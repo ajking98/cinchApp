@@ -1,0 +1,6 @@
+framework module EasyImagy {
+  umbrella header "EasyImagy-umbrella.h"
+
+  export *
+  module * { export * }
+}

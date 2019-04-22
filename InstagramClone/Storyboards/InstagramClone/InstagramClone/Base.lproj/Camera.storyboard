@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="31C-yE-zVW">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Upload-->
+        <scene sceneID="7uE-68-edL">
+            <objects>
+                <viewController id="CP9-Kp-4yr" customClass="CameraViewController" customModule="InstagramClone" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="szm-Di-Oad">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LKN-WQ-hED">
+                                <rect key="frame" x="20" y="118" width="374" height="400"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="400" id="Vq8-Sy-bgn"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xxn-mc-5R3">
+                                <rect key="frame" x="120" y="626" width="174" height="62"/>
+                                <color key="backgroundColor" red="0.29411764709999999" green="0.46274509800000002" blue="0.91764705879999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="62" id="fXu-VZ-cxa"/>
+                                </constraints>
+                                <state key="normal" title="Button">
+                                    <color key="titleColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="onSelectImage:" destination="CP9-Kp-4yr" eventType="touchUpInside" id="FpI-fq-G8I"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Xxn-mc-5R3" firstAttribute="leading" secondItem="tj6-dI-3BO" secondAttribute="leading" constant="120" id="3E4-XO-fyp"/>
+                            <constraint firstItem="LKN-WQ-hED" firstAttribute="leading" secondItem="tj6-dI-3BO" secondAttribute="leading" constant="20" id="WMr-vx-kVN"/>
+                            <constraint firstItem="tj6-dI-3BO" firstAttribute="bottom" secondItem="Xxn-mc-5R3" secondAttribute="bottom" constant="174" id="ecF-3u-FN1"/>
+                            <constraint firstItem="LKN-WQ-hED" firstAttribute="centerX" secondItem="szm-Di-Oad" secondAttribute="centerX" id="g7q-sY-fgv"/>
+                            <constraint firstItem="tj6-dI-3BO" firstAttribute="trailing" secondItem="LKN-WQ-hED" secondAttribute="trailing" constant="20" id="gUU-xf-VEB"/>
+                            <constraint firstItem="LKN-WQ-hED" firstAttribute="top" secondItem="tj6-dI-3BO" secondAttribute="top" constant="30" id="jkU-0A-epm"/>
+                            <constraint firstItem="Xxn-mc-5R3" firstAttribute="centerX" secondItem="szm-Di-Oad" secondAttribute="centerX" id="lOR-kb-WKS"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="tj6-dI-3BO"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Upload" id="jax-IK-i2U"/>
+                    <connections>
+                        <outlet property="imageView" destination="LKN-WQ-hED" id="Cqm-Ek-Xfd"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x1F-0M-hPN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3550.7246376811595" y="306.69642857142856"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="f6c-ug-9ce">
+            <objects>
+                <navigationController storyboardIdentifier="NavigationCamera" automaticallyAdjustsScrollViewInsets="NO" id="31C-yE-zVW" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="" image="camera" id="5Y0-HQ-aT8"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="1zn-dJ-rTu">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="CP9-Kp-4yr" kind="relationship" relationship="rootViewController" id="0gz-vi-iAJ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="A4T-SU-dM8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2640.579710144928" y="307.36607142857139"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="camera" width="30" height="30"/>
+    </resources>
+</document>
