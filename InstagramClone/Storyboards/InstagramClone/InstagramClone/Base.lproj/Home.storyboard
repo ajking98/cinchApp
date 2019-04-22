@@ -54,7 +54,11 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" title="Home" id="QnV-Uc-WN2">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="mrl-40-pVE"/>
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="mrl-40-pVE">
+                            <connections>
+                                <segue destination="pvU-q2-6Sf" kind="show" id="Uwg-qg-VWQ"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="imageCollection" destination="2ae-ya-GH7" id="TyY-hX-uQC"/>
@@ -84,6 +88,16 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zOx-sy-wpf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2641" y="-1033"/>
+        </scene>
+        <!--CameraID-->
+        <scene sceneID="BWI-iw-gH3">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Camera" referencedIdentifier="CameraID" id="pvU-q2-6Sf" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="olk-72-G4t"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zsQ-g2-10I" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4236" y="-1135"/>
         </scene>
     </scenes>
     <resources>

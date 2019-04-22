@@ -8,9 +8,13 @@
 
 import UIKit
 import EasyImagy
+import Firebase
+import FirebaseDatabase
+import FirebaseStorage
 
 class CameraViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
-
+    
+    var dbRef: DatabaseReference!
     @IBOutlet weak var imageView: UIImageView!
     @IBAction func onSelectImage(_ sender: UIButton) {
         //Picking the image from photoLibrary
@@ -21,16 +25,78 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
         self.present(image, animated: true)
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // Do any additional setup after loading the view.
+    }
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        self.dismiss(animated: true, completion: nil)
+        
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage{
             let image2 = trimInsta(image : image)
             imageView.image = image2
+            
+            // data in memory
+            var data = Data()
+            data = image2.jpegData(compressionQuality: 0.8)!
+            
+            let refImages = Database.database().reference().child("images")
+            let storageRef = Storage.storage().reference().child("images/" + randomString(20))
+            print(storageRef.name)
+            
+            // Upload the file to the path "images/rivers.jpg"
+            _ = storageRef.putData(data, metadata: nil) { (metadata, error) in
+                guard let metadata = metadata else {
+                    // Uh-oh, an error occurred!
+                    print("Error occurred")
+                    return
+                }
+                print("hi")
+                
+                // Metadata contains file metadata such as size, content-type.
+                
+                // You can also access to download URL after upload.
+                storageRef.downloadURL { (url, error) in
+                    if (error == nil) {
+                        if let downloadUrl = url {
+                            // Make you download string
+                            let key = refImages.childByAutoId().key
+                            let image = ["url": downloadUrl.absoluteString]
+                            refImages.child(key).setValue(image)
+                        }
+                    }
+                    guard let url = url else {
+                        // Uh-oh, an error occurred!
+                        return
+                    }
+                }
+            }
+
+            
         }
         else{
             print("Error has occured loading up the image")
         }
         
-        self.dismiss(animated: true, completion: nil)
+        
+    }
+    
+    func randomString(_ length: Int) -> String {
+        let letters : NSString = "asdfghjkloiuytrewqazxcvbnmWERTYUIASDFGHJKXCVBN"
+        let len = UInt32(letters.length)
+        
+        var randomString = ""
+        
+        for _ in 0 ..< length {
+            let rand = arc4random_uniform(len)
+            var nextChar = letters.character(at: Int(rand))
+            randomString += NSString(characters: &nextChar, length: 1) as String
+        }
+        
+        return randomString
     }
     
     func trimInsta(image : UIImage) -> UIImage {
@@ -96,11 +162,7 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
         return cropped.uiImage
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
+    
     
 
     /*

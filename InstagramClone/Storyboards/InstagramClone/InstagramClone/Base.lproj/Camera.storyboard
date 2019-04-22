@@ -13,7 +13,7 @@
         <!--Upload-->
         <scene sceneID="7uE-68-edL">
             <objects>
-                <viewController id="CP9-Kp-4yr" customClass="CameraViewController" customModule="InstagramClone" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CameraID" id="CP9-Kp-4yr" customClass="CameraViewController" customModule="InstagramClone" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="szm-Di-Oad">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
