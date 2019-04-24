@@ -14,9 +14,9 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "745899F2A1D8327D197A773C15498836"
-               BuildableName = "TRMosaicLayout.framework"
-               BlueprintName = "TRMosaicLayout"
+               BlueprintIdentifier = "3923DC7A4B6CE5EDEC78EA08D4D86D95"
+               BuildableName = "Player.framework"
+               BlueprintName = "Player"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

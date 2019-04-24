@@ -1,4 +1,6 @@
 PODS:
+  - Cards (1.4.0):
+    - Player (= 0.13.0)
   - EasyImagy (0.6.0)
   - Firebase/Auth (4.13.0):
     - Firebase/Core
@@ -74,6 +76,7 @@ PODS:
     - nanopb/encode (= 0.3.901)
   - nanopb/decode (0.3.901)
   - nanopb/encode (0.3.901)
+  - Player (0.13.0)
   - SDWebImage/Core (4.4.6)
   - SDWebImage/WebP (4.4.6):
     - libwebp (>= 0.5)
@@ -84,6 +87,7 @@ PODS:
     - XLActionController/Core
 
 DEPENDENCIES:
+  - Cards
   - EasyImagy (from `../swift-image`)
   - Firebase/Auth
   - Firebase/Core
@@ -95,6 +99,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - Cards
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuth
@@ -107,6 +112,7 @@ SPEC REPOS:
     - leveldb-library
     - libwebp
     - nanopb
+    - Player
     - SDWebImage
     - TRMosaicLayout
     - XLActionController
@@ -116,6 +122,7 @@ EXTERNAL SOURCES:
     :path: "../swift-image"
 
 SPEC CHECKSUMS:
+  Cards: 45ae6bd0eca7b5e8016d3b6cb30b60b04753f68f
   EasyImagy: f63b20b08f3b55d792ce91f37da20c36d4e0410e
   Firebase: 5ec5e863d269d82d66b4bf56856726f8fb8f0fb3
   FirebaseAnalytics: 7ef69e76a5142f643aeb47c780e1cdce4e23632e
@@ -129,10 +136,11 @@ SPEC CHECKSUMS:
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   libwebp: b068a3bd7c45f7460f6715be7bed1a18fd5d6b48
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
+  Player: 968d8d07d923bcdd6f7e4091c9e306eb44a5f7a4
   SDWebImage: 3f3f0c02f09798048c47a5ed0a13f17b063572d8
   TRMosaicLayout: 1875505c48dd2877afd69a8bea7b4c1c63afa5b5
   XLActionController: d7dea0b162bd3977311bcba7d377b88d6b87a7b4
 
-PODFILE CHECKSUM: d3d1eb3bb1c8c02cb8fcc9c8c5b78b6aea1397f4
+PODFILE CHECKSUM: 44756514a6aeddb51d41081093067ae64f5ffc30
 
 COCOAPODS: 1.6.1

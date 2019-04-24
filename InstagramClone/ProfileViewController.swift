@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Cards
 
 class ProfileViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     var customImageFlowLayout: CustomImageFlowLayout!
@@ -19,19 +20,19 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell:ProfileCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProfileCollectionViewCell", for: indexPath) as! ProfileCollectionViewCell
-        cell.imageView.image = UIImage(named: "folderImage")
         
         return cell
     }
     
     
+    @IBOutlet var wallpaperImage: UIImageView!
+    @IBOutlet var overlayProfileView: UIView!
     @IBOutlet weak var profileImage: UIImageView!
     @IBAction func followAction(_ sender: UIButton) {
     }
     
 
     @IBOutlet weak var collectionView: UICollectionView!
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +45,20 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
         customImageFlowLayout = CustomImageFlowLayout()
         collectionView.collectionViewLayout = customImageFlowLayout
         
+        let card = CardHighlight(frame: CGRect(x: overlayProfileView.frame.minX + 30, y: overlayProfileView.frame.maxY + wallpaperImage.frame.maxY - 10, width: 120, height: 144))
+        card.backgroundColor = UIColor(red: 0, green: 94/255, blue: 112/255, alpha: 1)
+        card.title = ""
+        card.hasParallax = true
+        card.backgroundImage = UIImage(named: "minions")
+        card.textColor = .white
+        card.buttonText = ""
+        card.itemTitle = "Random"
+        card.itemTitleSize = 40
+        card.itemSubtitle = ""
+        let cardContentVC = storyboard!.instantiateViewController(withIdentifier: "CardContent")
+        card.shouldPresent(cardContentVC, from: self, fullscreen: false)
+        view.addSubview(card)
+
 
         // Do any additional setup after loading the view.
     }
