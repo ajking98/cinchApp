@@ -25,6 +25,18 @@
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="295"/>
                                         <color key="backgroundColor" red="0.74628609418869019" green="0.54458886384963989" blue="0.87803775072097778" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <color key="tintColor" red="0.78326835601581357" green="0.55175867654983413" blue="0.93755948604060912" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBound" value="NO"/>
+                                            <userDefinedRuntimeAttribute type="size" keyPath="layer.shadowOffset">
+                                                <size key="value" width="0.0" height="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowRadius">
+                                                <integer key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowOpacity">
+                                                <integer key="value" value="0"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                     </imageView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ojb-Dg-cP1">
                                         <rect key="frame" x="20" y="167" width="374" height="128"/>
@@ -190,15 +202,9 @@
                                             <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="N87-LF-86I">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N87-LF-86I">
                                                     <rect key="frame" x="20" y="0.0" width="160" height="169"/>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Folder" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ISq-Hw-Vkh">
-                                                    <rect key="frame" x="20" y="173" width="49" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AmW-iV-sha">
                                                     <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                                                     <connections>
@@ -209,12 +215,9 @@
                                         </view>
                                         <constraints>
                                             <constraint firstItem="AmW-iV-sha" firstAttribute="top" secondItem="N87-LF-86I" secondAttribute="top" id="DPO-eS-9wb"/>
-                                            <constraint firstItem="ISq-Hw-Vkh" firstAttribute="top" secondItem="N87-LF-86I" secondAttribute="bottom" constant="4" id="Ks4-ma-TO8"/>
-                                            <constraint firstAttribute="bottom" secondItem="ISq-Hw-Vkh" secondAttribute="bottom" constant="6" id="L1p-UG-yWj"/>
                                             <constraint firstItem="N87-LF-86I" firstAttribute="leading" secondItem="KQG-dh-UYd" secondAttribute="leadingMargin" constant="12" id="QhY-y5-gOe"/>
                                             <constraint firstAttribute="bottom" secondItem="AmW-iV-sha" secondAttribute="bottom" id="Ru4-Ar-udD"/>
                                             <constraint firstItem="AmW-iV-sha" firstAttribute="centerX" secondItem="N87-LF-86I" secondAttribute="centerX" id="Y3L-HV-OgU"/>
-                                            <constraint firstItem="ISq-Hw-Vkh" firstAttribute="leading" secondItem="KQG-dh-UYd" secondAttribute="leading" constant="20" id="gC4-XC-tCW"/>
                                             <constraint firstItem="AmW-iV-sha" firstAttribute="leading" secondItem="KQG-dh-UYd" secondAttribute="leading" id="hec-wP-jxH"/>
                                             <constraint firstItem="N87-LF-86I" firstAttribute="top" secondItem="KQG-dh-UYd" secondAttribute="top" id="kU0-gE-LQP"/>
                                             <constraint firstAttribute="trailingMargin" secondItem="N87-LF-86I" secondAttribute="trailing" constant="12" id="qDe-Yx-xys"/>
@@ -245,7 +248,9 @@
                     <navigationItem key="navigationItem" title="Profile" id="EiK-9t-sJu"/>
                     <connections>
                         <outlet property="collectionView" destination="KHH-Ml-gif" id="SRs-A5-SWG"/>
+                        <outlet property="overlayProfileView" destination="AFe-w1-Kg4" id="bSb-LG-Zxo"/>
                         <outlet property="profileImage" destination="d9e-AC-y1L" id="UjI-12-3In"/>
+                        <outlet property="wallpaperImage" destination="JJf-hA-DT1" id="Kbb-Cp-Ssy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RQZ-iR-GAb" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -255,7 +260,7 @@
         <!--Inside Folder Collection View Controller-->
         <scene sceneID="XPI-1l-0LJ">
             <objects>
-                <collectionViewController id="SXZ-Ra-RW1" customClass="InsideFolderCollectionViewController" customModule="InstagramClone" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="CardContent" id="SXZ-Ra-RW1" customClass="InsideFolderCollectionViewController" customModule="InstagramClone" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="HLP-HK-Vs7">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

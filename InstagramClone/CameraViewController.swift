@@ -83,8 +83,6 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
                     print("Error occurred")
                     return
                 }
-                print("hi")
-                
                 // Metadata contains file metadata such as size, content-type.
                 
                 // You can also access to download URL after upload.
