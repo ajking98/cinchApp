@@ -20,6 +20,7 @@
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LKN-WQ-hED">
                                 <rect key="frame" x="20" y="118" width="374" height="400"/>
+                                <color key="backgroundColor" red="0.75406885150000003" green="0.75408679249999999" blue="0.75407713649999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="400" id="Vq8-Sy-bgn"/>
                                 </constraints>
@@ -43,7 +44,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Xxn-mc-5R3" firstAttribute="leading" secondItem="tj6-dI-3BO" secondAttribute="leading" constant="120" id="3E4-XO-fyp"/>
                             <constraint firstItem="LKN-WQ-hED" firstAttribute="leading" secondItem="tj6-dI-3BO" secondAttribute="leading" constant="20" id="WMr-vx-kVN"/>
@@ -57,6 +58,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Upload" id="jax-IK-i2U"/>
                     <connections>
+                        <outlet property="findImage" destination="Xxn-mc-5R3" id="YX9-WY-S0f"/>
                         <outlet property="imageView" destination="LKN-WQ-hED" id="Cqm-Ek-Xfd"/>
                     </connections>
                 </viewController>

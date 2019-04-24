@@ -2,18 +2,22 @@
 //  CameraViewController.swift
 //  InstagramClone
 //
-//  Created by Gedi, Ahmed M on 4/11/19.
-//  Copyright © 2019 Gedi, Ahmed M. All rights reserved.
-//
+/*
+        Prompted when user uploads image from camera roll and a delegate is used
+ 
+ */
+
 
 import UIKit
 import EasyImagy
 import Firebase
 import FirebaseDatabase
 import FirebaseStorage
+import XLActionController
 
 class CameraViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
+    @IBOutlet weak var findImage: UIButton!
     var dbRef: DatabaseReference!
     @IBOutlet weak var imageView: UIImageView!
     @IBAction func onSelectImage(_ sender: UIButton) {
@@ -25,11 +29,34 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
         self.present(image, animated: true)
     }
     
+    
+    
+    
+    let button = UIButton(type: .system)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+        
+        //Add button (+)
+        button.frame = CGRect(x: UIScreen.main.bounds.width - 85, y: findImage.frame.minY - 65, width: 50, height: 50)
+        button.backgroundColor = .green
+        button.setTitle("+", for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 40)
+        button.layer.shadowOpacity = 0.25
+        button.layer.cornerRadius = button.frame.height / 2
+        button.layer.shadowRadius = 2
+        button.contentVerticalAlignment = .top
+        button.addTarget(self, action: #selector(saveImage), for: .touchUpInside)
+        button.isHidden = true
+        self.view.addSubview(button)
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+    }
+    
+    
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
@@ -38,6 +65,8 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage{
             let image2 = trimInsta(image : image)
             imageView.image = image2
+            
+            button.isHidden = false
             
             // data in memory
             var data = Data()
@@ -162,8 +191,20 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
         return cropped.uiImage
     }
     
-    
-    
+    @objc func saveImage(sender: UIButton!){
+        let actionController = SpotifyActionController()
+        if let image = imageView.image {
+            actionController.headerData = SpotifyHeaderData(title: "Which folder do you want to save to?", subtitle: "", image: image)
+        }
+        for x in 0 ... 5{
+            actionController.addAction(Action(ActionData(title: "Folder #\(x)", subtitle: "For Content"), style: .default, handler: nil))
+
+        }
+        present(actionController, animated: true, completion: nil)
+        
+        self.imageView.image = nil
+        sender.isHidden = true
+    }
 
     /*
     // MARK: - Navigation

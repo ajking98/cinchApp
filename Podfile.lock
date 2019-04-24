@@ -79,6 +79,9 @@ PODS:
     - libwebp (>= 0.5)
     - SDWebImage/Core
   - TRMosaicLayout (1.0.0)
+  - XLActionController/Core (5.0.0)
+  - XLActionController/Spotify (5.0.0):
+    - XLActionController/Core
 
 DEPENDENCIES:
   - EasyImagy (from `../swift-image`)
@@ -88,6 +91,7 @@ DEPENDENCIES:
   - Firebase/Storage (~> 4.0)
   - SDWebImage/WebP
   - TRMosaicLayout
+  - XLActionController/Spotify
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -105,6 +109,7 @@ SPEC REPOS:
     - nanopb
     - SDWebImage
     - TRMosaicLayout
+    - XLActionController
 
 EXTERNAL SOURCES:
   EasyImagy:
@@ -126,7 +131,8 @@ SPEC CHECKSUMS:
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   SDWebImage: 3f3f0c02f09798048c47a5ed0a13f17b063572d8
   TRMosaicLayout: 1875505c48dd2877afd69a8bea7b4c1c63afa5b5
+  XLActionController: d7dea0b162bd3977311bcba7d377b88d6b87a7b4
 
-PODFILE CHECKSUM: 97c9948d2f05736b84aa7d3d3d1682332ef86836
+PODFILE CHECKSUM: d3d1eb3bb1c8c02cb8fcc9c8c5b78b6aea1397f4
 
 COCOAPODS: 1.6.1
