@@ -42,7 +42,7 @@
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tro-up-H71">
                                         <rect key="frame" x="0.0" y="100" width="374" height="45"/>
-                                        <color key="backgroundColor" red="0.30876918005819765" green="0.30876918005819765" blue="0.30876918005819765" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" red="0.40553313944906066" green="0.40553313944906066" blue="0.40553313944906066" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="45" id="ZxE-10-z19"/>
                                             <constraint firstAttribute="height" constant="45" id="rWl-cU-dtZ"/>
@@ -59,9 +59,9 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Instagram" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3MZ-zO-42H">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="cinch" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3MZ-zO-42H">
                                 <rect key="frame" x="53" y="168" width="308" height="72"/>
-                                <fontDescription key="fontDescription" name="Noteworthy-Light" family="Noteworthy" pointSize="45"/>
+                                <fontDescription key="fontDescription" name="Noteworthy-Bold" family="Noteworthy" pointSize="45"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -85,7 +85,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
+                        <color key="backgroundColor" red="0.44189068217661565" green="0.78551216982066729" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="eiS-ZM-sej" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="4Kb-Ej-snR"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="eiS-ZM-sej" secondAttribute="bottom" constant="30" id="5o3-Ve-tOs"/>
@@ -152,7 +152,7 @@
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dug-TL-p0x">
                                         <rect key="frame" x="0.0" y="150" width="374" height="44"/>
-                                        <color key="backgroundColor" red="0.30876918009999998" green="0.30876918009999998" blue="0.30876918009999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" red="0.40553313940000002" green="0.40553313940000002" blue="0.40553313940000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title="Sign Up">
                                             <color key="titleColor" red="0.88824727920000002" green="0.88824727920000002" blue="0.88824727920000002" alpha="0.58332416369999995" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
@@ -181,7 +181,7 @@
                                 </constraints>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
+                        <color key="backgroundColor" red="0.44232714176177979" green="0.78382962942123413" blue="0.99959558248519897" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="nOr-ie-A9U" firstAttribute="centerX" secondItem="X5U-E2-gfy" secondAttribute="centerX" id="6qw-Lh-x9W"/>
                             <constraint firstItem="nOr-ie-A9U" firstAttribute="top" secondItem="h4B-38-Thh" secondAttribute="top" constant="103" id="BSV-1B-lpF"/>

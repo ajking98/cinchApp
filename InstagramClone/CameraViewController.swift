@@ -25,7 +25,7 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
         let image = UIImagePickerController()
         image.delegate = self
         image.sourceType = UIImagePickerController.SourceType.photoLibrary
-        image.allowsEditing = true
+        image.allowsEditing = false
         self.present(image, animated: true)
     }
     

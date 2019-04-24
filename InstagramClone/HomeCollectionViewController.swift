@@ -78,6 +78,7 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
         zoomingImageView = UIImageView(frame: startingFrame!)
         zoomingImageView?.image = startingImageView.image
         //zoomingImageView?.backgroundColor = .red
+       
         zoomingImageView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleZoomOut)))
         zoomingImageView?.isUserInteractionEnabled = true
         
@@ -86,7 +87,8 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
             blackBackgroundView?.backgroundColor = .black
             blackBackgroundView?.alpha = 0
             keyWindow.addSubview(blackBackgroundView!)
-            
+            blackBackgroundView?.isUserInteractionEnabled = true
+            blackBackgroundView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleZoomOut)))
             keyWindow.addSubview(zoomingImageView!)
             
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {

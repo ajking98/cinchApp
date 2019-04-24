@@ -31,7 +31,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="62" id="fXu-VZ-cxa"/>
                                 </constraints>
-                                <state key="normal" title="Button">
+                                <state key="normal" title="Import Content">
                                     <color key="titleColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -44,7 +44,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.44232714179999999" green="0.78382962940000001" blue="0.99959558250000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Xxn-mc-5R3" firstAttribute="leading" secondItem="tj6-dI-3BO" secondAttribute="leading" constant="120" id="3E4-XO-fyp"/>
                             <constraint firstItem="LKN-WQ-hED" firstAttribute="leading" secondItem="tj6-dI-3BO" secondAttribute="leading" constant="20" id="WMr-vx-kVN"/>
