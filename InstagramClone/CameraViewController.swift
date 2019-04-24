@@ -193,18 +193,18 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     
     @objc func saveImage(sender: UIButton!){
         let actionController = SpotifyActionController()
+        if let image = imageView.image {
+            actionController.headerData = SpotifyHeaderData(title: "Which folder do you want to save to?", subtitle: "", image: image)
+        }
         for x in 0 ... 5{
             actionController.addAction(Action(ActionData(title: "Folder #\(x)", subtitle: "For Content"), style: .default, handler: nil))
 
         }
-        present(actionController, animated: true) {
-            self.imageView.image = nil
-            sender.isHidden = true
-        }
+        present(actionController, animated: true, completion: nil)
         
+        self.imageView.image = nil
+        sender.isHidden = true
     }
-    
-    
 
     /*
     // MARK: - Navigation
