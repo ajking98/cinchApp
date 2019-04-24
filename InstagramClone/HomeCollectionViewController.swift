@@ -10,7 +10,6 @@ import UIKit
 import FirebaseDatabase
 import SDWebImage
 
-
 class HomeCollectionViewController: UICollectionViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @IBOutlet var imageCollection: UICollectionView!
@@ -24,7 +23,7 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
         super.viewDidLoad()
         
         imagePicker.delegate = self
-        // create a refernce to the database
+        // create a reference to the database
         dbRef = Database.database().reference().child("images")
         loadDB()
         
@@ -50,6 +49,7 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
         // #warning Incomplete implementation, return the number of items
         return images.count
     }
+    
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = imageCollection.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! HomeCollectionViewCell
@@ -101,7 +101,7 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
     }
     
     @objc func handleZoomOut(tapGesture: UITapGestureRecognizer) {
-        if let zoomOutImageView = tapGesture.view {
+        if tapGesture.view != nil {
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
                 self.zoomingImageView?.removeFromSuperview()
                 self.blackBackgroundView?.alpha = 0

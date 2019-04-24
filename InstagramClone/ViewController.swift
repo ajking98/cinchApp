@@ -53,6 +53,7 @@ class ViewController: UIViewController {
                 if (user != nil) {
                     print("User authenticated")
                     self.presentingViewController?.dismiss(animated: true, completion: nil)
+                    self.performSegue(withIdentifier: "homeView", sender: self)
                 } else {
                     print("there was a error")
                     self.errorLabel?.isHidden = false

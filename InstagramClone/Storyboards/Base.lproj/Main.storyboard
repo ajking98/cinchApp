@@ -52,7 +52,9 @@
                                         </state>
                                         <connections>
                                             <action selector="loginClickButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="pi5-yV-YpF"/>
-                                            <segue destination="hCC-EB-7L8" kind="presentation" id="hcA-DA-dC8"/>
+                                            <segue destination="hCC-EB-7L8" kind="popoverPresentation" popoverAnchorView="Tro-up-H71" id="hcA-DA-dC8">
+                                                <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                            </segue>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -155,7 +157,7 @@
                                             <color key="titleColor" red="0.88824727920000002" green="0.88824727920000002" blue="0.88824727920000002" alpha="0.58332416369999995" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
-                                            <segue destination="hCC-EB-7L8" kind="presentation" id="PjK-Z0-Hx4"/>
+                                            <segue destination="BYZ-38-t0r" kind="show" id="FBE-5G-1mX"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -217,7 +219,4 @@
     <resources>
         <image name="userPlaceHolder" width="220" height="229"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="hcA-DA-dC8"/>
-    </inferredMetricsTieBreakers>
 </document>

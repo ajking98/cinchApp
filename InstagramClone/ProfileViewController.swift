@@ -9,11 +9,12 @@
 import UIKit
 
 class ProfileViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+    var customImageFlowLayout: CustomImageFlowLayout!
     var photoCategories = PhotoCategory.fetchPhotos()
     // var folders = ["family", "foods", "travel", "nature"]
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photoCategories.count
+        return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -39,6 +40,9 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
         
         collectionView.dataSource = self
         collectionView.delegate = self
+        
+        customImageFlowLayout = CustomImageFlowLayout()
+        collectionView.collectionViewLayout = customImageFlowLayout
         
 
         // Do any additional setup after loading the view.
