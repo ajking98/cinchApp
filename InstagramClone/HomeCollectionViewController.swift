@@ -9,6 +9,7 @@
 import UIKit
 import FirebaseDatabase
 import SDWebImage
+import Photos
 
 class HomeCollectionViewController: UICollectionViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -81,6 +82,8 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
        
         zoomingImageView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleZoomOut)))
         zoomingImageView?.isUserInteractionEnabled = true
+    zoomingImageView?.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(longPressed)))
+        
         
         if let keyWindow = UIApplication.shared.keyWindow {
             blackBackgroundView = UIView(frame: keyWindow.frame)
@@ -101,6 +104,15 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
                 }, completion: nil)
         }
     }
+    
+    @objc func longPressed(tapGesture: UILongPressGestureRecognizer)
+    {
+        print("longpressed")
+        //Different code
+        
+    }
+
+    
     
     @objc func handleZoomOut(tapGesture: UITapGestureRecognizer) {
         if tapGesture.view != nil {

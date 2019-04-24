@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Upload-->
+        <!--UPLOAD-->
         <scene sceneID="7uE-68-edL">
             <objects>
                 <viewController storyboardIdentifier="CameraID" id="CP9-Kp-4yr" customClass="CameraViewController" customModule="InstagramClone" customModuleProvider="target" sceneMemberID="viewController">
@@ -18,7 +18,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LKN-WQ-hED">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LKN-WQ-hED">
                                 <rect key="frame" x="20" y="118" width="374" height="400"/>
                                 <color key="backgroundColor" red="0.75406885150000003" green="0.75408679249999999" blue="0.75407713649999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -56,9 +56,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="tj6-dI-3BO"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Upload" id="jax-IK-i2U"/>
+                    <navigationItem key="navigationItem" title="UPLOAD" id="jax-IK-i2U"/>
                     <connections>
-                        <outlet property="findImage" destination="Xxn-mc-5R3" id="YX9-WY-S0f"/>
+                        <outlet property="findImage" destination="Xxn-mc-5R3" id="tEc-O8-DVg"/>
                         <outlet property="imageView" destination="LKN-WQ-hED" id="Cqm-Ek-Xfd"/>
                     </connections>
                 </viewController>
