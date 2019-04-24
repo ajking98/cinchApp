@@ -14,6 +14,8 @@ target 'InstagramClone' do
   
   # Pods for CameraViewFinal
   pod "EasyImagy", :path => "../swift-image"
+  pod 'XLActionController/Spotify'
+
 
   # Pods for InstagramClone
 

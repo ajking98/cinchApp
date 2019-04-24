@@ -57,6 +57,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Upload" id="jax-IK-i2U"/>
                     <connections>
+                        <outlet property="findImage" destination="Xxn-mc-5R3" id="YX9-WY-S0f"/>
                         <outlet property="imageView" destination="LKN-WQ-hED" id="Cqm-Ek-Xfd"/>
                     </connections>
                 </viewController>

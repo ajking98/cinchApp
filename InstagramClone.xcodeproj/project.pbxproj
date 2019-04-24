@@ -34,7 +34,6 @@
 		EB74D3F4226045A600556399 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB74D3F2226045A600556399 /* Home.storyboard */; };
 		EB74D3F92260465500556399 /* Camera.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB74D3F72260465500556399 /* Camera.storyboard */; };
 		EB74D3FE226046C800556399 /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB74D3FC226046C800556399 /* Profile.storyboard */; };
-		EBE992EB226E37C9002D01CF /* TRMosaicLayout in Resources */ = {isa = PBXBuildFile; fileRef = EBE992EA226E37C9002D01CF /* TRMosaicLayout */; };
 		EBE992ED226E3B8D002D01CF /* TRCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE992EC226E3B8D002D01CF /* TRCollectionViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -94,7 +93,6 @@
 		EB74D3F3226045A600556399 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = InstagramClone/InstagramClone/Base.lproj/Home.storyboard; sourceTree = "<group>"; };
 		EB74D3F82260465500556399 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = InstagramClone/InstagramClone/Base.lproj/Camera.storyboard; sourceTree = "<group>"; };
 		EB74D3FD226046C800556399 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = InstagramClone/InstagramClone/Base.lproj/Profile.storyboard; sourceTree = "<group>"; };
-		EBE992EA226E37C9002D01CF /* TRMosaicLayout */ = {isa = PBXFileReference; lastKnownFileType = folder; name = TRMosaicLayout; path = "../../mosaic-layout-master/TRMosaicLayout"; sourceTree = "<group>"; };
 		EBE992EC226E3B8D002D01CF /* TRCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TRCollectionViewController.swift; sourceTree = "<group>"; };
 		FC945FE0D7581185DE7FBF19 /* Pods_InstagramCloneTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstagramCloneTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -190,7 +188,6 @@
 				EB41F8E822653170003751FA /* Photo.swift */,
 				EB40EF982263E9940093BB5B /* FolderCollectionViewCell.swift */,
 				EB40EF9C2263F7E20093BB5B /* InsideFolderCollectionViewController.swift */,
-				EBE992EA226E37C9002D01CF /* TRMosaicLayout */,
 				EB74D3FF2260520C00556399 /* Storyboards */,
 				EB74D3BC226025EA00556399 /* Assets.xcassets */,
 				EB74D3BE226025EA00556399 /* LaunchScreen.storyboard */,
@@ -345,7 +342,6 @@
 				EB74D3BD226025EA00556399 /* Assets.xcassets in Resources */,
 				EB74D3BB226025E900556399 /* Main.storyboard in Resources */,
 				EB74D3FE226046C800556399 /* Profile.storyboard in Resources */,
-				EBE992EB226E37C9002D01CF /* TRMosaicLayout in Resources */,
 				EB41F92722655C26003751FA /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -381,6 +377,7 @@
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/TRMosaicLayout/TRMosaicLayout.framework",
+				"${BUILT_PRODUCTS_DIR}/XLActionController/XLActionController.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/libwebp/libwebp.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
@@ -394,6 +391,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TRMosaicLayout.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLActionController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/libwebp.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
