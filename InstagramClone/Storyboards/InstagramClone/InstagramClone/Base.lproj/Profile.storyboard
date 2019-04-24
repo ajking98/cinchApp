@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Profile-->
+        <!--PROFILE-->
         <scene sceneID="gJf-Pr-j5v">
             <objects>
                 <viewController id="r0O-FK-vd2" customClass="ProfileViewController" customModule="InstagramClone" customModuleProvider="target" sceneMemberID="viewController">
@@ -245,7 +245,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="yC4-le-0Kd"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Profile" id="EiK-9t-sJu"/>
+                    <navigationItem key="navigationItem" title="PROFILE" id="EiK-9t-sJu"/>
                     <connections>
                         <outlet property="collectionView" destination="KHH-Ml-gif" id="SRs-A5-SWG"/>
                         <outlet property="overlayProfileView" destination="AFe-w1-Kg4" id="bSb-LG-Zxo"/>

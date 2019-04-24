@@ -26,6 +26,7 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
         image.delegate = self
         image.sourceType = UIImagePickerController.SourceType.photoLibrary
         image.allowsEditing = false
+        
         self.present(image, animated: true)
     }
     
@@ -51,6 +52,8 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
         button.addTarget(self, action: #selector(saveImage), for: .touchUpInside)
         button.isHidden = true
         self.view.addSubview(button)
+        //imageView?.isUserInteractionEnabled = true
+        //imageView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector()))
     }
     
     override func viewDidAppear(_ animated: Bool) {
