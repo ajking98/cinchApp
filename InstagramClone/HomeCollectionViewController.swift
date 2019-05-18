@@ -28,6 +28,8 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
         dbRef = Database.database().reference().child("images")
         loadDB()
         
+        imageCollection.alwaysBounceVertical = true
+        imageCollection.indicatorStyle = .white
         customImageFlowLayout = CustomImageFlowLayout()
         imageCollection.collectionViewLayout = customImageFlowLayout
         imageCollection.backgroundColor = .white
