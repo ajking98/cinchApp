@@ -125,54 +125,15 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
     
     @objc func longPressed(tapGesture: UILongPressGestureRecognizer)
     {
-        
-        //Alert user
-        let alert = UIAlertController(title:"Saved", message: "Your image has been saved", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-        alert.addAction(okAction)
-        self.present(alert, animated: true, completion: nil)
-        
-        
-        
-        //request access to write to camera roll
-        let photos = PHPhotoLibrary.authorizationStatus()
-        if photos == .notDetermined {
-            PHPhotoLibrary.requestAuthorization { (status) in
-                if status == .authorized {
-                    
-                    //save image
-                    UIImageWriteToSavedPhotosAlbum((self.zoomingImageView?.image!)!, nil, nil, nil)
-                }else {}
-            }
+        guard tapGesture.state == .began else{
+            return
         }
-        else if (photos == .authorized){
-            
-            //save image
-            UIImageWriteToSavedPhotosAlbum((self.zoomingImageView?.image!)!, nil, nil, nil)
-        }
-        else {
-            let errorAlert = UIAlertController(title: "Error", message: "You must grant Cinch access to your camera roll first", preferredStyle: .alert)
-            alert.addAction(okAction)
-            self.present(alert, animated: true, completion: nil)
-            
-            PHPhotoLibrary.requestAuthorization { (status) in
-                if status == .authorized {
-                    
-                    //save image
-                    UIImageWriteToSavedPhotosAlbum((self.zoomingImageView?.image!)!, nil, nil, nil)
-                }else {}
-            }
-        }
-        
-        
-        
-        
         //if long press has not been pressed before
         if let keyWindow = UIApplication.shared.keyWindow {
             guard longPressedBool else {
                 
                 
-                var iconsView = UIImageView(frame: CGRect(x: keyWindow.frame.width - 100, y: 10, width: 100, height: 0))
+                let iconsView = UIImageView(frame: CGRect(x: keyWindow.frame.width - 100, y: 10, width: 100, height: 0))
                 iconsView.image = icon
                 blackBackgroundView?.backgroundColor = .lightGray
                 iconsView.layer.name = "icons_view"
@@ -202,7 +163,6 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
                     if(item.name == "icons_view"){
                         item.frame = CGRect(x: keyWindow.frame.width - 100, y: 10, width: 100, height: 0)
                     }
-                    print(item.name, "this is the item name")
                 }
             }) { (Bool) in
                 //after completion
@@ -211,6 +171,10 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
         }
         
         
+        //Downloads image
+        var downloader = Download()
+        let alert = downloader.downloadImage(targetImage: self.zoomingImageView!.image!)
+        self.present(alert, animated: true, completion: nil)
         
         
         
