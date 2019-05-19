@@ -17,7 +17,7 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
     var customImageFlowLayout: CustomImageFlowLayout!
     var dbRef: DatabaseReference!
     var images = [ImageInsta]()
-    var icon = UIImage(named: "family")
+    var icon = UIImage(named: "download_icon")
     var longPressedBool = false
     let imagePicker = UIImagePickerController()
     
@@ -121,6 +121,8 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
                 
                 //sizing and centering zoomingImage
                 self.zoomingImageView?.frame = CGRect(x: 0, y: 0, width: keyWindow.frame.width, height: height)
+                self.zoomingImageView?.layer.cornerRadius = 8
+                self.zoomingImageView?.layer.masksToBounds = true
                 self.zoomingImageView?.center = keyWindow.center
             }, completion: nil)
         }
@@ -151,12 +153,11 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
                 
                 
                 UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.1, options: .curveEaseIn, animations: {
-                    self.iconsView!.frame = CGRect(x: keyWindow.frame.width - 100, y: 10, width: 100, height: 200)
+                    self.iconsView!.frame = CGRect(x: keyWindow.frame.width - 80, y: 50, width: 75, height: 75)
                     self.zoomingImageView?.frame = CGRect(x:0, y:0, width: keyWindow.frame.width * 0.95, height: (self.zoomingImageView?.frame.height)! * 0.95)
-                    self.zoomingImageView?.layer.cornerRadius = 8
-                    self.zoomingImageView?.layer.masksToBounds = true
                     self.zoomingImageView?.center = keyWindow.center
                 }, completion: { (completed: Bool) in
+                    
                     //medium level vibration feedback
                     let vibration = UIImpactFeedbackGenerator(style: .medium)
                     vibration.impactOccurred()
@@ -165,35 +166,19 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
                 return
             }
             
-            //TODO long click is registering two long clicks instead of one, find reason and fix, then uncomment next line
-            //        longPressedBool = false
-            
-            //        TODO reverse the animation back up
-            UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseOut, animations: {
-                for item in keyWindow.layer.sublayers! {
-                    if(item.name == "icons_view"){
-                        item.frame = CGRect(x: keyWindow.frame.width - 100, y: 10, width: 100, height: 0)
-                    }
-                }
-            }) { (Bool) in
-                //after completion
-            }
-            
         }
-        
-        
-        //        print(blackBackgroundView?.layer.name, "is the name of the layer")
-        //        blackBackgroundView?.layer.name = "blackbackgorund"
-        
-        //        blackBackgroundView?.removeFromSuperview()
-        //Different code
         
     }
 
     
     
     @objc func handleZoomOut(tapGesture: UITapGestureRecognizer) {
-        longPressedBool = false
+        guard (longPressedBool == false) else {
+            exitLongPress()
+            longPressedBool = false
+            return
+        }
+        
         if tapGesture.view != nil {
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
                 self.zoomingImageView?.frame = self.startingFrame!
@@ -205,14 +190,47 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
         }
     }
     
+    //Reset layout to before longPressed
+    func exitLongPress(){
+        longPressedBool = false
+        
+        //        TODO reverse the animation back up
+        
+        if let keyWindow = UIApplication.shared.keyWindow {
+            
+            UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseOut, animations: {
+                
+                for item in keyWindow.layer.sublayers! {
+                    switch item.name {
+                        
+                    case "icons_view":
+                        item.frame = CGRect(x: keyWindow.frame.width - 100, y: 10, width: 100, height: 0)
+                        
+                    case "black_background":
+                        item.backgroundColor = CGColor(colorSpace: CGColorSpaceCreateDeviceRGB(), components: [0, 0, 0, 1.0])
+                        
+                    case "zooming_image_view":
+                        item.frame = CGRect(x: 0, y: 0, width: keyWindow.frame.width, height: (self.zoomingImageView?.frame.height)! / 0.95)
+                        item.position = keyWindow.center
+                        
+                    default:
+                        print("defaulted: \(item.name)")
+                    }
+                }
+            }) { (Bool) in
+                //after completion
+            }
+        }
+    }
+    
+    
+    //downloads target image and alerts the user about download
     @objc func download(tapGesture: UITapGestureRecognizer){
-        print("was clicked")
         
         //Downloads image
         var downloader = Download()
         let alert = downloader.downloadImage(targetImage: self.zoomingImageView!.image!)
         self.present(alert, animated: true, completion: nil)
-        
     }
     
     @IBAction func loadButtonClicked(_ sender: Any) {
