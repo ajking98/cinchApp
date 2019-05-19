@@ -1,6 +1,6 @@
 //
 //  HomeCollectionViewController.swift
-//  InstagramClone
+//  Discover Page
 //
 //  Created by Gedi, Ahmed M on 4/14/19.
 //  Copyright © 2019 Gedi, Ahmed M. All rights reserved.
@@ -17,6 +17,8 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
     var customImageFlowLayout: CustomImageFlowLayout!
     var dbRef: DatabaseReference!
     var images = [ImageInsta]()
+    var icon = UIImage(named: "family")
+    var longPressedBool = false
     let imagePicker = UIImagePickerController()
     //var tabBarController: UITabBarController? { get }
     
@@ -88,28 +90,93 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
         
         
         if let keyWindow = UIApplication.shared.keyWindow {
+            
             blackBackgroundView = UIView(frame: keyWindow.frame)
             blackBackgroundView?.backgroundColor = .black
             blackBackgroundView?.alpha = 0
+            blackBackgroundView?.layer.name = "black_background"
             keyWindow.addSubview(blackBackgroundView!)
             blackBackgroundView?.isUserInteractionEnabled = true
             blackBackgroundView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleZoomOut)))
+            zoomingImageView?.layer.name = "zooming_image_view"
             keyWindow.addSubview(zoomingImageView!)
             
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
                 
                 self.blackBackgroundView?.alpha = 1
-                let height = self.startingFrame!.height / self.startingFrame!.width * keyWindow.frame.width
+                
+                //logic to get height
+                var height = (startingImageView.image?.size.height)! / (startingImageView.image?.size.width)! * keyWindow.frame.width
+                if (height > keyWindow.frame.height * 0.9) {
+                    height = keyWindow.frame.height * 0.88
+                }
+                
+                
+                print((startingImageView.image?.size.height)!, "is the height" )
+                print((startingImageView.image?.size)! )
+                
                 self.zoomingImageView?.frame = CGRect(x: 0, y: 0, width: keyWindow.frame.width, height: height)
                 
                 self.zoomingImageView?.center = keyWindow.center
-                }, completion: nil)
+            }, completion: nil)
         }
+        
     }
     
     @objc func longPressed(tapGesture: UILongPressGestureRecognizer)
     {
-        print("longpressed")
+        //if long press has not been pressed before
+        if let keyWindow = UIApplication.shared.keyWindow {
+            guard longPressedBool else {
+                
+                
+                var iconsView = UIImageView(frame: CGRect(x: keyWindow.frame.width - 100, y: 10, width: 100, height: 0))
+                iconsView.image = icon
+                blackBackgroundView?.backgroundColor = .lightGray
+                iconsView.layer.name = "icons_view"
+                keyWindow.addSubview(iconsView)
+                
+                UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.1, options: .curveEaseIn, animations: {
+                    iconsView.frame = CGRect(x: keyWindow.frame.width - 100, y: 10, width: 100, height: 200)
+                    self.zoomingImageView?.frame = CGRect(x:0, y:0, width: keyWindow.frame.width * 0.95, height: (self.zoomingImageView?.frame.height)! * 0.95)
+                    self.zoomingImageView?.layer.cornerRadius = 8
+                    self.zoomingImageView?.layer.masksToBounds = true
+                    self.zoomingImageView?.center = keyWindow.center
+                }, completion: { (completed: Bool) in
+                    //medium level vibration feedback
+                    let vibration = UIImpactFeedbackGenerator(style: .medium)
+                    vibration.impactOccurred()
+                })
+                longPressedBool = true
+                return
+            }
+            
+            //TODO long click is registering two long clicks instead of one, find reason and fix, then uncomment next line
+            //        longPressedBool = false
+            
+            //        TODO reverse the animation back up
+            UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseOut, animations: {
+                for item in keyWindow.layer.sublayers! {
+                    if(item.name == "icons_view"){
+                        item.frame = CGRect(x: keyWindow.frame.width - 100, y: 10, width: 100, height: 0)
+                    }
+                    print(item.name, "this is the item name")
+                }
+            }) { (Bool) in
+                //after completion
+            }
+            
+        }
+        
+        
+        
+        
+        
+        
+        //        print(blackBackgroundView?.layer.name, "is the name of the layer")
+        //        blackBackgroundView?.layer.name = "blackbackgorund"
+        
+        //        blackBackgroundView?.removeFromSuperview()
         //Different code
         
     }
@@ -117,15 +184,17 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
     
     
     @objc func handleZoomOut(tapGesture: UITapGestureRecognizer) {
+        longPressedBool = false
         if tapGesture.view != nil {
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
-                self.zoomingImageView?.removeFromSuperview()
+                self.zoomingImageView?.frame = self.startingFrame!
                 self.blackBackgroundView?.alpha = 0
             }, completion: { (completed: Bool) in
+                self.zoomingImageView?.removeFromSuperview()
+                
             })
         }
     }
-    
     
     @IBAction func loadButtonClicked(_ sender: Any) {
         performSegue(withIdentifier: "nextView", sender: self)
