@@ -125,6 +125,48 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
     
     @objc func longPressed(tapGesture: UILongPressGestureRecognizer)
     {
+        
+        //Alert user
+        let alert = UIAlertController(title:"Saved", message: "Your image has been saved", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(okAction)
+        self.present(alert, animated: true, completion: nil)
+        
+        
+        
+        //request access to write to camera roll
+        let photos = PHPhotoLibrary.authorizationStatus()
+        if photos == .notDetermined {
+            PHPhotoLibrary.requestAuthorization { (status) in
+                if status == .authorized {
+                    
+                    //save image
+                    UIImageWriteToSavedPhotosAlbum((self.zoomingImageView?.image!)!, nil, nil, nil)
+                }else {}
+            }
+        }
+        else if (photos == .authorized){
+            
+            //save image
+            UIImageWriteToSavedPhotosAlbum((self.zoomingImageView?.image!)!, nil, nil, nil)
+        }
+        else {
+            let errorAlert = UIAlertController(title: "Error", message: "You must grant Cinch access to your camera roll first", preferredStyle: .alert)
+            alert.addAction(okAction)
+            self.present(alert, animated: true, completion: nil)
+            
+            PHPhotoLibrary.requestAuthorization { (status) in
+                if status == .authorized {
+                    
+                    //save image
+                    UIImageWriteToSavedPhotosAlbum((self.zoomingImageView?.image!)!, nil, nil, nil)
+                }else {}
+            }
+        }
+        
+        
+        
+        
         //if long press has not been pressed before
         if let keyWindow = UIApplication.shared.keyWindow {
             guard longPressedBool else {
