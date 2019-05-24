@@ -109,23 +109,33 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
             let textField = alert?.textFields![0]
             folderName = textField!.text!
             print("Text field: \(folderName)")
+            
+            //calling the function to save the folder name to Firebase and create it on the front end
+            self.saveFolder(folderName : folderName)
+            self.createFolder(folderName: folderName)
         }))
+        
+        alert.addAction(UIAlertAction(title:"Cancel", style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
         
-        //calling the function to save the folder name to Firebase and create it on the front end
-        saveFolder(folderName : folderName)
-        createFolder(folderName: folderName)
     }
 
     
     func saveFolder(folderName : String){
-    
     print("saving Folder")
     }
     
     
     func createFolder(folderName: String){
     print("Creating folder: \(folderName)")
+        populateFolders()
+    }
+    
+    
+    //Should add all folder to FrontEnd
+    //The parameter for this function should be an array of Folders (Create the Folders struct)
+    func populateFolders(){
+        print("Populating")
     }
 
 }

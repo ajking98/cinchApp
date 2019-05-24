@@ -214,6 +214,7 @@ class InsideFolderCollectionViewController: UICollectionViewController, UIImageP
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         print("prepping")
+        self.hidesBottomBarWhenPushed = true
     }
     
     

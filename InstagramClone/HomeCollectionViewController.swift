@@ -68,6 +68,7 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
         cell.imageView.sd_setImage(with: URL(string: image.url), placeholderImage: UIImage(named: "empty"))
         cell.imageView.isUserInteractionEnabled = true
         cell.imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleZoomTap)))
+        cell.imageView.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(handleLong)))
         
         return cell
         
@@ -77,6 +78,11 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
         if let imageView = tapGesture.view as? UIImageView {
             self.performZoomInForStartingImageView(startingImageView: imageView)
         }
+    }
+    
+    //TODO: finish long press
+    @objc func handleLong(tapGesture: UILongPressGestureRecognizer) {
+        print("has been long pressed")
     }
     
     
@@ -140,6 +146,11 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
             guard longPressedBool else {
                 
                 
+                //medium level vibration feedback
+                let vibration = UIImpactFeedbackGenerator(style: .medium)
+                vibration.impactOccurred()
+                
+                
                 //creating iconsView
                 iconsView = UIImageView(frame: CGRect(x: keyWindow.frame.width - 100, y: 10, width: 100, height: 0))
                 if let iconsViewOG = iconsView {
@@ -158,9 +169,6 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
                     self.zoomingImageView?.center = keyWindow.center
                 }, completion: { (completed: Bool) in
                     
-                    //medium level vibration feedback
-                    let vibration = UIImpactFeedbackGenerator(style: .medium)
-                    vibration.impactOccurred()
                 })
                 longPressedBool = true
                 return
