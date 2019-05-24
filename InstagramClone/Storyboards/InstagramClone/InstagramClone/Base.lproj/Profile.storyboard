@@ -13,6 +13,7 @@
         <!--PROFILE-->
         <scene sceneID="gJf-Pr-j5v">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RQZ-iR-GAb" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="r0O-FK-vd2" customClass="ProfileViewController" customModule="InstagramClone" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="OsO-h2-ocY">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -208,7 +209,7 @@
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AmW-iV-sha">
                                                     <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                                                     <connections>
-                                                        <segue destination="SXZ-Ra-RW1" kind="show" id="MUU-2p-4pn"/>
+                                                        <segue destination="SXZ-Ra-RW1" kind="show" identifier="" id="MUU-2p-4pn"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -253,7 +254,6 @@
                         <outlet property="wallpaperImage" destination="JJf-hA-DT1" id="Kbb-Cp-Ssy"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="RQZ-iR-GAb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3450.7246376811595" y="1709.5982142857142"/>
         </scene>
@@ -298,11 +298,20 @@
                     <connections>
                         <outlet property="collectionView" destination="HLP-HK-Vs7" id="Wma-Zd-D7U"/>
                         <outlet property="imageCollection" destination="HLP-HK-Vs7" id="SAq-D0-c0O"/>
+                        <segue destination="XH7-QS-hSa" kind="presentation" identifier="OpenCamera" id="qQu-rR-TyY"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ts8-oL-ixY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4198.5507246376819" y="1709.5982142857142"/>
+        </scene>
+        <!--CameraID-->
+        <scene sceneID="RD2-pa-nko">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Camera" referencedIdentifier="CameraID" id="XH7-QS-hSa" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fkl-NA-8bh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4854" y="1597"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="VbL-HJ-Y5G">

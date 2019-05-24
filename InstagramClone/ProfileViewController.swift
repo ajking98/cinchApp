@@ -1,6 +1,10 @@
 //
 //  ProfileViewController.swift
-//  InstagramClone
+//  Profile Page
+/*
+        1. User should be able to press and hold to move Folder order around
+            1.5 The press and hold functionality should also give users the ability to rename and delete a folder (Similar to how you can press and hold an app)
+ */
 //
 //  Created by Gedi, Ahmed M on 4/11/19.
 //  Copyright © 2019 Gedi, Ahmed M. All rights reserved.
@@ -96,7 +100,32 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
     //trigger the add folder function
     @objc func handleAdd(tapGesture: UITapGestureRecognizer) {
         print("working dog")
+        var folderName : String = ""
+        
+        let alert = UIAlertController(title: "Name Your Folder", message: "Enter the name you wish to use for your folder", preferredStyle: .alert)
+        
+        alert.addTextField(configurationHandler: nil)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
+            let textField = alert?.textFields![0]
+            folderName = textField!.text!
+            print("Text field: \(folderName)")
+        }))
+        self.present(alert, animated: true, completion: nil)
+        
+        //calling the function to save the folder name to Firebase and create it on the front end
+        saveFolder(folderName : folderName)
+        createFolder(folderName: folderName)
     }
 
+    
+    func saveFolder(folderName : String){
+    
+    print("saving Folder")
+    }
+    
+    
+    func createFolder(folderName: String){
+    print("Creating folder: \(folderName)")
+    }
 
 }

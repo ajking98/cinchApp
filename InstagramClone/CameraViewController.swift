@@ -21,13 +21,7 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     var dbRef: DatabaseReference!
     @IBOutlet weak var imageView: UIImageView!
     @IBAction func onSelectImage(_ sender: UIButton) {
-        //Picking the image from photoLibrary
-        let image = UIImagePickerController()
-        image.delegate = self
-        image.sourceType = UIImagePickerController.SourceType.photoLibrary
-        image.allowsEditing = false
-        
-        self.present(image, animated: true)
+        self.pickImage()
     }
     
     
@@ -56,9 +50,17 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
         //imageView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector()))
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-    }
     
+    
+    func pickImage(){
+        //Picking the image from photoLibrary
+        let image = UIImagePickerController()
+//        image.delegate = self
+        image.sourceType = UIImagePickerController.SourceType.photoLibrary
+        image.allowsEditing = false
+        
+//        self.present(image, animated: true)
+    }
     
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {

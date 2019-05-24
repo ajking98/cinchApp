@@ -1,6 +1,15 @@
 //
 //  InsideFolderCollectionViewController.swift
-//  InstagramClone
+//  inside the folder
+/*
+        1. the user should be able to swipe to the next and previous folder from the inside
+        2. User should be able to tap the wallpaper image and replace it with another image
+        3. The user should be able to tap an image and be able to download it (recieve same treatment as the discover page)
+        4. Pressing the green ADD button should trigger the camera view
+        5. Button should have shadow
+        6. User should be able to press and hold to move image order around inside of folder 
+ 
+ */
 //
 //  Created by Gedi, Ahmed M on 4/14/19.
 //  Copyright © 2019 Gedi, Ahmed M. All rights reserved.
@@ -18,6 +27,9 @@ class InsideFolderCollectionViewController: UICollectionViewController, UIImageP
     var dbRef: DatabaseReference!
     var images = [ImageInsta]()
     let imagePicker = UIImagePickerController()
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -29,7 +41,18 @@ class InsideFolderCollectionViewController: UICollectionViewController, UIImageP
         customImageFlowLayout = CustomImageFlowLayout()
         imageCollection.collectionViewLayout = customImageFlowLayout
         imageCollection.backgroundColor = .white
+        
+        
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(handleRightSwipe))
+        swipeRight.direction = .right
+        self.view.addGestureRecognizer(swipeRight)
+        
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(handleLeftSwipe))
+        swipeLeft.direction = .left
+        self.view.addGestureRecognizer(swipeLeft)
     }
+    
+    
     
     //creating the Add image icon
     override func viewDidAppear(_ animated: Bool) {
@@ -186,6 +209,26 @@ class InsideFolderCollectionViewController: UICollectionViewController, UIImageP
     //trigger the add image function
     @objc func handleAdd(tapGesture: UITapGestureRecognizer) {
         print("working doggo, from the image selection view")
+        self.performSegue(withIdentifier: "OpenCamera", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        print("prepping")
+    }
+    
+    
+    
+    
+    //Swiping folder from inside the folder
+    
+    //Swipe to the RIGHT from the left side
+    @objc func handleRightSwipe(gesture: UIGestureRecognizer){
+        print("you swiped right")
+    }
+    
+    //Swipe to the LEFT from the right side
+    @objc func handleLeftSwipe(gesture: UIGestureRecognizer){
+        print("You swiped left")
     }
 
 
