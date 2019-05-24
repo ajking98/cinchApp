@@ -34,6 +34,7 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
         
         // create a reference to the database
         dbRef = Database.database().reference().child("images")
+        print(dbRef)
         loadDB()
         
         imageCollection.alwaysBounceVertical = true
@@ -48,7 +49,7 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
             var newImages = [ImageInsta]()
             for imageInstaSnapshot in snapshot.children {
                 let imageInstaObject = ImageInsta(snapshot: imageInstaSnapshot as! DataSnapshot)
-                newImages.append(imageInstaObject)
+                newImages.insert(imageInstaObject, at: 0)
             }
             self.images = newImages
             self.imageCollection.reloadData()

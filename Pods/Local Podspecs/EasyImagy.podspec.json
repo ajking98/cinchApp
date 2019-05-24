@@ -1,7 +1,7 @@
 {
   "name": "EasyImagy",
   "version": "0.6.0",
-  "swift_version": "5.0",
+  "swift_versions": "5.0",
   "summary": "EasyImagy",
   "description": "this app does cool stuff",
   "homepage": "https://github.com/koher/swift-image",
@@ -19,5 +19,6 @@
     "git": "https://github.com/koher/swift-image.git",
     "tag": "0.6.0"
   },
-  "source_files": "Sources/**/*.{swift}"
+  "source_files": "Sources/**/*.{swift}",
+  "swift_version": "5.0"
 }

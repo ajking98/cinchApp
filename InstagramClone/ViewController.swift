@@ -14,7 +14,9 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var errorLabel: UILabel!
+    var dbRef: DatabaseReference!
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -37,7 +39,47 @@ class ViewController: UIViewController {
         bottomLayerPassword.frame = CGRect(x: 0, y: 29, width: UIScreen.main.bounds.width - 70, height: 0.6)
         bottomLayerPassword.backgroundColor = UIColor(red: 255/255, green: 50/255, blue: 2/255, alpha: 1).cgColor
         passwordTextField.layer.addSublayer(bottomLayerPassword)
+        
+        
+        nameTextField.backgroundColor = UIColor.clear
+        nameTextField.tintColor = UIColor.white
+        nameTextField.textColor = UIColor.white
+        nameTextField.attributedPlaceholder = NSAttributedString(string: nameTextField.placeholder!, attributes: [NSAttributedString.Key.foregroundColor: UIColor(white:1.0, alpha: 0.6)] as [NSAttributedString.Key: Any])
+        
+        bottomLayer.frame = CGRect(x: 0, y: 29, width: UIScreen.main.bounds.width - 70, height: 0.6)
+        bottomLayer.backgroundColor = UIColor(red: 255/255, green: 50/255, blue: 2/255, alpha: 1).cgColor
+        nameTextField.layer.addSublayer(bottomLayer)
+        
+        let dbRef = Database.database().reference().child("users")
+        let uuid = UIDevice.current.identifierForVendor?.uuidString
+        let idPath = dbRef.child(uuid!)
+        print(uuid!)
+        let name = nameTextField.text
+        var password = "empty"
+        var profilePic = "imageUrl"
+        var privateOrPublic = false
+        var tagName = ["imageUrl1", "imageUrl2"]
+        var tag = "tag1"
+        var tags = [tag: tagName]
+        var personalImages = ["imageUrl", "imageUrl"]
+        var folderNames = ["personal", "funny", "for family"]
+        var folderName:[String : Any] = ["icon": "imageUrl", "# of images": 6, "# of videos":8, "private": false, "date_created": "timeStamp", "date_modified": "timeStamp", "personalImages": personalImages]
+        var userData:[String : Any] = [
+            "name": name!,
+            "password": password,
+            "profile_pic": profilePic,
+            "private": privateOrPublic,
+            "tags": tagName,
+            "folders": folderName
+            ]
+        print(userData)
+        print(dbRef)
+        print(idPath)
+        idPath.setValue(["name": name, "password": password, "profilePic": profilePic, "private": privateOrPublic, "tags": tags, "folders": [folderNames[0]: ["icon": "iconUrl", "numOfImg": 5, "numOfVids": 6, "private": privateOrPublic, "dateCreated": "timestamp", "dateModified": "timestamp", "images": personalImages] ]])
+        
     }
+    
+    //TODO: Make into Struct or API
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
@@ -56,13 +98,13 @@ class ViewController: UIViewController {
                     // self.performSegue(withIdentifier: "homeView", sender: self)
                 } else {
                     print("there was a error")
-                    self.errorLabel?.isHidden = false
+//                    self.errorLabel?.isHidden = false
                 }
                 
             }
         } else {
             print("there was an error")
-            self.errorLabel?.isHidden = false
+//            self.errorLabel?.isHidden = false
         }
     }
     
