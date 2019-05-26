@@ -62,20 +62,15 @@ class ViewController: UIViewController {
         var tag = "tag1"
         var tags = [tag: tagName]
         var personalImages = ["imageUrl", "imageUrl"]
+        var numOfImages = 6
+        var numOfVideos = 7
         var folderNames = ["personal", "funny", "for family"]
         var folderName:[String : Any] = ["icon": "imageUrl", "# of images": 6, "# of videos":8, "private": false, "date_created": "timeStamp", "date_modified": "timeStamp", "personalImages": personalImages]
-        var userData:[String : Any] = [
-            "name": name!,
-            "password": password,
-            "profile_pic": profilePic,
-            "private": privateOrPublic,
-            "tags": tagName,
-            "folders": folderName
-            ]
+        var timestamp = NSDate().timeIntervalSince1970
+        var userData:[String : Any] = ["name": name, "password": password, "profilePic": profilePic, "private": privateOrPublic, "tags": tags, "folders": [folderNames[0]: ["icon": "iconUrl", "numOfImg": numOfImages, "numOfVids": numOfVideos, "private": privateOrPublic, "dateCreated": timestamp, "dateModified": timestamp, "images": personalImages] ]]
         print(userData)
         print(dbRef)
         print(idPath)
-        idPath.setValue(["name": name, "password": password, "profilePic": profilePic, "private": privateOrPublic, "tags": tags, "folders": [folderNames[0]: ["icon": "iconUrl", "numOfImg": 5, "numOfVids": 6, "private": privateOrPublic, "dateCreated": "timestamp", "dateModified": "timestamp", "images": personalImages] ]])
         
     }
     
