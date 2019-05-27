@@ -105,7 +105,7 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
         let alert = UIAlertController(title: "Name Your Folder", message: "Enter the name you wish to use for your folder", preferredStyle: .alert)
         
         alert.addTextField(configurationHandler: nil)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
+        alert.addAction(UIAlertAction(title: "Create", style: .default, handler: { [weak alert] (_) in
             let textField = alert?.textFields![0]
             folderName = textField!.text!
             print("Text field: \(folderName)")

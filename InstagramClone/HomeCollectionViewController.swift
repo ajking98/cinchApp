@@ -10,6 +10,8 @@ import UIKit
 import FirebaseDatabase
 import SDWebImage
 import Photos
+import XLActionController
+
 
 class HomeCollectionViewController: UICollectionViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -18,13 +20,16 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
     var dbRef: DatabaseReference!
     var images = [ImageInsta]()
     var icon = UIImage(named: "download_icon")
+    var save = UIImage(named: "add")
     var longPressedBool = false
     let imagePicker = UIImagePickerController()
     
     var startingFrame: CGRect?
     var blackBackgroundView: UIView?
     var zoomingImageView: UIImageView?
-    var iconsView : UIImageView?
+    var iconsView : UIView?
+    var downloadIconView : UIImageView?
+    var addIconView : UIImageView?
     
     
     override func viewDidLoad() {
@@ -41,6 +46,30 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
         customImageFlowLayout = CustomImageFlowLayout()
         imageCollection.collectionViewLayout = customImageFlowLayout
         imageCollection.backgroundColor = .white
+        
+        if let keyWindow = UIApplication.shared.keyWindow {
+            
+            //creating iconsView
+            iconsView = UIView(frame: CGRect(x: 10, y: UIScreen.main.bounds.height - 100, width: 200, height: 80))
+            
+            downloadIconView = UIImageView(frame: CGRect(x: 8, y:0, width: 75, height: 80))
+            addIconView = UIImageView(frame: CGRect(x: 90, y: 0, width: 75, height: 80))
+            
+            downloadIconView!.image = icon
+            addIconView!.image = save
+            iconsView!.layer.name = "icons_view"
+            iconsView!.isUserInteractionEnabled = true
+            downloadIconView!.isUserInteractionEnabled = true
+            addIconView?.isUserInteractionEnabled = true
+        downloadIconView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(download(tapGesture:))))
+            addIconView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(saveToFolder(tapGesture:))))
+            
+            iconsView?.addSubview(downloadIconView!)
+            iconsView?.addSubview(addIconView!)
+            keyWindow.addSubview(iconsView!)
+            iconsView?.isHidden = true
+        }
+        
     }
     
     func loadDB() {
@@ -100,6 +129,16 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
         zoomingImageView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleZoomOut)))
         zoomingImageView?.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(longPressed)))
         
+            //adding swipe gestures to exit the zoomed image
+        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(handleZoomOut))
+        swipeUp.direction = .up
+        
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(handleZoomOut))
+        swipeDown.direction = .down
+        
+        zoomingImageView?.addGestureRecognizer(swipeUp)
+        zoomingImageView?.addGestureRecognizer(swipeDown)
+        
         
         if let keyWindow = UIApplication.shared.keyWindow {
             
@@ -110,7 +149,21 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
             blackBackgroundView?.alpha = 0
             blackBackgroundView?.layer.name = "black_background"
             blackBackgroundView?.isUserInteractionEnabled = true
-            blackBackgroundView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleZoomOut)))
+        blackBackgroundView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleZoomOut)))
+            
+            
+            
+            //adding swipe gestures to exit the zoomed image
+            let swipeUp1 = UISwipeGestureRecognizer(target: self, action: #selector(handleZoomOut))
+            swipeUp1.direction = .up
+            
+            let swipeDown1 = UISwipeGestureRecognizer(target: self, action: #selector(handleZoomOut))
+            swipeDown1.direction = .down
+            
+            
+            
+            blackBackgroundView?.addGestureRecognizer(swipeUp1)
+            blackBackgroundView?.addGestureRecognizer(swipeDown1)
             
             
             //adding subviews
@@ -147,28 +200,21 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
                 
                 
                 //medium level vibration feedback
-                let vibration = UIImpactFeedbackGenerator(style: .medium)
+                let vibration = UIImpactFeedbackGenerator(style: .heavy)
                 vibration.impactOccurred()
                 
                 
-                //creating iconsView
-                iconsView = UIImageView(frame: CGRect(x: keyWindow.frame.width - 100, y: 10, width: 100, height: 0))
-                if let iconsViewOG = iconsView {
-                    iconsViewOG.image = icon
-                    iconsViewOG.layer.name = "icons_view"
-                    blackBackgroundView?.backgroundColor = .lightGray
-                    iconsViewOG.isUserInteractionEnabled = true
-                    iconsViewOG.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(download(tapGesture:))))
-                    keyWindow.addSubview(iconsViewOG)
-                }
+                
+                blackBackgroundView?.backgroundColor = .lightGray
                 
                 
                 UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.1, options: .curveEaseIn, animations: {
-                    self.iconsView!.frame = CGRect(x: keyWindow.frame.width - 80, y: 50, width: 75, height: 75)
                     self.zoomingImageView?.frame = CGRect(x:0, y:0, width: keyWindow.frame.width * 0.95, height: (self.zoomingImageView?.frame.height)! * 0.95)
                     self.zoomingImageView?.center = keyWindow.center
-                }, completion: { (completed: Bool) in
                     
+                    self.iconsView?.isHidden = false
+                    keyWindow.bringSubviewToFront(self.iconsView!)
+                }, completion: { (completed: Bool) in
                 })
                 longPressedBool = true
                 return
@@ -212,7 +258,7 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
                     switch item.name {
                         
                     case "icons_view":
-                        item.frame = CGRect(x: keyWindow.frame.width - 100, y: 10, width: 100, height: 0)
+                        self.iconsView?.isHidden = true
                         
                     case "black_background":
                         item.backgroundColor = CGColor(colorSpace: CGColorSpaceCreateDeviceRGB(), components: [0, 0, 0, 1.0])
@@ -244,5 +290,15 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
     @IBAction func loadButtonClicked(_ sender: Any) {
         performSegue(withIdentifier: "nextView", sender: self)
         //tabBarController?.selectedIndex = 1
+    }
+    
+    @objc func saveToFolder(tapGesture: UITapGestureRecognizer){
+        
+        var action = SpotifyActionController.init()
+        if let image = zoomingImageView?.image {
+            action = Helper().saveToFolder(image: image)
+        }
+        present(action, animated: true, completion: nil)
+        
     }
 }

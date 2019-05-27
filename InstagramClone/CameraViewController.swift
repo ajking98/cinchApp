@@ -195,28 +195,15 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     }
     
     @objc func saveImage(sender: UIButton!){
-        let actionController = SpotifyActionController()
+        var action = SpotifyActionController.init()
         if let image = imageView.image {
-            actionController.headerData = SpotifyHeaderData(title: "Which folder do you want to save to?", subtitle: "", image: image)
+            action = Helper().saveToFolder(image: image)
         }
-        for x in 0 ... 5{
-            actionController.addAction(Action(ActionData(title: "Folder #\(x)", subtitle: "For Content"), style: .default, handler: nil))
-
-        }
-        present(actionController, animated: true, completion: nil)
+        present(action, animated: true, completion: nil)
+        
         
         self.imageView.image = nil
         sender.isHidden = true
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
