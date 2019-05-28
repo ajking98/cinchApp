@@ -25,12 +25,11 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
     let imagePicker = UIImagePickerController()
     
     var startingFrame: CGRect?
-    var blackBackgroundView: UIView?
+    var blackBackgroundView: DiscoverBackGround?
     var zoomingImageView: UIImageView?
     var iconsView : UIView?
     var downloadIconView : UIImageView?
     var addIconView : UIImageView?
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -119,13 +118,8 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
         
         //selecting the target image and converting it to a frame
         startingFrame = startingImageView.superview?.convert(startingImageView.frame, to: nil)
-        zoomingImageView = UIImageView(frame: startingFrame!)
-        zoomingImageView?.image = startingImageView.image
-        zoomingImageView?.layer.name = "zooming_image_view"
-       
         
-        //adding gestures to zoomingImage
-        zoomingImageView?.isUserInteractionEnabled = true
+        zoomingImageView = ZoomingImage(image: startingImageView.image!, frame: startingFrame!)
         zoomingImageView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleZoomOut)))
         zoomingImageView?.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(longPressed)))
         
@@ -144,12 +138,8 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
             
             
             //creating black background
-            blackBackgroundView = UIView(frame: keyWindow.frame)
-            blackBackgroundView?.backgroundColor = .black
-            blackBackgroundView?.alpha = 0
-            blackBackgroundView?.layer.name = "black_background"
-            blackBackgroundView?.isUserInteractionEnabled = true
-        blackBackgroundView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleZoomOut)))
+            blackBackgroundView = DiscoverBackGround(frame: keyWindow.frame)
+            blackBackgroundView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleZoomOut)))
             
             
             
@@ -205,7 +195,7 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
                 
                 
                 
-                blackBackgroundView?.backgroundColor = .lightGray
+                blackBackgroundView?.backgroundColor = blackBackgroundView?.colorOnHold
                 
                 
                 UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.1, options: .curveEaseIn, animations: {
