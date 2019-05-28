@@ -184,33 +184,8 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
         guard tapGesture.state == .began else{
             return
         }
-        //if long press has not been pressed before
-        if let keyWindow = UIApplication.shared.keyWindow {
-            guard longPressedBool else {
-                
-                
-                //medium level vibration feedback
-                let vibration = UIImpactFeedbackGenerator(style: .heavy)
-                vibration.impactOccurred()
-                
-                
-                
-                blackBackgroundView?.backgroundColor = blackBackgroundView?.colorOnHold
-                
-                
-                UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.1, options: .curveEaseIn, animations: {
-                    self.zoomingImageView?.frame = CGRect(x:0, y:0, width: keyWindow.frame.width * 0.95, height: (self.zoomingImageView?.frame.height)! * 0.95)
-                    self.zoomingImageView?.center = keyWindow.center
-                    
-                    self.iconsView?.isHidden = false
-                    keyWindow.bringSubviewToFront(self.iconsView!)
-                }, completion: { (completed: Bool) in
-                })
-                longPressedBool = true
-                return
-            }
-            
-        }
+        
+        animateIn()
         
     }
 
@@ -234,7 +209,7 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
         }
     }
     
-    //Reset layout to before longPressed
+    
     func exitLongPress(){
         longPressedBool = false
         
@@ -248,17 +223,16 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
                     switch item.name {
                         
                     case "icons_view":
-                        self.iconsView?.isHidden = true
+                        self.exitIconsView()
                         
                     case "black_background":
-                        item.backgroundColor = CGColor(colorSpace: CGColorSpaceCreateDeviceRGB(), components: [0, 0, 0, 1.0])
+                        self.exitBlackBackgroundView(item)
                         
                     case "zooming_image_view":
-                        item.frame = CGRect(x: 0, y: 0, width: keyWindow.frame.width, height: (self.zoomingImageView?.frame.height)! / 0.95)
-                        item.position = keyWindow.center
+                        self.exitZoomingImageView(item, keyWindow)
                         
                     default:
-                        print("defaulted: \(item.name)")
+                        print("defaulted: \(item.name ?? "No extra Layers")")
                     }
                 }
             }) { (Bool) in
@@ -266,6 +240,22 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
             }
         }
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    //EXTRA FUNCTIONS:
+    
+    
+    
+    
+    
     
     
     //downloads target image and alerts the user about download
@@ -283,12 +273,54 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
     }
     
     @objc func saveToFolder(tapGesture: UITapGestureRecognizer){
-        
         var action = SpotifyActionController.init()
         if let image = zoomingImageView?.image {
             action = Helper().saveToFolder(image: image)
         }
         present(action, animated: true, completion: nil)
         
+    }
+    
+    
+    //Turn iconsview invisible
+    fileprivate func exitIconsView() {
+        self.iconsView?.isHidden = true
+    }
+    
+    
+    //Resets the background color
+    fileprivate func exitBlackBackgroundView(_ item: CALayer) {
+        item.backgroundColor = CGColor(colorSpace: CGColorSpaceCreateDeviceRGB(), components: [0, 0, 0, 1.0])
+    }
+    
+    //exits the zoomedImageFocus
+    fileprivate func exitZoomingImageView(_ item: CALayer, _ keyWindow : UIWindow) {
+        item.frame = CGRect(x: 0, y: 0, width: keyWindow.frame.width, height: (self.zoomingImageView?.frame.height)! / 0.95)
+        item.position = keyWindow.center
+    }
+    
+    
+    
+    
+    
+    fileprivate func animateIn() {
+        //if long press has not been pressed before
+        if let keyWindow = UIApplication.shared.keyWindow {
+            guard longPressedBool else {
+                
+                //vibrate
+                Helper().vibrate(style: .heavy)
+                
+                //change color of background
+                blackBackgroundView?.backgroundColor = blackBackgroundView?.colorOnHold
+                
+                //Animate Inwards
+                Helper().animateIn(iconsView: iconsView!, zoomingImageView: zoomingImageView!, keyWindow: keyWindow)
+                
+                longPressedBool = true
+                return
+            }
+            
+        }
     }
 }

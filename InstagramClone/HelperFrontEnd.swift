@@ -25,60 +25,30 @@ struct Helper {
         
         return actionController
     }
+    
+    
+    func vibrate(style : UIImpactFeedbackGenerator.FeedbackStyle){
+        //medium level vibration feedback
+        let vibration = UIImpactFeedbackGenerator(style: style)
+        vibration.impactOccurred()
+    }
+    
+    
+    func animateIn(iconsView : UIView, zoomingImageView : UIView, keyWindow : UIWindow) {
+        //Animate Inwards
+        UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.1, options: .curveEaseIn, animations: {
+            zoomingImageView.frame = CGRect(x:0, y:0, width: keyWindow.frame.width * 0.95, height: (zoomingImageView.frame.height) * 0.95)
+            zoomingImageView.center = keyWindow.center
+            
+            iconsView.isHidden = false
+            keyWindow.bringSubviewToFront(iconsView)
+        }, completion: { (completed: Bool) in
+        })
+    }
 }
 
 
 
-class ZoomingImage : UIImageView {
-    
-    
-    var longPressedBool = false
-    
-    init(image : UIImage, frame: CGRect){
-        super.init(frame: frame)
-        setupView()
-        self.image = image
-        self.frame = frame
-    }
-    
-    func setupView() {
-        self.layer.name = "zooming_image_view"
-        self.isUserInteractionEnabled = true
-        
-    }
-    
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-        
-    }
-
-class DiscoverBackGround : UIView {
-    
-    
-    let colorDefault = UIColor.black
-    let colorOnHold = UIColor.lightGray
-    
-    override init(frame: CGRect) {
-        super.init(frame : frame)
-        setupView()
-    }
-    
-    func setupView(){
-        self.backgroundColor = colorDefault
-        self.alpha = 0
-        self.layer.name = "black_background"
-        self.isUserInteractionEnabled = true
-        
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-}
-    
     
     
     
