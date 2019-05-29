@@ -50,27 +50,24 @@ class ViewController: UIViewController {
         bottomLayer.backgroundColor = UIColor(red: 255/255, green: 50/255, blue: 2/255, alpha: 1).cgColor
         nameTextField.layer.addSublayer(bottomLayer)
         
+        
         let dbRef = Database.database().reference().child("users")
         let uuid = UIDevice.current.identifierForVendor?.uuidString
         let idPath = dbRef.child(uuid!)
-        print(uuid!)
-        let name = nameTextField.text
-        var password = "empty"
-        var profilePic = "imageUrl"
-        var privateOrPublic = false
-        var tagName = ["imageUrl1", "imageUrl2"]
-        var tag = "tag1"
-        var tags = [tag: tagName]
+        // Create Tag Object
+        var tagImages = ["imageUrl1", "imageUrl2"]
+        var tags = tagStruct(tagName: "friends", tagImages: tagImages)
+        // Create User Object
+        var user = userStruct(uuid: uuid!, name: nameTextField.text!, password: "password", email: "email", profilePic: "url", privateOrPublic: false, tags: tags)
+        // Create User's Folder Object
         var personalImages = ["imageUrl", "imageUrl"]
-        var numOfImages = 6
-        var numOfVideos = 7
-        var folderNames = ["personal", "funny", "for family"]
-        var folderName:[String : Any] = ["icon": "imageUrl", "# of images": 6, "# of videos":8, "private": false, "date_created": "timeStamp", "date_modified": "timeStamp", "personalImages": personalImages]
-        var timestamp = NSDate().timeIntervalSince1970
-        var userData:[String : Any] = ["name": name, "password": password, "profilePic": profilePic, "private": privateOrPublic, "tags": tags, "folders": [folderNames[0]: ["icon": "iconUrl", "numOfImg": numOfImages, "numOfVids": numOfVideos, "private": privateOrPublic, "dateCreated": timestamp, "dateModified": timestamp, "images": personalImages] ]]
+        let folder = folderStruct(folderName: "personal", iconImage: "iconUrl", numOfImages: 7, numOfVideos: 6, privateOrPublic: false, dateCreated: "timestamp", dateModified: "timestamp", imgs: personalImages)
+        // Create Collected User Data
+        var userData:[String : Any] = ["name": user.name, "password": user.password, "email": user.email, "profilePic": user.profilePic, "private": user.privateOrPublic, "tags": [tags.tagName: tagImages], "folders": [folder.folderName: ["icon": folder.iconImage, "numOfImg": folder.numOfImages, "numOfVids": folder.numOfVideos, "private": folder.privateOrPublic, "dateCreated": folder.dateCreated, "dateModified": folder.dateModified, "images": folder.imgs] ]]
+        // See Userdata in console
         print(userData)
-        print(dbRef)
-        print(idPath)
+        // Add User data to firebase database
+        idPath.setValue(userData)
         
     }
     
