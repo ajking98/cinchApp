@@ -28,6 +28,13 @@ struct tagStruct {
         tagImages = newTagImages
     }
     
+    func printTagInfo() {
+        print("The Tagged Images for \(tagName) are: \n")
+        for i in 0..<tagImages.count {
+            print("\(tagImages[i]) \n")
+        }
+    }
+    
     init(tagName:String, tagImages:[String]) {
         self.tagName = tagName
         self.tagImages = tagImages

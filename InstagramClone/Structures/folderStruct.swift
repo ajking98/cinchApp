@@ -82,6 +82,10 @@ struct folderStruct {
         imgs = newImages
     }
     
+    func printFolderInfo() {
+        print("This Folder Info is as follows: \n Folder Name: \(folderName) \n Icon Image Location: \(iconImage) \n Number of Images: \(numOfImages) \n Number of Videos: \(numOfVideos) \n Folder Privacy: \(privateOrPublic) \n Date Created: \(dateCreated) \n Date Modified: \(dateModified) \n")
+    }
+    
     init(folderName:String, iconImage:String, numOfImages:Int, numOfVideos:Int, privateOrPublic:Bool, dateCreated:String, dateModified:String, imgs:[String]) {
         self.folderName = folderName
         self.iconImage = iconImage

@@ -67,6 +67,10 @@ struct userStruct {
         tags = tagStruct(tagName: newTagName, tagImages: newTagImages)
     }
     
+    func printUserInfo() {
+        print("The User's Info is as follows: \n Name: \(name) \n Password: \(password) \n Email: \(email) \n Profile Picture Location: \(profilePic) \n Account Privacy: \(privateOrPublic) \n")
+    }
+    
     init(uuid:String, name:String, password:String, email:String, profilePic:String, privateOrPublic:Bool, tags:tagStruct) {
         self.uuid = uuid
         self.name = name
