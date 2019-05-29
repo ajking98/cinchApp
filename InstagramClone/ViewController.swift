@@ -56,14 +56,16 @@ class ViewController: UIViewController {
         let idPath = dbRef.child(uuid!)
         // Create Tag Object
         var tagImages = ["imageUrl1", "imageUrl2"]
+        var tagImages2 = ["imageUrl3", "imageUrl4"]
         var tags = tagStruct(tagName: "friends", tagImages: tagImages)
+        var tags2 = tagStruct(tagName: "dogs", tagImages: tagImages2)
         // Create User Object
         var user = userStruct(uuid: uuid!, name: nameTextField.text!, password: "password", email: "email", profilePic: "url", privateOrPublic: false, tags: tags)
         // Create User's Folder Object
         var personalImages = ["imageUrl", "imageUrl"]
         let folder = folderStruct(folderName: "personal", iconImage: "iconUrl", numOfImages: 7, numOfVideos: 6, privateOrPublic: false, dateCreated: "timestamp", dateModified: "timestamp", imgs: personalImages)
         // Create Collected User Data
-        var userData:[String : Any] = ["name": user.name, "password": user.password, "email": user.email, "profilePic": user.profilePic, "private": user.privateOrPublic, "tags": [tags.tagName: tagImages], "folders": [folder.folderName: ["icon": folder.iconImage, "numOfImg": folder.numOfImages, "numOfVids": folder.numOfVideos, "private": folder.privateOrPublic, "dateCreated": folder.dateCreated, "dateModified": folder.dateModified, "images": folder.imgs] ]]
+        var userData:[String : Any] = ["name": user.name, "password": user.password, "email": user.email, "profilePic": user.profilePic, "private": user.privateOrPublic, "tags": [tags.tagName: tagImages, tags2.tagName: tagImages2], "folders": [folder.folderName: ["icon": folder.iconImage, "numOfImg": folder.numOfImages, "numOfVids": folder.numOfVideos, "private": folder.privateOrPublic, "dateCreated": folder.dateCreated, "dateModified": folder.dateModified, "images": folder.imgs] ]]
         // See Userdata in console
         print(userData)
         // Add User data to firebase database
