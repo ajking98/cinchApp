@@ -26,7 +26,7 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
     
     var startingFrame: CGRect?
     var blackBackgroundView: DiscoverBackGround?
-    var zoomingImageView: UIImageView?
+    var zoomingImageView: ZoomingImage?
     var iconsView : UIView?
     var downloadIconView : UIImageView?
     var addIconView : UIImageView?
@@ -60,7 +60,7 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
             iconsView!.isUserInteractionEnabled = true
             downloadIconView!.isUserInteractionEnabled = true
             addIconView?.isUserInteractionEnabled = true
-        downloadIconView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(download(tapGesture:))))
+            downloadIconView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(download(tapGesture:))))
             addIconView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(saveToFolder(tapGesture:))))
             
             iconsView?.addSubview(downloadIconView!)
@@ -108,10 +108,24 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
         }
     }
     
-    //TODO: finish long press
+    
+    
+    //Long Press when user clicks on an image from the grid layout
     @objc func handleLong(tapGesture: UILongPressGestureRecognizer) {
-        print("has been long pressed")
+        guard tapGesture.state == .began else{
+            if tapGesture.state == .ended{
+                animateOut()
+            }
+            return
+        }
+        if let imageView = tapGesture.view as? UIImageView {
+            
+            performZoomInForStartingImageView(startingImageView: imageView)
+            animateIn()
+        }
     }
+    
+    
     
     
     func performZoomInForStartingImageView(startingImageView: UIImageView) {
@@ -120,40 +134,22 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
         startingFrame = startingImageView.superview?.convert(startingImageView.frame, to: nil)
         
         zoomingImageView = ZoomingImage(image: startingImageView.image!, frame: startingFrame!)
-        zoomingImageView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleZoomOut)))
-        zoomingImageView?.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(longPressed)))
+        zoomingImageView?.setupView(any: self, zoomOut: #selector(handleZoomOut), longPressed: #selector(longPressed))
         
-            //adding swipe gestures to exit the zoomed image
-        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(handleZoomOut))
-        swipeUp.direction = .up
-        
-        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(handleZoomOut))
-        swipeDown.direction = .down
-        
-        zoomingImageView?.addGestureRecognizer(swipeUp)
-        zoomingImageView?.addGestureRecognizer(swipeDown)
-        
+        //swiping ability
+        zoomingImageView?.swipe(target: self, action: #selector(handleZoomOut), direction: .up)
+        zoomingImageView?.swipe(target: self, action: #selector(handleZoomOut), direction: .down)
         
         if let keyWindow = UIApplication.shared.keyWindow {
             
             
             //creating black background
             blackBackgroundView = DiscoverBackGround(frame: keyWindow.frame)
+            
+            //All Gestures for blackBackground View
             blackBackgroundView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleZoomOut)))
-            
-            
-            
-            //adding swipe gestures to exit the zoomed image
-            let swipeUp1 = UISwipeGestureRecognizer(target: self, action: #selector(handleZoomOut))
-            swipeUp1.direction = .up
-            
-            let swipeDown1 = UISwipeGestureRecognizer(target: self, action: #selector(handleZoomOut))
-            swipeDown1.direction = .down
-            
-            
-            
-            blackBackgroundView?.addGestureRecognizer(swipeUp1)
-            blackBackgroundView?.addGestureRecognizer(swipeDown1)
+            blackBackgroundView?.swipe(target: self, action: #selector(handleZoomOut), direction: .up)
+            blackBackgroundView?.swipe(target: self, action: #selector(handleZoomOut), direction: .down)
             
             
             //adding subviews
@@ -179,12 +175,11 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
     }
     
     
-    
+    //On the zoomed Image View
     @objc func longPressed(tapGesture: UILongPressGestureRecognizer) {
         guard tapGesture.state == .began else{
             return
         }
-        
         animateIn()
         
     }
@@ -199,14 +194,19 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
         }
         
         if tapGesture.view != nil {
-            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
-                self.zoomingImageView?.frame = self.startingFrame!
-                self.blackBackgroundView?.alpha = 0
-            }, completion: { (completed: Bool) in
-                self.zoomingImageView?.removeFromSuperview()
-                
-            })
+            animateOut()
         }
+    }
+    
+    //animating the exit zoomedImageView
+    func animateOut(){
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
+            self.zoomingImageView?.frame = self.startingFrame!
+            self.blackBackgroundView?.alpha = 0
+        }, completion: { (completed: Bool) in
+            self.zoomingImageView?.removeFromSuperview()
+            
+        })
     }
     
     

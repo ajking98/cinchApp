@@ -152,6 +152,14 @@
 			path = Classes;
 			sourceTree = "<group>";
 		};
+		8987125B229DF14500BE8F23 /* HelpingStructs */ = {
+			isa = PBXGroup;
+			children = (
+				8E92367D229C5B4F0071E63C /* HelperFrontEnd.swift */,
+			);
+			path = HelpingStructs;
+			sourceTree = "<group>";
+		};
 		C2EFC41CF087D33E3A5E7F49 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -190,6 +198,7 @@
 		EB74D3B4226025E900556399 /* InstagramClone */ = {
 			isa = PBXGroup;
 			children = (
+				8987125B229DF14500BE8F23 /* HelpingStructs */,
 				89871250229DE96A00BE8F23 /* Classes */,
 				EB74D3B5226025E900556399 /* AppDelegate.swift */,
 				EB74D3B7226025E900556399 /* ViewController.swift */,
@@ -197,7 +206,6 @@
 				89CD1D03229201BA004BD0A0 /* DownloadImage.swift */,
 				EB74D3E322602B2C00556399 /* SignUpViewController.swift */,
 				EB3A43312263A07600F6F339 /* HomeCollectionViewController.swift */,
-				8E92367D229C5B4F0071E63C /* HelperFrontEnd.swift */,
 				EBE992EC226E3B8D002D01CF /* TRCollectionViewController.swift */,
 				EB63B7DB226A7584004C7E2C /* HomeCollectionViewCell.swift */,
 				EB63B7DD226A7933004C7E2C /* CustomImageFlowLayout.swift */,

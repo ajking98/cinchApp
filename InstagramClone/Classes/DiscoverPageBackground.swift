@@ -30,6 +30,14 @@ class DiscoverBackGround : UIView {
         
     }
     
+    
+    func swipe(target: Any, action: Selector, direction: UISwipeGestureRecognizer.Direction){
+        let swipe = UISwipeGestureRecognizer(target: target, action: action)
+        swipe.direction = direction
+        self.addGestureRecognizer(swipe)
+    }
+    
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
