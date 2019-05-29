@@ -110,19 +110,37 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
     
     
     
+    var first = 0
+
     //Long Press when user clicks on an image from the grid layout
     @objc func handleLong(tapGesture: UILongPressGestureRecognizer) {
-        guard tapGesture.state == .began else{
-            if tapGesture.state == .ended{
-                animateOut()
+        
+        switch tapGesture.state {
+        case .began:
+            first = Int(tapGesture.location(in: view).y)
+            if let imageView = tapGesture.view as? UIImageView {
+                performZoomInForStartingImageView(startingImageView: imageView)
+                animateInfromGrid()
+        }
+        case .changed:
+            let touch = tapGesture.location(in: view)
+            guard first < (Int(touch.y) + 80) else{
+                
+                var action = SpotifyActionController.init()
+                if let image = zoomingImageView?.image {
+                    action = Helper().saveToFolder(image: image)
+                }
+                present(action, animated: true, completion: nil)
+                
+                return
             }
-            return
-        }
-        if let imageView = tapGesture.view as? UIImageView {
             
-            performZoomInForStartingImageView(startingImageView: imageView)
-            animateIn()
+        case .ended:
+            exitLongPress()
+            animateOut()
+        @unknown default: break
         }
+        
     }
     
     
@@ -130,17 +148,19 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
     
     func performZoomInForStartingImageView(startingImageView: UIImageView) {
         
-        //selecting the target image and converting it to a frame
-        startingFrame = startingImageView.superview?.convert(startingImageView.frame, to: nil)
-        
-        zoomingImageView = ZoomingImage(image: startingImageView.image!, frame: startingFrame!)
-        zoomingImageView?.setupView(any: self, zoomOut: #selector(handleZoomOut), longPressed: #selector(longPressed))
-        
-        //swiping ability
-        zoomingImageView?.swipe(target: self, action: #selector(handleZoomOut), direction: .up)
-        zoomingImageView?.swipe(target: self, action: #selector(handleZoomOut), direction: .down)
-        
         if let keyWindow = UIApplication.shared.keyWindow {
+            
+            
+            
+            //selecting the target image and converting it to a frame
+            startingFrame = startingImageView.superview?.convert(startingImageView.frame, to: nil)
+            
+            zoomingImageView = ZoomingImage(image: startingImageView.image!, frame: startingFrame!)
+            zoomingImageView?.setupView(any: self, zoomOut: #selector(handleZoomOut), longPressed: #selector(longPressed))
+            
+            //swiping ability
+            zoomingImageView?.swipe(target: self, action: #selector(handleZoomOut), direction: .up)
+            zoomingImageView?.swipe(target: self, action: #selector(handleZoomOut), direction: .down)
             
             
             //creating black background
@@ -196,17 +216,6 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
         if tapGesture.view != nil {
             animateOut()
         }
-    }
-    
-    //animating the exit zoomedImageView
-    func animateOut(){
-        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
-            self.zoomingImageView?.frame = self.startingFrame!
-            self.blackBackgroundView?.alpha = 0
-        }, completion: { (completed: Bool) in
-            self.zoomingImageView?.removeFromSuperview()
-            
-        })
     }
     
     
@@ -306,7 +315,6 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
     fileprivate func animateIn() {
         //if long press has not been pressed before
         if let keyWindow = UIApplication.shared.keyWindow {
-            guard longPressedBool else {
                 
                 //vibrate
                 Helper().vibrate(style: .heavy)
@@ -319,8 +327,34 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
                 
                 longPressedBool = true
                 return
-            }
             
         }
     }
+    
+    
+    
+    fileprivate func animateInfromGrid() {
+        //if long press has not been pressed before
+        if let keyWindow = UIApplication.shared.keyWindow {
+            
+              //vibrate
+                Helper().vibrate(style: .heavy)
+                
+                //change color of background
+                blackBackgroundView?.backgroundColor = blackBackgroundView?.colorOnHold
+                
+                //Animate Inwards
+                Helper().animateIn(zoomingImageView: zoomingImageView!, keyWindow: keyWindow)
+                
+                longPressedBool = true
+                return
+        }
+    }
+    
+    
+    //animating the exit zoomedImageView
+    func animateOut(){
+        Helper().animateOut(zoomingImageView : zoomingImageView!, blackBackgroundView : blackBackgroundView!, startingFrame : startingFrame!)
+    }
+    
 }
