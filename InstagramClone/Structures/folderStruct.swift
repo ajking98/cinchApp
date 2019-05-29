@@ -18,6 +18,70 @@ struct folderStruct {
     var dateModified:String
     var imgs:[String]
 
+    func getName() -> String {
+        return folderName
+    }
+    
+    mutating func setName(newName:String) {
+        folderName = newName
+    }
+    
+    func getIconImage() -> String {
+        return iconImage
+    }
+    
+    mutating func setIconImage(newIconImage:String) {
+        iconImage = newIconImage
+    }
+    
+    func getNumOfImages() -> Int {
+        return numOfImages
+    }
+    
+    mutating func setNumOfImages(newNumOfImages:Int) {
+        numOfImages = newNumOfImages
+    }
+    
+    func getNumOfVideos() -> Int {
+        return numOfVideos
+    }
+    
+    mutating func setNumOfVideos(newNumOfVideos:Int) {
+        numOfVideos = newNumOfVideos
+    }
+    
+    func getPrivateOrPublic() -> Bool {
+        return privateOrPublic
+    }
+    
+    mutating func setPrivateOrPublic(newPrivateOrPublic:Bool) {
+        privateOrPublic = newPrivateOrPublic
+    }
+    
+    func getDateCreated() -> String {
+        return dateCreated
+    }
+    
+    mutating func setDateCreated(newDateCreated:String) {
+        dateCreated = newDateCreated
+    }
+    
+    func getDateModified() -> String {
+        return dateModified
+    }
+    
+    mutating func setDateModified(newDateModified:String) {
+        dateModified = newDateModified
+    }
+    
+    func getImages() -> [String] {
+        return imgs
+    }
+    
+    mutating func setImages(newImages:[String]) {
+        imgs = newImages
+    }
+    
     init(folderName:String, iconImage:String, numOfImages:Int, numOfVideos:Int, privateOrPublic:Bool, dateCreated:String, dateModified:String, imgs:[String]) {
         self.folderName = folderName
         self.iconImage = iconImage

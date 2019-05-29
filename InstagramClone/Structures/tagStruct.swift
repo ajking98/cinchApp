@@ -12,8 +12,28 @@ struct tagStruct {
     var tagName:String
     var tagImages:[String]
     
+    func getName() -> String {
+        return tagName
+    }
+    
+    mutating func setName(newName:String) {
+        tagName = newName
+    }
+    
+    func getTagImages() -> [String] {
+        return tagImages
+    }
+    
+    mutating func setTagImages(newTagImages:[String]) {
+        tagImages = newTagImages
+    }
+    
     init(tagName:String, tagImages:[String]) {
         self.tagName = tagName
         self.tagImages = tagImages
     }
+    
+    
+    
+    
 }
