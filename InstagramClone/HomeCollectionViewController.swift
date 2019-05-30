@@ -10,6 +10,8 @@ import UIKit
 import FirebaseDatabase
 import SDWebImage
 import Photos
+import XLActionController
+
 
 class HomeCollectionViewController: UICollectionViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -18,14 +20,16 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
     var dbRef: DatabaseReference!
     var images = [ImageInsta]()
     var icon = UIImage(named: "download_icon")
+    var save = UIImage(named: "add")
     var longPressedBool = false
     let imagePicker = UIImagePickerController()
     
     var startingFrame: CGRect?
-    var blackBackgroundView: UIView?
-    var zoomingImageView: UIImageView?
-    var iconsView : UIImageView?
-    
+    var blackBackgroundView: DiscoverBackGround?
+    var zoomingImageView: ZoomingImage?
+    var iconsView : UIView?
+    var downloadIconView : UIImageView?
+    var addIconView : UIImageView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +38,7 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
         
         // create a reference to the database
         dbRef = Database.database().reference().child("images")
+        print(dbRef)
         loadDB()
         
         imageCollection.alwaysBounceVertical = true
@@ -41,6 +46,30 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
         customImageFlowLayout = CustomImageFlowLayout()
         imageCollection.collectionViewLayout = customImageFlowLayout
         imageCollection.backgroundColor = .white
+        
+        if let keyWindow = UIApplication.shared.keyWindow {
+            
+            //creating iconsView
+            iconsView = UIView(frame: CGRect(x: 10, y: UIScreen.main.bounds.height - 100, width: 200, height: 80))
+            
+            downloadIconView = UIImageView(frame: CGRect(x: 8, y:0, width: 75, height: 80))
+            addIconView = UIImageView(frame: CGRect(x: 90, y: 0, width: 75, height: 80))
+            
+            downloadIconView!.image = icon
+            addIconView!.image = save
+            iconsView!.layer.name = "icons_view"
+            iconsView!.isUserInteractionEnabled = true
+            downloadIconView!.isUserInteractionEnabled = true
+            addIconView?.isUserInteractionEnabled = true
+            downloadIconView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(download(tapGesture:))))
+            addIconView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(saveToFolder(tapGesture:))))
+            
+            iconsView?.addSubview(downloadIconView!)
+            iconsView?.addSubview(addIconView!)
+            keyWindow.addSubview(iconsView!)
+            iconsView?.isHidden = true
+        }
+        
     }
     
     func loadDB() {
@@ -48,7 +77,7 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
             var newImages = [ImageInsta]()
             for imageInstaSnapshot in snapshot.children {
                 let imageInstaObject = ImageInsta(snapshot: imageInstaSnapshot as! DataSnapshot)
-                newImages.append(imageInstaObject)
+                newImages.insert(imageInstaObject, at: 0)
             }
             self.images = newImages
             self.imageCollection.reloadData()
@@ -68,6 +97,7 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
         cell.imageView.sd_setImage(with: URL(string: image.url), placeholderImage: UIImage(named: "empty"))
         cell.imageView.isUserInteractionEnabled = true
         cell.imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleZoomTap)))
+        cell.imageView.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(handleLong)))
         
         return cell
         
@@ -80,31 +110,67 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
     }
     
     
+    
+    var first = 0
+
+    //Long Press when user clicks on an image from the grid layout
+    @objc func handleLong(tapGesture: UILongPressGestureRecognizer) {
+        
+        switch tapGesture.state {
+        case .began:
+            first = Int(tapGesture.location(in: view).y)
+            if let imageView = tapGesture.view as? UIImageView {
+                performZoomInForStartingImageView(startingImageView: imageView)
+                animateInfromGrid()
+        }
+        case .changed:
+            let touch = tapGesture.location(in: view)
+            guard first < (Int(touch.y) + 80) else{
+                
+                var action = SpotifyActionController.init()
+                if let image = zoomingImageView?.image {
+                    action = Helper().saveToFolder(image: image)
+                }
+                present(action, animated: true, completion: nil)
+                
+                return
+            }
+            
+        case .ended:
+            exitLongPress()
+            animateOut()
+        @unknown default: break
+        }
+        
+    }
+    
+    
+    
+    
     func performZoomInForStartingImageView(startingImageView: UIImageView) {
-        
-        //selecting the target image and converting it to a frame
-        startingFrame = startingImageView.superview?.convert(startingImageView.frame, to: nil)
-        zoomingImageView = UIImageView(frame: startingFrame!)
-        zoomingImageView?.image = startingImageView.image
-        zoomingImageView?.layer.name = "zooming_image_view"
-       
-        
-        //adding gestures to zoomingImage
-        zoomingImageView?.isUserInteractionEnabled = true
-        zoomingImageView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleZoomOut)))
-        zoomingImageView?.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(longPressed)))
-        
         
         if let keyWindow = UIApplication.shared.keyWindow {
             
             
+            
+            //selecting the target image and converting it to a frame
+            startingFrame = startingImageView.superview?.convert(startingImageView.frame, to: nil)
+            
+            zoomingImageView = ZoomingImage(image: startingImageView.image!, frame: startingFrame!)
+            zoomingImageView?.setupView(any: self, zoomOut: #selector(handleZoomOut), longPressed: #selector(longPressed))
+            
+            //swiping ability
+            zoomingImageView?.swipe(target: self, action: #selector(handleZoomOut), direction: .up)
+            zoomingImageView?.swipe(target: self, action: #selector(handleZoomOut), direction: .down)
+            
+            
             //creating black background
-            blackBackgroundView = UIView(frame: keyWindow.frame)
-            blackBackgroundView?.backgroundColor = .black
-            blackBackgroundView?.alpha = 0
-            blackBackgroundView?.layer.name = "black_background"
-            blackBackgroundView?.isUserInteractionEnabled = true
+            blackBackgroundView = DiscoverBackGround(frame: keyWindow.frame)
+            
+            //All Gestures for blackBackground View
             blackBackgroundView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleZoomOut)))
+            blackBackgroundView?.swipe(target: self, action: #selector(handleZoomOut), direction: .up)
+            blackBackgroundView?.swipe(target: self, action: #selector(handleZoomOut), direction: .down)
             
             
             //adding subviews
@@ -130,43 +196,12 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
     }
     
     
-    
+    //On the zoomed Image View
     @objc func longPressed(tapGesture: UILongPressGestureRecognizer) {
         guard tapGesture.state == .began else{
             return
         }
-        //if long press has not been pressed before
-        if let keyWindow = UIApplication.shared.keyWindow {
-            guard longPressedBool else {
-                
-                
-                //creating iconsView
-                iconsView = UIImageView(frame: CGRect(x: keyWindow.frame.width - 100, y: 10, width: 100, height: 0))
-                if let iconsViewOG = iconsView {
-                    iconsViewOG.image = icon
-                    iconsViewOG.layer.name = "icons_view"
-                    blackBackgroundView?.backgroundColor = .lightGray
-                    iconsViewOG.isUserInteractionEnabled = true
-                    iconsViewOG.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(download(tapGesture:))))
-                    keyWindow.addSubview(iconsViewOG)
-                }
-                
-                
-                UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.1, options: .curveEaseIn, animations: {
-                    self.iconsView!.frame = CGRect(x: keyWindow.frame.width - 80, y: 50, width: 75, height: 75)
-                    self.zoomingImageView?.frame = CGRect(x:0, y:0, width: keyWindow.frame.width * 0.95, height: (self.zoomingImageView?.frame.height)! * 0.95)
-                    self.zoomingImageView?.center = keyWindow.center
-                }, completion: { (completed: Bool) in
-                    
-                    //medium level vibration feedback
-                    let vibration = UIImpactFeedbackGenerator(style: .medium)
-                    vibration.impactOccurred()
-                })
-                longPressedBool = true
-                return
-            }
-            
-        }
+        animateIn()
         
     }
 
@@ -179,18 +214,12 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
             return
         }
         
-        if tapGesture.view != nil {
-            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
-                self.zoomingImageView?.frame = self.startingFrame!
-                self.blackBackgroundView?.alpha = 0
-            }, completion: { (completed: Bool) in
-                self.zoomingImageView?.removeFromSuperview()
-                
-            })
-        }
+            if tapGesture.state == .ended {
+                animateOut()
+            }
     }
     
-    //Reset layout to before longPressed
+    
     func exitLongPress(){
         longPressedBool = false
         
@@ -204,17 +233,16 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
                     switch item.name {
                         
                     case "icons_view":
-                        item.frame = CGRect(x: keyWindow.frame.width - 100, y: 10, width: 100, height: 0)
+                        self.exitIconsView()
                         
                     case "black_background":
-                        item.backgroundColor = CGColor(colorSpace: CGColorSpaceCreateDeviceRGB(), components: [0, 0, 0, 1.0])
+                        self.exitBlackBackgroundView(item)
                         
                     case "zooming_image_view":
-                        item.frame = CGRect(x: 0, y: 0, width: keyWindow.frame.width, height: (self.zoomingImageView?.frame.height)! / 0.95)
-                        item.position = keyWindow.center
+                        self.exitZoomingImageView(item, keyWindow)
                         
                     default:
-                        print("defaulted: \(item.name)")
+                        print("defaulted: \(item.name ?? "No extra Layers")")
                     }
                 }
             }) { (Bool) in
@@ -222,6 +250,22 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
             }
         }
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    //EXTRA FUNCTIONS:
+    
+    
+    
+    
+    
     
     
     //downloads target image and alerts the user about download
@@ -237,4 +281,80 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
         performSegue(withIdentifier: "nextView", sender: self)
         //tabBarController?.selectedIndex = 1
     }
+    
+    @objc func saveToFolder(tapGesture: UITapGestureRecognizer){
+        var action = SpotifyActionController.init()
+        if let image = zoomingImageView?.image {
+            action = Helper().saveToFolder(image: image)
+        }
+        present(action, animated: true, completion: nil)
+        
+    }
+    
+    
+    //Turn iconsview invisible
+    fileprivate func exitIconsView() {
+        self.iconsView?.isHidden = true
+    }
+    
+    
+    //Resets the background color
+    fileprivate func exitBlackBackgroundView(_ item: CALayer) {
+        item.backgroundColor = CGColor(colorSpace: CGColorSpaceCreateDeviceRGB(), components: [0, 0, 0, 1.0])
+    }
+    
+    //exits the zoomedImageFocus
+    fileprivate func exitZoomingImageView(_ item: CALayer, _ keyWindow : UIWindow) {
+        item.frame = CGRect(x: 0, y: 0, width: keyWindow.frame.width, height: (self.zoomingImageView?.frame.height)! / 0.95)
+        item.position = keyWindow.center
+    }
+    
+    
+    
+    
+    
+    fileprivate func animateIn() {
+        if let keyWindow = UIApplication.shared.keyWindow {
+                
+                //vibrate
+                Helper().vibrate(style: .heavy)
+                
+                //change color of background
+                blackBackgroundView?.backgroundColor = blackBackgroundView?.colorOnHold
+                
+                //Animate Inwards
+                Helper().animateIn(iconsView: iconsView!, zoomingImageView: zoomingImageView!, keyWindow: keyWindow)
+                
+                longPressedBool = true
+                return
+            
+        }
+    }
+    
+    
+    
+    fileprivate func animateInfromGrid() {
+        //if long press has not been pressed before
+        if let keyWindow = UIApplication.shared.keyWindow {
+            
+              //vibrate
+                Helper().vibrate(style: .heavy)
+                
+                //change color of background
+                blackBackgroundView?.backgroundColor = blackBackgroundView?.colorOnHold
+                
+                //Animate Inwards
+                Helper().animateIn(zoomingImageView: zoomingImageView!, keyWindow: keyWindow)
+                
+                longPressedBool = true
+                return
+        }
+    }
+    
+    
+    //animating the exit zoomedImageView
+    func animateOut(){
+        Helper().animateOut(zoomingImageView : zoomingImageView!, blackBackgroundView : blackBackgroundView!, startingFrame : startingFrame!)
+    }
+    
 }

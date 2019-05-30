@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="ztG-Ya-fa0">
-                                <rect key="frame" x="20" y="375.5" width="374" height="145"/>
+                                <rect key="frame" x="20" y="350.5" width="374" height="195"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="a7R-ik-rw5">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="30"/>
@@ -40,8 +40,14 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                     </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="djT-2h-BmT">
+                                        <rect key="frame" x="0.0" y="100" width="374" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="namePhonePad"/>
+                                    </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tro-up-H71">
-                                        <rect key="frame" x="0.0" y="100" width="374" height="45"/>
+                                        <rect key="frame" x="0.0" y="150" width="374" height="45"/>
                                         <color key="backgroundColor" red="0.40553313944906066" green="0.40553313944906066" blue="0.40553313944906066" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="45" id="ZxE-10-z19"/>
@@ -77,13 +83,6 @@
                                     <segue destination="2X8-cR-dgV" kind="presentation" id="KYh-VT-YsX"/>
                                 </connections>
                             </button>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="There was an error. Try again." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZOI-x7-ULm">
-                                <rect key="frame" x="74" y="323" width="267" height="24"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
-                                <color key="textColor" red="0.93592785781825427" green="0.045783166014610716" blue="0.32381449292273506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.44189068217661565" green="0.78551216982066729" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -105,6 +104,7 @@
                     </view>
                     <connections>
                         <outlet property="emailTextField" destination="a7R-ik-rw5" id="liZ-VS-3t7"/>
+                        <outlet property="nameTextField" destination="djT-2h-BmT" id="9Y2-g3-pGR"/>
                         <outlet property="passwordTextField" destination="Yfa-9l-TVx" id="mZ6-sb-azn"/>
                     </connections>
                 </viewController>

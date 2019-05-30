@@ -1,6 +1,15 @@
 //
 //  InsideFolderCollectionViewController.swift
-//  InstagramClone
+//  inside the folder
+/*
+        1. the user should be able to swipe to the next and previous folder from the inside
+        2. User should be able to tap the wallpaper image and replace it with another image
+        3. The user should be able to tap an image and be able to download it (recieve same treatment as the discover page)
+        4. Pressing the green ADD button should trigger the camera view
+        5. Button should have shadow
+        6. User should be able to press and hold to move image order around inside of folder 
+ 
+ */
 //
 //  Created by Gedi, Ahmed M on 4/14/19.
 //  Copyright © 2019 Gedi, Ahmed M. All rights reserved.
@@ -10,12 +19,17 @@ import UIKit
 import FirebaseDatabase
 
 class InsideFolderCollectionViewController: UICollectionViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    let plus = UIImage(named: "plus")
 
     @IBOutlet var imageCollection: UICollectionView!
     var customImageFlowLayout: CustomImageFlowLayout!
     var dbRef: DatabaseReference!
     var images = [ImageInsta]()
     let imagePicker = UIImagePickerController()
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -27,6 +41,47 @@ class InsideFolderCollectionViewController: UICollectionViewController, UIImageP
         customImageFlowLayout = CustomImageFlowLayout()
         imageCollection.collectionViewLayout = customImageFlowLayout
         imageCollection.backgroundColor = .white
+        
+        
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(handleRightSwipe))
+        swipeRight.direction = .right
+        self.view.addGestureRecognizer(swipeRight)
+        
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(handleLeftSwipe))
+        swipeLeft.direction = .left
+        self.view.addGestureRecognizer(swipeLeft)
+    }
+    
+    
+    
+    //creating the Add image icon
+    override func viewDidAppear(_ animated: Bool) {
+        
+        //getting screen dimensions
+        let screenSize = UIScreen.main.bounds
+        let screenWidth = screenSize.width
+        let screenHeight = screenSize.height
+        
+            
+            //creating the circle object and adding it to subview
+            let outline = CGRect(x: screenWidth * 0.68, y: screenHeight * 0.55, width: 80, height: 80)
+            let circleImg = UIImageView(frame: outline)
+            circleImg.image = plus
+            circleImg.layer.masksToBounds = false
+            circleImg.layer.cornerRadius = outline.width / 2
+            circleImg.clipsToBounds = true
+            circleImg.layer.borderWidth = 1.5
+
+            
+            view.addSubview(circleImg)
+            
+            
+            //adding functionality to the circleImg
+            circleImg.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleAdd)))
+            circleImg.isUserInteractionEnabled = true
+            
+            print("Inside folder view")
+        
     }
     
     func loadDB() {
@@ -148,5 +203,34 @@ class InsideFolderCollectionViewController: UICollectionViewController, UIImageP
     
     }
     */
+    
+    
+    
+    //trigger the add image function
+    @objc func handleAdd(tapGesture: UITapGestureRecognizer) {
+        print("working doggo, from the image selection view")
+        self.performSegue(withIdentifier: "OpenCamera", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        print("prepping")
+        self.hidesBottomBarWhenPushed = true
+    }
+    
+    
+    
+    
+    //Swiping folder from inside the folder
+    
+    //Swipe to the RIGHT from the left side
+    @objc func handleRightSwipe(gesture: UIGestureRecognizer){
+        print("you swiped right")
+    }
+    
+    //Swipe to the LEFT from the right side
+    @objc func handleLeftSwipe(gesture: UIGestureRecognizer){
+        print("You swiped left")
+    }
+
 
 }
