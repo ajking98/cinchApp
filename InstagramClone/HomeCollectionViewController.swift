@@ -214,9 +214,9 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
             return
         }
         
-        if tapGesture.view != nil {
-            animateOut()
-        }
+            if tapGesture.state == .ended {
+                animateOut()
+            }
     }
     
     
@@ -314,7 +314,6 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
     
     
     fileprivate func animateIn() {
-        //if long press has not been pressed before
         if let keyWindow = UIApplication.shared.keyWindow {
                 
                 //vibrate
