@@ -56,7 +56,7 @@
                     <navigationItem key="navigationItem" title="EXPLORE" id="QnV-Uc-WN2">
                         <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="mrl-40-pVE">
                             <connections>
-                                <segue destination="pvU-q2-6Sf" kind="show" id="E6e-mu-aEb"/>
+                                <segue destination="pvU-q2-6Sf" kind="show" identifier="" id="E6e-mu-aEb"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -97,7 +97,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zsQ-g2-10I" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4236" y="-1135"/>
+            <point key="canvasLocation" x="4232" y="-1137"/>
         </scene>
     </scenes>
     <resources>
