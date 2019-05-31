@@ -54,9 +54,9 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" title="EXPLORE" id="QnV-Uc-WN2">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="mrl-40-pVE">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="6X7-00-E91">
                             <connections>
-                                <segue destination="pvU-q2-6Sf" kind="show" identifier="" id="E6e-mu-aEb"/>
+                                <action selector="goToCamera:" destination="mK1-q4-DSC" id="Eyc-iI-ogP"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

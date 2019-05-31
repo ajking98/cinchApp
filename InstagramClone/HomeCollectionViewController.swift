@@ -15,6 +15,9 @@ import XLActionController
 
 class HomeCollectionViewController: UICollectionViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
+    @IBAction func goToCamera(_ sender: Any) {
+        tabBarController?.selectedIndex = 1
+    }
     @IBOutlet var imageCollection: UICollectionView!
     var customImageFlowLayout: CustomImageFlowLayout!
     var dbRef: DatabaseReference!

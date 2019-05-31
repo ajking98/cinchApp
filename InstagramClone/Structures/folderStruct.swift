@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct folderStruct {
     var folderName:String
@@ -80,6 +81,10 @@ struct folderStruct {
     
     mutating func setImages(newImages:[String]) {
         imgs = newImages
+    }
+    
+    mutating func addImage(newImage:UIImage, folderName:String) {
+        
     }
     
     func printFolderInfo() {
