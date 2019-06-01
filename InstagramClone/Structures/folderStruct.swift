@@ -18,6 +18,7 @@ struct folderStruct {
     var dateCreated:String
     var dateModified:String
     var imgs:[String]
+    var videos:[String]
 
     func getName() -> String {
         return folderName
@@ -83,15 +84,20 @@ struct folderStruct {
         imgs = newImages
     }
     
-    mutating func addImage(newImage:UIImage, folderName:String) {
-        
+    func getVideos() -> [String] {
+        return videos
     }
+    
+    mutating func setVideos(newVideos:[String]) {
+        videos = newVideos
+    }
+    
     
     func printFolderInfo() {
         print("This Folder Info is as follows: \n Folder Name: \(folderName) \n Icon Image Location: \(iconImage) \n Number of Images: \(numOfImages) \n Number of Videos: \(numOfVideos) \n Folder Privacy: \(privateOrPublic) \n Date Created: \(dateCreated) \n Date Modified: \(dateModified) \n")
     }
     
-    init(folderName:String, iconImage:String, numOfImages:Int, numOfVideos:Int, privateOrPublic:Bool, dateCreated:String, dateModified:String, imgs:[String]) {
+    init(folderName:String, iconImage:String, numOfImages:Int, numOfVideos:Int, privateOrPublic:Bool, dateCreated:String, dateModified:String, imgs:[String], videos:[String]) {
         self.folderName = folderName
         self.iconImage = iconImage
         self.numOfImages = numOfImages
@@ -100,5 +106,6 @@ struct folderStruct {
         self.dateCreated = dateCreated
         self.dateModified = dateModified
         self.imgs = imgs
+        self.videos = videos
     }
 }
