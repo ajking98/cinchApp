@@ -9,6 +9,7 @@
 import UIKit
 import FirebaseAuth
 import FirebaseDatabase
+import FirebaseStorage
 
 class ViewController: UIViewController {
 
@@ -66,15 +67,13 @@ class ViewController: UIViewController {
         var personalVideos = ["videoUrl", "videoUrl"]
         let folder = folderStruct(folderName: "personal", iconImage: "iconUrl", numOfImages: 7, numOfVideos: 6, privateOrPublic: false, dateCreated: "timestamp", dateModified: "timestamp", imgs: personalImages, videos: personalVideos)
         // Create Collected User Data
-        var userData:[String : Any] = ["name": user.name, "password": user.password, "email": user.email, "profilePic": user.profilePic, "private": user.privateOrPublic, "tags": [tags.tagName: tagImages, tags2.tagName: tagImages2], "folders": [folder.folderName: ["icon": folder.iconImage, "numOfImg": folder.numOfImages, "numOfVids": folder.numOfVideos, "private": folder.privateOrPublic, "dateCreated": folder.dateCreated, "dateModified": folder.dateModified, "images": folder.imgs, "videos": folder.videos] ]]
+        var userData:[String : Any] = ["name": user.name, "password": user.password, "email": user.email, "profilePic": user.profilePic, "private": user.privateOrPublic, "tags": [tags.tagName: tagImages, tags2.tagName: tagImages2], "folders": [folder.folderName: ["icon": folder.iconImage, "numOfImg": folder.numOfImages, "numOfVids": folder.numOfVideos, "private": folder.privateOrPublic, "dateCreated": folder.dateCreated, "dateModified": folder.dateModified, "images": [ "url": folder.imgs ], "videos": folder.videos] ]]
         // See Userdata in console
         print(userData)
         // Add User data to firebase database
         idPath.setValue(userData)
         
     }
-    
-    //TODO: Make into Struct or API
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)

@@ -7,6 +7,9 @@
 //
 
 import Foundation
+import UIKit
+import FirebaseDatabase
+import FirebaseStorage
 
 class firebaseClass {
     var user:userStruct
@@ -205,5 +208,76 @@ class firebaseClass {
     func createNewFolder(newFolderName:String, newIconImage:String, newNumOfImages:Int, newNumOfVideos:Int, newPrivateOrPublic:Bool, newDateCreated:String, newDateModified:String, newImgs:[String], newVideos:[String]) -> folderStruct {
         var newFolder = folderStruct(folderName: newFolderName, iconImage: newIconImage, numOfImages: newNumOfImages, numOfVideos: newNumOfVideos, privateOrPublic: newPrivateOrPublic, dateCreated: newDateCreated, dateModified: newDateModified, imgs: newImgs, videos: newVideos)
         return newFolder
+    }
+    
+    func uploadImageToStorage(image:UIImage, folder:folderStruct) {
+        let uuid = UIDevice.current.identifierForVendor?.uuidString
+        var data = Data()
+        data = image.jpegData(compressionQuality: 0.8)!
+        
+        let refImages = Database.database().reference().child("users").child(uuid!).child("folders").child(folder.getName()).child("images")
+        let storageRef = Storage.storage().reference().child("userImages/" + randomString(20))
+        print(storageRef.name)
+        print(refImages)
+        
+        // Upload the file to the path "images/rivers.jpg"
+        _ = storageRef.putData(data, metadata: nil) { (metadata, error) in
+            guard let metadata = metadata else {
+                // Uh-oh, an error occurred!
+                print("Error occurred")
+                return
+            }
+            // Metadata contains file metadata such as size, content-type.
+            
+            // You can also access to download URL after upload.
+            storageRef.downloadURL { (url, error) in
+                if (error == nil) {
+                    if let downloadUrl = url {
+                        // Make you download string
+                        let key = refImages.childByAutoId().key
+                        let image = [downloadUrl.absoluteString]
+                        refImages.child(key).setValue(image)
+                    }
+                }
+                guard let url = url else {
+                    // Uh-oh, an error occurred!
+                    return
+                }
+            }
+        }
+    }
+    
+    // TODO: Set up storing video
+//    func uploadVideoToStorage() -> <#return type#> {
+//        <#function body#>
+//    }
+    
+    func removeImageFromDatabase(child: String) {
+        let uuid = UIDevice.current.identifierForVendor?.uuidString
+        let ref = Database.database().reference().child("users").child(uuid!).child("folders").child(folder.getName()).child("images")
+        ref.child(child)
+        
+        ref.removeValue { error, _ in
+            print(error)
+        }
+    }
+    // TODO: Delete video from database
+//    func removeVideoFromDatabase(<#parameters#>) -> <#return type#> {
+//        <#function body#>
+//    }
+    
+    func randomString(_ length: Int) -> String {
+        let letters : NSString = "asdfghjkloiuytrewqazxcvbnmWERTYUIASDFGHJKXCVBN"
+        let len = UInt32(letters.length)
+        
+        var randomString = ""
+        
+        for _ in 0 ..< length {
+            let rand = arc4random_uniform(len)
+            var nextChar = letters.character(at: Int(rand))
+            randomString += NSString(characters: &nextChar, length: 1) as String
+        }
+        
+        return randomString
     }
 }
