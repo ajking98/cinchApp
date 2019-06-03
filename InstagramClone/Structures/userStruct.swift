@@ -7,80 +7,128 @@
 //
 
 import Foundation
+import UIKit
 import FirebaseDatabase
+import FirebaseStorage
 
 struct userStruct {
-    let uuid:String
     var name: String
     var password: String
     var profilePic: String
     var email: String
-    var privateOrPublic:Bool
-    var tags:tagStruct
-    let itemRef:DatabaseReference?
+    var isPrivate:Bool
+    var folder:folderStruct
+//    var tags:tagStruct
+    let uuid = UIDevice.current.identifierForVendor?.uuidString
     
-    func getName() -> String {
-        return name
+    init() {
+        name = ""
+        password = ""
+        profilePic = ""
+        email = ""
+        isPrivate = false
+        folder = folderStruct()
+//        tags = tagStruct()
     }
     
-    mutating func setName(newName:String) {
-        name = newName
+    func readName() {
+        var databaseReference: DatabaseReference!
+        databaseReference = Database.database().reference()
+        
+        databaseReference.child("users").child(uuid!).child("name").observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            print(snapshot.value as Any)
+            
+            
+        }) { (error) in
+            print(error.localizedDescription)
+        }
     }
     
-    func getPassword() -> String {
-        return password
+    func updateName(newName:String) {
+        let refImages = Database.database().reference().child("users").child(uuid!).child("name")
+        refImages.setValue(newName)
     }
     
-    mutating func setPassword(newPassword:String) {
-        password = newPassword
+    func readPassword() {
+        var databaseReference: DatabaseReference!
+        databaseReference = Database.database().reference()
+        
+        databaseReference.child("users").child(uuid!).child("password").observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            print(snapshot.value as Any)
+            
+            
+        }) { (error) in
+            print(error.localizedDescription)
+        }
     }
     
-    func getProfilePic() -> String {
-        return profilePic
+    func updatePassword(newPassword:String) {
+        let refImages = Database.database().reference().child("users").child(uuid!).child("password")
+        refImages.setValue(newPassword)
     }
     
-    mutating func setProfilePic(newProfilePic:String) {
-        profilePic = newProfilePic
+    func readProfilePicture() {
+        var databaseReference: DatabaseReference!
+        databaseReference = Database.database().reference()
+        
+        databaseReference.child("users").child(uuid!).child("profilePic").observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            print(snapshot.value as Any)
+            
+            
+        }) { (error) in
+            print(error.localizedDescription)
+        }
     }
     
-    func getEmail() -> String {
-        return email
+    func updateProfilePic(profilePic:String) {
+        let refImages = Database.database().reference().child("users").child(uuid!).child("profilePic")
+        refImages.setValue(profilePic)
     }
     
-    mutating func setEmail(newEmail:String) {
-        email = newEmail
+    func deleteProfilePic(profilePic:String){
+        let refImages = Database.database().reference().child("users").child(uuid!).child("profilePic")
+        refImages.setValue("")
     }
     
-    func getPrivateOrPublic() -> Bool {
-        return privateOrPublic
+    func readEmail() {
+        var databaseReference: DatabaseReference!
+        databaseReference = Database.database().reference()
+        
+        databaseReference.child("users").child(uuid!).child("email").observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            print(snapshot.value as Any)
+            
+            
+        }) { (error) in
+            print(error.localizedDescription)
+        }
     }
     
-    mutating func setPrivateOrPublic(newPrivateOrPublic:Bool) {
-        privateOrPublic = newPrivateOrPublic
+    func updateEmail(newName:String) {
+        let refImages = Database.database().reference().child("users").child(uuid!).child("email")
+        refImages.setValue(newName)
     }
-    
-    func getTagStruct() -> tagStruct {
-        return tags
-    }
-    
-    mutating func setTagStruct(newTagName:String, newTagImages:[String]) {
-        tags = tagStruct(tagName: newTagName, tagImages: newTagImages)
-    }
-    
-    func printUserInfo() {
-        print("The User's Info is as follows: \n Name: \(name) \n Password: \(password) \n Email: \(email) \n Profile Picture Location: \(profilePic) \n Account Privacy: \(privateOrPublic) \n")
-    }
-    
-    init(uuid:String, name:String, password:String, email:String, profilePic:String, privateOrPublic:Bool, tags:tagStruct) {
-        self.uuid = uuid
-        self.name = name
-        self.password = password
-        self.email = email
-        self.profilePic = profilePic
-        self.privateOrPublic = privateOrPublic
-        self.tags = tags
-        self.itemRef = nil
-    }
-    
 
+    func readFolderPrivacy() {
+        var databaseReference: DatabaseReference!
+        databaseReference = Database.database().reference()
+        
+        databaseReference.child("users").child(uuid!).child("private").observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            print(snapshot.value as Any)
+            
+            
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+    
+    func updateFolderPrivacy(isPrivate:Bool) {
+        let refImages = Database.database().reference().child("users").child(uuid!).child("private")
+        refImages.setValue(isPrivate)
+    }
+    
 }

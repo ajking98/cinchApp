@@ -12,35 +12,38 @@ struct tagStruct {
     var tagName:String
     var tagImages:[String]
     
-    func getName() -> String {
-        return tagName
+    init() {
+        tagName = ""
+        tagImages = [String]()
     }
-    
-    mutating func setName(newName:String) {
-        tagName = newName
-    }
-    
-    func getTagImages() -> [String] {
-        return tagImages
-    }
-    
-    mutating func setTagImages(newTagImages:[String]) {
-        tagImages = newTagImages
-    }
-    
-    func printTagInfo() {
-        print("The Tagged Images for \(tagName) are: \n")
-        for i in 0..<tagImages.count {
-            print("\(tagImages[i]) \n")
-        }
-    }
-    
-    init(tagName:String, tagImages:[String]) {
-        self.tagName = tagName
-        self.tagImages = tagImages
-    }
-    
-    
-    
+//    func createTag(tagName:String) -> tagStruct {
+//        // Creates Tag with tagName parameter and empty string array
+//        var tagObject = tagStruct(tagName: tagName, tagImages: tagImages)
+//        return tagObject
+//    }
+//
+//    func addImageToTag(image:String) {
+//        tagImages.append(image)
+//    }
+//
+//    func deleteImageFromTag(image:String) -> String {
+//        var index = 0
+//        if let i = tagImages.firstIndex(of: image) {
+//            tagImages.remove(at: i)
+//            index = i
+//        }
+//        return tagImages[index]
+//    }
+//
+//    func readTagContent() -> [String] {
+//        return tagImages
+//    }
+//
+//    func printTagInfo() {
+//        print("The Tagged Images for \(tagName) are: \n")
+//        for i in 0..<tagImages.count {
+//            print("\(tagImages[i]) \n")
+//        }
+//    }
     
 }
