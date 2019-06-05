@@ -48,6 +48,18 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
         self.view.addSubview(button)
         //imageView?.isUserInteractionEnabled = true
         //imageView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector()))
+        
+        
+        //Swipe left
+        var swipe = UISwipeGestureRecognizer(target: self, action: #selector(openDiscoverView))
+        swipe.direction = .right
+        view.addGestureRecognizer(swipe)
+        
+        
+        //Swipe right
+        swipe = UISwipeGestureRecognizer(target: self, action: #selector(openProfileView))
+        swipe.direction = .left
+        view.addGestureRecognizer(swipe)
     }
     
     
@@ -204,6 +216,14 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
         
         self.imageView.image = nil
         sender.isHidden = true
+    }
+    
+    @objc func openDiscoverView() {
+        self.tabBarController?.selectedIndex = 0
+    }
+    
+    @objc func openProfileView() {
+        self.tabBarController?.selectedIndex = 2
     }
 
 }
