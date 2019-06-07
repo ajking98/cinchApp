@@ -25,6 +25,13 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     }
     
     
+    @IBAction func testing(_ sender: UIButton) {
+        let user = User2()
+        let user2 = User2(name: "yassin", email: "yasnaruto", password: "something", isPrivate: false)
+        
+        
+    
+    }
     
     
     let button = UIButton(type: .system)
