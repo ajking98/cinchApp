@@ -43,16 +43,28 @@
                                     <action selector="onSelectImage:" destination="CP9-Kp-4yr" eventType="touchUpInside" id="FpI-fq-G8I"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BUs-iJ-9mF">
+                                <rect key="frame" x="120" y="720" width="190" height="63"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="50"/>
+                                <state key="normal" title="test"/>
+                                <connections>
+                                    <action selector="testing:" destination="CP9-Kp-4yr" eventType="touchUpInside" id="OCX-mL-9J3"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.44232714179999999" green="0.78382962940000001" blue="0.99959558250000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Xxn-mc-5R3" firstAttribute="leading" secondItem="tj6-dI-3BO" secondAttribute="leading" constant="120" id="3E4-XO-fyp"/>
+                            <constraint firstItem="tj6-dI-3BO" firstAttribute="trailing" secondItem="BUs-iJ-9mF" secondAttribute="trailing" constant="104" id="FvR-EA-1ec"/>
+                            <constraint firstItem="BUs-iJ-9mF" firstAttribute="leading" secondItem="tj6-dI-3BO" secondAttribute="leading" constant="120" id="SQr-aC-QEs"/>
                             <constraint firstItem="LKN-WQ-hED" firstAttribute="leading" secondItem="tj6-dI-3BO" secondAttribute="leading" constant="20" id="WMr-vx-kVN"/>
                             <constraint firstItem="tj6-dI-3BO" firstAttribute="bottom" secondItem="Xxn-mc-5R3" secondAttribute="bottom" constant="174" id="ecF-3u-FN1"/>
                             <constraint firstItem="LKN-WQ-hED" firstAttribute="centerX" secondItem="szm-Di-Oad" secondAttribute="centerX" id="g7q-sY-fgv"/>
                             <constraint firstItem="tj6-dI-3BO" firstAttribute="trailing" secondItem="LKN-WQ-hED" secondAttribute="trailing" constant="20" id="gUU-xf-VEB"/>
+                            <constraint firstItem="BUs-iJ-9mF" firstAttribute="top" secondItem="Xxn-mc-5R3" secondAttribute="bottom" constant="32" id="je6-UP-yfA"/>
                             <constraint firstItem="LKN-WQ-hED" firstAttribute="top" secondItem="tj6-dI-3BO" secondAttribute="top" constant="30" id="jkU-0A-epm"/>
                             <constraint firstItem="Xxn-mc-5R3" firstAttribute="centerX" secondItem="szm-Di-Oad" secondAttribute="centerX" id="lOR-kb-WKS"/>
+                            <constraint firstItem="tj6-dI-3BO" firstAttribute="bottom" secondItem="BUs-iJ-9mF" secondAttribute="bottom" constant="79" id="zoh-eZ-kqC"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="tj6-dI-3BO"/>
                     </view>

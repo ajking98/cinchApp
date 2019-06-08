@@ -93,6 +93,11 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
 
             print("FolderView")
         
+        
+        //Swipe left
+        let swipe = UISwipeGestureRecognizer(target: self, action: #selector(openCameraView))
+        swipe.direction = .right
+        view.addGestureRecognizer(swipe)
 
     }
     
@@ -136,6 +141,10 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
     //The parameter for this function should be an array of Folders (Create the Folders struct)
     func populateFolders(){
         print("Populating")
+    }
+    
+    @objc func openCameraView(){
+        self.tabBarController?.selectedIndex = 1
     }
 
 }

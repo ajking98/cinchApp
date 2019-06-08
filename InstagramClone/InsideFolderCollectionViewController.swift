@@ -61,24 +61,6 @@ class InsideFolderCollectionViewController: UICollectionViewController, UIImageP
         let screenSize = UIScreen.main.bounds
         let screenWidth = screenSize.width
         let screenHeight = screenSize.height
-        
-            
-            //creating the circle object and adding it to subview
-            let outline = CGRect(x: screenWidth * 0.68, y: screenHeight * 0.55, width: 80, height: 80)
-            let circleImg = UIImageView(frame: outline)
-            circleImg.image = plus
-            circleImg.layer.masksToBounds = false
-            circleImg.layer.cornerRadius = outline.width / 2
-            circleImg.clipsToBounds = true
-            circleImg.layer.borderWidth = 1.5
-
-            
-            view.addSubview(circleImg)
-            
-            
-            //adding functionality to the circleImg
-            circleImg.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleAdd)))
-            circleImg.isUserInteractionEnabled = true
             
             print("Inside folder view")
         
@@ -203,20 +185,6 @@ class InsideFolderCollectionViewController: UICollectionViewController, UIImageP
     
     }
     */
-    
-    
-    
-    //trigger the add image function
-    @objc func handleAdd(tapGesture: UITapGestureRecognizer) {
-        print("working doggo, from the image selection view")
-        self.performSegue(withIdentifier: "OpenCamera", sender: self)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        print("prepping")
-        self.hidesBottomBarWhenPushed = true
-    }
-    
     
     
     

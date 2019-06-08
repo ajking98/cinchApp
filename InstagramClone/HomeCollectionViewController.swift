@@ -15,6 +15,9 @@ import XLActionController
 
 class HomeCollectionViewController: UICollectionViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
+    @IBAction func goToCamera(_ sender: Any) {
+        tabBarController?.selectedIndex = 1
+    }
     @IBOutlet var imageCollection: UICollectionView!
     var customImageFlowLayout: CustomImageFlowLayout!
     var dbRef: DatabaseReference!
@@ -70,6 +73,10 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
             iconsView?.isHidden = true
         }
         
+        //Swipe left 
+        let swipe = UISwipeGestureRecognizer(target: self, action: #selector(openCameraView))
+        swipe.direction = .left
+        view.addGestureRecognizer(swipe)
     }
     
     func loadDB() {
@@ -162,6 +169,8 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
             //swiping ability
             zoomingImageView?.swipe(target: self, action: #selector(handleZoomOut), direction: .up)
             zoomingImageView?.swipe(target: self, action: #selector(handleZoomOut), direction: .down)
+            zoomingImageView?.swipe(target: self, action: #selector(handleNextImage), direction: .left)
+            zoomingImageView?.swipe(target: self, action: #selector(handlePrevImage), direction: .right)
             
             
             //creating black background
@@ -355,6 +364,18 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
     //animating the exit zoomedImageView
     func animateOut(){
         Helper().animateOut(zoomingImageView : zoomingImageView!, blackBackgroundView : blackBackgroundView!, startingFrame : startingFrame!)
+    }
+    
+    @objc func openCameraView(){
+        self.tabBarController?.selectedIndex = 1
+    }
+    
+    @objc func handleNextImage(){
+        print("set up next Image")
+    }
+    
+    @objc func handlePrevImage() {
+        print("set up previous image")
     }
     
 }
