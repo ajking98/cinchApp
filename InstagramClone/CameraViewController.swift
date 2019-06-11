@@ -26,10 +26,16 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     
     
     @IBAction func testing(_ sender: UIButton) {
-        let user = User2()
-        let user2 = User2(name: "yassin", email: "yasnaruto", password: "something", isPrivate: false)
-        
-        
+        let tempUser = User()
+        tempUser.username = "hhh"
+        ParentStruct().createUser(user: tempUser)
+//        ParentStruct().readUser(user: tempUser.username)
+        print(tempUser.isPrivate)
+        print(tempUser.username)
+        let uuid = UIDevice.current.identifierForVendor?.uuidString
+        StorageStruct().UploadProfilePic(user: tempUser.username!, image: tempUser.profilePic!)
+        StorageStruct().UploadFolderIcon(user: tempUser.username!, folderName: tempUser.folder1.folderName!, image: tempUser.folder1.icon!)
+        StorageStruct().UploadContent(user: tempUser.username!, folderName: tempUser.folder1.folderName!, content: tempUser.folder1.icon!)
     
     }
     

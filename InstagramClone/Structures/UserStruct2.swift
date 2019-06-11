@@ -39,14 +39,14 @@ struct UserStruct {
             return ""
         }
         //Handle UUID
-        if let id = user.uuid {
-            databaseReference.child("users").child(id.uuidString).child("name").observeSingleEvent(of: .value, with: { (snapshot) in
-                print(snapshot.value as Any)
-                        })
-            { (error) in
-            print(error.localizedDescription)
-            }
-        }
+//        if let id = user.uuid {
+//            databaseReference.child("users").child(id.uuidString).child("name").observeSingleEvent(of: .value, with: { (snapshot) in
+//                print(snapshot.value as Any)
+//                        })
+//            { (error) in
+//            print(error.localizedDescription)
+//            }
+//        }
         return ""
     }
     
@@ -163,6 +163,16 @@ struct UserStruct {
     
     //Returns true if successfully changed the profile picture of the user given
     func updateProfilePic<T>(user : T, newProfilePic : UIImage) ->Bool {
+        guard user is UUID else {
+            //Handle username given
+            return true
+        }
+        //Handle UUID given
+        return true
+    }
+    
+    //Method overloading for existing images in storage because we dont want duplicates 
+    func updateProfilePic<T>(user : T, newProfilePic : String) ->Bool {
         guard user is UUID else {
             //Handle username given
             return true

@@ -7,7 +7,7 @@ import Foundation
 import UIKit
 
 
-class User2  {
+class User  {
     
     var name:String?
     var username: String?
@@ -15,7 +15,7 @@ class User2  {
     var password:String?
     var isPrivate:Bool?
     var profilePic: UIImage?
-    var folders : [Folder]?
+    var folders : Folder?
     var tags : [Tag]?
     var dateCreated : Date?
     var dateLastActive : Date?
@@ -23,6 +23,7 @@ class User2  {
     
     //default variables 
     let defaultProfilePic = UIImage(named: "profilePlaceholder")
+    let folder1 = Folder(folderName: "personal")
     
     init() {
         name = ""
@@ -31,7 +32,7 @@ class User2  {
         isPrivate = false
         profilePic = defaultProfilePic
         uuid = UIDevice.current.identifierForVendor
-        
+        folders = folder1
         //add Random folder to user
     }
     
@@ -55,5 +56,24 @@ class User2  {
         self.profilePic = profilePic
     }
     
-    
+    func toString() -> [String: Any] {
+        let userString:[String : Any] = ["name": name, "email": email, "username": username, "password": password, "isPrivate": isPrivate, "profilePic": profilePic?.toString(), "folders": folder1.toString()]
+        return userString
+    }
+}
+
+extension UIImage {
+    func toString() -> String? {
+        let data: Data? = self.pngData()
+        return data?.base64EncodedString(options: .endLineWithLineFeed)
+    }
+}
+
+extension String {
+    func toImage() -> UIImage? {
+        if let data = Data(base64Encoded: self, options: .ignoreUnknownCharacters){
+            return UIImage(data: data)
+        }
+        return nil
+    }
 }

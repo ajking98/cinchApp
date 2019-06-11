@@ -99,6 +99,17 @@ struct FolderStruct {
         return true
     }
     
+    //Method overloading and takes a string instead of UIImage so that we dont upload the same image multiple times
+    func updateIcon<T>(user : T, folderName: String, newIcon : String) -> Bool {
+        guard user is UUID else {
+            //handle username given
+            return true
+        }
+        //handle UUID given
+        return true
+    }
+    
+    
     
     /*
      numOfImages
