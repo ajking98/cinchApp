@@ -56,6 +56,9 @@ class Folder {
         self.isPrivate = isPrivate
     }
     
+    func toString() -> [String: Any] {
+        let folderString:[String : Any] = ["icon": icon?.toString(), "dateCreated": dateCreated?.toString(), "dateLastModified": dateLastModified?.toString(), "isPrivate": isPrivate, "numOfImages": numOfImages, "numOfVideos": numOfVideos, "content": content]
+        return folderString
+    }
     
 }
-

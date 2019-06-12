@@ -21,6 +21,7 @@
 		46D5E07822A87F89003B41DE /* UserStruct2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E07722A87F89003B41DE /* UserStruct2.swift */; };
 		46D5E07A22A88F14003B41DE /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E07922A88F14003B41DE /* Tag.swift */; };
 		46D5E07C22A899B1003B41DE /* ParentStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E07B22A899B1003B41DE /* ParentStruct.swift */; };
+		46D5E08022ADABC3003B41DE /* StorageStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E07F22ADABC3003B41DE /* StorageStruct.swift */; };
 		6E591AF9ECEE74F44925E53C /* Pods_InstagramCloneTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC945FE0D7581185DE7FBF19 /* Pods_InstagramCloneTests.framework */; };
 		89871252229DE98200BE8F23 /* ZoomingImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89871251229DE98200BE8F23 /* ZoomingImage.swift */; };
 		89871254229DEA2700BE8F23 /* DiscoverPageBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89871253229DEA2700BE8F23 /* DiscoverPageBackground.swift */; };
@@ -86,6 +87,7 @@
 		46D5E07722A87F89003B41DE /* UserStruct2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStruct2.swift; sourceTree = "<group>"; };
 		46D5E07922A88F14003B41DE /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		46D5E07B22A899B1003B41DE /* ParentStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentStruct.swift; sourceTree = "<group>"; };
+		46D5E07F22ADABC3003B41DE /* StorageStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageStruct.swift; sourceTree = "<group>"; };
 		64A9B990C160D383D7FF0D45 /* Pods-InstagramCloneTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramCloneTests.release.xcconfig"; path = "Target Support Files/Pods-InstagramCloneTests/Pods-InstagramCloneTests.release.xcconfig"; sourceTree = "<group>"; };
 		89871251229DE98200BE8F23 /* ZoomingImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomingImage.swift; sourceTree = "<group>"; };
 		89871253229DEA2700BE8F23 /* DiscoverPageBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverPageBackground.swift; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 				46D5E06722A323A9003B41DE /* userClass.swift */,
 				EB63B7DF226A7EB5004C7E2C /* ImageInsta.swift */,
 				EB41F8E822653170003751FA /* Photo.swift */,
+				46D5E07F22ADABC3003B41DE /* StorageStruct.swift */,
 			);
 			path = Structures;
 			sourceTree = "<group>";
@@ -541,6 +544,7 @@
 				EB74D3E422602B2C00556399 /* SignUpViewController.swift in Sources */,
 				EB74D3B8226025E900556399 /* ViewController.swift in Sources */,
 				EBE992ED226E3B8D002D01CF /* TRCollectionViewController.swift in Sources */,
+				46D5E08022ADABC3003B41DE /* StorageStruct.swift in Sources */,
 				89871252229DE98200BE8F23 /* ZoomingImage.swift in Sources */,
 				8E92367E229C5B4F0071E63C /* HelperFrontEnd.swift in Sources */,
 				EB74D3B6226025E900556399 /* AppDelegate.swift in Sources */,
