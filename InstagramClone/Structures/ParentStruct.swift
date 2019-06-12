@@ -14,6 +14,7 @@ import FirebaseStorage
 
 struct ParentStruct {
     let DB = Database.database().reference().child("users")
+    let uuid = UIDevice.current.identifierForVendor!
     //returns true if the user was successfully added
     // WORKS
     func createUser(user : User) -> Bool{
@@ -32,47 +33,98 @@ struct ParentStruct {
         }
     }
     
-    
-    
     //Used to call a user based on username or uuid
-    //returns User object
-    func readUser<T>(user : T)-> User{
-//        let uuid = UIDevice.current.identifierForVendor!
+    func readUser <T>(user : T, userClosure: @escaping (User, String, String, Any) -> Void) -> Void {
         guard user is UUID else {
-            //Handle Username
-//            DB.child(user as! String).observeSingleEvent(of: .value, with: { (snapshot) in
-//                print(snapshot.value as Any)
-//            }) { (error) in
-//                print(error.localizedDescription)
-//            }
-            return User()
+            DB.child(String(describing: user)).observeSingleEvent(of: .value) { (snapshot) -> Void in
+                if let dict = snapshot.value as? [String:Any] {
+                    var name:String?
+                    var email: String?
+                    var password: String?
+                    var isPrivate: Bool?
+                    var profilePic: String?
+                    var dateCreated: String?
+                    var dateLastActive: String?
+                    var folders: Any?
+                    let dictionary = snapshot.value as? NSDictionary
+                    name = dictionary?["name"] as? String ?? ""
+                    email = dictionary?["email"] as? String ?? ""
+                    password = dictionary?["password"] as? String ?? ""
+                    isPrivate = dictionary?["isPrivate"] as? Bool ?? false
+                    profilePic = dictionary?["profilePic"] as? String ?? ""
+                    dateCreated = dictionary?["dateCreated"] as? String ?? ""
+                    dateLastActive = dictionary?["dateLastActive"] as? String ?? ""
+                    folders = dictionary?["folders"]
+                    var userInfo = User(name: name!, username: String(describing: user), email: email!, password: password!, isPrivate: isPrivate!, profilePic: (profilePic?.toImage())!)
+                    userClosure(userInfo, dateCreated!, dateLastActive!, folders)
+                }
+            }
+            return
         }
-        //Handle UUID
-        DB.child(user as! String).observeSingleEvent(of: .value, with: { (snapshot) in
-            print(snapshot.value as Any)
-        }) { (error) in
-            print(error.localizedDescription)
+        DB.child(uuid.uuidString).observeSingleEvent(of: .value) { (snapshot) -> Void in
+            if let dict = snapshot.value as? [String:Any] {
+                var name:String?
+                var email: String?
+                var password: String?
+                var isPrivate: Bool?
+                var profilePic: String?
+                var dateCreated: String?
+                var dateLastActive: String?
+                var folders: Any?
+                let dictionary = snapshot.value as? NSDictionary
+                name = dictionary?["name"] as? String ?? ""
+                email = dictionary?["email"] as? String ?? ""
+                password = dictionary?["password"] as? String ?? ""
+                isPrivate = dictionary?["isPrivate"] as? Bool ?? false
+                profilePic = dictionary?["profilePic"] as? String ?? ""
+                dateCreated = dictionary?["dateCreated"] as? String ?? ""
+                dateLastActive = dictionary?["dateLastActive"] as? String ?? ""
+                folders = dictionary?["folders"]
+                var userInfo = User(name: name!, username: String(describing: user), email: email!, password: password!, isPrivate: isPrivate!, profilePic: (profilePic?.toImage())!)
+                userClosure(userInfo, dateCreated!, dateLastActive!, folders)
+            }
         }
-        return User()
+        return
     }
-    
-    
-    
-    
+
+    // TODO
     //Used to migrate from the user's UUID to the user's username
     //Can also be used if user wishes to update their username
     //returns the updated User
-    func updateUser<T>(user : T, username : String)-> User {
+    func updateUser<T>(user : T, username : String) {
         guard user is UUID else {
             //Handle username given
-            return User()
+            let DB = Database.database().reference().child("users")
+            DB.observe(.value, with: { (snapshot) in
+                if var dictionary = snapshot.key as? [String] {
+                    if dictionary.contains(self.uuid.uuidString) {
+                        var index = dictionary.firstIndex(of: self.uuid.uuidString)
+                        dictionary[index!] = username
+                        DB.child(username).setValue(snapshot.value)
+                    }
+                }
+                //            let userTemp: User = User()
+                //            DB.child(username).setValue(userTemp.toString())
+                //            print(userTemp.toString())
+            })
+            return
         }
         //Handle UUID given
-        return User()
+        let DB = Database.database().reference().child("users")
+        DB.observe(.value, with: { (snapshot) in
+            if var dictionary = snapshot.key as? [String] {
+                if dictionary.contains(self.uuid.uuidString) {
+                    var index = dictionary.firstIndex(of: self.uuid.uuidString)
+                    dictionary[index!] = username
+                    DB.child(username).setValue(snapshot.value)
+                }
+            }
+        })
+        return
     }
     
     
-    
+    // TODO
     //Used to remove a User permanently
     //returns true if the user was successfully deleted
     func deleteUser<T>(user : T) -> Bool {

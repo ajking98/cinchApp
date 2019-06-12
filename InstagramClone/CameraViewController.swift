@@ -25,17 +25,109 @@ class CameraViewController: UIViewController, UINavigationControllerDelegate, UI
     }
     
     
+    let uuid = UIDevice.current.identifierForVendor?.uuidString
+    let tempUser = User(name: "ahmed", username: "testing2", email: "agedi@mail.com", password: "fjff", isPrivate: false)
+    
     @IBAction func testing(_ sender: UIButton) {
-        let tempUser = User()
-        tempUser.username = "hhh"
         ParentStruct().createUser(user: tempUser)
-//        ParentStruct().readUser(user: tempUser.username)
-        print(tempUser.isPrivate)
-        print(tempUser.username)
-        let uuid = UIDevice.current.identifierForVendor?.uuidString
+        ParentStruct().readUser(user: tempUser.username!, userClosure: { (userInfo:User, dateCreated:String, dateLastActive:String, folders:Any) in
+            //handle read functionality
+            print("printing user: ", userInfo)
+            print("printing name: ", userInfo.name!)
+            print("printing email: ", userInfo.email!)
+            print("printing password: ", userInfo.password!)
+            print("printing date created: ", dateCreated)
+            print("printing date last active: ", dateLastActive)
+            print(folders)
+        })
+//        var userName = ParentStruct().readUser(user: uuid!)
+//        print(userName)
+        UserStruct().updateName(user: tempUser.username!, newName: "Yassin")
+        UserStruct().updateEmail(user: tempUser.username!, newEmail: "Yassin@gmail.com")
+        UserStruct().updatePassword(user: tempUser.username!, newPassword: "nb#$%^i")
+        UserStruct().updateIsPrivate(user: tempUser.username!, newIsPrivate: false)
+        UserStruct().updateProfilePic(user: tempUser.username!, newProfilePic: tempUser.folder1.icon!)
+        UserStruct().updateDateCreated(user: tempUser.username!, newDateCreated: Date())
+        UserStruct().updateDateLastActive(user: tempUser.username!, newDateLastActive: Date())
+        //        ParentStruct().updateUser(user: uuid!, username: "hfhf")
+//        print(UserStruct().readName(user: tempUser.username!, other: tempUser))
+        UserStruct().readName(user: tempUser.username!, nameClosure: { (name:String) in
+            //handle read functionality
+            print("printing name: ", name)
+        })
+        UserStruct().readEmail(user: tempUser.username!, emailClosure: { (email:String) in
+            //handle read functionality
+            print("printing email: ", email)
+        })
+        UserStruct().readPassword(user: tempUser.username!, passwordClosure: { (password:String) in
+            //handle read functionality
+            print("printing password: ", password)
+        })
+        UserStruct().readPrivate(user: tempUser.username!, privateClosure: { (isPrivate:Bool) in
+            //handle read functionality
+            print("printing user privacy: ", isPrivate)
+        })
+        UserStruct().readProfilePic(user: tempUser.username!, profilePicClosure: { (profilePic:String) in
+            //handle read functionality
+            print("printing user's profile pic: ", profilePic.toImage()!)
+        })
+        UserStruct().readDateCreated(user: tempUser.username!, dateCreatedClosure: { (dateCreated:String) in
+            //handle read functionality
+            print("printing date created: ", dateCreated)
+        })
+        UserStruct().readDateLastActive(user: tempUser.username!, dateLastActiveClosure: { (dateLastActive:String) in
+            //handle read functionality
+            print("printing date last active: ", dateLastActive)
+        })
+        
+        FolderStruct().updateDateCreated(user: tempUser.username!, folderName: "personal", newDateCreated: Date())
+        FolderStruct().updateDateLastModified(user: tempUser.username!, folderName: "personal", newDateLastModified: Date())
+        FolderStruct().updateIcon(user: tempUser.username!, folderName: "personal", newIcon: "newUrl")
+        FolderStruct().updateIsPrivate(user: tempUser.username!, folderName: "personal", newIsPrivate: true)
+        FolderStruct().updateNumOfImages(user: tempUser.username!, folderName: "personal", newNumOfImages: 6)
+        FolderStruct().updateNumOfVideos(user: tempUser.username!, folderName: "personal", newNumOfVideos: 12)
+        
+        FolderStruct().readDateCreated(user: tempUser.username!, folderName: "personal", dateCreatedClosure: { (dateCreated:String) in
+            //handle read functionality
+            print("printing folder date created: ", dateCreated)
+        })
+        
+        FolderStruct().readDateLastModified(user: tempUser.username!, folderName: "personal", dateLastModifiedClosure: { (dateLastModified:String) in
+            //handle read functionality
+            print("printing folder date last modified: ", dateLastModified)
+        })
+        FolderStruct().readIcon(user: tempUser.username!, folderName: "personal", folderIconClosure: { (icon:String) in
+            //handle read functionality
+            print("printing folder icon: ", icon)
+        })
+        
+        FolderStruct().readNumOfImages(user: tempUser.username!, folderName: "personal", numOfImagesClosure: { (numOfImages:Int) in
+            //handle read functionality
+            print("printing number of images in folder: ", numOfImages)
+        })
+        FolderStruct().readNumOfVideos(user: tempUser.username!, folderName: "personal", numOfVideosClosure: { (numOfVideos:Int) in
+            //handle read functionality
+            print("printing number of videos in folder: ", numOfVideos)
+        })
+        
+        FolderStruct().readPrivate(user: tempUser.username!, folderName: "personal", isPrivateClosure: { (isPrivate:Bool) in
+            //handle read functionality
+            print("printing privacy of folder: ", isPrivate)
+        })
+        var funny = Folder(folderName: "funny")
+        UserStruct().createFolder(user: tempUser.username!, folder: funny)
+        UserStruct().readFolders(user: tempUser.username!, readFolderClosure: {(folders:[String]) in
+            for item in folders {
+                print(item)
+            }
+        })
+        
+//        UserStruct().deleteFolder(user: tempUser.username!, folderName: "funny")
+        UserStruct().updateFolder(user: tempUser.username!, prevFolderName: "funny", newFolderName: "lame", prevFolderainfo: tempUser.folder1)
+
         StorageStruct().UploadProfilePic(user: tempUser.username!, image: tempUser.profilePic!)
         StorageStruct().UploadFolderIcon(user: tempUser.username!, folderName: tempUser.folder1.folderName!, image: tempUser.folder1.icon!)
-        StorageStruct().UploadContent(user: tempUser.username!, folderName: tempUser.folder1.folderName!, content: tempUser.folder1.icon!)
+//        StorageStruct().UploadContent(user: uuid!, folderName: tempUser.folder1.folderName!, content: tempUser.folder1.icon!)
     
     }
     

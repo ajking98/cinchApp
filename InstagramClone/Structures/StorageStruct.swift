@@ -24,8 +24,6 @@ struct StorageStruct {
             
             let refImages = Database.database().reference().child("users").child(uuid!)
             let storageRef = Storage.storage().reference().child("userImages/" + randomString(20))
-            print(storageRef.name)
-            print(refImages)
             
             // Upload the file to the path "images/rivers.jpg"
             _ = storageRef.putData(data, metadata: nil) { (metadata, error) in
@@ -60,8 +58,6 @@ struct StorageStruct {
             
             let refImages = Database.database().reference().child("users").child(String(describing: user))
             let storageRef = Storage.storage().reference().child("userImages/" + randomString(20))
-            print(storageRef.name)
-            print(refImages)
             
             // Upload the file to the path "images/rivers.jpg"
             _ = storageRef.putData(data, metadata: nil) { (metadata, error) in
@@ -103,9 +99,6 @@ struct StorageStruct {
             
             let refImages = Database.database().reference().child("users").child(uuid!).child("folders").child(folderName)
             let storageRef = Storage.storage().reference().child("userImages/" + randomString(20))
-            print(storageRef.name)
-            print(refImages)
-            
             // Upload the file to the path "images/rivers.jpg"
             _ = storageRef.putData(data, metadata: nil) { (metadata, error) in
                 guard let metadata = metadata else {
@@ -139,8 +132,6 @@ struct StorageStruct {
             
             let refImages = Database.database().reference().child("users").child(String(describing: user)).child("folders").child(folderName)
             let storageRef = Storage.storage().reference().child("userImages/" + randomString(20))
-            print(storageRef.name)
-            print(refImages)
             
             // Upload the file to the path "images/rivers.jpg"
             _ = storageRef.putData(data, metadata: nil) { (metadata, error) in
@@ -170,7 +161,7 @@ struct StorageStruct {
         }
         return true
     }
-    
+    // TODO
     //Uploads Images and Videos to storage
     //T is for user, can be of type UUID or String (username)
     //folderName is the name of the folder the user wants to upload the image to
@@ -191,8 +182,6 @@ struct StorageStruct {
             
             let refImages = Database.database().reference().child("users").child(String(describing: user)).child("folders").child(folderName).child("content")
             let storageRef = Storage.storage().reference().child("userImages/" + randomString(20))
-            print(storageRef.name)
-            print(refImages)
             
             // Upload the file to the path "images/rivers.jpg"
             _ = storageRef.putData(data, metadata: nil) { (metadata, error) in
@@ -208,12 +197,20 @@ struct StorageStruct {
                     if (error == nil) {
                         if let downloadUrl = url {
                             // Make you download string
+//                            refImages.observeSingleEvent(of: .value) { (snapshot) -> Void in
+//                                var contentArr = [String]()
+//                                for image in snapshot.children {
+//                                    contentArr.append(image as! String)
+//                                }
+//                                contentArr.append(content as! )
+//                            }
+                            
                             refImages.observeSingleEvent(of: .value, with: { snapshot in
                                 var myContentArray = [String]()
                                 for child in snapshot.children {
                                     let snap = child as! DataSnapshot
-                                    let song = snap.value as! String
-                                    myContentArray.append(song)
+                                    let value = snap.value as! String
+                                    myContentArray.append(value)
                                     
                                 }
                                 let image = downloadUrl.absoluteString
@@ -244,8 +241,6 @@ struct StorageStruct {
         
         let refImages = Database.database().reference().child("users").child(uuid!).child("folders").child(folderName).child("content")
         let storageRef = Storage.storage().reference().child("userImages/" + randomString(20))
-        print(storageRef.name)
-        print(refImages)
         
         // Upload the file to the path "images/rivers.jpg"
         _ = storageRef.putData(data, metadata: nil) { (metadata, error) in
@@ -265,8 +260,8 @@ struct StorageStruct {
                             var myContentArray = [String]()
                             for child in snapshot.children {
                                 let snap = child as! DataSnapshot
-                                let song = snap.value as! String
-                                myContentArray.append(song)
+                                let value = snap.value as! String
+                                myContentArray.append(value)
                                 
                             }
                             let image = downloadUrl.absoluteString
