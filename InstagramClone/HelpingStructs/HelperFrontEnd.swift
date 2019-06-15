@@ -7,24 +7,79 @@
 //
 
 import Foundation
+import UIKit
 import XLActionController
+import FirebaseAuth
+import FirebaseDatabase
+import FirebaseStorage
 
 
 struct Helper {
+    let uuid = UIDevice.current.identifierForVendor!
+    var userVar = User()
+    var foldersVar = [String]()
+    
+//    func getAllData(user: User, folders:[String]) {
+//        if Auth.auth().currentUser != nil {
+//            // User is signed in.
+//            print("hey")
+//        } else {
+//            ParentStruct().readUser(user: uuid.uuidString, userClosure: { (userInfo:User, dateCreated:String, dateLastActive:String, folders:Any) in
+//                //handle read functionality
+//                print("printing user: ", userInfo)
+//                print("printing name: ", userInfo.name!)
+//                print("noooooooooo")
+//                UserStruct().readFolders(user: self.uuid.uuidString, readFolderClosure: {(folders:[String]) in
+//                    for item in folders {
+//                        print(item)
+//                        print(userInfo.name!)
+//                    }
+//                })
+//            })
+//        }
+//    }
     
     func saveToFolder(image: UIImage) -> SpotifyActionController {
-        
         let actionController = SpotifyActionController()
-        
         actionController.headerData = SpotifyHeaderData(title: "Which folder do you want to save to?", subtitle: "", image: image)
-        
-        for x in 0 ... 5{
-            actionController.addAction(Action(ActionData(title: "Folder #\(x)", subtitle: "For Content"), style: .default, handler: nil))
-            
+        if Auth.auth().currentUser != nil {
+            // User is signed in.
+            print("hey")
+        } else {
+            var date = ""
+            ParentStruct().readUser(user: uuid.uuidString, completion: { (userInfo:User, dateCreated:String, dateLastActive:String, folders:Any) -> String in
+                print("printing user: ", userInfo)
+                print("printing name: ", userInfo.name!)
+                date = userInfo.name!
+                print("printing date: ",date)
+                return ""
+            })
+            print("printing date: ",date)
+            for item in 0...5 {
+                actionController.addAction(Action(ActionData(title: "Folder #\(item)", subtitle: "For Content"), style: .default, handler: { action in
+                    // do something useful
+//                    self.dothething();
+                }))
+                
+            }
         }
         
         return actionController
     }
+//    func dothething() {
+//        ParentStruct().readUser(user: self.uuid.uuidString, userClosure: { (userInfo:User, dateCreated:String, dateLastActive:String, folders:Any) in
+//            //handle read functionality
+//            print("printing user: ", userInfo)
+//            print("printing name: ", userInfo.name!)
+//            UserStruct().readFolders(user: self.uuid.uuidString, readFolderClosure: {(folders:[String]) -> Void in
+//                for item in folders {
+//                    print(item)
+//                }
+//            })
+//        })
+//    }
+    
+
     
     
     func vibrate(style : UIImpactFeedbackGenerator.FeedbackStyle){

@@ -34,8 +34,9 @@ struct ParentStruct {
     }
     
     //Used to call a user based on username or uuid
-    func readUser <T>(user : T, userClosure: @escaping (User, String, String, Any) -> Void) -> Void {
+    func readUser <T>(user : T, completion: @escaping (User, String, String, Any) -> String) {
         guard user is UUID else {
+            var folderArr = [String]()
             DB.child(String(describing: user)).observeSingleEvent(of: .value) { (snapshot) -> Void in
                 if let dict = snapshot.value as? [String:Any] {
                     var name:String?
@@ -55,8 +56,13 @@ struct ParentStruct {
                     dateCreated = dictionary?["dateCreated"] as? String ?? ""
                     dateLastActive = dictionary?["dateLastActive"] as? String ?? ""
                     folders = dictionary?["folders"]
-                    var userInfo = User(name: name!, username: String(describing: user), email: email!, password: password!, isPrivate: isPrivate!, profilePic: (profilePic?.toImage())!)
-                    userClosure(userInfo, dateCreated!, dateLastActive!, folders)
+                    UserStruct().readFolders(user: self.uuid.uuidString, readFolderClosure: {(folders:[String]) in
+                        for item in folders {
+                            folderArr.append(item)
+                        }
+                    })
+                    var userInfo = User(name: name!, username: String(describing: user), email: email!, password: password!, isPrivate: isPrivate!)
+                    completion(userInfo, dateCreated!, dateLastActive!, folders)
                 }
             }
             return
@@ -81,60 +87,40 @@ struct ParentStruct {
                 dateLastActive = dictionary?["dateLastActive"] as? String ?? ""
                 folders = dictionary?["folders"]
                 var userInfo = User(name: name!, username: String(describing: user), email: email!, password: password!, isPrivate: isPrivate!, profilePic: (profilePic?.toImage())!)
-                userClosure(userInfo, dateCreated!, dateLastActive!, folders)
+//                userClosure(userInfo, dateCreated!, dateLastActive!, folders)
+                completion(userInfo, dateCreated!, dateLastActive!, folders)
             }
         }
         return
     }
 
-    // TODO
     //Used to migrate from the user's UUID to the user's username
     //Can also be used if user wishes to update their username
     //returns the updated User
-    func updateUser<T>(user : T, username : String) {
-        guard user is UUID else {
-            //Handle username given
-            let DB = Database.database().reference().child("users")
-            DB.observe(.value, with: { (snapshot) in
-                if var dictionary = snapshot.key as? [String] {
-                    if dictionary.contains(self.uuid.uuidString) {
-                        var index = dictionary.firstIndex(of: self.uuid.uuidString)
-                        dictionary[index!] = username
-                        DB.child(username).setValue(snapshot.value)
-                    }
-                }
-                //            let userTemp: User = User()
-                //            DB.child(username).setValue(userTemp.toString())
-                //            print(userTemp.toString())
-            })
-            return
-        }
-        //Handle UUID given
-        let DB = Database.database().reference().child("users")
-        DB.observe(.value, with: { (snapshot) in
-            if var dictionary = snapshot.key as? [String] {
-                if dictionary.contains(self.uuid.uuidString) {
-                    var index = dictionary.firstIndex(of: self.uuid.uuidString)
-                    dictionary[index!] = username
-                    DB.child(username).setValue(snapshot.value)
-                }
+    func updateUser<T>(user : T, username : String, prevUserInfo: User) -> Bool {
+            guard user is UUID else {
+                DB.updateChildValues([username: prevUserInfo.toString()])
+                deleteUser(user: user, userInfo: prevUserInfo)
+                return true
             }
-        })
-        return
+            //Handle UUID
+            DB.updateChildValues([username: prevUserInfo.toString()])
+            deleteUser(user: user, userInfo: prevUserInfo)
+            return true
     }
     
     
-    // TODO
     //Used to remove a User permanently
     //returns true if the user was successfully deleted
-    func deleteUser<T>(user : T) -> Bool {
-        guard user is UUID else {
-            //Handle Username
-            return true
-        }
-        
-        //Handle UUID
-        return true
+    func deleteUser<T>(user : T, userInfo:User) -> User {
+            guard user is UUID else {
+                //Handle username
+                let DB = Database.database().reference().child("users").child(String(describing: user)).removeValue()
+                return User(name: userInfo.name!, username: userInfo.username!, email: userInfo.email!, password: userInfo.password!, isPrivate: userInfo.isPrivate!)
+            }
+            //Handle UUID
+            let DB = Database.database().reference().child("users").child(uuid.uuidString).removeValue()
+            return User(name: userInfo.name!, username: userInfo.username!, email: userInfo.email!, password: userInfo.password!, isPrivate: userInfo.isPrivate!)
     }
     
     
