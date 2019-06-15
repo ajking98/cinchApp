@@ -18,6 +18,7 @@ import XLActionController
 class CameraViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
     @IBOutlet weak var findImage: UIButton!
+    var mainView = ViewController()
     var dbRef: DatabaseReference!
     @IBOutlet weak var imageView: UIImageView!
     @IBAction func onSelectImage(_ sender: UIButton) {

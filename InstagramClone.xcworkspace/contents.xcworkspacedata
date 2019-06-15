@@ -5,6 +5,9 @@
       location = "group:InstagramClone.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:../../Downloads/SQLite.swift-master/SQLite.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:Pods/Pods.xcodeproj">
    </FileRef>
 </Workspace>

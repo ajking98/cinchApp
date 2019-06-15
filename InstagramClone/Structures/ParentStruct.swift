@@ -34,7 +34,7 @@ struct ParentStruct {
     }
     
     //Used to call a user based on username or uuid
-    func readUser <T>(user : T, completion: @escaping (User, String, String, Any) -> String) {
+    func readUser <T>(user : T, completion: @escaping (User, String, String, Any) -> Void) {
         guard user is UUID else {
             var folderArr = [String]()
             DB.child(String(describing: user)).observeSingleEvent(of: .value) { (snapshot) -> Void in

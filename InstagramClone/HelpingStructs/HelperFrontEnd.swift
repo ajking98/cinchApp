@@ -2,7 +2,7 @@
 //  HelperFrontEnd.swift
 //  Helper
 //
-//  Created by Gedi on 5/27/19.
+//  Created by Gedi on 5/27/19. 
 //  Copyright © 2019 Gedi, Ahmed M. All rights reserved.
 //
 
@@ -12,12 +12,25 @@ import XLActionController
 import FirebaseAuth
 import FirebaseDatabase
 import FirebaseStorage
+import SQLite
 
 
-struct Helper {
+struct Helperg {
     let uuid = UIDevice.current.identifierForVendor!
     var userVar = User()
     var foldersVar = [String]()
+    
+    var database: Connection!
+    let usersTable = Table("users")
+    let id = Expression<Int>("id")
+    let name = Expression<String?>("name")
+    let email = Expression<String?>("email")
+    let password = Expression<String?>("password")
+    let isPrivate = Expression<Bool?>("isPrivate")
+    let profilePic = Expression<String?>("profilePic")
+    let dateCreated = Expression<String?>("dateCreated")
+    let dateLastActive = Expression<String?>("dateLastActive")
+    let fodler = Expression<[String]?>("folders")
     
 //    func getAllData(user: User, folders:[String]) {
 //        if Auth.auth().currentUser != nil {
@@ -47,12 +60,11 @@ struct Helper {
             print("hey")
         } else {
             var date = ""
-            ParentStruct().readUser(user: uuid.uuidString, completion: { (userInfo:User, dateCreated:String, dateLastActive:String, folders:Any) -> String in
+            ParentStruct().readUser(user: uuid.uuidString, completion: { (userInfo:User, dateCreated:String, dateLastActive:String, folders:Any) in
                 print("printing user: ", userInfo)
                 print("printing name: ", userInfo.name!)
                 date = userInfo.name!
                 print("printing date: ",date)
-                return ""
             })
             print("printing date: ",date)
             for item in 0...5 {
@@ -125,7 +137,6 @@ struct Helper {
     }
     
 }
-
 
 
     
