@@ -13,89 +13,6 @@ import FirebaseDatabase
 import FirebaseStorage
 import SQLite
 
-struct Helper {
-    let uuid = UIDevice.current.identifierForVendor!
-    var userVar = User()
-    var foldersVar = [String]()
-    var main = ViewController();
-    
-    func saveToFolder(image: UIImage) -> SpotifyActionController {
-        let actionController = SpotifyActionController()
-        
-//        main.createTable()
-        
-        actionController.headerData = SpotifyHeaderData(title: "Which folder do you want to save to?", subtitle: "", image: image)
-        
-        if Auth.auth().currentUser != nil {
-            // User is signed in.
-            print("hey")
-        } else {
-            var date = ""
-            ParentStruct().readUser(user: uuid.uuidString, completion: { (userInfo:User, dateCreated:String, dateLastActive:String, folders:Any) in
-                print("printing user: ", userInfo)
-                print("printing name: ", userInfo.name!)
-                date = userInfo.name!
-                print("printing date: ",date)
-                self.main.createTable(name: userInfo.name!, email: userInfo.email!, password: userInfo.password!, isPrivate: userInfo.isPrivate!, profilePic: (userInfo.profilePic?.toString())!, dateCreated: (userInfo.dateCreated?.toString())!, dateLastActive: (userInfo.dateLastActive?.toString())!)
-            })
-            print("printing date: ",date)
-            
-        }
-        
-        for item in 0...5 {
-            actionController.addAction(Action(ActionData(title: "Folder #\(item)", subtitle: "For Content"), style: .default, handler: { action in
-                // do something useful
-                //                    self.dothething();
-            }))
-            
-        }
-        
-        return actionController
-    }
-    
-    func vibrate(style : UIImpactFeedbackGenerator.FeedbackStyle){
-        //medium level vibration feedback
-        let vibration = UIImpactFeedbackGenerator(style: style)
-        vibration.impactOccurred()
-    }
-    
-    
-    func animateIn(iconsView : UIView, zoomingImageView : UIView, keyWindow : UIWindow) {
-        //Animate Inwards
-        UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.1, options: .curveEaseIn, animations: {
-            zoomingImageView.frame = CGRect(x:0, y:0, width: keyWindow.frame.width * 0.95, height: (zoomingImageView.frame.height) * 0.95)
-            zoomingImageView.center = keyWindow.center
-            
-            iconsView.isHidden = false
-            keyWindow.bringSubviewToFront(iconsView)
-        }, completion: { (completed: Bool) in
-        })
-    }
-    
-    
-    func animateIn(zoomingImageView: UIView, keyWindow: UIWindow){
-        //Animate Inwards
-        UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.1, options: .curveEaseIn, animations: {
-            zoomingImageView.frame = CGRect(x:0, y:0, width: keyWindow.frame.width * 0.9, height: (zoomingImageView.frame.height) * 0.9)
-            zoomingImageView.center = keyWindow.center
-            
-        }, completion: { (completed: Bool) in
-        })
-        
-    }
-    
-    
-    func animateOut(zoomingImageView : ZoomingImage, blackBackgroundView : DiscoverBackGround, startingFrame : CGRect){
-        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
-            zoomingImageView.frame = startingFrame
-            blackBackgroundView.alpha = 0
-        }, completion: { (completed: Bool) in
-            zoomingImageView.removeFromSuperview()
-            
-        })
-    }
-}
-
 class ViewController: UIViewController {
 
     @IBOutlet weak var emailTextField: UITextField!
@@ -103,6 +20,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var errorLabel: UILabel!
     var dbRef: DatabaseReference!
+    let uuid = UIDevice.current.identifierForVendor!
     
     var database: Connection!
     let usersTable = Table("users")
@@ -111,11 +29,12 @@ class ViewController: UIViewController {
     let email = Expression<String?>("email")
     let password = Expression<String?>("password")
     let isPrivate = Expression<Bool?>("isPrivate")
-    let profilePic = Expression<String?>("profilePic")
-    let dateCreated = Expression<String?>("dateCreated")
-    let dateLastActive = Expression<String?>("dateLastActive")
+//    let profilePic = Expression<String?>("profilePic")
+//    let dateCreated = Expression<String?>("dateCreated")
+//    let dateLastActive = Expression<String?>("dateLastActive")
 //    let folder = Expression<[String]?>("folders")
     
+    let userDefaults = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -128,7 +47,24 @@ class ViewController: UIViewController {
         } catch {
             print(error)
         }
-        
+
+        ParentStruct().readUser(user: uuid.uuidString, completion: { (userInfo:User, dateCreated:String, dateLastActive:String, folders:Any) in
+            print("printing userhh: ", userInfo)
+            print("printing name: ", userInfo.name!)
+            print("printing password: ", userInfo.password!)
+            UserStruct().readFolders(user: self.uuid.uuidString, readFolderClosure: {(folders:[String]) in
+                for item in folders {
+                    print(item)
+                }
+                self.userDefaults.set(folders, forKey: defaultKeys.folderKey)
+                self.userDefaults.set(userInfo.name!, forKey: defaultKeys.nameKey)
+                self.userDefaults.set(userInfo.email!, forKey: defaultKeys.emailKey)
+                self.userDefaults.set(userInfo.password!, forKey: defaultKeys.passwordKey)
+                self.userDefaults.set(userInfo.isPrivate, forKey: defaultKeys.isPrivateKey)
+                self.userDefaults.set(dateCreated, forKey: defaultKeys.dateCreatedKey)
+                self.userDefaults.set(dateLastActive, forKey: defaultKeys.dateLastActiveKey)
+            })
+        })
         
         // Do any additional setup after loading the view.
         emailTextField.backgroundColor = UIColor.clear
@@ -169,7 +105,10 @@ class ViewController: UIViewController {
     
     @IBAction func loginClickButton(_ sender: Any) {
         print("Login button clicked")
-        
+//        self.createTable()
+//        self.insertUser()
+//        self.listUsers()
+//        getUserInfo()
         if (emailTextField.text != "" && passwordTextField.text != "" ) {
             Auth.auth().signIn(withEmail: emailTextField.text!, password: passwordTextField.text!) {
                 (user, error) in
@@ -190,18 +129,18 @@ class ViewController: UIViewController {
         }
     }
     
-    func createTable(name:String, email:String, password:String, isPrivate:Bool, profilePic:String, dateCreated:String, dateLastActive:String) {
+    func createTable() {
         print("Create Table")
         
         let createTable = self.usersTable.create { (table) in
             table.column(self.id, primaryKey: true)
             table.column(self.name)
-            table.column(self.email, unique: true)
+            table.column(self.email)
             table.column(self.password)
             table.column(self.isPrivate)
-            table.column(self.profilePic)
-            table.column(self.dateCreated)
-            table.column(self.dateLastActive)
+            //            table.column(self.profilePic)
+            //            table.column(self.dateCreated)
+            //            table.column(self.dateLastActive)
         }
         
         do {
@@ -213,24 +152,13 @@ class ViewController: UIViewController {
         
     }
     
-    func insertUser(_ sender: Any) {
-        let uuid = UIDevice.current.identifierForVendor!
+    func insertUser() {
         print("Insert User")
-        let alert = UIAlertController(title: "Insert User", message: nil, preferredStyle: .alert)
-        alert.addTextField { (tf) in tf.placeholder = "Name" }
-        alert.addTextField { (tf) in tf.placeholder = "Email" }
         ParentStruct().readUser(user: uuid.uuidString, completion: { (userInfo:User, dateCreated:String, dateLastActive:String, folders:Any) in
             print("printing userhh: ", userInfo)
             print("printing name: ", userInfo.name!)
-        })
-        let action = UIAlertAction(title: "Submit", style: .default) { (_) in
-            guard let name = alert.textFields?.first?.text,
-                let email = alert.textFields?.last?.text
-                else { return }
-            print(name)
-            print(email)
-            
-            let insertUser = self.usersTable.insert(self.name <- name, self.email <- email)
+            print("printing password: ", userInfo.password!)
+            let insertUser = self.usersTable.insert(self.name <- userInfo.name!, self.email <- userInfo.email!, self.password <- userInfo.password!, self.isPrivate <- userInfo.isPrivate! )
             
             do {
                 try self.database.run(insertUser)
@@ -238,19 +166,18 @@ class ViewController: UIViewController {
             } catch {
                 print(error)
             }
-        }
-        alert.addAction(action)
-        present(alert, animated: true, completion: nil)
+        })
+        
+        
     }
     
     
-    func listUsers(_ sender: Any) {
+    func listUsers() {
         print("List Users")
-        
         do {
             let users = try self.database.prepare(usersTable)
             for user in users {
-                print("userID: \(user[self.id]), name: \(String(describing: user[self.name]!)), email: \(String(describing: user[self.email]!))" )
+                print("userID: \(user[self.id]), name: \(String(describing: user[self.name]!)), email: \(String(describing: user[self.email]!)), password: \(String(describing: user[self.password]!)), isPrivate: \(String(describing: user[self.isPrivate]!))" )
             }
         } catch {
             print(error)
@@ -282,26 +209,41 @@ class ViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    func deleteUser(_ sender: Any) {
+    func deleteUser(userId:Int) {
         print("Delete User")
-        let alert = UIAlertController(title: "Update User", message: nil, preferredStyle: .alert)
-        alert.addTextField { (tf) in tf.placeholder = "User ID" }
-        let action = UIAlertAction(title: "Submit", style: .default) { (_) in
-            guard let userIdString = alert.textFields?.first?.text,
-                let userId = Int(userIdString)
-                else { return }
-            print(userIdString)
-            
-            let user = self.usersTable.filter(self.id == userId)
-            let deleteUser = user.delete()
-            do {
-                try self.database.run(deleteUser)
-            } catch {
-                print(error)
-            }
+        let user = self.usersTable.filter(self.id == userId)
+        let deleteUser = user.delete()
+        do {
+            try self.database.run(deleteUser)
+        } catch {
+            print(error)
         }
-        alert.addAction(action)
-        present(alert, animated: true, completion: nil)
+    }
+    
+    func getUserInfo() {
+        if let stringOne = self.userDefaults.string(forKey: defaultKeys.nameKey) {
+            print(stringOne) // Some String Value
+        }
+        
+        if let stringTwo = self.userDefaults.string(forKey: defaultKeys.emailKey) {
+            print(stringTwo) // Some String Value
+        }
+        if let stringThree = self.userDefaults.string(forKey: defaultKeys.passwordKey) {
+            print(stringThree) // Some String Value
+        }
+        if let stringFour = self.userDefaults.string(forKey: defaultKeys.isPrivateKey) {
+            print(stringFour) // Some String Value
+        }
+        if let stringFive = self.userDefaults.string(forKey: defaultKeys.dateCreatedKey) {
+            print(stringFive) // Some String Value
+        }
+        if let stringSix = self.userDefaults.string(forKey: defaultKeys.dateLastActiveKey) {
+            print(stringSix) // Some String Value
+        }
+        
+        let foodArray = self.userDefaults.object(forKey: defaultKeys.folderKey) as? [String] ?? [String]()
+        print(foodArray.count)
+        print(foodArray[0])
     }
     
 

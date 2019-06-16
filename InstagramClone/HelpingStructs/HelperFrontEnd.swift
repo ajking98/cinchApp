@@ -15,84 +15,45 @@ import FirebaseStorage
 import SQLite
 
 
-struct Helperg {
+struct Helper {
     let uuid = UIDevice.current.identifierForVendor!
     var userVar = User()
     var foldersVar = [String]()
-    
-    var database: Connection!
-    let usersTable = Table("users")
-    let id = Expression<Int>("id")
-    let name = Expression<String?>("name")
-    let email = Expression<String?>("email")
-    let password = Expression<String?>("password")
-    let isPrivate = Expression<Bool?>("isPrivate")
-    let profilePic = Expression<String?>("profilePic")
-    let dateCreated = Expression<String?>("dateCreated")
-    let dateLastActive = Expression<String?>("dateLastActive")
-    let fodler = Expression<[String]?>("folders")
-    
-//    func getAllData(user: User, folders:[String]) {
-//        if Auth.auth().currentUser != nil {
-//            // User is signed in.
-//            print("hey")
-//        } else {
-//            ParentStruct().readUser(user: uuid.uuidString, userClosure: { (userInfo:User, dateCreated:String, dateLastActive:String, folders:Any) in
-//                //handle read functionality
-//                print("printing user: ", userInfo)
-//                print("printing name: ", userInfo.name!)
-//                print("noooooooooo")
-//                UserStruct().readFolders(user: self.uuid.uuidString, readFolderClosure: {(folders:[String]) in
-//                    for item in folders {
-//                        print(item)
-//                        print(userInfo.name!)
-//                    }
-//                })
-//            })
-//        }
-//    }
+    var main = ViewController();
     
     func saveToFolder(image: UIImage) -> SpotifyActionController {
         let actionController = SpotifyActionController()
+        
+        //        main.createTable()
+        
         actionController.headerData = SpotifyHeaderData(title: "Which folder do you want to save to?", subtitle: "", image: image)
+        
         if Auth.auth().currentUser != nil {
             // User is signed in.
             print("hey")
         } else {
-            var date = ""
             ParentStruct().readUser(user: uuid.uuidString, completion: { (userInfo:User, dateCreated:String, dateLastActive:String, folders:Any) in
                 print("printing user: ", userInfo)
                 print("printing name: ", userInfo.name!)
-                date = userInfo.name!
-                print("printing date: ",date)
-            })
-            print("printing date: ",date)
-            for item in 0...5 {
-                actionController.addAction(Action(ActionData(title: "Folder #\(item)", subtitle: "For Content"), style: .default, handler: { action in
-                    // do something useful
-//                    self.dothething();
-                }))
                 
-            }
+            })
+        }
+        let defaults = main.userDefaults
+        let foodArray = defaults.object(forKey: defaultKeys.folderKey) as? [String] ?? [String]()
+        print(foodArray.count)
+        print(foodArray[0])
+        for item in foodArray {
+            actionController.addAction(Action(ActionData(title: "\(item.uppercased())", subtitle: "For Content"), style: .default, handler: { action in
+                print("the button has been clicked")
+                print(item)
+                StorageStruct().UploadContent(user: self.uuid.uuidString, folderName: item, content: image)
+                
+            }))
+            
         }
         
         return actionController
     }
-//    func dothething() {
-//        ParentStruct().readUser(user: self.uuid.uuidString, userClosure: { (userInfo:User, dateCreated:String, dateLastActive:String, folders:Any) in
-//            //handle read functionality
-//            print("printing user: ", userInfo)
-//            print("printing name: ", userInfo.name!)
-//            UserStruct().readFolders(user: self.uuid.uuidString, readFolderClosure: {(folders:[String]) -> Void in
-//                for item in folders {
-//                    print(item)
-//                }
-//            })
-//        })
-//    }
-    
-
-    
     
     func vibrate(style : UIImpactFeedbackGenerator.FeedbackStyle){
         //medium level vibration feedback
@@ -135,9 +96,7 @@ struct Helperg {
             
         })
     }
-    
 }
-
 
     
     
