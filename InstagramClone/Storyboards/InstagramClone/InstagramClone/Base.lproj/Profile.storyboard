@@ -13,7 +13,6 @@
         <!--PROFILE-->
         <scene sceneID="gJf-Pr-j5v">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="RQZ-iR-GAb" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="r0O-FK-vd2" customClass="ProfileViewController" customModule="InstagramClone" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="OsO-h2-ocY">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -254,6 +253,7 @@
                         <outlet property="wallpaperImage" destination="JJf-hA-DT1" id="Kbb-Cp-Ssy"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RQZ-iR-GAb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3450.7246376811595" y="1709.5982142857142"/>
         </scene>
@@ -305,10 +305,10 @@
             </objects>
             <point key="canvasLocation" x="4198.5507246376819" y="1709.5982142857142"/>
         </scene>
-        <!--NavigationCamera-->
+        <!--CameraID-->
         <scene sceneID="RD2-pa-nko">
             <objects>
-                <viewControllerPlaceholder storyboardName="Camera" referencedIdentifier="NavigationCamera" id="XH7-QS-hSa" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="Camera" referencedIdentifier="CameraID" id="XH7-QS-hSa" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fkl-NA-8bh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4854" y="1597"/>

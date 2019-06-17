@@ -3,237 +3,288 @@
 //  InstagramClone
 //
 /*
-        Prompted when user uploads image from camera roll and a delegate is used
+ Prompted when user uploads image from camera roll and a delegate is used
  
  */
 
 
 import UIKit
-import EasyImagy
-import Firebase
-import FirebaseDatabase
-import FirebaseStorage
+import CoreImage
 import XLActionController
 
-class CameraViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+class CameraViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
-    @IBOutlet weak var findImage: UIButton!
-    var mainView = ViewController()
-    var dbRef: DatabaseReference!
-    @IBOutlet weak var imageView: UIImageView!
-    @IBAction func onSelectImage(_ sender: UIButton) {
-        self.pickImage()
-    }
+    @IBOutlet weak var segmentControl: UISegmentedControl!
     
     
-    let uuid = UIDevice.current.identifierForVendor?.uuidString
-    let tempUser = User(name: "ahmed", username: "testing2", email: "agedi@mail.com", password: "fjff", isPrivate: false)
+    //Button and pullup bar
+    @IBOutlet weak var addButton: UIImageView!
+    @IBOutlet weak var solidBar: UIImageView!
     
-    @IBAction func testing(_ sender: UIButton) {
-        ParentStruct().createUser(user: tempUser)
-        var funny = Folder(folderName: "funny")
-        UserStruct().createFolder(user: tempUser.username!, folder: funny)
-
-    }
+    //previous, center, and next view
+    @IBOutlet weak var centerShadow: UIImageView!
+    @IBOutlet weak var centerView: UIImageView!
+    
+    @IBOutlet weak var nextShadow: UIImageView!
+    @IBOutlet weak var nextView: UIImageView!
+    
+    @IBOutlet weak var previousShadow: UIImageView!
+    @IBOutlet weak var previousView: UIImageView!
+    
+    @IBOutlet weak var imageCollectionView: UICollectionView!
+    
+    @IBOutlet weak var FolderSliderView: UIView!
+    @IBOutlet weak var prevFolderName: UITextView!
+    @IBOutlet weak var currentFolderName: UITextView!
+    @IBOutlet weak var nextFolderName: UITextView!
     
     
-    let button = UIButton(type: .system)
+    //static values
+    let cornerRadius = [6.0, 4.0, 5.0]
+    var imageCollectionViewFrame : CGRect?
+    var solidBarFrame : CGRect?
+    var addButtonFrame : CGRect?
+    
+    
+    //Dynamic values
+    var userImages = ["n3", "n2", "n1","n3", "n2", "n1","n3", "n2", "n1","n3", "n2", "n1"]
+    var isFullScreen = true
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
-        
-        //Add button (+)
-        button.frame = CGRect(x: UIScreen.main.bounds.width - 85, y: findImage.frame.minY - 65, width: 50, height: 50)
-        button.backgroundColor = .green
-        button.setTitle("+", for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 40)
-        button.layer.shadowOpacity = 0.25
-        button.layer.cornerRadius = button.frame.height / 2
-        button.layer.shadowRadius = 2
-        button.contentVerticalAlignment = .top
-        button.addTarget(self, action: #selector(saveImage), for: .touchUpInside)
-        button.isHidden = true
-        self.view.addSubview(button)
-        //imageView?.isUserInteractionEnabled = true
-        //imageView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector()))
+        buildShadow() //Builds the shadows for the icons (AddButton and swipe bar)
+        buildSizes() //Also has the BuildBlur inside it (Must be called each time a new image is placed)
+        buildRadius() //Sets the radius for the imageViews (Needs to only be called once)
+        buildLayout()
+        buildGestures()
         
         
-        //Swipe left
-        var swipe = UISwipeGestureRecognizer(target: self, action: #selector(openDiscoverView))
-        swipe.direction = .right
-        view.addGestureRecognizer(swipe)
+        //Blurs need to only be built once
+        buildBlur(imageView: centerShadow)
+        buildBlur(imageView: nextShadow)
+        buildBlur(imageView: previousShadow)
         
         
-        //Swipe right
-        swipe = UISwipeGestureRecognizer(target: self, action: #selector(openProfileView))
-        swipe.direction = .left
-        view.addGestureRecognizer(swipe)
+        imageCollectionViewFrame = imageCollectionView.frame
+        solidBarFrame = solidBar.frame
+        addButtonFrame = addButton.frame
+    }
+    
+    func change(imagePrev : UIImage, imageCurr : UIImage, imageNext : UIImage){
+        changePreviousView(image: imagePrev)
+        changeCenterView(image: imageCurr)
+        changeNextView(image: imageNext)
+        
+        buildSizes()
+    }
+    
+    func changeCenterView(image : UIImage){
+        //Change the center view
+        centerView.image = image
+        centerShadow.image = image
+    }
+    
+    func changePreviousView(image: UIImage){
+        //change the previous image view
+        previousView.image = image
+        previousShadow.image = image
+    }
+    
+    func changeNextView(image: UIImage){
+        //change the next image view
+        nextView.image = image
+        nextShadow.image = image
+    }
+    
+    //sizes all the image views accordingly with the image size
+    func buildSizes(){
+        if let image = centerView.image {
+            centerShadow.frame.size = image.size
+            centerView.frame.size = image.size
+        }
+        if let image = nextView.image {
+            nextView.frame.size = image.size
+            nextShadow.frame.size = image.size
+        }
+        if let image = previousView.image {
+            previousView.frame.size = image.size
+            previousShadow.frame.size = image.size
+        }
+    }
+    
+    func buildShadow(){
+        //Setting the shadow for the views
+        addShadow(selectedView: addButton)
+        addShadow(selectedView: solidBar)
+    }
+    
+    
+    func buildRadius(){
+        //Creating the corner radius for left, right, and center views
+        //centerView
+        centerView.layer.cornerRadius = CGFloat(cornerRadius[0])
+        centerShadow.layer.cornerRadius = CGFloat(cornerRadius[2])
+        
+        //nextView
+        nextView.layer.cornerRadius = CGFloat(cornerRadius[1])
+        nextShadow.layer.cornerRadius = CGFloat(cornerRadius[2])
+        
+        //previousView
+        previousView.layer.cornerRadius = CGFloat(cornerRadius[1])
+        previousShadow.layer.cornerRadius = CGFloat(cornerRadius[2])
     }
     
     
     
-    func pickImage(){
-        //Picking the image from photoLibrary
-        let image = UIImagePickerController()
-//        image.delegate = self
-        image.sourceType = UIImagePickerController.SourceType.photoLibrary
-        image.allowsEditing = false
+    func addShadow(selectedView : UIView){
+        selectedView.layer.masksToBounds = false
+        selectedView.layer.shadowColor = UIColor.black.cgColor
         
-//        self.present(image, animated: true)
+        selectedView.layer.shadowOpacity = 0.40
+        selectedView.layer.shadowOffset = CGSize(width: 0, height: 3)
+        selectedView.layer.shadowRadius = 5
+        
+        selectedView.layer.shouldRasterize = true
+        selectedView.layer.rasterizationScale = UIScreen.main.scale
     }
     
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    func buildBlur(imageView : UIImageView){
+        let blurEffect = UIBlurEffect(style: .prominent)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        //always fill the view
         
-        self.dismiss(animated: true, completion: nil)
+        blurEffectView.frame = imageView.bounds
+        imageView.addSubview(blurEffectView)
         
-        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage{
-            let image2 = trimInsta(image : image)
-            imageView.image = image2
+    }
+    
+    func buildLayout(){
+        let layout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 20, left: 0, bottom: 10, right: 0)
+        layout.minimumInteritemSpacing = 3
+        layout.minimumLineSpacing = 0
+        
+        
+        //        imageCollectionView.collectionViewLayout = layoutlayou
+    }
+    
+    
+    //Building all the gestures and enabling
+    func buildGestures() {
+        //taps
+        solidBar.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSwipeUpAndSwipeDown)))
+        addButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(saveToFolder)))
+        
+        
+        //swipes
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeDown(_:)))
+        swipeDown.direction = .down
+        imageCollectionView.addGestureRecognizer(swipeDown)
+        
+        
+        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeUpAndSwipeDown))
+        swipeUp.direction = .up
+        imageCollectionView.addGestureRecognizer(swipeUp)
+        
+        //segment Control
+        segmentControl.addTarget(self, action: #selector(segmentControlValueChanged), for:.valueChanged)
+        
+        
+        //enabling interactivity
+        solidBar.isUserInteractionEnabled = true
+        addButton.isUserInteractionEnabled = true
+        imageCollectionView.isUserInteractionEnabled = true
+    }
+    
+    
+    @objc func segmentControlValueChanged(segment : UISegmentedControl){
+        if segment.selectedSegmentIndex == 0 {
+            handleSwipeDown()
+        }
+    }
+    
+    @objc func handleSwipeUpAndSwipeDown(){
+        if isFullScreen {
+            handleSwipeUp()
+            isFullScreen = false
+        }
             
-            button.isHidden = false
-            
-            // data in memory
-            var data = Data()
-            data = image2.jpegData(compressionQuality: 0.8)!
-            
-            let refImages = Database.database().reference().child("images")
-            let storageRef = Storage.storage().reference().child("images/" + randomString(20))
-            print(storageRef.name)
-            
-            // Upload the file to the path "images/rivers.jpg"
-            _ = storageRef.putData(data, metadata: nil) { (metadata, error) in
-                guard let metadata = metadata else {
-                    // Uh-oh, an error occurred!
-                    print("Error occurred")
-                    return
-                }
-                // Metadata contains file metadata such as size, content-type.
-                
-                // You can also access to download URL after upload.
-                storageRef.downloadURL { (url, error) in
-                    if (error == nil) {
-                        if let downloadUrl = url {
-                            // Make you download string
-                            let key = refImages.childByAutoId().key
-                            let image = ["url": downloadUrl.absoluteString]
-                            refImages.child(key).setValue(image)
-                        }
-                    }
-                    guard let url = url else {
-                        // Uh-oh, an error occurred!
-                        return
-                    }
-                }
+        else {
+            handleSwipeDown()
+            isFullScreen = true
+        }
+    }
+    
+    
+    @objc func handleSwipeUp(_ tapGesture : UITapGestureRecognizer? = nil){
+        //perform animation to swipe the collection view upward
+        print("working")
+        UIView.animate(withDuration: 0.4) {
+            guard let tempFrame = self.imageCollectionViewFrame else{
+                return
             }
-
+            let originX = tempFrame.origin.x
+            let originY = tempFrame.origin.y
+            let heightFS : CGFloat = 30.0
             
+            
+            //Updated values
+            let updatedOriginY = originY - 420
+            
+            self.imageCollectionView.frame.origin = CGPoint(x: originX, y: updatedOriginY)
+            
+            self.solidBar.frame.origin.y = (updatedOriginY - 24) - heightFS
+            self.FolderSliderView.frame.origin.y = updatedOriginY - heightFS
+            
+            self.FolderSliderView.frame.size.height = heightFS
+            self.prevFolderName.frame.size.height = heightFS
+            self.currentFolderName.frame.size.height = heightFS
+            self.nextFolderName.frame.size.height = heightFS
         }
-        else{
-            print("Error has occured loading up the image")
-        }
-        
-        
+        Helper().vibrate(style: .medium)
     }
     
-    func randomString(_ length: Int) -> String {
-        let letters : NSString = "asdfghjkloiuytrewqazxcvbnmWERTYUIASDFGHJKXCVBN"
-        let len = UInt32(letters.length)
-        
-        var randomString = ""
-        
-        for _ in 0 ..< length {
-            let rand = arc4random_uniform(len)
-            var nextChar = letters.character(at: Int(rand))
-            randomString += NSString(characters: &nextChar, length: 1) as String
+    @objc func handleSwipeDown(_ tapGesture  :UITapGestureRecognizer? = nil){
+        UIView.animate(withDuration: 0.2) {
+            print("swiping")
+            self.imageCollectionView.frame = self.imageCollectionViewFrame!
+            self.solidBar.frame = self.solidBarFrame!
+            self.addButton.frame = self.addButtonFrame!
+            
+            let heightFS : CGFloat = 0
+            
+            self.FolderSliderView.frame.origin.y = self.imageCollectionViewFrame!.origin.y
+            self.FolderSliderView.frame.size.height = heightFS
+            self.prevFolderName.frame.size.height = heightFS
+            self.currentFolderName.frame.size.height = heightFS
+            self.nextFolderName.frame.size.height = heightFS
         }
         
-        return randomString
+        Helper().vibrate(style: .medium)
     }
     
-    func trimInsta(image : UIImage) -> UIImage {
-        var instaImage = Image<RGBA<UInt8>>(uiImage: image)
-        var start = 0
-        let width = instaImage.width
-        let height = instaImage.height
-        let distToBookmark = 28
-        
-        for y in 0 ..< height {
-            if(instaImage[0, y].green < 240){
-                print("We are at:", instaImage[0, y], y)
-                start = y
-                break
-            }
+    @objc func saveToFolder(_ tapGesture : UITapGestureRecognizer? = nil){
+        if let image = centerView?.image {
+            Helper().vibrate(style: .medium)
+            let folderSelection = Helper().saveToFolder(image: image)
+            present(folderSelection, animated: true, completion: nil)
         }
-        
-        start = start + 10
-        for y in start ..< height {
-            if(instaImage[0, y].green < 250){
-                print("this is the start:", y)
-                start = y
-                break
-            }
-        }
-        
-        
-        //END
-        
-        var end = start + 553
-        let sizes = [553, 615, 828, 1035]
-        for size in (0 ..< sizes.count).reversed() {
-            var white = true
-            end = start + sizes[size]
-            for y in (end + 3) ... (end + 10){
-                if(instaImage[760, y].green < 250){
-                    print("Not white")
-                    white = false
-                    break
-                }
-                
-                if(!white){
-                    continue
-                }
-                print("yes")
-                for y in (end + 10) ..< (end + distToBookmark + 3){
-                    if(instaImage[760, y].green < 50){
-                        print("Start:", start, "End", end)
-                        let slice: ImageSlice<RGBA<UInt8>> = instaImage[0 ..< width, start ..< end]
-                        let cropped = Image<RGBA<UInt8>>(slice)
-                        print((instaImage[460,2]).green)
-                        print(instaImage.count)
-                        return cropped.uiImage
-                    }
-                }
-            }
-        }
-        
-        let slice: ImageSlice<RGBA<UInt8>> = instaImage[0 ..< width, 0 ..< height]
-        let cropped = Image<RGBA<UInt8>>(slice)
-        print((instaImage[460,2]).green)
-        print("This isn't an Instagram image")
-        return cropped.uiImage
     }
     
-    @objc func saveImage(sender: UIButton!){
-        var action = SpotifyActionController.init()
-        if let image = imageView.image {
-            action = Helper().saveToFolder(image: image)
-        }
-        present(action, animated: true, completion: nil)
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        
-        self.imageView.image = nil
-        sender.isHidden = true
+        userImages.append("n4")
+        return userImages.count
     }
     
-    @objc func openDiscoverView() {
-        self.tabBarController?.selectedIndex = 0
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! CameraViewCell
+        cell.imageView.image = UIImage(named: userImages[indexPath.row])
+        cell.imageView.contentMode = UIView.ContentMode.scaleAspectFill
+        return cell
     }
-    
-    @objc func openProfileView() {
-        self.tabBarController?.selectedIndex = 2
-    }
-
 }

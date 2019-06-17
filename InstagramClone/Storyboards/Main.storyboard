@@ -38,10 +38,10 @@
             </objects>
             <point key="canvasLocation" x="2643" y="68"/>
         </scene>
-        <!--NavigationCamera-->
+        <!--CameraID-->
         <scene sceneID="jZL-2r-oW2">
             <objects>
-                <viewControllerPlaceholder storyboardName="Camera" referencedIdentifier="NavigationCamera" id="poY-wD-Fmg" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="Camera" referencedIdentifier="CameraID" id="poY-wD-Fmg" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="ign-iB-qEF"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jw0-YD-D40" userLabel="First Responder" sceneMemberID="firstResponder"/>

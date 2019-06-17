@@ -81,6 +81,9 @@ PODS:
   - SDWebImage/WebP (4.4.6):
     - libwebp (>= 0.5)
     - SDWebImage/Core
+  - SQLite.swift (0.12.0):
+    - SQLite.swift/standard (= 0.12.0)
+  - SQLite.swift/standard (0.12.0)
   - TRMosaicLayout (1.0.0)
   - XLActionController/Core (5.0.0)
   - XLActionController/Spotify (5.0.0):
@@ -94,6 +97,7 @@ DEPENDENCIES:
   - Firebase/Database
   - Firebase/Storage (~> 4.0)
   - SDWebImage/WebP
+  - SQLite.swift (~> 0.12.0)
   - TRMosaicLayout
   - XLActionController/Spotify
 
@@ -114,6 +118,7 @@ SPEC REPOS:
     - nanopb
     - Player
     - SDWebImage
+    - SQLite.swift
     - TRMosaicLayout
     - XLActionController
 
@@ -123,7 +128,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Cards: 45ae6bd0eca7b5e8016d3b6cb30b60b04753f68f
-  EasyImagy: afbe29d209e5c0848ea68b4cc29c8695573cacf0
+  EasyImagy: f63b20b08f3b55d792ce91f37da20c36d4e0410e
   Firebase: 5ec5e863d269d82d66b4bf56856726f8fb8f0fb3
   FirebaseAnalytics: 7ef69e76a5142f643aeb47c780e1cdce4e23632e
   FirebaseAuth: bf22cacf22c60ab454bf2636f556d8892b10b53f
@@ -138,9 +143,10 @@ SPEC CHECKSUMS:
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   Player: 968d8d07d923bcdd6f7e4091c9e306eb44a5f7a4
   SDWebImage: 3f3f0c02f09798048c47a5ed0a13f17b063572d8
+  SQLite.swift: 7cad9db150a03716336e69469ec9559c85aece5b
   TRMosaicLayout: 1875505c48dd2877afd69a8bea7b4c1c63afa5b5
   XLActionController: d7dea0b162bd3977311bcba7d377b88d6b87a7b4
 
-PODFILE CHECKSUM: 44756514a6aeddb51d41081093067ae64f5ffc30
+PODFILE CHECKSUM: 5b4af3c853a33776694bbeddafa51b6a04e9f746
 
-COCOAPODS: 1.7.0
+COCOAPODS: 1.6.1

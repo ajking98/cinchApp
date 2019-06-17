@@ -25,10 +25,11 @@
 		46D5E08022ADABC3003B41DE /* StorageStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E07F22ADABC3003B41DE /* StorageStruct.swift */; };
 		46D5E10B22B54473003B41DE /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46D5E10A22B54473003B41DE /* SQLite.framework */; };
 		46D5E10C22B5448A003B41DE /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46D5E10A22B54473003B41DE /* SQLite.framework */; };
-		46D5E10D22B5448A003B41DE /* SQLite.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 46D5E10A22B54473003B41DE /* SQLite.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6E591AF9ECEE74F44925E53C /* Pods_InstagramCloneTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC945FE0D7581185DE7FBF19 /* Pods_InstagramCloneTests.framework */; };
 		89871252229DE98200BE8F23 /* ZoomingImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89871251229DE98200BE8F23 /* ZoomingImage.swift */; };
 		89871254229DEA2700BE8F23 /* DiscoverPageBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89871253229DEA2700BE8F23 /* DiscoverPageBackground.swift */; };
+		8999112222B848E500B0D96E /* Camera.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8999112022B848E500B0D96E /* Camera.storyboard */; };
+		8999112422B8499E00B0D96E /* CameraViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8999112322B8499E00B0D96E /* CameraViewCell.swift */; };
 		89CD1D04229201BA004BD0A0 /* DownloadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CD1D03229201BA004BD0A0 /* DownloadImage.swift */; };
 		8E123EFA22B7229400F3ED5D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E123EF922B7229400F3ED5D /* Main.storyboard */; };
 		8E225D8922B7285600FF75E7 /* Start.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E225D8822B7285600FF75E7 /* Start.storyboard */; };
@@ -53,7 +54,6 @@
 		EB74D3EA22603DA900556399 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB74D3E922603DA900556399 /* CameraViewController.swift */; };
 		EB74D3EE22603DC200556399 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB74D3ED22603DC200556399 /* ProfileViewController.swift */; };
 		EB74D3F4226045A600556399 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB74D3F2226045A600556399 /* Home.storyboard */; };
-		EB74D3F92260465500556399 /* Camera.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB74D3F72260465500556399 /* Camera.storyboard */; };
 		EB74D3FE226046C800556399 /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB74D3FC226046C800556399 /* Profile.storyboard */; };
 		EBE992ED226E3B8D002D01CF /* TRCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE992EC226E3B8D002D01CF /* TRCollectionViewController.swift */; };
 /* End PBXBuildFile section */
@@ -131,7 +131,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				46D5E10D22B5448A003B41DE /* SQLite.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -161,6 +160,8 @@
 		64A9B990C160D383D7FF0D45 /* Pods-InstagramCloneTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramCloneTests.release.xcconfig"; path = "Target Support Files/Pods-InstagramCloneTests/Pods-InstagramCloneTests.release.xcconfig"; sourceTree = "<group>"; };
 		89871251229DE98200BE8F23 /* ZoomingImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomingImage.swift; sourceTree = "<group>"; };
 		89871253229DEA2700BE8F23 /* DiscoverPageBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverPageBackground.swift; sourceTree = "<group>"; };
+		8999112122B848E500B0D96E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = ../../../../Documents/cinchApp/InstagramClone/Storyboards/InstagramClone/InstagramClone/Base.lproj/Camera.storyboard; sourceTree = "<group>"; };
+		8999112322B8499E00B0D96E /* CameraViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CameraViewCell.swift; path = ../../../Documents/cinchApp/InstagramClone/CameraViewCell.swift; sourceTree = "<group>"; };
 		89CD1D03229201BA004BD0A0 /* DownloadImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadImage.swift; sourceTree = "<group>"; };
 		8E123EF922B7229400F3ED5D /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		8E225D8822B7285600FF75E7 /* Start.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Start.storyboard; path = ../../Start.storyboard; sourceTree = "<group>"; };
@@ -195,7 +196,6 @@
 		EB74D3E922603DA900556399 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		EB74D3ED22603DC200556399 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		EB74D3F3226045A600556399 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = InstagramClone/InstagramClone/Base.lproj/Home.storyboard; sourceTree = "<group>"; };
-		EB74D3F82260465500556399 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = InstagramClone/InstagramClone/Base.lproj/Camera.storyboard; sourceTree = "<group>"; };
 		EB74D3FD226046C800556399 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = InstagramClone/InstagramClone/Base.lproj/Profile.storyboard; sourceTree = "<group>"; };
 		EBE992EC226E3B8D002D01CF /* TRCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TRCollectionViewController.swift; sourceTree = "<group>"; };
 		FC945FE0D7581185DE7FBF19 /* Pods_InstagramCloneTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstagramCloneTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -350,6 +350,7 @@
 				EB74D3B5226025E900556399 /* AppDelegate.swift */,
 				EB74D3B7226025E900556399 /* ViewController.swift */,
 				EB74D3E922603DA900556399 /* CameraViewController.swift */,
+				8999112322B8499E00B0D96E /* CameraViewCell.swift */,
 				EB74D3E322602B2C00556399 /* SignUpViewController.swift */,
 				EB3A43312263A07600F6F339 /* HomeCollectionViewController.swift */,
 				EB63B7DB226A7584004C7E2C /* HomeCollectionViewCell.swift */,
@@ -391,9 +392,9 @@
 			children = (
 				EB74D3BE226025EA00556399 /* LaunchScreen.storyboard */,
 				8E123EF922B7229400F3ED5D /* Main.storyboard */,
+				8999112022B848E500B0D96E /* Camera.storyboard */,
 				8E225D8822B7285600FF75E7 /* Start.storyboard */,
 				EB74D3F2226045A600556399 /* Home.storyboard */,
-				EB74D3F72260465500556399 /* Camera.storyboard */,
 				EB74D3FC226046C800556399 /* Profile.storyboard */,
 			);
 			path = Storyboards;
@@ -567,7 +568,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EB74D3C0226025EA00556399 /* LaunchScreen.storyboard in Resources */,
-				EB74D3F92260465500556399 /* Camera.storyboard in Resources */,
+				8999112222B848E500B0D96E /* Camera.storyboard in Resources */,
 				EB74D3F4226045A600556399 /* Home.storyboard in Resources */,
 				8E123EFA22B7229400F3ED5D /* Main.storyboard in Resources */,
 				EB74D3BD226025EA00556399 /* Assets.xcassets in Resources */,
@@ -602,9 +603,38 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-InstagramClone/Pods-InstagramClone-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-InstagramClone/Pods-InstagramClone-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Cards/Cards.framework",
+				"${BUILT_PRODUCTS_DIR}/EasyImagy/EasyImagy.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/Player/Player.framework",
+				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
+				"${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework",
+				"${BUILT_PRODUCTS_DIR}/TRMosaicLayout/TRMosaicLayout.framework",
+				"${BUILT_PRODUCTS_DIR}/XLActionController/XLActionController.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
+				"${BUILT_PRODUCTS_DIR}/libwebp/libwebp.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-InstagramClone/Pods-InstagramClone-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cards.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EasyImagy.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Player.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TRMosaicLayout.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLActionController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/libwebp.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -711,6 +741,7 @@
 				EB63B7DE226A7933004C7E2C /* CustomImageFlowLayout.swift in Sources */,
 				EB74D3EE22603DC200556399 /* ProfileViewController.swift in Sources */,
 				EB74D3EA22603DA900556399 /* CameraViewController.swift in Sources */,
+				8999112422B8499E00B0D96E /* CameraViewCell.swift in Sources */,
 				EB40EF9D2263F7E20093BB5B /* InsideFolderCollectionViewController.swift in Sources */,
 				46D5E06822A323A9003B41DE /* userClass.swift in Sources */,
 				EB63B7E0226A7EB5004C7E2C /* ImageInsta.swift in Sources */,
@@ -752,6 +783,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		8999112022B848E500B0D96E /* Camera.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8999112122B848E500B0D96E /* Base */,
+			);
+			name = Camera.storyboard;
+			sourceTree = "<group>";
+		};
 		EB74D3BE226025EA00556399 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -766,14 +805,6 @@
 				EB74D3F3226045A600556399 /* Base */,
 			);
 			name = Home.storyboard;
-			sourceTree = "<group>";
-		};
-		EB74D3F72260465500556399 /* Camera.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				EB74D3F82260465500556399 /* Base */,
-			);
-			name = Camera.storyboard;
 			sourceTree = "<group>";
 		};
 		EB74D3FC226046C800556399 /* Profile.storyboard */ = {
@@ -910,13 +941,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8NHWSCYNF7;
+				DEVELOPMENT_TEAM = 3U2RYAR5C3;
 				INFOPLIST_FILE = InstagramClone/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.InstagramClone;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.InstagramClon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -931,13 +962,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8NHWSCYNF7;
+				DEVELOPMENT_TEAM = 3U2RYAR5C3;
 				INFOPLIST_FILE = InstagramClone/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.InstagramClone;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.InstagramClon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;

@@ -11,6 +11,7 @@ target 'InstagramClone' do
   pod 'Firebase/Storage','~>4.0'
   platform :ios, '11.0'
   pod 'TRMosaicLayout'
+  pod 'SQLite.swift', '~> 0.12.0'
   
   # Pods for CameraViewFinal
   pod "EasyImagy", :path => "../swift-image"
