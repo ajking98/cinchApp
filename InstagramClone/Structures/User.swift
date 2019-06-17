@@ -22,7 +22,7 @@ class User  {
     var uuid : UUID?
     
     //default variables 
-    let defaultProfilePic = UIImage(named: "profilePlaceholder")
+    let defaultProfilePic = UIImage(named: "userPlaceholder")
     let folder1 = Folder(folderName: "personal")
     
     init() {
@@ -74,7 +74,7 @@ class User  {
     }
     
     func toString() -> [String: Any] {
-        let userString:[String : Any] = ["name": name, "email": email, "username": username, "password": password, "isPrivate": isPrivate, "profilePic": profilePic?.toString(), "folders": [folder1.folderName: folder1.toString()], "dateCreated": dateCreated?.toString(), "dateLastActive": dateLastActive?.toString()]
+        let userString:[String : Any] = ["name": name, "email": email, "username": username, "password": password, "isPrivate": isPrivate, "profilePic": "https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/userImages%2FhKaBCKrdabATDWHqnWIa?alt=media&token=3c8756d0-326c-42cf-86a3-b9901797749c", "folders": [folder1.folderName: folder1.toString()], "dateCreated": dateCreated?.toString(), "dateLastActive": dateLastActive?.toString()]
         return userString
     }
 }

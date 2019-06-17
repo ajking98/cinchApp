@@ -28,30 +28,38 @@ import FirebaseStorage
 struct UserStruct {
     let DB = Database.database().reference().child("users")
     let uuid = UIDevice.current.identifierForVendor!
+    
     /*
      Name
      */
-    func readName <T>(user : T, nameClosure: @escaping (String) -> Void) -> Void {
+    func printVal(val:String) -> String {
+        print("Hey there, \(val)")
+        return val
+    }
+    
+    func readName <T>(user : T) -> Void {
         guard user is UUID else {
             DB.child(String(describing: user)).observeSingleEvent(of: .value) { (snapshot) -> Void in
                 if let dict = snapshot.value as? [String:Any] {
                     var name:String?
                     let value = snapshot.value as? NSDictionary
                     name = value?["name"] as? String ?? ""
-                    nameClosure(name!)
+//                    nameClosure(name!)
+                    self.printVal(val: name!)
+                    
                 }
             }
             return
         }
-        DB.child(uuid.uuidString).observeSingleEvent(of: .value) { (snapshot) -> Void in
-            if let dict = snapshot.value as? [String:Any] {
-                var name:String?
-                let value = snapshot.value as? NSDictionary
-                name = value?["name"] as? String ?? ""
-                nameClosure(name!)
-            }
-        }
-        return
+//        DB.child(uuid.uuidString).observeSingleEvent(of: .value) { (snapshot) -> Void in
+//            if let dict = snapshot.value as? [String:Any] {
+//                var name:String?
+//                let value = snapshot.value as? NSDictionary
+//                name = value?["name"] as? String ?? ""
+//                nameClosure(name!)
+//            }
+//        }
+//        return
     }
     
     //returns true if successful
@@ -393,14 +401,14 @@ struct UserStruct {
     
     //Update
     //Is used to rename a folder
-    func updateFolder<T>(user : T, prevFolderName: String, newFolderName: String, prevFolderainfo: Folder) -> Bool {
+    func updateFolder<T>(user : T, prevFolderName: String, newFolderName: String, prevFolderinfo: Folder) -> Bool {
         guard user is UUID else {
-            DB.child(String(describing: user)).child("folders").updateChildValues([newFolderName: prevFolderainfo.toString()])
+            DB.child(String(describing: user)).child("folders").updateChildValues([newFolderName: prevFolderinfo.toString()])
             deleteFolder(user: String(describing: user), folderName: prevFolderName)
             return true
         }
         //Handle UUID
-        DB.child(uuid.uuidString).child("folders").updateChildValues([newFolderName: prevFolderainfo.toString()])
+        DB.child(uuid.uuidString).child("folders").updateChildValues([newFolderName: prevFolderinfo.toString()])
         deleteFolder(user: String(describing: user), folderName: prevFolderName)
         return true
     }

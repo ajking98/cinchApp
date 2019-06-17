@@ -2,30 +2,58 @@
 //  HelperFrontEnd.swift
 //  Helper
 //
-//  Created by Gedi on 5/27/19.
+//  Created by Gedi on 5/27/19. 
 //  Copyright © 2019 Gedi, Ahmed M. All rights reserved.
 //
 
 import Foundation
+import UIKit
 import XLActionController
+import FirebaseAuth
+import FirebaseDatabase
+import FirebaseStorage
+import SQLite
 
 
 struct Helper {
+    let uuid = UIDevice.current.identifierForVendor!
+    var userVar = User()
+    var foldersVar = [String]()
+    var main = ViewController();
     
     func saveToFolder(image: UIImage) -> SpotifyActionController {
-        
         let actionController = SpotifyActionController()
+        
+        //        main.createTable()
         
         actionController.headerData = SpotifyHeaderData(title: "Which folder do you want to save to?", subtitle: "", image: image)
         
-        for x in 0 ... 5{
-            actionController.addAction(Action(ActionData(title: "Folder #\(x)", subtitle: "For Content"), style: .default, handler: nil))
+        if Auth.auth().currentUser != nil {
+            // User is signed in.
+            print("hey")
+        } else {
+            ParentStruct().readUser(user: uuid.uuidString, completion: { (userInfo:User, dateCreated:String, dateLastActive:String, folders:Any) in
+                print("printing user: ", userInfo)
+                print("printing name: ", userInfo.name!)
+                
+            })
+        }
+        let defaults = main.userDefaults
+        let foodArray = defaults.object(forKey: defaultKeys.folderKey) as? [String] ?? [String]()
+        print(foodArray.count)
+        print(foodArray[0])
+        for item in foodArray {
+            actionController.addAction(Action(ActionData(title: "\(item.uppercased())", subtitle: "For Content"), style: .default, handler: { action in
+                print("the button has been clicked")
+                print(item)
+                StorageStruct().UploadContent(user: self.uuid.uuidString, folderName: item, content: image)
+                
+            }))
             
         }
         
         return actionController
     }
-    
     
     func vibrate(style : UIImpactFeedbackGenerator.FeedbackStyle){
         //medium level vibration feedback
@@ -68,10 +96,7 @@ struct Helper {
             
         })
     }
-    
 }
-
-
 
     
     

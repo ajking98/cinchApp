@@ -57,7 +57,7 @@ class Folder {
     }
     
     func toString() -> [String: Any] {
-        let folderString:[String : Any] = ["icon": icon?.toString(), "dateCreated": dateCreated?.toString(), "dateLastModified": dateLastModified?.toString(), "isPrivate": isPrivate, "numOfImages": numOfImages, "numOfVideos": numOfVideos, "content": content]
+        let folderString:[String : Any] = ["icon": "https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/userImages%2FGcdcSCTmFaruYKWnntBr?alt=media&token=35e80ea4-83fa-4941-8f3a-8b18ed86a35d", "dateCreated": dateCreated?.toString(), "dateLastModified": dateLastModified?.toString(), "isPrivate": isPrivate, "numOfImages": numOfImages, "numOfVideos": numOfVideos, "content": content]
         return folderString
     }
     
