@@ -14,7 +14,7 @@ target 'InstagramClone' do
   pod 'SQLite.swift', '~> 0.12.0'
   
   # Pods for CameraViewFinal
-  pod "EasyImagy", :path => "../swift-image"
+#  pod "EasyImagy", :path => "../swift-image"
   pod 'XLActionController/Spotify'
   
   
