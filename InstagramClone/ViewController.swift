@@ -49,53 +49,17 @@ class ViewController: UIViewController {
         }
 
         ParentStruct().readUser(user: uuid.uuidString, completion: { (userInfo:User, dateCreated:String, dateLastActive:String, folders:Any) in
-            print("printing userhh: ", userInfo)
-            print("printing name: ", userInfo.name!)
-            print("printing password: ", userInfo.password!)
             UserStruct().readFolders(user: self.uuid.uuidString, readFolderClosure: {(folders:[String]) in
-                for item in folders {
-                    print(item)
-                }
-                self.userDefaults.set(folders, forKey: defaultKeys.folderKey)
-                self.userDefaults.set(userInfo.name!, forKey: defaultKeys.nameKey)
-                self.userDefaults.set(userInfo.email!, forKey: defaultKeys.emailKey)
-                self.userDefaults.set(userInfo.password!, forKey: defaultKeys.passwordKey)
-                self.userDefaults.set(userInfo.isPrivate, forKey: defaultKeys.isPrivateKey)
-                self.userDefaults.set(dateCreated, forKey: defaultKeys.dateCreatedKey)
-                self.userDefaults.set(dateLastActive, forKey: defaultKeys.dateLastActiveKey)
+                // Get User's Info
+                self.userDefaults.set(folders, forKey: defaultsKeys.folderKey)
+                self.userDefaults.set(userInfo.name!, forKey: defaultsKeys.nameKey)
+                self.userDefaults.set(userInfo.email!, forKey: defaultsKeys.emailKey)
+                self.userDefaults.set(userInfo.password!, forKey: defaultsKeys.passwordKey)
+                self.userDefaults.set(userInfo.isPrivate, forKey: defaultsKeys.isPrivateKey)
+                self.userDefaults.set(dateCreated, forKey: defaultsKeys.dateCreatedKey)
+                self.userDefaults.set(dateLastActive, forKey: defaultsKeys.dateLastActiveKey)
             })
         })
-        
-        // Do any additional setup after loading the view.
-        emailTextField.backgroundColor = UIColor.clear
-        emailTextField.tintColor = UIColor.white
-        emailTextField.textColor = UIColor.white
-        emailTextField.attributedPlaceholder = NSAttributedString(string: emailTextField.placeholder!, attributes: [NSAttributedString.Key.foregroundColor: UIColor(white:1.0, alpha: 0.6)] as [NSAttributedString.Key: Any])
-        
-        let bottomLayer = CALayer()
-        bottomLayer.frame = CGRect(x: 0, y: 29, width: UIScreen.main.bounds.width - 70, height: 0.6)
-        bottomLayer.backgroundColor = UIColor(red: 255/255, green: 50/255, blue: 2/255, alpha: 1).cgColor
-        emailTextField.layer.addSublayer(bottomLayer)
-        
-        passwordTextField.backgroundColor = UIColor.clear
-        passwordTextField.tintColor = UIColor.white
-        passwordTextField.textColor = UIColor.white
-        passwordTextField.attributedPlaceholder = NSAttributedString(string: passwordTextField.placeholder!, attributes: [NSAttributedString.Key.foregroundColor: UIColor(white:1.0, alpha: 0.6)] as [NSAttributedString.Key: Any])
-        
-        let bottomLayerPassword = CALayer()
-        bottomLayerPassword.frame = CGRect(x: 0, y: 29, width: UIScreen.main.bounds.width - 70, height: 0.6)
-        bottomLayerPassword.backgroundColor = UIColor(red: 255/255, green: 50/255, blue: 2/255, alpha: 1).cgColor
-        passwordTextField.layer.addSublayer(bottomLayerPassword)
-        
-        
-        nameTextField.backgroundColor = UIColor.clear
-        nameTextField.tintColor = UIColor.white
-        nameTextField.textColor = UIColor.white
-        nameTextField.attributedPlaceholder = NSAttributedString(string: nameTextField.placeholder!, attributes: [NSAttributedString.Key.foregroundColor: UIColor(white:1.0, alpha: 0.6)] as [NSAttributedString.Key: Any])
-        
-        bottomLayer.frame = CGRect(x: 0, y: 29, width: UIScreen.main.bounds.width - 70, height: 0.6)
-        bottomLayer.backgroundColor = UIColor(red: 255/255, green: 50/255, blue: 2/255, alpha: 1).cgColor
-        nameTextField.layer.addSublayer(bottomLayer)
     }
     
     
@@ -103,32 +67,7 @@ class ViewController: UIViewController {
         view.endEditing(true)
     }
     
-    @IBAction func loginClickButton(_ sender: Any) {
-        print("Login button clicked")
-//        self.createTable()
-//        self.insertUser()
-//        self.listUsers()
-//        getUserInfo()
-        if (emailTextField.text != "" && passwordTextField.text != "" ) {
-            Auth.auth().signIn(withEmail: emailTextField.text!, password: passwordTextField.text!) {
-                (user, error) in
-                
-                if (user != nil) {
-                    print("User authenticated")
-                    self.presentingViewController?.dismiss(animated: true, completion: nil)
-                    // self.performSegue(withIdentifier: "homeView", sender: self)
-                } else {
-                    print("there was a error")
-//                    self.errorLabel?.isHidden = false
-                }
-                
-            }
-        } else {
-            print("there was an error")
-//            self.errorLabel?.isHidden = false
-        }
-    }
-    
+    // Creates Table
     func createTable() {
         print("Create Table")
         
@@ -221,27 +160,27 @@ class ViewController: UIViewController {
     }
     
     func getUserInfo() {
-        if let stringOne = self.userDefaults.string(forKey: defaultKeys.nameKey) {
+        if let stringOne = self.userDefaults.string(forKey: defaultsKeys.nameKey) {
             print(stringOne) // Some String Value
         }
         
-        if let stringTwo = self.userDefaults.string(forKey: defaultKeys.emailKey) {
+        if let stringTwo = self.userDefaults.string(forKey: defaultsKeys.emailKey) {
             print(stringTwo) // Some String Value
         }
-        if let stringThree = self.userDefaults.string(forKey: defaultKeys.passwordKey) {
+        if let stringThree = self.userDefaults.string(forKey: defaultsKeys.passwordKey) {
             print(stringThree) // Some String Value
         }
-        if let stringFour = self.userDefaults.string(forKey: defaultKeys.isPrivateKey) {
+        if let stringFour = self.userDefaults.string(forKey: defaultsKeys.isPrivateKey) {
             print(stringFour) // Some String Value
         }
-        if let stringFive = self.userDefaults.string(forKey: defaultKeys.dateCreatedKey) {
+        if let stringFive = self.userDefaults.string(forKey: defaultsKeys.dateCreatedKey) {
             print(stringFive) // Some String Value
         }
-        if let stringSix = self.userDefaults.string(forKey: defaultKeys.dateLastActiveKey) {
+        if let stringSix = self.userDefaults.string(forKey: defaultsKeys.dateLastActiveKey) {
             print(stringSix) // Some String Value
         }
         
-        let foodArray = self.userDefaults.object(forKey: defaultKeys.folderKey) as? [String] ?? [String]()
+        let foodArray = self.userDefaults.object(forKey: defaultsKeys.folderKey) as? [String] ?? [String]()
         print(foodArray.count)
         print(foodArray[0])
     }
