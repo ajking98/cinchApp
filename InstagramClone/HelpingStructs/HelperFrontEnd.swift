@@ -38,19 +38,18 @@ struct Helper {
                 
             })
         }
-        let defaults = main.userDefaults
-        let foodArray = defaults.object(forKey: defaultKeys.folderKey) as? [String] ?? [String]()
-        print(foodArray.count)
-        print(foodArray[0])
-        for item in foodArray {
-            actionController.addAction(Action(ActionData(title: "\(item.uppercased())", subtitle: "For Content"), style: .default, handler: { action in
-                print("the button has been clicked")
-                print(item)
-                StorageStruct().UploadContent(user: self.uuid.uuidString, folderName: item, content: image)
-                
-            }))
-            
-        }
+//        let defaults = main.userDefaults
+//        let foodArray = defaults.object(forKey: defaultsKeys.folderKey) as? [String] ?? [String]()
+//        print(foodArray.count)
+//        for item in foodArray {
+//            actionController.addAction(Action(ActionData(title: "\(item.uppercased())", subtitle: "For Content"), style: .default, handler: { action in
+//                print("the button has been clicked")
+//                print(item)
+//                StorageStruct().UploadContent(user: self.uuid.uuidString, folderName: item, content: image)
+//                
+//            }))
+//            
+//        }
         
         return actionController
     }

@@ -15,9 +15,11 @@ import FirebaseStorage
 struct ParentStruct {
     let DB = Database.database().reference().child("users")
     let uuid = UIDevice.current.identifierForVendor!
+    var main = ViewController();
+
     //returns true if the user was successfully added
-    // WORKS
     func createUser(user : User) -> Bool{
+        let defaults = main.userDefaults
         if user.username == nil {
             //USE UUID
             let uuid = UIDevice.current.identifierForVendor!
