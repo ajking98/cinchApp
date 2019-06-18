@@ -8,7 +8,8 @@
 import Foundation
 
 struct defaultsKeys {
-    static let usernameKey = "usernameKey" 
+    static var usernameKey = "usernameKey"
+    var profileCreatedKey = "profileCreatedKey"
     static let nameKey = "nameKey"
     static let emailKey = "emailKey"
     static let passwordKey = "passwordKey"

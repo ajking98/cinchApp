@@ -23,7 +23,8 @@ class User  {
     
     //default variables 
     let defaultProfilePic = UIImage(named: "userPlaceholder")
-    let folder1 = Folder(folderName: "personal")
+    let folder1 = Folder(folderName: "random")
+    let folder2 = Folder(folderName: "reactions")
     
     init() {
         name = ""
@@ -51,6 +52,17 @@ class User  {
         self.dateLastActive = Date()
     }
     
+    init(username : String) {
+        self.name = ""
+        self.email = ""
+        self.username = username
+        self.password = ""
+        self.isPrivate = false
+        self.profilePic = defaultProfilePic
+        self.dateCreated = Date()
+        self.dateLastActive = Date()
+    }
+    
     
     init(name : String, username : String, email : String, password: String, isPrivate:Bool, profilePic : UIImage) {
         self.name = name
@@ -74,7 +86,7 @@ class User  {
     }
     
     func toString() -> [String: Any] {
-        let userString:[String : Any] = ["name": name, "email": email, "username": username, "password": password, "isPrivate": isPrivate, "profilePic": "https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/userImages%2FhKaBCKrdabATDWHqnWIa?alt=media&token=3c8756d0-326c-42cf-86a3-b9901797749c", "folders": [folder1.folderName: folder1.toString()], "dateCreated": dateCreated?.toString(), "dateLastActive": dateLastActive?.toString()]
+        let userString:[String : Any] = ["name": name, "email": email, "username": username, "password": password, "isPrivate": isPrivate, "profilePic": "https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/userImages%2FhKaBCKrdabATDWHqnWIa?alt=media&token=3c8756d0-326c-42cf-86a3-b9901797749c", "folders": [folder1.folderName: folder1.toString(), folder2.folderName: folder2.toString()], "dateCreated": dateCreated?.toString(), "dateLastActive": dateLastActive?.toString()]
         return userString
     }
 }

@@ -20,36 +20,25 @@ struct Helper {
     var userVar = User()
     var foldersVar = [String]()
     var main = ViewController();
+    let username = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)
     
     func saveToFolder(image: UIImage) -> SpotifyActionController {
         let actionController = SpotifyActionController()
         
-        //        main.createTable()
-        
         actionController.headerData = SpotifyHeaderData(title: "Which folder do you want to save to?", subtitle: "", image: image)
         
-        if Auth.auth().currentUser != nil {
-            // User is signed in.
-            print("hey")
-        } else {
-            ParentStruct().readUser(user: uuid.uuidString, completion: { (userInfo:User, dateCreated:String, dateLastActive:String, folders:Any) in
-                print("printing user: ", userInfo)
-                print("printing name: ", userInfo.name!)
+        let defaults = main.userDefaults
+        let foodArray = defaults.object(forKey: defaultsKeys.folderKey) as? [String] ?? [String]()
+        print(foodArray.count)
+        for item in foodArray {
+            actionController.addAction(Action(ActionData(title: "\(item.uppercased())", subtitle: "For Content"), style: .default, handler: { action in
+                print("the button has been clicked")
+                print(item)
+                StorageStruct().UploadContent(user: UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!, folderName: item, content: image)
                 
-            })
+            }))
+            
         }
-//        let defaults = main.userDefaults
-//        let foodArray = defaults.object(forKey: defaultsKeys.folderKey) as? [String] ?? [String]()
-//        print(foodArray.count)
-//        for item in foodArray {
-//            actionController.addAction(Action(ActionData(title: "\(item.uppercased())", subtitle: "For Content"), style: .default, handler: { action in
-//                print("the button has been clicked")
-//                print(item)
-//                StorageStruct().UploadContent(user: self.uuid.uuidString, folderName: item, content: image)
-//                
-//            }))
-//            
-//        }
         
         return actionController
     }

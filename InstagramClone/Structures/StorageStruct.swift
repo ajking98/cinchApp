@@ -15,73 +15,36 @@ import FirebaseStorage
 struct StorageStruct {
     // WORKS
     //Uploads image to Firebase Storage and adds the path to the firebase database under the user's profile image key
-    func UploadProfilePic<T>(user : T, image : UIImage) -> Bool {
-        if user == nil {
+    func UploadProfilePic(user : String, image : UIImage) -> Bool {
             //Perform operation for Username given
-            let uuid = UIDevice.current.identifierForVendor?.uuidString
-            var data = Data()
-            data = image.jpegData(compressionQuality: 0.8)!
-            
-            let refImages = Database.database().reference().child("users").child(uuid!)
-            let storageRef = Storage.storage().reference().child("userImages/" + randomString(20))
-            
-            // Upload the file to the path "images/rivers.jpg"
-            _ = storageRef.putData(data, metadata: nil) { (metadata, error) in
-                guard let metadata = metadata else {
-                    // Uh-oh, an error occurred!
-                    print("Error occurred")
-                    return
-                }
-                // Metadata contains file metadata such as size, content-type.
-                
-                // You can also access to download URL after upload.
-                storageRef.downloadURL { (url, error) in
-                    if (error == nil) {
-                        if let downloadUrl = url {
-                            // Make you download string
-                            let image = [downloadUrl.absoluteString]
-                            let dict = ["profilePic": image]
-                            refImages.updateChildValues(dict)
-                        }
-                    }
-                    guard let url = url else {
-                        // Uh-oh, an error occurred!
-                        return
-                    }
-                }
+        var data = Data()
+        data = image.jpegData(compressionQuality: 0.8)!
+        
+        let refImages = Database.database().reference().child("users").child(user)
+        let storageRef = Storage.storage().reference().child("userImages/" + randomString(20))
+        
+        // Upload the file to the path "images/rivers.jpg"
+        _ = storageRef.putData(data, metadata: nil) { (metadata, error) in
+            guard let metadata = metadata else {
+                // Uh-oh, an error occurred!
+                print("Error occurred")
+                return
             }
-            return true
-        } else {
-        //perform operation given a UUID
-            var data = Data()
-            data = image.jpegData(compressionQuality: 0.8)!
+            // Metadata contains file metadata such as size, content-type.
             
-            let refImages = Database.database().reference().child("users").child(String(describing: user))
-            let storageRef = Storage.storage().reference().child("userImages/" + randomString(20))
-            
-            // Upload the file to the path "images/rivers.jpg"
-            _ = storageRef.putData(data, metadata: nil) { (metadata, error) in
-                guard let metadata = metadata else {
-                    // Uh-oh, an error occurred!
-                    print("Error occurred")
-                    return
+            // You can also access to download URL after upload.
+            storageRef.downloadURL { (url, error) in
+                if (error == nil) {
+                    if let downloadUrl = url {
+                        // Make you download string
+                        let image = [downloadUrl.absoluteString]
+                        let dict = ["profilePic": image]
+                        refImages.updateChildValues(dict)
+                    }
                 }
-                // Metadata contains file metadata such as size, content-type.
-                
-                // You can also access to download URL after upload.
-                storageRef.downloadURL { (url, error) in
-                    if (error == nil) {
-                        if let downloadUrl = url {
-                            // Make you download string
-                            let image = [downloadUrl.absoluteString]
-                            let dict = ["profilePic": image]
-                            refImages.updateChildValues(dict)
-                        }
-                    }
-                    guard let url = url else {
-                        // Uh-oh, an error occurred!
-                        return
-                    }
+                guard let url = url else {
+                    // Uh-oh, an error occurred!
+                    return
                 }
             }
         }

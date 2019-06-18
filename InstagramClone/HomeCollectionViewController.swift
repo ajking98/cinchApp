@@ -8,9 +8,12 @@
 
 import UIKit
 import FirebaseDatabase
+import FirebaseStorage
+import FirebaseAuth
 import SDWebImage
 import Photos
 import XLActionController
+import SQLite
 
 
 class HomeCollectionViewController: UICollectionViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -21,6 +24,7 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
     @IBOutlet var imageCollection: UICollectionView!
     var customImageFlowLayout: CustomImageFlowLayout!
     var dbRef: DatabaseReference!
+    let uuid = UIDevice.current.identifierForVendor!
     var images = [ImageInsta]()
     var icon = UIImage(named: "download_icon")
     var save = UIImage(named: "add")
@@ -34,14 +38,106 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
     var downloadIconView : UIImageView?
     var addIconView : UIImageView?
     
+    var database: Connection!
+    var randomUniqueId: String?
+    let usersTable = Table("users")
+    let id = Expression<Int>("id")
+    let name = Expression<String?>("name")
+    let email = Expression<String?>("email")
+    let password = Expression<String?>("password")
+    let isPrivate = Expression<Bool?>("isPrivate")
+    //    let profilePic = Expression<String?>("profilePic")
+    //    let dateCreated = Expression<String?>("dateCreated")
+    //    let dateLastActive = Expression<String?>("dateLastActive")
+    //    let folder = Expression<[String]?>("folders")
+    
+    let userDefaults = UserDefaults.standard
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+//        deleteUserFromDefault(key: defaultsKeys.usernameKey)
+        let status = userDefaults.string(forKey: defaultsKeys.usernameKey) ?? ""
+        if status == "" {
+            print("Hey")
+            let uniqueUsername = randomUniqueId(length: 10)
+            // TODO Create Function for checking for duplicates
+//            checkUserForDuplicates(uniqueUsername)
+            userDefaults.set(uniqueUsername, forKey: defaultsKeys.usernameKey)
+            let newUser = User(username: uniqueUsername)
+            ParentStruct().createUser(user: newUser)
+
+            ParentStruct().readUser(user: newUser.username!, completion: { (userInfo:User, dateCreated:String, dateLastActive:String, folders:Any) in
+                UserStruct().readFolders(user: newUser.username!, readFolderClosure: {(folders:[String]) in
+                    // Get User's Info
+                    self.userDefaults.set(userInfo.name!, forKey: defaultsKeys.nameKey)
+                    self.userDefaults.set(userInfo.email!, forKey: defaultsKeys.emailKey)
+                    self.userDefaults.set(userInfo.password!, forKey: defaultsKeys.passwordKey)
+                    self.userDefaults.set(userInfo.isPrivate, forKey: defaultsKeys.isPrivateKey)
+                    self.userDefaults.set(dateCreated, forKey: defaultsKeys.dateCreatedKey)
+                    self.userDefaults.set(dateLastActive, forKey: defaultsKeys.dateLastActiveKey)
+                })
+            })
+        }
+//        let newUser = User(username: "Mark")
+//        ParentStruct().createUser(user: newUser)
+        UserStruct().updateName(user: UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!, newName: "John Malthus")
+        UserStruct().readName(user: UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!) { (name:String) in
+            print("Name: ", name)
+        }
         
+        UserStruct().updateEmail(user: UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!, newEmail: "John76@gmail.com")
+        UserStruct().readEmail(user: UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!) { (email:String) in
+            print("Email: ", email)
+        }
+        
+        UserStruct().updatePassword(user: UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!, newPassword: "hcebjcuebc78")
+        UserStruct().readPassword(user: UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!) { (password:String) in
+            print("Password: ", password)
+        }
+        
+        UserStruct().updateIsPrivate(user: UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!, newIsPrivate: true)
+        UserStruct().readIsPrivate(user: UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!, completion: { (isPrivate:Bool) in
+            print("Privacy is set to: ", isPrivate)
+        })
+        
+        UserStruct().updateNewProfilePic(user: UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!, newProfilePic: save!)
+        UserStruct().readProfilePic(user: UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!) { (profilePic:String) in
+            print("Profile Pic is: ", profilePic)
+        }
+        
+        UserStruct().readDateCreated(user: UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!) { (dateCreated:String) in
+            print("Date Created on: ", dateCreated)
+        }
+        
+        UserStruct().readDateLastActive(user: UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!, completion: { (dateLastActive) in
+            print("Last Day Active: ", dateLastActive)
+        })
+        
+        let folder3 = Folder(folderName: "funny")
+        UserStruct().addFolder(user: UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!, folder: folder3)
+        UserStruct().deleteFolder(user: UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!, folderName: folder3.folderName!)
+        
+//        StorageStruct().UploadProfilePic(user: UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!, image: icon!)
+        
+        print(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
+        
+        
+        
+        do {
+            let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+            let fileUrl = documentDirectory.appendingPathComponent("users").appendingPathExtension("sqlite3")
+            let database = try Connection(fileUrl.path)
+            self.database = database
+        } catch {
+            print(error)
+        }
+        
+//        print(userDefaults.string(forKey: defaultsKeys.folderKey)!)
         imagePicker.delegate = self
         
         // create a reference to the database
         dbRef = Database.database().reference().child("images")
-        print(dbRef)
+
         loadDB()
         
         imageCollection.alwaysBounceVertical = true
@@ -77,6 +173,150 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
         let swipe = UISwipeGestureRecognizer(target: self, action: #selector(openCameraView))
         swipe.direction = .left
         view.addGestureRecognizer(swipe)
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
+    
+    func deleteUserFromDefault(key:String) -> Bool {
+        var keyValue = UserDefaults.standard.object(forKey: key)
+        UserDefaults.standard.removeObject(forKey:key)
+        return true
+    }
+    
+    func randomUniqueId(length: Int) -> String {
+        
+        let letters : NSString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        let len = UInt32(letters.length)
+        
+        var randomString = "-%&%-"
+        
+        for _ in 0 ..< length {
+            let rand = arc4random_uniform(len)
+            var nextChar = letters.character(at: Int(rand))
+            randomString += NSString(characters: &nextChar, length: 1) as String
+        }
+        
+        return randomString
+    }
+    
+    // Creates Table
+    func createTable() {
+        print("Create Table")
+        
+        let createTable = self.usersTable.create { (table) in
+            table.column(self.id, primaryKey: true)
+            table.column(self.name)
+            table.column(self.email)
+            table.column(self.password)
+            table.column(self.isPrivate)
+            //            table.column(self.profilePic)
+            //            table.column(self.dateCreated)
+            //            table.column(self.dateLastActive)
+        }
+        
+        do {
+            try self.database.run(createTable)
+            print("Created Table")
+        } catch {
+            print(error)
+        }
+        
+    }
+    
+    func insertUser() {
+        print("Insert User")
+        ParentStruct().readUser(user: uuid.uuidString, completion: { (userInfo:User, dateCreated:String, dateLastActive:String, folders:Any) in
+            print("printing userhh: ", userInfo)
+            print("printing name: ", userInfo.name!)
+            print("printing password: ", userInfo.password!)
+            let insertUser = self.usersTable.insert(self.name <- userInfo.name!, self.email <- userInfo.email!, self.password <- userInfo.password!, self.isPrivate <- userInfo.isPrivate! )
+            
+            do {
+                try self.database.run(insertUser)
+                print("Inserted User ")
+            } catch {
+                print(error)
+            }
+        })
+        
+        
+    }
+    
+    
+    func listUsers() {
+        print("List Users")
+        do {
+            let users = try self.database.prepare(usersTable)
+            for user in users {
+                print("userID: \(user[self.id]), name: \(String(describing: user[self.name]!)), email: \(String(describing: user[self.email]!)), password: \(String(describing: user[self.password]!)), isPrivate: \(String(describing: user[self.isPrivate]!))" )
+            }
+        } catch {
+            print(error)
+        }
+    }
+    
+    func updateUser(_ sender: Any) {
+        print("Update User")
+        let alert = UIAlertController(title: "Update User", message: nil, preferredStyle: .alert)
+        alert.addTextField { (tf) in tf.placeholder = "User ID" }
+        alert.addTextField { (tf) in tf.placeholder = "Email" }
+        let action = UIAlertAction(title: "Submit", style: .default) { (_) in
+            guard let userIdString = alert.textFields?.first?.text,
+                let userId = Int(userIdString),
+                let email = alert.textFields?.last?.text
+                else { return }
+            print(userIdString)
+            print(email)
+            
+            let user = self.usersTable.filter(self.id == userId)
+            let updateUser = user.update(self.email <- email)
+            do {
+                try self.database.run(updateUser)
+            } catch {
+                print(error)
+            }
+        }
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func deleteUser(userId:Int) {
+        print("Delete User")
+        let user = self.usersTable.filter(self.id == userId)
+        let deleteUser = user.delete()
+        do {
+            try self.database.run(deleteUser)
+        } catch {
+            print(error)
+        }
+    }
+    
+    func getUserInfo() {
+        if let stringOne = self.userDefaults.string(forKey: defaultsKeys.nameKey) {
+            print(stringOne) // Some String Value
+        }
+        
+        if let stringTwo = self.userDefaults.string(forKey: defaultsKeys.emailKey) {
+            print(stringTwo) // Some String Value
+        }
+        if let stringThree = self.userDefaults.string(forKey: defaultsKeys.passwordKey) {
+            print(stringThree) // Some String Value
+        }
+        if let stringFour = self.userDefaults.string(forKey: defaultsKeys.isPrivateKey) {
+            print(stringFour) // Some String Value
+        }
+        if let stringFive = self.userDefaults.string(forKey: defaultsKeys.dateCreatedKey) {
+            print(stringFive) // Some String Value
+        }
+        if let stringSix = self.userDefaults.string(forKey: defaultsKeys.dateLastActiveKey) {
+            print(stringSix) // Some String Value
+        }
+        
+        let foodArray = self.userDefaults.object(forKey: defaultsKeys.folderKey) as? [String] ?? [String]()
+        print(foodArray.count)
+        print(foodArray[0])
     }
     
     func loadDB() {
