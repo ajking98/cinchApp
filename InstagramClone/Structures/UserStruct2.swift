@@ -172,8 +172,18 @@ struct UserStruct {
     //CREATE
     //Creates a new folder under the user in the database and returns the newly added folder
     func addFolder(user : String, folder : Folder) -> Void {
-        let location = DB.child(user).child("folders").child(folder.folderName!)
-        location.updateChildValues(folder.toString())
+        var folderArray = UserDefaults.standard.array(forKey: defaultsKeys.folderKey) as! [String]
+        if !folderArray.contains(folder.folderName!) {
+            let location = DB.child(user).child("folders").child(folder.folderName!)
+            location.updateChildValues(folder.toString())
+            addToFolderKey(folderName: folder.folderName!)
+        }
+    }
+    
+    func addToFolderKey(folderName:String) -> Void {
+        var folderArray = UserDefaults.standard.array(forKey: defaultsKeys.folderKey) as! [String]
+        folderArray.append(folderName)
+        UserDefaults.standard.set(folderArray, forKey: defaultsKeys.folderKey)
     }
     
     //READ
@@ -208,7 +218,17 @@ struct UserStruct {
     //Delete
     //Takes a user and a folder name and deletes the folder with that foldername from that user and returns the deleted folder
     func deleteFolder(user : String, folderName : String) ->Folder {
+        print("You cannot recover deleted folder")
         let DB = Database.database().reference().child("users").child(String(describing: user)).child("folders").child(folderName).removeValue()
+        deleteFolderKey(folderName: folderName)
         return Folder(folderName: folderName)
+    }
+    
+    func deleteFolderKey(folderName:String) -> Void {
+        var folderArray = UserDefaults.standard.array(forKey: defaultsKeys.folderKey) as! [String]
+        if let index = folderArray.index(of: folderName) {
+            folderArray.remove(at: index)
+        }
+        UserDefaults.standard.set(folderArray, forKey: defaultsKeys.folderKey)
     }
 }

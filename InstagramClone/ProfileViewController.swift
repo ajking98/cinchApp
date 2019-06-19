@@ -114,9 +114,9 @@ class ProfileViewController: UIViewController, UICollectionViewDataSource, UICol
             let textField = alert?.textFields![0]
             folderName = textField!.text!
             print("Text field: \(folderName)")
-            
+            let newFolder = Folder(folderName: folderName)
             //calling the function to save the folder name to Firebase and create it on the front end
-            self.saveFolder(folderName : folderName)
+            UserStruct().addFolder(user: UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!, folder: newFolder)
             self.createFolder(folderName: folderName)
         }))
         
