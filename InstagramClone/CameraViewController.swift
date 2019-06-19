@@ -11,9 +11,9 @@
 import UIKit
 import CoreImage
 import XLActionController
+import Photos
 
 class CameraViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
-    
     @IBOutlet weak var segmentControl: UISegmentedControl!
     
     
@@ -51,25 +51,69 @@ class CameraViewController: UIViewController, UICollectionViewDataSource, UIColl
     var isFullScreen = true
     
     
+    func isAuthorized() ->Bool{
+        var authStatus = false
+        let photos = PHPhotoLibrary.authorizationStatus()
+        if (photos == .authorized){
+            print("has already been pre-authorized")
+            authStatus = true
+        }
+            
+            //If Restricted by the user
+        else if (photos == .restricted) {
+            let alert = UIAlertController(title: "APP RESTRICTED", message: "you have restricted this app from accessing your photos", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            
+            self.present(alert, animated: true)
+        }
+            
+            //If denied or not determined, then ask
+        else {
+            PHPhotoLibrary.requestAuthorization({status in
+                if status == .authorized{
+                    print("thank you for authorizing")
+                    authStatus = true
+                } else { print("not authorized") }
+            })
+        }
+        return authStatus
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        guard isAuthorized() else {
+            //TODO Activate Permissions view
+
+            return
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        buildShadow() //Builds the shadows for the icons (AddButton and swipe bar)
-        buildSizes() //Also has the BuildBlur inside it (Must be called each time a new image is placed)
-        buildRadius() //Sets the radius for the imageViews (Needs to only be called once)
-        buildLayout()
-        buildGestures()
+        
+        var mainView: UIStoryboard!
+        mainView = UIStoryboard(name : "Camera", bundle: nil)
+        let myviewController  :UIViewController = mainView.instantiateViewController(withIdentifier: "ProfileViewController") as UIViewController
+        print("here is hte view conroller ", mainView)
+        self.present(myviewController, animated: true, completion: nil)
         
         
-        //Blurs need to only be built once
-        buildBlur(imageView: centerShadow)
-        buildBlur(imageView: nextShadow)
-        buildBlur(imageView: previousShadow)
-        
-        
-        imageCollectionViewFrame = imageCollectionView.frame
-        solidBarFrame = solidBar.frame
-        addButtonFrame = addButton.frame
+//        buildShadow() //Builds the shadows for the icons (AddButton and swipe bar)
+//        buildSizes() //Also has the BuildBlur inside it (Must be called each time a new image is placed)
+//        buildRadius() //Sets the radius for the imageViews (Needs to only be called once)
+//        buildLayout()
+//        buildGestures()
+//        
+//        
+//        //Blurs need to only be built once
+//        buildBlur(imageView: centerShadow)
+//        buildBlur(imageView: nextShadow)
+//        buildBlur(imageView: previousShadow)
+//        
+//        
+//        imageCollectionViewFrame = imageCollectionView.frame
+//        solidBarFrame = solidBar.frame
+//        addButtonFrame = addButton.frame
     }
     
     func change(imagePrev : UIImage, imageCurr : UIImage, imageNext : UIImage){
