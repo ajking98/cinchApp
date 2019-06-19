@@ -92,10 +92,12 @@ class CameraViewController: UIViewController, UICollectionViewDataSource, UIColl
         
         
         var mainView: UIStoryboard!
-        mainView = UIStoryboard(name : "Camera", bundle: nil)
-        let myviewController  :UIViewController = mainView.instantiateViewController(withIdentifier: "ProfileViewController") as UIViewController
+        mainView = UIStoryboard(name : "Permissions", bundle: nil)
+        let myviewController  :UIViewController = mainView.instantiateViewController(withIdentifier: "PermissionsView") as UIViewController
         print("here is hte view conroller ", mainView)
         self.present(myviewController, animated: true, completion: nil)
+        
+        //Created a testing123 swift file that must be deleted 
         
         
 //        buildShadow() //Builds the shadows for the icons (AddButton and swipe bar)
