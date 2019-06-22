@@ -12,7 +12,7 @@
         <!--EXPLORE-->
         <scene sceneID="GLa-zp-fps">
             <objects>
-                <collectionViewController id="mK1-q4-DSC" customClass="HomeCollectionViewController" customModule="InstagramClone" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="ExploreView" id="mK1-q4-DSC" customClass="HomeCollectionViewController" customModule="InstagramClone" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="2ae-ya-GH7">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -92,10 +92,10 @@
         <!--CameraID-->
         <scene sceneID="BWI-iw-gH3">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="zsQ-g2-10I" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewControllerPlaceholder storyboardName="Camera" referencedIdentifier="CameraID" id="pvU-q2-6Sf" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="olk-72-G4t"/>
                 </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zsQ-g2-10I" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4232" y="-1137"/>
         </scene>

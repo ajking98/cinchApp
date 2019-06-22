@@ -66,56 +66,42 @@ class CameraViewController: UIViewController, UICollectionViewDataSource, UIColl
             
             self.present(alert, animated: true)
         }
-            
             //If denied or not determined, then ask
         else {
-            PHPhotoLibrary.requestAuthorization({status in
-                if status == .authorized{
-                    print("thank you for authorizing")
-                    authStatus = true
-                } else { print("not authorized") }
-            })
+            authStatus = false
         }
         return authStatus
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        guard isAuthorized() else {
-            //TODO Activate Permissions view
-
-            return
-        }
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        var mainView: UIStoryboard!
-        mainView = UIStoryboard(name : "Permissions", bundle: nil)
-        let myviewController  :UIViewController = mainView.instantiateViewController(withIdentifier: "PermissionsView") as UIViewController
-        print("here is hte view conroller ", mainView)
-        self.present(myviewController, animated: true, completion: nil)
-        
-        //Created a testing123 swift file that must be deleted 
-        
-        
-//        buildShadow() //Builds the shadows for the icons (AddButton and swipe bar)
-//        buildSizes() //Also has the BuildBlur inside it (Must be called each time a new image is placed)
-//        buildRadius() //Sets the radius for the imageViews (Needs to only be called once)
-//        buildLayout()
-//        buildGestures()
-//        
-//        
-//        //Blurs need to only be built once
-//        buildBlur(imageView: centerShadow)
-//        buildBlur(imageView: nextShadow)
-//        buildBlur(imageView: previousShadow)
-//        
-//        
-//        imageCollectionViewFrame = imageCollectionView.frame
-//        solidBarFrame = solidBar.frame
-//        addButtonFrame = addButton.frame
+        guard isAuthorized() else{
+            var mainView: UIStoryboard!
+            mainView = UIStoryboard(name : "Permissions", bundle: nil)
+            let myviewController  :UIViewController = mainView.instantiateViewController(withIdentifier: "PermissionsView") as UIViewController
+            print("here is the view conroller ", mainView)
+            self.present(myviewController, animated: true, completion: nil)
+            return
+        }
+
+        buildShadow() //Builds the shadows for the icons (AddButton and swipe bar)
+        buildSizes() //Also has the BuildBlur inside it (Must be called each time a new image is placed)
+        buildRadius() //Sets the radius for the imageViews (Needs to only be called once)
+        buildLayout()
+        buildGestures()
+
+
+        //Blurs need to only be built once
+        buildBlur(imageView: centerShadow)
+        buildBlur(imageView: nextShadow)
+        buildBlur(imageView: previousShadow)
+
+
+        imageCollectionViewFrame = imageCollectionView.frame
+        solidBarFrame = solidBar.frame
+        addButtonFrame = addButton.frame
     }
     
     func change(imagePrev : UIImage, imageCurr : UIImage, imageNext : UIImage){

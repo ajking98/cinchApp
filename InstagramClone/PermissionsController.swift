@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Photos
 
 class PermissionsController: UIViewController {
     @IBOutlet weak var outerMost: UIView!
@@ -14,6 +15,8 @@ class PermissionsController: UIViewController {
     @IBOutlet weak var innerMost: UIView!
     @IBOutlet weak var gotItButton: UIButton!
     @IBOutlet weak var cancelLabel: UILabel!
+    @IBOutlet weak var centerIcon: UIImageView!
+    @IBOutlet weak var permissionMessage: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,8 +24,30 @@ class PermissionsController: UIViewController {
         buildCircles()
         buildBorder()
         underline()
+        buildGestures()
     }
     
+    func buildGestures(){
+        
+        //center Icon Button
+        centerIcon.isUserInteractionEnabled = true
+        centerIcon.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(askForPermission)))
+        
+        //OK GOT IT button
+        gotItButton.isUserInteractionEnabled = true
+        gotItButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(askForPermission)))
+        
+        //cancel label
+        cancelLabel.isUserInteractionEnabled = true
+        cancelLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(exitView)))
+        
+        
+        //Swipe DOWN
+        view.isUserInteractionEnabled = true
+        var swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(exitView))
+        swipeDown.direction = .down
+        self.view.addGestureRecognizer(swipeDown)
+    }
     
     func buildCircles(){
         outerMost.layer.cornerRadius = outerMost.frame.width/2
@@ -47,6 +72,31 @@ class PermissionsController: UIViewController {
         cancelLabel.addSubview(line)
         cancelLabel.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[line]|", metrics: nil, views: ["line":line]))
         cancelLabel.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[line(1)]-(\(-spacing))-|", metrics: nil, views: ["line":line]))
+    }
+    
+    func enterCameraView(){
+        var mainView: UIStoryboard!
+        mainView = UIStoryboard(name : "Main", bundle: nil)
+        let myviewController  :UIViewController = mainView.instantiateViewController(withIdentifier: "TabBarID") as UIViewController
+        self.present(myviewController, animated: true, completion: nil)
+    }
+    
+    @objc func askForPermission(_ tapGesture : UITapGestureRecognizer? = nil) {
+        PHPhotoLibrary.requestAuthorization({status in
+            if status == .authorized{
+                self.enterCameraView()
+            } else { PHPhotoLibrary.requestAuthorization({status in
+                print(status)
+            }) }
+        })
+    }
+    
+    
+    @objc func exitView(_ tapGesture : UITapGestureRecognizer? = nil){
+        var mainView: UIStoryboard!
+        mainView = UIStoryboard(name : "Main", bundle: nil)
+        let myviewController  :UIViewController = mainView.instantiateViewController(withIdentifier: "TabBarID") as UIViewController
+        self.present(myviewController, animated: true, completion: nil)
     }
 
 
