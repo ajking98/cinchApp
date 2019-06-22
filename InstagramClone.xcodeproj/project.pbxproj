@@ -12,6 +12,7 @@
 		4669B8D222B6DC65004FB38D /* defaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4669B8D122B6DC64004FB38D /* defaultsKeys.swift */; };
 		46A3E05B22B8557D003F6F35 /* CameraViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A3E05A22B8557D003F6F35 /* CameraViewCell.swift */; };
 		46A3E05D22B855FF003F6F35 /* Camera.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46A3E05C22B855FF003F6F35 /* Camera.storyboard */; };
+		46A3E08522BA8156003F6F35 /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A3E08422BA8156003F6F35 /* SQLite.framework */; };
 		46D5E05E2298A130003B41DE /* userStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E05D2298A130003B41DE /* userStruct.swift */; };
 		46D5E062229DD6FA003B41DE /* folderStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E061229DD6FA003B41DE /* folderStruct.swift */; };
 		46D5E064229EDB8C003B41DE /* tagStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E063229EDB8C003B41DE /* tagStruct.swift */; };
@@ -147,6 +148,7 @@
 		46A3E06622B8577A003F6F35 /* SDWebImage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SDWebImage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		46A3E06C22B85825003F6F35 /* SDWebImage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SDWebImage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		46A3E06E22B8582D003F6F35 /* EasyImagy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = EasyImagy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		46A3E08422BA8156003F6F35 /* SQLite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SQLite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		46D5E05D2298A130003B41DE /* userStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userStruct.swift; sourceTree = "<group>"; };
 		46D5E061229DD6FA003B41DE /* folderStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = folderStruct.swift; sourceTree = "<group>"; };
 		46D5E063229EDB8C003B41DE /* tagStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tagStruct.swift; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46A3E08522BA8156003F6F35 /* SQLite.framework in Frameworks */,
 				2C6025F70DDC5657CB7597FE /* Pods_InstagramClone.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -281,6 +284,7 @@
 		72C6EA0D0A89A8447B5FD88A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				46A3E08422BA8156003F6F35 /* SQLite.framework */,
 				46A3E06E22B8582D003F6F35 /* EasyImagy.framework */,
 				46A3E06C22B85825003F6F35 /* SDWebImage.framework */,
 				46A3E06622B8577A003F6F35 /* SDWebImage.framework */,

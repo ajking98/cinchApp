@@ -9,7 +9,7 @@ import Foundation
 
 struct defaultsKeys {
     static var usernameKey = "usernameKey"
-    var profileCreatedKey = "profileCreatedKey"
+    static var profileCreatedKey = "profileCreatedKey"
     static let nameKey = "nameKey"
     static let emailKey = "emailKey"
     static let passwordKey = "passwordKey"
@@ -17,5 +17,5 @@ struct defaultsKeys {
     static let profilePicKey = "profilePicKey"
     static let dateCreatedKey = "dateCreatedKey"
     static let dateLastActiveKey = "dateLastActiveKey"
-    static let folderKey = "folderKey"
+    static var folderKey = "folderKey"
 }

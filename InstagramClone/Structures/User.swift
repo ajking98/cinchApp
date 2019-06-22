@@ -32,7 +32,6 @@ class User  {
         password = ""
         isPrivate = false
         profilePic = defaultProfilePic
-        uuid = UIDevice.current.identifierForVendor
         folders = folder1
         dateCreated = Date()
         dateLastActive = Date()

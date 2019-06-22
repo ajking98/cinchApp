@@ -66,12 +66,49 @@ struct ParentStruct {
     //Can also be used if user wishes to update their username
     //returns the updated User
     func updateUser(oldUsername : String, newUsername : String, prevUserInfo: User) -> Bool {
-        DB.updateChildValues([newUsername: prevUserInfo.toString()])
-        let status = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) ?? ""
-        print(status)
-        if status != "" {
-            UserDefaults.standard.set(newUsername, forKey: defaultsKeys.usernameKey)
+        readUser(user: oldUsername) { (userInfo:User, dateCreated:String, dateLastActive:String, folders:Any) in
+            self.DB.child(oldUsername).observeSingleEvent(of: .value) { (snapshot) -> Void in
+                if let dict = snapshot.value as? [String:Any] {
+                    var name:String?
+                    var email: String?
+                    var password: String?
+                    var isPrivate: Bool?
+                    var profilePic: String?
+                    var dateCreated: String?
+                    var dateLastActive: String?
+                    var folders: Any?
+                    let dictionary = snapshot.value as? NSDictionary
+                    name = dictionary?["name"] as? String ?? ""
+                    email = dictionary?["email"] as? String ?? ""
+                    password = dictionary?["password"] as? String ?? ""
+                    isPrivate = dictionary?["isPrivate"] as? Bool ?? false
+                    profilePic = dictionary?["profilePic"] as? String ?? ""
+                    dateCreated = dictionary?["dateCreated"] as? String ?? ""
+                    dateLastActive = dictionary?["dateLastActive"] as? String ?? ""
+                    folders = dictionary?["folders"]
+                    
+                    var userInfo = User(name: name!, username: newUsername, email: email!, password: password!, isPrivate: isPrivate!)
+                    self.createUser(user: userInfo)
+                    UserStruct().updateExistingProfilePic(user: newUsername, newProfilePic: profilePic!)
+                    UserStruct().updateDateCreated(user: newUsername, newDateCreated: Date().toString())
+                    UserStruct().updateDateLastActive(user: newUsername, newDateLastActive: Date().toString())
+                    self.DB.child(newUsername).observeSingleEvent(of: .value) { (snapshot) -> Void in
+                        if let dict = snapshot.value as? [String:Any] {
+                            var folders2: Any?
+                            folders2 = dictionary?["folders"]
+                            folders2 = folders
+                        }
+                    }
+//                    UserStruct().updateFolder(user: newUsername, prevFolderName: <#T##String#>, newFolderName: <#T##String#>, prevFolderinfo: <#T##Folder#>)
+                }
+            }
         }
+//        DB.updateChildValues([newUsername: prevUserInfo.toString()])
+//        let status = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) ?? ""
+//        print(status)
+//        if status != "" {
+//            UserDefaults.standard.set(newUsername, forKey: defaultsKeys.usernameKey)
+//        }
         deleteUser(username: oldUsername, userInfo: prevUserInfo)
         return true
     }

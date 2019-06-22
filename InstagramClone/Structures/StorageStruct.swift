@@ -53,72 +53,34 @@ struct StorageStruct {
     
     // Works
     //Uploads image to storage and sets it as the icon pic for the given folder for that given user
-    func UploadFolderIcon<T>(user : T, folderName : String, image : UIImage)-> Bool{
-        if user == nil {
-            //Perform operation for uuid
-            let uuid = UIDevice.current.identifierForVendor?.uuidString
-            var data = Data()
-            data = image.jpegData(compressionQuality: 0.8)!
-            
-            let refImages = Database.database().reference().child("users").child(uuid!).child("folders").child(folderName)
-            let storageRef = Storage.storage().reference().child("userImages/" + randomString(20))
-            // Upload the file to the path "images/rivers.jpg"
-            _ = storageRef.putData(data, metadata: nil) { (metadata, error) in
-                guard let metadata = metadata else {
-                    // Uh-oh, an error occurred!
-                    print("Error occurred")
-                    return
-                }
-                // Metadata contains file metadata such as size, content-type.
-                
-                // You can also access to download URL after upload.
-                storageRef.downloadURL { (url, error) in
-                    if (error == nil) {
-                        if let downloadUrl = url {
-                            // Make you download string
-                            let image = [downloadUrl.absoluteString]
-                            let dict = ["icon": image]
-                            refImages.updateChildValues(dict)
-                        }
-                    }
-                    guard let url = url else {
-                        // Uh-oh, an error occurred!
-                        return
-                    }
-                }
+    func UploadFolderIcon(user : String, folderName : String, image : UIImage)-> Bool{
+        var data = Data()
+        data = image.jpegData(compressionQuality: 0.8)!
+        
+        let refImages = Database.database().reference().child("users").child(user).child("folders").child(folderName)
+        let storageRef = Storage.storage().reference().child("userImages/" + randomString(20))
+        // Upload the file to the path "images/rivers.jpg"
+        _ = storageRef.putData(data, metadata: nil) { (metadata, error) in
+            guard let metadata = metadata else {
+                // Uh-oh, an error occurred!
+                print("Error occurred")
+                return
             }
-            return true
-        } else {
-            //perform operation given a username
-            var data = Data()
-            data = image.jpegData(compressionQuality: 0.8)!
+            // Metadata contains file metadata such as size, content-type.
             
-            let refImages = Database.database().reference().child("users").child(String(describing: user)).child("folders").child(folderName)
-            let storageRef = Storage.storage().reference().child("userImages/" + randomString(20))
-            
-            // Upload the file to the path "images/rivers.jpg"
-            _ = storageRef.putData(data, metadata: nil) { (metadata, error) in
-                guard let metadata = metadata else {
-                    // Uh-oh, an error occurred!
-                    print("Error occurred")
-                    return
+            // You can also access to download URL after upload.
+            storageRef.downloadURL { (url, error) in
+                if (error == nil) {
+                    if let downloadUrl = url {
+                        // Make you download string
+                        let image = [downloadUrl.absoluteString]
+                        let dict = ["icon": image]
+                        refImages.updateChildValues(dict)
+                    }
                 }
-                // Metadata contains file metadata such as size, content-type.
-                
-                // You can also access to download URL after upload.
-                storageRef.downloadURL { (url, error) in
-                    if (error == nil) {
-                        if let downloadUrl = url {
-                            // Make you download string
-                            let image = [downloadUrl.absoluteString]
-                            let dict = ["icon": image]
-                            refImages.updateChildValues(dict)
-                        }
-                    }
-                    guard let url = url else {
-                        // Uh-oh, an error occurred!
-                        return
-                    }
+                guard let url = url else {
+                    // Uh-oh, an error occurred!
+                    return
                 }
             }
         }
@@ -130,79 +92,12 @@ struct StorageStruct {
     //folderName is the name of the folder the user wants to upload the image to
     //U is for content, can be of type UIImage or AVplayer
     //Uploads the content to the Storage and includes the url in the user's folder's content (In Database)
-    func UploadContent<T,U>(user: T, folderName : String, content : U)->Bool{
-        guard user is UUID else {
-            
-            //perform username given
-            guard content is UIImage else {
-                //perform AVplayer given
-                return true
-            }
-                //perform Image given
-            //perform operation given a username
-            var data = Data()
-            data = (content as! UIImage).jpegData(compressionQuality: 0.8)!
-            
-            let refImages = Database.database().reference().child("users").child(String(describing: user)).child("folders").child(folderName).child("content")
-            let storageRef = Storage.storage().reference().child("userImages/" + randomString(20))
-            
-            // Upload the file to the path "images/rivers.jpg"
-            _ = storageRef.putData(data, metadata: nil) { (metadata, error) in
-                guard let metadata = metadata else {
-                    // Uh-oh, an error occurred!
-                    print("Error occurred")
-                    return
-                }
-                // Metadata contains file metadata such as size, content-type.
-                
-                // You can also access to download URL after upload.
-                storageRef.downloadURL { (url, error) in
-                    if (error == nil) {
-                        if let downloadUrl = url {
-                            // Make you download string
-//                            refImages.observeSingleEvent(of: .value) { (snapshot) -> Void in
-//                                var contentArr = [String]()
-//                                for image in snapshot.children {
-//                                    contentArr.append(image as! String)
-//                                }
-//                                contentArr.append(content as! )
-//                            }
-                            
-                            refImages.observeSingleEvent(of: .value, with: { snapshot in
-                                var myContentArray = [String]()
-                                for child in snapshot.children {
-                                    let snap = child as! DataSnapshot
-                                    let value = snap.value as! String
-                                    myContentArray.append(value)
-                                    
-                                }
-                                let image = downloadUrl.absoluteString
-                                myContentArray.append(image)
-                                refImages.setValue(myContentArray)
-                            })
-                            
-                        }
-                    }
-                    guard let url = url else {
-                        // Uh-oh, an error occurred!
-                        return
-                    }
-                }
-            }
-                return true
-        }
-        
-        //Perform UUID given
-        guard content is UIImage else {
-            //perform AVplayer given
-            return true
-        }
-            //Perform Image given
-        let uuid = UIDevice.current.identifierForVendor?.uuidString
+    func UploadContent(user: String, folderName : String, content : UIImage)->Bool{
+            //perform Image given
         var data = Data()
-        data = (content as! UIImage).jpegData(compressionQuality: 0.8)!
-        
-        let refImages = Database.database().reference().child("users").child(uuid!).child("folders").child(folderName).child("content")
+        data = content.jpegData(compressionQuality: 0.8)!
+            
+        let refImages = Database.database().reference().child("users").child(user).child("folders").child(folderName).child("content")
         let storageRef = Storage.storage().reference().child("userImages/" + randomString(20))
         
         // Upload the file to the path "images/rivers.jpg"
@@ -219,6 +114,14 @@ struct StorageStruct {
                 if (error == nil) {
                     if let downloadUrl = url {
                         // Make you download string
+//                            refImages.observeSingleEvent(of: .value) { (snapshot) -> Void in
+//                                var contentArr = [String]()
+//                                for image in snapshot.children {
+//                                    contentArr.append(image as! String)
+//                                }
+//                                contentArr.append(content as! )
+//                            }
+                        
                         refImages.observeSingleEvent(of: .value, with: { snapshot in
                             var myContentArray = [String]()
                             for child in snapshot.children {
@@ -240,7 +143,7 @@ struct StorageStruct {
                 }
             }
         }
-            return true
+        return true
     }
     
     func randomString(_ length: Int) -> String {

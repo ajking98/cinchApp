@@ -69,6 +69,7 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
             ParentStruct().readUser(user: newUser.username!, completion: { (userInfo:User, dateCreated:String, dateLastActive:String, folders:Any) in
                 UserStruct().readFolders(user: newUser.username!, readFolderClosure: {(folders:[String]) in
                     // Get User's Info
+                    self.userDefaults.set(folders, forKey: defaultsKeys.folderKey)
                     self.userDefaults.set(userInfo.name!, forKey: defaultsKeys.nameKey)
                     self.userDefaults.set(userInfo.email!, forKey: defaultsKeys.emailKey)
                     self.userDefaults.set(userInfo.password!, forKey: defaultsKeys.passwordKey)
@@ -78,50 +79,9 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
                 })
             })
         }
-//        let newUser = User(username: "Mark")
-//        ParentStruct().createUser(user: newUser)
-        UserStruct().updateName(user: UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!, newName: "John Malthus")
-        UserStruct().readName(user: UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!) { (name:String) in
-            print("Name: ", name)
-        }
-        
-        UserStruct().updateEmail(user: UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!, newEmail: "John76@gmail.com")
-        UserStruct().readEmail(user: UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!) { (email:String) in
-            print("Email: ", email)
-        }
-        
-        UserStruct().updatePassword(user: UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!, newPassword: "hcebjcuebc78")
-        UserStruct().readPassword(user: UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!) { (password:String) in
-            print("Password: ", password)
-        }
-        
-        UserStruct().updateIsPrivate(user: UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!, newIsPrivate: true)
-        UserStruct().readIsPrivate(user: UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!, completion: { (isPrivate:Bool) in
-            print("Privacy is set to: ", isPrivate)
-        })
-        
-        UserStruct().updateNewProfilePic(user: UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!, newProfilePic: save!)
-        UserStruct().readProfilePic(user: UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!) { (profilePic:String) in
-            print("Profile Pic is: ", profilePic)
-        }
-        
-        UserStruct().readDateCreated(user: UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!) { (dateCreated:String) in
-            print("Date Created on: ", dateCreated)
-        }
-        
-        UserStruct().readDateLastActive(user: UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!, completion: { (dateLastActive) in
-            print("Last Day Active: ", dateLastActive)
-        })
-        
-        let folder3 = Folder(folderName: "funny")
-        UserStruct().addFolder(user: UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!, folder: folder3)
-        UserStruct().deleteFolder(user: UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!, folderName: folder3.folderName!)
-        
-//        StorageStruct().UploadProfilePic(user: UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!, image: icon!)
-        
-        print(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
-        
-        
+//        var tempUser = User(username: "FartMeister")
+//        ParentStruct().createUser(user: tempUser)
+//        ParentStruct().updateUser(oldUsername: "FartMeister", newUsername: "Grand Solomon", prevUserInfo: tempUser)
         
         do {
             let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
