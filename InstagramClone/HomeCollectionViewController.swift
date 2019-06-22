@@ -79,7 +79,6 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
                 })
             })
         }
-        UserStruct().deleteFolder(user: status, folderName: "Songs")
 //        var tempUser = User(username: "FartMeister")
 //        ParentStruct().createUser(user: tempUser)
 //        ParentStruct().updateUser(oldUsername: "FartMeister", newUsername: "Grand Solomon", prevUserInfo: tempUser)
