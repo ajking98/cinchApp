@@ -89,6 +89,15 @@ class PermissionsController: UIViewController {
                 print(status)
             }) }
         })
+        
+        
+        let permissionStatus = PHPhotoLibrary.authorizationStatus()
+        if(permissionStatus == .restricted || permissionStatus == .denied){
+            let alert = UIAlertController(title: "APP RESTRICTED", message: "you have restricted this app from accessing your photos. Grant permission by going into your settings", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            
+            self.present(alert, animated: true)
+        }
     }
     
     
