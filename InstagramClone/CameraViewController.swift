@@ -11,9 +11,9 @@
 import UIKit
 import CoreImage
 import XLActionController
+import Photos
 
 class CameraViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
-    
     @IBOutlet weak var segmentControl: UISegmentedControl!
     
     
@@ -51,22 +51,54 @@ class CameraViewController: UIViewController, UICollectionViewDataSource, UIColl
     var isFullScreen = true
     
     
+    func isAuthorized() ->Bool{
+        var authStatus = false
+        let photos = PHPhotoLibrary.authorizationStatus()
+        if (photos == .authorized){
+            print("has already been pre-authorized")
+            authStatus = true
+        }
+            
+            //If Restricted by the user
+        else if (photos == .restricted) {
+            let alert = UIAlertController(title: "APP RESTRICTED", message: "you have restricted this app from accessing your photos", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            
+            self.present(alert, animated: true)
+        }
+            //If denied or not determined, then ask
+        else {
+            authStatus = false
+        }
+        return authStatus
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        guard isAuthorized() else{
+            var mainView: UIStoryboard!
+            mainView = UIStoryboard(name : "Permissions", bundle: nil)
+            let myviewController  :UIViewController = mainView.instantiateViewController(withIdentifier: "PermissionsView") as UIViewController
+            print("here is the view conroller ", mainView)
+            self.present(myviewController, animated: true, completion: nil)
+            return
+        }
+
         buildShadow() //Builds the shadows for the icons (AddButton and swipe bar)
         buildSizes() //Also has the BuildBlur inside it (Must be called each time a new image is placed)
         buildRadius() //Sets the radius for the imageViews (Needs to only be called once)
         buildLayout()
         buildGestures()
-        
-        
+
+
         //Blurs need to only be built once
         buildBlur(imageView: centerShadow)
         buildBlur(imageView: nextShadow)
         buildBlur(imageView: previousShadow)
-        
-        
+
+
         imageCollectionViewFrame = imageCollectionView.frame
         solidBarFrame = solidBar.frame
         addButtonFrame = addButton.frame
