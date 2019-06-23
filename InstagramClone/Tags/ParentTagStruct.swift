@@ -1,0 +1,72 @@
+//
+//  The Public Taggging
+//
+/*
+ Communicates with the Database and contains the CRUD commands to:
+ 1. Create Tag
+ 2. Read Tag
+ 3. Update Tag
+ 4. Delete Tag
+ 
+ 
+ ALL methods in here would increment the tagOccurance counter by 1 EACH
+ */
+
+
+import Foundation
+
+
+struct ParentTagStruct{
+    
+    /*
+     function checks if the tagLabel already exists in the database
+     If it does, then calls the updateTag and adds its elements to the existing tagElements in the DB
+     If it doesn't, then it calls the createTag
+     */
+    func addTag(tag : Tag)-> Bool{
+        
+        return true
+    }
+    
+    
+    /*
+     Takes a tag and adds it the DB under the tag label
+     Should only be called from inside this class
+    */
+    private func createTag(tag : Tag)-> Bool{
+        
+        
+        return true
+    }
+    
+    
+    /*
+     Takes a tagLabel and returns the corresponding tag object
+    */
+    func readTag(tagLabel : String)-> Tag{
+        
+        return Tag(tagElements: [TagElement(link: "nil")], tagLabel: "nil")
+    }
+    
+    
+    /*
+        Takes in a tag object and adds its elements to the database -- Is called to add a tagElement to an existing tagLabel in the DB
+            --This method should only be called from inside this class
+    */
+    private func updateTag(tag : Tag)-> Bool {
+      //TODO call the updateElements method in the TagStruct 
+        return true
+    }
+    
+    
+    /*
+        Takes in a tagLabel and deletes it from the database and returns the deleted tag object
+            -if the tagLabel doesn't exist in the database, then returns an empty tag object
+    */
+    func deleteTag(tagLabel : String)-> Tag {
+        return Tag(tagElements: [TagElement(link : "nil")], tagLabel: "nil")
+    }
+    
+    
+    
+}
