@@ -13,6 +13,8 @@
 		46A3E05B22B8557D003F6F35 /* CameraViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A3E05A22B8557D003F6F35 /* CameraViewCell.swift */; };
 		46A3E05D22B855FF003F6F35 /* Camera.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46A3E05C22B855FF003F6F35 /* Camera.storyboard */; };
 		46A3E08522BA8156003F6F35 /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A3E08422BA8156003F6F35 /* SQLite.framework */; };
+		46A3E09722BF0B6E003F6F35 /* ProfilePage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46A3E09622BF0B6E003F6F35 /* ProfilePage.storyboard */; };
+		46A3E0A022BF0BA1003F6F35 /* ProfilePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A3E09F22BF0BA1003F6F35 /* ProfilePageViewController.swift */; };
 		46D5E05E2298A130003B41DE /* userStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E05D2298A130003B41DE /* userStruct.swift */; };
 		46D5E062229DD6FA003B41DE /* folderStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E061229DD6FA003B41DE /* folderStruct.swift */; };
 		46D5E064229EDB8C003B41DE /* tagStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E063229EDB8C003B41DE /* tagStruct.swift */; };
@@ -149,6 +151,8 @@
 		46A3E06C22B85825003F6F35 /* SDWebImage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SDWebImage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		46A3E06E22B8582D003F6F35 /* EasyImagy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = EasyImagy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		46A3E08422BA8156003F6F35 /* SQLite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SQLite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		46A3E09622BF0B6E003F6F35 /* ProfilePage.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = ProfilePage.storyboard; path = ../ProfilePage.storyboard; sourceTree = "<group>"; };
+		46A3E09F22BF0BA1003F6F35 /* ProfilePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProfilePageViewController.swift; path = ../ProfilePageViewController.swift; sourceTree = "<group>"; };
 		46D5E05D2298A130003B41DE /* userStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userStruct.swift; sourceTree = "<group>"; };
 		46D5E061229DD6FA003B41DE /* folderStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = folderStruct.swift; sourceTree = "<group>"; };
 		46D5E063229EDB8C003B41DE /* tagStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tagStruct.swift; sourceTree = "<group>"; };
@@ -358,6 +362,7 @@
 				EB74D3B5226025E900556399 /* AppDelegate.swift */,
 				EB74D3B7226025E900556399 /* ViewController.swift */,
 				890608B122BAE2B1004C03CF /* PermissionsController.swift */,
+				46A3E09F22BF0BA1003F6F35 /* ProfilePageViewController.swift */,
 				EB74D3E922603DA900556399 /* CameraViewController.swift */,
 				46A3E05A22B8557D003F6F35 /* CameraViewCell.swift */,
 				EB74D3E322602B2C00556399 /* SignUpViewController.swift */,
@@ -403,6 +408,7 @@
 				8E123EF922B7229400F3ED5D /* Main.storyboard */,
 				EB74D3F2226045A600556399 /* Home.storyboard */,
 				EB74D3FC226046C800556399 /* Profile.storyboard */,
+				46A3E09622BF0B6E003F6F35 /* ProfilePage.storyboard */,
 				46A3E05C22B855FF003F6F35 /* Camera.storyboard */,
 				890608A822BAE27F004C03CF /* Permissions.storyboard */,
 			);
@@ -580,6 +586,7 @@
 				890608A922BAE27F004C03CF /* Permissions.storyboard in Resources */,
 				46A3E05D22B855FF003F6F35 /* Camera.storyboard in Resources */,
 				EB74D3F4226045A600556399 /* Home.storyboard in Resources */,
+				46A3E09722BF0B6E003F6F35 /* ProfilePage.storyboard in Resources */,
 				8E123EFA22B7229400F3ED5D /* Main.storyboard in Resources */,
 				EB74D3BD226025EA00556399 /* Assets.xcassets in Resources */,
 				EB74D3FE226046C800556399 /* Profile.storyboard in Resources */,
@@ -752,6 +759,7 @@
 				46A3E05B22B8557D003F6F35 /* CameraViewCell.swift in Sources */,
 				EB40EF9D2263F7E20093BB5B /* InsideFolderCollectionViewController.swift in Sources */,
 				46D5E06822A323A9003B41DE /* userClass.swift in Sources */,
+				46A3E0A022BF0BA1003F6F35 /* ProfilePageViewController.swift in Sources */,
 				EB63B7E0226A7EB5004C7E2C /* ImageInsta.swift in Sources */,
 				46D5E06A22A46505003B41DE /* folderClass.swift in Sources */,
 				46D5E05E2298A130003B41DE /* userStruct.swift in Sources */,
