@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="Slide2" customModule="InstagramClone" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oi2-Jo-zmR">
+                    <rect key="frame" x="32" y="44" width="350" height="194"/>
+                    <subviews>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="A very wild lifestyle" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jfr-By-gid">
+                            <rect key="frame" x="26" y="51" width="306" height="30"/>
+                            <nil key="textColor"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="350" id="AXV-Es-qd2"/>
+                        <constraint firstItem="jfr-By-gid" firstAttribute="top" secondItem="Oi2-Jo-zmR" secondAttribute="top" constant="51" id="G6V-1L-hQL"/>
+                        <constraint firstAttribute="trailing" secondItem="jfr-By-gid" secondAttribute="trailing" constant="18" id="UXn-fv-bMi"/>
+                        <constraint firstItem="jfr-By-gid" firstAttribute="leading" secondItem="Oi2-Jo-zmR" secondAttribute="leading" constant="26" id="etu-ZJ-Rtj"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Bio" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Qj-EP-9ON">
+                    <rect key="frame" x="195" y="55" width="25" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="9Qj-EP-9ON" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="195" id="Q3R-l3-GmY"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="Oi2-Jo-zmR" secondAttribute="bottom" constant="624" id="Wrq-RX-qne"/>
+                <constraint firstItem="Oi2-Jo-zmR" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="Y40-cC-g4H"/>
+                <constraint firstItem="9Qj-EP-9ON" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="11" id="hpe-I2-VwA"/>
+                <constraint firstItem="9Qj-EP-9ON" firstAttribute="centerX" secondItem="Oi2-Jo-zmR" secondAttribute="centerX" id="jdo-ra-5s5"/>
+                <constraint firstItem="Oi2-Jo-zmR" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="yP6-kB-qw9"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="47.826086956521742" y="63.616071428571423"/>
+        </view>
+    </objects>
+</document>
