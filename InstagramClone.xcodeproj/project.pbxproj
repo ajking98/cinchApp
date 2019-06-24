@@ -319,8 +319,8 @@
 			children = (
 				8E95FFCD22BF283F0067B5F2 /* ParentTagStruct.swift */,
 				46D5E07922A88F14003B41DE /* Tag.swift */,
-				8E95FFCB22BF25CE0067B5F2 /* TagElement.swift */,
 				8E95FFC222BF252D0067B5F2 /* TagStruct.swift */,
+				8E95FFCB22BF25CE0067B5F2 /* TagElement.swift */,
 				8E5EDB4D22C025990088FDA9 /* TagElementStruct.swift */,
 			);
 			path = Tags;

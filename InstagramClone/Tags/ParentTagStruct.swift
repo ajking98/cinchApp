@@ -27,8 +27,14 @@ struct ParentTagStruct{
      If it doesn't, then it calls the createTag
      */
     func addTag(tag : Tag)-> Bool{
-        print("creating Tag...")
-        DB.child(tag.tagLabel!).setValue(tag.toString())
+        print("adding Tag...")
+        DB.observeSingleEvent(of: .value) { (snapshot) in
+            if(snapshot.hasChild(tag.tagLabel!)) {
+                self.updateTag(tag: tag)
+            }else{
+                self.createTag(tag: tag)
+            }
+        }
         return true
     }
     
@@ -37,10 +43,11 @@ struct ParentTagStruct{
      Takes a tag and adds it the DB under the tag label
      Should only be called from inside this class
     */
-    private func createTag(tag : Tag)-> Bool{
+    private func createTag(tag : Tag)-> Void{
+        print("Creating Tag...")
+        DB.child(tag.tagLabel!).setValue(tag.toString(tag : tag))
         
-        
-        return true
+        return
     }
     
     
@@ -49,7 +56,7 @@ struct ParentTagStruct{
     */
     func readTag(tagLabel : String)-> Tag{
         
-        return Tag(tagElements: [TagElement(link: "nil")], tagLabel: "nil")
+        return Tag(tagElement: TagElement(link: "nil"), tagLabel: "nil")
     }
     
     
@@ -57,9 +64,10 @@ struct ParentTagStruct{
         Takes in a tag object and adds its elements to the database -- Is called to add a tagElement to an existing tagLabel in the DB
             --This method should only be called from inside this class
     */
-    private func updateTag(tag : Tag)-> Bool {
+    private func updateTag(tag : Tag)-> Void {
+        print("updating Tag...")
       //TODO call the updateElements method in the TagStruct
-        return true
+        return
     }
     
     
@@ -68,7 +76,7 @@ struct ParentTagStruct{
             -if the tagLabel doesn't exist in the database, then returns an empty tag object
     */
     func deleteTag(tagLabel : String)-> Tag {
-        return Tag(tagElements: [TagElement(link : "nil")], tagLabel: "nil")
+        return Tag(tagElement: TagElement(link : "nil"), tagLabel: "nil")
     }
     
     

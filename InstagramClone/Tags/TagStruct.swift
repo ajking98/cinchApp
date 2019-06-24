@@ -5,8 +5,8 @@
     Responsible for the interactions with the Tag object values with the database
  
  RUD commands for:  //Cannot create a tag Element because each tag is instantiated in the DB with at least one element
-    1. read Elements
-    2. update Elements
+    1. read Elements //Returns all elements in DB
+    2. update Element
     3. delete Element //deletes the element at a given index
  
  RU commands for :
@@ -33,10 +33,10 @@ struct TagStruct {
     
     
     /*
-     Takes in a tagLabel and a tagElement and appends the element to the current tagElements in the DB
+     Takes in a tagLabel and a new tagElement and appends the element to the current tagElements in the DB
      returns true if successful
     */
-    func updateElements(tagLabel : String, tagElement : TagElement)-> Bool{
+    func updateElement(tagLabel : String, newTagElement : TagElement)-> Bool{
         
         return true
     }

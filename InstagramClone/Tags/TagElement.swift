@@ -18,6 +18,8 @@ class TagElement {
     //This init should be called when trying to add a tagElement Object to the database
     init(link : String) {
         self.link = link
+        self.firstUsed = NSDate()
+        self.numOfUsages = 1
     }
     
     //This init should be called when reading data from the database with a tagIndex
@@ -29,7 +31,10 @@ class TagElement {
         self.elementIndex = elementIndex
     }
     
-    func toString()-> String{
-        return "testing my guy"
+    func toString()-> [String : Any]{
+        lastUsed = NSDate()
+        let tagDict : [String : Any] = ["link" : link!, "numOfUsages" : numOfUsages!, "lastUsed" : Int(lastUsed!.timeIntervalSince1970), "firstUsed" : Int(firstUsed!.timeIntervalSince1970)]
+        
+        return tagDict
     }
 }
