@@ -14,9 +14,12 @@
 
 
 import Foundation
+import FirebaseDatabase
 
 
 struct ParentTagStruct{
+    
+    var DB = Database.database().reference().child("tags")
     
     /*
      function checks if the tagLabel already exists in the database
@@ -24,7 +27,8 @@ struct ParentTagStruct{
      If it doesn't, then it calls the createTag
      */
     func addTag(tag : Tag)-> Bool{
-        
+        print("creating Tag...")
+        DB.child(tag.tagLabel!).setValue(tag.toString())
         return true
     }
     
@@ -54,7 +58,7 @@ struct ParentTagStruct{
             --This method should only be called from inside this class
     */
     private func updateTag(tag : Tag)-> Bool {
-      //TODO call the updateElements method in the TagStruct 
+      //TODO call the updateElements method in the TagStruct
         return true
     }
     

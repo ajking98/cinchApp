@@ -28,4 +28,8 @@ class TagElement {
         self.firstUsed = firstUsed
         self.elementIndex = elementIndex
     }
+    
+    func toString()-> String{
+        return "testing my guy"
+    }
 }

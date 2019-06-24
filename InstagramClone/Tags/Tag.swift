@@ -29,4 +29,16 @@ class Tag {
         self.firstUsed = firstUsed
         self.tagLabel = tagLabel
     }
+    
+    func toString()-> [String : Any]{
+        var tagElementDict = [String]()
+        for element in tagElements!{
+            tagElementDict.append(element.toString())
+        }
+        
+        let tagDict : [String : Any] = ["tagElements" : tagElementDict, "tagLabel" : self.tagLabel!]
+        
+        return tagDict
+        
+    }
 }
