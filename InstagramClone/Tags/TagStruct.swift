@@ -69,6 +69,15 @@ struct TagStruct {
     
     
     /*
+     Overriding for the above function
+     This only takes the tagLabel and bumps it up by one increment
+    */
+    func updateTagOccurance(tagLabel : String) ->Bool{
+        return true
+    }
+    
+    
+    /*
     Takes in a tagLabel and returns the last time that tag was used
     returns UNIX dateTime object
     */

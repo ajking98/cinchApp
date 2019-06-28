@@ -46,6 +46,7 @@ struct ParentTagStruct{
     private func createTag(tag : Tag)-> Void{
         print("Creating Tag...")
         DB.child(tag.tagLabel!).setValue(tag.toString(tag : tag))
+        DB.child(tag.tagLabel!).child("tagElements").child("0").setValue(tag.tagElement?.toString())
         
         return
     }
@@ -66,7 +67,40 @@ struct ParentTagStruct{
     */
     private func updateTag(tag : Tag)-> Void {
         print("updating Tag...")
+        
       //TODO call the updateElements method in the TagStruct
+        guard let tagLabel = tag.tagLabel else {
+            return
+        }
+//        DB.child(tagLabel).updateChildValues(tag.toString())
+        
+//        DB.child(tagLabel).child("numberOfElements").observe(.value) { (snapshot) in
+//            print("yessir")
+//            if let index = snapshot.value as? Int {
+//                print("reached")
+//                self.DB.child(tagLabel).child("tagElements").updateChildValues([String(index) : tag.tagElement?.toString() as Any])
+//                self.DB.child(tagLabel).child("numberOfElements").setValue(index + 1)
+//                self.DB.child(tagLabel).child("lastUsed").setValue(tag.getLastUsed())
+//            }
+//        }
+        
+        DB.child(tagLabel).child("numberOfElements").observeSingleEvent(of: .value) { (snapshot) in
+            //TODO this whole method should just be calling other methods instead of building them out in here 
+            print("yessir")
+            if let index = snapshot.value as? Int {
+                print("reached")
+                self.DB.child(tagLabel).child("tagElements").updateChildValues([String(index) : tag.tagElement?.toString() as Any])
+                //                TagStruct().updateElement(tagLabel: tagLabel, newTagElement: tag.tagElement!) TODO : un-comment when method is built
+    
+                self.DB.child(tagLabel).child("numberOfElements").setValue(index + 1)
+                //                TagStruct().updateNumberOfElements(tagLabel : tagLabel)  TODO : un-comment when method is built
+                self.DB.child(tagLabel).child("lastUsed").setValue(tag.getLastUsed())
+                //                TagStruct().updateLastUsed(tagLabel: tagLabel, newLastUsedValue: tag.getLastUsed()) TODO : uncomment when method is built
+            }
+        }
+        
+        
+        TagStruct().updateTagOccurance(tagLabel: tagLabel)
         return
     }
     
