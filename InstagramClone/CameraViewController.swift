@@ -103,7 +103,7 @@ class CameraViewController: UIViewController, UICollectionViewDataSource, UIColl
         solidBarFrame = solidBar.frame
         addButtonFrame = addButton.frame
         
-        let myTag = Tag(tagElement: TagElement(link: "hey"), tagLabel: "Emad")
+        let myTag = Tag(tagElement: TagElement(link: "hey"), tagLabel: "Emad2")
         ParentTagStruct().addTag(tag: myTag)
     }
     

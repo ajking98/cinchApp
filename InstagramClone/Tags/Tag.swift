@@ -34,22 +34,14 @@ class Tag {
         self.numberOfElements = numberOfElements
     }
     
-    func getLastUsed() ->Int{
+    func getLastUsed() ->NSDate{
         lastUsed = NSDate()
-        return Int(lastUsed!.timeIntervalSince1970)
+        return lastUsed!
     }
     
-//    //called when updating an existing tag entry
-//    func toString()-> [String : Any]{
-//        lastUsed = NSDate()
-//        let tagDict : [String : Any] = ["tagLabel" : self.tagLabel!, "lastUsed" : Int(lastUsed!.timeIntervalSince1970), "numberOfElements" : numberOfElements]
-//
-//        return tagDict
-//
-//    }
     
-    //called when creating a new object in database
-    func toString(tag : Tag)-> [String : Any]{
+    ///converts Tag Object to dictionary 
+    func toString()-> [String : Any]{
         
         firstUsed = NSDate()
         lastUsed = NSDate()

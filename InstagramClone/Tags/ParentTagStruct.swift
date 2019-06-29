@@ -10,6 +10,7 @@
  
  
  ALL methods in here would increment the tagOccurance counter by 1 EACH
+ ALL methods update lastUsed value in DB
  */
 
 
@@ -21,12 +22,8 @@ struct ParentTagStruct{
     
     var DB = Database.database().reference().child("tags")
     
-    /*
-     function checks if the tagLabel already exists in the database
-     If it does, then calls the updateTag and adds its elements to the existing tagElements in the DB
-     If it doesn't, then it calls the createTag
-     */
-    func addTag(tag : Tag)-> Bool{
+    ///Adds Tag to database
+    func addTag(tag : Tag)-> Void{
         print("adding Tag...")
         DB.observeSingleEvent(of: .value) { (snapshot) in
             if(snapshot.hasChild(tag.tagLabel!)) {
@@ -35,82 +32,51 @@ struct ParentTagStruct{
                 self.createTag(tag: tag)
             }
         }
-        return true
+        TagStruct().updateTagOccurance(tagLabel: tag.tagLabel!)
+        TagStruct().updateLastUsed(tagLabel: tag.tagLabel!, newLastUsedValue: NSDate())
+        return
     }
     
     
-    /*
-     Takes a tag and adds it the DB under the tag label
-     Should only be called from inside this class
-    */
+    //Takes a tag and adds it the DB under the tag label
     private func createTag(tag : Tag)-> Void{
         print("Creating Tag...")
-        DB.child(tag.tagLabel!).setValue(tag.toString(tag : tag))
+        DB.child(tag.tagLabel!).setValue(tag.toString())
         DB.child(tag.tagLabel!).child("tagElements").child("0").setValue(tag.tagElement?.toString())
         
         return
     }
     
     
-    /*
-     Takes a tagLabel and returns the corresponding tag object
-    */
+    ///Takes a tagLabel and returns the corresponding tag object
     func readTag(tagLabel : String)-> Tag{
+        TagStruct().updateTagOccurance(tagLabel: tagLabel)
+        TagStruct().updateLastUsed(tagLabel: tagLabel, newLastUsedValue: NSDate())
         
         return Tag(tagElement: TagElement(link: "nil"), tagLabel: "nil")
     }
     
     
-    /*
-        Takes in a tag object and adds its elements to the database -- Is called to add a tagElement to an existing tagLabel in the DB
-            --This method should only be called from inside this class
-    */
+    //Adds to existing tag in DB
     private func updateTag(tag : Tag)-> Void {
         print("updating Tag...")
         
-      //TODO call the updateElements method in the TagStruct
         guard let tagLabel = tag.tagLabel else {
             return
         }
-//        DB.child(tagLabel).updateChildValues(tag.toString())
-        
-//        DB.child(tagLabel).child("numberOfElements").observe(.value) { (snapshot) in
-//            print("yessir")
-//            if let index = snapshot.value as? Int {
-//                print("reached")
-//                self.DB.child(tagLabel).child("tagElements").updateChildValues([String(index) : tag.tagElement?.toString() as Any])
-//                self.DB.child(tagLabel).child("numberOfElements").setValue(index + 1)
-//                self.DB.child(tagLabel).child("lastUsed").setValue(tag.getLastUsed())
-//            }
-//        }
-        
         DB.child(tagLabel).child("numberOfElements").observeSingleEvent(of: .value) { (snapshot) in
-            //TODO this whole method should just be calling other methods instead of building them out in here 
-            print("yessir")
             if let index = snapshot.value as? Int {
-                print("reached")
-                self.DB.child(tagLabel).child("tagElements").updateChildValues([String(index) : tag.tagElement?.toString() as Any])
-                //                TagStruct().updateElement(tagLabel: tagLabel, newTagElement: tag.tagElement!) TODO : un-comment when method is built
-    
-                self.DB.child(tagLabel).child("numberOfElements").setValue(index + 1)
-                //                TagStruct().updateNumberOfElements(tagLabel : tagLabel)  TODO : un-comment when method is built
-                self.DB.child(tagLabel).child("lastUsed").setValue(tag.getLastUsed())
-                //                TagStruct().updateLastUsed(tagLabel: tagLabel, newLastUsedValue: tag.getLastUsed()) TODO : uncomment when method is built
+                TagStruct().updateElement(tagLabel: tagLabel, index: index, newTagElement: tag.tagElement!)
+                TagStruct().updateNumberOfElements(tagLabel : tagLabel, newNumber: index + 1)
             }
         }
-        
-        
-        TagStruct().updateTagOccurance(tagLabel: tagLabel)
         return
     }
     
     
-    /*
-        Takes in a tagLabel and deletes it from the database and returns the deleted tag object
-            -if the tagLabel doesn't exist in the database, then returns an empty tag object
-    */
-    func deleteTag(tagLabel : String)-> Tag {
-        return Tag(tagElement: TagElement(link : "nil"), tagLabel: "nil")
+    ///Takes in a tagLabel and deletes it from the database and returns the deleted tag object
+    func deleteTag(tagLabel : String)-> Void {
+        DB.child(tagLabel).removeValue()
     }
     
     
