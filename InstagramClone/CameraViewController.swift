@@ -102,6 +102,9 @@ class CameraViewController: UIViewController, UICollectionViewDataSource, UIColl
         imageCollectionViewFrame = imageCollectionView.frame
         solidBarFrame = solidBar.frame
         addButtonFrame = addButton.frame
+        
+        let myTag = Tag(tagElement: TagElement(link: "hey"), tagLabel: "Emad2")
+        ParentTagStruct().addTag(tag: myTag)
     }
     
     func change(imagePrev : UIImage, imageCurr : UIImage, imageNext : UIImage){
