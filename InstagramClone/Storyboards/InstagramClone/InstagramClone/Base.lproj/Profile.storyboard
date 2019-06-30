@@ -245,7 +245,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="yC4-le-0Kd"/>
                     </view>
-                    <navigationItem key="navigationItem" title="PROFILE" id="EiK-9t-sJu"/>
+                    <navigationItem key="navigationItem" title="PROFILE" id="EiK-9t-sJu">
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="GLM-Gf-tFV">
+                            <connections>
+                                <segue destination="GCY-SZ-xdp" kind="show" id="Zvm-Tc-PG5"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="KHH-Ml-gif" id="SRs-A5-SWG"/>
                         <outlet property="overlayProfileView" destination="AFe-w1-Kg4" id="bSb-LG-Zxo"/>
@@ -257,9 +263,18 @@
             </objects>
             <point key="canvasLocation" x="3450.7246376811595" y="1709.5982142857142"/>
         </scene>
+        <!--ProfilePageID-->
+        <scene sceneID="7eI-1y-7Jt">
+            <objects>
+                <viewControllerPlaceholder storyboardName="ProfilePage" referencedIdentifier="ProfilePageID" id="GCY-SZ-xdp" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gQk-Uq-Or9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3454" y="2109"/>
+        </scene>
         <!--Inside Folder Collection View Controller-->
         <scene sceneID="XPI-1l-0LJ">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ts8-oL-ixY" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <collectionViewController storyboardIdentifier="CardContent" id="SXZ-Ra-RW1" customClass="InsideFolderCollectionViewController" customModule="InstagramClone" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="HLP-HK-Vs7">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -301,15 +316,14 @@
                         <segue destination="XH7-QS-hSa" kind="presentation" identifier="OpenCamera" id="qQu-rR-TyY"/>
                     </connections>
                 </collectionViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ts8-oL-ixY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4198.5507246376819" y="1709.5982142857142"/>
         </scene>
         <!--CameraID-->
         <scene sceneID="RD2-pa-nko">
             <objects>
-                <viewControllerPlaceholder storyboardName="Camera" referencedIdentifier="CameraID" id="XH7-QS-hSa" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fkl-NA-8bh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewControllerPlaceholder storyboardName="Camera" referencedIdentifier="CameraID" id="XH7-QS-hSa" sceneMemberID="viewController"/>
             </objects>
             <point key="canvasLocation" x="4854" y="1597"/>
         </scene>
