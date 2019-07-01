@@ -37,12 +37,13 @@ class ProfilePageViewController: UIViewController {
 
 //        profileImage.layer.cornerRadius = 30
 //        profileImage.clipsToBounds = true
-        
-        
-        
-        
-        
+
         // Do any additional setup after loading the view.
+    }
+    
+    @IBAction func toggleSideMenu(_ sender: Any) {
+        print("Toggle Side Menu")
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Toggle Side Menu"), object: nil)
     }
     
     @objc func handleGesture(gesture: UISwipeGestureRecognizer) -> Void {

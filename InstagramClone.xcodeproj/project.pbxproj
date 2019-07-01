@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		2C6025F70DDC5657CB7597FE /* Pods_InstagramClone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A02F922BF6A888861EB10FC9 /* Pods_InstagramClone.framework */; };
 		45E0B9E575F52434E5EBEFE1 /* Pods_InstagramCloneUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B447ACE150C3C337574D3FD /* Pods_InstagramCloneUITests.framework */; };
+		46668D6022C98C070021229D /* ProfileContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46668D5F22C98C070021229D /* ProfileContainer.swift */; };
+		46668D6922C98FF60021229D /* SideMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46668D6822C98FF50021229D /* SideMenuTableViewController.swift */; };
 		4669B8D222B6DC65004FB38D /* defaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4669B8D122B6DC64004FB38D /* defaultsKeys.swift */; };
 		46A3E05B22B8557D003F6F35 /* CameraViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A3E05A22B8557D003F6F35 /* CameraViewCell.swift */; };
 		46A3E05D22B855FF003F6F35 /* Camera.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46A3E05C22B855FF003F6F35 /* Camera.storyboard */; };
@@ -153,6 +155,8 @@
 		1B447ACE150C3C337574D3FD /* Pods_InstagramCloneUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstagramCloneUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		275F63426EF2A9C7A49380AB /* Pods-InstagramClone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramClone.release.xcconfig"; path = "Target Support Files/Pods-InstagramClone/Pods-InstagramClone.release.xcconfig"; sourceTree = "<group>"; };
 		4053B843C77EE909A8C7461F /* Pods-InstagramCloneUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramCloneUITests.release.xcconfig"; path = "Target Support Files/Pods-InstagramCloneUITests/Pods-InstagramCloneUITests.release.xcconfig"; sourceTree = "<group>"; };
+		46668D5F22C98C070021229D /* ProfileContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileContainer.swift; sourceTree = "<group>"; };
+		46668D6822C98FF50021229D /* SideMenuTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SideMenuTableViewController.swift; path = /Users/cinch/Desktop/cinchApp/InstagramClone/SideMenuTableViewController.swift; sourceTree = "<absolute>"; };
 		4669B8B322B6D2AC004FB38D /* SQLite.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SQLite.xcodeproj; path = "../../Downloads/SQLite.swift-master/SQLite.xcodeproj"; sourceTree = "<group>"; };
 		4669B8D122B6DC64004FB38D /* defaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = defaultsKeys.swift; sourceTree = "<group>"; };
 		46A3E05A22B8557D003F6F35 /* CameraViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewCell.swift; sourceTree = "<group>"; };
@@ -400,10 +404,12 @@
 				EB74D3B5226025E900556399 /* AppDelegate.swift */,
 				EB74D3B7226025E900556399 /* ViewController.swift */,
 				890608B122BAE2B1004C03CF /* PermissionsController.swift */,
+				46668D5F22C98C070021229D /* ProfileContainer.swift */,
 				46A3E09F22BF0BA1003F6F35 /* ProfilePageViewController.swift */,
 				EB74D3E922603DA900556399 /* CameraViewController.swift */,
 				46A3E05A22B8557D003F6F35 /* CameraViewCell.swift */,
 				EB74D3E322602B2C00556399 /* SignUpViewController.swift */,
+				46668D6822C98FF50021229D /* SideMenuTableViewController.swift */,
 				EB3A43312263A07600F6F339 /* HomeCollectionViewController.swift */,
 				EB63B7DB226A7584004C7E2C /* HomeCollectionViewCell.swift */,
 				EBE992EC226E3B8D002D01CF /* TRCollectionViewController.swift */,
@@ -791,6 +797,7 @@
 				89871254229DEA2700BE8F23 /* DiscoverPageBackground.swift in Sources */,
 				46D5E07122A87F15003B41DE /* Folder.swift in Sources */,
 				46D5E07622A87F75003B41DE /* User.swift in Sources */,
+				46668D6022C98C070021229D /* ProfileContainer.swift in Sources */,
 				46D5E07822A87F89003B41DE /* UserStruct2.swift in Sources */,
 				EB3A43342263ACB500F6F339 /* PhotoCell.swift in Sources */,
 				46D5E07422A87F5F003B41DE /* FolderStruct2.swift in Sources */,
@@ -812,6 +819,7 @@
 				46D5E05E2298A130003B41DE /* userStruct.swift in Sources */,
 				46D5E07C22A899B1003B41DE /* ParentStruct.swift in Sources */,
 				46A3E0B422C033F1003F6F35 /* ReactionsViewController.swift in Sources */,
+				46668D6922C98FF60021229D /* SideMenuTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

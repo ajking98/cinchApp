@@ -85,8 +85,12 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="vaA-wV-MKa" secondAttribute="bottom" constant="-34" id="JMo-T7-i1a"/>
+                <constraint firstItem="vaA-wV-MKa" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="Mwv-ah-DgB"/>
                 <constraint firstItem="vaA-wV-MKa" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="U8g-O3-uU3"/>
+                <constraint firstItem="vaA-wV-MKa" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="dXh-ML-gNr"/>
                 <constraint firstItem="vaA-wV-MKa" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="-44" id="dY1-ZB-P12"/>
+                <constraint firstAttribute="bottom" secondItem="vaA-wV-MKa" secondAttribute="bottom" id="qQR-MR-Pfq"/>
+                <constraint firstItem="vaA-wV-MKa" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="qVV-4P-BW8"/>
                 <constraint firstItem="vaA-wV-MKa" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="xkq-xX-cOG"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
