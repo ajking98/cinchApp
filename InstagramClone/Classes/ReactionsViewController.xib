@@ -19,8 +19,54 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-            <color key="backgroundColor" red="0.015686274510000001" green="0.81960784310000001" blue="0.59215686270000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fzW-ex-6uT">
+                    <rect key="frame" x="20" y="44" width="374" height="852"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="fo1" translatesAutoresizingMaskIntoConstraints="NO" id="s1K-FO-yow">
+                            <rect key="frame" x="4" y="8" width="176" height="181"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="176" id="TZ6-SX-F87"/>
+                                <constraint firstAttribute="height" constant="181" id="q2V-Z0-3u6"/>
+                            </constraints>
+                        </imageView>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="t5" translatesAutoresizingMaskIntoConstraints="NO" id="FGI-UR-V00">
+                            <rect key="frame" x="188" y="8" width="178" height="181"/>
+                        </imageView>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="n6-1" translatesAutoresizingMaskIntoConstraints="NO" id="FMR-uU-pOH">
+                            <rect key="frame" x="4" y="197" width="176" height="181"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="181" id="OoK-Mh-zA1"/>
+                                <constraint firstAttribute="width" constant="176" id="vMz-yN-89t"/>
+                            </constraints>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.93645654970000003" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="s1K-FO-yow" firstAttribute="bottom" secondItem="FGI-UR-V00" secondAttribute="bottom" id="Ilb-HJ-rOw"/>
+                        <constraint firstItem="FGI-UR-V00" firstAttribute="leading" secondItem="s1K-FO-yow" secondAttribute="trailing" constant="8" id="OWy-b6-93k"/>
+                        <constraint firstItem="s1K-FO-yow" firstAttribute="top" secondItem="FGI-UR-V00" secondAttribute="top" id="V4w-kF-PGe"/>
+                        <constraint firstItem="s1K-FO-yow" firstAttribute="top" secondItem="fzW-ex-6uT" secondAttribute="topMargin" id="WG1-fo-Ba8"/>
+                        <constraint firstItem="s1K-FO-yow" firstAttribute="leading" secondItem="fzW-ex-6uT" secondAttribute="leading" constant="4" id="WhV-kN-haN"/>
+                        <constraint firstItem="FMR-uU-pOH" firstAttribute="leading" secondItem="s1K-FO-yow" secondAttribute="leading" id="aL6-8c-EhK"/>
+                        <constraint firstAttribute="trailing" secondItem="FGI-UR-V00" secondAttribute="trailing" constant="8" id="fR9-kS-85P"/>
+                        <constraint firstItem="FMR-uU-pOH" firstAttribute="top" secondItem="s1K-FO-yow" secondAttribute="bottom" constant="8" symbolic="YES" id="uKh-cl-SE8"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.93645654970000003" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="fzW-ex-6uT" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="UHz-PF-HkP"/>
+                <constraint firstAttribute="bottom" secondItem="fzW-ex-6uT" secondAttribute="bottom" id="d9y-44-4HM"/>
+                <constraint firstItem="fzW-ex-6uT" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailingMargin" id="hcG-Wq-GUr"/>
+                <constraint firstItem="fzW-ex-6uT" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="jIh-6E-T9Z"/>
+            </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
         </view>
     </objects>
+    <resources>
+        <image name="fo1" width="1080" height="1159"/>
+        <image name="n6-1" width="1872" height="1246"/>
+        <image name="t5" width="1080" height="1296"/>
+    </resources>
 </document>

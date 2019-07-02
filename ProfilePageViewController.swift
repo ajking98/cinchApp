@@ -73,10 +73,10 @@ class ProfilePageViewController: UIViewController {
         switch sender.selectedSegmentIndex {
         case 0:
             customSegmentedControl.tintColor = UIColor(red: 1/255.0, green: 209/255.0, blue: 151/255.0, alpha: 1.0)
-            viewContainer.bringSubviewToFront(reactionView)
+            viewContainer.bringSubviewToFront(gemView)
         case 1:
             customSegmentedControl.tintColor = UIColor(red: 1/255.0, green: 151/255.0, blue: 209/255.0, alpha: 1.0)
-            viewContainer.bringSubviewToFront(gemView)
+            viewContainer.bringSubviewToFront(reactionView)
         default:
             break
         }
@@ -85,8 +85,8 @@ class ProfilePageViewController: UIViewController {
     func buildSegmentedFolderControl() {
         reactionView = ReactionsViewController().view
         gemView = GemsViewController().view
-        viewContainer.addSubview(gemView)
         viewContainer.addSubview(reactionView)
+        viewContainer.addSubview(gemView)
     }
     
     func buildProfileViews() {
