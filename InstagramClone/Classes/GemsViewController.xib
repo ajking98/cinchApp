@@ -12,6 +12,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GemsViewController" customModule="InstagramClone" customModuleProvider="target">
             <connections>
+                <outlet property="image1" destination="Ewn-sD-Dfi" id="ZPk-2a-CnK"/>
+                <outlet property="image2" destination="Iil-xR-qJB" id="Olu-U0-wfC"/>
+                <outlet property="image3" destination="Oby-8B-rHK" id="yG3-a3-MWd"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -24,9 +27,9 @@
                     <rect key="frame" x="20" y="44" width="374" height="852"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="f9-1" translatesAutoresizingMaskIntoConstraints="NO" id="Ewn-sD-Dfi">
-                            <rect key="frame" x="4" y="8" width="176" height="181"/>
+                            <rect key="frame" x="4" y="8" width="178" height="181"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="176" id="7Ks-gS-7JR"/>
+                                <constraint firstAttribute="width" constant="178" id="7Ks-gS-7JR"/>
                                 <constraint firstAttribute="height" constant="181" id="VkF-4a-SCg"/>
                             </constraints>
                         </imageView>
@@ -34,16 +37,16 @@
                             <rect key="frame" x="188" y="8" width="178" height="181"/>
                         </imageView>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="n2" translatesAutoresizingMaskIntoConstraints="NO" id="Oby-8B-rHK">
-                            <rect key="frame" x="4" y="197" width="176" height="181"/>
+                            <rect key="frame" x="4" y="197" width="178" height="181"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="181" id="D4H-b5-cA1"/>
-                                <constraint firstAttribute="width" constant="176" id="s6Q-51-YPd"/>
+                                <constraint firstAttribute="width" constant="178" id="s6Q-51-YPd"/>
                             </constraints>
                         </imageView>
                     </subviews>
                     <color key="backgroundColor" white="0.93645654970000003" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstItem="Iil-xR-qJB" firstAttribute="leading" secondItem="Ewn-sD-Dfi" secondAttribute="trailing" constant="8" id="2Xn-NG-740"/>
+                        <constraint firstItem="Iil-xR-qJB" firstAttribute="leading" secondItem="Ewn-sD-Dfi" secondAttribute="trailing" constant="6" id="2Xn-NG-740"/>
                         <constraint firstAttribute="trailing" secondItem="Iil-xR-qJB" secondAttribute="trailing" constant="8" id="3jV-Ca-hjb"/>
                         <constraint firstItem="Ewn-sD-Dfi" firstAttribute="bottom" secondItem="Iil-xR-qJB" secondAttribute="bottom" id="66k-19-YO3"/>
                         <constraint firstItem="Oby-8B-rHK" firstAttribute="top" secondItem="Ewn-sD-Dfi" secondAttribute="bottom" constant="8" symbolic="YES" id="PkG-Rx-l4k"/>
