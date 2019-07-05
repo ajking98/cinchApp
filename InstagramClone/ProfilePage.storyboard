@@ -214,18 +214,19 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0M7-AU-kgy">
-                                <rect key="frame" x="0.0" y="425" width="404" height="471"/>
+                                <rect key="frame" x="0.0" y="428" width="394" height="468"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="404" id="vQy-F9-YKY"/>
+                                    <constraint firstAttribute="width" constant="394" id="vQy-F9-YKY"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JzH-vS-oEo">
-                                <rect key="frame" x="20" y="382" width="374" height="28"/>
+                                <rect key="frame" x="20" y="385" width="374" height="35"/>
                                 <subviews>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="kO4-eZ-RS4">
-                                        <rect key="frame" x="0.0" y="0.0" width="374" height="29"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="36"/>
                                         <constraints>
+                                            <constraint firstAttribute="height" constant="35" id="151-hP-pku"/>
                                             <constraint firstAttribute="width" constant="374" id="Cwe-dw-PKg"/>
                                         </constraints>
                                         <segments>
@@ -258,13 +259,13 @@
                             <constraint firstItem="X5C-UY-ysj" firstAttribute="top" secondItem="MRb-Yc-I3A" secondAttribute="top" constant="-9" id="ZJV-s6-Fb6"/>
                             <constraint firstAttribute="bottom" secondItem="0M7-AU-kgy" secondAttribute="bottom" id="apR-N2-mRf"/>
                             <constraint firstItem="MRb-Yc-I3A" firstAttribute="trailing" secondItem="Jj6-Zp-x7J" secondAttribute="trailing" constant="191" id="dGd-uQ-nTx"/>
-                            <constraint firstItem="0M7-AU-kgy" firstAttribute="top" secondItem="JzH-vS-oEo" secondAttribute="bottom" constant="15" id="dGo-ae-EJf"/>
-                            <constraint firstItem="MRb-Yc-I3A" firstAttribute="trailing" secondItem="0M7-AU-kgy" secondAttribute="trailing" constant="10" id="eGO-wf-TNd"/>
-                            <constraint firstItem="JzH-vS-oEo" firstAttribute="top" secondItem="vc3-DA-azQ" secondAttribute="bottom" constant="15" id="epH-03-StF"/>
+                            <constraint firstItem="0M7-AU-kgy" firstAttribute="top" secondItem="JzH-vS-oEo" secondAttribute="bottom" constant="8" id="dGo-ae-EJf"/>
+                            <constraint firstItem="MRb-Yc-I3A" firstAttribute="trailing" secondItem="0M7-AU-kgy" secondAttribute="trailing" constant="20" id="eGO-wf-TNd"/>
+                            <constraint firstItem="JzH-vS-oEo" firstAttribute="top" secondItem="vc3-DA-azQ" secondAttribute="bottom" constant="18" id="epH-03-StF"/>
                             <constraint firstItem="RSC-bE-Tz7" firstAttribute="top" secondItem="X5C-UY-ysj" secondAttribute="bottom" id="faY-ET-cc9"/>
                             <constraint firstAttribute="trailing" secondItem="X5C-UY-ysj" secondAttribute="trailing" constant="20" id="fcg-U2-wVc"/>
                             <constraint firstItem="vc3-DA-azQ" firstAttribute="top" secondItem="Jj6-Zp-x7J" secondAttribute="bottom" id="iMq-wa-snr"/>
-                            <constraint firstAttribute="bottom" secondItem="JzH-vS-oEo" secondAttribute="bottom" constant="486" id="xEt-Jk-1SB"/>
+                            <constraint firstAttribute="bottom" secondItem="JzH-vS-oEo" secondAttribute="bottom" constant="476" id="xEt-Jk-1SB"/>
                             <constraint firstItem="MRb-Yc-I3A" firstAttribute="trailing" secondItem="JzH-vS-oEo" secondAttribute="trailing" constant="20" id="zjz-JR-IAf"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="MRb-Yc-I3A"/>
@@ -356,7 +357,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bkV-DP-2fY">
-                                                    <rect key="frame" x="275" y="10" width="9" height="21"/>
+                                                    <rect key="frame" x="268" y="10" width="16" height="21"/>
                                                     <state key="normal" image="arrow"/>
                                                 </button>
                                             </subviews>
@@ -388,7 +389,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rEz-9J-o5b">
-                                                    <rect key="frame" x="275" y="11" width="9" height="21"/>
+                                                    <rect key="frame" x="268" y="11" width="16" height="21"/>
                                                     <state key="normal" image="arrow"/>
                                                 </button>
                                             </subviews>
@@ -419,7 +420,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="chp-cg-yt0">
-                                                    <rect key="frame" x="275" y="11" width="9" height="21"/>
+                                                    <rect key="frame" x="268" y="11" width="16" height="21"/>
                                                     <state key="normal" image="arrow"/>
                                                 </button>
                                             </subviews>

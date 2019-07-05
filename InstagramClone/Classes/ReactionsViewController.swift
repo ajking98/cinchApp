@@ -78,6 +78,7 @@ class ReactionsViewController: CardPartsViewController {
 
     @objc func handleTap(tapGesture: UITapGestureRecognizer) {
         print("Tapped")
+        // Do any additional setup after loading the view.
     }
 }
 
