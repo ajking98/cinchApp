@@ -96,13 +96,18 @@ class InsideFolderCollectionViewController: UICollectionViewController, UIImageP
         // #warning Incomplete implementation, return the number of items
         return images.count
     }
-
+    // TODO: If the one pimage is in there make the user interaction false
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = imageCollection.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! FolderCollectionViewCell
         let image = images[indexPath.row]
-        cell.imageView.sd_setImage(with: URL(string: image.url), placeholderImage: UIImage(named: "empty"))
-        cell.imageView.isUserInteractionEnabled = true
-    cell.imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleZoomTap)))
+        cell.imageView.sd_setImage(with: URL(string: image.url), placeholderImage: UIImage(named: "addImage"))
+        if cell.imageView.image == UIImage(named: "addimage") {
+            cell.imageView.isUserInteractionEnabled = false
+        } else {
+            cell.imageView.isUserInteractionEnabled = true
+            cell.imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleZoomTap)))
+        }
+    
         
         return cell
     }

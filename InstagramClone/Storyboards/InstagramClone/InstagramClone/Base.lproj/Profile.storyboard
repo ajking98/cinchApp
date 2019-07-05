@@ -202,8 +202,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N87-LF-86I">
-                                                    <rect key="frame" x="20" y="0.0" width="160" height="169"/>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="N87-LF-86I">
+                                                    <rect key="frame" x="20" y="0.0" width="160" height="195"/>
                                                 </imageView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AmW-iV-sha">
                                                     <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
@@ -214,6 +214,7 @@
                                             </subviews>
                                         </view>
                                         <constraints>
+                                            <constraint firstAttribute="bottomMargin" secondItem="N87-LF-86I" secondAttribute="bottom" constant="-3" id="3qt-xJ-VFS"/>
                                             <constraint firstItem="AmW-iV-sha" firstAttribute="top" secondItem="N87-LF-86I" secondAttribute="top" id="DPO-eS-9wb"/>
                                             <constraint firstItem="N87-LF-86I" firstAttribute="leading" secondItem="KQG-dh-UYd" secondAttribute="leadingMargin" constant="12" id="QhY-y5-gOe"/>
                                             <constraint firstAttribute="bottom" secondItem="AmW-iV-sha" secondAttribute="bottom" id="Ru4-Ar-udD"/>
@@ -274,7 +275,6 @@
         <!--Inside Folder Collection View Controller-->
         <scene sceneID="XPI-1l-0LJ">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ts8-oL-ixY" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <collectionViewController storyboardIdentifier="CardContent" id="SXZ-Ra-RW1" customClass="InsideFolderCollectionViewController" customModule="InstagramClone" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="HLP-HK-Vs7">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -316,14 +316,15 @@
                         <segue destination="XH7-QS-hSa" kind="presentation" identifier="OpenCamera" id="qQu-rR-TyY"/>
                     </connections>
                 </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ts8-oL-ixY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4198.5507246376819" y="1709.5982142857142"/>
         </scene>
         <!--CameraID-->
         <scene sceneID="RD2-pa-nko">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="fkl-NA-8bh" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewControllerPlaceholder storyboardName="Camera" referencedIdentifier="CameraID" id="XH7-QS-hSa" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fkl-NA-8bh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4854" y="1597"/>
         </scene>

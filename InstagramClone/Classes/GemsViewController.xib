@@ -22,36 +22,7 @@
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kni-i8-ogE">
                     <rect key="frame" x="20" y="44" width="374" height="852"/>
-                    <subviews>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="f9-1" translatesAutoresizingMaskIntoConstraints="NO" id="Ewn-sD-Dfi">
-                            <rect key="frame" x="4" y="8" width="176" height="181"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="176" id="7Ks-gS-7JR"/>
-                                <constraint firstAttribute="height" constant="181" id="VkF-4a-SCg"/>
-                            </constraints>
-                        </imageView>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="randomImg" translatesAutoresizingMaskIntoConstraints="NO" id="Iil-xR-qJB">
-                            <rect key="frame" x="188" y="8" width="178" height="181"/>
-                        </imageView>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="n2" translatesAutoresizingMaskIntoConstraints="NO" id="Oby-8B-rHK">
-                            <rect key="frame" x="4" y="197" width="176" height="181"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="181" id="D4H-b5-cA1"/>
-                                <constraint firstAttribute="width" constant="176" id="s6Q-51-YPd"/>
-                            </constraints>
-                        </imageView>
-                    </subviews>
                     <color key="backgroundColor" white="0.93645654970000003" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <constraints>
-                        <constraint firstItem="Iil-xR-qJB" firstAttribute="leading" secondItem="Ewn-sD-Dfi" secondAttribute="trailing" constant="8" id="2Xn-NG-740"/>
-                        <constraint firstAttribute="trailing" secondItem="Iil-xR-qJB" secondAttribute="trailing" constant="8" id="3jV-Ca-hjb"/>
-                        <constraint firstItem="Ewn-sD-Dfi" firstAttribute="bottom" secondItem="Iil-xR-qJB" secondAttribute="bottom" id="66k-19-YO3"/>
-                        <constraint firstItem="Oby-8B-rHK" firstAttribute="top" secondItem="Ewn-sD-Dfi" secondAttribute="bottom" constant="8" symbolic="YES" id="PkG-Rx-l4k"/>
-                        <constraint firstItem="Ewn-sD-Dfi" firstAttribute="top" secondItem="Iil-xR-qJB" secondAttribute="top" id="Sgp-VN-hJX"/>
-                        <constraint firstItem="Ewn-sD-Dfi" firstAttribute="top" secondItem="Kni-i8-ogE" secondAttribute="topMargin" id="VjN-Wy-zWp"/>
-                        <constraint firstItem="Ewn-sD-Dfi" firstAttribute="leading" secondItem="Kni-i8-ogE" secondAttribute="leading" constant="4" id="Ytb-pF-EEe"/>
-                        <constraint firstItem="Oby-8B-rHK" firstAttribute="leading" secondItem="Ewn-sD-Dfi" secondAttribute="leading" id="tRw-Y4-bK9"/>
-                    </constraints>
                 </view>
             </subviews>
             <color key="backgroundColor" white="0.93645654970000003" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -66,9 +37,4 @@
             <point key="canvasLocation" x="137.68115942028987" y="100.44642857142857"/>
         </view>
     </objects>
-    <resources>
-        <image name="f9-1" width="1080" height="1331"/>
-        <image name="n2" width="1640" height="1092"/>
-        <image name="randomImg" width="1000" height="560"/>
-    </resources>
 </document>

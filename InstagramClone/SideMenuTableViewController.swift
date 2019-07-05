@@ -5,7 +5,6 @@
 //  Created by Ahmed Gedi on 6/30/19.
 //  Copyright © 2019 Ahmed Gedi. All rights reserved.
 //
-
 import UIKit
 
 class SideMenuTableViewController: UITableViewController {

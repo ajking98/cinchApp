@@ -20,6 +20,7 @@ class Folder {
     
     //default variables
     let defaultIcon = UIImage(named: "nature")
+    let defaultContentImage = UIImage(named: "addImage")
     
     
     init(folderName : String) {
@@ -58,6 +59,7 @@ class Folder {
     
     func toString() -> [String: Any] {
         let folderString:[String : Any] = ["icon": "https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/userImages%2FGcdcSCTmFaruYKWnntBr?alt=media&token=35e80ea4-83fa-4941-8f3a-8b18ed86a35d", "dateCreated": dateCreated?.toString(), "dateLastModified": dateLastModified?.toString(), "isPrivate": isPrivate, "numOfImages": numOfImages, "numOfVideos": numOfVideos, "content": content]
+        StorageStruct().UploadContent(user: UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!, folderName: folderName!, content: defaultContentImage!)
         return folderString
     }
     
