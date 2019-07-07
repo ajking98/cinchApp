@@ -18,12 +18,14 @@ class ProfilePageViewController: UIViewController {
     var secondView: UIView!
     var reactionView: UIView!
     var gemView: UIView!
+    @IBOutlet weak var viewOne: UIView!
+    @IBOutlet weak var viewTwo: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         buildProfileViews()
-        buildSegmentedFolderControl()
+//        buildSegmentedFolderControl()
         buildTopProfileGestures()
     }
     
@@ -57,20 +59,15 @@ class ProfilePageViewController: UIViewController {
         switch sender.selectedSegmentIndex {
         case 0:
             customSegmentedControl.tintColor = UIColor(red: 1/255.0, green: 209/255.0, blue: 151/255.0, alpha: 1.0)
-            viewContainer.bringSubviewToFront(gemView)
+            viewOne.alpha = 1
+            viewTwo.alpha = 0
         case 1:
             customSegmentedControl.tintColor = UIColor(red: 1/255.0, green: 151/255.0, blue: 209/255.0, alpha: 1.0)
-            viewContainer.bringSubviewToFront(reactionView)
+            viewOne.alpha = 0
+            viewTwo.alpha = 1
         default:
             break
         }
-    }
-    
-    func buildSegmentedFolderControl() {
-        reactionView = ReactionsViewController().view
-        gemView = GemsViewController().view
-        viewContainer.addSubview(reactionView)
-        viewContainer.addSubview(gemView)
     }
     
     func buildProfileViews() {

@@ -41,7 +41,7 @@ class ReactionsViewController: CardPartsViewController {
         layout.minimumInteritemSpacing = 5
         layout.minimumLineSpacing = 5
         layout.scrollDirection = .vertical
-        layout.itemSize = CGSize(width: 170, height: 170)
+        layout.itemSize = CGSize(width: 150, height: 150)
         return layout
     }()
     let viewModel = CardPartCollectionViewModel()

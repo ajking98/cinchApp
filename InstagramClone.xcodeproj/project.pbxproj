@@ -167,8 +167,8 @@
 		46A3E06C22B85825003F6F35 /* SDWebImage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SDWebImage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		46A3E06E22B8582D003F6F35 /* EasyImagy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = EasyImagy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		46A3E08422BA8156003F6F35 /* SQLite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SQLite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		46A3E09622BF0B6E003F6F35 /* ProfilePage.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = ProfilePage.storyboard; path = ../ProfilePage.storyboard; sourceTree = "<group>"; };
-		46A3E09F22BF0BA1003F6F35 /* ProfilePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProfilePageViewController.swift; path = ../ProfilePageViewController.swift; sourceTree = "<group>"; };
+		46A3E09622BF0B6E003F6F35 /* ProfilePage.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ProfilePage.storyboard; sourceTree = "<group>"; };
+		46A3E09F22BF0BA1003F6F35 /* ProfilePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageViewController.swift; sourceTree = "<group>"; };
 		46A3E0B222C033F1003F6F35 /* ReactionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionsViewController.swift; sourceTree = "<group>"; };
 		46A3E0B322C033F1003F6F35 /* ReactionsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReactionsViewController.xib; sourceTree = "<group>"; };
 		46A3E0B622C0341E003F6F35 /* GemsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GemsViewController.swift; sourceTree = "<group>"; };
@@ -203,7 +203,7 @@
 		8E95FFC222BF252D0067B5F2 /* TagStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagStruct.swift; sourceTree = "<group>"; };
 		8E95FFCB22BF25CE0067B5F2 /* TagElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagElement.swift; sourceTree = "<group>"; };
 		8E95FFCD22BF283F0067B5F2 /* ParentTagStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentTagStruct.swift; sourceTree = "<group>"; };
-		8EADC50022D16BB3005A7CC0 /* GemsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GemsCollectionViewCell.swift; path = Storyboards/GemsCollectionViewCell.swift; sourceTree = "<group>"; };
+		8EADC50022D16BB3005A7CC0 /* GemsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GemsCollectionViewCell.swift; sourceTree = "<group>"; };
 		8EADC50122D16BB3005A7CC0 /* GemsCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GemsCollectionViewCell.xib; sourceTree = "<group>"; };
 		A02F922BF6A888861EB10FC9 /* Pods_InstagramClone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstagramClone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAEE40E3310BDAD7472CA2DB /* Pods-InstagramCloneTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramCloneTests.debug.xcconfig"; path = "Target Support Files/Pods-InstagramCloneTests/Pods-InstagramCloneTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -269,6 +269,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		465C438C22D176FB002BD263 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				46A3E09F22BF0BA1003F6F35 /* ProfilePageViewController.swift */,
+				46668D5F22C98C070021229D /* ProfileContainer.swift */,
+				EB74D3ED22603DC200556399 /* ProfileViewController.swift */,
+				EB3A43392263CCC000F6F339 /* ProfileCollectionViewCell.swift */,
+				46A3E0B222C033F1003F6F35 /* ReactionsViewController.swift */,
+				46A3E0B622C0341E003F6F35 /* GemsViewController.swift */,
+				8EADC50022D16BB3005A7CC0 /* GemsCollectionViewCell.swift */,
+				46A3E10922C18784003F6F35 /* SecondProfileHeader.swift */,
+				46A3E10722C18749003F6F35 /* FirstProfileHeader.swift */,
+				EB74D3FC226046C800556399 /* Profile.storyboard */,
+				46A3E0B322C033F1003F6F35 /* ReactionsViewController.xib */,
+				46A3E0B722C0341E003F6F35 /* GemsViewController.xib */,
+				8EADC50122D16BB3005A7CC0 /* GemsCollectionViewCell.xib */,
+				46A3E10322C18661003F6F35 /* FirstProfileHeader.xib */,
+				46A3E10522C18678003F6F35 /* SecondProfileHeader.xib */,
+				46A3E09622BF0B6E003F6F35 /* ProfilePage.storyboard */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
 		4669B8B422B6D2AC004FB38D /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -396,6 +419,7 @@
 		EB74D3B4226025E900556399 /* InstagramClone */ = {
 			isa = PBXGroup;
 			children = (
+				465C438C22D176FB002BD263 /* Profile */,
 				8E5EDB4522C0043B0088FDA9 /* Tags */,
 				46D5E066229EDCEF003B41DE /* Layouts */,
 				8987125B229DF14500BE8F23 /* HelpingStructs */,
@@ -403,13 +427,6 @@
 				EB74D3B5226025E900556399 /* AppDelegate.swift */,
 				EB74D3B7226025E900556399 /* ViewController.swift */,
 				890608B122BAE2B1004C03CF /* PermissionsController.swift */,
-				46668D5F22C98C070021229D /* ProfileContainer.swift */,
-				46A3E0B222C033F1003F6F35 /* ReactionsViewController.swift */,
-				46A3E0B622C0341E003F6F35 /* GemsViewController.swift */,
-				8EADC50022D16BB3005A7CC0 /* GemsCollectionViewCell.swift */,
-				46A3E10922C18784003F6F35 /* SecondProfileHeader.swift */,
-				46A3E10722C18749003F6F35 /* FirstProfileHeader.swift */,
-				46A3E09F22BF0BA1003F6F35 /* ProfilePageViewController.swift */,
 				EB74D3E922603DA900556399 /* CameraViewController.swift */,
 				46A3E05A22B8557D003F6F35 /* CameraViewCell.swift */,
 				EB74D3E322602B2C00556399 /* SignUpViewController.swift */,
@@ -419,8 +436,6 @@
 				EBE992EC226E3B8D002D01CF /* TRCollectionViewController.swift */,
 				46D5E065229EDCD8003B41DE /* Structures */,
 				EB3A43332263ACB500F6F339 /* PhotoCell.swift */,
-				EB74D3ED22603DC200556399 /* ProfileViewController.swift */,
-				EB3A43392263CCC000F6F339 /* ProfileCollectionViewCell.swift */,
 				EB40EF9C2263F7E20093BB5B /* InsideFolderCollectionViewController.swift */,
 				EB40EF982263E9940093BB5B /* FolderCollectionViewCell.swift */,
 				EB74D3FF2260520C00556399 /* Storyboards */,
@@ -455,13 +470,6 @@
 				EB74D3BE226025EA00556399 /* LaunchScreen.storyboard */,
 				8E123EF922B7229400F3ED5D /* Main.storyboard */,
 				EB74D3F2226045A600556399 /* Home.storyboard */,
-				EB74D3FC226046C800556399 /* Profile.storyboard */,
-				46A3E0B322C033F1003F6F35 /* ReactionsViewController.xib */,
-				46A3E0B722C0341E003F6F35 /* GemsViewController.xib */,
-				8EADC50122D16BB3005A7CC0 /* GemsCollectionViewCell.xib */,
-				46A3E10322C18661003F6F35 /* FirstProfileHeader.xib */,
-				46A3E10522C18678003F6F35 /* SecondProfileHeader.xib */,
-				46A3E09622BF0B6E003F6F35 /* ProfilePage.storyboard */,
 				46A3E05C22B855FF003F6F35 /* Camera.storyboard */,
 				890608A822BAE27F004C03CF /* Permissions.storyboard */,
 			);

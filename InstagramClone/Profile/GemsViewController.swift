@@ -28,6 +28,15 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
+        var collectionViewLayout: UICollectionViewFlowLayout = {
+            let layout = UICollectionViewFlowLayout()
+            layout.minimumInteritemSpacing = 5
+            layout.minimumLineSpacing = 5
+            layout.scrollDirection = .vertical
+            layout.itemSize = CGSize(width: 180, height: 180)
+            return layout
+        }()
+        collectionView.collectionViewLayout = collectionViewLayout
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -40,7 +49,11 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! GemsCollectionViewCell
-        cell.title.text = self.objects[indexPath.row]
+        cell.title.text = "Dog"
+        cell.layer.cornerRadius = 10
+        cell.layer.borderWidth = 1
+        cell.layer.borderColor = UIColor(red: 0.93, green: 0.93, blue: 0.95, alpha: 1.0).cgColor
+        cell.clipsToBounds = true
         return cell
         
     }
