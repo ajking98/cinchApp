@@ -49,6 +49,8 @@
 		8E95FFC322BF252D0067B5F2 /* TagStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E95FFC222BF252D0067B5F2 /* TagStruct.swift */; };
 		8E95FFCC22BF25CE0067B5F2 /* TagElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E95FFCB22BF25CE0067B5F2 /* TagElement.swift */; };
 		8E95FFCE22BF283F0067B5F2 /* ParentTagStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E95FFCD22BF283F0067B5F2 /* ParentTagStruct.swift */; };
+		8EADC50222D16BB3005A7CC0 /* GemsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EADC50022D16BB3005A7CC0 /* GemsCollectionViewCell.swift */; };
+		8EADC50322D16BB3005A7CC0 /* GemsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EADC50122D16BB3005A7CC0 /* GemsCollectionViewCell.xib */; };
 		EB3A43322263A07600F6F339 /* HomeCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3A43312263A07600F6F339 /* HomeCollectionViewController.swift */; };
 		EB3A43342263ACB500F6F339 /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3A43332263ACB500F6F339 /* PhotoCell.swift */; };
 		EB3A433A2263CCC000F6F339 /* ProfileCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3A43392263CCC000F6F339 /* ProfileCollectionViewCell.swift */; };
@@ -201,6 +203,8 @@
 		8E95FFC222BF252D0067B5F2 /* TagStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagStruct.swift; sourceTree = "<group>"; };
 		8E95FFCB22BF25CE0067B5F2 /* TagElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagElement.swift; sourceTree = "<group>"; };
 		8E95FFCD22BF283F0067B5F2 /* ParentTagStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentTagStruct.swift; sourceTree = "<group>"; };
+		8EADC50022D16BB3005A7CC0 /* GemsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GemsCollectionViewCell.swift; path = Storyboards/GemsCollectionViewCell.swift; sourceTree = "<group>"; };
+		8EADC50122D16BB3005A7CC0 /* GemsCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GemsCollectionViewCell.xib; sourceTree = "<group>"; };
 		A02F922BF6A888861EB10FC9 /* Pods_InstagramClone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstagramClone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAEE40E3310BDAD7472CA2DB /* Pods-InstagramCloneTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramCloneTests.debug.xcconfig"; path = "Target Support Files/Pods-InstagramCloneTests/Pods-InstagramCloneTests.debug.xcconfig"; sourceTree = "<group>"; };
 		CCFF1EDC4872CD07B6810F1E /* Pods-InstagramClone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramClone.debug.xcconfig"; path = "Target Support Files/Pods-InstagramClone/Pods-InstagramClone.debug.xcconfig"; sourceTree = "<group>"; };
@@ -329,14 +333,6 @@
 			children = (
 				89871251229DE98200BE8F23 /* ZoomingImage.swift */,
 				89871253229DEA2700BE8F23 /* DiscoverPageBackground.swift */,
-				46A3E0B222C033F1003F6F35 /* ReactionsViewController.swift */,
-				46A3E0B322C033F1003F6F35 /* ReactionsViewController.xib */,
-				46A3E0B622C0341E003F6F35 /* GemsViewController.swift */,
-				46A3E0B722C0341E003F6F35 /* GemsViewController.xib */,
-				46A3E10322C18661003F6F35 /* FirstProfileHeader.xib */,
-				46A3E10922C18784003F6F35 /* SecondProfileHeader.swift */,
-				46A3E10722C18749003F6F35 /* FirstProfileHeader.swift */,
-				46A3E10522C18678003F6F35 /* SecondProfileHeader.xib */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -408,6 +404,11 @@
 				EB74D3B7226025E900556399 /* ViewController.swift */,
 				890608B122BAE2B1004C03CF /* PermissionsController.swift */,
 				46668D5F22C98C070021229D /* ProfileContainer.swift */,
+				46A3E0B222C033F1003F6F35 /* ReactionsViewController.swift */,
+				46A3E0B622C0341E003F6F35 /* GemsViewController.swift */,
+				8EADC50022D16BB3005A7CC0 /* GemsCollectionViewCell.swift */,
+				46A3E10922C18784003F6F35 /* SecondProfileHeader.swift */,
+				46A3E10722C18749003F6F35 /* FirstProfileHeader.swift */,
 				46A3E09F22BF0BA1003F6F35 /* ProfilePageViewController.swift */,
 				EB74D3E922603DA900556399 /* CameraViewController.swift */,
 				46A3E05A22B8557D003F6F35 /* CameraViewCell.swift */,
@@ -455,6 +456,11 @@
 				8E123EF922B7229400F3ED5D /* Main.storyboard */,
 				EB74D3F2226045A600556399 /* Home.storyboard */,
 				EB74D3FC226046C800556399 /* Profile.storyboard */,
+				46A3E0B322C033F1003F6F35 /* ReactionsViewController.xib */,
+				46A3E0B722C0341E003F6F35 /* GemsViewController.xib */,
+				8EADC50122D16BB3005A7CC0 /* GemsCollectionViewCell.xib */,
+				46A3E10322C18661003F6F35 /* FirstProfileHeader.xib */,
+				46A3E10522C18678003F6F35 /* SecondProfileHeader.xib */,
 				46A3E09622BF0B6E003F6F35 /* ProfilePage.storyboard */,
 				46A3E05C22B855FF003F6F35 /* Camera.storyboard */,
 				890608A822BAE27F004C03CF /* Permissions.storyboard */,
@@ -629,6 +635,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8EADC50322D16BB3005A7CC0 /* GemsCollectionViewCell.xib in Resources */,
 				EB74D3C0226025EA00556399 /* LaunchScreen.storyboard in Resources */,
 				890608A922BAE27F004C03CF /* Permissions.storyboard in Resources */,
 				46A3E05D22B855FF003F6F35 /* Camera.storyboard in Resources */,
@@ -670,48 +677,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-InstagramClone/Pods-InstagramClone-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-InstagramClone/Pods-InstagramClone-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/CardParts/CardParts.framework",
-				"${BUILT_PRODUCTS_DIR}/Cards/Cards.framework",
-				"${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework",
-				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
-				"${BUILT_PRODUCTS_DIR}/Player/Player.framework",
-				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
-				"${BUILT_PRODUCTS_DIR}/RxDataSources/RxDataSources.framework",
-				"${BUILT_PRODUCTS_DIR}/RxGesture/RxGesture.framework",
-				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
-				"${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework",
-				"${BUILT_PRODUCTS_DIR}/TRMosaicLayout/TRMosaicLayout.framework",
-				"${BUILT_PRODUCTS_DIR}/XLActionController/XLActionController.framework",
-				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
-				"${BUILT_PRODUCTS_DIR}/libwebp/libwebp.framework",
-				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-InstagramClone/Pods-InstagramClone-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CardParts.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cards.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Differentiator.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Player.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxDataSources.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxGesture.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TRMosaicLayout.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLActionController.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/libwebp.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -825,6 +793,7 @@
 				EB74D3EE22603DC200556399 /* ProfileViewController.swift in Sources */,
 				EB74D3EA22603DA900556399 /* CameraViewController.swift in Sources */,
 				46A3E05B22B8557D003F6F35 /* CameraViewCell.swift in Sources */,
+				8EADC50222D16BB3005A7CC0 /* GemsCollectionViewCell.swift in Sources */,
 				EB40EF9D2263F7E20093BB5B /* InsideFolderCollectionViewController.swift in Sources */,
 				46D5E06822A323A9003B41DE /* userClass.swift in Sources */,
 				8E95FFCE22BF283F0067B5F2 /* ParentTagStruct.swift in Sources */,

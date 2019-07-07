@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GemsViewController" customModule="InstagramClone" customModuleProvider="target">
             <connections>
+                <outlet property="collectionView" destination="wpW-25-xyW" id="poP-5e-VcK"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -20,18 +21,24 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kni-i8-ogE">
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wpW-25-xyW">
                     <rect key="frame" x="20" y="44" width="374" height="852"/>
-                    <color key="backgroundColor" white="0.93645654970000003" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                </view>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="mAm-OG-U76">
+                        <size key="itemSize" width="50" height="50"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
             </subviews>
             <color key="backgroundColor" white="0.93645654970000003" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <color key="tintColor" red="0.015686274509803921" green="0.59215686274509804" blue="0.81960784313725488" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="Kni-i8-ogE" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailingMargin" id="HHC-kC-ky9"/>
-                <constraint firstItem="Kni-i8-ogE" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="JaV-jY-8aw"/>
-                <constraint firstAttribute="bottom" secondItem="Kni-i8-ogE" secondAttribute="bottom" id="fbR-TL-34o"/>
-                <constraint firstItem="Kni-i8-ogE" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="zSF-P2-oHP"/>
+                <constraint firstAttribute="bottom" secondItem="wpW-25-xyW" secondAttribute="bottom" id="RCx-Bw-AsI"/>
+                <constraint firstItem="wpW-25-xyW" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="UDD-aq-Mpr"/>
+                <constraint firstItem="wpW-25-xyW" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="bRl-v7-yxx"/>
+                <constraint firstItem="wpW-25-xyW" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailingMargin" id="mhj-jw-nf4"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="137.68115942028987" y="100.44642857142857"/>
