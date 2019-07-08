@@ -19,7 +19,6 @@
 		46A3E0B422C033F1003F6F35 /* ReactionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A3E0B222C033F1003F6F35 /* ReactionsViewController.swift */; };
 		46A3E0B522C033F1003F6F35 /* ReactionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 46A3E0B322C033F1003F6F35 /* ReactionsViewController.xib */; };
 		46A3E0B822C0341E003F6F35 /* GemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A3E0B622C0341E003F6F35 /* GemsViewController.swift */; };
-		46A3E0B922C0341E003F6F35 /* GemsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 46A3E0B722C0341E003F6F35 /* GemsViewController.xib */; };
 		46A3E10422C18661003F6F35 /* FirstProfileHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 46A3E10322C18661003F6F35 /* FirstProfileHeader.xib */; };
 		46A3E10622C18678003F6F35 /* SecondProfileHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 46A3E10522C18678003F6F35 /* SecondProfileHeader.xib */; };
 		46A3E10822C18749003F6F35 /* FirstProfileHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A3E10722C18749003F6F35 /* FirstProfileHeader.swift */; };
@@ -40,6 +39,7 @@
 		890608B222BAE2B1004C03CF /* PermissionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890608B122BAE2B1004C03CF /* PermissionsController.swift */; };
 		892677AC22CFCE390007825E /* SideMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892677AB22CFCE390007825E /* SideMenuTableViewController.swift */; };
 		892677E922D00EF10007825E /* FolderInsta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892677E822D00EF10007825E /* FolderInsta.swift */; };
+		8948646222D3FC280075EB90 /* FolderCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8948646122D3FC280075EB90 /* FolderCard.swift */; };
 		89871252229DE98200BE8F23 /* ZoomingImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89871251229DE98200BE8F23 /* ZoomingImage.swift */; };
 		89871254229DEA2700BE8F23 /* DiscoverPageBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89871253229DEA2700BE8F23 /* DiscoverPageBackground.swift */; };
 		89CD1D04229201BA004BD0A0 /* DownloadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CD1D03229201BA004BD0A0 /* DownloadImage.swift */; };
@@ -50,7 +50,6 @@
 		8E95FFCC22BF25CE0067B5F2 /* TagElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E95FFCB22BF25CE0067B5F2 /* TagElement.swift */; };
 		8E95FFCE22BF283F0067B5F2 /* ParentTagStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E95FFCD22BF283F0067B5F2 /* ParentTagStruct.swift */; };
 		8EADC50222D16BB3005A7CC0 /* GemsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EADC50022D16BB3005A7CC0 /* GemsCollectionViewCell.swift */; };
-		8EADC50322D16BB3005A7CC0 /* GemsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EADC50122D16BB3005A7CC0 /* GemsCollectionViewCell.xib */; };
 		EB3A43322263A07600F6F339 /* HomeCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3A43312263A07600F6F339 /* HomeCollectionViewController.swift */; };
 		EB3A43342263ACB500F6F339 /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3A43332263ACB500F6F339 /* PhotoCell.swift */; };
 		EB3A433A2263CCC000F6F339 /* ProfileCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3A43392263CCC000F6F339 /* ProfileCollectionViewCell.swift */; };
@@ -172,7 +171,6 @@
 		46A3E0B222C033F1003F6F35 /* ReactionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionsViewController.swift; sourceTree = "<group>"; };
 		46A3E0B322C033F1003F6F35 /* ReactionsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReactionsViewController.xib; sourceTree = "<group>"; };
 		46A3E0B622C0341E003F6F35 /* GemsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GemsViewController.swift; sourceTree = "<group>"; };
-		46A3E0B722C0341E003F6F35 /* GemsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GemsViewController.xib; sourceTree = "<group>"; };
 		46A3E10322C18661003F6F35 /* FirstProfileHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FirstProfileHeader.xib; sourceTree = "<group>"; };
 		46A3E10522C18678003F6F35 /* SecondProfileHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SecondProfileHeader.xib; sourceTree = "<group>"; };
 		46A3E10722C18749003F6F35 /* FirstProfileHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstProfileHeader.swift; sourceTree = "<group>"; };
@@ -194,6 +192,7 @@
 		890608B122BAE2B1004C03CF /* PermissionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsController.swift; sourceTree = "<group>"; };
 		892677AB22CFCE390007825E /* SideMenuTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuTableViewController.swift; sourceTree = "<group>"; };
 		892677E822D00EF10007825E /* FolderInsta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderInsta.swift; sourceTree = "<group>"; };
+		8948646122D3FC280075EB90 /* FolderCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderCard.swift; sourceTree = "<group>"; };
 		89871251229DE98200BE8F23 /* ZoomingImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomingImage.swift; sourceTree = "<group>"; };
 		89871253229DEA2700BE8F23 /* DiscoverPageBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverPageBackground.swift; sourceTree = "<group>"; };
 		89CD1D03229201BA004BD0A0 /* DownloadImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadImage.swift; sourceTree = "<group>"; };
@@ -204,7 +203,6 @@
 		8E95FFCB22BF25CE0067B5F2 /* TagElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagElement.swift; sourceTree = "<group>"; };
 		8E95FFCD22BF283F0067B5F2 /* ParentTagStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentTagStruct.swift; sourceTree = "<group>"; };
 		8EADC50022D16BB3005A7CC0 /* GemsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GemsCollectionViewCell.swift; sourceTree = "<group>"; };
-		8EADC50122D16BB3005A7CC0 /* GemsCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GemsCollectionViewCell.xib; sourceTree = "<group>"; };
 		A02F922BF6A888861EB10FC9 /* Pods_InstagramClone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstagramClone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAEE40E3310BDAD7472CA2DB /* Pods-InstagramCloneTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramCloneTests.debug.xcconfig"; path = "Target Support Files/Pods-InstagramCloneTests/Pods-InstagramCloneTests.debug.xcconfig"; sourceTree = "<group>"; };
 		CCFF1EDC4872CD07B6810F1E /* Pods-InstagramClone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramClone.debug.xcconfig"; path = "Target Support Files/Pods-InstagramClone/Pods-InstagramClone.debug.xcconfig"; sourceTree = "<group>"; };
@@ -279,12 +277,11 @@
 				46A3E0B222C033F1003F6F35 /* ReactionsViewController.swift */,
 				46A3E0B622C0341E003F6F35 /* GemsViewController.swift */,
 				8EADC50022D16BB3005A7CC0 /* GemsCollectionViewCell.swift */,
+				8948646122D3FC280075EB90 /* FolderCard.swift */,
 				46A3E10922C18784003F6F35 /* SecondProfileHeader.swift */,
 				46A3E10722C18749003F6F35 /* FirstProfileHeader.swift */,
 				EB74D3FC226046C800556399 /* Profile.storyboard */,
 				46A3E0B322C033F1003F6F35 /* ReactionsViewController.xib */,
-				46A3E0B722C0341E003F6F35 /* GemsViewController.xib */,
-				8EADC50122D16BB3005A7CC0 /* GemsCollectionViewCell.xib */,
 				46A3E10322C18661003F6F35 /* FirstProfileHeader.xib */,
 				46A3E10522C18678003F6F35 /* SecondProfileHeader.xib */,
 				46A3E09622BF0B6E003F6F35 /* ProfilePage.storyboard */,
@@ -643,11 +640,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8EADC50322D16BB3005A7CC0 /* GemsCollectionViewCell.xib in Resources */,
 				EB74D3C0226025EA00556399 /* LaunchScreen.storyboard in Resources */,
 				890608A922BAE27F004C03CF /* Permissions.storyboard in Resources */,
 				46A3E05D22B855FF003F6F35 /* Camera.storyboard in Resources */,
-				46A3E0B922C0341E003F6F35 /* GemsViewController.xib in Resources */,
 				46A3E0B522C033F1003F6F35 /* ReactionsViewController.xib in Resources */,
 				EB74D3F4226045A600556399 /* Home.storyboard in Resources */,
 				46A3E09722BF0B6E003F6F35 /* ProfilePage.storyboard in Resources */,
@@ -809,6 +804,7 @@
 				46A3E0A022BF0BA1003F6F35 /* ProfilePageViewController.swift in Sources */,
 				46A3E10A22C18784003F6F35 /* SecondProfileHeader.swift in Sources */,
 				EB63B7E0226A7EB5004C7E2C /* ImageInsta.swift in Sources */,
+				8948646222D3FC280075EB90 /* FolderCard.swift in Sources */,
 				46D5E06A22A46505003B41DE /* folderClass.swift in Sources */,
 				46D5E05E2298A130003B41DE /* userStruct.swift in Sources */,
 				46D5E07C22A899B1003B41DE /* ParentStruct.swift in Sources */,

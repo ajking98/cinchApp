@@ -15,5 +15,9 @@ class GemsCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         // Initialization code
     }
+    
+    func displayContent(title: String) {
+        self.title.text = title
+    }
 
 }

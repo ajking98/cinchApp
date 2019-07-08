@@ -25,7 +25,6 @@ class ProfilePageViewController: UIViewController {
         super.viewDidLoad()
         
         buildProfileViews()
-//        buildSegmentedFolderControl()
         buildTopProfileGestures()
     }
     

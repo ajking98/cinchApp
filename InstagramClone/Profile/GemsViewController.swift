@@ -16,7 +16,7 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
     var folderNames: [String]?
     
     @IBOutlet weak var collectionView: UICollectionView!
-    let cellIdentifier = "cellIdentifier"
+    let cellIdentifier = "cell"
     let objects = ["Cat", "Dog", "Fish"]
     
     override func viewDidLoad() {
