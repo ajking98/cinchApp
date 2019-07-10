@@ -133,7 +133,7 @@ class CameraViewController: UIViewController, UICollectionViewDataSource, UIColl
         nextShadow.image = image
     }
     
-    //sizes all the image views accordingly with the image size
+    ///sizes all the image views accordingly with the image size
     func buildSizes(){
         if let image = centerView.image {
             centerShadow.frame.size = image.size
