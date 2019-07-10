@@ -19,6 +19,13 @@ class ProfileContainer: UIViewController {
                                                selector: #selector(toggleSideMenu),
                                                name: NSNotification.Name(rawValue: "Toggle Side Menu"),
                                                object: nil)
+        let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe))
+        leftSwipe.direction = .left
+        view.addGestureRecognizer(leftSwipe)
+        
+        let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe))
+        rightSwipe.direction = .right
+        view.addGestureRecognizer(rightSwipe)
     }
     @objc func toggleSideMenu() {
         if isExpanded {
@@ -28,5 +35,20 @@ class ProfileContainer: UIViewController {
             isExpanded = true
             rightMenuSideConstraint.constant = 0
         }
+    }
+    
+    @objc func handleSwipe(gesture: UISwipeGestureRecognizer) {
+        if gesture.direction == UISwipeGestureRecognizer.Direction.left {
+            UIView.animateKeyframes(withDuration: 1, delay: 0.7, options: [], animations: {
+                self.isExpanded = true
+                self.rightMenuSideConstraint.constant = 0
+            }, completion: nil)
+        } else if gesture.direction == UISwipeGestureRecognizer.Direction.right {
+            UIView.animateKeyframes(withDuration: 1, delay: 0.7, options: [], animations: {
+                self.isExpanded = false
+                self.rightMenuSideConstraint.constant = 300
+            }, completion: nil)
+        }
+        
     }
 }
