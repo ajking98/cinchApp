@@ -7,129 +7,70 @@
 //
 
 import UIKit
-import CardParts
-import RxSwift
-import RxDataSources
-import RxCocoa
 
-struct MyStruct {
-    var title: String
-    var description: String
-}
 
-struct SectionOfCustomStruct {
-    var header: String
-    var items: [Item]
-}
-
-extension SectionOfCustomStruct: SectionModelType {
-
-    typealias Item = MyStruct
-
-    init(original: SectionOfCustomStruct, items: [Item]) {
-        self = original
-        self.items = items
-    }
-}
-
-class ReactionsViewController: CardPartsViewController {
-
-    let cardPartTextView = CardPartTextView(type: .normal)
-    lazy var collectionViewCardPart = CardPartCollectionView(collectionViewLayout: self.collectionViewLayout)
-    var collectionViewLayout: UICollectionViewFlowLayout = {
-        let layout = UICollectionViewFlowLayout()
-        layout.minimumInteritemSpacing = 5
-        layout.minimumLineSpacing = 5
-        layout.scrollDirection = .vertical
-        layout.itemSize = CGSize(width: 150, height: 150)
-        return layout
-    }()
-    let viewModel = CardPartCollectionViewModel()
-
+class ReactionsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    @IBOutlet weak var collectionView: UICollectionView!
+    let objectNames = ["Mad", "Sad", "Angry", "Love", "Jealousy"]
+    let objectImages = ["n1", "n2", "n3", "n4", "n5"]
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        collectionViewCardPart.collectionView.register(MyCustomCollectionViewCell.self, forCellWithReuseIdentifier: "MyCustomCollectionViewCell")
-        collectionViewCardPart.collectionView.backgroundColor = .clear
-        collectionViewCardPart.collectionView.showsHorizontalScrollIndicator = false
-
-        let dataSource = RxCollectionViewSectionedReloadDataSource<SectionOfCustomStruct>(configureCell: { (_, collectionView, indexPath, data) -> UICollectionViewCell in
-
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyCustomCollectionViewCell", for: indexPath) as? MyCustomCollectionViewCell else { return UICollectionViewCell() }
-
-            cell.setData(data)
-            cell.isUserInteractionEnabled = true
-            cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.handleTap)))
-            let flappy = UIImage(named: "flappy")
-            cell.backgroundView = UIImageView.init(image: flappy)
-            cell.layer.cornerRadius = 10
-            cell.layer.borderWidth = 1
-            cell.layer.borderColor = UIColor(red: 0.93, green: 0.93, blue: 0.95, alpha: 1.0).cgColor
-            cell.clipsToBounds = true
-            return cell
-        })
-
-        viewModel.data.asObservable().bind(to: collectionViewCardPart.collectionView.rx.items(dataSource: dataSource)).disposed(by: bag)
-
-        collectionViewCardPart.collectionView.frame = CGRect(x: 0, y: 0, width: 200, height: 400)
-
-        setupCardParts([cardPartTextView, collectionViewCardPart])
+        
+        self.collectionView.delegate = self
+        self.collectionView.dataSource = self
+        setupCollectionViewLayout()
     }
-
-    @objc func handleTap(tapGesture: UITapGestureRecognizer) {
-        print("Tapped")
-        // Do any additional setup after loading the view.
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
     }
-}
-
-class CardPartCollectionViewModel {
-
-    typealias ReactiveSection = BehaviorRelay<[SectionOfCustomStruct]>
-    var data = ReactiveSection(value: [])
-
-    let emojis: [String] = ["😎", "🤪", "🤩", "👻", "🤟🏽", "💋", "💃🏽"]
-
-    init() {
-
-        var temp: [MyStruct] = []
-
-        for i in 0...4 {
-
-            temp.append(MyStruct(title: "Title #\(i)", description: "\(emojis[Int(arc4random_uniform(UInt32(emojis.count)))])"))
-        }
-
-        data.accept([SectionOfCustomStruct(header: "", items: temp)])
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.objectNames.count
     }
-}
-
-class MyCustomCollectionViewCell: CardPartCollectionViewCardPartsCell {
-    let bag = DisposeBag()
-
-    let titleCP = CardPartTextView(type: .title)
-    let descriptionCP = CardPartTextView(type: .normal)
-
-    override init(frame: CGRect) {
-
-        super.init(frame: frame)
-
-        titleCP.margins = .init(top: 50, left: 20, bottom: 5, right: 30)
-        descriptionCP.margins = .init(top: 15, left: 30, bottom: 0, right: 20)
-        setupCardParts([titleCP, descriptionCP])
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MoodCell", for: indexPath) as! MoodsCollectionViewCell
+        cell.title.text = objectNames[indexPath.row]
+        cell.overlayView?.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.3)
+        cell.imageView.image = UIImage.init(named: objectImages[indexPath.row])
+        
+        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = view.bounds
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        cell.overlayView.addSubview(blurEffectView)
+        cell.overlayView.addSubview(cell.addImageButton)
+        cell.overlayView.addSubview(cell.title)
+        let tapAddImage = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        cell.addImageButton.addGestureRecognizer(tapAddImage)
+        cell.title.textColor = UIColor(white: 1, alpha: 1)
+        cell.title.font = UIFont(name: "Helvetica", size: 20)
+        
+        cell.backgroundColor = UIColor.blue
+        cell.layer.cornerRadius = 10
+        cell.layer.borderWidth = 1
+        cell.layer.borderColor = UIColor(red: 0.93, green: 0.93, blue: 0.95, alpha: 1.0).cgColor
+        cell.clipsToBounds = true
+        return cell
     }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    
+    func setupCollectionViewLayout() {
+        let collectionViewLayout: UICollectionViewFlowLayout = {
+            let layout = UICollectionViewFlowLayout()
+            layout.minimumInteritemSpacing = 5
+            layout.minimumLineSpacing = 5
+            layout.scrollDirection = .vertical
+            layout.itemSize = CGSize(width: 180, height: 180)
+            return layout
+        }()
+        collectionView.collectionViewLayout = collectionViewLayout
     }
-
-    func setData(_ data: MyStruct) {
-
-        titleCP.text = data.title
-        titleCP.textAlignment = .center
-        titleCP.textColor = .white
-
-        descriptionCP.text = data.description
-        descriptionCP.textAlignment = .center
-        descriptionCP.textColor = .white
+    
+    @objc func handleTap(gesture: UITapGestureRecognizer) -> Void {
+        print("Add Image to Folder")
     }
+    
 }
 

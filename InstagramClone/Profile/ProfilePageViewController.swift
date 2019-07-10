@@ -16,14 +16,11 @@ class ProfilePageViewController: UIViewController {
     @IBOutlet weak var customSegmentedControl: UISegmentedControl!
     var firstView: UIView!
     var secondView: UIView!
-    var reactionView: UIView!
-    var gemView: UIView!
     @IBOutlet weak var viewOne: UIView!
     @IBOutlet weak var viewTwo: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         buildProfileViews()
         buildTopProfileGestures()
     }

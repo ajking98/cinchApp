@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="llW-Oh-W5Y">
-                                <rect key="frame" x="0.0" y="88" width="414" height="295"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="295"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="userPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="JJf-hA-DT1">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="295"/>
@@ -186,7 +186,7 @@
                                 <rect key="frame" x="0.0" y="610" width="42" height="21"/>
                             </stackView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="KHH-Ml-gif">
-                                <rect key="frame" x="0.0" y="405" width="414" height="491"/>
+                                <rect key="frame" x="0.0" y="361" width="414" height="535"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="A5f-Qt-ujw">
                                     <size key="itemSize" width="200" height="200"/>
@@ -247,11 +247,7 @@
                         <viewLayoutGuide key="safeArea" id="yC4-le-0Kd"/>
                     </view>
                     <navigationItem key="navigationItem" title="PROFILE" id="EiK-9t-sJu">
-                        <barButtonItem key="rightBarButtonItem" title="Item" id="GLM-Gf-tFV">
-                            <connections>
-                                <segue destination="GCY-SZ-xdp" kind="show" id="Zvm-Tc-PG5"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="GLM-Gf-tFV"/>
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="KHH-Ml-gif" id="SRs-A5-SWG"/>
@@ -263,14 +259,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RQZ-iR-GAb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3450.7246376811595" y="1709.5982142857142"/>
-        </scene>
-        <!--ProfilePageID-->
-        <scene sceneID="7eI-1y-7Jt">
-            <objects>
-                <viewControllerPlaceholder storyboardName="ProfilePage" referencedIdentifier="ProfilePageID" id="GCY-SZ-xdp" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="gQk-Uq-Or9" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3454" y="2109"/>
         </scene>
         <!--Inside Folder Collection View Controller-->
         <scene sceneID="XPI-1l-0LJ">
@@ -331,7 +319,7 @@
         <!--Navigation Controller-->
         <scene sceneID="VbL-HJ-Y5G">
             <objects>
-                <navigationController storyboardIdentifier="NavigationProfile" automaticallyAdjustsScrollViewInsets="NO" id="YDV-aP-4g5" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="YDV-aP-4g5" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="user_male" id="zkK-4O-q4a"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="xNG-f9-XCs">
@@ -339,9 +327,6 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="r0O-FK-vd2" kind="relationship" relationship="rootViewController" id="Din-iU-UYw"/>
-                    </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k9A-vQ-Q7n" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

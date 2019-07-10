@@ -10,7 +10,10 @@ import UIKit
 
 class GemsCollectionViewCell: UICollectionViewCell {
 
-    @IBOutlet weak var title: UILabel!
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var overlayView: UIView!
+    @IBOutlet var title: UILabel!
+    @IBOutlet weak var addImageButton: UIButton!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

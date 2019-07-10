@@ -48,10 +48,10 @@
             </objects>
             <point key="canvasLocation" x="2632" y="139"/>
         </scene>
-        <!--NavigationProfile-->
+        <!--ProfileID-->
         <scene sceneID="bC1-wB-ClT">
             <objects>
-                <viewControllerPlaceholder storyboardName="Profile" referencedIdentifier="NavigationProfile" id="1oR-2O-pdA" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="ProfilePage" referencedIdentifier="ProfileID" id="1oR-2O-pdA" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="Oe0-oU-mic"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ORK-an-5L1" userLabel="First Responder" sceneMemberID="firstResponder"/>

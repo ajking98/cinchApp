@@ -1,27 +1,24 @@
 //
-//  GemsViewController.swift
+//  ReactionsViewController.swift
 //  InstagramClone
 //
 //  Created by Ahmed Gedi on 6/23/19.
 //  Copyright © 2019 Gedi, Ahmed M. All rights reserved.
+//
 
 import UIKit
-import Cards
-import FirebaseStorage
-import FirebaseDatabase
 
-class GemsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
-    
-    var dbRef: DatabaseReference!
-    var folderNames: [String]?
+
+class MoodsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
     @IBOutlet weak var collectionView: UICollectionView!
-    let cellIdentifier = "GemCell"
-    let objectNames = ["Cat", "Dog", "Fish"]
-    let objectImages = ["f1", "f2", "f3"]
+    let cellIdentifier = "MoodCell"
+    let objectNames = ["Mad", "Sad", "Angry", "Love", "Jealousy"]
+    let objectImages = ["n1", "n2", "n3", "n4", "n5"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         setupCollectionViewLayout()
@@ -36,7 +33,7 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! GemsCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! MoodsCollectionViewCell
         designCell(cell: cell)
         cell.title.text = objectNames[indexPath.row]
         cell.imageView.image = UIImage.init(named: objectImages[indexPath.row])
@@ -45,26 +42,6 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
         cell.addImageButton.addGestureRecognizer(tapAddImage)
         
         return cell
-        
-    }
-    
-    func loadDB() {
-        print("reached")
-        // Not reading database properly
-        dbRef.queryOrderedByKey().observe(.value, with: {
-            snapshot in
-            let value = snapshot.value as? NSDictionary
-            print("hey")
-            var yourArray = [String]()
-            if let scores = snapshot.value as? NSDictionary{
-                for i in 0..<scores.count {
-                    yourArray.append(scores[i] as! String)
-                    print(scores[i])
-                }
-            }
-            self.folderNames = yourArray
-        })
-        
     }
     
     func setupCollectionViewLayout() {
@@ -91,14 +68,14 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
         return blurEffectView
     }
     
-    func addSubviews(cell: GemsCollectionViewCell) {
+    func addSubviews(cell: MoodsCollectionViewCell) {
         let blurEffect = createBlurEffect()
         cell.overlayView.addSubview(blurEffect)
         cell.overlayView.addSubview(cell.addImageButton)
         cell.overlayView.addSubview(cell.title)
     }
     
-    func designCell(cell: GemsCollectionViewCell) {
+    func designCell(cell: MoodsCollectionViewCell) {
         cell.overlayView?.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.3)
         cell.title.textColor = UIColor(white: 1, alpha: 1)
         cell.title.font = UIFont(name: "Helvetica", size: 15)
@@ -107,4 +84,6 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
         cell.layer.borderColor = UIColor(red: 0.93, green: 0.93, blue: 0.95, alpha: 1.0).cgColor
         cell.clipsToBounds = true
     }
+    
 }
+
