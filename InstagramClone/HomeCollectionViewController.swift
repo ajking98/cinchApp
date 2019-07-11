@@ -19,7 +19,15 @@ import SQLite
 class HomeCollectionViewController: UICollectionViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @IBAction func goToCamera(_ sender: Any) {
-        tabBarController?.selectedIndex = 1
+        
+        //        let newViewController = DiscoverViewController()
+        //        self.navigationController?.pushViewController(newViewController, animated: true)
+        
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Discover", bundle: nil)
+        let newViewController = storyBoard.instantiateViewController(withIdentifier: "DiscoverID")
+//        self.present(newViewController, animated: true, completion: nil)
+                self.navigationController?.pushViewController(newViewController, animated: true)
+        
     }
     @IBOutlet var imageCollection: UICollectionView!
     var customImageFlowLayout: CustomImageFlowLayout!

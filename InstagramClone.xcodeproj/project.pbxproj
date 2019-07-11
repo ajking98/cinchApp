@@ -37,6 +37,13 @@
 		6E591AF9ECEE74F44925E53C /* Pods_InstagramCloneTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC945FE0D7581185DE7FBF19 /* Pods_InstagramCloneTests.framework */; };
 		890608A922BAE27F004C03CF /* Permissions.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 890608A822BAE27F004C03CF /* Permissions.storyboard */; };
 		890608B222BAE2B1004C03CF /* PermissionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890608B122BAE2B1004C03CF /* PermissionsController.swift */; };
+		891FC3EC22D7F6720024A623 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891FC3EB22D7F6720024A623 /* SearchBar.swift */; };
+		891FC3EE22D7F6930024A623 /* DiscoverController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891FC3ED22D7F6930024A623 /* DiscoverController.swift */; };
+		891FC3F722D7F6B50024A623 /* PostCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891FC3F622D7F6B50024A623 /* PostCard.swift */; };
+		891FC3F922D7F6D80024A623 /* DiscoverLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891FC3F822D7F6D80024A623 /* DiscoverLayout.swift */; };
+		891FC3FB22D7F7050024A623 /* ImageSelectedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891FC3FA22D7F7050024A623 /* ImageSelectedController.swift */; };
+		891FC3FD22D7F72E0024A623 /* Discover.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 891FC3FC22D7F72E0024A623 /* Discover.storyboard */; };
+		891FC3FF22D7F73A0024A623 /* PostCard.xib in Resources */ = {isa = PBXBuildFile; fileRef = 891FC3FE22D7F73A0024A623 /* PostCard.xib */; };
 		892677AC22CFCE390007825E /* SideMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892677AB22CFCE390007825E /* SideMenuTableViewController.swift */; };
 		892677E922D00EF10007825E /* FolderInsta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892677E822D00EF10007825E /* FolderInsta.swift */; };
 		8948646222D3FC280075EB90 /* FolderCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8948646122D3FC280075EB90 /* FolderCard.swift */; };
@@ -190,6 +197,13 @@
 		64A9B990C160D383D7FF0D45 /* Pods-InstagramCloneTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramCloneTests.release.xcconfig"; path = "Target Support Files/Pods-InstagramCloneTests/Pods-InstagramCloneTests.release.xcconfig"; sourceTree = "<group>"; };
 		890608A822BAE27F004C03CF /* Permissions.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Permissions.storyboard; sourceTree = "<group>"; };
 		890608B122BAE2B1004C03CF /* PermissionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsController.swift; sourceTree = "<group>"; };
+		891FC3EB22D7F6720024A623 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
+		891FC3ED22D7F6930024A623 /* DiscoverController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverController.swift; sourceTree = "<group>"; };
+		891FC3F622D7F6B50024A623 /* PostCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCard.swift; sourceTree = "<group>"; };
+		891FC3F822D7F6D80024A623 /* DiscoverLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverLayout.swift; sourceTree = "<group>"; };
+		891FC3FA22D7F7050024A623 /* ImageSelectedController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSelectedController.swift; sourceTree = "<group>"; };
+		891FC3FC22D7F72E0024A623 /* Discover.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Discover.storyboard; sourceTree = "<group>"; };
+		891FC3FE22D7F73A0024A623 /* PostCard.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostCard.xib; sourceTree = "<group>"; };
 		892677AB22CFCE390007825E /* SideMenuTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuTableViewController.swift; sourceTree = "<group>"; };
 		892677E822D00EF10007825E /* FolderInsta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderInsta.swift; sourceTree = "<group>"; };
 		8948646122D3FC280075EB90 /* FolderCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderCard.swift; sourceTree = "<group>"; };
@@ -348,6 +362,20 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		891FC3EA22D7F5DD0024A623 /* DiscoverFolder */ = {
+			isa = PBXGroup;
+			children = (
+				891FC3FE22D7F73A0024A623 /* PostCard.xib */,
+				891FC3FC22D7F72E0024A623 /* Discover.storyboard */,
+				891FC3EB22D7F6720024A623 /* SearchBar.swift */,
+				891FC3ED22D7F6930024A623 /* DiscoverController.swift */,
+				891FC3F622D7F6B50024A623 /* PostCard.swift */,
+				891FC3F822D7F6D80024A623 /* DiscoverLayout.swift */,
+				891FC3FA22D7F7050024A623 /* ImageSelectedController.swift */,
+			);
+			path = DiscoverFolder;
+			sourceTree = "<group>";
+		};
 		89871250229DE96A00BE8F23 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -416,6 +444,7 @@
 		EB74D3B4226025E900556399 /* InstagramClone */ = {
 			isa = PBXGroup;
 			children = (
+				891FC3EA22D7F5DD0024A623 /* DiscoverFolder */,
 				465C438C22D176FB002BD263 /* Profile */,
 				8E5EDB4522C0043B0088FDA9 /* Tags */,
 				46D5E066229EDCEF003B41DE /* Layouts */,
@@ -645,6 +674,8 @@
 				46A3E05D22B855FF003F6F35 /* Camera.storyboard in Resources */,
 				EB74D3F4226045A600556399 /* Home.storyboard in Resources */,
 				46A3E09722BF0B6E003F6F35 /* ProfilePage.storyboard in Resources */,
+				891FC3FF22D7F73A0024A623 /* PostCard.xib in Resources */,
+				891FC3FD22D7F72E0024A623 /* Discover.storyboard in Resources */,
 				8E123EFA22B7229400F3ED5D /* Main.storyboard in Resources */,
 				EB74D3BD226025EA00556399 /* Assets.xcassets in Resources */,
 				46A3E10622C18678003F6F35 /* SecondProfileHeader.xib in Resources */,
@@ -679,9 +710,48 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-InstagramClone/Pods-InstagramClone-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-InstagramClone/Pods-InstagramClone-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/CardParts/CardParts.framework",
+				"${BUILT_PRODUCTS_DIR}/Cards/Cards.framework",
+				"${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/Player/Player.framework",
+				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxDataSources/RxDataSources.framework",
+				"${BUILT_PRODUCTS_DIR}/RxGesture/RxGesture.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
+				"${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework",
+				"${BUILT_PRODUCTS_DIR}/TRMosaicLayout/TRMosaicLayout.framework",
+				"${BUILT_PRODUCTS_DIR}/XLActionController/XLActionController.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
+				"${BUILT_PRODUCTS_DIR}/libwebp/libwebp.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-InstagramClone/Pods-InstagramClone-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CardParts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cards.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Differentiator.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Player.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxDataSources.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxGesture.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TRMosaicLayout.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLActionController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/libwebp.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -765,6 +835,7 @@
 				892677E922D00EF10007825E /* FolderInsta.swift in Sources */,
 				46A3E0B822C0341E003F6F35 /* GemsViewController.swift in Sources */,
 				EB41F8E922653170003751FA /* Photo.swift in Sources */,
+				891FC3F722D7F6B50024A623 /* PostCard.swift in Sources */,
 				8E95FFCC22BF25CE0067B5F2 /* TagElement.swift in Sources */,
 				892677AC22CFCE390007825E /* SideMenuTableViewController.swift in Sources */,
 				890608B222BAE2B1004C03CF /* PermissionsController.swift in Sources */,
@@ -792,6 +863,7 @@
 				EB3A433A2263CCC000F6F339 /* ProfileCollectionViewCell.swift in Sources */,
 				89CD1D04229201BA004BD0A0 /* DownloadImage.swift in Sources */,
 				EB40EF992263E9940093BB5B /* FolderCollectionViewCell.swift in Sources */,
+				891FC3F922D7F6D80024A623 /* DiscoverLayout.swift in Sources */,
 				EB63B7DE226A7933004C7E2C /* CustomImageFlowLayout.swift in Sources */,
 				EB74D3EE22603DC200556399 /* ProfileViewController.swift in Sources */,
 				EB74D3EA22603DA900556399 /* CameraViewController.swift in Sources */,
@@ -801,10 +873,13 @@
 				46D5E06822A323A9003B41DE /* userClass.swift in Sources */,
 				8E95FFCE22BF283F0067B5F2 /* ParentTagStruct.swift in Sources */,
 				8E5EDB4E22C025990088FDA9 /* TagElementStruct.swift in Sources */,
+				891FC3EE22D7F6930024A623 /* DiscoverController.swift in Sources */,
 				46A3E0A022BF0BA1003F6F35 /* ProfilePageViewController.swift in Sources */,
 				46A3E10A22C18784003F6F35 /* SecondProfileHeader.swift in Sources */,
+				891FC3EC22D7F6720024A623 /* SearchBar.swift in Sources */,
 				EB63B7E0226A7EB5004C7E2C /* ImageInsta.swift in Sources */,
 				8948646222D3FC280075EB90 /* FolderCard.swift in Sources */,
+				891FC3FB22D7F7050024A623 /* ImageSelectedController.swift in Sources */,
 				46D5E06A22A46505003B41DE /* folderClass.swift in Sources */,
 				46D5E05E2298A130003B41DE /* userStruct.swift in Sources */,
 				4622486A22D41A920005B12F /* MoodsViewController.swift in Sources */,
