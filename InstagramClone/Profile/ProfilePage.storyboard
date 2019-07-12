@@ -519,6 +519,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mcq-ao-4KY">
+                                <rect key="frame" x="0.0" y="88" width="414" height="808"/>
+                                <connections>
+                                    <segue destination="c9c-6r-wGY" kind="embed" id="KNM-sn-AJ1"/>
+                                </connections>
+                            </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Yx-rL-IW0">
                                 <rect key="frame" x="414" y="0.0" width="300" height="896"/>
                                 <constraints>
@@ -526,12 +532,6 @@
                                 </constraints>
                                 <connections>
                                     <segue destination="34Y-BZ-g6V" kind="embed" id="Ile-fr-hvt"/>
-                                </connections>
-                            </containerView>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mcq-ao-4KY">
-                                <rect key="frame" x="0.0" y="88" width="414" height="808"/>
-                                <connections>
-                                    <segue destination="c9c-6r-wGY" kind="embed" id="KNM-sn-AJ1"/>
                                 </connections>
                             </containerView>
                         </subviews>
@@ -551,7 +551,9 @@
                     </view>
                     <navigationItem key="navigationItem" id="qVx-Vg-NMz"/>
                     <connections>
+                        <outlet property="firstView" destination="Mcq-ao-4KY" id="hf8-az-bjB"/>
                         <outlet property="rightMenuSideConstraint" destination="YLG-DL-3zi" id="hDk-12-IEV"/>
+                        <outlet property="secondView" destination="8Yx-rL-IW0" id="SKw-6q-nhP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bXV-Ue-ExR" userLabel="First Responder" sceneMemberID="firstResponder"/>
