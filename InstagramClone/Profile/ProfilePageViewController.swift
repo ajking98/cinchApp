@@ -18,6 +18,7 @@ class ProfilePageViewController: UIViewController {
     var secondView: UIView!
     @IBOutlet weak var viewOne: UIView!
     @IBOutlet weak var viewTwo: UIView!
+    var profileViewTapped = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,23 +31,25 @@ class ProfilePageViewController: UIViewController {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Toggle Side Menu"), object: nil)
     }
     
-    @objc func handleGesture(gesture: UISwipeGestureRecognizer) -> Void {
-        if gesture.direction == UISwipeGestureRecognizer.Direction.right {
-            print("Swipe Right")
+    @objc func handleGesture(gesture: UITapGestureRecognizer) -> Void {
+        if profileViewTapped == true {
+            print("Tapped")
             secondView.removeFromSuperview()
             UIView.transition(with: self.view, duration: 0.25, options: [.transitionCrossDissolve], animations: {
                 self.topView.addSubview(self.firstView)
             }, completion: nil)
             
             pageControl.currentPage = 0
+            profileViewTapped = false
         }
-        else if gesture.direction == UISwipeGestureRecognizer.Direction.left {
-            print("Swipe Left")
+        else {
+            print("Tapped")
             firstView.removeFromSuperview()
             UIView.transition(with: self.view, duration: 0.25, options: [.transitionCrossDissolve], animations: {
                 self.topView.addSubview(self.secondView)
             }, completion: nil)
             pageControl.currentPage = 1
+            profileViewTapped = true
         }
         
     }
@@ -73,13 +76,8 @@ class ProfilePageViewController: UIViewController {
     }
     
     func buildTopProfileGestures() {
-        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
-        swipeLeft.direction = .left
-        topView.addGestureRecognizer(swipeLeft)
-        
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
-        swipeRight.direction = .right
-        topView.addGestureRecognizer(swipeRight)
+        let tapped = UITapGestureRecognizer(target: self, action: #selector(handleGesture))
+        topView.addGestureRecognizer(tapped)
     }
     
 }
