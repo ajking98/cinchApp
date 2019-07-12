@@ -376,6 +376,25 @@
 			path = DiscoverFolder;
 			sourceTree = "<group>";
 		};
+		89503D6422D92D09004EFC06 /* CameraView */ = {
+			isa = PBXGroup;
+			children = (
+				EB74D3E922603DA900556399 /* CameraViewController.swift */,
+				46A3E05A22B8557D003F6F35 /* CameraViewCell.swift */,
+				46A3E05C22B855FF003F6F35 /* Camera.storyboard */,
+			);
+			path = CameraView;
+			sourceTree = "<group>";
+		};
+		89503D6C22D92D37004EFC06 /* PermissionsView */ = {
+			isa = PBXGroup;
+			children = (
+				890608B122BAE2B1004C03CF /* PermissionsController.swift */,
+				890608A822BAE27F004C03CF /* Permissions.storyboard */,
+			);
+			path = PermissionsView;
+			sourceTree = "<group>";
+		};
 		89871250229DE96A00BE8F23 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -444,6 +463,8 @@
 		EB74D3B4226025E900556399 /* InstagramClone */ = {
 			isa = PBXGroup;
 			children = (
+				89503D6C22D92D37004EFC06 /* PermissionsView */,
+				89503D6422D92D09004EFC06 /* CameraView */,
 				891FC3EA22D7F5DD0024A623 /* DiscoverFolder */,
 				465C438C22D176FB002BD263 /* Profile */,
 				8E5EDB4522C0043B0088FDA9 /* Tags */,
@@ -452,9 +473,6 @@
 				89871250229DE96A00BE8F23 /* Classes */,
 				EB74D3B5226025E900556399 /* AppDelegate.swift */,
 				EB74D3B7226025E900556399 /* ViewController.swift */,
-				890608B122BAE2B1004C03CF /* PermissionsController.swift */,
-				EB74D3E922603DA900556399 /* CameraViewController.swift */,
-				46A3E05A22B8557D003F6F35 /* CameraViewCell.swift */,
 				EB74D3E322602B2C00556399 /* SignUpViewController.swift */,
 				892677AB22CFCE390007825E /* SideMenuTableViewController.swift */,
 				EB3A43312263A07600F6F339 /* HomeCollectionViewController.swift */,
@@ -496,8 +514,6 @@
 				EB74D3BE226025EA00556399 /* LaunchScreen.storyboard */,
 				8E123EF922B7229400F3ED5D /* Main.storyboard */,
 				EB74D3F2226045A600556399 /* Home.storyboard */,
-				46A3E05C22B855FF003F6F35 /* Camera.storyboard */,
-				890608A822BAE27F004C03CF /* Permissions.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -710,9 +726,48 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-InstagramClone/Pods-InstagramClone-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-InstagramClone/Pods-InstagramClone-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/CardParts/CardParts.framework",
+				"${BUILT_PRODUCTS_DIR}/Cards/Cards.framework",
+				"${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/Player/Player.framework",
+				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxDataSources/RxDataSources.framework",
+				"${BUILT_PRODUCTS_DIR}/RxGesture/RxGesture.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
+				"${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework",
+				"${BUILT_PRODUCTS_DIR}/TRMosaicLayout/TRMosaicLayout.framework",
+				"${BUILT_PRODUCTS_DIR}/XLActionController/XLActionController.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
+				"${BUILT_PRODUCTS_DIR}/libwebp/libwebp.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-InstagramClone/Pods-InstagramClone-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CardParts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cards.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Differentiator.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Player.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxDataSources.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxGesture.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TRMosaicLayout.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLActionController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/libwebp.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
