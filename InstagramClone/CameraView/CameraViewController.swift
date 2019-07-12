@@ -22,21 +22,18 @@ class CameraViewController: UIViewController, UICollectionViewDataSource, UIColl
     @IBOutlet weak var solidBar: UIImageView!
     
     //previous, center, and next view
-    @IBOutlet weak var centerShadow: UIImageView!
     @IBOutlet weak var centerView: UIImageView!
     
-    @IBOutlet weak var nextShadow: UIImageView!
     @IBOutlet weak var nextView: UIImageView!
     
-    @IBOutlet weak var previousShadow: UIImageView!
     @IBOutlet weak var previousView: UIImageView!
     
     @IBOutlet weak var imageCollectionView: UICollectionView!
     
     @IBOutlet weak var FolderSliderView: UIView!
-    @IBOutlet weak var prevFolderName: UITextView!
-    @IBOutlet weak var currentFolderName: UITextView!
-    @IBOutlet weak var nextFolderName: UITextView!
+    @IBOutlet weak var prevFolderName: UILabel!
+    @IBOutlet weak var currentFolderName: UILabel!
+    @IBOutlet weak var nextFolderName: UILabel!
     
     
     //static values
@@ -93,12 +90,6 @@ class CameraViewController: UIViewController, UICollectionViewDataSource, UIColl
         buildGestures()
 
 
-        //Blurs need to only be built once
-        buildBlur(imageView: centerShadow)
-        buildBlur(imageView: nextShadow)
-        buildBlur(imageView: previousShadow)
-
-
         imageCollectionViewFrame = imageCollectionView.frame
         solidBarFrame = solidBar.frame
         addButtonFrame = addButton.frame
@@ -118,34 +109,28 @@ class CameraViewController: UIViewController, UICollectionViewDataSource, UIColl
     func changeCenterView(image : UIImage){
         //Change the center view
         centerView.image = image
-        centerShadow.image = image
     }
     
     func changePreviousView(image: UIImage){
         //change the previous image view
         previousView.image = image
-        previousShadow.image = image
     }
     
     func changeNextView(image: UIImage){
         //change the next image view
         nextView.image = image
-        nextShadow.image = image
     }
     
     ///sizes all the image views accordingly with the image size
     func buildSizes(){
         if let image = centerView.image {
-            centerShadow.frame.size = image.size
             centerView.frame.size = image.size
         }
         if let image = nextView.image {
             nextView.frame.size = image.size
-            nextShadow.frame.size = image.size
         }
         if let image = previousView.image {
             previousView.frame.size = image.size
-            previousShadow.frame.size = image.size
         }
     }
     
@@ -160,15 +145,12 @@ class CameraViewController: UIViewController, UICollectionViewDataSource, UIColl
         //Creating the corner radius for left, right, and center views
         //centerView
         centerView.layer.cornerRadius = CGFloat(cornerRadius[0])
-        centerShadow.layer.cornerRadius = CGFloat(cornerRadius[2])
         
         //nextView
         nextView.layer.cornerRadius = CGFloat(cornerRadius[1])
-        nextShadow.layer.cornerRadius = CGFloat(cornerRadius[2])
         
         //previousView
         previousView.layer.cornerRadius = CGFloat(cornerRadius[1])
-        previousShadow.layer.cornerRadius = CGFloat(cornerRadius[2])
     }
     
     
@@ -213,16 +195,9 @@ class CameraViewController: UIViewController, UICollectionViewDataSource, UIColl
         solidBar.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSwipeUpAndSwipeDown)))
         addButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(saveToFolder)))
         
-        
-        //swipes
-        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeDown(_:)))
-        swipeDown.direction = .down
-        imageCollectionView.addGestureRecognizer(swipeDown)
-        
-        
-        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeUpAndSwipeDown))
-        swipeUp.direction = .up
-        imageCollectionView.addGestureRecognizer(swipeUp)
+        //Panning
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(handlePan(sender :)))
+        imageCollectionView.addGestureRecognizer(pan)
         
         //segment Control
         segmentControl.addTarget(self, action: #selector(segmentControlValueChanged), for:.valueChanged)
@@ -232,6 +207,40 @@ class CameraViewController: UIViewController, UICollectionViewDataSource, UIColl
         solidBar.isUserInteractionEnabled = true
         addButton.isUserInteractionEnabled = true
         imageCollectionView.isUserInteractionEnabled = true
+    }
+    
+    
+    
+    @objc func handlePan(sender : UIPanGestureRecognizer) {
+        let tableView = sender.view!
+        let translation = sender.translation(in: view)
+        
+        switch sender.state {
+        case .began, .changed:
+            let y = tableView.center.y + translation.y
+            if (Int(y) > 600 && Int(y) < 1040) {
+                tableView.center.y = y
+                
+                let updatedY = tableView.frame.origin.y - FolderSliderView.frame.height/2
+                FolderSliderView.center.y = updatedY
+                
+                solidBar.center.y = updatedY - 30
+                sender.setTranslation(CGPoint.zero, in: view)
+            }
+        case .ended:
+            if(tableView.center.y < 850) {
+                print("fullscreening")
+                handleSwipeUp()
+            }
+            else {
+                print("snapping back to bottom")
+                handleSwipeDown()
+            }
+        case .possible, .cancelled, .failed:
+            print("finish later")
+        @unknown default:
+            print("finishing later")
+        }
     }
     
     
