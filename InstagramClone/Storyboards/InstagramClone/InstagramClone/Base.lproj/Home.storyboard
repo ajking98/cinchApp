@@ -71,7 +71,7 @@
         <!--Navigation Controller-->
         <scene sceneID="tOk-1j-6ml">
             <objects>
-                <navigationController storyboardIdentifier="NavigationHome" automaticallyAdjustsScrollViewInsets="NO" id="xfN-0Y-ZEo" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="xfN-0Y-ZEo" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="home" id="IE4-by-ddd">
                         <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-5"/>
                     </tabBarItem>
@@ -92,10 +92,10 @@
         <!--CameraID-->
         <scene sceneID="BWI-iw-gH3">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="zsQ-g2-10I" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewControllerPlaceholder storyboardName="Camera" referencedIdentifier="CameraID" id="pvU-q2-6Sf" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="olk-72-G4t"/>
                 </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zsQ-g2-10I" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4232" y="-1137"/>
         </scene>

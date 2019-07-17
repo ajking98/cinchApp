@@ -41,8 +41,6 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
         cell.title.text = objectNames[indexPath.row]
         cell.imageView.image = UIImage.init(named: objectImages[indexPath.row])
         addSubviews(cell: cell)
-        let tapAddImage = UITapGestureRecognizer(target: self, action: #selector(handleTap))
-        cell.addImageButton.addGestureRecognizer(tapAddImage)
         
         return cell
         
@@ -79,10 +77,6 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
         collectionView.collectionViewLayout = collectionViewLayout
     }
     
-    @objc func handleTap(gesture: UITapGestureRecognizer) -> Void {
-        print("Add Image to Folder")
-    }
-    
     func createBlurEffect() -> UIVisualEffectView {
         let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
@@ -94,7 +88,7 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
     func addSubviews(cell: GemsCollectionViewCell) {
         let blurEffect = createBlurEffect()
         cell.overlayView.addSubview(blurEffect)
-        cell.overlayView.addSubview(cell.addImageButton)
+        cell.overlayView.addSubview(cell.contentNumber)
         cell.overlayView.addSubview(cell.title)
     }
     
@@ -102,6 +96,8 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
         cell.overlayView?.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.3)
         cell.title.textColor = UIColor(white: 1, alpha: 1)
         cell.title.font = UIFont(name: "Helvetica", size: 15)
+        cell.contentNumber.textColor = UIColor(white: 1, alpha: 1)
+        cell.contentNumber.font = UIFont(name: "Helvetica", size: 15)
         cell.layer.cornerRadius = 10
         cell.layer.borderWidth = 1
         cell.layer.borderColor = UIColor(red: 0.93, green: 0.93, blue: 0.95, alpha: 1.0).cgColor

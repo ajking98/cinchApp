@@ -34,20 +34,6 @@
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <textField opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="left" contentVerticalAlignment="center" usesAttributedText="YES" placeholder="+ Add Bio" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TWf-t2-cYz">
-                            <rect key="frame" x="51" y="62" width="248" height="17"/>
-                            <color key="backgroundColor" red="0.91784566640853882" green="0.92137378454208374" blue="0.93333601951599121" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <attributedString key="attributedText">
-                                <fragment content="A very caffeine dependent life form">
-                                    <attributes>
-                                        <font key="NSFont" metaFont="system" size="14"/>
-                                        <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                    </attributes>
-                                </fragment>
-                            </attributedString>
-                            <textInputTraits key="textInputTraits"/>
-                        </textField>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_query_builder_24px" translatesAutoresizingMaskIntoConstraints="NO" id="bl8-vn-M6k">
                             <rect key="frame" x="40" y="119" width="32" height="31"/>
                             <constraints>
@@ -65,14 +51,20 @@
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Atlanta, GA" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jBJ-Yp-fyY">
-                            <rect key="frame" x="243" y="126" width="73" height="17"/>
+                            <rect key="frame" x="243" y="130" width="73" height="17"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Joined May 2017" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t0w-QO-i70">
-                            <rect key="frame" x="78" y="126" width="109" height="17"/>
+                            <rect key="frame" x="78" y="130" width="109" height="17"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A very caffeine dependent life form" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CCm-Ur-173">
+                            <rect key="frame" x="40" y="52" width="276" height="58"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -80,23 +72,23 @@
                     <color key="tintColor" red="0.92156862745098034" green="0.92156862745098034" blue="0.93725490196078431" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     <constraints>
                         <constraint firstItem="bl8-vn-M6k" firstAttribute="top" secondItem="iRI-1F-OpE" secondAttribute="top" constant="1" id="1Ed-XU-k4e"/>
+                        <constraint firstItem="CCm-Ur-173" firstAttribute="top" secondItem="xNN-6s-o8J" secondAttribute="bottom" constant="8" symbolic="YES" id="25n-2b-2HF"/>
+                        <constraint firstItem="CCm-Ur-173" firstAttribute="trailing" secondItem="jBJ-Yp-fyY" secondAttribute="trailing" id="28Q-9q-nXs"/>
                         <constraint firstAttribute="bottom" secondItem="bl8-vn-M6k" secondAttribute="bottom" constant="45" id="ASA-ix-sPG"/>
                         <constraint firstItem="xNN-6s-o8J" firstAttribute="centerX" secondItem="SHK-Oi-vp8" secondAttribute="centerX" id="Arm-ax-ZNz"/>
-                        <constraint firstItem="TWf-t2-cYz" firstAttribute="leading" secondItem="SHK-Oi-vp8" secondAttribute="leading" constant="51" id="C3d-UC-M5P"/>
+                        <constraint firstItem="CCm-Ur-173" firstAttribute="leading" secondItem="bl8-vn-M6k" secondAttribute="leading" id="Lbb-TW-wAo"/>
+                        <constraint firstItem="iRI-1F-OpE" firstAttribute="top" secondItem="CCm-Ur-173" secondAttribute="bottom" constant="8" symbolic="YES" id="LjZ-tr-h5Z"/>
                         <constraint firstItem="jBJ-Yp-fyY" firstAttribute="baseline" secondItem="t0w-QO-i70" secondAttribute="baseline" id="O9K-nh-e0f"/>
                         <constraint firstAttribute="trailing" secondItem="xNN-6s-o8J" secondAttribute="trailing" constant="163" id="OoK-qD-vmn"/>
                         <constraint firstItem="bl8-vn-M6k" firstAttribute="bottom" secondItem="iRI-1F-OpE" secondAttribute="bottom" constant="-2" id="Pp1-TE-rmp"/>
                         <constraint firstItem="jBJ-Yp-fyY" firstAttribute="leading" secondItem="iRI-1F-OpE" secondAttribute="trailing" constant="9" id="Tuo-yA-UWo"/>
-                        <constraint firstItem="TWf-t2-cYz" firstAttribute="top" secondItem="xNN-6s-o8J" secondAttribute="bottom" constant="18" id="bIF-5N-ZiK"/>
-                        <constraint firstItem="jBJ-Yp-fyY" firstAttribute="top" secondItem="TWf-t2-cYz" secondAttribute="bottom" constant="47" id="btM-ze-ZCV"/>
                         <constraint firstItem="xNN-6s-o8J" firstAttribute="leading" secondItem="SHK-Oi-vp8" secondAttribute="leading" constant="163" id="e9I-ob-xKN"/>
                         <constraint firstItem="t0w-QO-i70" firstAttribute="leading" secondItem="bl8-vn-M6k" secondAttribute="trailing" constant="6" id="eOw-ri-Qny"/>
-                        <constraint firstItem="xNN-6s-o8J" firstAttribute="centerX" secondItem="TWf-t2-cYz" secondAttribute="centerX" id="esM-Fk-pcs"/>
                         <constraint firstItem="bl8-vn-M6k" firstAttribute="leading" secondItem="SHK-Oi-vp8" secondAttribute="leadingMargin" constant="32" id="gXh-mH-6cF"/>
                         <constraint firstItem="xNN-6s-o8J" firstAttribute="top" secondItem="SHK-Oi-vp8" secondAttribute="top" constant="23" id="gpd-fd-ccH"/>
                         <constraint firstItem="bl8-vn-M6k" firstAttribute="top" secondItem="SHK-Oi-vp8" secondAttribute="top" constant="119" id="nr9-IH-Vd8"/>
                         <constraint firstItem="iRI-1F-OpE" firstAttribute="leading" secondItem="t0w-QO-i70" secondAttribute="trailing" constant="15" id="qtJ-rR-f1u"/>
-                        <constraint firstAttribute="trailing" secondItem="TWf-t2-cYz" secondAttribute="trailing" constant="51" id="vyc-44-vmZ"/>
+                        <constraint firstItem="t0w-QO-i70" firstAttribute="top" secondItem="CCm-Ur-173" secondAttribute="bottom" constant="20" id="sUo-Ce-CkN"/>
                     </constraints>
                 </view>
             </subviews>
