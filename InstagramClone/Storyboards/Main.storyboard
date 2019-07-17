@@ -28,10 +28,10 @@
             </objects>
             <point key="canvasLocation" x="1748" y="139"/>
         </scene>
-        <!--NavigationHome-->
+        <!--DiscoverID-->
         <scene sceneID="b13-mC-dSV">
             <objects>
-                <viewControllerPlaceholder storyboardName="Home" referencedIdentifier="NavigationHome" id="Jhd-ws-8hg" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="Discover" referencedIdentifier="DiscoverID" id="Jhd-ws-8hg" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="O7E-Yh-35g"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gRP-iE-vzH" userLabel="First Responder" sceneMemberID="firstResponder"/>

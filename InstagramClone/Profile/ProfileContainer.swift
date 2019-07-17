@@ -6,6 +6,10 @@
 //  Copyright © 2019 Gedi, Ahmed M. All rights reserved.
 //
 
+//RIBBIT
+//Thanks I guess <3 
+
+
 import Foundation
 import UIKit
 
@@ -51,13 +55,12 @@ class ProfileContainer: UIViewController {
             print(gesture.view!.center.x)
             print("First View \(self.firstView.center.x)" )
             print("Second View \(self.secondView.center.x)" )
-            if(gesture.view!.center.x < 210) {
+            if(gesture.view!.center.x < 600) {
                 self.firstView.center = CGPoint(x: gesture.view!.center.x + translation.x,y: gesture.view!.center.y)
-                self.secondView.center = CGPoint(x: self.secondView.center.x + translation.x,y: gesture.view!.center.y)
+                self.secondView.center = CGPoint(x: self.secondView.center.x + translation.x,y: self.firstView.center.y)
                 gesture.view!.center = self.firstView.center
             }else {
                 self.firstView.center = CGPoint(x: 206, y: gesture.view!.center.y)
-                self.secondView.center = CGPoint(x: 564, y: gesture.view!.center.y)
             }
             
             gesture.setTranslation(CGPoint(x: 0,y: 0), in: self.view)
@@ -65,6 +68,7 @@ class ProfileContainer: UIViewController {
             if gesture.view!.center.x < 50 {
                 UIView.animateKeyframes(withDuration: 0.4, delay: 0, options: [], animations: {
 //                    gesture.view!.center = CGPoint(x: -90, y: gesture.view!.center.y)
+                    self.secondView.center = CGPoint(x: 300, y: gesture.view!.center.y)
                    self.rightMenuSideConstraint.constant = 0
                     self.isExpanded = true
                 }, completion: nil)

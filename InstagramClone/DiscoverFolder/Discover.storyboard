@@ -46,13 +46,14 @@
                         <color key="backgroundColor" red="0.92156862745098034" green="0.92156862745098034" blue="0.93725490196078431" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="6o6-d1-aWb"/>
                     </view>
+                    <tabBarItem key="tabBarItem" title="" image="home" id="Oeq-8Q-8z4"/>
                     <connections>
                         <outlet property="collectionView" destination="v41-Tq-mwU" id="44w-l3-J3D"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nkx-iF-l1s" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="308.69565217391306" y="65.625"/>
+            <point key="canvasLocation" x="1218.840579710145" y="65.625"/>
         </scene>
         <!--Image Selected Controller-->
         <scene sceneID="2uG-jg-7LO">
@@ -77,7 +78,27 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZW7-1C-4hc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1125" y="66"/>
+            <point key="canvasLocation" x="2034.7826086956522" y="65.625"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="IQd-Xm-MbW">
+            <objects>
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="2cr-IN-gtA" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="6wY-X0-QL1">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="tcj-Tb-CIJ" kind="relationship" relationship="viewControllers" id="De0-3u-Ode"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Pw0-08-a31" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="308.69565217391306" y="65.625"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="home" width="30" height="30"/>
+    </resources>
 </document>
