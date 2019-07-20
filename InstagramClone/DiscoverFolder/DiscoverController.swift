@@ -23,6 +23,8 @@ class DiscoverController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     var items : [Item] = [Item]()
+    // Test
+    var objectImages = ["f1", "f2", "f3", "f4", "f5"]
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -40,6 +42,10 @@ class DiscoverController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         addSearchBar()
+        // Test
+        let defaults = UserDefaults(suiteName: "group.InstagramClone.messages")
+        defaults?.set(objectImages, forKey: "testImages")
+        
         setUpCollectionView()
         setUpCollectionViewItemSizes()
         addContent()

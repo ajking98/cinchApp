@@ -11,6 +11,14 @@
 		45E0B9E575F52434E5EBEFE1 /* Pods_InstagramCloneUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B447ACE150C3C337574D3FD /* Pods_InstagramCloneUITests.framework */; };
 		4622486A22D41A920005B12F /* MoodsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4622486922D41A920005B12F /* MoodsViewController.swift */; };
 		4622486C22D41ADF0005B12F /* MoodsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4622486B22D41ADF0005B12F /* MoodsCollectionViewCell.swift */; };
+		4622493722DFAC8F0005B12F /* Messages.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4622493622DFAC8F0005B12F /* Messages.framework */; };
+		4622493A22DFAC8F0005B12F /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4622493922DFAC8F0005B12F /* MessagesViewController.swift */; };
+		4622493D22DFAC8F0005B12F /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4622493B22DFAC8F0005B12F /* MainInterface.storyboard */; };
+		4622493F22DFAC900005B12F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4622493E22DFAC900005B12F /* Assets.xcassets */; };
+		4622494322DFAC900005B12F /* Gems.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 4622493522DFAC8F0005B12F /* Gems.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		4622495522DFB1D20005B12F /* MessageContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4622495422DFB1D20005B12F /* MessageContentViewController.swift */; };
+		4622495722DFB1F60005B12F /* MessageContentCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4622495622DFB1F60005B12F /* MessageContentCVCell.swift */; };
+		4622495A22E24D5D0005B12F /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891FC3EB22D7F6720024A623 /* SearchBar.swift */; };
 		46668D6022C98C070021229D /* ProfileContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46668D5F22C98C070021229D /* ProfileContainer.swift */; };
 		4669B8D222B6DC65004FB38D /* defaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4669B8D122B6DC64004FB38D /* defaultsKeys.swift */; };
 		46A3E05B22B8557D003F6F35 /* CameraViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A3E05A22B8557D003F6F35 /* CameraViewCell.swift */; };
@@ -82,6 +90,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		4622494122DFAC900005B12F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EB74D3AA226025E900556399 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4622493422DFAC8F0005B12F;
+			remoteInfo = Gems;
+		};
+		4622494E22DFAC900005B12F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4669B8B322B6D2AC004FB38D /* SQLite.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 462248AA22DEA1FC0005B12F;
+			remoteInfo = Gems;
+		};
 		4669B8BD22B6D2AC004FB38D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4669B8B322B6D2AC004FB38D /* SQLite.xcodeproj */;
@@ -148,6 +170,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		4622495122DFAC900005B12F /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				4622494322DFAC900005B12F /* Gems.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		46D5E10E22B5448B003B41DE /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -166,6 +199,16 @@
 		4053B843C77EE909A8C7461F /* Pods-InstagramCloneUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramCloneUITests.release.xcconfig"; path = "Target Support Files/Pods-InstagramCloneUITests/Pods-InstagramCloneUITests.release.xcconfig"; sourceTree = "<group>"; };
 		4622486922D41A920005B12F /* MoodsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodsViewController.swift; sourceTree = "<group>"; };
 		4622486B22D41ADF0005B12F /* MoodsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodsCollectionViewCell.swift; sourceTree = "<group>"; };
+		4622493522DFAC8F0005B12F /* Gems.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Gems.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		4622493622DFAC8F0005B12F /* Messages.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Messages.framework; path = System/Library/Frameworks/Messages.framework; sourceTree = SDKROOT; };
+		4622493922DFAC8F0005B12F /* MessagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
+		4622493C22DFAC8F0005B12F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		4622493E22DFAC900005B12F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4622494022DFAC900005B12F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4622495222DFAD240005B12F /* InstagramClone.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = InstagramClone.entitlements; sourceTree = "<group>"; };
+		4622495322DFAD2D0005B12F /* Gems.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Gems.entitlements; sourceTree = "<group>"; };
+		4622495422DFB1D20005B12F /* MessageContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageContentViewController.swift; sourceTree = "<group>"; };
+		4622495622DFB1F60005B12F /* MessageContentCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageContentCVCell.swift; sourceTree = "<group>"; };
 		46668D5F22C98C070021229D /* ProfileContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileContainer.swift; sourceTree = "<group>"; };
 		4669B8B322B6D2AC004FB38D /* SQLite.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SQLite.xcodeproj; path = "../../Downloads/SQLite.swift-master/SQLite.xcodeproj"; sourceTree = "<group>"; };
 		4669B8D122B6DC64004FB38D /* defaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = defaultsKeys.swift; sourceTree = "<group>"; };
@@ -253,6 +296,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		4622493222DFAC8F0005B12F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4622493722DFAC8F0005B12F /* Messages.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EB74D3AF226025E900556399 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -281,6 +332,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4622493822DFAC8F0005B12F /* Gems */ = {
+			isa = PBXGroup;
+			children = (
+				4622495322DFAD2D0005B12F /* Gems.entitlements */,
+				4622493922DFAC8F0005B12F /* MessagesViewController.swift */,
+				4622493B22DFAC8F0005B12F /* MainInterface.storyboard */,
+				4622495422DFB1D20005B12F /* MessageContentViewController.swift */,
+				4622495622DFB1F60005B12F /* MessageContentCVCell.swift */,
+				4622493E22DFAC900005B12F /* Assets.xcassets */,
+				4622494022DFAC900005B12F /* Info.plist */,
+			);
+			path = Gems;
+			sourceTree = "<group>";
+		};
 		465C438C22D176FB002BD263 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -313,6 +378,7 @@
 				4669B8C622B6D2AC004FB38D /* SQLite.framework */,
 				4669B8C822B6D2AC004FB38D /* SQLiteTests tvOS.xctest */,
 				4669B8CA22B6D2AC004FB38D /* SQLite.framework */,
+				4622494F22DFAC900005B12F /* Gems.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -358,6 +424,7 @@
 				A02F922BF6A888861EB10FC9 /* Pods_InstagramClone.framework */,
 				FC945FE0D7581185DE7FBF19 /* Pods_InstagramCloneTests.framework */,
 				1B447ACE150C3C337574D3FD /* Pods_InstagramCloneUITests.framework */,
+				4622493622DFAC8F0005B12F /* Messages.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -444,6 +511,7 @@
 				EB74D3B4226025E900556399 /* InstagramClone */,
 				EB74D3C9226025EA00556399 /* InstagramCloneTests */,
 				EB74D3D4226025EA00556399 /* InstagramCloneUITests */,
+				4622493822DFAC8F0005B12F /* Gems */,
 				EB74D3B3226025E900556399 /* Products */,
 				C2EFC41CF087D33E3A5E7F49 /* Pods */,
 				72C6EA0D0A89A8447B5FD88A /* Frameworks */,
@@ -456,6 +524,7 @@
 				EB74D3B2226025E900556399 /* InstagramClone.app */,
 				EB74D3C6226025EA00556399 /* InstagramCloneTests.xctest */,
 				EB74D3D1226025EA00556399 /* InstagramCloneUITests.xctest */,
+				4622493522DFAC8F0005B12F /* Gems.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -463,6 +532,7 @@
 		EB74D3B4226025E900556399 /* InstagramClone */ = {
 			isa = PBXGroup;
 			children = (
+				4622495222DFAD240005B12F /* InstagramClone.entitlements */,
 				89503D6C22D92D37004EFC06 /* PermissionsView */,
 				89503D6422D92D09004EFC06 /* CameraView */,
 				891FC3EA22D7F5DD0024A623 /* DiscoverFolder */,
@@ -521,6 +591,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		4622493422DFAC8F0005B12F /* Gems */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4622495022DFAC900005B12F /* Build configuration list for PBXNativeTarget "Gems" */;
+			buildPhases = (
+				4622493122DFAC8F0005B12F /* Sources */,
+				4622493222DFAC8F0005B12F /* Frameworks */,
+				4622493322DFAC8F0005B12F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Gems;
+			productName = Gems;
+			productReference = 4622493522DFAC8F0005B12F /* Gems.appex */;
+			productType = "com.apple.product-type.app-extension.messages";
+		};
 		EB74D3B1226025E900556399 /* InstagramClone */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = EB74D3DA226025EA00556399 /* Build configuration list for PBXNativeTarget "InstagramClone" */;
@@ -531,10 +618,12 @@
 				EB74D3B0226025E900556399 /* Resources */,
 				953066332C75CD4FF1302C0E /* [CP] Embed Pods Frameworks */,
 				46D5E10E22B5448B003B41DE /* Embed Frameworks */,
+				4622495122DFAC900005B12F /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				4622494222DFAC900005B12F /* PBXTargetDependency */,
 			);
 			name = InstagramClone;
 			productName = InstagramClone;
@@ -585,12 +674,32 @@
 		EB74D3AA226025E900556399 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				DefaultBuildSystemTypeForWorkspace = Original;
 				LastSwiftUpdateCheck = 1020;
 				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = "Gedi, Ahmed M";
 				TargetAttributes = {
+					4622493422DFAC8F0005B12F = {
+						CreatedOnToolsVersion = 10.2.1;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
+					};
 					EB74D3B1226025E900556399 = {
 						CreatedOnToolsVersion = 10.2;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+							com.apple.Keychain = {
+								enabled = 0;
+							};
+							com.apple.WAC = {
+								enabled = 0;
+							};
+						};
 					};
 					EB74D3C5226025EA00556399 = {
 						CreatedOnToolsVersion = 10.2;
@@ -624,11 +733,19 @@
 				EB74D3B1226025E900556399 /* InstagramClone */,
 				EB74D3C5226025EA00556399 /* InstagramCloneTests */,
 				EB74D3D0226025EA00556399 /* InstagramCloneUITests */,
+				4622493422DFAC8F0005B12F /* Gems */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		4622494F22DFAC900005B12F /* Gems.appex */ = {
+			isa = PBXReferenceProxy;
+			fileType = "wrapper.app-extension";
+			path = Gems.appex;
+			remoteRef = 4622494E22DFAC900005B12F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		4669B8BE22B6D2AC004FB38D /* SQLite.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -681,6 +798,15 @@
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
+		4622493322DFAC8F0005B12F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4622493F22DFAC900005B12F /* Assets.xcassets in Resources */,
+				4622493D22DFAC8F0005B12F /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EB74D3B0226025E900556399 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -804,6 +930,17 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		4622493122DFAC8F0005B12F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4622495522DFB1D20005B12F /* MessageContentViewController.swift in Sources */,
+				4622495A22E24D5D0005B12F /* SearchBar.swift in Sources */,
+				4622493A22DFAC8F0005B12F /* MessagesViewController.swift in Sources */,
+				4622495722DFB1F60005B12F /* MessageContentCVCell.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EB74D3AE226025E900556399 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -883,6 +1020,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		4622494222DFAC900005B12F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4622493422DFAC8F0005B12F /* Gems */;
+			targetProxy = 4622494122DFAC900005B12F /* PBXContainerItemProxy */;
+		};
 		EB74D3C8226025EA00556399 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = EB74D3B1226025E900556399 /* InstagramClone */;
@@ -896,6 +1038,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		4622493B22DFAC8F0005B12F /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4622493C22DFAC8F0005B12F /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
 		EB74D3BE226025EA00556399 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -923,6 +1073,50 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		4622494422DFAC900005B12F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
+				CODE_SIGN_ENTITLEMENTS = Gems/Gems.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8NHWSCYNF7;
+				INFOPLIST_FILE = Gems/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.InstagramClone.Gems;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		4622494522DFAC900005B12F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
+				CODE_SIGN_ENTITLEMENTS = Gems/Gems.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8NHWSCYNF7;
+				INFOPLIST_FILE = Gems/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.InstagramClone.Gems;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		EB74D3D8226025EA00556399 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1043,7 +1237,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CCFF1EDC4872CD07B6810F1E /* Pods-InstagramClone.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = InstagramClone/InstagramClone.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8NHWSCYNF7;
@@ -1064,7 +1260,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 275F63426EF2A9C7A49380AB /* Pods-InstagramClone.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = InstagramClone/InstagramClone.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8NHWSCYNF7;
@@ -1166,6 +1364,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4622495022DFAC900005B12F /* Build configuration list for PBXNativeTarget "Gems" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4622494422DFAC900005B12F /* Debug */,
+				4622494522DFAC900005B12F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		EB74D3AD226025E900556399 /* Build configuration list for PBXProject "InstagramClone" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
