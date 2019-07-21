@@ -16,12 +16,17 @@ class MessagesViewController: MSMessagesAppViewController, UICollectionViewDeleg
     let cellIdentifier = "ContentCell"
     var objectImages:[String] = []
     @IBOutlet weak var searchView: UIView!
+    var stickers = [MSSticker]()
     
     @IBOutlet weak var collectionView: UICollectionView!
     override func viewDidLoad() {
         super.viewDidLoad()
         addSearchBar()
         objectImages = defaults?.array(forKey: "testImages") as! [String]
+        
+        
+        
+        activeConversation?.insert(stickers[0], completionHandler: nil)
 //        let lay = MSMessageTemplateLayout()
 //        lay.image = image
 //        let message = MSMessage()
@@ -48,8 +53,8 @@ class MessagesViewController: MSMessagesAppViewController, UICollectionViewDeleg
         designCell(cell: cell)
         cell.imageView.image = UIImage.init(named: objectImages[indexPath.row])
 //        cell.isUserInteractionEnabled = true
-//        let tapped = UITapGestureRecognizer(target: self, action: #selector(handleTap))
-//        cell.addGestureRecognizer(tapped)
+////        let tapped = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+////        cell.addGestureRecognizer(tapped)
         images.append(cell.imageView.image!)
         //        mc.message = message
         //        mc.activeConversation?.insert(message, completionHandler: nil)
@@ -61,12 +66,18 @@ class MessagesViewController: MSMessagesAppViewController, UICollectionViewDeleg
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(images.count)
+        print(indexPath.row)
         let layout = MSMessageTemplateLayout()
         layout.image = UIImage.init(named: objectImages[indexPath.row])
         let message = MSMessage()
         message.layout = layout
         
-        activeConversation?.insert(message, completionHandler: nil)
+        let audioFileName:String = "/testImages/f1"
+        let bundleURL = Bundle.main.bundleURL
+        print(bundleURL)
+        
+        activeConversation?.insertAttachment(URL(fileURLWithPath: "/Users/cinch/Desktop/cinchApp/Gems/Assets.xcassets/testImages/\(objectImages[indexPath.row]).imageset/\(objectImages[indexPath.row]).jpg"), withAlternateFilename: "\(objectImages[indexPath.row])", completionHandler: nil)
+//        activeConversation?.insert(message, completionHandler: nil)
     }
     
 //    @objc func handleTap(cell: MessageContentCVCell) {
