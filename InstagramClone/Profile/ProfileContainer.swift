@@ -82,5 +82,5 @@ class ProfileContainer: UIViewController {
                 }, completion: nil)
             }
         }
-}
+    }
 }

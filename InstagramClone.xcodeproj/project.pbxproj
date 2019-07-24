@@ -19,6 +19,7 @@
 		4622495522DFB1D20005B12F /* MessageContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4622495422DFB1D20005B12F /* MessageContentViewController.swift */; };
 		4622495722DFB1F60005B12F /* MessageContentCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4622495622DFB1F60005B12F /* MessageContentCVCell.swift */; };
 		4622495A22E24D5D0005B12F /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891FC3EB22D7F6720024A623 /* SearchBar.swift */; };
+		4622497122E7F3C80005B12F /* TableViewPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4622497022E7F3C80005B12F /* TableViewPostCell.swift */; };
 		46668D6022C98C070021229D /* ProfileContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46668D5F22C98C070021229D /* ProfileContainer.swift */; };
 		4669B8D222B6DC65004FB38D /* defaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4669B8D122B6DC64004FB38D /* defaultsKeys.swift */; };
 		46A3E05B22B8557D003F6F35 /* CameraViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A3E05A22B8557D003F6F35 /* CameraViewCell.swift */; };
@@ -209,6 +210,7 @@
 		4622495322DFAD2D0005B12F /* Gems.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Gems.entitlements; sourceTree = "<group>"; };
 		4622495422DFB1D20005B12F /* MessageContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageContentViewController.swift; sourceTree = "<group>"; };
 		4622495622DFB1F60005B12F /* MessageContentCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageContentCVCell.swift; sourceTree = "<group>"; };
+		4622497022E7F3C80005B12F /* TableViewPostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewPostCell.swift; sourceTree = "<group>"; };
 		46668D5F22C98C070021229D /* ProfileContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileContainer.swift; sourceTree = "<group>"; };
 		4669B8B322B6D2AC004FB38D /* SQLite.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SQLite.xcodeproj; path = "../../Downloads/SQLite.swift-master/SQLite.xcodeproj"; sourceTree = "<group>"; };
 		4669B8D122B6DC64004FB38D /* defaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = defaultsKeys.swift; sourceTree = "<group>"; };
@@ -439,6 +441,7 @@
 				891FC3F622D7F6B50024A623 /* PostCard.swift */,
 				891FC3F822D7F6D80024A623 /* DiscoverLayout.swift */,
 				891FC3FA22D7F7050024A623 /* ImageSelectedController.swift */,
+				4622497022E7F3C80005B12F /* TableViewPostCell.swift */,
 			);
 			path = DiscoverFolder;
 			sourceTree = "<group>";
@@ -974,6 +977,7 @@
 				46D5E07822A87F89003B41DE /* UserStruct2.swift in Sources */,
 				EB3A43342263ACB500F6F339 /* PhotoCell.swift in Sources */,
 				46D5E07422A87F5F003B41DE /* FolderStruct2.swift in Sources */,
+				4622497122E7F3C80005B12F /* TableViewPostCell.swift in Sources */,
 				EB3A433A2263CCC000F6F339 /* ProfileCollectionViewCell.swift in Sources */,
 				89CD1D04229201BA004BD0A0 /* DownloadImage.swift in Sources */,
 				EB40EF992263E9940093BB5B /* FolderCollectionViewCell.swift in Sources */,
