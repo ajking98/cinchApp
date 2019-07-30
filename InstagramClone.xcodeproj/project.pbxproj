@@ -20,6 +20,7 @@
 		4622495722DFB1F60005B12F /* MessageContentCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4622495622DFB1F60005B12F /* MessageContentCVCell.swift */; };
 		4622495A22E24D5D0005B12F /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891FC3EB22D7F6720024A623 /* SearchBar.swift */; };
 		4622497122E7F3C80005B12F /* TableViewPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4622497022E7F3C80005B12F /* TableViewPostCell.swift */; };
+		4622497322E89D8A0005B12F /* DiscoverTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4622497222E89D8A0005B12F /* DiscoverTableController.swift */; };
 		46668D6022C98C070021229D /* ProfileContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46668D5F22C98C070021229D /* ProfileContainer.swift */; };
 		4669B8D222B6DC65004FB38D /* defaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4669B8D122B6DC64004FB38D /* defaultsKeys.swift */; };
 		46A3E05B22B8557D003F6F35 /* CameraViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A3E05A22B8557D003F6F35 /* CameraViewCell.swift */; };
@@ -211,6 +212,7 @@
 		4622495422DFB1D20005B12F /* MessageContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageContentViewController.swift; sourceTree = "<group>"; };
 		4622495622DFB1F60005B12F /* MessageContentCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageContentCVCell.swift; sourceTree = "<group>"; };
 		4622497022E7F3C80005B12F /* TableViewPostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewPostCell.swift; sourceTree = "<group>"; };
+		4622497222E89D8A0005B12F /* DiscoverTableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTableController.swift; sourceTree = "<group>"; };
 		46668D5F22C98C070021229D /* ProfileContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileContainer.swift; sourceTree = "<group>"; };
 		4669B8B322B6D2AC004FB38D /* SQLite.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SQLite.xcodeproj; path = "../../Downloads/SQLite.swift-master/SQLite.xcodeproj"; sourceTree = "<group>"; };
 		4669B8D122B6DC64004FB38D /* defaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = defaultsKeys.swift; sourceTree = "<group>"; };
@@ -442,6 +444,7 @@
 				891FC3F822D7F6D80024A623 /* DiscoverLayout.swift */,
 				891FC3FA22D7F7050024A623 /* ImageSelectedController.swift */,
 				4622497022E7F3C80005B12F /* TableViewPostCell.swift */,
+				4622497222E89D8A0005B12F /* DiscoverTableController.swift */,
 			);
 			path = DiscoverFolder;
 			sourceTree = "<group>";
@@ -1002,6 +1005,7 @@
 				46D5E05E2298A130003B41DE /* userStruct.swift in Sources */,
 				4622486A22D41A920005B12F /* MoodsViewController.swift in Sources */,
 				46D5E07C22A899B1003B41DE /* ParentStruct.swift in Sources */,
+				4622497322E89D8A0005B12F /* DiscoverTableController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

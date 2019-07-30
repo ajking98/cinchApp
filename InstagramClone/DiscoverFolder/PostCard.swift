@@ -102,11 +102,11 @@ class PostCard: UICollectionViewCell {
     
 }
 
-extension DiscoverController  {
-    @objc func handlePressed(tapGesture : UITapGestureRecognizer) {
-        if let Post = tapGesture.view as? PostCard {
-            print("handling")
-            performSegue(withIdentifier: viewImageSegueIdentifier, sender: Post)
-        }
-    }
-}
+//extension DiscoverController  {
+//    @objc func handlePressed(tapGesture : UITapGestureRecognizer) {
+//        if let Post = tapGesture.view as? PostCard {
+//            print("handling")
+//            performSegue(withIdentifier: viewImageSegueIdentifier, sender: Post)
+//        }
+//    }
+//}
