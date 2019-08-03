@@ -67,6 +67,7 @@
 		8E95FFCC22BF25CE0067B5F2 /* TagElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E95FFCB22BF25CE0067B5F2 /* TagElement.swift */; };
 		8E95FFCE22BF283F0067B5F2 /* ParentTagStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E95FFCD22BF283F0067B5F2 /* ParentTagStruct.swift */; };
 		8EADC50222D16BB3005A7CC0 /* GemsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EADC50022D16BB3005A7CC0 /* GemsCollectionViewCell.swift */; };
+		EB3159B122F4BEF400EB4FA9 /* SelectedTablePostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3159B022F4BEF400EB4FA9 /* SelectedTablePostCell.swift */; };
 		EB3A43322263A07600F6F339 /* HomeCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3A43312263A07600F6F339 /* HomeCollectionViewController.swift */; };
 		EB3A43342263ACB500F6F339 /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3A43332263ACB500F6F339 /* PhotoCell.swift */; };
 		EB3A433A2263CCC000F6F339 /* ProfileCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3A43392263CCC000F6F339 /* ProfileCollectionViewCell.swift */; };
@@ -268,6 +269,7 @@
 		AAEE40E3310BDAD7472CA2DB /* Pods-InstagramCloneTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramCloneTests.debug.xcconfig"; path = "Target Support Files/Pods-InstagramCloneTests/Pods-InstagramCloneTests.debug.xcconfig"; sourceTree = "<group>"; };
 		CCFF1EDC4872CD07B6810F1E /* Pods-InstagramClone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramClone.debug.xcconfig"; path = "Target Support Files/Pods-InstagramClone/Pods-InstagramClone.debug.xcconfig"; sourceTree = "<group>"; };
 		E4B2D05AE2BF2F59DB788D43 /* Pods-InstagramCloneUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramCloneUITests.debug.xcconfig"; path = "Target Support Files/Pods-InstagramCloneUITests/Pods-InstagramCloneUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		EB3159B022F4BEF400EB4FA9 /* SelectedTablePostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedTablePostCell.swift; sourceTree = "<group>"; };
 		EB3A43312263A07600F6F339 /* HomeCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewController.swift; sourceTree = "<group>"; };
 		EB3A43332263ACB500F6F339 /* PhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
 		EB3A43392263CCC000F6F339 /* ProfileCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -444,6 +446,7 @@
 				891FC3F822D7F6D80024A623 /* DiscoverLayout.swift */,
 				891FC3FA22D7F7050024A623 /* ImageSelectedController.swift */,
 				4622497022E7F3C80005B12F /* TableViewPostCell.swift */,
+				EB3159B022F4BEF400EB4FA9 /* SelectedTablePostCell.swift */,
 				4622497222E89D8A0005B12F /* DiscoverTableController.swift */,
 			);
 			path = DiscoverFolder;
@@ -858,9 +861,48 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-InstagramClone/Pods-InstagramClone-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-InstagramClone/Pods-InstagramClone-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/CardParts/CardParts.framework",
+				"${BUILT_PRODUCTS_DIR}/Cards/Cards.framework",
+				"${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/Player/Player.framework",
+				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxDataSources/RxDataSources.framework",
+				"${BUILT_PRODUCTS_DIR}/RxGesture/RxGesture.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
+				"${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework",
+				"${BUILT_PRODUCTS_DIR}/TRMosaicLayout/TRMosaicLayout.framework",
+				"${BUILT_PRODUCTS_DIR}/XLActionController/XLActionController.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
+				"${BUILT_PRODUCTS_DIR}/libwebp/libwebp.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-InstagramClone/Pods-InstagramClone-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CardParts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cards.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Differentiator.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Player.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxDataSources.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxGesture.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TRMosaicLayout.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLActionController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/libwebp.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -988,6 +1030,7 @@
 				EB63B7DE226A7933004C7E2C /* CustomImageFlowLayout.swift in Sources */,
 				EB74D3EE22603DC200556399 /* ProfileViewController.swift in Sources */,
 				EB74D3EA22603DA900556399 /* CameraViewController.swift in Sources */,
+				EB3159B122F4BEF400EB4FA9 /* SelectedTablePostCell.swift in Sources */,
 				46A3E05B22B8557D003F6F35 /* CameraViewCell.swift in Sources */,
 				8EADC50222D16BB3005A7CC0 /* GemsCollectionViewCell.swift in Sources */,
 				EB40EF9D2263F7E20093BB5B /* InsideFolderCollectionViewController.swift in Sources */,

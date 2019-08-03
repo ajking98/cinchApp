@@ -25,28 +25,14 @@ class DiscoverController: UIViewController {
     @IBOutlet weak var collectionViewLeftConstraint: NSLayoutConstraint!
     @IBOutlet weak var collectionView: UICollectionView!
     var items : [Item] = [Item]()
-    // Test
-    var objectImages = ["f1", "f2", "f3", "f4", "f5"]
     let buttonBar = UIView()
     var tapped = true
     
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        print(sender)
-//        print("Leaving")
-//        let post = sender as! PostCard
-//
-//        if segue.identifier == viewImageSegueIdentifier {
-//            if let vc = segue.destination as? ImageSelectedController {
-//                vc.imageName = post.imageView.image
-//            }
-//        }
-//    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-//        printChecks()
+        printChecks()
+        
         addSearchBar()
-        addSearchBar2()
         setUpTableView()
         setUpCollectionView()
         setUpCollectionViewItemSizes()
@@ -67,15 +53,6 @@ class DiscoverController: UIViewController {
         view.addGestureRecognizer(tapped)
         searchBar.backgroundColor = .white
         collectionView.addSubview(searchBar)
-    }
-    
-    func addSearchBar2() {
-        let frame = tableView.frame
-        var searchBar = SearchBar(frame: CGRect(x: 0, y: 0, width: frame.width * 0.88, height: 33))
-        searchBar.center = CGPoint(x: tableView.center.x, y: 21)
-//        view.addGestureRecognizer(UITapGestureRecognizer(target: searchBar, action: #selector(searchBar.revertToNormal)))
-        searchBar.backgroundColor = .white
-        tableView.addSubview(searchBar)
     }
     
     func setUpCollectionView() {
@@ -133,14 +110,14 @@ class DiscoverController: UIViewController {
         tableView.addGestureRecognizer(panTableViewGesture)
     }
     
-    func setUserDefaults() {
-        let defaults = UserDefaults(suiteName: "group.InstagramClone.messages")
-        defaults?.set(objectImages, forKey: "testImages")
-    }
+//    func setUserDefaults() {
+//        let defaults = UserDefaults(suiteName: "group.InstagramClone.messages")
+//        defaults?.set(objectImages, forKey: "testImages")
+//    }
     
     func printChecks() {
-        print("Collection View \(self.collectionView.center.x)" )
-        print("Table View \(self.tableView.center.x)" )
+//        print("Collection View \(self.collectionView.center.x)" )
+//        print("Table View \(self.tableView.center.x)" )
     }
     
     func addSegmentControlAttributes() {
@@ -177,15 +154,19 @@ class DiscoverController: UIViewController {
     }
     
     @objc func handlePanCollectionView(gesture: UIPanGestureRecognizer) {
+        gesture.isEnabled = true
         if gesture.state == .began || gesture.state == .changed {
             let translation = gesture.translation(in: self.view)
-            if(gesture.view!.center.x < 600) {
+            if(gesture.view!.center.x < 210) {
                 self.collectionView.center = CGPoint(x: gesture.view!.center.x + translation.x,y: gesture.view!.center.y)
                 self.tableView.center = CGPoint(x: self.tableView.center.x + translation.x,y: self.collectionView.center.y)
                 gesture.view!.center = self.collectionView.center
             }else {
-                self.collectionView.center = CGPoint(x: 207, y: gesture.view!.center.y)
-                self.buttonBar.frame.origin.x = 20
+                UIView.animateKeyframes(withDuration: 0.5, delay: 0, options: [], animations: {
+                    self.collectionView.center = CGPoint(x: 207, y: gesture.view!.center.y)
+                    self.buttonBar.frame.origin.x = 20
+                    gesture.isEnabled = false
+                }, completion: nil)
             }
             
             gesture.setTranslation(CGPoint(x: 0,y: 0), in: self.view)
@@ -210,15 +191,19 @@ class DiscoverController: UIViewController {
     }
     
     @objc func handleTableViewPan(gesture: UIPanGestureRecognizer) {
+            gesture.isEnabled = true
             if gesture.state == .began || gesture.state == .changed {
                 let translation = gesture.translation(in: self.view)
-                if(gesture.view!.center.x < 600) {
+                if(gesture.view!.center.x > 190) {
                     self.collectionView.center = CGPoint(x: self.collectionView.center.x + translation.x,y: gesture.view!.center.y)
                     self.tableView.center = CGPoint(x: gesture.view!.center.x + translation.x,y: self.collectionView.center.y)
                     gesture.view!.center = self.tableView.center
                 }else {
-                    self.tableView.center = CGPoint(x: 207, y: gesture.view!.center.y)
-                    self.buttonBar.frame.origin.x = 207
+                    UIView.animateKeyframes(withDuration: 0.5, delay: 0, options: [], animations: {
+                        self.tableView.center = CGPoint(x: 207, y: gesture.view!.center.y)
+                        self.buttonBar.frame.origin.x = 207
+                        gesture.isEnabled = false
+                    }, completion: nil)
                 }
                 
                 gesture.setTranslation(CGPoint(x: 0,y: 0), in: self.view)
@@ -259,15 +244,16 @@ extension DiscoverController : UICollectionViewDelegate, UICollectionViewDataSou
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("Collection Selected Row \(indexPath.row)")
-        var item = items[indexPath.row]
-        let vc = storyboard?.instantiateViewController(withIdentifier: "ImageSelectedController") as! ImageSelectedController
-        vc.imageName = UIImage.init(named: item.imageName)!
+//        var item = items[indexPath.row]
+//        let vc = storyboard?.instantiateViewController(withIdentifier: "A")
+//        self.navigationController?.pushViewController(vc!, animated: true)
+//        vc.imageName = UIImage.init(named: item.imageName)!
 //        vc.nameLabel.text = item.author
 //        vc.likesLabel.text = String(item.likes)
         
-        print(UIImage.init(named: items[indexPath.row].imageName)!)
+//        print(UIImage.init(named: items[indexPath.row].imageName)!)
 //        vc.setupView(image: UIImage.init(named: items[indexPath.row].imageName)!)
-        self.present(vc, animated: true, completion: nil)
+//        self.present(vc, animated: true, completion: nil)
 //        let vc = ImageSelectedController()
 //        nextVC.YourLabel.text = "Passed Text"
 //        nextVC.YourLabel.text = YourArray[indexPath.row]
@@ -299,21 +285,24 @@ extension DiscoverController : UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("Table Selected Row \(indexPath.row)")
-        var item = items[indexPath.row]
         let vc = storyboard?.instantiateViewController(withIdentifier: "ImageSelectedController") as! ImageSelectedController
-        vc.imageName = UIImage.init(named: item.imageName)!
-        //        vc.nameLabel.text = item.author
-        //        vc.likesLabel.text = String(item.likes)
-        
-        print(UIImage.init(named: items[indexPath.row].imageName)!)
-        //        vc.setupView(image: UIImage.init(named: items[indexPath.row].imageName)!)
-        self.present(vc, animated: true, completion: nil)
-        //        let vc = ImageSelectedController()
-        //        nextVC.YourLabel.text = "Passed Text"
-        //        nextVC.YourLabel.text = YourArray[indexPath.row]
-        
-        // Push to next view
-        //        self.navigationController?.pushViewController(vc!, animated: true)
+        for index in indexPath.row...(items.count - 1) {
+            vc.items.append(items[index])
+        }
+        var item = items[indexPath.row]
+//        vc.imageName = UIImage.init(named: item.imageName)!
+//        vc.nameLabel.text = item.author
+//        vc.likesLabel.text = String(item.likes)
+//
+//        print(UIImage.init(named: items[indexPath.row].imageName)!)
+//        //        vc.setupView(image: UIImage.init(named: items[indexPath.row].imageName)!)
+//        self.present(vc, animated: true, completion: nil)
+//        //        let vc = ImageSelectedController()
+//        //        nextVC.YourLabel.text = "Passed Text"
+//        //        nextVC.YourLabel.text = YourArray[indexPath.row]
+//
+//        // Push to next view
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     
