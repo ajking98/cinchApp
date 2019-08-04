@@ -33,19 +33,17 @@
         <!--UPLOAD-->
         <scene sceneID="fDD-Td-0A0">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ZlG-Pm-J7s" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="8Fk-lM-z4o" customClass="CameraViewController" customModule="InstagramClone" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" clipsSubviews="YES" contentMode="scaleToFill" id="HGZ-NR-boe">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="testImage1" translatesAutoresizingMaskIntoConstraints="NO" id="MrZ-e4-hv3">
-                                <rect key="frame" x="57" y="210" width="300" height="300"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="testImage1" translatesAutoresizingMaskIntoConstraints="NO" id="MrZ-e4-hv3">
+                                <rect key="frame" x="59.5" y="255" width="295" height="266"/>
                                 <color key="tintColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </imageView>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Dfx-fi-Yrj">
-                                <rect key="frame" x="94.5" y="129" width="225" height="29"/>
+                                <rect key="frame" x="94.5" y="68" width="225" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <segments>
                                     <segment title="original" width="112"/>
@@ -53,12 +51,11 @@
                                 </segments>
                                 <color key="tintColor" red="0.015686274510000001" green="0.81960784310000001" blue="0.59215686270000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </segmentedControl>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="testImage2" translatesAutoresizingMaskIntoConstraints="NO" id="798-76-Lm5">
-                                <rect key="frame" x="440" y="222" width="387" height="241"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="testImage2" translatesAutoresizingMaskIntoConstraints="NO" id="798-76-Lm5">
+                                <rect key="frame" x="415" y="267.5" width="387" height="241"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="testImage2" translatesAutoresizingMaskIntoConstraints="NO" id="nX0-C7-HQ4">
-                                <rect key="frame" x="-423" y="222" width="387" height="241"/>
+                                <rect key="frame" x="-423" y="222" width="387" height="332"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="solidBar" translatesAutoresizingMaskIntoConstraints="NO" id="TBi-vf-7tk">
                                 <rect key="frame" x="184.5" y="662" width="45" height="9"/>
@@ -105,14 +102,14 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="Sm7-gd-gIF" customClass="CameraViewCell" customModule="InstagramClone" customModuleProvider="target">
-                                        <rect key="frame" x="4" y="8" width="90" height="90"/>
+                                        <rect key="frame" x="4" y="8" width="100" height="100"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                            <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="f2-1" translatesAutoresizingMaskIntoConstraints="NO" id="udZ-Qb-ex3">
-                                                    <rect key="frame" x="0.0" y="0.0" width="90" height="86"/>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="f2-1" translatesAutoresizingMaskIntoConstraints="NO" id="udZ-Qb-ex3">
+                                                    <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                                 </imageView>
                                             </subviews>
                                         </view>
@@ -122,7 +119,7 @@
                                             <constraint firstItem="udZ-Qb-ex3" firstAttribute="top" secondItem="Sm7-gd-gIF" secondAttribute="top" id="aJ9-B6-Ryx"/>
                                             <constraint firstAttribute="trailing" secondItem="udZ-Qb-ex3" secondAttribute="trailing" id="gWb-ai-LUj"/>
                                         </constraints>
-                                        <size key="customSize" width="90" height="90"/>
+                                        <size key="customSize" width="100" height="100"/>
                                         <connections>
                                             <outlet property="imageView" destination="udZ-Qb-ex3" id="g7e-Sw-rR3"/>
                                         </connections>
@@ -142,11 +139,16 @@
                         <constraints>
                             <constraint firstItem="d98-yt-gyt" firstAttribute="top" secondItem="cbd-ar-5of" secondAttribute="top" constant="536" id="7sh-J4-gOL"/>
                             <constraint firstAttribute="trailing" secondItem="nX0-C7-HQ4" secondAttribute="trailing" constant="450" id="B2N-GR-Ni5"/>
+                            <constraint firstItem="MrZ-e4-hv3" firstAttribute="centerX" secondItem="HGZ-NR-boe" secondAttribute="centerX" id="Djf-t4-2z0"/>
                             <constraint firstItem="nX0-C7-HQ4" firstAttribute="top" secondItem="HGZ-NR-boe" secondAttribute="top" constant="222" id="G3P-WH-17w"/>
                             <constraint firstItem="42X-YV-jeA" firstAttribute="leading" secondItem="HGZ-NR-boe" secondAttribute="leading" constant="20" id="YhP-Zh-EUo"/>
                             <constraint firstItem="TBi-vf-7tk" firstAttribute="centerX" secondItem="HGZ-NR-boe" secondAttribute="centerX" id="bf8-0B-rfd"/>
                             <constraint firstAttribute="trailing" secondItem="42X-YV-jeA" secondAttribute="trailing" constant="20" id="j8t-ds-5Ut"/>
+                            <constraint firstItem="798-76-Lm5" firstAttribute="centerY" secondItem="HGZ-NR-boe" secondAttribute="centerY" constant="-60" id="jZV-MN-XlM"/>
+                            <constraint firstItem="nX0-C7-HQ4" firstAttribute="centerY" secondItem="HGZ-NR-boe" secondAttribute="centerY" constant="-60" id="lup-pF-5ab"/>
                             <constraint firstItem="TBi-vf-7tk" firstAttribute="top" secondItem="cbd-ar-5of" secondAttribute="top" constant="689" id="v3I-jk-Zgo"/>
+                            <constraint firstItem="798-76-Lm5" firstAttribute="leading" secondItem="HGZ-NR-boe" secondAttribute="leading" constant="415" id="wW9-lJ-enV"/>
+                            <constraint firstItem="MrZ-e4-hv3" firstAttribute="centerY" secondItem="HGZ-NR-boe" secondAttribute="centerY" constant="-60" id="yVp-Cv-YVe"/>
                             <constraint firstItem="cbd-ar-5of" firstAttribute="trailing" secondItem="d98-yt-gyt" secondAttribute="trailing" constant="54" id="zZz-LO-syY"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="cbd-ar-5of"/>
@@ -166,6 +168,7 @@
                         <outlet property="solidBar" destination="TBi-vf-7tk" id="G6T-QJ-ece"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZlG-Pm-J7s" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4460.8695652173919" y="306.69642857142856"/>
         </scene>

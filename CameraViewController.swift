@@ -13,6 +13,7 @@ import CoreImage
 import XLActionController
 import Photos
 
+
 class CameraViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     @IBOutlet weak var segmentControl: UISegmentedControl!
     var centerIndex = 0
@@ -112,7 +113,7 @@ class CameraViewController: UIViewController, UICollectionViewDataSource, UIColl
         
         let requestOptions = PHImageRequestOptions()
         requestOptions.isSynchronous = true
-        requestOptions.deliveryMode = .opportunistic
+        requestOptions.deliveryMode = .fastFormat
         
         let fetchOptions = PHFetchOptions()
         fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
@@ -329,7 +330,7 @@ class CameraViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     @objc func handlePan(sender : UIPanGestureRecognizer) {
         let tableView = sender.view!
-        let translation = sender.translation(in: view)
+        let translation = sender.translation(in: view) 
         
         switch sender.state {
         case .began, .changed:
@@ -344,7 +345,17 @@ class CameraViewController: UIViewController, UICollectionViewDataSource, UIColl
                 sender.setTranslation(CGPoint.zero, in: view)
             }
         case .ended:
-            if(tableView.center.y < 750) {
+            if(isQuickSwipe(velocity: sender.velocity(in: view).y)){
+                if(sender.velocity(in: view).y < 0){
+                    print("swiping upwards")
+                    handleSwipeUp()
+                }
+                else {
+                    print("downward")
+                    handleSwipeDown()
+                }
+            }
+            else if(tableView.center.y < 750) {
                 print("fullscreening")
                 handleSwipeUp()
             }
@@ -404,7 +415,7 @@ class CameraViewController: UIViewController, UICollectionViewDataSource, UIColl
             self.currentFolderName.frame.size.height = heightFS
             self.nextFolderName.frame.size.height = heightFS
         }
-        Helper().vibrate(style: .medium)
+        Helper().vibrate(style: .light)
     }
     
     @objc func handleSwipeDown(_ tapGesture  :UITapGestureRecognizer? = nil){
@@ -423,7 +434,7 @@ class CameraViewController: UIViewController, UICollectionViewDataSource, UIColl
             self.nextFolderName.frame.size.height = heightFS
         }
         
-        Helper().vibrate(style: .medium)
+        Helper().vibrate(style: .light)
     }
     
     @objc func saveToFolder(_ tapGesture : UITapGestureRecognizer? = nil){
