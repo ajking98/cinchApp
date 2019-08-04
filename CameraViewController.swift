@@ -14,9 +14,17 @@ import XLActionController
 import Photos
 
 
-class CameraViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+class CameraViewController: UIViewController {
     @IBOutlet weak var segmentControl: UISegmentedControl!
     var centerIndex = 0
+    
+    @IBOutlet weak var partition1: UIView!
+    @IBOutlet weak var partition2: UIView!
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var mainStage: UIView!
+    @IBOutlet weak var fullscreen: UIImageView!
+    @IBOutlet weak var multiple: UIImageView!
+    @IBOutlet weak var circleCounter: UILabel!
     
     //Button and pullup bar
     @IBOutlet weak var addButton: UIImageView!
@@ -45,7 +53,8 @@ class CameraViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     
     //Dynamic values
-    var isFullScreen = true
+    var isFullScreen = false
+    var isMultipleSelected = false
     
     var imageArray = [UIImage]()
     
@@ -86,7 +95,7 @@ class CameraViewController: UIViewController, UICollectionViewDataSource, UIColl
         }
         
         buildShadow() //Builds the shadows for the icons (AddButton and swipe bar)
-        buildSizes() //Also has the BuildBlur inside it (Must be called each time a new image is placed)
+        buildSizes()
         buildRadius() //Sets the radius for the imageViews (Needs to only be called once)
         buildLayout()
         buildGestures()
@@ -94,17 +103,25 @@ class CameraViewController: UIViewController, UICollectionViewDataSource, UIColl
         grabPhotos()
         
         //Panning
-        centerView.isUserInteractionEnabled = true
+        mainStage.isUserInteractionEnabled = true
         let pan = UIPanGestureRecognizer(target: self, action: #selector(handlePanCenterView(sender :)))
-        centerView.addGestureRecognizer(pan)
+        
+        mainStage.addGestureRecognizer(pan)
         
         
         imageCollectionViewFrame = imageCollectionView.frame
         solidBarFrame = solidBar.frame
         addButtonFrame = addButton.frame
         
-        let myTag = Tag(tagElement: TagElement(link: "hey"), tagLabel: "Emad2")
-        ParentTagStruct().addTag(tag: myTag)
+        scrollView.minimumZoomScale = 1.0
+        scrollView.maximumZoomScale = 6.0
+        scrollView.isUserInteractionEnabled = true
+    }
+    
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        centerView.centerXAnchor.constraint(equalTo: scrollView.contentLayoutGuide.centerXAnchor)
+        centerView.centerYAnchor.constraint(equalTo: scrollView.contentLayoutGuide.centerYAnchor)
+        return self.centerView
     }
     
     
@@ -156,7 +173,8 @@ class CameraViewController: UIViewController, UICollectionViewDataSource, UIColl
     ///sizes all the image views accordingly with the image size
     func buildSizes(){
         if let image = centerView.image {
-            centerView.frame.size = image.size
+            centerView.frame = scrollView.frame
+            centerView.center.x = view.center.x
         }
         if let image = nextView.image {
             nextView.frame.size = image.size
@@ -170,6 +188,13 @@ class CameraViewController: UIViewController, UICollectionViewDataSource, UIColl
         //Setting the shadow for the views
         addShadow(selectedView: addButton)
         addShadow(selectedView: solidBar)
+        partition1.layer.masksToBounds = false
+        
+        partition1.layer.shadowColor = UIColor(red: 0.129, green: 0.129, blue: 0.129, alpha: 1).cgColor
+        partition1.layer.shadowOffset = CGSize(width: 0, height: 1)
+        partition1.layer.shadowOpacity = 1.0
+        partition1.layer.shouldRasterize = true
+        partition1.layer.rasterizationScale = UIScreen.main.scale
     }
     
     
@@ -183,6 +208,11 @@ class CameraViewController: UIViewController, UICollectionViewDataSource, UIColl
         
         //previousView
         previousView.layer.cornerRadius = CGFloat(cornerRadius[1])
+        
+        //circleCounter
+        circleCounter.layer.cornerRadius = circleCounter.frame.height / 2
+        circleCounter.layer.borderColor = UIColor(red: 0.937, green: 0.937, blue: 0.957, alpha: 1).cgColor
+        circleCounter.layer.borderWidth = 1.0
     }
     
     
@@ -199,17 +229,6 @@ class CameraViewController: UIViewController, UICollectionViewDataSource, UIColl
         selectedView.layer.rasterizationScale = UIScreen.main.scale
     }
     
-    
-    func buildBlur(imageView : UIImageView){
-        let blurEffect = UIBlurEffect(style: .prominent)
-        let blurEffectView = UIVisualEffectView(effect: blurEffect)
-        //always fill the view
-        
-        blurEffectView.frame = imageView.bounds
-        imageView.addSubview(blurEffectView)
-        
-    }
-    
     func buildLayout(){
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 20, left: 0, bottom: 10, right: 0)
@@ -223,9 +242,16 @@ class CameraViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     //Building all the gestures and enabling
     func buildGestures() {
+        //adding user interactivity
+        fullscreen.isUserInteractionEnabled = true
+        multiple.isUserInteractionEnabled = true
+        
         //taps
-        solidBar.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSwipeUpAndSwipeDown)))
         addButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(saveToFolder)))
+        
+        fullscreen.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleFullScreenTapped)))
+        
+        multiple.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleMultipleTapped)))
         
         //Panning
         let pan = UIPanGestureRecognizer(target: self, action: #selector(handlePan(sender :)))
@@ -241,9 +267,37 @@ class CameraViewController: UIViewController, UICollectionViewDataSource, UIColl
         imageCollectionView.isUserInteractionEnabled = true
     }
     
+    @objc func handleFullScreenTapped(_ sender : UITapGestureRecognizer? = nil) {
+        if !isFullScreen {
+            fullscreen.image = UIImage(named: "zoomIn")
+            centerView.contentMode = .scaleAspectFill
+        }
+        else {
+            fullscreen.image = UIImage(named: "fullscreen")
+            centerView.contentMode = .scaleAspectFit
+        }
+        
+        isFullScreen = !isFullScreen
+    }
+    
+    @objc func handleMultipleTapped(_ sender : UITapGestureRecognizer? = nil) {
+        if !isMultipleSelected {
+            multiple.image = UIImage(named: "multipleSelected")
+            circleCounter.isHidden = false
+        }
+        else {
+            multiple.image = UIImage(named: "multiple")
+            circleCounter.isHidden = true
+        }
+        
+        isMultipleSelected = !isMultipleSelected
+    }
+    
     
     @objc func handlePanCenterView(sender : UIPanGestureRecognizer) {
-        let imageView = sender.view!
+        guard let imageView = centerView else {
+            return
+        }
         let translation = sender.translation(in: view)
         
         switch sender.state {
@@ -273,6 +327,8 @@ class CameraViewController: UIViewController, UICollectionViewDataSource, UIColl
             }
             else {
                 imageView.center.x = centerX
+                previousView.center.x = 0 - previousView.frame.width
+                nextView.frame.origin.x = view.frame.width
             }
         default:
             print("Default")
@@ -327,155 +383,4 @@ class CameraViewController: UIViewController, UICollectionViewDataSource, UIColl
         }
     }
     
-    
-    @objc func handlePan(sender : UIPanGestureRecognizer) {
-        let tableView = sender.view!
-        let translation = sender.translation(in: view) 
-        
-        switch sender.state {
-        case .began, .changed:
-            let y = tableView.center.y + translation.y
-            if (Int(y) > 600 && Int(y) < 1040) {
-                tableView.center.y = y
-                
-                let updatedY = tableView.frame.origin.y - FolderSliderView.frame.height/2
-                FolderSliderView.center.y = updatedY
-                
-                solidBar.center.y = updatedY - 30
-                sender.setTranslation(CGPoint.zero, in: view)
-            }
-        case .ended:
-            if(isQuickSwipe(velocity: sender.velocity(in: view).y)){
-                if(sender.velocity(in: view).y < 0){
-                    print("swiping upwards")
-                    handleSwipeUp()
-                }
-                else {
-                    print("downward")
-                    handleSwipeDown()
-                }
-            }
-            else if(tableView.center.y < 750) {
-                print("fullscreening")
-                handleSwipeUp()
-            }
-            else {
-                print("snapping back to bottom")
-                handleSwipeDown()
-            }
-        case .possible, .cancelled, .failed:
-            print("finish later")
-        @unknown default:
-            print("finishing later")
-        }
-    }
-    
-    
-    @objc func segmentControlValueChanged(segment : UISegmentedControl){
-        if segment.selectedSegmentIndex == 0 {
-            handleSwipeDown()
-        }
-    }
-    
-    @objc func handleSwipeUpAndSwipeDown(){
-        if isFullScreen {
-            handleSwipeUp()
-            isFullScreen = false
-        }
-            
-        else {
-            handleSwipeDown()
-            isFullScreen = true
-        }
-    }
-    
-    
-    @objc func handleSwipeUp(_ tapGesture : UITapGestureRecognizer? = nil){
-        //perform animation to swipe the collection view upward
-        print("working")
-        UIView.animate(withDuration: 0.4) {
-            guard let tempFrame = self.imageCollectionViewFrame else{
-                return
-            }
-            let originX = tempFrame.origin.x
-            let originY = tempFrame.origin.y
-            let heightFS : CGFloat = 30.0
-            
-            
-            //Updated values
-            let updatedOriginY = originY - 420
-            
-            self.imageCollectionView.frame.origin = CGPoint(x: originX, y: updatedOriginY)
-            
-            self.solidBar.frame.origin.y = (updatedOriginY - 24) - heightFS
-            self.FolderSliderView.frame.origin.y = updatedOriginY - heightFS
-            
-            self.FolderSliderView.frame.size.height = heightFS
-            self.prevFolderName.frame.size.height = heightFS
-            self.currentFolderName.frame.size.height = heightFS
-            self.nextFolderName.frame.size.height = heightFS
-        }
-        Helper().vibrate(style: .light)
-    }
-    
-    @objc func handleSwipeDown(_ tapGesture  :UITapGestureRecognizer? = nil){
-        UIView.animate(withDuration: 0.2) {
-            print("swiping")
-            self.imageCollectionView.frame = self.imageCollectionViewFrame!
-            self.solidBar.frame = self.solidBarFrame!
-            self.addButton.frame = self.addButtonFrame!
-            
-            let heightFS : CGFloat = 0
-            
-            self.FolderSliderView.frame.origin.y = self.imageCollectionViewFrame!.origin.y
-            self.FolderSliderView.frame.size.height = heightFS
-            self.prevFolderName.frame.size.height = heightFS
-            self.currentFolderName.frame.size.height = heightFS
-            self.nextFolderName.frame.size.height = heightFS
-        }
-        
-        Helper().vibrate(style: .light)
-    }
-    
-    @objc func saveToFolder(_ tapGesture : UITapGestureRecognizer? = nil){
-        if let image = centerView?.image {
-            Helper().vibrate(style: .medium)
-            let folderSelection = Helper().saveToFolder(image: image)
-            present(folderSelection, animated: true, completion: nil)
-        }
-    }
-    
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return imageArray.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! CameraViewCell
-        cell.imageView.image = imageArray[indexPath.row]
-        cell.currentIndex = indexPath.row
-        cell.imageView.contentMode = UIView.ContentMode.scaleAspectFill
-        
-        cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleCellTapped)))
-        cell.isUserInteractionEnabled = true
-        return cell
-    }
-    
-    
-    @objc func handleCellTapped(tapGesture : UITapGestureRecognizer) {
-        if (tapGesture.view is CameraViewCell) {
-            let cell = tapGesture.view as! CameraViewCell
-            print(cell.currentIndex, "is the current index")
-            centerIndex = cell.currentIndex
-            
-            centerView.image = cell.imageView.image
-            if (cell.currentIndex < (imageArray.count - 1)){
-                nextView.image = imageArray[cell.currentIndex + 1]
-            }
-            
-            if cell.currentIndex > 0 {
-                previousView.image = imageArray[cell.currentIndex - 1]
-            }
-        }
-    }
 }
