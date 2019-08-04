@@ -95,7 +95,8 @@ class CameraViewController: UIViewController {
         }
         
         buildShadow() //Builds the shadows for the icons (AddButton and swipe bar)
-        buildSizes()
+        buildSizes() //builds the sizes for the images in the scroll view
+        buildPositioning()
         buildRadius() //Sets the radius for the imageViews (Needs to only be called once)
         buildLayout()
         buildGestures()
@@ -170,20 +171,6 @@ class CameraViewController: UIViewController {
         nextView.image = image
     }
     
-    ///sizes all the image views accordingly with the image size
-    func buildSizes(){
-        if let image = centerView.image {
-            centerView.frame = scrollView.frame
-            centerView.center.x = view.center.x
-        }
-        if let image = nextView.image {
-            nextView.frame.size = image.size
-        }
-        if let image = previousView.image {
-            previousView.frame.size = image.size
-        }
-    }
-    
     func buildShadow(){
         //Setting the shadow for the views
         addShadow(selectedView: addButton)
@@ -253,6 +240,10 @@ class CameraViewController: UIViewController {
         
         multiple.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleMultipleTapped)))
         
+        let doubleTapped = UITapGestureRecognizer(target: self, action: #selector(handleFullScreenTapped(_:)))
+        doubleTapped.numberOfTapsRequired = 2
+        scrollView.addGestureRecognizer(doubleTapped)
+        
         //Panning
         let pan = UIPanGestureRecognizer(target: self, action: #selector(handlePan(sender :)))
         imageCollectionView.addGestureRecognizer(pan)
@@ -295,6 +286,7 @@ class CameraViewController: UIViewController {
     
     
     @objc func handlePanCenterView(sender : UIPanGestureRecognizer) {
+        unhideImages()
         guard let imageView = centerView else {
             return
         }
@@ -302,15 +294,10 @@ class CameraViewController: UIViewController {
         
         switch sender.state {
         case .began, .changed:
-            
-            let previousX = previousView.center.x + translation.x
-            previousView.center.x = previousX
-            
-            let x = imageView.center.x + translation.x
-            imageView.center.x = x
-            
-            let nextX = nextView.center.x + translation.x
-            nextView.center.x = nextX
+            let x = translation.x
+            previousView.center.x += x
+            imageView.center.x += x
+            nextView.center.x += x
             
             sender.setTranslation(CGPoint.zero, in: view)
             
@@ -326,9 +313,7 @@ class CameraViewController: UIViewController {
                 animateScrollPrev()
             }
             else {
-                imageView.center.x = centerX
-                previousView.center.x = 0 - previousView.frame.width
-                nextView.frame.origin.x = view.frame.width
+                buildPositioning()
             }
         default:
             print("Default")
@@ -336,51 +321,99 @@ class CameraViewController: UIViewController {
     }
     
     
+    
     ///Animates the views to move to the previous image
     func animateScrollPrev(){
+        
+        guard self.centerIndex > 0 else {
+            print("reached limit")
+            buildPositioning()
+            return
+        }
+        
         UIView.animate(withDuration: 0.25, animations: {
             self.previousView.center.x = self.view.center.x
-            self.centerView.frame.origin.x = self.view.frame.width
-        }){ (status) in
-            
-            
-            //todo come back to this next line for proper alignment when scrolling
-            self.centerView.center.y = self.previousView.center.y
-            
+            self.centerView.center.x = (self.view.frame.width + self.scrollView.frame.width / 2) + 12
+        })
+        { (status) in
             
             if(self.centerIndex > 1){
                 self.centerIndex -= 1
                 self.change(self.imageArray[self.centerIndex - 1], self.imageArray[self.centerIndex], self.imageArray[self.centerIndex + 1])
             }
-            else if(self.centerIndex == 1) {
+            else {
                 self.centerIndex -= 1
                 self.change(UIImage(named: "addImage")!, self.imageArray[self.centerIndex], self.imageArray[self.centerIndex + 1])
             }
-            self.centerView.center.x = self.view.center.x
-            self.previousView.center.x = 0 - self.previousView.frame.width
-            self.nextView.frame.origin.x = self.view.frame.width
+            self.buildPositioning()
         }
     }
     
     ///Animates the views to move to the next image
     func animateScrollNext() {
         
+        centerIndex += 1
+        
+        guard centerIndex < imageArray.count else{
+            print("maxing out")
+            buildPositioning()
+            centerIndex -= 1
+            return
+            
+        }
         UIView.animate(withDuration: 0.25, animations: {
             self.nextView.center.x = self.view.center.x
-            self.centerView.frame.origin.x = 0 - self.centerView.frame.width
-        }){ (status) in
-            if(self.centerIndex < self.imageArray.count - 2){
-                self.centerIndex += 1
+            self.centerView.center.x = (0 - self.scrollView.frame.width / 2) - 12
+        })
+        { (status) in
+            if(self.centerIndex < self.imageArray.count - 1){
                 self.change(self.imageArray[self.centerIndex - 1], self.imageArray[self.centerIndex], self.imageArray[self.centerIndex + 1])
             }
-            else if(self.centerIndex < self.imageArray.count - 1) {
-                self.centerIndex += 1
+            else {
                 self.change(self.imageArray[self.centerIndex - 1], self.imageArray[self.centerIndex], UIImage(named: "addImage")!)
             }
-            self.centerView.center.x = self.view.center.x
-            self.previousView.center.x = 0 - self.previousView.frame.width
-            self.nextView.frame.origin.x = self.view.frame.width
+            self.buildPositioning()
         }
     }
     
+    func buildPositioning(){
+        let frame = scrollView.frame
+        let center = centerView.center
+        //positioning - x
+        centerView.center.x = scrollView.center.x
+        previousView.center.x = (0 - frame.width / 2) - 32
+        nextView.center.x = (view.frame.width + frame.width / 2) + 32
+        
+        // - y
+        previousView.center.y = center.y
+        nextView.center.y = center.y
+        
+        hideImages()
+    }
+    
+    
+    func buildSizes() {
+        print("building the size")
+        let frame = scrollView.frame
+        
+        //sizing
+        previousView.frame.size = frame.size
+        centerView.frame = frame
+        nextView.frame.size = frame.size
+        
+        
+        print("Previous frame: ", previousView.frame)
+        print("currentView Frame:", centerView.frame)
+        print("nextview freame", nextView.frame)
+    }
+    
+    func unhideImages() {
+        nextView.isHidden = false
+        previousView.isHidden = false
+    }
+    
+    func hideImages() {
+        nextView.isHidden = true
+        previousView.isHidden = true
+    }
 }
