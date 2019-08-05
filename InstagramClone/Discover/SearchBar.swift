@@ -12,7 +12,6 @@ class SearchBar: UITextField {
     
     var iconView : UIImageView?
     var iconViewSize : CGSize?
-    var iconViewCenterY : CGFloat?
     var isDrawn = false
     
     
@@ -24,7 +23,6 @@ class SearchBar: UITextField {
         buildIcon() //adds search icon to the left with padding
         buildGestures() //builds all gestures for view
         iconViewSize = iconView?.frame.size
-        iconViewCenterY = self.center.y
         
         isDrawn = true
     }
@@ -63,23 +61,19 @@ class SearchBar: UITextField {
     
     
     func buildGestures() {
-        self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handlePressed)))
+        addTarget(self, action: #selector(handlePressed), for: UIControl.Event.editingDidBegin)
         print((self.text)?.count == 0)
         
     }
     
-    //rotates the image icon when the user presses the search bar
-    //TODO remove this
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print("touched1")
-    }
     
     //reverts back to original position when the focus is no longer on the search bar and the search bar is empty
     @objc func revertToNormal(){
+        
+        self.endEditing(true)
         guard (self.text?.count == 0) else {
             return
         }
-        
         //reseting icon back to original color
         iconView?.image = UIImage(named: "searchIcon")
         UIView.animate(withDuration: 0.3) {
@@ -104,7 +98,7 @@ class SearchBar: UITextField {
             //make icon edits
             let size = CGSize(width: self.iconViewSize!.width + 10, height: self.iconViewSize!.height + 10)
             self.iconView?.frame.size = size
-            self.iconView?.center.y = (self.iconViewCenterY!) - 5
+            self.iconView?.center.y -= 5
         }
     }
     

@@ -47,12 +47,12 @@ class DiscoverController: UIViewController {
     func addSearchBar() {
         let frame = collectionView.frame
         var searchBar = SearchBar(frame: CGRect(x: 0, y: 0, width: frame.width * 0.88, height: 33))
-        searchBar.center = CGPoint(x: collectionView.center.x, y: 21)
+        searchBar.center = CGPoint(x: view.center.x, y: collectionView.frame.origin.y + 12)
         let tapped = UITapGestureRecognizer(target: searchBar, action: #selector(searchBar.revertToNormal))
         tapped.cancelsTouchesInView = false
         view.addGestureRecognizer(tapped)
         searchBar.backgroundColor = .white
-        collectionView.addSubview(searchBar)
+        view.addSubview(searchBar)
     }
     
     func setUpCollectionView() {
