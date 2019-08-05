@@ -244,22 +244,24 @@ extension DiscoverController : UICollectionViewDelegate, UICollectionViewDataSou
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("Collection Selected Row \(indexPath.row)")
-//        var item = items[indexPath.row]
-//        let vc = storyboard?.instantiateViewController(withIdentifier: "A")
-//        self.navigationController?.pushViewController(vc!, animated: true)
-//        vc.imageName = UIImage.init(named: item.imageName)!
-//        vc.nameLabel.text = item.author
-//        vc.likesLabel.text = String(item.likes)
-        
-//        print(UIImage.init(named: items[indexPath.row].imageName)!)
-//        vc.setupView(image: UIImage.init(named: items[indexPath.row].imageName)!)
-//        self.present(vc, animated: true, completion: nil)
-//        let vc = ImageSelectedController()
-//        nextVC.YourLabel.text = "Passed Text"
-//        nextVC.YourLabel.text = YourArray[indexPath.row]
-
-        // Push to next view
-//        self.navigationController?.pushViewController(vc!, animated: true)
+        let vc = storyboard?.instantiateViewController(withIdentifier: "ImageSelectedController") as! ImageSelectedController
+        for index in indexPath.row...(items.count - 1) {
+            vc.items.append(items[index])
+        }
+        var item = items[indexPath.row]
+        //        vc.imageName = UIImage.init(named: item.imageName)!
+        //        vc.nameLabel.text = item.author
+        //        vc.likesLabel.text = String(item.likes)
+        //
+        //        print(UIImage.init(named: items[indexPath.row].imageName)!)
+        //        //        vc.setupView(image: UIImage.init(named: items[indexPath.row].imageName)!)
+        //        self.present(vc, animated: true, completion: nil)
+        //        //        let vc = ImageSelectedController()
+        //        //        nextVC.YourLabel.text = "Passed Text"
+        //        //        nextVC.YourLabel.text = YourArray[indexPath.row]
+        //
+        //        // Push to next view
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
 }

@@ -35,6 +35,7 @@ class ProfileContainer: UIViewController {
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapOut))
         firstView.addGestureRecognizer(tapGesture)
+        print("First View \(firstView.center.x)" )
         print("Second View \(secondView.center.x)" )
     }
     @objc func toggleSideMenu() {
@@ -64,22 +65,26 @@ class ProfileContainer: UIViewController {
             }else {
                 UIView.animateKeyframes(withDuration: 0.5, delay: 0, options: [], animations: {
                     self.firstView.center = CGPoint(x: 207, y: gesture.view!.center.y)
+                    self.secondView.center = CGPoint(x: 564, y: gesture.view!.center.y)
                     gesture.isEnabled = false
                 }, completion: nil)
             }
             
             gesture.setTranslation(CGPoint(x: 0,y: 0), in: self.view)
         } else if gesture.state == .ended {
+            print("Gesture View \(gesture.view!.center.x)")
+            print("First View \(firstView.center.x)" )
+            print("Second View \(secondView.center.x)" )
             if secondView.center.x < 400 {
                 UIView.animateKeyframes(withDuration: 0.3, delay: 0, options: [], animations: {
-                    self.firstView.center = CGPoint(x: -180, y: gesture.view!.center.y)
-                    self.secondView.center = CGPoint(x: 220, y: gesture.view!.center.y)
+                    self.firstView.center = CGPoint(x: -90, y: gesture.view!.center.y)
+                    self.secondView.center = CGPoint(x: 260, y: gesture.view!.center.y)
                 }, completion: nil)
                 
             } else {
                 UIView.animateKeyframes(withDuration: 0.3, delay: 0, options: [], animations: {
                     self.firstView.center = CGPoint(x: 207, y: gesture.view!.center.y)
-                    self.secondView.center = CGPoint(x: 580, y: gesture.view!.center.y)
+                    self.secondView.center = CGPoint(x: 564, y: gesture.view!.center.y)
                 }, completion: nil)
             }
         }
@@ -96,23 +101,25 @@ class ProfileContainer: UIViewController {
                 gesture.view!.center = self.secondView.center
             }else {
                 UIView.animateKeyframes(withDuration: 0.5, delay: 0, options: [], animations: {
-                    self.secondView.center = CGPoint(x: 207, y: gesture.view!.center.y)
+                    self.secondView.center = CGPoint(x: 260, y: gesture.view!.center.y)
+                    self.firstView.center = CGPoint(x: -90, y: gesture.view!.center.y)
                     gesture.isEnabled = false
                 }, completion: nil)
             }
             
             gesture.setTranslation(CGPoint(x: 0,y: 0), in: self.view)
         } else if gesture.state == .ended {
+            print("First View \(firstView.center.x)")
             if firstView.center.x < 0 {
                 UIView.animateKeyframes(withDuration: 0.3, delay: 0, options: [], animations: {
-                    self.firstView.center = CGPoint(x: -207, y: gesture.view!.center.y)
-                    self.secondView.center = CGPoint(x: 207, y: gesture.view!.center.y)
+                    self.firstView.center = CGPoint(x: -90, y: gesture.view!.center.y)
+                    self.secondView.center = CGPoint(x: 260, y: gesture.view!.center.y)
                 }, completion: nil)
                 
             } else {
                 UIView.animateKeyframes(withDuration: 0.3, delay: 0, options: [], animations: {
                     self.firstView.center = CGPoint(x: 207, y: gesture.view!.center.y)
-                    self.secondView.center = CGPoint(x: 621, y: gesture.view!.center.y)
+                    self.secondView.center = CGPoint(x: 564, y: gesture.view!.center.y)
                 }, completion: nil)
             }
         }
