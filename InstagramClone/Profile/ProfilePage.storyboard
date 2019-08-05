@@ -719,6 +719,28 @@
                                             <outlet property="title" destination="tAo-Ya-I6i" id="fb7-ry-SPk"/>
                                         </connections>
                                     </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Create" id="NwC-HJ-QTN" customClass="AddFolderViewCell" customModule="CardParts">
+                                        <rect key="frame" x="135.5" y="0.0" width="103" height="106"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="103" height="106"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="glS-Kl-sVD">
+                                                    <rect key="frame" x="0.0" y="0.0" width="103" height="106"/>
+                                                </button>
+                                            </subviews>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="glS-Kl-sVD" secondAttribute="bottom" id="PaY-XH-oyJ"/>
+                                            <constraint firstAttribute="trailing" secondItem="glS-Kl-sVD" secondAttribute="trailing" id="RO8-zw-Jvr"/>
+                                            <constraint firstItem="glS-Kl-sVD" firstAttribute="leading" secondItem="NwC-HJ-QTN" secondAttribute="leading" id="YJN-b6-wpm"/>
+                                            <constraint firstItem="glS-Kl-sVD" firstAttribute="top" secondItem="NwC-HJ-QTN" secondAttribute="top" id="u2r-9i-XmE"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="addFolder" destination="glS-Kl-sVD" id="lAa-21-1gz"/>
+                                        </connections>
+                                    </collectionViewCell>
                                 </cells>
                             </collectionView>
                         </subviews>
