@@ -40,11 +40,17 @@ class ProfileContainer: UIViewController {
     }
     @objc func toggleSideMenu() {
         if isExpanded {
+            print("Menu Collapsed")
             isExpanded = false
             rightMenuSideConstraint.constant = 300
+            print("First View \(firstView.center.x)" )
+            print("Second View \(secondView.center.x)" )
         } else {
+            print("Menu Expanded")
             isExpanded = true
             rightMenuSideConstraint.constant = 0
+            print("First View \(firstView.center.x)" )
+            print("Second View \(secondView.center.x)" )
         }
     }
     

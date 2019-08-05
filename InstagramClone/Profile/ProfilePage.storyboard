@@ -334,7 +334,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bkV-DP-2fY">
-                                                    <rect key="frame" x="275" y="10" width="9" height="21"/>
+                                                    <rect key="frame" x="268" y="10" width="16" height="21"/>
                                                     <state key="normal" image="arrow"/>
                                                 </button>
                                             </subviews>
@@ -366,7 +366,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rEz-9J-o5b">
-                                                    <rect key="frame" x="275" y="11" width="9" height="21"/>
+                                                    <rect key="frame" x="268" y="11" width="16" height="21"/>
                                                     <state key="normal" image="arrow"/>
                                                 </button>
                                             </subviews>
@@ -397,7 +397,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="chp-cg-yt0">
-                                                    <rect key="frame" x="275" y="11" width="9" height="21"/>
+                                                    <rect key="frame" x="268" y="11" width="16" height="21"/>
                                                     <state key="normal" image="arrow"/>
                                                 </button>
                                             </subviews>
@@ -620,6 +620,28 @@
                                             <outlet property="title" destination="bYZ-Ny-Ktc" id="tlX-9n-Fgl"/>
                                         </connections>
                                     </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Create" id="qYZ-ak-Vyf" customClass="AddFolderViewCell" customModule="InstagramClone" customModuleProvider="target">
+                                        <rect key="frame" x="135.5" y="0.0" width="103" height="106"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="103" height="106"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rgC-RU-CRp">
+                                                    <rect key="frame" x="27" y="26" width="50" height="50"/>
+                                                </imageView>
+                                            </subviews>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="rgC-RU-CRp" secondAttribute="trailing" constant="26" id="5Rs-KQ-Ql8"/>
+                                            <constraint firstItem="rgC-RU-CRp" firstAttribute="leading" secondItem="qYZ-ak-Vyf" secondAttribute="leading" constant="27" id="6hv-52-KTw"/>
+                                            <constraint firstAttribute="bottom" secondItem="rgC-RU-CRp" secondAttribute="bottom" constant="30" id="Xmf-Sb-Nad"/>
+                                            <constraint firstItem="rgC-RU-CRp" firstAttribute="top" secondItem="qYZ-ak-Vyf" secondAttribute="top" constant="26" id="m4j-je-NQJ"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="addFolder" destination="rgC-RU-CRp" id="UC3-1Z-gOF"/>
+                                        </connections>
+                                    </collectionViewCell>
                                 </cells>
                             </collectionView>
                         </subviews>
@@ -719,26 +741,26 @@
                                             <outlet property="title" destination="tAo-Ya-I6i" id="fb7-ry-SPk"/>
                                         </connections>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Create" id="NwC-HJ-QTN" customClass="AddFolderViewCell" customModule="CardParts">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Create" id="NwC-HJ-QTN" customClass="AddFolderViewCell" customModule="InstagramClone" customModuleProvider="target">
                                         <rect key="frame" x="135.5" y="0.0" width="103" height="106"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="103" height="106"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="glS-Kl-sVD">
-                                                    <rect key="frame" x="0.0" y="0.0" width="103" height="106"/>
-                                                </button>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KTN-wJ-5Df">
+                                                    <rect key="frame" x="27" y="26" width="50" height="50"/>
+                                                </imageView>
                                             </subviews>
                                         </view>
                                         <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="glS-Kl-sVD" secondAttribute="bottom" id="PaY-XH-oyJ"/>
-                                            <constraint firstAttribute="trailing" secondItem="glS-Kl-sVD" secondAttribute="trailing" id="RO8-zw-Jvr"/>
-                                            <constraint firstItem="glS-Kl-sVD" firstAttribute="leading" secondItem="NwC-HJ-QTN" secondAttribute="leading" id="YJN-b6-wpm"/>
-                                            <constraint firstItem="glS-Kl-sVD" firstAttribute="top" secondItem="NwC-HJ-QTN" secondAttribute="top" id="u2r-9i-XmE"/>
+                                            <constraint firstItem="KTN-wJ-5Df" firstAttribute="top" secondItem="NwC-HJ-QTN" secondAttribute="top" constant="26" id="IOz-mg-TBe"/>
+                                            <constraint firstAttribute="bottom" secondItem="KTN-wJ-5Df" secondAttribute="bottom" constant="30" id="T0K-TL-f2n"/>
+                                            <constraint firstItem="KTN-wJ-5Df" firstAttribute="leading" secondItem="NwC-HJ-QTN" secondAttribute="leading" constant="27" id="ZpG-2s-Nwl"/>
+                                            <constraint firstAttribute="trailing" secondItem="KTN-wJ-5Df" secondAttribute="trailing" constant="26" id="e5s-T4-e6K"/>
                                         </constraints>
                                         <connections>
-                                            <outlet property="addFolder" destination="glS-Kl-sVD" id="lAa-21-1gz"/>
+                                            <outlet property="addFolder" destination="KTN-wJ-5Df" id="3Wx-Yv-1CA"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
