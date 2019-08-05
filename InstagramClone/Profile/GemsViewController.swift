@@ -69,10 +69,6 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
             print("Text field: \(folderName)")
             let newFolder = Folder(folderName: folderName)
             //calling the function to save the folder name to Firebase and create it on the front end
-            print(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey))
-            print(UserDefaults.standard.string(forKey: defaultsKeys.profileCreatedKey))
-            print(UserDefaults.standard.string(forKey: defaultsKeys.nameKey))
-            print(UserDefaults.standard.string(forKey: defaultsKeys.emailKey))
 //            UserStruct().addFolder(user: UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!, folder: newFolder)
             self.createFolder(folderName: folderName)
         }))

@@ -42,13 +42,20 @@ class ProfileContainer: UIViewController {
         if isExpanded {
             print("Menu Collapsed")
             isExpanded = false
-            rightMenuSideConstraint.constant = 300
+            UIView.animateKeyframes(withDuration: 0.2, delay: 0, options: [], animations: {
+                self.firstView.center = CGPoint(x: 207, y: self.firstView.center.y)
+                self.secondView.center = CGPoint(x: 564, y: self.firstView.center.y)
+            }, completion: nil)
             print("First View \(firstView.center.x)" )
             print("Second View \(secondView.center.x)" )
         } else {
             print("Menu Expanded")
             isExpanded = true
-            rightMenuSideConstraint.constant = 0
+            UIView.animateKeyframes(withDuration: 0.2, delay: 0, options: [], animations: {
+                self.firstView.center = CGPoint(x: -90, y: self.firstView.center.y)
+                self.secondView.center = CGPoint(x: 260, y: self.firstView.center.y)
+            }, completion: nil)
+//            rightMenuSideConstraint.constant = 0
             print("First View \(firstView.center.x)" )
             print("Second View \(secondView.center.x)" )
         }
@@ -72,6 +79,7 @@ class ProfileContainer: UIViewController {
                 UIView.animateKeyframes(withDuration: 0.5, delay: 0, options: [], animations: {
                     self.firstView.center = CGPoint(x: 207, y: gesture.view!.center.y)
                     self.secondView.center = CGPoint(x: 564, y: gesture.view!.center.y)
+                    self.isExpanded = false
                     gesture.isEnabled = false
                 }, completion: nil)
             }
@@ -85,12 +93,14 @@ class ProfileContainer: UIViewController {
                 UIView.animateKeyframes(withDuration: 0.3, delay: 0, options: [], animations: {
                     self.firstView.center = CGPoint(x: -90, y: gesture.view!.center.y)
                     self.secondView.center = CGPoint(x: 260, y: gesture.view!.center.y)
+                    self.isExpanded = true
                 }, completion: nil)
                 
             } else {
                 UIView.animateKeyframes(withDuration: 0.3, delay: 0, options: [], animations: {
                     self.firstView.center = CGPoint(x: 207, y: gesture.view!.center.y)
                     self.secondView.center = CGPoint(x: 564, y: gesture.view!.center.y)
+                    self.isExpanded = false
                 }, completion: nil)
             }
         }
@@ -107,8 +117,9 @@ class ProfileContainer: UIViewController {
                 gesture.view!.center = self.secondView.center
             }else {
                 UIView.animateKeyframes(withDuration: 0.5, delay: 0, options: [], animations: {
-                    self.secondView.center = CGPoint(x: 260, y: gesture.view!.center.y)
                     self.firstView.center = CGPoint(x: -90, y: gesture.view!.center.y)
+                    self.secondView.center = CGPoint(x: 260, y: gesture.view!.center.y)
+                    self.isExpanded = true
                     gesture.isEnabled = false
                 }, completion: nil)
             }
@@ -120,12 +131,14 @@ class ProfileContainer: UIViewController {
                 UIView.animateKeyframes(withDuration: 0.3, delay: 0, options: [], animations: {
                     self.firstView.center = CGPoint(x: -90, y: gesture.view!.center.y)
                     self.secondView.center = CGPoint(x: 260, y: gesture.view!.center.y)
+                    self.isExpanded = true
                 }, completion: nil)
                 
             } else {
                 UIView.animateKeyframes(withDuration: 0.3, delay: 0, options: [], animations: {
                     self.firstView.center = CGPoint(x: 207, y: gesture.view!.center.y)
                     self.secondView.center = CGPoint(x: 564, y: gesture.view!.center.y)
+                    self.isExpanded = false
                 }, completion: nil)
             }
         }
