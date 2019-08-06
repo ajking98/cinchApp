@@ -163,30 +163,35 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <segmentedControl opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="fpp-h7-3zz">
-                                <rect key="frame" x="20" y="125" width="374" height="29"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="crl-x2-fR8">
+                                <rect key="frame" x="20" y="112" width="374" height="40"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="collectionIconGreen" translatesAutoresizingMaskIntoConstraints="NO" id="EhD-L1-fI7">
+                                        <rect key="frame" x="62" y="3" width="25" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    </imageView>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="tableIconBlack" translatesAutoresizingMaskIntoConstraints="NO" id="q5W-G2-1OC">
+                                        <rect key="frame" x="184" y="3" width="25" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    </imageView>
+                                </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <segments>
-                                    <segment title="First"/>
-                                    <segment title="Second"/>
-                                </segments>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <connections>
-                                    <action selector="switchLayouts:" destination="tcj-Tb-CIJ" eventType="valueChanged" id="UF6-NB-BZ6"/>
-                                </connections>
-                            </segmentedControl>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="5zr-zO-iGB"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.92156862745098034" green="0.92156862745098034" blue="0.93725490196078431" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="fpp-h7-3zz" firstAttribute="leading" secondItem="peo-QB-grK" secondAttribute="leadingMargin" id="5YY-fj-7Oh"/>
+                            <constraint firstItem="T4Z-Sf-0Sh" firstAttribute="top" secondItem="crl-x2-fR8" secondAttribute="bottom" constant="24" id="8P6-ea-A4p"/>
                             <constraint firstItem="xiB-k2-qHT" firstAttribute="leading" secondItem="T4Z-Sf-0Sh" secondAttribute="trailing" id="9I7-wf-5MM"/>
-                            <constraint firstItem="fpp-h7-3zz" firstAttribute="top" secondItem="6o6-d1-aWb" secondAttribute="top" constant="37" id="9Mp-6c-GaE"/>
+                            <constraint firstItem="T4Z-Sf-0Sh" firstAttribute="top" secondItem="6o6-d1-aWb" secondAttribute="top" constant="88" id="ETi-0a-OgG"/>
                             <constraint firstAttribute="bottom" secondItem="T4Z-Sf-0Sh" secondAttribute="bottom" id="OnH-Pi-37L"/>
-                            <constraint firstItem="6o6-d1-aWb" firstAttribute="trailing" secondItem="fpp-h7-3zz" secondAttribute="trailing" constant="20" id="PRN-vm-epv"/>
-                            <constraint firstItem="T4Z-Sf-0Sh" firstAttribute="top" secondItem="fpp-h7-3zz" secondAttribute="bottom" constant="23" id="Trb-OV-Boq"/>
                             <constraint firstItem="T4Z-Sf-0Sh" firstAttribute="leading" secondItem="6o6-d1-aWb" secondAttribute="leading" id="VQE-NE-7Q8"/>
-                            <constraint firstItem="fpp-h7-3zz" firstAttribute="leading" secondItem="6o6-d1-aWb" secondAttribute="leading" constant="20" id="ceC-KN-GlK"/>
                             <constraint firstItem="xiB-k2-qHT" firstAttribute="top" secondItem="6o6-d1-aWb" secondAttribute="top" constant="88" id="hBc-PU-mNo"/>
+                            <constraint firstItem="crl-x2-fR8" firstAttribute="leading" secondItem="6o6-d1-aWb" secondAttribute="leading" constant="20" id="j9y-37-h8E"/>
+                            <constraint firstItem="6o6-d1-aWb" firstAttribute="trailing" secondItem="crl-x2-fR8" secondAttribute="trailing" constant="20" id="nqH-9x-Jd4"/>
                             <constraint firstAttribute="bottom" secondItem="xiB-k2-qHT" secondAttribute="bottom" id="yCZ-15-pd6"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6o6-d1-aWb"/>
@@ -194,9 +199,11 @@
                     <navigationItem key="navigationItem" id="Ntn-Bq-CML"/>
                     <connections>
                         <outlet property="collectionView" destination="T4Z-Sf-0Sh" id="sMT-NP-pa1"/>
+                        <outlet property="collectionViewIcon" destination="EhD-L1-fI7" id="sen-H1-n4Y"/>
                         <outlet property="collectionViewLeftConstraint" destination="VQE-NE-7Q8" id="n0A-mI-L7b"/>
-                        <outlet property="segmentedControl" destination="fpp-h7-3zz" id="p5P-6D-5D9"/>
+                        <outlet property="segmentControl" destination="crl-x2-fR8" id="DZ6-Em-9vE"/>
                         <outlet property="tableView" destination="xiB-k2-qHT" id="Qv6-an-1kk"/>
+                        <outlet property="tableViewIcon" destination="q5W-G2-1OC" id="JHi-Zl-DoP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nkx-iF-l1s" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -352,7 +359,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uso-R3-K4S">
-                                                            <rect key="frame" x="356" y="2" width="50" height="50"/>
+                                                            <rect key="frame" x="390" y="33" width="16" height="22"/>
                                                             <state key="normal" image="icons8-share-arrow"/>
                                                             <connections>
                                                                 <action selector="shareAction:" destination="gBG-JY-1En" eventType="touchUpInside" id="tP5-lx-RqM"/>
@@ -433,9 +440,11 @@
         </scene>
     </scenes>
     <resources>
+        <image name="collectionIconGreen" width="30" height="30"/>
         <image name="f5" width="1080" height="1346"/>
         <image name="icons8-heart-unpressed" width="50" height="50"/>
         <image name="icons8-menu-vertical" width="50" height="50"/>
         <image name="icons8-share-arrow" width="50" height="50"/>
+        <image name="tableIconBlack" width="30" height="30"/>
     </resources>
 </document>
