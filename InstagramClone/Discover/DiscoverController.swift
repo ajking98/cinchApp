@@ -41,7 +41,7 @@ class DiscoverController: UIViewController {
         setUpCollectionViewItemSizes()
         addContent()
         addGestures()
-        addSelectBar(color: UIColor.lightGray)
+        addSelectBar(color: UIColor.darkerGreen)
         let tvc = DiscoverTableController()
         tvc.items = items
         
@@ -161,6 +161,9 @@ class DiscoverController: UIViewController {
             gesture.setTranslation(CGPoint(x: 0,y: 0), in: self.view)
         
         case .ended:
+            if(isQuickSwipe(velocity: gesture.velocity(in: view).x)){
+                summonTableView()
+            }
             if tableView.center.x < 400 {
                 summonTableView()
                 
@@ -193,7 +196,9 @@ class DiscoverController: UIViewController {
                 gesture.setTranslation(CGPoint(x: 0,y: 0), in: self.view)
             
             case .ended :
-                print("ended")
+                if(isQuickSwipe(velocity: gesture.velocity(in: view).x)){
+                    summonCollectionView()
+                }
                 if collectionView.center.x < -50 {
                     summonTableView()
                 }
