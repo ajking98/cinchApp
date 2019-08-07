@@ -77,8 +77,9 @@ class DiscoverController: UIViewController {
             guard (segmentControl.center.y + translation) <= segmentControlCenter!.y else {
                 return
             }
-            print("fuk")
-            segmentControl.center.y += pan
+            if (pan < 0 && segmentControl.center.y > (-10 - segmentControl.frame.height)){
+                segmentControl.center.y += pan
+            }
         case .ended:
             if(gesture.velocity(in: scrollView.superview).y > 120){
                 print("Greater", gesture.velocity(in: scrollView.superview))
