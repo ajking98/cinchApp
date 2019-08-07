@@ -30,6 +30,8 @@ class DiscoverController: UIViewController {
     let buttonBar = UIView()
     var tapped = true
     var isRightSegmented = true
+    var previousTranslation:CGFloat = 0
+    var segmentControlCenter : CGPoint?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,6 +48,50 @@ class DiscoverController: UIViewController {
         tvc.items = items
         
         buildSegmentIcons()
+        
+        let panView = UISwipeGestureRecognizer(target: self, action: #selector(handleViewPan))
+        panView.direction = .up
+        view.addGestureRecognizer(panView)
+    }
+    
+    @objc func handleViewPan(_ gesture : UISwipeGestureRecognizer) {
+        print("view panning: ")
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let pan = (scrollView.panGestureRecognizer.translation(in: scrollView.superview).y * 0.1)
+        print(pan, "this is the panning")
+//        buttonBar.center.y += pan
+//        segmentControl.center.y += (pan)
+//        previousTranslation = pan
+//        print(previousTranslation)
+        
+        
+        //TODO
+        let gesture = scrollView.panGestureRecognizer
+        switch gesture.state {
+        case .began, .changed:
+            let translation = gesture.translation(in: scrollView.superview).y
+            
+            
+            guard (segmentControl.center.y + translation) <= segmentControlCenter!.y else {
+                return
+            }
+            print("fuk")
+            segmentControl.center.y += pan
+        case .ended:
+            if(gesture.velocity(in: scrollView.superview).y > 120){
+                print("Greater", gesture.velocity(in: scrollView.superview))
+                UIView.animate(withDuration: Double(300 / gesture.velocity(in: scrollView.superview).y)) {
+                    self.segmentControl.center.y = self.segmentControlCenter!.y
+
+                }
+            }
+            print("endd")
+        default:
+            print("defaulted")
+        }
+        
     }
     
     func buildSegmentIcons() {
@@ -57,12 +103,14 @@ class DiscoverController: UIViewController {
     func addSearchBar() {
         let frame = collectionView.frame
         var searchBar = SearchBar(frame: CGRect(x: 0, y: 0, width: frame.width * 0.88, height: 33))
-        searchBar.center = CGPoint(x: view.center.x, y: collectionView.frame.origin.y + 12)
+        searchBar.center.y = 72
         let tapped = UITapGestureRecognizer(target: searchBar, action: #selector(searchBar.revertToNormal))
         tapped.cancelsTouchesInView = false
         view.addGestureRecognizer(tapped)
         searchBar.backgroundColor = .white
-        view.addSubview(searchBar)
+        segmentControl.addSubview(searchBar)
+        segmentControlCenter = segmentControl.center
+        print(segmentControl.center)
     }
     
     func setUpCollectionView() {
@@ -132,13 +180,25 @@ class DiscoverController: UIViewController {
 //        print("Table View \(self.tableView.center.x)" )
     }
     
+    func bringToTop(workingView : UIScrollView){
+        UIView.animate(withDuration: 0.2) {
+            workingView.contentOffset.y = 0
+        }
+    }
+    
     @objc func handleSegmentTap(_ tapGesture : UITapGestureRecognizer) {
         let x = tapGesture.location(in: view).x
         
         if x > view.center.x {
+            if isRightSegmented {
+                bringToTop(workingView : tableView)
+            }
             summonTableView()
         }
         else {
+            if !isRightSegmented {
+                bringToTop(workingView: collectionView)
+            }
             summonCollectionView()
         }
     }
@@ -148,6 +208,9 @@ class DiscoverController: UIViewController {
         switch gesture.state {
         case .began, .changed:
             let translation = gesture.translation(in: self.view)
+            if(collectionView.center.x < (view.center.x - 30)){
+                collectionView.isScrollEnabled = false
+            }
             if(gesture.view!.center.x <= view.center.x) {
                 translateTables(translation: translation)
             }else {
@@ -161,6 +224,7 @@ class DiscoverController: UIViewController {
             gesture.setTranslation(CGPoint(x: 0,y: 0), in: self.view)
         
         case .ended:
+            collectionView.isScrollEnabled = true
             if(isQuickSwipe(velocity: gesture.velocity(in: view).x)){
                 summonTableView()
             }
@@ -180,7 +244,10 @@ class DiscoverController: UIViewController {
         switch (gesture.state) {
             
             case .began, .changed:
-                print("changing")
+                if(tableView.center.x > (view.center.x + 30)){
+                    tableView.isScrollEnabled = false
+                }
+                
                 let translation = gesture.translation(in: self.view)
                 if(gesture.view!.center.x >= view.center.x) {
                     translateTables(translation: translation)
@@ -196,6 +263,7 @@ class DiscoverController: UIViewController {
                 gesture.setTranslation(CGPoint(x: 0,y: 0), in: self.view)
             
             case .ended :
+                tableView.isScrollEnabled = true
                 if(isQuickSwipe(velocity: gesture.velocity(in: view).x)){
                     summonCollectionView()
                 }
