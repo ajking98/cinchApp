@@ -11,18 +11,16 @@ import UIKit
 class MenuOptionCell: UITableViewCell {
 
     // MARK: - Properties
+    @IBOutlet weak var menuLabel: UILabel!
+    @IBOutlet weak var sideView: UIView!
     
     // MARK: - Init
-    
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
         
-        backgroundColor = .darkGray
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     // MARK: - Handlers
 
 }
