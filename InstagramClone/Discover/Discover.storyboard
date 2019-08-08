@@ -184,6 +184,7 @@
                         </subviews>
                         <color key="backgroundColor" red="0.92156862745098034" green="0.92156862745098034" blue="0.93725490196078431" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="xiB-k2-qHT" firstAttribute="top" secondItem="crl-x2-fR8" secondAttribute="bottom" constant="24" id="1Jz-Fk-yZi"/>
                             <constraint firstItem="T4Z-Sf-0Sh" firstAttribute="top" secondItem="crl-x2-fR8" secondAttribute="bottom" constant="24" id="8P6-ea-A4p"/>
                             <constraint firstItem="xiB-k2-qHT" firstAttribute="leading" secondItem="T4Z-Sf-0Sh" secondAttribute="trailing" id="9I7-wf-5MM"/>
                             <constraint firstItem="T4Z-Sf-0Sh" firstAttribute="top" secondItem="6o6-d1-aWb" secondAttribute="top" constant="88" id="ETi-0a-OgG"/>
@@ -359,7 +360,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uso-R3-K4S">
-                                                            <rect key="frame" x="390" y="33" width="16" height="22"/>
+                                                            <rect key="frame" x="356" y="2" width="50" height="50"/>
                                                             <state key="normal" image="icons8-share-arrow"/>
                                                             <connections>
                                                                 <action selector="shareAction:" destination="gBG-JY-1En" eventType="touchUpInside" id="tP5-lx-RqM"/>
