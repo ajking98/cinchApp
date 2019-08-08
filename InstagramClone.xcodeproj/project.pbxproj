@@ -97,6 +97,7 @@
 		EB74D3FE226046C800556399 /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB74D3FC226046C800556399 /* Profile.storyboard */; };
 		EBE992ED226E3B8D002D01CF /* TRCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE992EC226E3B8D002D01CF /* TRCollectionViewController.swift */; };
 		EBF7FF1D22FC79F00099037D /* SendFeedbackController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF7FF1C22FC79F00099037D /* SendFeedbackController.swift */; };
+		EBF7FF6522FCCB930099037D /* ReportCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF7FF6422FCCB930099037D /* ReportCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -312,6 +313,7 @@
 		EB74D3FD226046C800556399 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = InstagramClone/InstagramClone/Base.lproj/Profile.storyboard; sourceTree = "<group>"; };
 		EBE992EC226E3B8D002D01CF /* TRCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TRCollectionViewController.swift; sourceTree = "<group>"; };
 		EBF7FF1C22FC79F00099037D /* SendFeedbackController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendFeedbackController.swift; sourceTree = "<group>"; };
+		EBF7FF6422FCCB930099037D /* ReportCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportCell.swift; sourceTree = "<group>"; };
 		FC945FE0D7581185DE7FBF19 /* Pods_InstagramCloneTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstagramCloneTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -386,6 +388,7 @@
 				EB0158E022FB65DA008CC63A /* ProfileSettingsController.swift */,
 				EBF7FF1C22FC79F00099037D /* SendFeedbackController.swift */,
 				892A4FDE22FC76970012E9AD /* ReportBugController.swift */,
+				EBF7FF6422FCCB930099037D /* ReportCell.swift */,
 				EB74D3FC226046C800556399 /* Profile.storyboard */,
 				46A3E10322C18661003F6F35 /* FirstProfileHeader.xib */,
 				46A3E10522C18678003F6F35 /* SecondProfileHeader.xib */,
@@ -889,6 +892,9 @@
 				"${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/PINCache/PINCache.framework",
+				"${BUILT_PRODUCTS_DIR}/PINOperation/PINOperation.framework",
+				"${BUILT_PRODUCTS_DIR}/PINRemoteImage/PINRemoteImage.framework",
 				"${BUILT_PRODUCTS_DIR}/Player/Player.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxDataSources/RxDataSources.framework",
@@ -897,6 +903,7 @@
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework",
 				"${BUILT_PRODUCTS_DIR}/TRMosaicLayout/TRMosaicLayout.framework",
+				"${BUILT_PRODUCTS_DIR}/Texture/AsyncDisplayKit.framework",
 				"${BUILT_PRODUCTS_DIR}/XLActionController/XLActionController.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/libwebp/libwebp.framework",
@@ -912,6 +919,9 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Differentiator.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINCache.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINOperation.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINRemoteImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Player.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxDataSources.framework",
@@ -920,6 +930,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TRMosaicLayout.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AsyncDisplayKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLActionController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/libwebp.framework",
@@ -1053,6 +1064,7 @@
 				EB3A433A2263CCC000F6F339 /* ProfileCollectionViewCell.swift in Sources */,
 				89CD1D04229201BA004BD0A0 /* DownloadImage.swift in Sources */,
 				EB40EF992263E9940093BB5B /* FolderCollectionViewCell.swift in Sources */,
+				EBF7FF6522FCCB930099037D /* ReportCell.swift in Sources */,
 				891FC3F922D7F6D80024A623 /* DiscoverLayout.swift in Sources */,
 				EB63B7DE226A7933004C7E2C /* CustomImageFlowLayout.swift in Sources */,
 				EB74D3EE22603DC200556399 /* ProfileViewController.swift in Sources */,
