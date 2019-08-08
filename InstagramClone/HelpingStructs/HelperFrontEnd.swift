@@ -44,7 +44,6 @@ struct Helper {
     }
     
     func vibrate(style : UIImpactFeedbackGenerator.FeedbackStyle){
-        //medium level vibration feedback
         let vibration = UIImpactFeedbackGenerator(style: style)
         vibration.impactOccurred()
     }

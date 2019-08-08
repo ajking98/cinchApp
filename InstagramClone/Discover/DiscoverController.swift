@@ -32,6 +32,9 @@ class DiscoverController: UIViewController {
     var isRightSegmented = true
     var previousTranslation:CGFloat = 0
     var segmentControlCenter : CGPoint?
+    var scrollViewFrame : CGRect?
+    var isRefreshing = false
+    var loadingIcon = UIImageView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,23 +55,84 @@ class DiscoverController: UIViewController {
         let panView = UISwipeGestureRecognizer(target: self, action: #selector(handleViewPan))
         panView.direction = .up
         view.addGestureRecognizer(panView)
+        
+        scrollViewFrame = collectionView.frame
+        
+        
+        loadingIcon.loadGif(asset: "loadingIcon")
+        loadingIcon.frame.size = CGSize(width: 0, height: 0)
+        loadingIcon.center = CGPoint(x: view.center.x, y: collectionView.frame.origin.y + 45)
+        view.addSubview(loadingIcon)
     }
     
     @objc func handleViewPan(_ gesture : UISwipeGestureRecognizer) {
         print("view panning: ")
     }
     
+    func refresh(scrollView : UIScrollView) {
+        print("offset error")
+        isRefreshing = true
+        
+        
+        UIView.animate(withDuration: 0.2) {
+            self.loadingIcon.frame.size = CGSize(width: 60, height: 60)
+            self.loadingIcon.center = CGPoint(x: self.view.center.x, y: self.collectionView.frame.origin.y + 55)
+        }
+        
+        
+        //TODO call the grab images function here
+        
+        
+        //Close refresh icon
+        UIView.animate(withDuration: 0.2) {
+            self.loadingIcon.frame.size = CGSize(width: 0, height: 0)
+            self.loadingIcon.center = CGPoint(x: self.view.center.x, y: self.collectionView.frame.origin.y + 55)
+        }
+        UIView.animate(withDuration: 0.2, animations: {
+            self.loadingIcon.frame.size = CGSize(width: 0, height: 0)
+            self.loadingIcon.center = CGPoint(x: self.view.center.x, y: self.collectionView.frame.origin.y + 55)
+        }) { (status) in
+            self.isRefreshing = false
+        }
+        
+        // -- or -- //
+//        UIView.animate(withDuration: 0.2, animations: {
+//            self.loadingIcon.frame.size = CGSize(width: 60, height: 60)
+//            self.loadingIcon.center = CGPoint(x: self.view.center.x, y: self.collectionView.frame.origin.y + 55)
+//        }) {
+//            (status) in
+//            //Close refresh icon
+//            UIView.animate(withDuration: 0.2) {
+//                self.loadingIcon.frame.size = CGSize(width: 0, height: 0)
+//                self.loadingIcon.center = CGPoint(x: self.view.center.x, y: self.collectionView.frame.origin.y + 55)
+//            }
+//            UIView.animate(withDuration: 0.2, animations: {
+//                self.loadingIcon.frame.size = CGSize(width: 0, height: 0)
+//                self.loadingIcon.center = CGPoint(x: self.view.center.x, y: self.collectionView.frame.origin.y + 55)
+//            }) { (status) in
+//                self.isRefreshing = false
+//            }
+//        }
+        
+    }
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let pan = (scrollView.panGestureRecognizer.translation(in: scrollView.superview).y * 0.1)
-        print(pan, "this is the panning")
-//        buttonBar.center.y += pan
-//        segmentControl.center.y += (pan)
-//        previousTranslation = pan
-//        print(previousTranslation)
         
         
-        //TODO
         let gesture = scrollView.panGestureRecognizer
+        if scrollView.contentOffset.y <= -50 && !isRefreshing {
+            print("offset has been reachd", scrollView.contentOffset)
+            
+            let vibration = UIImpactFeedbackGenerator(style: .medium)
+            vibration.impactOccurred()
+            
+            
+            refresh(scrollView: scrollView)
+        }
+        
+        
+        //TODO clean this up
         switch gesture.state {
         case .began, .changed:
             let translation = gesture.translation(in: scrollView.superview).y
@@ -79,14 +143,30 @@ class DiscoverController: UIViewController {
             }
             if (pan < 0 && segmentControl.center.y > (-10 - segmentControl.frame.height)){
                 segmentControl.center.y += pan
+                buttonBar.center.y += pan
+            }
+            if(scrollView.frame.origin.y > 100){
+                scrollView.center.y += pan
+                scrollView.frame.size.height -= pan
             }
         case .ended:
             if(gesture.velocity(in: scrollView.superview).y > 120){
                 print("Greater", gesture.velocity(in: scrollView.superview))
-                UIView.animate(withDuration: Double(300 / gesture.velocity(in: scrollView.superview).y)) {
+                UIView.animate(withDuration: Double(240 / gesture.velocity(in: scrollView.superview).y)) {
                     self.segmentControl.center.y = self.segmentControlCenter!.y
-
+                    self.buttonBar.center.y = self.segmentControl.frame.origin.y + self.segmentControl.frame.height
+                    scrollView.frame.origin.y = self.scrollViewFrame!.origin.y
+                    scrollView.frame.size.height = self.scrollViewFrame!.size.height
                 }
+            }
+            
+            if(gesture.velocity(in: scrollView.superview).y < -120 && scrollView.frame.origin.y > 100) {
+                UIView.animate(withDuration:  Double(240 / gesture.velocity(in: scrollView.superview).y), animations: {
+                    self.segmentControl.center.y = -10 - self.segmentControl.frame.height
+                    self.buttonBar.center.y = self.segmentControl.frame.origin.y + self.segmentControl.frame.height
+                    scrollView.frame.origin.y = 100
+                    scrollView.frame.size.height += 100
+                })
             }
             print("endd")
         default:

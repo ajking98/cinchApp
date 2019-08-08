@@ -62,6 +62,7 @@ class SearchBar: UITextField {
     
     func buildGestures() {
         addTarget(self, action: #selector(handlePressed), for: UIControl.Event.editingDidBegin)
+        addTarget(self, action: #selector(handlePressed), for: UIControl.Event.editingDidEnd)
         print((self.text)?.count == 0)
         
     }
@@ -69,7 +70,7 @@ class SearchBar: UITextField {
     
     //reverts back to original position when the focus is no longer on the search bar and the search bar is empty
     @objc func revertToNormal(){
-        
+        print("active2")
         self.endEditing(true)
         guard (self.text?.count == 0) else {
             return
@@ -89,6 +90,7 @@ class SearchBar: UITextField {
     
     @objc func handlePressed() {
         //making icon green
+        print("active")
         iconView?.image = UIImage(named: "searchIconGreen")
         
         UIView.animate(withDuration: 0.3) {
