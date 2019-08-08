@@ -29,17 +29,66 @@ class MoodsViewController: UIViewController, UICollectionViewDelegate, UICollect
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.objectNames.count
+        return self.objectNames.count + 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! MoodsCollectionViewCell
-        designCell(cell: cell)
-        cell.title.text = objectNames[indexPath.row]
-        cell.imageView.image = UIImage.init(named: objectImages[indexPath.row])
-        addSubviews(cell: cell)
+        if indexPath.row + 1 < self.objectImages.count + 1 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! MoodsCollectionViewCell
+            designCell(cell: cell)
+            cell.title.text = objectNames[indexPath.row]
+            cell.imageView.image = UIImage.init(named: objectImages[indexPath.row])
+            addSubviews(cell: cell)
+            
+            return cell
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Create", for: indexPath) as! AddFolderViewCell
+            cell.addFolder.image = UIImage.init(named: "icons8-add-50")
+            
+            let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleAdd(tapGesture:)))
+            cell.isUserInteractionEnabled = true
+            cell.addGestureRecognizer(tapGestureRecognizer)
+            
+            return cell
+        }
+    }
+    
+    @objc func handleAdd(tapGesture: UITapGestureRecognizer) {
+        print("working dog")
+        var folderName : String = ""
         
-        return cell
+        let alert = UIAlertController(title: "Name Your Folder", message: "Enter the name you wish to use for your folder", preferredStyle: .alert)
+        
+        alert.addTextField(configurationHandler: nil)
+        alert.addAction(UIAlertAction(title: "Create", style: .default, handler: { [weak alert] (_) in
+            let textField = alert?.textFields![0]
+            folderName = textField!.text!
+            print("Text field: \(folderName)")
+            let newFolder = Folder(folderName: folderName)
+            //calling the function to save the folder name to Firebase and create it on the front end
+//            UserStruct().addFolder(user: UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!, folder: newFolder)
+            self.createFolder(folderName: folderName)
+        }))
+        
+        alert.addAction(UIAlertAction(title:"Cancel", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func saveFolder(folderName : String){
+        print("saving Folder")
+    }
+    
+    
+    func createFolder(folderName: String){
+        print("Creating folder: \(folderName)")
+        populateFolders()
+    }
+    
+    
+    //Should add all folder to FrontEnd
+    //The parameter for this function should be an array of Folders (Create the Folders struct)
+    func populateFolders(){
+        print("Populating")
     }
     
     func setupCollectionViewLayout() {
