@@ -38,24 +38,13 @@ class TableViewPostCell: UITableViewCell {
     }
     @IBAction func likeAction(_ sender: Any) {
         if buttonClicked {
-            print("Liked")
-            UIView.animate( withDuration: 0.2, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.8, options: .curveEaseInOut, animations: {
-                    self.likeButton.setImage(UIImage.init(named: "icons8-heart-pressed"), for: UIControl.State.normal)
-                    self.likeButton.transform = CGAffineTransform(scaleX: 2, y: 2)
-                    Helper().vibrate(style: .heavy)
-                    self.buttonClicked = false
-            })
-            UIView.animate( withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.8, options: .curveEaseInOut, animations: {
-                self.likeButton.transform = CGAffineTransform(scaleX: 1, y: 1)
-            })
+            DiscoverHelper().like(likeButton: likeButton)
         } else {
-            UIView.animate( withDuration: 0.2, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.8, options: .curveEaseInOut, animations: {
-                self.likeButton.setImage(UIImage.init(named: "icons8-heart-unpressed"), for: UIControl.State.normal)
-                self.likeButton.transform = CGAffineTransform(scaleX: 1, y: 1)
-                Helper().vibrate(style: .light)
-                self.buttonClicked = true
-            })
+           DiscoverHelper().unLike(likeButton: likeButton)
         }
+        
+        buttonClicked = !buttonClicked
     }
+    
 
 }

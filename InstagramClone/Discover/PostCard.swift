@@ -12,9 +12,10 @@ class PostCard: UICollectionViewCell {
     
     
     @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var likesView: UILabel!
-    @IBOutlet weak var authorView: UILabel!
     @IBOutlet weak var labelContainer: UIView!
+    var likesView = UILabel(frame: CGRect.zero)
+    var authorView = UILabel(frame: CGRect.zero)
+    let likeButton = LikeButton()
     
     var setHeight : CGFloat?
     
@@ -22,6 +23,7 @@ class PostCard: UICollectionViewCell {
     var topBorder : UIView?
     var leftBorder : UIView?
     var rightBorder : UIView?
+    
     
     ///given an UIImage, Int, and String, and sets the values of the post to the details given
     func buildPostCard(image : UIImage, likes : Int, author : String) {
@@ -34,7 +36,7 @@ class PostCard: UICollectionViewCell {
         imageView.frame.size = size
         
         //LikesView and author
-        likesView?.text = String(likes)
+        likesView.text = String(likes)
         authorView.text = author
         
         //label container
@@ -49,7 +51,40 @@ class PostCard: UICollectionViewCell {
         
         //border containers
         buildBorderViews()
+        
+        addSubviews()
     }
+    
+    
+    fileprivate func addSubviews() {
+        
+        
+        //likeButton
+        likeButton.frame.size = CGSize(width: 25, height: 25)
+        likeButton.frame.origin = CGPoint(x: 6, y: -2)
+        likeButton.isActive = false
+        
+        
+        //Sizing
+        likesView.frame.size = CGSize(width: 70, height: 20)
+        authorView.frame.size = CGSize(width: (labelContainer.frame.width / 2) - 10, height: 20)
+        
+        //positioning
+        likesView.frame.origin.x = 38
+        authorView.frame.origin.x = labelContainer.center.x
+        likesView.center.y = labelContainer.frame.height / 2
+        authorView.center.y = likesView.center.y - 1
+        
+        //font
+        likesView.font = likesView.font.withSize(17)
+        authorView.font = authorView.font.withSize(15)
+        authorView.textAlignment = .right
+        
+        labelContainer.addSubview(likeButton)
+        labelContainer.addSubview(likesView)
+        labelContainer.addSubview(authorView)
+    }
+    
     
     func buildBorderViews(){
         let frame = self.frame
@@ -101,12 +136,3 @@ class PostCard: UICollectionViewCell {
     
     
 }
-
-//extension DiscoverController  {
-//    @objc func handlePressed(tapGesture : UITapGestureRecognizer) {
-//        if let Post = tapGesture.view as? PostCard {
-//            print("handling")
-//            performSegue(withIdentifier: viewImageSegueIdentifier, sender: Post)
-//        }
-//    }
-//}

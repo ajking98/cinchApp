@@ -80,7 +80,7 @@ class DiscoverController: UIViewController {
         }
         
         
-        //TODO grab new images here
+        //TODO call the grab images function here
         
         
         //Close refresh icon
@@ -119,7 +119,7 @@ class DiscoverController: UIViewController {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let pan = (scrollView.panGestureRecognizer.translation(in: scrollView.superview).y * 0.1)
         
-        //TODO
+        
         let gesture = scrollView.panGestureRecognizer
         if scrollView.contentOffset.y <= -50 && !isRefreshing {
             print("offset has been reachd", scrollView.contentOffset)
@@ -132,7 +132,7 @@ class DiscoverController: UIViewController {
         }
         
         
-        
+        //TODO clean this up
         switch gesture.state {
         case .began, .changed:
             let translation = gesture.translation(in: scrollView.superview).y
@@ -158,6 +158,15 @@ class DiscoverController: UIViewController {
                     scrollView.frame.origin.y = self.scrollViewFrame!.origin.y
                     scrollView.frame.size.height = self.scrollViewFrame!.size.height
                 }
+            }
+            
+            if(gesture.velocity(in: scrollView.superview).y < -120 && scrollView.frame.origin.y > 100) {
+                UIView.animate(withDuration:  Double(240 / gesture.velocity(in: scrollView.superview).y), animations: {
+                    self.segmentControl.center.y = -10 - self.segmentControl.frame.height
+                    self.buttonBar.center.y = self.segmentControl.frame.origin.y + self.segmentControl.frame.height
+                    scrollView.frame.origin.y = 100
+                    scrollView.frame.size.height += 100
+                })
             }
             print("endd")
         default:

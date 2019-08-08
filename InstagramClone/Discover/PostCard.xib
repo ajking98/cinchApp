@@ -24,22 +24,8 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kTT-XH-bSv">
-                        <rect key="frame" x="0.0" y="128" width="140" height="35"/>
+                        <rect key="frame" x="0.0" y="138" width="140" height="25"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="13.8k" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HjK-it-gbf">
-                                <rect key="frame" x="8" y="9" width="56" height="20"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Richard B." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xqH-8M-Eax">
-                                <rect key="frame" x="62" y="13" width="77" height="15"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
                         <color key="backgroundColor" red="0.60784313725490191" green="0.93725490196078431" blue="0.84705882352941175" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                 </subviews>
@@ -47,10 +33,8 @@
             <viewLayoutGuide key="safeArea" id="XN7-ED-KTu"/>
             <size key="customSize" width="140" height="162"/>
             <connections>
-                <outlet property="authorView" destination="xqH-8M-Eax" id="P0C-OT-vvo"/>
                 <outlet property="imageView" destination="zTe-jy-nT0" id="w05-i5-RT2"/>
                 <outlet property="labelContainer" destination="kTT-XH-bSv" id="eEM-Bk-fa4"/>
-                <outlet property="likesView" destination="HjK-it-gbf" id="OLe-RJ-l8k"/>
             </connections>
             <point key="canvasLocation" x="-55.072463768115945" y="41.852678571428569"/>
         </collectionViewCell>
