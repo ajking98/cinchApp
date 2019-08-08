@@ -2,7 +2,7 @@
 //  SendFeedbackController.swift
 //  
 //
-//  Created by Gedi, Ahmed M on 8/7/19.
+//  Created by Alsahlani, Yassin K on 8/8/19.
 //
 
 import UIKit
@@ -24,6 +24,7 @@ class SendFeedbackController: UIViewController {
         }, completion: nil)
     }
     
+
     /*
     // MARK: - Navigation
 
