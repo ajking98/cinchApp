@@ -20,13 +20,18 @@ struct Item {
 
 class DiscoverController: UIViewController {
     
-    @IBOutlet weak var segmentedControl: UISegmentedControl!
+    @IBOutlet weak var segmentControl: UIView!
+    @IBOutlet weak var collectionViewIcon: UIImageView!
+    @IBOutlet weak var tableViewIcon: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var collectionViewLeftConstraint: NSLayoutConstraint!
     @IBOutlet weak var collectionView: UICollectionView!
     var items : [Item] = [Item]()
     let buttonBar = UIView()
     var tapped = true
+    var isRightSegmented = true
+    var previousTranslation:CGFloat = 0
+    var segmentControlCenter : CGPoint?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,21 +43,75 @@ class DiscoverController: UIViewController {
         setUpCollectionViewItemSizes()
         addContent()
         addGestures()
-        addSegmentControlAttributes()
-        addSelectBar(color: UIColor.lightGray)
+        addSelectBar(color: UIColor.darkerGreen)
         let tvc = DiscoverTableController()
         tvc.items = items
+        
+        buildSegmentIcons()
+        
+        let panView = UISwipeGestureRecognizer(target: self, action: #selector(handleViewPan))
+        panView.direction = .up
+        view.addGestureRecognizer(panView)
+    }
+    
+    @objc func handleViewPan(_ gesture : UISwipeGestureRecognizer) {
+        print("view panning: ")
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let pan = (scrollView.panGestureRecognizer.translation(in: scrollView.superview).y * 0.1)
+        print(pan, "this is the panning")
+//        buttonBar.center.y += pan
+//        segmentControl.center.y += (pan)
+//        previousTranslation = pan
+//        print(previousTranslation)
+        
+        
+        //TODO
+        let gesture = scrollView.panGestureRecognizer
+        switch gesture.state {
+        case .began, .changed:
+            let translation = gesture.translation(in: scrollView.superview).y
+            
+            
+            guard (segmentControl.center.y + translation) <= segmentControlCenter!.y else {
+                return
+            }
+            if (pan < 0 && segmentControl.center.y > (-10 - segmentControl.frame.height)){
+                segmentControl.center.y += pan
+            }
+        case .ended:
+            if(gesture.velocity(in: scrollView.superview).y > 120){
+                print("Greater", gesture.velocity(in: scrollView.superview))
+                UIView.animate(withDuration: Double(300 / gesture.velocity(in: scrollView.superview).y)) {
+                    self.segmentControl.center.y = self.segmentControlCenter!.y
+
+                }
+            }
+            print("endd")
+        default:
+            print("defaulted")
+        }
+        
+    }
+    
+    func buildSegmentIcons() {
+        collectionViewIcon.center.x = view.frame.width * 0.23
+        tableViewIcon.center.x = (view.frame.width * 0.68)
+        handleSegmentControl(true)
     }
     
     func addSearchBar() {
         let frame = collectionView.frame
         var searchBar = SearchBar(frame: CGRect(x: 0, y: 0, width: frame.width * 0.88, height: 33))
-        searchBar.center = CGPoint(x: collectionView.center.x, y: 21)
+        searchBar.center.y = 72
         let tapped = UITapGestureRecognizer(target: searchBar, action: #selector(searchBar.revertToNormal))
         tapped.cancelsTouchesInView = false
         view.addGestureRecognizer(tapped)
         searchBar.backgroundColor = .white
-        collectionView.addSubview(searchBar)
+        segmentControl.addSubview(searchBar)
+        segmentControlCenter = segmentControl.center
+        print(segmentControl.center)
     }
     
     func setUpCollectionView() {
@@ -93,10 +152,10 @@ class DiscoverController: UIViewController {
         buttonBar.translatesAutoresizingMaskIntoConstraints = false
         buttonBar.backgroundColor = color
         view.addSubview(buttonBar)
-        buttonBar.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor).isActive = true
+        buttonBar.topAnchor.constraint(equalTo: segmentControl.bottomAnchor).isActive = true
         buttonBar.heightAnchor.constraint(equalToConstant: 3).isActive = true
-        buttonBar.leftAnchor.constraint(equalTo: segmentedControl.leftAnchor).isActive = true
-        buttonBar.widthAnchor.constraint(equalTo: segmentedControl.widthAnchor, multiplier: 1 / CGFloat(segmentedControl.numberOfSegments)).isActive = true
+        buttonBar.leftAnchor.constraint(equalTo: segmentControl.leftAnchor).isActive = true
+        buttonBar.widthAnchor.constraint(equalTo: segmentControl.widthAnchor, multiplier: 1 / 2).isActive = true
     }
     
     func addGestures() {
@@ -108,6 +167,8 @@ class DiscoverController: UIViewController {
         let panTableViewGesture = UIPanGestureRecognizer(target: self, action: #selector(handleTableViewPan))
         panTableViewGesture.delegate = self
         tableView.addGestureRecognizer(panTableViewGesture)
+        
+        segmentControl.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSegmentTap(_:))))
     }
     
 //    func setUserDefaults() {
@@ -120,47 +181,39 @@ class DiscoverController: UIViewController {
 //        print("Table View \(self.tableView.center.x)" )
     }
     
-    func addSegmentControlAttributes() {
-        segmentedControl.setTitleTextAttributes([
-            NSAttributedString.Key.font : UIFont(name: "DINCondensed-Bold", size: 18),
-            NSAttributedString.Key.foregroundColor: UIColor.lightGray
-            ], for: .normal)
-        
-        segmentedControl.setTitleTextAttributes([
-            NSAttributedString.Key.font : UIFont(name: "DINCondensed-Bold", size: 18),
-            NSAttributedString.Key.foregroundColor: UIColor.gray
-            ], for: .selected)
+    func bringToTop(workingView : UIScrollView){
+        UIView.animate(withDuration: 0.2) {
+            workingView.contentOffset.y = 0
+        }
     }
     
-    @IBAction func switchLayouts(_ sender: UISegmentedControl) {
-        UIView.animate(withDuration: 0.3) {
-            self.buttonBar.frame.origin.x = (self.segmentedControl.frame.width / CGFloat(self.segmentedControl.numberOfSegments)) * CGFloat(self.segmentedControl.selectedSegmentIndex) + 20
-            print(self.buttonBar.frame.origin.x)
+    @objc func handleSegmentTap(_ tapGesture : UITapGestureRecognizer) {
+        let x = tapGesture.location(in: view).x
+        
+        if x > view.center.x {
+            if isRightSegmented {
+                bringToTop(workingView : tableView)
+            }
+            summonTableView()
         }
-        switch sender.selectedSegmentIndex {
-        case 0:
-            UIView.animateKeyframes(withDuration: 0.15, delay: 0, options: [], animations: {
-                self.collectionView.center = CGPoint(x: 207, y: self.collectionView.center.y)
-                self.tableView.center = CGPoint(x: 621, y: self.tableView.center.y)
-            }, completion: nil)
-        case 1:
-            UIView.animateKeyframes(withDuration: 0.15, delay: 0, options: [], animations: {
-                self.collectionView.center = CGPoint(x: -207, y: self.collectionView.center.y)
-                self.tableView.center = CGPoint(x: 207, y: self.tableView.center.y)
-            }, completion: nil)
-        default:
-            break
+        else {
+            if !isRightSegmented {
+                bringToTop(workingView: collectionView)
+            }
+            summonCollectionView()
         }
     }
     
     @objc func handlePanCollectionView(gesture: UIPanGestureRecognizer) {
         gesture.isEnabled = true
-        if gesture.state == .began || gesture.state == .changed {
+        switch gesture.state {
+        case .began, .changed:
             let translation = gesture.translation(in: self.view)
-            if(gesture.view!.center.x < 210) {
-                self.collectionView.center = CGPoint(x: gesture.view!.center.x + translation.x,y: gesture.view!.center.y)
-                self.tableView.center = CGPoint(x: self.tableView.center.x + translation.x,y: self.collectionView.center.y)
-                gesture.view!.center = self.collectionView.center
+            if(collectionView.center.x < (view.center.x - 30)){
+                collectionView.isScrollEnabled = false
+            }
+            if(gesture.view!.center.x <= view.center.x) {
+                translateTables(translation: translation)
             }else {
                 UIView.animateKeyframes(withDuration: 0.5, delay: 0, options: [], animations: {
                     self.collectionView.center = CGPoint(x: 207, y: gesture.view!.center.y)
@@ -170,35 +223,37 @@ class DiscoverController: UIViewController {
             }
             
             gesture.setTranslation(CGPoint(x: 0,y: 0), in: self.view)
-        } else if gesture.state == .ended {
+        
+        case .ended:
+            collectionView.isScrollEnabled = true
+            if(isQuickSwipe(velocity: gesture.velocity(in: view).x)){
+                summonTableView()
+            }
             if tableView.center.x < 400 {
-                UIView.animateKeyframes(withDuration: 0.3, delay: 0, options: [], animations: {
-                    self.collectionView.center = CGPoint(x: -207, y: gesture.view!.center.y)
-                    self.tableView.center = CGPoint(x: 207, y: gesture.view!.center.y)
-                    self.buttonBar.frame.origin.x = 207
-                    self.segmentedControl.selectedSegmentIndex = 1
-                }, completion: nil)
+                summonTableView()
                 
             } else {
-                UIView.animateKeyframes(withDuration: 0.3, delay: 0, options: [], animations: {
-                    self.collectionView.center = CGPoint(x: 207, y: gesture.view!.center.y)
-                    self.tableView.center = CGPoint(x: 621, y: gesture.view!.center.y)
-                    self.buttonBar.frame.origin.x = 20
-                    self.segmentedControl.selectedSegmentIndex = 0
-                }, completion: nil)
+                summonCollectionView()
             }
+        default:
+            print("defaulted")
         }
     }
     
     @objc func handleTableViewPan(gesture: UIPanGestureRecognizer) {
-            gesture.isEnabled = true
-            if gesture.state == .began || gesture.state == .changed {
+        gesture.isEnabled = true
+        switch (gesture.state) {
+            
+            case .began, .changed:
+                if(tableView.center.x > (view.center.x + 30)){
+                    tableView.isScrollEnabled = false
+                }
+                
                 let translation = gesture.translation(in: self.view)
-                if(gesture.view!.center.x > 190) {
-                    self.collectionView.center = CGPoint(x: self.collectionView.center.x + translation.x,y: gesture.view!.center.y)
-                    self.tableView.center = CGPoint(x: gesture.view!.center.x + translation.x,y: self.collectionView.center.y)
-                    gesture.view!.center = self.tableView.center
-                }else {
+                if(gesture.view!.center.x >= view.center.x) {
+                    translateTables(translation: translation)
+                }
+                else {
                     UIView.animateKeyframes(withDuration: 0.5, delay: 0, options: [], animations: {
                         self.tableView.center = CGPoint(x: 207, y: gesture.view!.center.y)
                         self.buttonBar.frame.origin.x = 207
@@ -207,25 +262,72 @@ class DiscoverController: UIViewController {
                 }
                 
                 gesture.setTranslation(CGPoint(x: 0,y: 0), in: self.view)
-            } else if gesture.state == .ended {
-                if collectionView.center.x < 0 {
-                    UIView.animateKeyframes(withDuration: 0.3, delay: 0, options: [], animations: {
-                        self.collectionView.center = CGPoint(x: -207, y: gesture.view!.center.y)
-                        self.tableView.center = CGPoint(x: 207, y: gesture.view!.center.y)
-                        self.buttonBar.frame.origin.x = 207
-                        self.segmentedControl.selectedSegmentIndex = 1
-                    }, completion: nil)
-                    
-                } else {
-                    UIView.animateKeyframes(withDuration: 0.3, delay: 0, options: [], animations: {
-                        self.collectionView.center = CGPoint(x: 207, y: gesture.view!.center.y)
-                        self.tableView.center = CGPoint(x: 621, y: gesture.view!.center.y)
-                        self.buttonBar.frame.origin.x = 20
-                        self.segmentedControl.selectedSegmentIndex = 0
-                    }, completion: nil)
+            
+            case .ended :
+                tableView.isScrollEnabled = true
+                if(isQuickSwipe(velocity: gesture.velocity(in: view).x)){
+                    summonCollectionView()
                 }
-            }
+                if collectionView.center.x < -50 {
+                    summonTableView()
+                }
+                else {
+                    summonCollectionView()
+                }
+            
+            default:
+                print("defaulted")
         }
+    }
+    
+    func translateTables(translation : CGPoint) {
+        self.collectionView.center.x += translation.x
+        self.tableView.center.x += translation.x
+    }
+    
+    func summonCollectionView() {
+        print("summoning collectionview")
+        UIView.animateKeyframes(withDuration: 0.3, delay: 0, options: [], animations: {
+            self.handleSegmentControl(true)
+            self.collectionView.center.x = 207
+            self.tableView.center.x = 621
+            self.buttonBar.frame.origin.x = 20
+        }, completion: nil)
+    }
+    
+    
+    func summonTableView() {
+        print("table view")
+        UIView.animateKeyframes(withDuration: 0.3, delay: 0, options: [], animations: {
+            self.handleSegmentControl(false)
+            self.collectionView.center.x = -207
+            self.tableView.center.x = 207
+            self.buttonBar.frame.origin.x = 207
+        }, completion: nil)
+    }
+    
+    
+    fileprivate func handleSegmentControl(_ condition : Bool) {
+        if(isRightSegmented && condition){
+            self.tableViewIcon.image = UIImage(named: "tableIconBlack")
+            self.collectionViewIcon.image = UIImage(named: "collectionIconGreen")
+            self.collectionViewIcon.center.y -= 5
+            self.tableViewIcon.center.y += 5
+            self.collectionViewIcon.frame.size = CGSize(width: 30, height: 30)
+            self.tableViewIcon.frame.size = CGSize(width: 25, height: 25)
+            isRightSegmented = false
+        }
+        else if(!isRightSegmented && !condition) {
+            self.tableViewIcon.image = UIImage(named: "tableIconGreen")
+            self.collectionViewIcon.image = UIImage(named: "collectionIconBlack")
+            self.collectionViewIcon.center.y += 5
+            self.tableViewIcon.center.y -= 5
+            self.collectionViewIcon.frame.size = CGSize(width: 25, height: 25)
+            self.tableViewIcon.frame.size = CGSize(width: 30, height: 30)
+            isRightSegmented = true
+        }
+    }
+    
 }
 
 
