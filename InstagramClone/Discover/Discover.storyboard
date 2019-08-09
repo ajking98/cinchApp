@@ -15,11 +15,11 @@
             <objects>
                 <viewController id="tcj-Tb-CIJ" customClass="DiscoverController" customModule="InstagramClone" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="peo-QB-grK">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="379"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="T4Z-Sf-0Sh">
-                                <rect key="frame" x="0.0" y="176" width="414" height="203"/>
+                                <rect key="frame" x="0.0" y="176" width="414" height="720"/>
                                 <color key="backgroundColor" red="0.92156862750000001" green="0.92156862750000001" blue="0.93725490199999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="414" id="v8T-EV-hhz"/>
@@ -310,6 +310,7 @@
             <objects>
                 <navigationController storyboardIdentifier="DiscoverID" automaticallyAdjustsScrollViewInsets="NO" id="eIA-i3-5n6" sceneMemberID="viewController">
                     <toolbarItems/>
+                    <size key="freeformSize" width="414" height="896"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="cJz-AP-a9o">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>

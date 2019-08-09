@@ -34,18 +34,18 @@ class ImageSelectedController: UIViewController {
         print(scrollView.isUserInteractionEnabled, "the user interaction is enabled")
     }
     
-//    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-//        postImage.centerXAnchor.constraint(equalTo: scrollView.contentLayoutGuide.centerXAnchor)
-//        postImage.centerYAnchor.constraint(equalTo: scrollView.contentLayoutGuide.centerYAnchor)
-//        return postImage
-//    }
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        postImage.centerXAnchor.constraint(equalTo: scrollView.contentLayoutGuide.centerXAnchor)
+        postImage.centerYAnchor.constraint(equalTo: scrollView.contentLayoutGuide.centerYAnchor)
+        return postImage
+    }
     
     
     func setUpScrollView() {
-//        scrollView.minimumZoomScale = 1.0
-//        scrollView.maximumZoomScale = 20.0
-////        scrollView.delegate = self //- it is set on the storyboard.
-//        scrollView.isUserInteractionEnabled = true
+        scrollView.minimumZoomScale = 1.0
+        scrollView.maximumZoomScale = 20.0
+//        scrollView.delegate = self //- it is set on the storyboard.
+        scrollView.isUserInteractionEnabled = true
     }
     
     func setUp() {
@@ -106,7 +106,7 @@ class ImageSelectedController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        lowerView.frame = view.frame
+//        lowerView.frame = view.frame
         print("I am sequing", lowerView.frame)
     }
     
