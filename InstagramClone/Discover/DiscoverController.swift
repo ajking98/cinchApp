@@ -169,8 +169,8 @@ class DiscoverController: UIViewController {
                 })
             }
             print("endd")
-        default:
-            print("defaulted")
+        default: break
+            
         }
         
     }
@@ -307,16 +307,17 @@ class DiscoverController: UIViewController {
         case .ended:
             collectionView.isScrollEnabled = true
             if(isQuickSwipe(velocity: gesture.velocity(in: view).x)){
-                summonTableView()
+                let indexPath = collectionView.indexPathsForVisibleItems[0]
+                summonTableView(indexPath)
             }
             if tableView.center.x < 400 {
-                summonTableView()
+                let indexPath = collectionView.indexPathsForVisibleItems[0]
+                summonTableView(indexPath)
                 
             } else {
                 summonCollectionView()
             }
-        default:
-            print("defaulted")
+        default: break
         }
     }
     
@@ -346,17 +347,19 @@ class DiscoverController: UIViewController {
             case .ended :
                 tableView.isScrollEnabled = true
                 if(isQuickSwipe(velocity: gesture.velocity(in: view).x)){
-                    summonCollectionView()
+                    let indexPath = collectionView.indexPathsForVisibleItems[0]
+                    summonCollectionView(indexPath)
+                    
                 }
                 if collectionView.center.x < -50 {
                     summonTableView()
                 }
                 else {
-                    summonCollectionView()
+                    let indexPath = collectionView.indexPathsForVisibleItems[0]
+                    summonCollectionView(indexPath)
                 }
             
-            default:
-                print("defaulted")
+            default: break
         }
     }
     
@@ -365,24 +368,41 @@ class DiscoverController: UIViewController {
         self.tableView.center.x += translation.x
     }
     
-    func summonCollectionView() {
-        print("summoning collectionview")
+    func summonCollectionView(_ indexPath : IndexPath = IndexPath(item: 0, section: 0)) {
         UIView.animateKeyframes(withDuration: 0.3, delay: 0, options: [], animations: {
             self.handleSegmentControl(true)
             self.collectionView.center.x = 207
             self.tableView.center.x = 621
             self.buttonBar.frame.origin.x = 20
+            
+            //fixing the height issue
+            self.collectionView.frame.size.height = self.tableView.frame.size.height
+            self.collectionView.center.y = self.tableView.center.y
+            
+//            //scrolls to index
+//            if (indexPath != IndexPath(item: 0, section: 0)){
+//                self.collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
+//            }
         }, completion: nil)
     }
     
     
-    func summonTableView() {
-        print("table view")
+    func summonTableView(_ indexPath : IndexPath = IndexPath(item: 0, section: 0) ) {
         UIView.animateKeyframes(withDuration: 0.3, delay: 0, options: [], animations: {
             self.handleSegmentControl(false)
             self.collectionView.center.x = -207
             self.tableView.center.x = 207
             self.buttonBar.frame.origin.x = 207
+            
+            //Fixing the height issue
+            self.tableView.frame.size.height = self.collectionView.frame.size.height
+            self.tableView.center.y = self.collectionView.center.y
+            
+//            //scrolls to the index
+//            if (indexPath != IndexPath(item: 0, section: 0)){
+//                self.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
+//            }
+            
         }, completion: nil)
     }
     
@@ -425,10 +445,10 @@ extension DiscoverController : UICollectionViewDelegate, UICollectionViewDataSou
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("Collection Selected Row \(indexPath.row)")
         let vc = storyboard?.instantiateViewController(withIdentifier: "ImageSelectedController") as! ImageSelectedController
         for index in indexPath.row...(items.count - 1) {
             vc.items.append(items[index])
+            vc.discoverController = self
         }
         var item = items[indexPath.row]
         //        vc.imageName = UIImage.init(named: item.imageName)!
@@ -457,8 +477,8 @@ extension DiscoverController : UITableViewDelegate, UITableViewDataSource{
         let cell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath) as! TableViewPostCell
         let item = items[indexPath.row]
         cell.postImage.image = UIImage.init(named: item.imageName)
-        cell.nameLabel.text = item.author
-        cell.viewLabel.text = String(item.likes)
+//        cell.nameLabel.text = item.author
+//        cell.viewLabel.text = String(item.likes)
         cell.postImage.layer.cornerRadius = 8.0
         cell.postImage.clipsToBounds = true
         
@@ -468,7 +488,6 @@ extension DiscoverController : UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("Table Selected Row \(indexPath.row)")
         let vc = storyboard?.instantiateViewController(withIdentifier: "ImageSelectedController") as! ImageSelectedController
         for index in indexPath.row...(items.count - 1) {
             vc.items.append(items[index])

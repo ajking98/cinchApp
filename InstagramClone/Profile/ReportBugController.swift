@@ -8,11 +8,8 @@
 
 import UIKit
 import AVKit
-import AsyncDisplayKit
 
 class ReportBugController: UIViewController {
-    
-    let videoNode = ASVideoNode()
     
     @IBOutlet weak var collectionView: UICollectionView!
     var playerItem: AVPlayerItem!
@@ -79,15 +76,6 @@ extension ReportBugController: UICollectionViewDataSource, UICollectionViewDeleg
         print(player.currentItem)
         player.isMuted = true
         //        loopVideo(videoPlayer: player)
-        
-        // Other way of doing it. Using a library that facebook uses called Texture
-        //        let asset = AVAsset(url: URL(string: "http://www.w3schools.com/html/mov_bbb.mp4")!)
-        //        videoNode.asset = asset
-        //        cell.videoView.addSubnode(videoNode)
-        //        videoNode.shouldAutoplay = true
-        //        videoNode.shouldAutorepeat = false
-        //        videoNode.muted = true
-        //        videoNode.play()
         
         return cell
     }

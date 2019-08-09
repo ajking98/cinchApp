@@ -21,6 +21,14 @@ class User  {
     var dateLastActive : Date?
     var uuid : UUID?
     
+    //New stuff
+    var followers : [String]?
+    var following : [String]? //is a dictionary of following (people) and following (folders)
+    var biography : String?
+    var isDarkModeEnabled : Bool?
+    var newContent : [String]?
+    var suggestedContent : [String]?
+    
     //default variables 
     let defaultProfilePic = UIImage(named: "userPlaceholder")
     let folder1 = Folder(folderName: "random")

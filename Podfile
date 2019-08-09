@@ -13,7 +13,6 @@ target 'InstagramClone' do
   platform :ios, '10.0'
   pod 'TRMosaicLayout'
   pod 'SQLite.swift', '~> 0.12.0'
-  pod 'Texture' #Video Playing Compatibility
   
   # Pods for CameraViewFinal
 #  pod "EasyImagy", :path => "../swift-image"

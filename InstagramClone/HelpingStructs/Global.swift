@@ -24,6 +24,7 @@ func isQuickSwipe(velocity : CGFloat) -> Bool {
 
 extension UIColor {
     static let normalGreen = UIColor(red: 0.016, green: 0.8196, blue: 0.592, alpha: 1)
+    static let lightGreen = UIColor(red: 0.608, green: 0.937, blue: 0.847, alpha: 1)
     static let darkerGreen = UIColor(red: 0.247, green: 0.627, blue: 0.522, alpha: 1)
     
 }

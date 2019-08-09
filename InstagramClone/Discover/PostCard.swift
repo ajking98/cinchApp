@@ -58,7 +58,6 @@ class PostCard: UICollectionViewCell {
     
     fileprivate func addSubviews() {
         
-        
         //likeButton
         likeButton.frame.size = CGSize(width: 25, height: 25)
         likeButton.frame.origin = CGPoint(x: 6, y: -2)
@@ -93,9 +92,9 @@ class PostCard: UICollectionViewCell {
         rightBorder = UIView(frame: CGRect(x: frame.width - 4, y: 0, width: 4, height: frame.height))
         
         //coloring (Should add these to the enum of colors)
-        topBorder?.backgroundColor = UIColor(red: 0.608, green: 0.937, blue: 0.847, alpha: 1)
-        leftBorder?.backgroundColor = UIColor(red: 0.608, green: 0.937, blue: 0.847, alpha: 1)
-        rightBorder?.backgroundColor = UIColor(red: 0.608, green: 0.937, blue: 0.847, alpha: 1)
+        topBorder?.backgroundColor = .lightGreen
+        leftBorder?.backgroundColor = .lightGreen
+        rightBorder?.backgroundColor = .lightGreen
         
         //adding to view
         self.addSubview(topBorder!)
