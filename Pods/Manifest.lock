@@ -81,21 +81,6 @@ PODS:
     - nanopb/encode (= 0.3.901)
   - nanopb/decode (0.3.901)
   - nanopb/encode (0.3.901)
-  - PINCache (3.0.1-beta.6):
-    - PINCache/Arc-exception-safe (= 3.0.1-beta.6)
-    - PINCache/Core (= 3.0.1-beta.6)
-  - PINCache/Arc-exception-safe (3.0.1-beta.6):
-    - PINCache/Core
-  - PINCache/Core (3.0.1-beta.6):
-    - PINOperation (~> 1.1.0)
-  - PINOperation (1.1.2)
-  - PINRemoteImage/Core (3.0.0-beta.13):
-    - PINOperation
-  - PINRemoteImage/iOS (3.0.0-beta.13):
-    - PINRemoteImage/Core
-  - PINRemoteImage/PINCache (3.0.0-beta.13):
-    - PINCache (= 3.0.1-beta.6)
-    - PINRemoteImage/Core
   - Player (0.13.0)
   - RxCocoa (4.5.0):
     - RxSwift (>= 4.4.2, ~> 4.4)
@@ -114,26 +99,6 @@ PODS:
   - SQLite.swift (0.12.0):
     - SQLite.swift/standard (= 0.12.0)
   - SQLite.swift/standard (0.12.0)
-  - Texture (2.8.1):
-    - Texture/AssetsLibrary (= 2.8.1)
-    - Texture/Core (= 2.8.1)
-    - Texture/MapKit (= 2.8.1)
-    - Texture/Photos (= 2.8.1)
-    - Texture/PINRemoteImage (= 2.8.1)
-    - Texture/Video (= 2.8.1)
-  - Texture/AssetsLibrary (2.8.1):
-    - Texture/Core
-  - Texture/Core (2.8.1)
-  - Texture/MapKit (2.8.1):
-    - Texture/Core
-  - Texture/Photos (2.8.1):
-    - Texture/Core
-  - Texture/PINRemoteImage (2.8.1):
-    - PINRemoteImage/iOS (= 3.0.0-beta.13)
-    - PINRemoteImage/PINCache
-    - Texture/Core
-  - Texture/Video (2.8.1):
-    - Texture/Core
   - TRMosaicLayout (1.0.0)
   - XLActionController/Core (5.0.0)
   - XLActionController/Spotify (5.0.0):
@@ -148,7 +113,6 @@ DEPENDENCIES:
   - Firebase/Storage (~> 4.0)
   - SDWebImage/WebP
   - SQLite.swift (~> 0.12.0)
-  - Texture
   - TRMosaicLayout
   - XLActionController/Spotify
 
@@ -169,9 +133,6 @@ SPEC REPOS:
     - leveldb-library
     - libwebp
     - nanopb
-    - PINCache
-    - PINOperation
-    - PINRemoteImage
     - Player
     - RxCocoa
     - RxDataSources
@@ -179,7 +140,6 @@ SPEC REPOS:
     - RxSwift
     - SDWebImage
     - SQLite.swift
-    - Texture
     - TRMosaicLayout
     - XLActionController
 
@@ -199,9 +159,6 @@ SPEC CHECKSUMS:
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   libwebp: b068a3bd7c45f7460f6715be7bed1a18fd5d6b48
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
-  PINCache: d195fdba255283f7e9900a55e3cced377f431f9b
-  PINOperation: 24b774353ca248fcf87d67b2d61eef42087c125a
-  PINRemoteImage: d6d51c5d2adda55f1ce30c96e850b6c4ebd2856a
   Player: 968d8d07d923bcdd6f7e4091c9e306eb44a5f7a4
   RxCocoa: cbf70265dc65a981d4ac982e513c10cf23df24a0
   RxDataSources: a843bad90c29817f5923ec8163f4af2de084ceb3
@@ -209,10 +166,9 @@ SPEC CHECKSUMS:
   RxSwift: f172070dfd1a93d70a9ab97a5a01166206e1c575
   SDWebImage: 3f3f0c02f09798048c47a5ed0a13f17b063572d8
   SQLite.swift: 7cad9db150a03716336e69469ec9559c85aece5b
-  Texture: 8ecf6984065a1e54f06bf97b349ecca28582acd7
   TRMosaicLayout: 1875505c48dd2877afd69a8bea7b4c1c63afa5b5
   XLActionController: d7dea0b162bd3977311bcba7d377b88d6b87a7b4
 
-PODFILE CHECKSUM: 77a88945b323054a148520985954280b98c286cd
+PODFILE CHECKSUM: 41e188a076502c91c79527266c8868757c1215e6
 
 COCOAPODS: 1.6.1

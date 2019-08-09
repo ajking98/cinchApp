@@ -38,8 +38,8 @@ class DiscoverTableController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath) as! TableViewPostCell
         let item = items[indexPath.row]
         cell.postImage.image = UIImage.init(named: item.imageName)
-        cell.nameLabel.text = item.author
-        cell.viewLabel.text = String(item.likes)
+//        cell.nameLabel.text = item.author
+//        cell.viewLabel.text = String(item.likes)
         cell.postImage.layer.cornerRadius = 8.0
         cell.postImage.clipsToBounds = true
 

@@ -10,18 +10,44 @@ import UIKit
 
 class TableViewPostCell: UITableViewCell {
 
+    @IBOutlet weak var topView: UIView!
+    @IBOutlet weak var sideView: UIView!
     @IBOutlet weak var postImage: UIImageView!
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var viewLabel: UILabel!
-    @IBOutlet weak var menuOption: UIButton!
-    @IBOutlet weak var shareButton: UIButton!
-    @IBOutlet weak var likeButton: UIButton!
+    
+    var likeButton = LikeButton()
+    var shareButton = ShareButton()
+    var menuOptions = MenuOptions()
+    
     var buttonClicked = true
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         postImage.layer
+        
+        setUp()
+    }
+    
+    func setUp() {
+        let centerX = sideView.frame.width / 2
+        let bottomY = sideView.frame.height
+        
+        //Menu
+        menuOptions.center = CGPoint(x: centerX, y: 30)
+        
+        
+        //share
+        shareButton.center = CGPoint(x: centerX, y: bottomY - 65)
+        
+        
+        //like View
+        likeButton.center = CGPoint(x: centerX, y: bottomY - 30)
+        
+        
+        //adding subviews
+        sideView.addSubview(menuOptions)
+        sideView.addSubview(shareButton)
+        sideView.addSubview(likeButton)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -30,21 +56,6 @@ class TableViewPostCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    @IBAction func optionMenu(_ sender: Any) {
-        print("More Options")
-    }
-    @IBAction func shareAction(_ sender: Any) {
-        print("Share")
-    }
-    @IBAction func likeAction(_ sender: Any) {
-        if buttonClicked {
-            DiscoverHelper().like(likeButton: likeButton)
-        } else {
-           DiscoverHelper().unLike(likeButton: likeButton)
-        }
-        
-        buttonClicked = !buttonClicked
-    }
     
 
 }

@@ -18,6 +18,10 @@ class Folder {
     var numOfVideos : Int?
     var isPrivate : Bool?
     
+    //new
+    var admin : [String]? //the root owner of the folder that could edit it 
+    var followers : [String]? //a list of people following this folder
+    
     //default variables
     let defaultIcon = UIImage(named: "nature")
     let defaultContentImage = UIImage(named: "addImage")
