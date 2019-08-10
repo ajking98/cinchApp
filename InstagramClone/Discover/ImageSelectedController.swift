@@ -84,14 +84,31 @@ class ImageSelectedController: UIViewController {
         //panning up
         let pan = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
         view.addGestureRecognizer(pan)
+        
+        lowerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(doSomething)))
+        lowerView.isUserInteractionEnabled = true
+    }
+    
+    @objc func doSomething(_ gesture : UITapGestureRecognizer) {
+        print("something has been done")
     }
     
     
     @objc func handlePan(gesture : UIPanGestureRecognizer) {
         let pan = gesture.translation(in: view).y
         //scrolling up
-        if lowerView.center.y + pan > view.center.y {
-            panUp(pan)
+        
+        switch  gesture.state {
+        case .began, .changed:
+            if lowerView.center.y + pan > view.center.y  && pan + scrollView.frame.origin.y < 20 {
+                panUp(pan)
+            }
+            print("has been updated")
+        
+        case .ended :
+            print("ended")
+        default:
+            print("defaulted")
         }
     }
     
@@ -100,8 +117,10 @@ class ImageSelectedController: UIViewController {
     fileprivate func panUp(_ value: CGFloat) {
         print("we are panning upward")
         let pan = value * 0.1
-        view.center.y += pan
-//        lowerView.center.y += pan
+        //pan up each element
+        scrollView.center.y += pan
+        labels.center.y += pan
+        lowerView.center.y += pan
         lowerView.frame.size.height -= pan
     }
     

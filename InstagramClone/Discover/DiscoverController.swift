@@ -24,7 +24,6 @@ class DiscoverController: UIViewController {
     @IBOutlet weak var collectionViewIcon: UIImageView!
     @IBOutlet weak var tableViewIcon: UIImageView!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var collectionViewLeftConstraint: NSLayoutConstraint!
     @IBOutlet weak var collectionView: UICollectionView!
     var items : [Item] = [Item]()
     let buttonBar = UIView()
@@ -63,6 +62,8 @@ class DiscoverController: UIViewController {
         loadingIcon.frame.size = CGSize(width: 0, height: 0)
         loadingIcon.center = CGPoint(x: view.center.x, y: collectionView.frame.origin.y + 45)
         view.addSubview(loadingIcon)
+        
+        normalize(scrollView: collectionView)
     }
     
     
@@ -343,7 +344,7 @@ class DiscoverController: UIViewController {
         }
         
         //positioning
-        searchBar.center.y = segmentControl.frame.origin.y + segmentControl.frame.height + 30
+        searchBar.center.y = segmentControl.frame.origin.y + 50
         searchBar.center.x = view.center.x
         
         let tapped = UITapGestureRecognizer(target: searchBar, action: #selector(searchBar.revertToNormal))
@@ -599,18 +600,6 @@ extension DiscoverController : UITableViewDelegate, UITableViewDataSource{
             vc.items.append(items[index])
         }
         var item = items[indexPath.row]
-//        vc.imageName = UIImage.init(named: item.imageName)!
-//        vc.nameLabel.text = item.author
-//        vc.likesLabel.text = String(item.likes)
-//
-//        print(UIImage.init(named: items[indexPath.row].imageName)!)
-//        //        vc.setupView(image: UIImage.init(named: items[indexPath.row].imageName)!)
-//        self.present(vc, animated: true, completion: nil)
-//        //        let vc = ImageSelectedController()
-//        //        nextVC.YourLabel.text = "Passed Text"
-//        //        nextVC.YourLabel.text = YourArray[indexPath.row]
-//
-//        // Push to next view
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
