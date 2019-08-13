@@ -39,6 +39,7 @@ class DiscoverController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        sizeUp()
         addSearchBar()
         setUpTableView()
         setUpCollectionView()
@@ -64,6 +65,34 @@ class DiscoverController: UIViewController {
         view.addSubview(loadingIcon)
         
         normalize(scrollView: collectionView)
+    }
+    
+    
+    func sizeUp() {
+        //TODO consider deleting below
+        segmentControlCenter = segmentControl.center
+        print(segmentControl.center)
+    }
+    
+    func addSearchBar() {
+        let frame = collectionView.frame
+        
+        //sizing
+        searchBar = SearchBar(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: frame.width * 0.88, height: 33)))
+        
+        guard let searchBar = searchBar else {
+            return
+        }
+        
+        //positioning
+        searchBar.center.y = segmentControl.frame.origin.y + 50
+        searchBar.center.x = view.center.x
+        
+        let tapped = UITapGestureRecognizer(target: searchBar, action: #selector(searchBar.revertToNormal))
+        tapped.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapped)
+        searchBar.backgroundColor = .white
+        view.addSubview(searchBar)
     }
     
     
@@ -178,70 +207,6 @@ class DiscoverController: UIViewController {
         
     }
     
-    //when user scrolls in the scrollview, the view should pan and either move the segment control out the view or into the view
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let gesture = scrollView.panGestureRecognizer
-        
-        if (scrollView.contentOffset.y < -60){
-            scrollView.contentOffset.y = -60
-        }
-        
-        //TODO clean this up
-        switch gesture.state {
-            
-            case .began, .changed:
-                let translation = gesture.translation(in: scrollView.superview).y * 0.1
-                
-                
-                //if the segment control is less than or equal to the normalized center, then continue
-                guard (segmentControl.center.y + translation) <= segmentControlCenter!.y else {
-                    return
-                }
-                
-                //if pan is in the negative direction and the segment control hasn't reached its peak height
-                if (translation < 0 && segmentControl.center.y > (-10 - segmentControl.frame.height)){
-                    segmentControl.center.y += translation
-                    buttonBar.center.y += translation
-                    searchBar!.center.y += translation
-                }
-                
-                //if the summation of the translation and scrollview y-axis is within bounds
-                // bounds are: 100 < origin.y < scrollViewFrame.y
-                print("should", scrollView.frame)
-                if(100 < scrollView.frame.origin.y + translation && scrollView.frame.origin.y + translation <= (scrollViewFrame?.origin.y)!){
-                    print("should be doing this")
-                    collectionView.center.y += translation
-                    collectionView.frame.size.height -= translation
-                    
-                    tableView.center.y += translation
-                    tableView.frame.size.height -= translation
-                }
-            case .ended:
-                //refresh the scrollviews
-                if scrollView.contentOffset.y <= -50 && !isRefreshing {
-                    
-                    //vibrate for feedback
-                    let vibration = UIImpactFeedbackGenerator(style: .medium)
-                    vibration.impactOccurred()
-                    
-                    //refresh view
-                    refresh(scrollView: scrollView)
-                }
-                
-                //if user swipes down quickly
-                guard !(gesture.velocity(in: scrollView.superview).y > 120) else{
-                    normalize(scrollView: scrollView)
-                    return
-                }
-                
-                //if user swipes up really quick
-                if(gesture.velocity(in: scrollView.superview).y < -120 && scrollView.frame.origin.y > 100) {
-                    unNormalize(scrollView: scrollView)
-                }
-            default: break
-        }
-    }
-    
     
     
     
@@ -331,31 +296,6 @@ class DiscoverController: UIViewController {
         collectionViewIcon.center.x = view.frame.width * 0.23
         tableViewIcon.center.x = (view.frame.width * 0.68)
         handleSegmentControl(true)
-    }
-    
-    func addSearchBar() {
-        let frame = collectionView.frame
-        
-        //sizing
-        searchBar = SearchBar(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: frame.width * 0.88, height: 33)))
-        
-        guard let searchBar = searchBar else {
-            return
-        }
-        
-        //positioning
-        searchBar.center.y = segmentControl.frame.origin.y + 50
-        searchBar.center.x = view.center.x
-        
-        let tapped = UITapGestureRecognizer(target: searchBar, action: #selector(searchBar.revertToNormal))
-        tapped.cancelsTouchesInView = false
-        view.addGestureRecognizer(tapped)
-        searchBar.backgroundColor = .white
-        view.addSubview(searchBar)
-        
-        //TODO consider deleting below
-        segmentControlCenter = segmentControl.center
-        print(segmentControl.center)
     }
     
     

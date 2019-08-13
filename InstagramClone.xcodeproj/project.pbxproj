@@ -24,8 +24,8 @@
 		463A844322F6279A00F9B4CD /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463A844222F6279A00F9B4CD /* CameraViewController.swift */; };
 		463A844522F627F000F9B4CD /* CameraViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463A844422F627F000F9B4CD /* CameraViewCell.swift */; };
 		463A844922F6286A00F9B4CD /* Camera.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 463A844822F6286A00F9B4CD /* Camera.storyboard */; };
-		46456C2222FE51A700D96EB5 /* DiscoverController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46456C2122FE51A700D96EB5 /* DiscoverController2.swift */; };
-		46456C2C22FE52FB00D96EB5 /* MainDiscover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46456C2B22FE52FB00D96EB5 /* MainDiscover.swift */; };
+		46456C2222FE51A700D96EB5 /* SecondaryDiscoverController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46456C2122FE51A700D96EB5 /* SecondaryDiscoverController.swift */; };
+		46456C2C22FE52FB00D96EB5 /* PrimaryDiscoverController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46456C2B22FE52FB00D96EB5 /* PrimaryDiscoverController.swift */; };
 		4657E21A22F65B6400396087 /* AddFolderViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4657E21122F65B6400396087 /* AddFolderViewCell.swift */; };
 		4657E21D22F72DA700396087 /* CameraViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4657E21C22F72DA700396087 /* CameraViewExtensions.swift */; };
 		46668D6022C98C070021229D /* ProfileContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46668D5F22C98C070021229D /* ProfileContainer.swift */; };
@@ -231,8 +231,8 @@
 		463A844222F6279A00F9B4CD /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = SOURCE_ROOT; };
 		463A844422F627F000F9B4CD /* CameraViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewCell.swift; sourceTree = SOURCE_ROOT; };
 		463A844822F6286A00F9B4CD /* Camera.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Camera.storyboard; sourceTree = SOURCE_ROOT; };
-		46456C2122FE51A700D96EB5 /* DiscoverController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverController2.swift; sourceTree = "<group>"; };
-		46456C2B22FE52FB00D96EB5 /* MainDiscover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainDiscover.swift; sourceTree = "<group>"; };
+		46456C2122FE51A700D96EB5 /* SecondaryDiscoverController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryDiscoverController.swift; sourceTree = "<group>"; };
+		46456C2B22FE52FB00D96EB5 /* PrimaryDiscoverController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryDiscoverController.swift; sourceTree = "<group>"; };
 		4657E21122F65B6400396087 /* AddFolderViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFolderViewCell.swift; sourceTree = "<group>"; };
 		4657E21C22F72DA700396087 /* CameraViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewExtensions.swift; sourceTree = SOURCE_ROOT; };
 		46668D5F22C98C070021229D /* ProfileContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileContainer.swift; sourceTree = "<group>"; };
@@ -494,8 +494,8 @@
 				EB3159B022F4BEF400EB4FA9 /* SelectedTablePostCell.swift */,
 				892A4FE222FCA6FD0012E9AD /* DiscoverHelper.swift */,
 				4622497222E89D8A0005B12F /* DiscoverTableController.swift */,
-				46456C2122FE51A700D96EB5 /* DiscoverController2.swift */,
-				46456C2B22FE52FB00D96EB5 /* MainDiscover.swift */,
+				46456C2122FE51A700D96EB5 /* SecondaryDiscoverController.swift */,
+				46456C2B22FE52FB00D96EB5 /* PrimaryDiscoverController.swift */,
 			);
 			path = Discover;
 			sourceTree = "<group>";
@@ -1053,7 +1053,7 @@
 				EB3159B122F4BEF400EB4FA9 /* SelectedTablePostCell.swift in Sources */,
 				467E5DB922FCE8EF00F23ABD /* Post.swift in Sources */,
 				8EADC50222D16BB3005A7CC0 /* GemsCollectionViewCell.swift in Sources */,
-				46456C2C22FE52FB00D96EB5 /* MainDiscover.swift in Sources */,
+				46456C2C22FE52FB00D96EB5 /* PrimaryDiscoverController.swift in Sources */,
 				EB40EF9D2263F7E20093BB5B /* InsideFolderCollectionViewController.swift in Sources */,
 				46D5E06822A323A9003B41DE /* userClass.swift in Sources */,
 				8E95FFCE22BF283F0067B5F2 /* ParentTagStruct.swift in Sources */,
@@ -1064,7 +1064,7 @@
 				891FC3EC22D7F6720024A623 /* SearchBar.swift in Sources */,
 				EB63B7E0226A7EB5004C7E2C /* ImageInsta.swift in Sources */,
 				8948646222D3FC280075EB90 /* FolderCard.swift in Sources */,
-				46456C2222FE51A700D96EB5 /* DiscoverController2.swift in Sources */,
+				46456C2222FE51A700D96EB5 /* SecondaryDiscoverController.swift in Sources */,
 				4657E21D22F72DA700396087 /* CameraViewExtensions.swift in Sources */,
 				EBF7FF1D22FC79F00099037D /* SendFeedbackController.swift in Sources */,
 				891FC3FB22D7F7050024A623 /* ImageSelectedController.swift in Sources */,

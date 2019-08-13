@@ -47,7 +47,7 @@ class DiscoverLayout: UICollectionViewLayout {
         }
         
         var column = 0
-        var yOffset = [CGFloat](repeating: 50, count: numberOfColumns)
+        var yOffset = [CGFloat](repeating: 0, count: numberOfColumns)
         
         for item in 0..<collectionView.numberOfItems(inSection: 0) {
             
