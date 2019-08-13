@@ -15,12 +15,12 @@ class SecondaryDiscoverController: DiscoverController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("yes, this is working")
-        
-        collectionView.center.y = 550
-        
-        buildSizes()
-        unNormalize(scrollView: collectionView)
+//        print("yes, this is working")
+//        
+//        collectionView.center.y = 550
+//        
+//        buildSizes()
+//        unNormalize(scrollView: collectionView)
     }
 
     func buildSizes() {

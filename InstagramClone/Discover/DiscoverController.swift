@@ -327,6 +327,7 @@ class DiscoverController: UIViewController {
     
     
     @objc func handlePanCollectionView(gesture: UIPanGestureRecognizer) {
+        
         gesture.isEnabled = true
         switch gesture.state {
         case .began, .changed:

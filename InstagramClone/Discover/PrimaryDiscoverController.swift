@@ -58,6 +58,9 @@ class PrimaryDiscoverController: DiscoverController {
             // bounds are: 100 < origin.y < scrollViewFrame.y
             print("should", scrollView.frame)
             if(100 < scrollView.frame.origin.y + translation && scrollView.frame.origin.y + translation <= (scrollViewFrame?.origin.y)!){
+                guard scrollView.frame.origin.y > 102 else {
+                    return
+                }
                 print("should be doing this")
                 collectionView.center.y += translation
                 collectionView.frame.size.height -= translation
