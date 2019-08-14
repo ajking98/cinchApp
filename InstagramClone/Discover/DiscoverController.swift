@@ -35,12 +35,13 @@ class DiscoverController: UIViewController {
     var isRefreshing = false
     var loadingIcon = UIImageView()
     var searchBar : SearchBar?
+    var isScrolling = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         sizeUp()
-        addSearchBar()
+//        addSearchBar()
         setUpTableView()
         setUpCollectionView()
         setUpCollectionViewItemSizes()
@@ -65,6 +66,15 @@ class DiscoverController: UIViewController {
         view.addSubview(loadingIcon)
         
         normalize(scrollView: collectionView)
+        
+        collectionView.allowsMultipleSelection = true
+        
+        setUpNavigation()
+    }
+    
+    func setUpNavigation() {
+//        self.navigationController?.navigationBar.barTintColor = UIColor.lightGreen
+        self.navigationController?.navigationBar.tintColor = UIColor.darkerGreen
     }
     
     
@@ -72,27 +82,6 @@ class DiscoverController: UIViewController {
         //TODO consider deleting below
         segmentControlCenter = segmentControl.center
         print(segmentControl.center)
-    }
-    
-    func addSearchBar() {
-        let frame = collectionView.frame
-        
-        //sizing
-        searchBar = SearchBar(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: frame.width * 0.88, height: 33)))
-        
-        guard let searchBar = searchBar else {
-            return
-        }
-        
-        //positioning
-        searchBar.center.y = segmentControl.frame.origin.y + 50
-        searchBar.center.x = view.center.x
-        
-        let tapped = UITapGestureRecognizer(target: searchBar, action: #selector(searchBar.revertToNormal))
-        tapped.cancelsTouchesInView = false
-        view.addGestureRecognizer(tapped)
-        searchBar.backgroundColor = .white
-        view.addSubview(searchBar)
     }
     
     
@@ -185,6 +174,7 @@ class DiscoverController: UIViewController {
         }
         
         normalize(scrollView: scrollView)
+        print("is refreshing my guy")
         
         // -- or -- //
 //        UIView.animate(withDuration: 0.2, animations: {
@@ -328,11 +318,25 @@ class DiscoverController: UIViewController {
     
     @objc func handlePanCollectionView(gesture: UIPanGestureRecognizer) {
         
+        let translation = gesture.translation(in: self.view)
+        
         gesture.isEnabled = true
+        
         switch gesture.state {
-        case .began, .changed:
-            let translation = gesture.translation(in: self.view)
+        case .began:
+            isScrolling = false
             
+        case .changed:
+            guard abs(translation.x * 2) >= abs(translation.y) else {
+                isScrolling = true
+                return
+            }
+            guard !isScrolling else {
+                return
+            }
+            guard abs(translation.x) > abs(translation.y * 10) else {
+                return
+            }
             //disabling scroll when user is swiping to other view
             if(collectionView.center.x < (view.center.x - 30)){
                 collectionView.isScrollEnabled = false
@@ -373,14 +377,23 @@ class DiscoverController: UIViewController {
     
     @objc func handlePanTableView(gesture: UIPanGestureRecognizer) {
         gesture.isEnabled = true
+        let translation = gesture.translation(in: self.view)
         switch (gesture.state) {
             
-            case .began, .changed:
+            case .began:
+                isScrolling = false
+            
+            case .changed:
+                guard abs(translation.x * 2) >= abs(translation.y) else {
+                    isScrolling = true
+                    return
+                }
+                guard !isScrolling else {
+                    return
+                }
                 if(tableView.center.x > (view.center.x + 30)){
                     tableView.isScrollEnabled = false
                 }
-                
-                let translation = gesture.translation(in: self.view)
                 if(gesture.view!.center.x >= view.center.x) {
                     translateTables(translation: translation)
                 }

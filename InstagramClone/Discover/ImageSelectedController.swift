@@ -32,6 +32,8 @@ class ImageSelectedController: UIViewController {
         
         setUpScrollView()
         print(scrollView.isUserInteractionEnabled, "the user interaction is enabled")
+        labels.addGestureRecognizer((navigationController?.interactivePopGestureRecognizer)!)
+
     }
     
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
@@ -81,18 +83,8 @@ class ImageSelectedController: UIViewController {
         lowerView.center.x = view.center.x
         
         
-        //panning up
-        let pan = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
-        view.addGestureRecognizer(pan)
-        
-        lowerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(doSomething)))
         lowerView.isUserInteractionEnabled = true
     }
-    
-    @objc func doSomething(_ gesture : UITapGestureRecognizer) {
-        print("something has been done")
-    }
-    
     
     @objc func handlePan(gesture : UIPanGestureRecognizer) {
         let pan = gesture.translation(in: view).y

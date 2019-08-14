@@ -15,13 +15,31 @@ class PrimaryDiscoverController: DiscoverController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        updateSearchBar()
+        addSearchBar()
     }
     
     
-    func updateSearchBar() {
-        searchBar?.center.y += 30
+    func addSearchBar() {
+        let frame = collectionView.frame
+        
+        //sizing
+        searchBar = SearchBar(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: frame.width * 0.88, height: 33)))
+        
+        guard let searchBar = searchBar else {
+            return
+        }
+        
+        //positioning
+        searchBar.center.y = segmentControl.frame.origin.y + 80
+        searchBar.center.x = view.center.x
+        
+        let tapped = UITapGestureRecognizer(target: searchBar, action: #selector(searchBar.revertToNormal))
+        tapped.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapped)
+        searchBar.backgroundColor = .white
+        view.addSubview(searchBar)
     }
+
     
     
     
@@ -31,8 +49,9 @@ class PrimaryDiscoverController: DiscoverController {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let gesture = scrollView.panGestureRecognizer
         
-        if (scrollView.contentOffset.y < -60){
-            scrollView.contentOffset.y = -60
+        if (scrollView.contentOffset.y < -80){
+            scrollView.contentOffset.y = -80
+            gesture.state = .ended
         }
         
         //TODO clean this up
@@ -56,7 +75,6 @@ class PrimaryDiscoverController: DiscoverController {
             
             //if the summation of the translation and scrollview y-axis is within bounds
             // bounds are: 100 < origin.y < scrollViewFrame.y
-            print("should", scrollView.frame)
             if(100 < scrollView.frame.origin.y + translation && scrollView.frame.origin.y + translation <= (scrollViewFrame?.origin.y)!){
                 guard scrollView.frame.origin.y > 102 else {
                     return
@@ -69,8 +87,10 @@ class PrimaryDiscoverController: DiscoverController {
                 tableView.frame.size.height -= translation
             }
         case .ended:
+            print("refreshing", scrollView.contentOffset)
             //refresh the scrollviews
             if scrollView.contentOffset.y <= -50 && !isRefreshing {
+                print("reached refreshing")
                 
                 //vibrate for feedback
                 let vibration = UIImpactFeedbackGenerator(style: .medium)
