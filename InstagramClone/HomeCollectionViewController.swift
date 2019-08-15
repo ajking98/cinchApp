@@ -540,8 +540,8 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
                 blackBackgroundView?.backgroundColor = blackBackgroundView?.colorOnHold
                 
                 //Animate Inwards
-                Helper().animateIn(iconsView: iconsView!, zoomingImageView: zoomingImageView!, keyWindow: keyWindow)
-                
+//                Helper().animateIn(iconsView: iconsView!, zoomingImageView: zoomingImageView!, keyWindow: keyWindow)
+            
                 longPressedBool = true
                 return
             
@@ -561,8 +561,8 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
                 blackBackgroundView?.backgroundColor = blackBackgroundView?.colorOnHold
                 
                 //Animate Inwards
-                Helper().animateIn(zoomingImageView: zoomingImageView!, keyWindow: keyWindow)
-                
+//                Helper().animateIn(zoomingImageView: zoomingImageView!, keyWindow: keyWindow)
+            
                 longPressedBool = true
                 return
         }
@@ -571,7 +571,7 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
     
     //animating the exit zoomedImageView
     func animateOut(){
-        Helper().animateOut(zoomingImageView : zoomingImageView!, blackBackgroundView : blackBackgroundView!, startingFrame : startingFrame!)
+//        Helper().animateOut(zoomingImageView : zoomingImageView!, blackBackgroundView : blackBackgroundView!, startingFrame : startingFrame!)
     }
     
     @objc func openCameraView(){

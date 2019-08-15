@@ -149,11 +149,22 @@ extension CameraViewController {
     }
     
     @objc func saveToFolder(_ tapGesture : UITapGestureRecognizer? = nil){
+        
+        let alert = UIAlertController(title: "Tags", message: "Tag this gem to find it later", preferredStyle: .alert)
+        alert.addTextField { (textField) in
+            
+        }
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Finish", style: .default, handler: nil))
+        
+        present(alert, animated: true, completion: nil)
+        
         if let image = centerView?.image {
             Helper().vibrate(style: .medium)
             let folderSelection = Helper().saveToFolder(image: image)
             present(folderSelection, animated: true, completion: nil)
         }
+        
     }
     
     

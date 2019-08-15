@@ -53,10 +53,6 @@ class DiscoverController: UIViewController {
         
         buildSegmentIcons()
         
-        let panView = UISwipeGestureRecognizer(target: self, action: #selector(handleViewPan))
-        panView.direction = .up
-        view.addGestureRecognizer(panView)
-        
         scrollViewFrame = collectionView.frame
         
         
@@ -143,9 +139,6 @@ class DiscoverController: UIViewController {
         segmentControl.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSegmentTap(_:))))
     }
     
-    @objc func handleViewPan(_ gesture : UISwipeGestureRecognizer) {
-        print("view panning: ")
-    }
     
     func refresh(scrollView : UIScrollView) {
         print("offset error")

@@ -49,40 +49,7 @@ struct Helper {
     }
     
     
-    func animateIn(iconsView : UIView, zoomingImageView : UIView, keyWindow : UIWindow) {
-        //Animate Inwards
-        UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.1, options: .curveEaseIn, animations: {
-            zoomingImageView.frame = CGRect(x:0, y:0, width: keyWindow.frame.width * 0.95, height: (zoomingImageView.frame.height) * 0.95)
-            zoomingImageView.center = keyWindow.center
-            
-            iconsView.isHidden = false
-            keyWindow.bringSubviewToFront(iconsView)
-        }, completion: { (completed: Bool) in
-        })
-    }
     
-    
-    func animateIn(zoomingImageView: UIView, keyWindow: UIWindow){
-        //Animate Inwards
-        UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.1, options: .curveEaseIn, animations: {
-            zoomingImageView.frame = CGRect(x:0, y:0, width: keyWindow.frame.width * 0.9, height: (zoomingImageView.frame.height) * 0.9)
-            zoomingImageView.center = keyWindow.center
-            
-        }, completion: { (completed: Bool) in
-        })
-        
-    }
-    
-    
-    func animateOut(zoomingImageView : ZoomingImage, blackBackgroundView : DiscoverBackGround, startingFrame : CGRect){
-        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
-            zoomingImageView.frame = startingFrame
-            blackBackgroundView.alpha = 0
-        }, completion: { (completed: Bool) in
-            zoomingImageView.removeFromSuperview()
-            
-        })
-    }
 }
 
     
