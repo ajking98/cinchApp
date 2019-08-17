@@ -44,6 +44,13 @@ class PrimaryDiscoverController: DiscoverController {
     
     
     
+    func translateTables(_ translation: CGFloat) {
+        collectionView.center.y += translation
+        collectionView.frame.size.height -= translation
+        
+        tableView.center.y += translation
+        tableView.frame.size.height -= translation
+    }
     
     //when user scrolls in the scrollview, the view should pan and either move the segment control out the view or into the view
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -79,12 +86,10 @@ class PrimaryDiscoverController: DiscoverController {
                 guard scrollView.frame.origin.y > 102 else {
                     return
                 }
-                print("should be doing this")
-                collectionView.center.y += translation
-                collectionView.frame.size.height -= translation
                 
-                tableView.center.y += translation
-                tableView.frame.size.height -= translation
+                if translation < 0 {
+                    translateTables(translation)
+                }
             }
         case .ended:
             print("refreshing", scrollView.contentOffset)

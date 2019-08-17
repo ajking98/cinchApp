@@ -331,7 +331,7 @@ class DiscoverController: UIViewController {
                 return
             }
             //disabling scroll when user is swiping to other view
-            if(collectionView.center.x < (view.center.x - 30)){
+            if(collectionView.center.x < (view.center.x - 15)){
                 collectionView.isScrollEnabled = false
             }
             
@@ -384,7 +384,10 @@ class DiscoverController: UIViewController {
                 guard !isScrolling else {
                     return
                 }
-                if(tableView.center.x > (view.center.x + 30)){
+                guard abs(translation.x) > abs(translation.y * 10) else {
+                    return
+                }
+                if(tableView.center.x > (view.center.x + 15)){
                     tableView.isScrollEnabled = false
                 }
                 if(gesture.view!.center.x >= view.center.x) {
