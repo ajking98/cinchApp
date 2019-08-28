@@ -35,7 +35,7 @@ struct FolderStruct {
     func readDateCreated<T>(user : T, folderName: String, dateCreatedClosure: @escaping (String) -> Void) -> Void{
         guard user is UUID else {
             DB.child(String(describing: user)).child("folders").child(folderName).observeSingleEvent(of: .value) { (snapshot) -> Void in
-                if let dict = snapshot.value as? [String:Any] {
+                if (snapshot.value as? [String:Any]) != nil {
                     var dateCreated:String?
                     let value = snapshot.value as? NSDictionary
                     dateCreated = value?["dateCreated"] as? String ?? ""

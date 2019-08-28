@@ -65,7 +65,7 @@ extension CameraViewController {
                 FolderSliderView.center.y = updatedY
                 
                 solidBar.center.y = updatedY - 30
-                //TODO fix this part 
+                //TODO fix this part
                 sender.setTranslation(CGPoint.zero, in: view)
             }
         case .ended:

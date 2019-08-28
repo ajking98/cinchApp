@@ -18,7 +18,7 @@ struct ParentStruct {
     var main = ViewController();
     let username = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!
 
-    //returns true if the user was successfully added
+    ///creates a user in the database
     func createUser(user : User) -> Void {
         //user username
         print("Creating a User...")
@@ -31,7 +31,7 @@ struct ParentStruct {
     func readUser(user : String, completion: @escaping (User, String, String, Any) -> Void) {
             var folderArr = [String]()
             DB.child(user).observeSingleEvent(of: .value) { (snapshot) -> Void in
-                if let dict = snapshot.value as? [String:Any] {
+                if (snapshot.value as? [String:Any]) != nil {
                     var name:String?
                     var email: String?
                     var password: String?

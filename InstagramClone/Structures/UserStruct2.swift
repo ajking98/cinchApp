@@ -9,6 +9,12 @@
     - profilePic
     - dateCreated
     - dateLastActive
+    - Followers
+    - Following
+    - biography
+    - isDarkModeEnabled
+    - newContent
+    - SuggestedContent
  
  CRD commands for: CREATE, READ, DELETE
     - folders
@@ -33,12 +39,9 @@ struct UserStruct {
      Name
      */
     func readName(user : String, completion: @escaping (String) -> Void) {
-        DB.child(user).observeSingleEvent(of: .value) { (snapshot) -> Void in
-            if let dict = snapshot.value as? [String:Any] {
-                var name:String?
-                let dictionary = snapshot.value as? NSDictionary
-                name = dictionary?["name"] as? String ?? "Empty Name"
-                completion(name!)
+        DB.child(user).child("name").observeSingleEvent(of: .value) { (snapshot) in
+            if let name = snapshot.value as? String {
+                completion(name)
             }
         }
     }
@@ -48,16 +51,15 @@ struct UserStruct {
         DB.updateChildValues(["name": newName])
     }
     
+    
+    
     /*
         EMAIL
     */
     func readEmail(user : String, completion: @escaping (String) -> Void) {
-        DB.child(user).observeSingleEvent(of: .value) { (snapshot) -> Void in
-            if let dict = snapshot.value as? [String:Any] {
-                var email:String?
-                let dictionary = snapshot.value as? NSDictionary
-                email = dictionary?["email"] as? String ?? "Empty Email"
-                completion(email!)
+        DB.child(user).child("email").observeSingleEvent(of: .value) { (snapshot) in
+            if let email = snapshot.value as? String {
+                completion(email)
             }
         }
     }
@@ -71,13 +73,11 @@ struct UserStruct {
     /*
      Password
      */
+    //TODO check over this one and make it restricted!!
     func readPassword(user : String, completion: @escaping (String) -> Void) {
-        DB.child(user).observeSingleEvent(of: .value) { (snapshot) -> Void in
-            if let dict = snapshot.value as? [String:Any] {
-                var password:String?
-                let dictionary = snapshot.value as? NSDictionary
-                password = dictionary?["password"] as? String ?? "Empty Password"
-                completion(password!)
+        DB.child(user).child("password").observeSingleEvent(of: .value) { (snapshot) in
+            if let password = snapshot.value as? String {
+                completion(password)
             }
         }
     }
@@ -91,12 +91,9 @@ struct UserStruct {
      isPrivate
     */
     func readIsPrivate(user : String, completion: @escaping (Bool) -> Void) {
-        DB.child(user).observeSingleEvent(of: .value) { (snapshot) -> Void in
-            if let dict = snapshot.value as? [String:Any] {
-                var isPrivate:Bool?
-                let dictionary = snapshot.value as? NSDictionary
-                isPrivate = dictionary?["isPrivate"] as? Bool ?? false
-                completion(isPrivate!)
+        DB.child(user).child("isPrivate").observeSingleEvent(of: .value) { (snapshot) in
+            if let isPrivate = snapshot.value as? Bool {
+                completion(isPrivate)
             }
         }
     }
@@ -110,12 +107,9 @@ struct UserStruct {
      ProfilePic
      */
     func readProfilePic(user : String, completion: @escaping (String) -> Void) {
-        DB.child(user).observeSingleEvent(of: .value) { (snapshot) -> Void in
-            if let dict = snapshot.value as? [String:Any] {
-                var profilePic:String?
-                let dictionary = snapshot.value as? NSDictionary
-                profilePic = dictionary?["profilePic"] as? String ?? "default image"
-                completion(profilePic!)
+        DB.child(user).child("profilePic").observeSingleEvent(of: .value) { (snapshot) in
+            if let profilePic = snapshot.value as? String {
+                completion(profilePic)
             }
         }
     }
@@ -135,12 +129,9 @@ struct UserStruct {
      DateCreated
     */
     func readDateCreated(user : String, completion: @escaping (String) -> Void) {
-        DB.child(user).observeSingleEvent(of: .value) { (snapshot) -> Void in
-            if let dict = snapshot.value as? [String:Any] {
-                var dateCreated:String?
-                let dictionary = snapshot.value as? NSDictionary
-                dateCreated = dictionary?["dateCreated"] as? String ?? ""
-                completion(dateCreated!)
+        DB.child(user).child("dateCreated").observeSingleEvent(of: .value) { (snapshot) in
+            if let dateCreated = snapshot.value as? String {
+                completion(dateCreated)
             }
         }
     }
@@ -151,12 +142,9 @@ struct UserStruct {
     }
     
     func readDateLastActive(user : String, completion: @escaping (String) -> Void) {
-        DB.child(user).observeSingleEvent(of: .value) { (snapshot) -> Void in
-            if let dict = snapshot.value as? [String:Any] {
-                var dateLastActive:String?
-                let dictionary = snapshot.value as? NSDictionary
-                dateLastActive = dictionary?["dateLastActive"] as? String ?? ""
-                completion(dateLastActive!)
+        DB.child(user).child("dateLastActive").observeSingleEvent(of: .value) { (snapshot) in
+            if let dateLastActive = snapshot.value as? String {
+                completion(dateLastActive)
             }
         }
     }
@@ -166,13 +154,61 @@ struct UserStruct {
         DB.updateChildValues(["dateLastActive": newDateLastActive])
     }
 
+    
+    /*
+        Followers
+    */
+    ///reads the number of followers a given user has
+    func readFollowers(user : String, completion: @escaping ([String : String]) -> Void) {
+        DB.child(user).child("followers").observeSingleEvent(of: .value) { (snapshot) in
+            if let followers = snapshot.value as? [String : String] {
+                completion(followers)
+            }
+        }
+    }
+    
+    ///Adds a follower to the user - Should be given an official username
+    func addFollower(user : String, newFollower : String) {
+        DB.child(user).child("followers").updateChildValues([newFollower : newFollower])
+    }
+    
+    
+    ///removes a follower from the user's followers list
+    func deleteFollower(user : String, follower : String) {
+        self.DB.child(user).child("followers").child(follower).removeValue()
+    }
+    
+    
+    ///this removes all the followers and replaces it with the newly given list
+    fileprivate func updateFollowers(user : String, newFollowers : [String]) {
+        var list : [String : String] = [:]
+        for follower in newFollowers {
+            list[follower] = follower
+        }
+        DB.child(user).updateChildValues(["followers" : list])
+    }
+    
+    
+    /*
+     Following
+    */
+    func readFollowing(user : String, completion : @escaping ([String : String]) -> Void) {
+        DB.child(user).child("following").observeSingleEvent(of: .value) { (snapshot) in
+            if let following = snapshot.value as? [String : String] {
+                completion(following)
+            }
+        }
+    }
+    
+    
+    
     /*
      Folders
     */
     //CREATE
-    //Creates a new folder under the user in the database and returns the newly added folder
+    ///Creates a new folder under the user in the database
     func addFolder(user : String, folder : Folder) -> Void {
-        var folderArray = UserDefaults.standard.array(forKey: defaultsKeys.folderKey) as! [String]
+        let folderArray = UserDefaults.standard.array(forKey: defaultsKeys.folderKey) as! [String]
         if !folderArray.contains(folder.folderName!) {
             let location = DB.child(user).child("folders").child(folder.folderName!)
             location.updateChildValues(folder.toString())

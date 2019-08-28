@@ -81,9 +81,39 @@ class CameraViewController: UIViewController {
         return authStatus
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        let user = User(username: "yassin2")
+        UserStruct().addFollower(user: user.username!, newFollower: "justin")
+        print("Appearing the view")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        let user = User(username: "yassin2")
+//        ParentStruct().createUser(user: user)
+        
+        //todo remove this after testing Firebase calling
+        let myUser = "-%&%-3Y5BL591Hx"
+        UserStruct().readName(user: myUser) { (snapshot) in
+            print("this is the name of the person", snapshot)
+        }
+        UserStruct().readEmail(user: myUser) { (snapshot) in
+            print("this is the email", snapshot)
+        }
+        UserStruct().readPassword(user: myUser) { (snapshot) in
+            print("this is the password", snapshot)
+        }
+        UserStruct().readDateCreated(user: myUser) { (snapshot) in
+            print("this is the dateCreated", snapshot)
+        }
+        UserStruct().readProfilePic(user: myUser) { (snapshot) in
+            print("this is the ProfilePic", snapshot)
+        }
+        UserStruct().readIsPrivate(user: myUser) { (snapshot) in
+            print("this is the isPrivate status", snapshot)
+        }
+        
         
         guard isAuthorized() else{
             var mainView: UIStoryboard!
