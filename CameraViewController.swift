@@ -83,7 +83,14 @@ class CameraViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         let user = User(username: "yassin2")
-        UserStruct().addFollower(user: user.username!, newFollower: "justin")
+        UserStruct().deleteFollowing(user: user.username!, following: "justin2")
+        UserStruct().readBiography(user: user.username!) { (snapshot) in
+            print(snapshot, "htis is the snapshot")
+        }
+        UserStruct().addFolder(user: user.username!, folder: Folder(folderName: "naming"))
+        UserStruct().readFolders(user: user.username!) { (snapshot) in
+            print("working", snapshot)
+        }
         print("Appearing the view")
     }
     

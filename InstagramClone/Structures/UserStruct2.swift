@@ -14,7 +14,7 @@
     - biography
     - isDarkModeEnabled
     - newContent
-    - SuggestedContent
+    - suggestedContent
  
  CRD commands for: CREATE, READ, DELETE
     - folders
@@ -172,7 +172,6 @@ struct UserStruct {
         DB.child(user).child("followers").updateChildValues([newFollower : newFollower])
     }
     
-    
     ///removes a follower from the user's followers list
     func deleteFollower(user : String, follower : String) {
         self.DB.child(user).child("followers").child(follower).removeValue()
@@ -193,78 +192,193 @@ struct UserStruct {
      Following
     */
     func readFollowing(user : String, completion : @escaping ([String : String]) -> Void) {
-        DB.child(user).child("following").observeSingleEvent(of: .value) { (snapshot) in
-            if let following = snapshot.value as? [String : String] {
-                completion(following)
+        DB.child(user).child("followings").observeSingleEvent(of: .value) { (snapshot) in
+            if let followings = snapshot.value as? [String : String] {
+                completion(followings)
             }
         }
+    }
+    
+    ///Adds a person to the user's followings list
+    func addFollowing(user : String, newFollowing : String) {
+        DB.child(user).child("followings").updateChildValues([newFollowing : newFollowing])
+    }
+    
+    ///Removes a person from the user's followings list
+    func deleteFollowing(user : String, following : String) {
+        DB.child(user).child("followings").child(following).removeValue()
+    }
+    
+    //removes all the previous followings and inserts the new list given
+    fileprivate func updateFollowers(user : String, newFollowings : [String]){
+        var list : [String : String] = [:]
+        for following in newFollowings {
+            list[following] = following
+        }
+        
+        DB.child(user).updateChildValues(["followings" : list])
+    }
+    
+    
+    /*
+    biography
+    */
+    
+    ///Reads the biography of the given user
+    func readBiography(user : String, completion : @escaping(String)-> Void) {
+        DB.child(user).child("biography").observeSingleEvent(of: .value) { (snapshot) in
+            if let biography = snapshot.value as? String {
+                completion(biography)
+            }
+        }
+    }
+    
+    ///updates the biography of the given user
+    func updateBiography(user : String, newBiography : String) {
+        DB.child(user).child("biography").setValue(newBiography)
+    }
+    
+    
+    /*
+    isDarkModeEnabled
+    */
+    func readIsDarkModeEnabled(user : String, completion : @escaping(Bool) -> Void) {
+        DB.child(user).child("isDarkModeEnabled").observeSingleEvent(of: .value) { (snapshot) in
+            if let isDarkModeEnabled = snapshot.value as? Bool {
+                completion(isDarkModeEnabled)
+            }
+        }
+    }
+    
+    
+    func updateIsDarkModeEnabled(user : String, newIsDarkModeEnabled : Bool){
+        DB.child(user).child("isDarkModeEnabled").setValue(newIsDarkModeEnabled)
+    }
+    
+    
+    /*
+    newContent
+     is an array of links that can be put against the posts node in the database
+    */
+    ///Reads the new content
+    func readNewContent(user : String, completion : @escaping([String : String]) -> Void) {
+        DB.child(user).child("newContent").observeSingleEvent(of: .value) { (snapshot) in
+            if let newContent = snapshot.value as? [String : String] {
+                completion(newContent)
+            }
+        }
+    }
+    
+    
+    ///adds new post links to the user's new content
+    func addNewContent(user : String, link : String) {
+        DB.child(user).child("newContent").child(link).setValue(link)
+    }
+    
+    
+    ///deletes a post link from the user's new content
+    func deleteNewContent(user : String, link : String) {
+        DB.child(user).child("newContent").child(link).removeValue()
+    }
+    
+    
+    ///Updates the whole newContent instance in the DB. Replaces all existing data with new given data for user
+    func updateNewContent(user : String, newContents : [String]) {
+        var content : [String : String] = [:]
+        for newContent in newContents {
+            content[newContent] = newContent
+        }
+        DB.child(user).child("newContent").setValue(content)
     }
     
     
     
     /*
-     Folders
-    */
-    //CREATE
-    ///Creates a new folder under the user in the database
-    func addFolder(user : String, folder : Folder) -> Void {
-        let folderArray = UserDefaults.standard.array(forKey: defaultsKeys.folderKey) as! [String]
-        if !folderArray.contains(folder.folderName!) {
-            let location = DB.child(user).child("folders").child(folder.folderName!)
-            location.updateChildValues(folder.toString())
-            addToFolderKey(folderName: folder.folderName!)
-        }
-    }
-    
-    func addToFolderKey(folderName:String) -> Void {
-        var folderArray = UserDefaults.standard.array(forKey: defaultsKeys.folderKey) as! [String]
-        folderArray.append(folderName)
-        UserDefaults.standard.set(folderArray, forKey: defaultsKeys.folderKey)
-    }
-    
-    //READ
-    //returns all the folders the given user has in a folder array
-    func readFolders(user : String, readFolderClosure: @escaping ([String]) -> Void) -> Void {
-            DB.child(String(describing: user)).child("folders").observeSingleEvent(of: .value) { (snapshot) -> Void in
-                var folder = [String]()
-                for folders in snapshot.children {
-                    folder.append(((folders as AnyObject).key))
-                }
-                readFolderClosure(folder)
+     suggestedContent
+     is an array of links that can be put against the posts node in the database
+     */
+    ///Reads the suggested content
+    func readSuggestedContent(user : String, completion : @escaping([String : String]) -> Void) {
+        DB.child(user).child("suggestedContent").observeSingleEvent(of: .value) { (snapshot) in
+            if let suggestedContent = snapshot.value as? [String : String] {
+                completion(suggestedContent)
             }
-            return
-    }
-    
-    // TODO Add read individual folder
-    
-    //Update
-    //Is used to rename a folder
-    func updateFolder<T>(user : T, prevFolderName: String, newFolderName: String, prevFolderinfo: Folder) -> Bool {
-        guard user is UUID else {
-            DB.child(String(describing: user)).child("folders").updateChildValues([newFolderName: prevFolderinfo.toString()])
-            deleteFolder(user: String(describing: user), folderName: prevFolderName)
-            return true
         }
-        //Handle UUID
-        DB.child(uuid.uuidString).child("folders").updateChildValues([newFolderName: prevFolderinfo.toString()])
-        deleteFolder(user: String(describing: user), folderName: prevFolderName)
-        return true
     }
     
-    //Delete
-    //Takes a user and a folder name and deletes the folder with that foldername from that user and returns the deleted folder
-    func deleteFolder(user : String, folderName : String) ->Folder {
-        print("You cannot recover deleted folder")
-        let DB = Database.database().reference().child("users").child(String(describing: user)).child("folders").child(folderName).removeValue()
-        deleteFolderKey(folderName: folderName)
-        return Folder(folderName: folderName)
+    
+    ///adds new post links to the user's suggestedContent
+    func addSuggestedContent(user : String, link : String) {
+        DB.child(user).child("suggestedContent").child(link).setValue(link)
     }
     
-    func deleteFolderKey(folderName:String) -> Void {
-        var folderArray = UserDefaults.standard.array(forKey: defaultsKeys.folderKey) as! [String]
-        if let index = folderArray.index(of: folderName) {
-            folderArray.remove(at: index)
+    
+    ///deletes a post link from the user's new content
+    func deleteSuggestedContent(user : String, link : String) {
+        DB.child(user).child("suggestedContent").child(link).removeValue()
+    }
+    
+    
+    ///Updates the whole suggestedContent instance in the DB. Replaces all existing data with new given data for user
+    func updateSuggestedContent(user : String, newContents : [String]) {
+        var content : [String : String] = [:]
+        for newContent in newContents {
+            content[newContent] = newContent
         }
-        UserDefaults.standard.set(folderArray, forKey: defaultsKeys.folderKey)
+        DB.child(user).child("suggestedContent").setValue(content)
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /*
+ 
+    TODO THIS NEEDS FIXING ASAP
+ 
+    */
+    
+    func addFolder(user : String, folder : Folder) {
+        DB.child(user).child("folders").updateChildValues([folder.folderName! : folder.toString()])
+    }
+    
+    
+    ///Reads folders from the database for the given user
+    func readFolders(user : String, completion : @escaping([String])-> Void) {
+        DB.child(user).child("folders").observeSingleEvent(of: .value) { (snapshot) in
+            if let folders = snapshot.value as? [String : Any] {
+                var folderNames : [String] = []
+                for folder in folders {
+                    folderNames.append(folder.key)
+                }
+                
+                completion(folderNames)
+            }
+        }
+    }
+    
+    
+    ///deletes a folder for the given user
+    func deleteFolder(user : String, folderName : String) {
+        DB.child(user).child("folders").child(folderName).removeValue()
+    }
+    
+    ///replaces all existing folders in the database with the new list given
+    func updateFolders(user : String, newFolders : [Folder]){
+        var folders : [String : Any] = [:]
+        for folder in newFolders {
+            folders[folder.folderName!] = folder.toString()
+        }
+        
+        DB.child(user).updateChildValues(["folders" : folders])
+    }
+    
+    
+    
+    
 }

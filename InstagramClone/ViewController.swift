@@ -49,16 +49,7 @@ class ViewController: UIViewController {
         }
 
         ParentStruct().readUser(user: uuid.uuidString, completion: { (userInfo:User, dateCreated:String, dateLastActive:String, folders:Any) in
-            UserStruct().readFolders(user: self.uuid.uuidString, readFolderClosure: {(folders:[String]) in
-                // Get User's Info
-                self.userDefaults.set(folders, forKey: defaultsKeys.folderKey)
-                self.userDefaults.set(userInfo.name!, forKey: defaultsKeys.nameKey)
-                self.userDefaults.set(userInfo.email!, forKey: defaultsKeys.emailKey)
-                self.userDefaults.set(userInfo.password!, forKey: defaultsKeys.passwordKey)
-                self.userDefaults.set(userInfo.isPrivate, forKey: defaultsKeys.isPrivateKey)
-                self.userDefaults.set(dateCreated, forKey: defaultsKeys.dateCreatedKey)
-                self.userDefaults.set(dateLastActive, forKey: defaultsKeys.dateLastActiveKey)
-            })
+           
         })
     }
     

@@ -49,11 +49,7 @@ struct ParentStruct {
                     dateCreated = dictionary?["dateCreated"] as? String ?? ""
                     dateLastActive = dictionary?["dateLastActive"] as? String ?? ""
                     folders = dictionary?["folders"]
-                    UserStruct().readFolders(user: user, readFolderClosure: {(folders:[String]) in
-                        for item in folders {
-                            folderArr.append(item)
-                        }
-                    })
+                    
                     var userInfo = User(name: name!, username: String(describing: user), email: email!, password: password!, isPrivate: isPrivate!)
                     completion(userInfo, dateCreated!, dateLastActive!, folders)
                 }
