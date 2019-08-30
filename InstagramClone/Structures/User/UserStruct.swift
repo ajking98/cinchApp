@@ -339,12 +339,11 @@ struct UserStruct {
     */
     //TODO the folder.toString() should be ACCURATE
     func addFolder(user : String, folder : Folder) {
-        DB.child(user).child("folders").updateChildValues([folder.folderName! : folder.toString()])
+        DB.child(user).child("folders").updateChildValues([folder.folderName : folder.toString()])
     }
     
     
-    //TODO fix this and make it read the whole folder from the database and put it in a folderclass
-    ///Reads folders from the database for the given user
+    ///Reads only the folderNamess from the database for the given user
     func readFolders(user : String, completion : @escaping([String])-> Void) {
         DB.child(user).child("folders").observeSingleEvent(of: .value) { (snapshot) in
             if let folders = snapshot.value as? [String : Any] {
@@ -358,6 +357,21 @@ struct UserStruct {
     }
     
     
+    ///reads the complete folder and puts it in the folder class
+    func readCompleteFolder(user : String, completion : @escaping([Folder])-> Void) {
+        DB.child(user).child("folders").observeSingleEvent(of: .value) { (snapshot) in
+            if let folders = snapshot.value as? [String : Any] {
+                var folderArray : [Folder] = []
+                for folderKey in folders.keys {
+                    let folder : [String : Any] = folders[folderKey] as! [String : Any]
+                    let thisFolder = Folder(folderName: folder["folderName"] as! String, iconLink: folder["icon"] as! String, dateCreated: folder["dateCreated"] as! Double, dateLastModified: folder["dateLastModified"] as! Double, content: folder["content"] != nil ? folder["content"] as! [String : String] : [:] as! [String : String], numOfImages: folder["numOfImages"] as! Int, numOfVideos: folder["numOfVideos"] as! Int, isPrivate: folder["isPrivate"] as! Bool, followers: folder["followers"] != nil ? folder["followers"] as! [String] : [] as! [String], followersCount: folder["followersCount"] as! Int)
+                    
+                    folderArray.append(thisFolder)
+                }
+                completion(folderArray)
+            }
+        }
+    }
     
     ///deletes a folder for the given user
     func deleteFolder(user : String, folderName : String) {
@@ -368,7 +382,7 @@ struct UserStruct {
     func updateFolders(user : String, newFolders : [Folder]){
         var folders : [String : Any] = [:]
         for folder in newFolders {
-            folders[folder.folderName!] = folder.toString()
+            folders[folder.folderName] = folder.toString()
         }
         
         DB.child(user).updateChildValues(["folders" : folders])
@@ -381,22 +395,22 @@ struct UserStruct {
     */
     ///reads the folders the given user is following
     func readFoldersFollowing(user : String, completion : @escaping([String : Any])->Void) {
-        DB.child(user).child("foldersFollowing").observeSingleEvent(of: .value) { (snapshot) in
-            if let foldersFollowing = snapshot.value as? [String : Any] {
-                completion(foldersFollowing)
+        DB.child(user).child("folderReferences").observeSingleEvent(of: .value) { (snapshot) in
+            if let folderReferences = snapshot.value as? [String : Any] {
+                completion(folderReferences)
             }
         }
     }
     
     
     ///adds a folder to the folder's following list
-    func addFolderFollowing(user : String, newFolder : FolderReference) {
-        DB.child(user).child("foldersFollowing").child(newFolder.admin).updateChildValues([newFolder.folderName : newFolder])
+    func addFolderReference(user : String, newFolder : FolderReference) {
+        DB.child(user).child("folderReferences").child(newFolder.admin).updateChildValues([newFolder.folderName : newFolder.toString()])
     }
     
-    ///Deletes a folder from the folderFollowings in DB for given user
-    func deleteFolderFollowing(user : String, folder : FolderReference) {
-        DB.child(user).child("foldersFollowing").child(folder.admin).child(folder.folderName).removeValue()
+    ///Deletes a folder from the folderReferences in DB for given user
+    func deleteFolderReference(user : String, folder : FolderReference) {
+        DB.child(user).child("folderReferences").child(folder.admin).child(folder.folderName).removeValue()
     }
     
 }

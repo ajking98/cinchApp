@@ -9,17 +9,16 @@ import UIKit
 
 class User  {
     static var sharedInstance: String!
-    var name:String?
-    var username: String?
-    var email:String?
-    var password:String?
-    var isPrivate:Bool?
+    var name:String = ""
+    var username: String = ""
+    var email:String = ""
+    var password:String = ""
+    var isPrivate:Bool = false
     var profilePic: UIImage?
-    var folders : [String : [String : Any]]?
+    var folders : [String : [String : Any]] = [:]
     var tags : [Tag]?
     var dateCreated : Date?
     var dateLastActive : Date?
-    var uuid : UUID?
     
     //New stuff
     var followers : [String] = []
@@ -28,20 +27,23 @@ class User  {
     var isDarkModeEnabled : Bool = false
     var newContent : [String] = []
     var suggestedContent : [String] = []
-    var foldersFollowing : [String : Any] = [:]
+    var folderReferences : [String : Any] = [:]
     
     //default variables 
     let defaultProfilePic = UIImage(named: "userPlaceholder")
     let folder1 = Folder(folderName: "random")
     let folder2 = Folder(folderName: "reactions")
     
+    
+    ///should only be called when first making a user to add them to the database
     init() {
+        username = "" //TODO this should not be blank, it should instead generate a generic key that doesn't exist in the DB
         name = ""
         email = ""
         password = ""
         isPrivate = false
         profilePic = defaultProfilePic
-        folders = [folder1.folderName : folder1.toString(), folder2.folderName : folder2.toString()] as! [String : [String : Any]] 
+        folders = [folder1.folderName : folder1.toString(), folder2.folderName : folder2.toString()]
         dateCreated = Date()
         dateLastActive = Date()
     }
@@ -54,7 +56,7 @@ class User  {
         self.password = ""
         self.isPrivate = false
         self.profilePic = defaultProfilePic
-        folders = [folder1.folderName : folder1.toString(), folder2.folderName : folder2.toString()] as! [String : [String : Any]]
+        folders = [folder1.folderName : folder1.toString(), folder2.folderName : folder2.toString()]
         self.dateCreated = Date()
         self.dateLastActive = Date()
     }
@@ -68,7 +70,6 @@ class User  {
         self.password = password
         self.isPrivate = isPrivate
         self.profilePic = defaultProfilePic
-        uuid = UIDevice.current.identifierForVendor
         self.dateCreated = Date()
         self.dateLastActive = Date()
     }
@@ -117,14 +118,19 @@ class User  {
             suggestedContentDict[content] = content
         }
         
+        if folders.count < 1 {
+            folders = [folder1.folderName : folder1.toString(), folder2.folderName : folder2.toString()]
+        }
         
+        let userString : [String : Any] = ["name": name, "email": email, "username": username, "password": password, "isPrivate": isPrivate, "profilePic": "https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/userImages%2FhKaBCKrdabATDWHqnWIa?alt=media&token=3c8756d0-326c-42cf-86a3-b9901797749c", "folders": folders, "dateCreated": dateCreated?.toString() as Any, "dateLastActive": dateLastActive?.toString() as Any, "followers" : followersDict, "followings" : followingsDict, "biography" : biography, "isDarkModeEnabled" : isDarkModeEnabled, "newContent" : newContentDict, "suggestedContent" : suggestedContentDict, "folderReferences" : folderReferences]
         
-        
-        let userString : [String : Any] = ["name": name, "email": email, "username": username, "password": password, "isPrivate": isPrivate, "profilePic": "https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/userImages%2FhKaBCKrdabATDWHqnWIa?alt=media&token=3c8756d0-326c-42cf-86a3-b9901797749c", "folders": folders, "dateCreated": dateCreated?.toString(), "dateLastActive": dateLastActive?.toString(), "followers" : followersDict, "followings" : followingsDict, "biography" : biography, "isDarkModeEnabled" : isDarkModeEnabled, "newContent" : newContentDict, "suggestedContent" : suggestedContentDict]
         return userString
-
     }
 }
+
+
+
+//TODO what the fuck is this Below???
 
 extension UIImage {
     func toString() -> String? {

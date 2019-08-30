@@ -84,20 +84,6 @@ class ViewController: UIViewController {
     
     func insertUser() {
         print("Insert User")
-        ParentStruct().readUser(user: uuid.uuidString, completion: { (userInfo:User, dateCreated:String, dateLastActive:String, folders:Any) in
-            print("printing userhh: ", userInfo)
-            print("printing name: ", userInfo.name!)
-            print("printing password: ", userInfo.password!)
-            let insertUser = self.usersTable.insert(self.name <- userInfo.name!, self.email <- userInfo.email!, self.password <- userInfo.password!, self.isPrivate <- userInfo.isPrivate! )
-            
-            do {
-                try self.database.run(insertUser)
-                print("Inserted User ")
-            } catch {
-                print(error)
-            }
-        })
-        
         
     }
     

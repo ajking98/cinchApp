@@ -22,8 +22,7 @@ struct ParentStruct {
     func createUser(user : User) -> Void {
         //user username
         print("Creating a User...")
-        let location = DB.child(user.username!)
-        DB.child(user.username!).setValue(user.toString())
+        DB.child(user.username).setValue(user.toString())
         print("Finished creating user...")
     }
     
@@ -110,11 +109,9 @@ struct ParentStruct {
     
     
     //Used to remove a User permanently
-    //returns true if the user was successfully deleted
-    func deleteUser(username: String , userInfo:User) -> User {
+    func deleteUser(username: String , userInfo:User) {
         //Handle username
         let DB = Database.database().reference().child("users").child(username).removeValue()
-        return User(name: userInfo.name!, username: userInfo.username!, email: userInfo.email!, password: userInfo.password!, isPrivate: userInfo.isPrivate!)
     }
     
 }
