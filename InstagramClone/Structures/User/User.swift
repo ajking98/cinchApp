@@ -22,12 +22,13 @@ class User  {
     var uuid : UUID?
     
     //New stuff
-    var followers : [String]?
-    var following : [String]? //is a dictionary of following (people) and following (folders)
-    var biography : String?
-    var isDarkModeEnabled : Bool?
-    var newContent : [String]?
-    var suggestedContent : [String]?
+    var followers : [String] = []
+    var followings : [String] = [] //is a dictionary of following (people) and following (folders)
+    var biography : String = ""
+    var isDarkModeEnabled : Bool = false
+    var newContent : [String] = []
+    var suggestedContent : [String] = []
+    var foldersFollowing : [String : Any] = [:]
     
     //default variables 
     let defaultProfilePic = UIImage(named: "userPlaceholder")
@@ -43,8 +44,8 @@ class User  {
         folders = [folder1.folderName : folder1.toString(), folder2.folderName : folder2.toString()] as! [String : [String : Any]] 
         dateCreated = Date()
         dateLastActive = Date()
-        //add Random folder to user
     }
+    
     
     init(username : String) {
         self.name = ""
@@ -95,11 +96,32 @@ class User  {
     }
     
     func toString() -> [String: Any] {
-        let userString : [String : Any] = ["name": name, "email": email, "username": username, "password": password, "isPrivate": isPrivate, "profilePic": "https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/userImages%2FhKaBCKrdabATDWHqnWIa?alt=media&token=3c8756d0-326c-42cf-86a3-b9901797749c", "folders": folders, "dateCreated": dateCreated?.toString(), "dateLastActive": dateLastActive?.toString()]
+        var followersDict :[String : String] = [:]
+        var followingsDict :[String : String] = [:]
+        var newContentDict : [String : String] = [:]
+        var suggestedContentDict : [String : String] = [:]
+        
+        
+        for follower in followers {
+            followersDict[follower] = follower
+        }
+        for following in followings {
+            followingsDict[following] = following
+        }
+        
+        for content in newContent {
+            newContentDict[content] = content
+        }
+        
+        for content in suggestedContent {
+            suggestedContentDict[content] = content
+        }
+        
+        
+        
+        
+        let userString : [String : Any] = ["name": name, "email": email, "username": username, "password": password, "isPrivate": isPrivate, "profilePic": "https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/userImages%2FhKaBCKrdabATDWHqnWIa?alt=media&token=3c8756d0-326c-42cf-86a3-b9901797749c", "folders": folders, "dateCreated": dateCreated?.toString(), "dateLastActive": dateLastActive?.toString(), "followers" : followersDict, "followings" : followingsDict, "biography" : biography, "isDarkModeEnabled" : isDarkModeEnabled, "newContent" : newContentDict, "suggestedContent" : suggestedContentDict]
         return userString
-        
-        
-//        let userString : [String : Any] = ["name" : name, "email" : email, "username" : username, "password" : password, "isPrivate" : isPrivate, "profilePic" : ]
 
     }
 }

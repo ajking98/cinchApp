@@ -85,7 +85,6 @@ struct ParentStruct {
                     
                     var userInfo = User(name: name!, username: newUsername, email: email!, password: password!, isPrivate: isPrivate!)
                     self.createUser(user: userInfo)
-                    UserStruct().updateExistingProfilePic(user: newUsername, newProfilePic: profilePic!)
                     UserStruct().updateDateCreated(user: newUsername, newDateCreated: Date().toString())
                     UserStruct().updateDateLastActive(user: newUsername, newDateLastActive: Date().toString())
                     self.DB.child(newUsername).observeSingleEvent(of: .value) { (snapshot) -> Void in

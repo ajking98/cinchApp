@@ -82,15 +82,24 @@ class CameraViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        let user = User(username: "yassin2")
+        let user = User(username: "justin")
         UserStruct().deleteFollowing(user: user.username!, following: "justin2")
         UserStruct().readBiography(user: user.username!) { (snapshot) in
             print(snapshot, "htis is the snapshot")
         }
-        UserStruct().addFolder(user: user.username!, folder: Folder(folderName: "naming"))
-        UserStruct().readFolders(user: user.username!) { (snapshot) in
-            print("working", snapshot)
+//        ParentStruct().createUser(user: user)
+        FolderStruct().readNumOfImages(user: user.username!, folderName: "random") { (snapshot) in
+            print("this is the number of images in the folder", snapshot)
         }
+        
+        FolderStruct().readNumOfVideos(user: user.username!, folderName: "random") { (snapshot) in
+            print("Videos", snapshot)
+        }
+        
+//        FolderStruct().addContent(user: user.username!, folderName: "random", newContent: "thisisNewContent")
+        FolderStruct().updateNumOfImagesByConstant(user: user.username!, folderName: "random", constant: -1)
+        FolderStruct().deleteContent(user: user.username!, folderName: "random", content: "thisisNewContent")
+        
         print("Appearing the view")
     }
     

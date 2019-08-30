@@ -113,17 +113,13 @@ struct UserStruct {
             }
         }
     }
-
-    // Existing Image
-    func updateExistingProfilePic(user : String, newProfilePic : String) -> Void {
+    
+    
+    func updateProfilePic(user : String, newProfilePic : String) -> Void {
         let DB = Database.database().reference().child("users").child(user)
         DB.updateChildValues(["profilePic": newProfilePic])
     }
     
-    // New Image
-    func updateNewProfilePic(user: String, newProfilePic: UIImage) -> Void {
-        StorageStruct().UploadProfilePic(user: UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!, image: newProfilePic)
-    }
     
     /*
      DateCreated
@@ -309,7 +305,8 @@ struct UserStruct {
     
     ///adds new post links to the user's suggestedContent
     func addSuggestedContent(user : String, link : String) {
-        DB.child(user).child("suggestedContent").child(link).setValue(link)
+        DB.child(user).child("suggestedContent").updateChildValues([link : link])
+        print("wer are adding the content")
     }
     
     
@@ -338,16 +335,15 @@ struct UserStruct {
     
     
     /*
- 
-    TODO THIS NEEDS FIXING ASAP
- 
+     Folders
     */
-    
+    //TODO the folder.toString() should be ACCURATE
     func addFolder(user : String, folder : Folder) {
         DB.child(user).child("folders").updateChildValues([folder.folderName! : folder.toString()])
     }
     
     
+    //TODO fix this and make it read the whole folder from the database and put it in a folderclass
     ///Reads folders from the database for the given user
     func readFolders(user : String, completion : @escaping([String])-> Void) {
         DB.child(user).child("folders").observeSingleEvent(of: .value) { (snapshot) in
@@ -356,11 +352,11 @@ struct UserStruct {
                 for folder in folders {
                     folderNames.append(folder.key)
                 }
-                
                 completion(folderNames)
             }
         }
     }
+    
     
     
     ///deletes a folder for the given user
@@ -380,5 +376,27 @@ struct UserStruct {
     
     
     
+    /*
+    foldersFollowing
+    */
+    ///reads the folders the given user is following
+    func readFoldersFollowing(user : String, completion : @escaping([String : Any])->Void) {
+        DB.child(user).child("foldersFollowing").observeSingleEvent(of: .value) { (snapshot) in
+            if let foldersFollowing = snapshot.value as? [String : Any] {
+                completion(foldersFollowing)
+            }
+        }
+    }
+    
+    
+    ///adds a folder to the folder's following list
+    func addFolderFollowing(user : String, newFolder : FolderReference) {
+        DB.child(user).child("foldersFollowing").child(newFolder.admin).updateChildValues([newFolder.folderName : newFolder])
+    }
+    
+    ///Deletes a folder from the folderFollowings in DB for given user
+    func deleteFolderFollowing(user : String, folder : FolderReference) {
+        DB.child(user).child("foldersFollowing").child(folder.admin).child(folder.folderName).removeValue()
+    }
     
 }

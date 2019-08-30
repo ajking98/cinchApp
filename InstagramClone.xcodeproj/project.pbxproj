@@ -41,10 +41,11 @@
 		46A3E10622C18678003F6F35 /* SecondProfileHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 46A3E10522C18678003F6F35 /* SecondProfileHeader.xib */; };
 		46A3E10822C18749003F6F35 /* FirstProfileHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A3E10722C18749003F6F35 /* FirstProfileHeader.swift */; };
 		46A3E10A22C18784003F6F35 /* SecondProfileHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A3E10922C18784003F6F35 /* SecondProfileHeader.swift */; };
+		46D48D902318A7D100952EDB /* FolderReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D48D8F2318A7D100952EDB /* FolderReference.swift */; };
 		46D5E07122A87F15003B41DE /* Folder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E07022A87F15003B41DE /* Folder.swift */; };
-		46D5E07422A87F5F003B41DE /* FolderStruct2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E07322A87F5F003B41DE /* FolderStruct2.swift */; };
+		46D5E07422A87F5F003B41DE /* FolderStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E07322A87F5F003B41DE /* FolderStruct.swift */; };
 		46D5E07622A87F75003B41DE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E07522A87F75003B41DE /* User.swift */; };
-		46D5E07822A87F89003B41DE /* UserStruct2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E07722A87F89003B41DE /* UserStruct2.swift */; };
+		46D5E07822A87F89003B41DE /* UserStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E07722A87F89003B41DE /* UserStruct.swift */; };
 		46D5E07A22A88F14003B41DE /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E07922A88F14003B41DE /* Tag.swift */; };
 		46D5E07C22A899B1003B41DE /* ParentStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E07B22A899B1003B41DE /* ParentStruct.swift */; };
 		46D5E08022ADABC3003B41DE /* StorageStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E07F22ADABC3003B41DE /* StorageStruct.swift */; };
@@ -247,10 +248,11 @@
 		46A3E10522C18678003F6F35 /* SecondProfileHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SecondProfileHeader.xib; sourceTree = "<group>"; };
 		46A3E10722C18749003F6F35 /* FirstProfileHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstProfileHeader.swift; sourceTree = "<group>"; };
 		46A3E10922C18784003F6F35 /* SecondProfileHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondProfileHeader.swift; sourceTree = "<group>"; };
+		46D48D8F2318A7D100952EDB /* FolderReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderReference.swift; sourceTree = "<group>"; };
 		46D5E07022A87F15003B41DE /* Folder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Folder.swift; sourceTree = "<group>"; };
-		46D5E07322A87F5F003B41DE /* FolderStruct2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderStruct2.swift; sourceTree = "<group>"; };
+		46D5E07322A87F5F003B41DE /* FolderStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderStruct.swift; sourceTree = "<group>"; };
 		46D5E07522A87F75003B41DE /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		46D5E07722A87F89003B41DE /* UserStruct2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStruct2.swift; sourceTree = "<group>"; };
+		46D5E07722A87F89003B41DE /* UserStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStruct.swift; sourceTree = "<group>"; };
 		46D5E07922A88F14003B41DE /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		46D5E07B22A899B1003B41DE /* ParentStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentStruct.swift; sourceTree = "<group>"; };
 		46D5E07F22ADABC3003B41DE /* StorageStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageStruct.swift; sourceTree = "<group>"; };
@@ -423,16 +425,33 @@
 			path = Post;
 			sourceTree = "<group>";
 		};
+		46D48D912318AAB900952EDB /* Folder */ = {
+			isa = PBXGroup;
+			children = (
+				46D5E07022A87F15003B41DE /* Folder.swift */,
+				46D48D8F2318A7D100952EDB /* FolderReference.swift */,
+				46D5E07322A87F5F003B41DE /* FolderStruct.swift */,
+			);
+			path = Folder;
+			sourceTree = "<group>";
+		};
+		46D48D922318AAC300952EDB /* User */ = {
+			isa = PBXGroup;
+			children = (
+				46D5E07522A87F75003B41DE /* User.swift */,
+				46D5E07722A87F89003B41DE /* UserStruct.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
 		46D5E065229EDCD8003B41DE /* Structures */ = {
 			isa = PBXGroup;
 			children = (
+				46D48D922318AAC300952EDB /* User */,
+				46D48D912318AAB900952EDB /* Folder */,
 				4669B8D122B6DC64004FB38D /* defaultsKeys.swift */,
 				89CD1D03229201BA004BD0A0 /* DownloadImage.swift */,
 				46D5E07B22A899B1003B41DE /* ParentStruct.swift */,
-				46D5E07522A87F75003B41DE /* User.swift */,
-				46D5E07022A87F15003B41DE /* Folder.swift */,
-				46D5E07322A87F5F003B41DE /* FolderStruct2.swift */,
-				46D5E07722A87F89003B41DE /* UserStruct2.swift */,
 				EB63B7DF226A7EB5004C7E2C /* ImageInsta.swift */,
 				EB41F8E822653170003751FA /* Photo.swift */,
 				46D5E07F22ADABC3003B41DE /* StorageStruct.swift */,
@@ -1022,14 +1041,15 @@
 				46D5E07122A87F15003B41DE /* Folder.swift in Sources */,
 				46D5E07622A87F75003B41DE /* User.swift in Sources */,
 				46668D6022C98C070021229D /* ProfileContainer.swift in Sources */,
-				46D5E07822A87F89003B41DE /* UserStruct2.swift in Sources */,
+				46D5E07822A87F89003B41DE /* UserStruct.swift in Sources */,
 				EB3A43342263ACB500F6F339 /* PhotoCell.swift in Sources */,
-				46D5E07422A87F5F003B41DE /* FolderStruct2.swift in Sources */,
+				46D5E07422A87F5F003B41DE /* FolderStruct.swift in Sources */,
 				4622497122E7F3C80005B12F /* TableViewPostCell.swift in Sources */,
 				EB3A433A2263CCC000F6F339 /* ProfileCollectionViewCell.swift in Sources */,
 				89CD1D04229201BA004BD0A0 /* DownloadImage.swift in Sources */,
 				EB40EF992263E9940093BB5B /* FolderCollectionViewCell.swift in Sources */,
 				EBF7FF6522FCCB930099037D /* ReportCell.swift in Sources */,
+				46D48D902318A7D100952EDB /* FolderReference.swift in Sources */,
 				891FC3F922D7F6D80024A623 /* DiscoverLayout.swift in Sources */,
 				EB63B7DE226A7933004C7E2C /* CustomImageFlowLayout.swift in Sources */,
 				EB74D3EE22603DC200556399 /* ProfileViewController.swift in Sources */,
