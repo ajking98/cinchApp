@@ -15,10 +15,10 @@ class User  {
     var password:String = ""
     var isPrivate:Bool = false
     var profilePic: UIImage?
-    var folders : [String : [String : Any]] = [:]
+    var folders : [Folder] = []
     var tags : [Tag]?
-    var dateCreated : Date?
-    var dateLastActive : Date?
+    var dateCreated : TimeInterval?
+    var dateLastActive : TimeInterval?
     
     //New stuff
     var followers : [String] = []
@@ -27,12 +27,14 @@ class User  {
     var isDarkModeEnabled : Bool = false
     var newContent : [String] = []
     var suggestedContent : [String] = []
-    var folderReferences : [String : Any] = [:]
+    var folderReferences : [FolderReference] = []
+    var profilePicLink : String?
     
     //default variables 
     let defaultProfilePic = UIImage(named: "userPlaceholder")
     let folder1 = Folder(folderName: "random")
     let folder2 = Folder(folderName: "reactions")
+
     
     
     ///should only be called when first making a user to add them to the database
@@ -43,9 +45,9 @@ class User  {
         password = ""
         isPrivate = false
         profilePic = defaultProfilePic
-        folders = [folder1.folderName : folder1.toString(), folder2.folderName : folder2.toString()]
-        dateCreated = Date()
-        dateLastActive = Date()
+        folders = [folder1, folder2]
+        dateCreated = Date().timeIntervalSince1970
+        dateLastActive = Date().timeIntervalSince1970
     }
     
     
@@ -56,11 +58,10 @@ class User  {
         self.password = ""
         self.isPrivate = false
         self.profilePic = defaultProfilePic
-        folders = [folder1.folderName : folder1.toString(), folder2.folderName : folder2.toString()]
-        self.dateCreated = Date()
-        self.dateLastActive = Date()
+        folders = [folder1, folder2]
+        self.dateCreated = Date().timeIntervalSince1970
+        self.dateLastActive = Date().timeIntervalSince1970
     }
-    
     
     //add Default image
     init(name : String, username : String, email : String, password: String, isPrivate:Bool) {
@@ -70,38 +71,41 @@ class User  {
         self.password = password
         self.isPrivate = isPrivate
         self.profilePic = defaultProfilePic
-        self.dateCreated = Date()
-        self.dateLastActive = Date()
+        self.dateCreated = Date().timeIntervalSince1970
+        self.dateLastActive = Date().timeIntervalSince1970
     }
     
     
-    init(name : String, username : String, email : String, password: String, isPrivate:Bool, profilePic : UIImage) {
+    ///Called when all the data is available
+    init(name : String, username : String, email : String, password: String, isPrivate : Bool, profilePicLink : String, folders : [Folder], dateCreated : Double, dateLastActive : Double, followers : [String], followings : [String], biography : String, isDarkModeEnabled : Bool, newContent : [String], suggestedContent : [String], folderReferences : [FolderReference]) {
         self.name = name
         self.username = username
         self.email = email
         self.password = password
         self.isPrivate = isPrivate
-        self.profilePic = profilePic
-        self.dateCreated = Date()
-        self.dateLastActive = Date()
+        self.profilePicLink = profilePicLink
+        self.folders = folders
+        self.dateCreated = Date().timeIntervalSince1970
+        self.dateLastActive = Date().timeIntervalSince1970
+        self.followers = followers
+        self.followings = followings
+        self.biography = biography
+        self.isDarkModeEnabled = isDarkModeEnabled
+        self.newContent = newContent
+        self.suggestedContent = suggestedContent
+        self.folderReferences = folderReferences
     }
     
-    init(name : String, email : String, password: String, isPrivate:Bool, profilePic : UIImage) {
-        self.name = name
-        self.email = email
-        self.password = password
-        self.isPrivate = isPrivate
-        self.profilePic = profilePic
-        self.dateCreated = Date()
-        self.dateLastActive = Date()
-    }
+    
+    
     
     func toString() -> [String: Any] {
         var followersDict :[String : String] = [:]
         var followingsDict :[String : String] = [:]
         var newContentDict : [String : String] = [:]
         var suggestedContentDict : [String : String] = [:]
-        
+        var foldersDict : [String : Any] = [:]
+        var folderReferencesDict : [String : Any] = [:]
         
         for follower in followers {
             followersDict[follower] = follower
@@ -119,10 +123,20 @@ class User  {
         }
         
         if folders.count < 1 {
-            folders = [folder1.folderName : folder1.toString(), folder2.folderName : folder2.toString()]
+            folders = [folder1, folder2]
         }
         
-        let userString : [String : Any] = ["name": name, "email": email, "username": username, "password": password, "isPrivate": isPrivate, "profilePic": "https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/userImages%2FhKaBCKrdabATDWHqnWIa?alt=media&token=3c8756d0-326c-42cf-86a3-b9901797749c", "folders": folders, "dateCreated": dateCreated?.toString() as Any, "dateLastActive": dateLastActive?.toString() as Any, "followers" : followersDict, "followings" : followingsDict, "biography" : biography, "isDarkModeEnabled" : isDarkModeEnabled, "newContent" : newContentDict, "suggestedContent" : suggestedContentDict, "folderReferences" : folderReferences]
+        for folder in folders {
+            foldersDict[folder.folderName] = folder.toString()
+        }
+        
+        for folderRef in folderReferences {
+            folderReferencesDict[folderRef.admin] = [folderRef.folderName : folderRef.folderName]
+        }
+        
+        
+        
+        let userString : [String : Any] = ["name": name, "email": email, "username": username, "password": password, "isPrivate": isPrivate, "profilePic": "https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/userImages%2FhKaBCKrdabATDWHqnWIa?alt=media&token=3c8756d0-326c-42cf-86a3-b9901797749c", "folders": foldersDict, "dateCreated": dateCreated!, "dateLastActive": dateLastActive!, "followers" : followersDict, "followings" : followingsDict, "biography" : biography, "isDarkModeEnabled" : isDarkModeEnabled, "newContent" : newContentDict, "suggestedContent" : suggestedContentDict, "folderReferences" : folderReferencesDict]
         
         return userString
     }

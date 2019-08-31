@@ -422,7 +422,8 @@
 				467E5DB822FCE8EF00F23ABD /* Post.swift */,
 				467E5DC422FCFE2100F23ABD /* PostStruct.swift */,
 			);
-			path = Post;
+			name = Post;
+			path = ../Post;
 			sourceTree = "<group>";
 		};
 		46D48D912318AAB900952EDB /* Folder */ = {
@@ -447,6 +448,8 @@
 		46D5E065229EDCD8003B41DE /* Structures */ = {
 			isa = PBXGroup;
 			children = (
+				467E5DC622FD044A00F23ABD /* Post */,
+				8E5EDB4522C0043B0088FDA9 /* Tags */,
 				46D48D922318AAC300952EDB /* User */,
 				46D48D912318AAB900952EDB /* Folder */,
 				4669B8D122B6DC64004FB38D /* defaultsKeys.swift */,
@@ -551,7 +554,8 @@
 				8E95FFCB22BF25CE0067B5F2 /* TagElement.swift */,
 				8E5EDB4D22C025990088FDA9 /* TagElementStruct.swift */,
 			);
-			path = Tags;
+			name = Tags;
+			path = ../Tags;
 			sourceTree = "<group>";
 		};
 		C2EFC41CF087D33E3A5E7F49 /* Pods */ = {
@@ -595,13 +599,11 @@
 		EB74D3B4226025E900556399 /* InstagramClone */ = {
 			isa = PBXGroup;
 			children = (
-				467E5DC622FD044A00F23ABD /* Post */,
 				4622495222DFAD240005B12F /* InstagramClone.entitlements */,
 				89503D6C22D92D37004EFC06 /* PermissionsView */,
 				89503D6422D92D09004EFC06 /* CameraView */,
 				891FC3EA22D7F5DD0024A623 /* Discover */,
 				465C438C22D176FB002BD263 /* Profile */,
-				8E5EDB4522C0043B0088FDA9 /* Tags */,
 				46D5E066229EDCEF003B41DE /* Layouts */,
 				8987125B229DF14500BE8F23 /* HelpingStructs */,
 				89871250229DE96A00BE8F23 /* Classes */,

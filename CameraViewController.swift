@@ -86,10 +86,20 @@ class CameraViewController: UIViewController {
         
         let myUser = User(name: "Nahome", username: "namho", email: "ass@gmail.com", password: "passcode", isPrivate: true)
         
-        ParentStruct().createUser(user: myUser)
+//        ParentStruct().addUser(user: myUser)
         print("Appearing the view")
         UserStruct().readCompleteFolder(user: myUser.username) { (snapshot) in
             print("these are names of the folders", snapshot[0].content)
+        }
+        UserStruct().addFolderReference(user: myUser.username, newFolder: FolderReference(admin: "yassin", folderName: "Justin's Funny"))
+        UserStruct().readFoldersFollowing(user: myUser.username) { (snapshot) in
+            print("this is the snapshot", snapshot)
+        }
+        
+        ParentStruct().readUser(user: myUser.username) { (user) in
+            var user2 = user
+            user2.username = "James Harden"
+            ParentStruct().addUser(user: user2)
         }
     }
     

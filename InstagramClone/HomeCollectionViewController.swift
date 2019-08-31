@@ -72,11 +72,7 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
 //            checkUserForDuplicates(uniqueUsername)
             userDefaults.set(uniqueUsername, forKey: defaultsKeys.usernameKey)
             let newUser = User(username: uniqueUsername)
-            ParentStruct().createUser(user: newUser)
 
-            ParentStruct().readUser(user: newUser.username, completion: { (userInfo:User, dateCreated:String, dateLastActive:String, folders:Any) in
-               
-            })
         }
 //        var tempUser = User(username: "FartMeister")
 //        ParentStruct().createUser(user: tempUser)

@@ -48,9 +48,6 @@ class ViewController: UIViewController {
             print(error)
         }
 
-        ParentStruct().readUser(user: uuid.uuidString, completion: { (userInfo:User, dateCreated:String, dateLastActive:String, folders:Any) in
-           
-        })
     }
     
     

@@ -124,28 +124,32 @@ struct UserStruct {
     /*
      DateCreated
     */
-    func readDateCreated(user : String, completion: @escaping (String) -> Void) {
+    func readDateCreated(user : String, completion: @escaping (Double) -> Void) {
         DB.child(user).child("dateCreated").observeSingleEvent(of: .value) { (snapshot) in
-            if let dateCreated = snapshot.value as? String {
+            if let dateCreated = snapshot.value as? Double {
                 completion(dateCreated)
             }
         }
     }
     
-    func updateDateCreated(user : String, newDateCreated : String) -> Void {
+    func updateDateCreated(user : String, newDateCreated : Double) {
         let DB = Database.database().reference().child("users").child(user)
         DB.updateChildValues(["dateCreated": newDateCreated])
     }
     
-    func readDateLastActive(user : String, completion: @escaping (String) -> Void) {
+    
+    /*
+     dateLastActive
+    */
+    func readDateLastActive(user : String, completion: @escaping (Double) -> Void) {
         DB.child(user).child("dateLastActive").observeSingleEvent(of: .value) { (snapshot) in
-            if let dateLastActive = snapshot.value as? String {
+            if let dateLastActive = snapshot.value as? Double {
                 completion(dateLastActive)
             }
         }
     }
     
-    func updateDateLastActive(user : String, newDateLastActive : String) -> Void {
+    func updateDateLastActive(user : String, newDateLastActive : Double) -> Void {
         let DB = Database.database().reference().child("users").child(user)
         DB.updateChildValues(["dateLastActive": newDateLastActive])
     }
@@ -394,10 +398,20 @@ struct UserStruct {
     foldersFollowing
     */
     ///reads the folders the given user is following
-    func readFoldersFollowing(user : String, completion : @escaping([String : Any])->Void) {
+    func readFoldersFollowing(user : String, completion : @escaping([FolderReference])->Void) {
         DB.child(user).child("folderReferences").observeSingleEvent(of: .value) { (snapshot) in
-            if let folderReferences = snapshot.value as? [String : Any] {
-                completion(folderReferences)
+            if let folderReferences = snapshot.value as? [String : [String : String]] {
+                var folderReferencesArray : [FolderReference] = []
+                //TODO cycle through the users' names and then cycle through the folder names making a folderReference Class and adding it to the folderReferences Array along the way
+                for user in folderReferences {
+                    let admin = user.key
+                    for folderName in folderReferences[admin]! {
+                        let folderRef = FolderReference(admin: admin, folderName: folderName.key)
+                        folderReferencesArray.append(folderRef)
+                    }
+
+                }
+                completion(folderReferencesArray)
             }
         }
     }
@@ -405,7 +419,7 @@ struct UserStruct {
     
     ///adds a folder to the folder's following list
     func addFolderReference(user : String, newFolder : FolderReference) {
-        DB.child(user).child("folderReferences").child(newFolder.admin).updateChildValues([newFolder.folderName : newFolder.toString()])
+        DB.child(user).child("folderReferences").child(newFolder.admin).updateChildValues([newFolder.folderName : newFolder.folderName])
     }
     
     ///Deletes a folder from the folderReferences in DB for given user

@@ -14,104 +14,80 @@ import FirebaseStorage
 
 struct ParentStruct {
     var DB = Database.database().reference().child("users")
-    let uuid = UIDevice.current.identifierForVendor!
-    var main = ViewController();
-    let username = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!
-
-    ///creates a user in the database
-    func createUser(user : User) -> Void {
-        //user username
-        print("Creating a User...")
+    
+    
+    /*
+     addUser
+    */
+    func addUser(user : User) {
         DB.child(user.username).setValue(user.toString())
-        print("Finished creating user...")
     }
     
-    //Used to call a user based on username or uuid
-    func readUser(user : String, completion: @escaping (User, String, String, Any) -> Void) {
-            var folderArr = [String]()
-            DB.child(user).observeSingleEvent(of: .value) { (snapshot) -> Void in
-                if (snapshot.value as? [String:Any]) != nil {
-                    var name:String?
-                    var email: String?
-                    var password: String?
-                    var isPrivate: Bool?
-                    var profilePic: String?
-                    var dateCreated: String?
-                    var dateLastActive: String?
-                    var folders: Any?
-                    let dictionary = snapshot.value as? NSDictionary
-                    name = dictionary?["name"] as? String ?? ""
-                    email = dictionary?["email"] as? String ?? ""
-                    password = dictionary?["password"] as? String ?? ""
-                    isPrivate = dictionary?["isPrivate"] as? Bool ?? false
-                    profilePic = dictionary?["profilePic"] as? String ?? ""
-                    dateCreated = dictionary?["dateCreated"] as? String ?? ""
-                    dateLastActive = dictionary?["dateLastActive"] as? String ?? ""
-                    folders = dictionary?["folders"]
-                    
-                    var userInfo = User(name: name!, username: String(describing: user), email: email!, password: password!, isPrivate: isPrivate!)
-                    completion(userInfo, dateCreated!, dateLastActive!, folders)
-                }
-            }
-            return
+    
+    /*
+     deleteUser
+    */
+    func deleteUser(user : String) {
+        DB.child(user).removeValue()
     }
-    // TODO Doesn't fully work, rigt now it deletes the old account and restarts it with a new username. Fix it.
-    // https://stackoverflow.com/questions/39107274/is-it-possible-to-rename-a-key-in-the-firebase-realtime-database
-    //Used to migrate from the user's default unique username to the user's own username
-    //Can also be used if user wishes to update their username
-    //returns the updated User
-    func updateUser(oldUsername : String, newUsername : String, prevUserInfo: User) -> Bool {
-        readUser(user: oldUsername) { (userInfo:User, dateCreated:String, dateLastActive:String, folders:Any) in
-            self.DB.child(oldUsername).observeSingleEvent(of: .value) { (snapshot) -> Void in
-                if let dict = snapshot.value as? [String:Any] {
-                    var name:String?
-                    var email: String?
-                    var password: String?
-                    var isPrivate: Bool?
-                    var profilePic: String?
-                    var dateCreated: String?
-                    var dateLastActive: String?
-                    var folders: Any?
-                    let dictionary = snapshot.value as? NSDictionary
-                    name = dictionary?["name"] as? String ?? ""
-                    email = dictionary?["email"] as? String ?? ""
-                    password = dictionary?["password"] as? String ?? ""
-                    isPrivate = dictionary?["isPrivate"] as? Bool ?? false
-                    profilePic = dictionary?["profilePic"] as? String ?? ""
-                    dateCreated = dictionary?["dateCreated"] as? String ?? ""
-                    dateLastActive = dictionary?["dateLastActive"] as? String ?? ""
-                    folders = dictionary?["folders"]
+    
+    
+    /*
+     readUser
+    */
+    func readUser(user : String, completion : @escaping(User)-> Void) {
+        DB.child(user).observeSingleEvent(of: .value) { (snapshot) in
+            if let userDict = snapshot.value as? [String : Any] {
+                UserStruct().readCompleteFolder(user: user, completion: { (folders) in
                     
-                    var userInfo = User(name: name!, username: newUsername, email: email!, password: password!, isPrivate: isPrivate!)
-                    self.createUser(user: userInfo)
-                    UserStruct().updateDateCreated(user: newUsername, newDateCreated: Date().toString())
-                    UserStruct().updateDateLastActive(user: newUsername, newDateLastActive: Date().toString())
-                    self.DB.child(newUsername).observeSingleEvent(of: .value) { (snapshot) -> Void in
-                        if let dict = snapshot.value as? [String:Any] {
-                            var folders2: Any?
-                            folders2 = dictionary?["folders"]
-                            folders2 = folders
+                    //Calling Values from the user dictionary
+                    let name = userDict["name"] as! String
+                    let username = userDict["username"] as! String
+                    let email = userDict["email"] as! String
+                    let password = userDict["password"] as! String
+                    let isPrivate = userDict["isPrivate"] as! Bool
+                    let profilePicLink = userDict["profilePic"] as! String
+                    //folders being read through UserStruct()
+                    let dateCreated = userDict["dateCreated"] as! Double
+                    let dateLastActive = userDict["dateLastActive"] as! Double
+                    
+                    //followers
+                    let followersDict = (userDict["followers"] != nil) ? userDict["followers"] as! [String : String] : [ : ] as! [String : String]
+                    let followers : [String] = Array(followersDict.keys)
+                    
+                    //followings
+                    let followingsDict = userDict["followings"] != nil ? userDict["followings"] as! [String : String] : [:] as! [String : String]
+                    let followings : [String] = Array(followingsDict.keys)
+                    
+                    let biography = userDict["biography"] as! String
+                    let isDarkModeEnabled = userDict["isDarkModeEnabled"] as! Bool
+                    
+                    //newContent
+                    let newContentDict = userDict["newContent"] != nil ? userDict["newContent"] as! [String : String] : [:] as! [String : String]
+                    let newContent : [String] = Array(newContentDict.keys)
+                    
+                    //suggestedContent
+                    let suggestedContentDict = userDict["suggestedContent"] != nil ? userDict["suggestedContent"] as! [String : String] : [:] as! [String : String]
+                    let suggestedContent : [String] = Array(suggestedContentDict.keys)
+                    
+                    //folderReferences
+                    let folderReferencesDict = userDict["folderReferences"] != nil ? userDict["folderReferences"] as! [String : [String : String]] : [ "" : ["" : ""]]
+                    var folderReferences : [FolderReference] = []
+                    
+                    //for loop to retreive folderReferences
+                    for admin in folderReferencesDict.keys {
+                        for folderName in folderReferencesDict[admin]!.keys {
+                            folderReferences.append(FolderReference(admin: admin, folderName: folderName))
                         }
                     }
-//                    UserStruct().updateFolder(user: newUsername, prevFolderName: <#T##String#>, newFolderName: <#T##String#>, prevFolderinfo: <#T##Folder#>)
-                }
+                    
+                    let thisUser = User(name: name, username: username, email: email, password: password, isPrivate: isPrivate, profilePicLink: profilePicLink, folders: folders, dateCreated: dateCreated, dateLastActive: dateLastActive, followers: followers, followings: followings, biography: biography, isDarkModeEnabled: isDarkModeEnabled, newContent: newContent, suggestedContent: suggestedContent, folderReferences: folderReferences)
+                    
+                    completion(thisUser)
+                })
             }
         }
-//        DB.updateChildValues([newUsername: prevUserInfo.toString()])
-//        let status = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) ?? ""
-//        print(status)
-//        if status != "" {
-//            UserDefaults.standard.set(newUsername, forKey: defaultsKeys.usernameKey)
-//        }
-        deleteUser(username: oldUsername, userInfo: prevUserInfo)
-        return true
     }
     
-    
-    //Used to remove a User permanently
-    func deleteUser(username: String , userInfo:User) {
-        //Handle username
-        let DB = Database.database().reference().child("users").child(username).removeValue()
-    }
     
 }
