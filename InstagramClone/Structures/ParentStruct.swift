@@ -13,7 +13,7 @@ import FirebaseStorage
 
 
 struct ParentStruct {
-    var DB = Database.database().reference().child("users")
+    let DB = Database.database().reference().child("users")
     
     
     /*
@@ -38,7 +38,7 @@ struct ParentStruct {
     func readUser(user : String, completion : @escaping(User)-> Void) {
         DB.child(user).observeSingleEvent(of: .value) { (snapshot) in
             if let userDict = snapshot.value as? [String : Any] {
-                UserStruct().readCompleteFolder(user: user, completion: { (folders) in
+                UserStruct().readCompleteFolders(user: user, completion: { (folders) in
                     
                     //Calling Values from the user dictionary
                     let name = userDict["name"] as! String

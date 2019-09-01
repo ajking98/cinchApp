@@ -42,6 +42,7 @@
 		46A3E10822C18749003F6F35 /* FirstProfileHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A3E10722C18749003F6F35 /* FirstProfileHeader.swift */; };
 		46A3E10A22C18784003F6F35 /* SecondProfileHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A3E10922C18784003F6F35 /* SecondProfileHeader.swift */; };
 		46D48D902318A7D100952EDB /* FolderReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D48D8F2318A7D100952EDB /* FolderReference.swift */; };
+		46D48D97231AF48700952EDB /* ParentPostStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D48D96231AF48700952EDB /* ParentPostStruct.swift */; };
 		46D5E07122A87F15003B41DE /* Folder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E07022A87F15003B41DE /* Folder.swift */; };
 		46D5E07422A87F5F003B41DE /* FolderStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E07322A87F5F003B41DE /* FolderStruct.swift */; };
 		46D5E07622A87F75003B41DE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E07522A87F75003B41DE /* User.swift */; };
@@ -249,6 +250,7 @@
 		46A3E10722C18749003F6F35 /* FirstProfileHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstProfileHeader.swift; sourceTree = "<group>"; };
 		46A3E10922C18784003F6F35 /* SecondProfileHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondProfileHeader.swift; sourceTree = "<group>"; };
 		46D48D8F2318A7D100952EDB /* FolderReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderReference.swift; sourceTree = "<group>"; };
+		46D48D96231AF48700952EDB /* ParentPostStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentPostStruct.swift; sourceTree = "<group>"; };
 		46D5E07022A87F15003B41DE /* Folder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Folder.swift; sourceTree = "<group>"; };
 		46D5E07322A87F5F003B41DE /* FolderStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderStruct.swift; sourceTree = "<group>"; };
 		46D5E07522A87F75003B41DE /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -421,6 +423,7 @@
 			children = (
 				467E5DB822FCE8EF00F23ABD /* Post.swift */,
 				467E5DC422FCFE2100F23ABD /* PostStruct.swift */,
+				46D48D96231AF48700952EDB /* ParentPostStruct.swift */,
 			);
 			name = Post;
 			path = ../Post;
@@ -1012,6 +1015,7 @@
 			files = (
 				46A3E10822C18749003F6F35 /* FirstProfileHeader.swift in Sources */,
 				EB71602822FA2726009538C2 /* MenuOptionCell.swift in Sources */,
+				46D48D97231AF48700952EDB /* ParentPostStruct.swift in Sources */,
 				46A3E0B822C0341E003F6F35 /* GemsViewController.swift in Sources */,
 				EB0158E122FB65DA008CC63A /* ProfileSettingsController.swift in Sources */,
 				EB41F8E922653170003751FA /* Photo.swift in Sources */,

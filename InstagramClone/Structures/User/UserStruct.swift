@@ -360,9 +360,22 @@ struct UserStruct {
         }
     }
     
+    ///reads a SINGLE folder
+    func readSingleFolder(user : String, folderName : String, completion : @escaping(Folder)-> Void) {
+        DB.child(user).child("folders").child(folderName).observeSingleEvent(of: .value) { (snapshot) in
+            if let folder = snapshot.value as? [String : Any] {
+                
+                let thisFolder = Folder(folderName: folder["folderName"] as! String, iconLink: folder["icon"] as! String, dateCreated: folder["dateCreated"] as! Double, dateLastModified: folder["dateLastModified"] as! Double, content: folder["content"] != nil ? folder["content"] as! [String : String] : [:] as! [String : String], numOfImages: folder["numOfImages"] as! Int, numOfVideos: folder["numOfVideos"] as! Int, isPrivate: folder["isPrivate"] as! Bool, followers: folder["followers"] != nil ? folder["followers"] as! [String] : [] as! [String], followersCount: folder["followersCount"] as! Int)
+                
+                completion(thisFolder)
+                
+            }
+        }
+    }
     
-    ///reads the complete folder and puts it in the folder class
-    func readCompleteFolder(user : String, completion : @escaping([Folder])-> Void) {
+    
+    ///reads the complete folders and puts it in the folder class
+    func readCompleteFolders(user : String, completion : @escaping([Folder])-> Void) {
         DB.child(user).child("folders").observeSingleEvent(of: .value) { (snapshot) in
             if let folders = snapshot.value as? [String : Any] {
                 var folderArray : [Folder] = []

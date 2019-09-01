@@ -84,52 +84,20 @@ class CameraViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         
         
-        let myUser = User(name: "Nahome", username: "namho", email: "ass@gmail.com", password: "passcode", isPrivate: true)
-        
-//        ParentStruct().addUser(user: myUser)
-        print("Appearing the view")
-        UserStruct().readCompleteFolder(user: myUser.username) { (snapshot) in
-            print("these are names of the folders", snapshot[0].content)
+        let post = Post(isImage: false, postOwner: "Yassin", link: "This is the link")
+//        ParentPostStruct().addPost(post: post)
+        UserStruct().readSingleFolder(user: "namho", folderName: "random") { (snapshot) in
+            let folder = snapshot
+            folder.folderName = "New Folder"
+            UserStruct().addFolder(user: "namho", folder: folder)
+           
         }
-        UserStruct().addFolderReference(user: myUser.username, newFolder: FolderReference(admin: "yassin", folderName: "Justin's Funny"))
-        UserStruct().readFoldersFollowing(user: myUser.username) { (snapshot) in
-            print("this is the snapshot", snapshot)
-        }
-        
-        ParentStruct().readUser(user: myUser.username) { (user) in
-            var user2 = user
-            user2.username = "James Harden"
-            ParentStruct().addUser(user: user2)
-        }
+        print("we are adding the post")
+        PostStruct().addLikedBy(post: post.link!, newLiker: "Yassincom")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        let user = User(username: "yassin2")
-//        ParentStruct().createUser(user: user)
-        
-        //todo remove this after testing Firebase calling
-        let myUser = "-%&%-3Y5BL591Hx"
-        UserStruct().readName(user: myUser) { (snapshot) in
-            print("this is the name of the person", snapshot)
-        }
-        UserStruct().readEmail(user: myUser) { (snapshot) in
-            print("this is the email", snapshot)
-        }
-        UserStruct().readPassword(user: myUser) { (snapshot) in
-            print("this is the password", snapshot)
-        }
-        UserStruct().readDateCreated(user: myUser) { (snapshot) in
-            print("this is the dateCreated", snapshot)
-        }
-        UserStruct().readProfilePic(user: myUser) { (snapshot) in
-            print("this is the ProfilePic", snapshot)
-        }
-        UserStruct().readIsPrivate(user: myUser) { (snapshot) in
-            print("this is the isPrivate status", snapshot)
-        }
-        
         
         guard isAuthorized() else{
             var mainView: UIStoryboard!
