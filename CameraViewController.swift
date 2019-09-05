@@ -81,21 +81,6 @@ class CameraViewController: UIViewController {
         return authStatus
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        
-        
-        let post = Post(isImage: false, postOwner: "Yassin", link: "This is the link")
-//        ParentPostStruct().addPost(post: post)
-        UserStruct().readSingleFolder(user: "namho", folderName: "random") { (snapshot) in
-            let folder = snapshot
-            folder.folderName = "New Folder"
-            UserStruct().addFolder(user: "namho", folder: folder)
-           
-        }
-        print("we are adding the post")
-        PostStruct().addLikedBy(post: post.link!, newLiker: "Yassincom")
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         

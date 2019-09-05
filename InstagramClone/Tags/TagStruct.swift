@@ -27,33 +27,71 @@ import FirebaseDatabase
 
 struct TagStruct {
     
-    var DB = Database.database().reference().child("tags")
-    
-    //Takes in a tagLabel and returns the list of tagElement objects that correspond with that tagLabel
-    //gets all the elements under that taglabel and puts it in a list of tagElements
-    func readElements(tagLabel : String)->[TagElement] {
-        return [TagElement(link: "nil")]
-    }
+    private var DB = Database.database().reference().child("tags")
     
     
-    ///Gets the whole element at a given index 
-    func readElement(tagLabel : String, elementIndex : Int, action : @escaping (Any) -> Void){
+    ///Gets the whole element at a given link
+    func readElement(tagLabel : String, link : String, completion : @escaping (TagElement) -> Void){
+        DB.child(tagLabel).child("elements").child(link).observeSingleEvent(of: .value) { (snapshot) in
+            if let element = snapshot.value as? [String : Any] {
+                let firstUsed = element["firstUsed"] as! Double
+                let lastUsed = element["lastUsed"] as! Double
+                let link = element["link"] as! String
+                let numOfUsages = element["numOfUsages"] as! Int
+                completion(TagElement(link: link, numOfUsages: numOfUsages, lastUsed: lastUsed, firstUsed: firstUsed))
+            }
+        }
         
-        TagElementStruct().updateNumOfUsages(tagLabel: tagLabel, elementIndex: elementIndex)
-        TagElementStruct().updateLastUsed(tagLabel: tagLabel, elementIndex: elementIndex, newLastUsedValue: NSDate())
-        return
+        TagElementStruct().updateNumOfUsages(tagLabel: tagLabel, link: link)
+        TagElementStruct().updateLastUsed(tagLabel: tagLabel, link: link, newLastUsedValue: NSDate().timeIntervalSince1970)
+    }
+    
+    ///reads all the elements for a given tag label
+    func readAllElements(tagLabel : String, completion : @escaping([TagElement])->Void){
+        DB.child(tagLabel).child("elements").observeSingleEvent(of: .value) { (snapshot) in
+            if let elements = snapshot.value as? [String : [String : Any]] {
+                var elementsDict : [TagElement] = []
+                for thisElement in elements {
+                    if let element = elements[thisElement.key] {
+                        let firstUsed = element["firstUsed"] as! Double
+                        let lastUsed = element["lastUsed"] as! Double
+                        let link = element["link"] as! String
+                        let numOfUsages = element["numOfUsages"] as! Int
+                        
+                        let tagElement = TagElement(link: link, numOfUsages: numOfUsages, lastUsed: lastUsed, firstUsed: firstUsed)
+                        elementsDict.append(tagElement)
+                    }
+                }
+                completion(elementsDict)
+            }
+        }
+    }
+    
+    //check is data already exists in db and updates or creates depending on the outcome
+    func addElement(tagLabel : String, tagElement : TagElement) {
+        let link = tagElement.link
+        DB.child(tagLabel).child("elements").child(link).observeSingleEvent(of: .value) { (snapshot) in
+            if let _ = snapshot.value as? [String : Any] {
+                TagElementStruct().updateNumOfUsages(tagLabel: tagLabel, link: link)
+                TagStruct().updateTagOccurance(tagLabel: tagLabel)
+            }
+            else {
+                self.createElement(tagLabel: tagLabel, newTagElement: tagElement)
+            }
+        }
     }
     
     
-    ///Takes in a tagLabel and a new tagElement and appends the element to the current tagElements in the DB
-    func updateElement(tagLabel : String, index : Int, newTagElement : TagElement){
-        DB.child(tagLabel).child("tagElements").updateChildValues([String(index) : newTagElement.toString()])
+    ///Takes in a tagLabel and a new tagElement and creates the elements for the given link
+    fileprivate func createElement(tagLabel : String, newTagElement : TagElement){
+        let link = newTagElement.link
+        DB.child(tagLabel).child("elements").updateChildValues([link : newTagElement.toString()])
     }
     
     
-    ///Takes in a tagLabel and elementIndex and deletes the tagElement at that given index in the tag object in the DB
-    func deleteElement(tagLabel : String, elementIndex : Int){
-        DB.child(tagLabel).child("tagElements").child(String(elementIndex)).removeValue()
+    ///Takes in a tagLabel and a link to the image and deletes the tagElement at that given link in the tag object in the DB
+    func deleteElement(tagLabel : String, link : String){
+        DB.child(tagLabel).child("elements").child(String(link)).removeValue()
     }
     
     
@@ -86,8 +124,8 @@ struct TagStruct {
     ///Takes in a tagLabel and returns the last time that tag was used
     func readLastUsed(tagLabel : String, action: @escaping (NSDate) -> Void){
         DB.child(tagLabel).child("lastUsed").observeSingleEvent(of: .value) { (snapshot) in
-            if let lastUsed = snapshot.value as? Int {
-                let date = NSDate(timeIntervalSince1970: Double(lastUsed))
+            if let lastUsed = snapshot.value as? Double {
+                let date = NSDate(timeIntervalSince1970: lastUsed)
                 action(date)
             }
         }
@@ -96,16 +134,16 @@ struct TagStruct {
     
     
      ///Takes a tagLabel and a newLastUsedValue (Unix DateTime object) and updates the value in the DB for when the Tag was last used
-    func updateLastUsed(tagLabel : String, newLastUsedValue : NSDate){
-        DB.child(tagLabel).child("lastUsed").setValue(Int(newLastUsedValue.timeIntervalSince1970))
+    func updateLastUsed(tagLabel : String, newLastUsedValue : TimeInterval){
+        DB.child(tagLabel).child("lastUsed").setValue(newLastUsedValue)
     }
     
     
     ///Takes a tagLabel and returns the firstUsed (Unix DateTime object) value for when the Tag was first created
     func readFirstUsed(tagLabel : String, action: @escaping (NSDate) -> Void) {
         DB.child(tagLabel).child("firstUsed").observeSingleEvent(of: .value) { (snapshot) in
-            if let firstUsed = snapshot.value as? Int {
-                let date = NSDate(timeIntervalSince1970: Double(firstUsed))
+            if let firstUsed = snapshot.value as? Double {
+                let date = NSDate(timeIntervalSince1970: firstUsed)
                 action(date)
             }
         }

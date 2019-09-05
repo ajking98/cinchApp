@@ -22,55 +22,56 @@ struct ParentTagStruct{
     
     var DB = Database.database().reference().child("tags")
     
+    
     ///Adds Tag to database
     func addTag(tag : Tag)-> Void{
-        print("adding Tag...")
-        DB.observeSingleEvent(of: .value) { (snapshot) in
-            if(snapshot.hasChild(tag.tagLabel!)) {
+        DB.child(tag.tagLabel!).observeSingleEvent(of: .value) { (snapshot) in
+            if let _ = snapshot.value as? [String : Any] {
                 self.updateTag(tag: tag)
-            }else{
+            }
+            else {
                 self.createTag(tag: tag)
             }
         }
-        TagStruct().updateTagOccurance(tagLabel: tag.tagLabel!)
-        TagStruct().updateLastUsed(tagLabel: tag.tagLabel!, newLastUsedValue: NSDate())
-        return
     }
     
     
     //Takes a tag and adds it the DB under the tag label
     private func createTag(tag : Tag)-> Void{
-        print("Creating Tag...")
         DB.child(tag.tagLabel!).setValue(tag.toString())
-        DB.child(tag.tagLabel!).child("tagElements").child("0").setValue(tag.tagElement?.toString())
-        
-        return
     }
     
-    
     ///Takes a tagLabel and returns the corresponding tag object
-    func readTag(tagLabel : String)-> Tag{
+    func readTag(tagLabel : String, completion : @escaping(Tag)->Void){
+        DB.child(tagLabel).observeSingleEvent(of: .value) { (snapshot) in
+            if let tag = snapshot.value as? [String : Any] {
+                print("reading tag")
+                TagStruct().readAllElements(tagLabel: tagLabel, completion: { (tagElements) in
+                    
+                    let firstUsed = tag["firstUsed"] as! Double
+                    let lastUsed = tag["lastUsed"] as! Double
+                    let numberOfElements = tag["numberOfElements"] as! Int
+                    let tagLabel = tag["tagLabel"] as! String
+                    let tagOccurance = tag["tagOccurance"] as! Int
+                    
+                    let tag = Tag(tagLabel: tagLabel, tagOccurance: tagOccurance, lastUsed: lastUsed, firstUsed: firstUsed, numberOfElements: numberOfElements, tagElements: tagElements)
+                    
+                    completion(tag)
+                })
+                
+            }
+        }
         TagStruct().updateTagOccurance(tagLabel: tagLabel)
-        TagStruct().updateLastUsed(tagLabel: tagLabel, newLastUsedValue: NSDate())
-        
-        return Tag(tagElement: TagElement(link: "nil"), tagLabel: "nil")
+        TagStruct().updateLastUsed(tagLabel: tagLabel, newLastUsedValue: NSDate().timeIntervalSince1970)
     }
     
     
     //Adds to existing tag in DB
     private func updateTag(tag : Tag)-> Void {
-        print("updating Tag...")
-        
-        guard let tagLabel = tag.tagLabel else {
-            return
+        guard let tagElements = tag.tagElements else { return }
+        for tagElement in tagElements {
+            TagStruct().addElement(tagLabel: tag.tagLabel!, tagElement: tagElement)
         }
-        DB.child(tagLabel).child("numberOfElements").observeSingleEvent(of: .value) { (snapshot) in
-            if let index = snapshot.value as? Int {
-                TagStruct().updateElement(tagLabel: tagLabel, index: index, newTagElement: tag.tagElement!)
-                TagStruct().updateNumberOfElements(tagLabel : tagLabel, newNumber: index + 1)
-            }
-        }
-        return
     }
     
     

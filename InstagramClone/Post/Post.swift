@@ -27,7 +27,6 @@ class Post {
     var video : AVPlayer?
     
     
-    
     ///called when a post is first being made
     init(isImage : Bool, postOwner : String, link : String) {
         
