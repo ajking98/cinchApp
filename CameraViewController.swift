@@ -81,6 +81,12 @@ class CameraViewController: UIViewController {
         return authStatus
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        let post = Post(isImage: false, postOwner: "James", link: "wwwfungamescom")
+        ParentPostStruct().addPost(post: post)
+        PostStruct().addTag(post: post.link!, newTag: "Games")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

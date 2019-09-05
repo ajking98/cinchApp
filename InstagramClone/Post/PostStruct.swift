@@ -126,8 +126,11 @@ struct PostStruct {
     /*
     tags
     */
+    //TODO FIX this asap 
     func addTag(post : String, newTag : String) {
-        DB.child(post).child("tags").child(newTag).child(newTag)
+        DB.child(post).child("tags").updateChildValues([newTag : newTag])
+        let tag = Tag(tagLabel: newTag, tagElements: [TagElement(link: post)])
+        ParentTagStruct().addTag(tag: tag)
     }
     
     func deleteTag(post : String, tag : String) {
