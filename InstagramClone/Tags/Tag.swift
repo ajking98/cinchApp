@@ -8,16 +8,16 @@ import Foundation
 
 
 class Tag {
-    var tagElement : TagElement?
+    var tagElements : [TagElement]?
     var tagOccurance : Int?
-    var lastUsed : NSDate?
-    var firstUsed : NSDate?
+    var lastUsed : TimeInterval?
+    var firstUsed : TimeInterval?
     var tagLabel : String?
     var numberOfElements : Int?
     
     //This init should be called when trying to add a tag the database
-    init(tagElement : TagElement, tagLabel : String) {
-        self.tagElement = tagElement
+    init(tagLabel : String, tagElements : [TagElement]) {
+        self.tagElements = tagElements
         self.tagLabel = tagLabel
         numberOfElements = 1
         tagOccurance = 1
@@ -25,8 +25,8 @@ class Tag {
     
     
     //This init should be called when reading data from the database
-    init(tagElement : TagElement, tagOccurance : Int, lastUsed : NSDate, firstUsed: NSDate, tagLabel : String, numberOfElements : Int){
-        self.tagElement = tagElement
+    init(tagLabel : String, tagOccurance : Int, lastUsed : Double, firstUsed: Double, numberOfElements : Int, tagElements : [TagElement]){
+        self.tagElements = tagElements
         self.tagOccurance = tagOccurance
         self.lastUsed = lastUsed
         self.firstUsed = firstUsed
@@ -34,8 +34,8 @@ class Tag {
         self.numberOfElements = numberOfElements
     }
     
-    func getLastUsed() ->NSDate{
-        lastUsed = NSDate()
+    func getLastUsed() ->Double{
+        lastUsed = NSDate().timeIntervalSince1970
         return lastUsed!
     }
     
@@ -43,9 +43,17 @@ class Tag {
     ///converts Tag Object to dictionary 
     func toString()-> [String : Any]{
         
-        firstUsed = NSDate()
-        lastUsed = NSDate()
-        let tagDict : [String : Any] = ["tagLabel" : self.tagLabel!, "lastUsed" : Int(lastUsed!.timeIntervalSince1970), "firstUsed" : Int(firstUsed!.timeIntervalSince1970), "numberOfElements" : numberOfElements, "tagOccurance" : tagOccurance]
+        firstUsed = NSDate().timeIntervalSince1970
+        lastUsed = NSDate().timeIntervalSince1970
+        var tagElementsDict : [String : Any] = [:]
+        
+        if let tagElements = tagElements {
+            for element in tagElements {
+                tagElementsDict[element.link] = element.toString()
+            }
+        }
+        
+        let tagDict : [String : Any] = ["tagLabel" : self.tagLabel!, "lastUsed" : lastUsed!, "firstUsed" : firstUsed!, "numberOfElements" : numberOfElements, "tagOccurance" : tagOccurance, "elements" : tagElementsDict]
         
         return tagDict
     }

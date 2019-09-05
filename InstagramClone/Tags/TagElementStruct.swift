@@ -3,7 +3,7 @@
 //  InstagramClone
 //
 /*
- Responsible for the RU commands for the tag Elements : MUST take in index to know which on to delete
+ Responsible for the RU commands for the tag Elements : MUST take in a link to know which one to delete
     1. read numOfUsages  - Y
     2. update numOfUsages - Y
     3. read lastUsed    - Y
@@ -24,9 +24,9 @@ struct TagElementStruct {
     var DB = Database.database().reference().child("tags")
     
     
-    ///Takes in a tagLabel and an elementIndex and returns the link that correspond with that tagLabel at that given index
-    func readLink(tagLabel : String, elementIndex : Int, action : @escaping (String) ->Void){
-        DB.child(tagLabel).child("tagElements").child(String(elementIndex)).child("link").observeSingleEvent(of: .value) { (snapshot) in
+    ///Takes in a tagLabel and an a link and returns the link that correspond with that tagLabel at that given link
+    func readLink(tagLabel : String, link : String, action : @escaping (String) ->Void){
+        DB.child(tagLabel).child("elements").child(link).child("link").observeSingleEvent(of: .value) { (snapshot) in
             if let link = snapshot.value as? String {
                 action(link)
             }
@@ -36,25 +36,23 @@ struct TagElementStruct {
     
     
     
-    ///Takes in a tagLabel and elementIndex and returns the number of times that element has been used
-    func readNumOfUsages(tagLabel : String, elementIndex : Int, action : @escaping (Int) -> Void) {
-        DB.child(tagLabel).child("tagElements").child(String(elementIndex)).child("numOfUsages").observeSingleEvent(of: .value) { (snapshot) in
+    ///Takes in a tagLabel and a link and returns the number of times that element has been used
+    func readNumOfUsages(tagLabel : String, link : String, action : @escaping (Int) -> Void) {
+        DB.child(tagLabel).child("elements").child(link).child("numOfUsages").observeSingleEvent(of: .value) { (snapshot) in
             if let numOfUsages = snapshot.value as? Int {
                 action(numOfUsages)
             }
         }
     }
     
-    ///Takes tagLabel, elementIndex, and newNumOfUsages and updates the existing value in the DB to the new given value
-    func updateNumOfUsages(tagLabel : String, elementIndex : Int, newNumOfUsages : Int){ DB.child(tagLabel).child("tagElements").child(String(elementIndex)).child("numOfUsages").setValue(newNumOfUsages)
+    ///Takes tagLabel, link, and newNumOfUsages and updates the existing value in the DB to the new given value
+    func updateNumOfUsages(tagLabel : String, link : String, newNumOfUsages : Int){ DB.child(tagLabel).child("elements").child(link).child("numOfUsages").setValue(newNumOfUsages)
     }
     
     ///increments the number for a given tag Element by one point
-    func updateNumOfUsages(tagLabel: String, elementIndex : Int){
-        //TODO update by one increment
-        readNumOfUsages(tagLabel: tagLabel, elementIndex: elementIndex) { (numberOfUsages) in
-            print(numberOfUsages + 1)
-            self.updateNumOfUsages(tagLabel: tagLabel, elementIndex: elementIndex, newNumOfUsages: Int(numberOfUsages + 1))
+    func updateNumOfUsages(tagLabel: String, link : String){
+        readNumOfUsages(tagLabel: tagLabel, link: link) { (numberOfUsages) in
+            self.updateNumOfUsages(tagLabel: tagLabel, link: link, newNumOfUsages: Int(numberOfUsages + 1))
         }
         return
     }
@@ -62,10 +60,10 @@ struct TagElementStruct {
     
     
     ///Fetches the time that tag element was last used
-    func readLastUsed(tagLabel : String, elementIndex : Int, action : @escaping (NSDate) -> Void) {
-        DB.child(tagLabel).child("tagElements").child(String(elementIndex)).child("lastUsed").observeSingleEvent(of: .value) { (snapshot) in
-            if let lastUsed = snapshot.value as? Int {
-                let date = NSDate(timeIntervalSince1970: Double(lastUsed))
+    func readLastUsed(tagLabel : String, link : String, action : @escaping (NSDate) -> Void) {
+        DB.child(tagLabel).child("elements").child(link).child("lastUsed").observeSingleEvent(of: .value) { (snapshot) in
+            if let lastUsed = snapshot.value as? Double {
+                let date = NSDate(timeIntervalSince1970: lastUsed)
                 action(date)
             }
         }
@@ -73,16 +71,16 @@ struct TagElementStruct {
     }
     
     ///updates the dateTime for the tagElement
-    func updateLastUsed(tagLabel : String, elementIndex : Int, newLastUsedValue : NSDate){ DB.child(tagLabel).child("tagElements").child(String(elementIndex)).child("lastUsed").setValue(Int(newLastUsedValue.timeIntervalSince1970))
+    func updateLastUsed(tagLabel : String, link : String, newLastUsedValue : TimeInterval){ DB.child(tagLabel).child("elements").child(link).child("lastUsed").setValue(newLastUsedValue)
     }
     
     
     
     ///Gives the time the Tag elements was first created
-    func readFirstUsed(tagLabel : String, elementIndex : Int, action : @escaping (NSDate) -> Void){
-        DB.child(tagLabel).child("tagElements").child(String(elementIndex)).child("firstUsed").observeSingleEvent(of: .value) { (snapshot) in
-            if let firstUsed = snapshot.value as? Int {
-                let date = NSDate(timeIntervalSince1970: Double(firstUsed))
+    func readFirstUsed(tagLabel : String, link : String, action : @escaping (NSDate) -> Void){
+        DB.child(tagLabel).child("elements").child(link).child("firstUsed").observeSingleEvent(of: .value) { (snapshot) in
+            if let firstUsed = snapshot.value as? Double {
+                let date = NSDate(timeIntervalSince1970: firstUsed)
                 action(date)
             }
         }

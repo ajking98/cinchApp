@@ -48,18 +48,6 @@ class ViewController: UIViewController {
             print(error)
         }
 
-        ParentStruct().readUser(user: uuid.uuidString, completion: { (userInfo:User, dateCreated:String, dateLastActive:String, folders:Any) in
-            UserStruct().readFolders(user: self.uuid.uuidString, readFolderClosure: {(folders:[String]) in
-                // Get User's Info
-                self.userDefaults.set(folders, forKey: defaultsKeys.folderKey)
-                self.userDefaults.set(userInfo.name!, forKey: defaultsKeys.nameKey)
-                self.userDefaults.set(userInfo.email!, forKey: defaultsKeys.emailKey)
-                self.userDefaults.set(userInfo.password!, forKey: defaultsKeys.passwordKey)
-                self.userDefaults.set(userInfo.isPrivate, forKey: defaultsKeys.isPrivateKey)
-                self.userDefaults.set(dateCreated, forKey: defaultsKeys.dateCreatedKey)
-                self.userDefaults.set(dateLastActive, forKey: defaultsKeys.dateLastActiveKey)
-            })
-        })
     }
     
     
@@ -93,20 +81,6 @@ class ViewController: UIViewController {
     
     func insertUser() {
         print("Insert User")
-        ParentStruct().readUser(user: uuid.uuidString, completion: { (userInfo:User, dateCreated:String, dateLastActive:String, folders:Any) in
-            print("printing userhh: ", userInfo)
-            print("printing name: ", userInfo.name!)
-            print("printing password: ", userInfo.password!)
-            let insertUser = self.usersTable.insert(self.name <- userInfo.name!, self.email <- userInfo.email!, self.password <- userInfo.password!, self.isPrivate <- userInfo.isPrivate! )
-            
-            do {
-                try self.database.run(insertUser)
-                print("Inserted User ")
-            } catch {
-                print(error)
-            }
-        })
-        
         
     }
     

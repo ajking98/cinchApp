@@ -35,11 +35,13 @@ class DiscoverController: UIViewController {
     var isRefreshing = false
     var loadingIcon = UIImageView()
     var searchBar : SearchBar?
+    var isScrolling = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        addSearchBar()
+        sizeUp()
+//        addSearchBar()
         setUpTableView()
         setUpCollectionView()
         setUpCollectionViewItemSizes()
@@ -51,10 +53,6 @@ class DiscoverController: UIViewController {
         
         buildSegmentIcons()
         
-        let panView = UISwipeGestureRecognizer(target: self, action: #selector(handleViewPan))
-        panView.direction = .up
-        view.addGestureRecognizer(panView)
-        
         scrollViewFrame = collectionView.frame
         
         
@@ -64,6 +62,22 @@ class DiscoverController: UIViewController {
         view.addSubview(loadingIcon)
         
         normalize(scrollView: collectionView)
+        
+        collectionView.allowsMultipleSelection = true
+        
+        setUpNavigation()
+    }
+    
+    func setUpNavigation() {
+//        self.navigationController?.navigationBar.barTintColor = UIColor.lightGreen
+        self.navigationController?.navigationBar.tintColor = UIColor.darkerGreen
+    }
+    
+    
+    func sizeUp() {
+        //TODO consider deleting below
+        segmentControlCenter = segmentControl.center
+        print(segmentControl.center)
     }
     
     
@@ -125,9 +139,6 @@ class DiscoverController: UIViewController {
         segmentControl.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSegmentTap(_:))))
     }
     
-    @objc func handleViewPan(_ gesture : UISwipeGestureRecognizer) {
-        print("view panning: ")
-    }
     
     func refresh(scrollView : UIScrollView) {
         print("offset error")
@@ -156,6 +167,7 @@ class DiscoverController: UIViewController {
         }
         
         normalize(scrollView: scrollView)
+        print("is refreshing my guy")
         
         // -- or -- //
 //        UIView.animate(withDuration: 0.2, animations: {
@@ -176,70 +188,6 @@ class DiscoverController: UIViewController {
 //            }
 //        }
         
-    }
-    
-    //when user scrolls in the scrollview, the view should pan and either move the segment control out the view or into the view
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let gesture = scrollView.panGestureRecognizer
-        
-        if (scrollView.contentOffset.y < -60){
-            scrollView.contentOffset.y = -60
-        }
-        
-        //TODO clean this up
-        switch gesture.state {
-            
-            case .began, .changed:
-                let translation = gesture.translation(in: scrollView.superview).y * 0.1
-                
-                
-                //if the segment control is less than or equal to the normalized center, then continue
-                guard (segmentControl.center.y + translation) <= segmentControlCenter!.y else {
-                    return
-                }
-                
-                //if pan is in the negative direction and the segment control hasn't reached its peak height
-                if (translation < 0 && segmentControl.center.y > (-10 - segmentControl.frame.height)){
-                    segmentControl.center.y += translation
-                    buttonBar.center.y += translation
-                    searchBar!.center.y += translation
-                }
-                
-                //if the summation of the translation and scrollview y-axis is within bounds
-                // bounds are: 100 < origin.y < scrollViewFrame.y
-                print("should", scrollView.frame)
-                if(100 < scrollView.frame.origin.y + translation && scrollView.frame.origin.y + translation <= (scrollViewFrame?.origin.y)!){
-                    print("should be doing this")
-                    collectionView.center.y += translation
-                    collectionView.frame.size.height -= translation
-                    
-                    tableView.center.y += translation
-                    tableView.frame.size.height -= translation
-                }
-            case .ended:
-                //refresh the scrollviews
-                if scrollView.contentOffset.y <= -50 && !isRefreshing {
-                    
-                    //vibrate for feedback
-                    let vibration = UIImpactFeedbackGenerator(style: .medium)
-                    vibration.impactOccurred()
-                    
-                    //refresh view
-                    refresh(scrollView: scrollView)
-                }
-                
-                //if user swipes down quickly
-                guard !(gesture.velocity(in: scrollView.superview).y > 120) else{
-                    normalize(scrollView: scrollView)
-                    return
-                }
-                
-                //if user swipes up really quick
-                if(gesture.velocity(in: scrollView.superview).y < -120 && scrollView.frame.origin.y > 100) {
-                    unNormalize(scrollView: scrollView)
-                }
-            default: break
-        }
     }
     
     
@@ -333,31 +281,6 @@ class DiscoverController: UIViewController {
         handleSegmentControl(true)
     }
     
-    func addSearchBar() {
-        let frame = collectionView.frame
-        
-        //sizing
-        searchBar = SearchBar(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: frame.width * 0.88, height: 33)))
-        
-        guard let searchBar = searchBar else {
-            return
-        }
-        
-        //positioning
-        searchBar.center.y = segmentControl.frame.origin.y + 50
-        searchBar.center.x = view.center.x
-        
-        let tapped = UITapGestureRecognizer(target: searchBar, action: #selector(searchBar.revertToNormal))
-        tapped.cancelsTouchesInView = false
-        view.addGestureRecognizer(tapped)
-        searchBar.backgroundColor = .white
-        view.addSubview(searchBar)
-        
-        //TODO consider deleting below
-        segmentControlCenter = segmentControl.center
-        print(segmentControl.center)
-    }
-    
     
     //if the user taps on the collection view icon while on the collection view, then they scroll to the top
     func bringToTop(scrollView : UIScrollView){
@@ -387,13 +310,28 @@ class DiscoverController: UIViewController {
     
     
     @objc func handlePanCollectionView(gesture: UIPanGestureRecognizer) {
+        
+        let translation = gesture.translation(in: self.view)
+        
         gesture.isEnabled = true
+        
         switch gesture.state {
-        case .began, .changed:
-            let translation = gesture.translation(in: self.view)
+        case .began:
+            isScrolling = false
             
+        case .changed:
+            guard abs(translation.x * 2) >= abs(translation.y) else {
+                isScrolling = true
+                return
+            }
+            guard !isScrolling else {
+                return
+            }
+            guard abs(translation.x) > abs(translation.y * 10) else {
+                return
+            }
             //disabling scroll when user is swiping to other view
-            if(collectionView.center.x < (view.center.x - 30)){
+            if(collectionView.center.x < (view.center.x - 15)){
                 collectionView.isScrollEnabled = false
             }
             
@@ -432,14 +370,26 @@ class DiscoverController: UIViewController {
     
     @objc func handlePanTableView(gesture: UIPanGestureRecognizer) {
         gesture.isEnabled = true
+        let translation = gesture.translation(in: self.view)
         switch (gesture.state) {
             
-            case .began, .changed:
-                if(tableView.center.x > (view.center.x + 30)){
+            case .began:
+                isScrolling = false
+            
+            case .changed:
+                guard abs(translation.x * 2) >= abs(translation.y) else {
+                    isScrolling = true
+                    return
+                }
+                guard !isScrolling else {
+                    return
+                }
+                guard abs(translation.x) > abs(translation.y * 10) else {
+                    return
+                }
+                if(tableView.center.x > (view.center.x + 15)){
                     tableView.isScrollEnabled = false
                 }
-                
-                let translation = gesture.translation(in: self.view)
                 if(gesture.view!.center.x >= view.center.x) {
                     translateTables(translation: translation)
                 }
