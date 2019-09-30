@@ -57,6 +57,8 @@ class CameraViewController: UIViewController {
     var isMultipleSelected = false
     
     var imageArray = [UIImage]()
+    var selectedImages = [UIImage]()
+    var tappedImages = [Int]() //holds the indexes of the tapped images
     
     
     func isAuthorized() ->Bool{
@@ -284,6 +286,8 @@ class CameraViewController: UIViewController {
         else {
             multiple.image = UIImage(named: "multiple")
             circleCounter.isHidden = true
+            handleUndoTap()//undoes the borders for the tapped cells and clears the selectedImages array
+            circleCounter.text = "0"
         }
         
         isMultipleSelected = !isMultipleSelected
@@ -421,4 +425,5 @@ class CameraViewController: UIViewController {
         nextView.isHidden = true
         previousView.isHidden = true
     }
+    
 }

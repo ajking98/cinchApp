@@ -28,17 +28,17 @@ struct Helper {
         //Folder pick
         let actionController = SpotifyActionController()
         
-        actionController.headerData = SpotifyHeaderData(title: "which folder do you want to save to?", subtitle: "", image: image)
+        actionController.headerData = SpotifyHeaderData(title: "select a folder for the image?", subtitle: "", image: image)
         
         let defaults = main.userDefaults
-        let foodArray = defaults.object(forKey: defaultsKeys.folderKey) as? [String] ?? [String]()
-        print(foodArray.count)
-        for item in foodArray {
+        let foldersArray = defaults.object(forKey: defaultsKeys.folderKey) as? [String] ?? [String]()
+        print(foldersArray.count)
+        for item in foldersArray {
             actionController.addAction(Action(ActionData(title: "\(item.uppercased())", subtitle: "For Content"), style: .default, handler: { action in
                 
                 
                 //todo Later, this "Testing" string in the next line should be given a link instead of static string
-                let alert = self.createTagsAlert(link: "Testing")
+                let alert = self.createTagsAlert(link: "Testing")//Tagging alert
                 viewController.present(alert, animated: true, completion: nil)
                 StorageStruct().UploadContent(user: UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!, folderName: item, content: image)
                 
@@ -46,6 +46,25 @@ struct Helper {
 
         }
         
+        return actionController
+    }
+    
+    
+    ///takes an array of images and appends them to the storage
+    func saveMultipleImages(images : [UIImage]) -> SpotifyActionController{
+        let actionController = SpotifyActionController()
+        actionController.headerData = SpotifyHeaderData(title: "select a folder for the images?", subtitle: "", image: images[0])
+        let defaults = main.userDefaults
+        let foldersArray = defaults.object(forKey: defaultsKeys.folderKey) as? [String] ?? [String]()
+        for item in foldersArray {
+            actionController.addAction(Action(ActionData(title: "\(item.uppercased())", subtitle: "For Content"), style: .default, handler: { action in
+                let user = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)
+                for image in images {
+                    StorageStruct().UploadContent(user: user!, folderName: item, content: image)
+                }
+            }))
+            
+        }
         return actionController
     }
     
