@@ -316,7 +316,6 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
                 
                 var action = SpotifyActionController.init()
                 if let image = zoomingImageView?.image {
-                    action = Helper().saveToFolder(image: image)
                 }
                 present(action, animated: true, completion: nil)
                 
@@ -474,7 +473,6 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
     @objc func saveToFolder(tapGesture: UITapGestureRecognizer){
         var action = SpotifyActionController.init()
         if let image = zoomingImageView?.image {
-            action = Helper().saveToFolder(image: image)
         }
         present(action, animated: true, completion: nil)
         

@@ -486,7 +486,6 @@ class DiscoverController: UIViewController {
             isRightSegmented = true
         }
     }
-    
 }
 
 
@@ -505,6 +504,7 @@ extension DiscoverController : UICollectionViewDelegate, UICollectionViewDataSou
         cell.buildPostCard(item: items[indexPath.item])
         return cell
     }
+    
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "ImageSelectedController") as! ImageSelectedController
@@ -533,16 +533,15 @@ extension DiscoverController : UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath) as! TableViewPostCell
         let item = items[indexPath.row]
-        cell.postImage.image = UIImage.init(named: item.imageName)
-//        cell.nameLabel.text = item.author
-//        cell.viewLabel.text = String(item.likes)
+        
+        guard let image = UIImage(named: item.imageName) else { return UITableViewCell(frame: CGRect.zero) }
+        cell.postImage.image = image
         cell.postImage.layer.cornerRadius = 8.0
         cell.postImage.clipsToBounds = true
         
-        // Configure the cell...
-        
         return cell
     }
+
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "ImageSelectedController") as! ImageSelectedController

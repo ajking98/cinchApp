@@ -16,7 +16,7 @@ class CameraViewCell: UICollectionViewCell {
     ///returns the index of the image it was given
     var currentIndex = 0
     
-    var tapped = false
+    var isTapped = false
     
     
     
