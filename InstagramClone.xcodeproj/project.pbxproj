@@ -477,13 +477,6 @@
 			path = User;
 			sourceTree = "<group>";
 		};
-		46D48DBB233182EE00952EDB /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "New Group";
-			sourceTree = "<group>";
-		};
 		46D5E065229EDCD8003B41DE /* Structures */ = {
 			isa = PBXGroup;
 			children = (
@@ -528,7 +521,6 @@
 		891FC3EA22D7F5DD0024A623 /* Discover */ = {
 			isa = PBXGroup;
 			children = (
-				46D48DBB233182EE00952EDB /* New Group */,
 				891FC3F822D7F6D80024A623 /* DiscoverLayout.swift */,
 				891FC3FE22D7F73A0024A623 /* PostCard.xib */,
 				891FC3F622D7F6B50024A623 /* PostCard.swift */,

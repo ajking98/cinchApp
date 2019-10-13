@@ -382,72 +382,50 @@ class DiscoverController: UIViewController {
         let translation = gesture.translation(in: self.view)
         switch (gesture.state) {
             
-//<<<<<<< HEAD
-//        case .began:
-//            isScrolling = false
-//
-//        case .changed:
-//            guard abs(translation.x * 2) >= abs(translation.y) else {
-//                isScrolling = true
-//                return
-//            }
-//            guard !isScrolling else {
-//                return
-//            }
-//            guard abs(translation.x) > abs(translation.y * 10) else {
-//                return
-//            }
-//            if(tableView.center.x > (view.center.x + 15)){
-//                tableView.isScrollEnabled = false
-//            }
-//            if(gesture.view!.center.x >= view.center.x) {
-//                translateTables(translation: translation)
-//            }
-//            else {
-//                print("elsing")
-//                normalize(scrollView: tableView)
-//                gesture.isEnabled = false
-//            }
-//
-//            gesture.setTranslation(CGPoint(x: 0,y: 0), in: self.view)
-//
-//        case .ended :
-//            tableView.isScrollEnabled = true
-//            if(isQuickSwipe(velocity: gesture.velocity(in: view).x)){
-//                let indexPath = collectionView.indexPathsForVisibleItems[0]
-//                summonCollectionView(indexPath)
-//
-//            }
-//            else {
-//                if collectionView.center.x < -50 {
-//                    summonTableView()
-//=======
-            case .began:
-                isScrolling = false
-            
-            case .changed:
-                guard abs(translation.x * 2) >= abs(translation.y) else {
-                    isScrolling = true
-                    return
-                }
-                guard !isScrolling else {
-                    return
-                }
-                guard abs(translation.x) > abs(translation.y * 10) else {
-                    return
-                }
-                if(tableView.center.x > (view.center.x + 15)){
-                    tableView.isScrollEnabled = false
-                }
-                if(gesture.view!.center.x >= view.center.x) {
-                    translateTables(translation: translation)
-//>>>>>>> 0d325f479fd15372db8571287925db4cf1fcd348
+        case .began:
+            isScrolling = false
+
+        case .changed:
+            guard abs(translation.x * 2) >= abs(translation.y) else {
+                isScrolling = true
+                return
+            }
+            guard !isScrolling else {
+                return
+            }
+            guard abs(translation.x) > abs(translation.y * 10) else {
+                return
+            }
+            if(tableView.center.x > (view.center.x + 15)){
+                tableView.isScrollEnabled = false
+            }
+            if(gesture.view!.center.x >= view.center.x) {
+                translateTables(translation: translation)
+            }
+            else {
+                print("elsing")
+                normalize(scrollView: tableView)
+                gesture.isEnabled = false
+            }
+
+            gesture.setTranslation(CGPoint(x: 0,y: 0), in: self.view)
+
+        case .ended :
+            tableView.isScrollEnabled = true
+            if(isQuickSwipe(velocity: gesture.velocity(in: view).x)){
+                let indexPath = collectionView.indexPathsForVisibleItems[0]
+                summonCollectionView(indexPath)
+
+            }
+            else {
+                if collectionView.center.x < -50 {
+                    summonTableView()
                 }
                 else {
                     let indexPath = collectionView.indexPathsForVisibleItems[0]
                     summonCollectionView(indexPath)
                 }
-//            }
+            }
             
         default: break
         }
