@@ -72,20 +72,7 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
 //            checkUserForDuplicates(uniqueUsername)
             userDefaults.set(uniqueUsername, forKey: defaultsKeys.usernameKey)
             let newUser = User(username: uniqueUsername)
-            ParentStruct().createUser(user: newUser)
 
-            ParentStruct().readUser(user: newUser.username!, completion: { (userInfo:User, dateCreated:String, dateLastActive:String, folders:Any) in
-                UserStruct().readFolders(user: newUser.username!, readFolderClosure: {(folders:[String]) in
-                    // Get User's Info
-                    self.userDefaults.set(folders, forKey: defaultsKeys.folderKey)
-                    self.userDefaults.set(userInfo.name!, forKey: defaultsKeys.nameKey)
-                    self.userDefaults.set(userInfo.email!, forKey: defaultsKeys.emailKey)
-                    self.userDefaults.set(userInfo.password!, forKey: defaultsKeys.passwordKey)
-                    self.userDefaults.set(userInfo.isPrivate, forKey: defaultsKeys.isPrivateKey)
-                    self.userDefaults.set(dateCreated, forKey: defaultsKeys.dateCreatedKey)
-                    self.userDefaults.set(dateLastActive, forKey: defaultsKeys.dateLastActiveKey)
-                })
-            })
         }
 //        var tempUser = User(username: "FartMeister")
 //        ParentStruct().createUser(user: tempUser)
@@ -195,21 +182,6 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
     
     func insertUser() {
         print("Insert User")
-        ParentStruct().readUser(user: uuid.uuidString, completion: { (userInfo:User, dateCreated:String, dateLastActive:String, folders:Any) in
-            print("printing userhh: ", userInfo)
-            print("printing name: ", userInfo.name!)
-            print("printing password: ", userInfo.password!)
-            let insertUser = self.usersTable.insert(self.name <- userInfo.name!, self.email <- userInfo.email!, self.password <- userInfo.password!, self.isPrivate <- userInfo.isPrivate! )
-            
-            do {
-                try self.database.run(insertUser)
-                print("Inserted User ")
-            } catch {
-                print(error)
-            }
-        })
-        
-        
     }
     
     
@@ -344,7 +316,6 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
                 
                 var action = SpotifyActionController.init()
                 if let image = zoomingImageView?.image {
-                    action = Helper().saveToFolder(image: image)
                 }
                 present(action, animated: true, completion: nil)
                 
@@ -502,7 +473,6 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
     @objc func saveToFolder(tapGesture: UITapGestureRecognizer){
         var action = SpotifyActionController.init()
         if let image = zoomingImageView?.image {
-            action = Helper().saveToFolder(image: image)
         }
         present(action, animated: true, completion: nil)
         
@@ -540,8 +510,8 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
                 blackBackgroundView?.backgroundColor = blackBackgroundView?.colorOnHold
                 
                 //Animate Inwards
-                Helper().animateIn(iconsView: iconsView!, zoomingImageView: zoomingImageView!, keyWindow: keyWindow)
-                
+//                Helper().animateIn(iconsView: iconsView!, zoomingImageView: zoomingImageView!, keyWindow: keyWindow)
+            
                 longPressedBool = true
                 return
             
@@ -561,8 +531,8 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
                 blackBackgroundView?.backgroundColor = blackBackgroundView?.colorOnHold
                 
                 //Animate Inwards
-                Helper().animateIn(zoomingImageView: zoomingImageView!, keyWindow: keyWindow)
-                
+//                Helper().animateIn(zoomingImageView: zoomingImageView!, keyWindow: keyWindow)
+            
                 longPressedBool = true
                 return
         }
@@ -571,7 +541,7 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
     
     //animating the exit zoomedImageView
     func animateOut(){
-        Helper().animateOut(zoomingImageView : zoomingImageView!, blackBackgroundView : blackBackgroundView!, startingFrame : startingFrame!)
+//        Helper().animateOut(zoomingImageView : zoomingImageView!, blackBackgroundView : blackBackgroundView!, startingFrame : startingFrame!)
     }
     
     @objc func openCameraView(){

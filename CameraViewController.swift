@@ -57,6 +57,8 @@ class CameraViewController: UIViewController {
     var isMultipleSelected = false
     
     var imageArray = [UIImage]()
+    var selectedImages = [UIImage]()
+    var tappedImages = [Int]() //holds the indexes of the tapped images
     
     
     func isAuthorized() ->Bool{
@@ -81,6 +83,11 @@ class CameraViewController: UIViewController {
         return authStatus
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        let post = Post(isImage: false, postOwner: "James", link: "wwwfungamescom")
+        ParentPostStruct().addPost(post: post)
+        PostStruct().addTag(post: post.link!, newTag: "Games")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -279,6 +286,8 @@ class CameraViewController: UIViewController {
         else {
             multiple.image = UIImage(named: "multiple")
             circleCounter.isHidden = true
+            handleUndoTap()//undoes the borders for the tapped cells and clears the selectedImages array
+            circleCounter.text = "0"
         }
         
         isMultipleSelected = !isMultipleSelected
@@ -416,4 +425,5 @@ class CameraViewController: UIViewController {
         nextView.isHidden = true
         previousView.isHidden = true
     }
+    
 }

@@ -28,13 +28,28 @@ class TableViewPostCell: UITableViewCell {
         setUp()
     }
     
+    
+    //TODO make compatible for videos 
+    //creates the activity controller when the user taps on the menu options icon
+    //only works for images right now
+    @objc func postActivityController() {
+        print("we reached this far")
+        guard let viewController = UIApplication.shared.keyWindow?.rootViewController else { return }
+        guard let image = postImage.image else { return }
+        let activityController = UIActivityViewController(activityItems: [image], applicationActivities: nil)
+        viewController.present(activityController, animated: true) {
+            print("working with the activity controller")
+        }
+    }
+    
+    
     func setUp() {
         let centerX = sideView.frame.width / 2
         let bottomY = sideView.frame.height
         
         //Menu
         menuOptions.center = CGPoint(x: centerX, y: 30)
-        
+        menuOptions.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(postActivityController)))
         
         //share
         shareButton.center = CGPoint(x: centerX, y: bottomY - 65)

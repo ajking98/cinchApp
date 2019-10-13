@@ -24,8 +24,8 @@
 		463A844322F6279A00F9B4CD /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463A844222F6279A00F9B4CD /* CameraViewController.swift */; };
 		463A844522F627F000F9B4CD /* CameraViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463A844422F627F000F9B4CD /* CameraViewCell.swift */; };
 		463A844922F6286A00F9B4CD /* Camera.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 463A844822F6286A00F9B4CD /* Camera.storyboard */; };
-		46456C2222FE51A700D96EB5 /* DiscoverController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46456C2122FE51A700D96EB5 /* DiscoverController2.swift */; };
-		46456C2C22FE52FB00D96EB5 /* MainDiscover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46456C2B22FE52FB00D96EB5 /* MainDiscover.swift */; };
+		46456C2222FE51A700D96EB5 /* SecondaryDiscoverController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46456C2122FE51A700D96EB5 /* SecondaryDiscoverController.swift */; };
+		46456C2C22FE52FB00D96EB5 /* PrimaryDiscoverController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46456C2B22FE52FB00D96EB5 /* PrimaryDiscoverController.swift */; };
 		4657E21A22F65B6400396087 /* AddFolderViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4657E21122F65B6400396087 /* AddFolderViewCell.swift */; };
 		4657E21D22F72DA700396087 /* CameraViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4657E21C22F72DA700396087 /* CameraViewExtensions.swift */; };
 		46668D6022C98C070021229D /* ProfileContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46668D5F22C98C070021229D /* ProfileContainer.swift */; };
@@ -41,14 +41,17 @@
 		46A3E10622C18678003F6F35 /* SecondProfileHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 46A3E10522C18678003F6F35 /* SecondProfileHeader.xib */; };
 		46A3E10822C18749003F6F35 /* FirstProfileHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A3E10722C18749003F6F35 /* FirstProfileHeader.swift */; };
 		46A3E10A22C18784003F6F35 /* SecondProfileHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A3E10922C18784003F6F35 /* SecondProfileHeader.swift */; };
-		46D5E05E2298A130003B41DE /* userStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E05D2298A130003B41DE /* userStruct.swift */; };
-		46D5E062229DD6FA003B41DE /* folderStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E061229DD6FA003B41DE /* folderStruct.swift */; };
-		46D5E06822A323A9003B41DE /* userClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E06722A323A9003B41DE /* userClass.swift */; };
-		46D5E06A22A46505003B41DE /* folderClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E06922A46505003B41DE /* folderClass.swift */; };
+		46ADC111233FFBA1001B62E8 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46ADC110233FFBA1001B62E8 /* UIColorExtension.swift */; };
+		46ADC113233FFBD4001B62E8 /* UIImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46ADC112233FFBD4001B62E8 /* UIImageViewExtension.swift */; };
+		46ADC115233FFC8F001B62E8 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46ADC114233FFC8F001B62E8 /* UIImageExtension.swift */; };
+		46ADC1312352BC48001B62E8 /* TablePostCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46ADC12F2352BC45001B62E8 /* TablePostCard.swift */; };
+		46ADC1322352BC48001B62E8 /* TablePostCard.xib in Resources */ = {isa = PBXBuildFile; fileRef = 46ADC1302352BC47001B62E8 /* TablePostCard.xib */; };
+		46D48D902318A7D100952EDB /* FolderReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D48D8F2318A7D100952EDB /* FolderReference.swift */; };
+		46D48D97231AF48700952EDB /* ParentPostStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D48D96231AF48700952EDB /* ParentPostStruct.swift */; };
 		46D5E07122A87F15003B41DE /* Folder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E07022A87F15003B41DE /* Folder.swift */; };
-		46D5E07422A87F5F003B41DE /* FolderStruct2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E07322A87F5F003B41DE /* FolderStruct2.swift */; };
+		46D5E07422A87F5F003B41DE /* FolderStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E07322A87F5F003B41DE /* FolderStruct.swift */; };
 		46D5E07622A87F75003B41DE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E07522A87F75003B41DE /* User.swift */; };
-		46D5E07822A87F89003B41DE /* UserStruct2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E07722A87F89003B41DE /* UserStruct2.swift */; };
+		46D5E07822A87F89003B41DE /* UserStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E07722A87F89003B41DE /* UserStruct.swift */; };
 		46D5E07A22A88F14003B41DE /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E07922A88F14003B41DE /* Tag.swift */; };
 		46D5E07C22A899B1003B41DE /* ParentStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E07B22A899B1003B41DE /* ParentStruct.swift */; };
 		46D5E08022ADABC3003B41DE /* StorageStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E07F22ADABC3003B41DE /* StorageStruct.swift */; };
@@ -63,9 +66,7 @@
 		891FC3FD22D7F72E0024A623 /* Discover.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 891FC3FC22D7F72E0024A623 /* Discover.storyboard */; };
 		891FC3FF22D7F73A0024A623 /* PostCard.xib in Resources */ = {isa = PBXBuildFile; fileRef = 891FC3FE22D7F73A0024A623 /* PostCard.xib */; };
 		892677AC22CFCE390007825E /* SideMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892677AB22CFCE390007825E /* SideMenuTableViewController.swift */; };
-		892677E922D00EF10007825E /* FolderInsta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892677E822D00EF10007825E /* FolderInsta.swift */; };
 		892A4FDF22FC76970012E9AD /* ReportBugController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892A4FDE22FC76970012E9AD /* ReportBugController.swift */; };
-		892A4FE322FCA6FD0012E9AD /* DiscoverHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892A4FE222FCA6FD0012E9AD /* DiscoverHelper.swift */; };
 		8948646222D3FC280075EB90 /* FolderCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8948646122D3FC280075EB90 /* FolderCard.swift */; };
 		89871252229DE98200BE8F23 /* ZoomingImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89871251229DE98200BE8F23 /* ZoomingImage.swift */; };
 		89871254229DEA2700BE8F23 /* DiscoverPageBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89871253229DEA2700BE8F23 /* DiscoverPageBackground.swift */; };
@@ -231,8 +232,8 @@
 		463A844222F6279A00F9B4CD /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = SOURCE_ROOT; };
 		463A844422F627F000F9B4CD /* CameraViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewCell.swift; sourceTree = SOURCE_ROOT; };
 		463A844822F6286A00F9B4CD /* Camera.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Camera.storyboard; sourceTree = SOURCE_ROOT; };
-		46456C2122FE51A700D96EB5 /* DiscoverController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverController2.swift; sourceTree = "<group>"; };
-		46456C2B22FE52FB00D96EB5 /* MainDiscover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainDiscover.swift; sourceTree = "<group>"; };
+		46456C2122FE51A700D96EB5 /* SecondaryDiscoverController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryDiscoverController.swift; sourceTree = "<group>"; };
+		46456C2B22FE52FB00D96EB5 /* PrimaryDiscoverController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryDiscoverController.swift; sourceTree = "<group>"; };
 		4657E21122F65B6400396087 /* AddFolderViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFolderViewCell.swift; sourceTree = "<group>"; };
 		4657E21C22F72DA700396087 /* CameraViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewExtensions.swift; sourceTree = SOURCE_ROOT; };
 		46668D5F22C98C070021229D /* ProfileContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileContainer.swift; sourceTree = "<group>"; };
@@ -252,14 +253,17 @@
 		46A3E10522C18678003F6F35 /* SecondProfileHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SecondProfileHeader.xib; sourceTree = "<group>"; };
 		46A3E10722C18749003F6F35 /* FirstProfileHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstProfileHeader.swift; sourceTree = "<group>"; };
 		46A3E10922C18784003F6F35 /* SecondProfileHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondProfileHeader.swift; sourceTree = "<group>"; };
-		46D5E05D2298A130003B41DE /* userStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userStruct.swift; sourceTree = "<group>"; };
-		46D5E061229DD6FA003B41DE /* folderStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = folderStruct.swift; sourceTree = "<group>"; };
-		46D5E06722A323A9003B41DE /* userClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userClass.swift; sourceTree = "<group>"; };
-		46D5E06922A46505003B41DE /* folderClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = folderClass.swift; sourceTree = "<group>"; };
+		46ADC110233FFBA1001B62E8 /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
+		46ADC112233FFBD4001B62E8 /* UIImageViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageViewExtension.swift; sourceTree = "<group>"; };
+		46ADC114233FFC8F001B62E8 /* UIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
+		46ADC12F2352BC45001B62E8 /* TablePostCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TablePostCard.swift; sourceTree = "<group>"; };
+		46ADC1302352BC47001B62E8 /* TablePostCard.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TablePostCard.xib; sourceTree = "<group>"; };
+		46D48D8F2318A7D100952EDB /* FolderReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderReference.swift; sourceTree = "<group>"; };
+		46D48D96231AF48700952EDB /* ParentPostStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentPostStruct.swift; sourceTree = "<group>"; };
 		46D5E07022A87F15003B41DE /* Folder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Folder.swift; sourceTree = "<group>"; };
-		46D5E07322A87F5F003B41DE /* FolderStruct2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderStruct2.swift; sourceTree = "<group>"; };
+		46D5E07322A87F5F003B41DE /* FolderStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderStruct.swift; sourceTree = "<group>"; };
 		46D5E07522A87F75003B41DE /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		46D5E07722A87F89003B41DE /* UserStruct2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStruct2.swift; sourceTree = "<group>"; };
+		46D5E07722A87F89003B41DE /* UserStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStruct.swift; sourceTree = "<group>"; };
 		46D5E07922A88F14003B41DE /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		46D5E07B22A899B1003B41DE /* ParentStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentStruct.swift; sourceTree = "<group>"; };
 		46D5E07F22ADABC3003B41DE /* StorageStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageStruct.swift; sourceTree = "<group>"; };
@@ -275,9 +279,7 @@
 		891FC3FC22D7F72E0024A623 /* Discover.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Discover.storyboard; sourceTree = "<group>"; };
 		891FC3FE22D7F73A0024A623 /* PostCard.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostCard.xib; sourceTree = "<group>"; };
 		892677AB22CFCE390007825E /* SideMenuTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuTableViewController.swift; sourceTree = "<group>"; };
-		892677E822D00EF10007825E /* FolderInsta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderInsta.swift; sourceTree = "<group>"; };
 		892A4FDE22FC76970012E9AD /* ReportBugController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportBugController.swift; sourceTree = "<group>"; };
-		892A4FE222FCA6FD0012E9AD /* DiscoverHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverHelper.swift; sourceTree = "<group>"; };
 		8948646122D3FC280075EB90 /* FolderCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderCard.swift; sourceTree = "<group>"; };
 		89871251229DE98200BE8F23 /* ZoomingImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomingImage.swift; sourceTree = "<group>"; };
 		89871253229DEA2700BE8F23 /* DiscoverPageBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverPageBackground.swift; sourceTree = "<group>"; };
@@ -292,7 +294,9 @@
 		8EF6B3EF22F640BF00EECBF6 /* Global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		A02F922BF6A888861EB10FC9 /* Pods_InstagramClone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstagramClone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAEE40E3310BDAD7472CA2DB /* Pods-InstagramCloneTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramCloneTests.debug.xcconfig"; path = "Target Support Files/Pods-InstagramCloneTests/Pods-InstagramCloneTests.debug.xcconfig"; sourceTree = "<group>"; };
+		B503A609BCCA556B94D3639B /* Pods-InstagramClone-Gems.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramClone-Gems.release.xcconfig"; path = "Target Support Files/Pods-InstagramClone-Gems/Pods-InstagramClone-Gems.release.xcconfig"; sourceTree = "<group>"; };
 		CCFF1EDC4872CD07B6810F1E /* Pods-InstagramClone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramClone.debug.xcconfig"; path = "Target Support Files/Pods-InstagramClone/Pods-InstagramClone.debug.xcconfig"; sourceTree = "<group>"; };
+		E11F40163552A3656E8CBE99 /* Pods-InstagramClone-Gems.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramClone-Gems.debug.xcconfig"; path = "Target Support Files/Pods-InstagramClone-Gems/Pods-InstagramClone-Gems.debug.xcconfig"; sourceTree = "<group>"; };
 		E4B2D05AE2BF2F59DB788D43 /* Pods-InstagramCloneUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramCloneUITests.debug.xcconfig"; path = "Target Support Files/Pods-InstagramCloneUITests/Pods-InstagramCloneUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		EB0158E022FB65DA008CC63A /* ProfileSettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsController.swift; sourceTree = "<group>"; };
 		EB3159B022F4BEF400EB4FA9 /* SelectedTablePostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedTablePostCell.swift; sourceTree = "<group>"; };
@@ -429,26 +433,68 @@
 			children = (
 				467E5DB822FCE8EF00F23ABD /* Post.swift */,
 				467E5DC422FCFE2100F23ABD /* PostStruct.swift */,
+				46D48D96231AF48700952EDB /* ParentPostStruct.swift */,
 			);
-			path = Post;
+			name = Post;
+			path = ../Post;
+			sourceTree = "<group>";
+		};
+		46ADC10E233FFB0F001B62E8 /* Globals */ = {
+			isa = PBXGroup;
+			children = (
+				46ADC10F233FFB61001B62E8 /* Extensions */,
+				8EF6B3EF22F640BF00EECBF6 /* Global.swift */,
+			);
+			path = Globals;
+			sourceTree = "<group>";
+		};
+		46ADC10F233FFB61001B62E8 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				46ADC110233FFBA1001B62E8 /* UIColorExtension.swift */,
+				46ADC112233FFBD4001B62E8 /* UIImageViewExtension.swift */,
+				46ADC114233FFC8F001B62E8 /* UIImageExtension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		46D48D912318AAB900952EDB /* Folder */ = {
+			isa = PBXGroup;
+			children = (
+				46D5E07022A87F15003B41DE /* Folder.swift */,
+				46D48D8F2318A7D100952EDB /* FolderReference.swift */,
+				46D5E07322A87F5F003B41DE /* FolderStruct.swift */,
+			);
+			path = Folder;
+			sourceTree = "<group>";
+		};
+		46D48D922318AAC300952EDB /* User */ = {
+			isa = PBXGroup;
+			children = (
+				46D5E07522A87F75003B41DE /* User.swift */,
+				46D5E07722A87F89003B41DE /* UserStruct.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		46D48DBB233182EE00952EDB /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
 			sourceTree = "<group>";
 		};
 		46D5E065229EDCD8003B41DE /* Structures */ = {
 			isa = PBXGroup;
 			children = (
+				467E5DC622FD044A00F23ABD /* Post */,
+				8E5EDB4522C0043B0088FDA9 /* Tags */,
+				46D48D922318AAC300952EDB /* User */,
+				46D48D912318AAB900952EDB /* Folder */,
 				4669B8D122B6DC64004FB38D /* defaultsKeys.swift */,
 				89CD1D03229201BA004BD0A0 /* DownloadImage.swift */,
 				46D5E07B22A899B1003B41DE /* ParentStruct.swift */,
-				46D5E07522A87F75003B41DE /* User.swift */,
-				46D5E07022A87F15003B41DE /* Folder.swift */,
-				46D5E07322A87F5F003B41DE /* FolderStruct2.swift */,
-				46D5E07722A87F89003B41DE /* UserStruct2.swift */,
-				46D5E06922A46505003B41DE /* folderClass.swift */,
-				46D5E061229DD6FA003B41DE /* folderStruct.swift */,
-				46D5E05D2298A130003B41DE /* userStruct.swift */,
-				46D5E06722A323A9003B41DE /* userClass.swift */,
 				EB63B7DF226A7EB5004C7E2C /* ImageInsta.swift */,
-				892677E822D00EF10007825E /* FolderInsta.swift */,
 				EB41F8E822653170003751FA /* Photo.swift */,
 				46D5E07F22ADABC3003B41DE /* StorageStruct.swift */,
 			);
@@ -482,20 +528,22 @@
 		891FC3EA22D7F5DD0024A623 /* Discover */ = {
 			isa = PBXGroup;
 			children = (
+				46D48DBB233182EE00952EDB /* New Group */,
 				891FC3F822D7F6D80024A623 /* DiscoverLayout.swift */,
 				891FC3FE22D7F73A0024A623 /* PostCard.xib */,
 				891FC3F622D7F6B50024A623 /* PostCard.swift */,
-				891FC3ED22D7F6930024A623 /* DiscoverController.swift */,
+				46ADC12F2352BC45001B62E8 /* TablePostCard.swift */,
+				46ADC1302352BC47001B62E8 /* TablePostCard.xib */,
 				891FC3FC22D7F72E0024A623 /* Discover.storyboard */,
 				4622497022E7F3C80005B12F /* TableViewPostCell.swift */,
 				467E5DC722FD110C00F23ABD /* Buttons.swift */,
 				891FC3EB22D7F6720024A623 /* SearchBar.swift */,
 				891FC3FA22D7F7050024A623 /* ImageSelectedController.swift */,
 				EB3159B022F4BEF400EB4FA9 /* SelectedTablePostCell.swift */,
-				892A4FE222FCA6FD0012E9AD /* DiscoverHelper.swift */,
 				4622497222E89D8A0005B12F /* DiscoverTableController.swift */,
-				46456C2122FE51A700D96EB5 /* DiscoverController2.swift */,
-				46456C2B22FE52FB00D96EB5 /* MainDiscover.swift */,
+				891FC3ED22D7F6930024A623 /* DiscoverController.swift */,
+				46456C2B22FE52FB00D96EB5 /* PrimaryDiscoverController.swift */,
+				46456C2122FE51A700D96EB5 /* SecondaryDiscoverController.swift */,
 			);
 			path = Discover;
 			sourceTree = "<group>";
@@ -533,7 +581,6 @@
 			isa = PBXGroup;
 			children = (
 				8E92367D229C5B4F0071E63C /* HelperFrontEnd.swift */,
-				8EF6B3EF22F640BF00EECBF6 /* Global.swift */,
 			);
 			path = HelpingStructs;
 			sourceTree = "<group>";
@@ -547,7 +594,8 @@
 				8E95FFCB22BF25CE0067B5F2 /* TagElement.swift */,
 				8E5EDB4D22C025990088FDA9 /* TagElementStruct.swift */,
 			);
-			path = Tags;
+			name = Tags;
+			path = ../Tags;
 			sourceTree = "<group>";
 		};
 		C2EFC41CF087D33E3A5E7F49 /* Pods */ = {
@@ -559,6 +607,8 @@
 				64A9B990C160D383D7FF0D45 /* Pods-InstagramCloneTests.release.xcconfig */,
 				E4B2D05AE2BF2F59DB788D43 /* Pods-InstagramCloneUITests.debug.xcconfig */,
 				4053B843C77EE909A8C7461F /* Pods-InstagramCloneUITests.release.xcconfig */,
+				E11F40163552A3656E8CBE99 /* Pods-InstagramClone-Gems.debug.xcconfig */,
+				B503A609BCCA556B94D3639B /* Pods-InstagramClone-Gems.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -591,13 +641,12 @@
 		EB74D3B4226025E900556399 /* InstagramClone */ = {
 			isa = PBXGroup;
 			children = (
-				467E5DC622FD044A00F23ABD /* Post */,
+				46ADC10E233FFB0F001B62E8 /* Globals */,
 				4622495222DFAD240005B12F /* InstagramClone.entitlements */,
 				89503D6C22D92D37004EFC06 /* PermissionsView */,
 				89503D6422D92D09004EFC06 /* CameraView */,
 				891FC3EA22D7F5DD0024A623 /* Discover */,
 				465C438C22D176FB002BD263 /* Profile */,
-				8E5EDB4522C0043B0088FDA9 /* Tags */,
 				46D5E066229EDCEF003B41DE /* Layouts */,
 				8987125B229DF14500BE8F23 /* HelpingStructs */,
 				89871250229DE96A00BE8F23 /* Classes */,
@@ -874,6 +923,7 @@
 				890608A922BAE27F004C03CF /* Permissions.storyboard in Resources */,
 				463A844922F6286A00F9B4CD /* Camera.storyboard in Resources */,
 				EB74D3F4226045A600556399 /* Home.storyboard in Resources */,
+				46ADC1322352BC48001B62E8 /* TablePostCard.xib in Resources */,
 				46A3E09722BF0B6E003F6F35 /* ProfilePage.storyboard in Resources */,
 				891FC3FF22D7F73A0024A623 /* PostCard.xib in Resources */,
 				891FC3FD22D7F72E0024A623 /* Discover.storyboard in Resources */,
@@ -1006,7 +1056,8 @@
 			files = (
 				46A3E10822C18749003F6F35 /* FirstProfileHeader.swift in Sources */,
 				EB71602822FA2726009538C2 /* MenuOptionCell.swift in Sources */,
-				892677E922D00EF10007825E /* FolderInsta.swift in Sources */,
+				46ADC115233FFC8F001B62E8 /* UIImageExtension.swift in Sources */,
+				46D48D97231AF48700952EDB /* ParentPostStruct.swift in Sources */,
 				46A3E0B822C0341E003F6F35 /* GemsViewController.swift in Sources */,
 				EB0158E122FB65DA008CC63A /* ProfileSettingsController.swift in Sources */,
 				EB41F8E922653170003751FA /* Photo.swift in Sources */,
@@ -1014,12 +1065,11 @@
 				8E95FFCC22BF25CE0067B5F2 /* TagElement.swift in Sources */,
 				892677AC22CFCE390007825E /* SideMenuTableViewController.swift in Sources */,
 				890608B222BAE2B1004C03CF /* PermissionsController.swift in Sources */,
+				46ADC111233FFBA1001B62E8 /* UIColorExtension.swift in Sources */,
 				EB3A43322263A07600F6F339 /* HomeCollectionViewController.swift in Sources */,
 				467E5DC822FD110C00F23ABD /* Buttons.swift in Sources */,
-				46D5E062229DD6FA003B41DE /* folderStruct.swift in Sources */,
 				8E95FFC322BF252D0067B5F2 /* TagStruct.swift in Sources */,
 				4657E21A22F65B6400396087 /* AddFolderViewCell.swift in Sources */,
-				892A4FE322FCA6FD0012E9AD /* DiscoverHelper.swift in Sources */,
 				467E5DC522FCFE2100F23ABD /* PostStruct.swift in Sources */,
 				463A844522F627F000F9B4CD /* CameraViewCell.swift in Sources */,
 				463A844322F6279A00F9B4CD /* CameraViewController.swift in Sources */,
@@ -1035,27 +1085,29 @@
 				EB63B7DC226A7584004C7E2C /* HomeCollectionViewCell.swift in Sources */,
 				8EF6B3F022F640BF00EECBF6 /* Global.swift in Sources */,
 				46D5E07A22A88F14003B41DE /* Tag.swift in Sources */,
+				46ADC113233FFBD4001B62E8 /* UIImageViewExtension.swift in Sources */,
 				89871254229DEA2700BE8F23 /* DiscoverPageBackground.swift in Sources */,
 				46D5E07122A87F15003B41DE /* Folder.swift in Sources */,
 				46D5E07622A87F75003B41DE /* User.swift in Sources */,
 				46668D6022C98C070021229D /* ProfileContainer.swift in Sources */,
-				46D5E07822A87F89003B41DE /* UserStruct2.swift in Sources */,
+				46D5E07822A87F89003B41DE /* UserStruct.swift in Sources */,
 				EB3A43342263ACB500F6F339 /* PhotoCell.swift in Sources */,
-				46D5E07422A87F5F003B41DE /* FolderStruct2.swift in Sources */,
+				46D5E07422A87F5F003B41DE /* FolderStruct.swift in Sources */,
 				4622497122E7F3C80005B12F /* TableViewPostCell.swift in Sources */,
 				EB3A433A2263CCC000F6F339 /* ProfileCollectionViewCell.swift in Sources */,
 				89CD1D04229201BA004BD0A0 /* DownloadImage.swift in Sources */,
 				EB40EF992263E9940093BB5B /* FolderCollectionViewCell.swift in Sources */,
 				EBF7FF6522FCCB930099037D /* ReportCell.swift in Sources */,
+				46D48D902318A7D100952EDB /* FolderReference.swift in Sources */,
 				891FC3F922D7F6D80024A623 /* DiscoverLayout.swift in Sources */,
 				EB63B7DE226A7933004C7E2C /* CustomImageFlowLayout.swift in Sources */,
 				EB74D3EE22603DC200556399 /* ProfileViewController.swift in Sources */,
 				EB3159B122F4BEF400EB4FA9 /* SelectedTablePostCell.swift in Sources */,
 				467E5DB922FCE8EF00F23ABD /* Post.swift in Sources */,
 				8EADC50222D16BB3005A7CC0 /* GemsCollectionViewCell.swift in Sources */,
-				46456C2C22FE52FB00D96EB5 /* MainDiscover.swift in Sources */,
+				46456C2C22FE52FB00D96EB5 /* PrimaryDiscoverController.swift in Sources */,
+				46ADC1312352BC48001B62E8 /* TablePostCard.swift in Sources */,
 				EB40EF9D2263F7E20093BB5B /* InsideFolderCollectionViewController.swift in Sources */,
-				46D5E06822A323A9003B41DE /* userClass.swift in Sources */,
 				8E95FFCE22BF283F0067B5F2 /* ParentTagStruct.swift in Sources */,
 				8E5EDB4E22C025990088FDA9 /* TagElementStruct.swift in Sources */,
 				891FC3EE22D7F6930024A623 /* DiscoverController.swift in Sources */,
@@ -1064,13 +1116,11 @@
 				891FC3EC22D7F6720024A623 /* SearchBar.swift in Sources */,
 				EB63B7E0226A7EB5004C7E2C /* ImageInsta.swift in Sources */,
 				8948646222D3FC280075EB90 /* FolderCard.swift in Sources */,
-				46456C2222FE51A700D96EB5 /* DiscoverController2.swift in Sources */,
+				46456C2222FE51A700D96EB5 /* SecondaryDiscoverController.swift in Sources */,
 				4657E21D22F72DA700396087 /* CameraViewExtensions.swift in Sources */,
 				EBF7FF1D22FC79F00099037D /* SendFeedbackController.swift in Sources */,
 				891FC3FB22D7F7050024A623 /* ImageSelectedController.swift in Sources */,
 				892A4FDF22FC76970012E9AD /* ReportBugController.swift in Sources */,
-				46D5E06A22A46505003B41DE /* folderClass.swift in Sources */,
-				46D5E05E2298A130003B41DE /* userStruct.swift in Sources */,
 				4622486A22D41A920005B12F /* MoodsViewController.swift in Sources */,
 				46D5E07C22A899B1003B41DE /* ParentStruct.swift in Sources */,
 				4622497322E89D8A0005B12F /* DiscoverTableController.swift in Sources */,

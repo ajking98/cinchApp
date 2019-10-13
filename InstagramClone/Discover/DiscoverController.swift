@@ -8,6 +8,7 @@
  */
 
 import UIKit
+import AVKit
 
 private let reuseIdentifier = "Cell"
 
@@ -35,11 +36,19 @@ class DiscoverController: UIViewController {
     var isRefreshing = false
     var loadingIcon = UIImageView()
     var searchBar : SearchBar?
+    var isScrolling = false
+    
+    //video
+    var playerItem: AVPlayerItem!
+    var players = [AVPlayer]()
+    var player: AVPlayer!
+    var playerLayer: AVPlayerLayer!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        addSearchBar()
+        sizeUp()
+        //        addSearchBar()
         setUpTableView()
         setUpCollectionView()
         setUpCollectionViewItemSizes()
@@ -51,10 +60,6 @@ class DiscoverController: UIViewController {
         
         buildSegmentIcons()
         
-        let panView = UISwipeGestureRecognizer(target: self, action: #selector(handleViewPan))
-        panView.direction = .up
-        view.addGestureRecognizer(panView)
-        
         scrollViewFrame = collectionView.frame
         
         
@@ -64,6 +69,22 @@ class DiscoverController: UIViewController {
         view.addSubview(loadingIcon)
         
         normalize(scrollView: collectionView)
+        
+        collectionView.allowsMultipleSelection = true
+        
+        setUpNavigation()
+    }
+    
+    func setUpNavigation() {
+        //        self.navigationController?.navigationBar.barTintColor = UIColor.lightGreen
+        self.navigationController?.navigationBar.tintColor = UIColor.darkerGreen
+    }
+    
+    
+    func sizeUp() {
+        //TODO consider deleting below
+        segmentControlCenter = segmentControl.center
+        print(segmentControl.center)
     }
     
     
@@ -72,7 +93,9 @@ class DiscoverController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         let nib = UINib(nibName: "PostCard", bundle: nil)
+        let nib2 = UINib(nibName: "TablePostCard", bundle: nil)
         collectionView.register(nib, forCellWithReuseIdentifier: reuseIdentifier)
+        tableView.register(nib2, forCellReuseIdentifier: reuseIdentifier)
         tableView.delegate = self
         tableView.dataSource = self
     }
@@ -96,9 +119,9 @@ class DiscoverController: UIViewController {
         items.append(Item(imageName: "f2", likes: 13, author: "something"))
         items.append(Item(imageName: "f3", likes: 14, author: "something"))
         items.append(Item(imageName: "f4", likes: 15, author: "something"))
-        items.append(Item(imageName: "f5", likes: 16, author: "something"))
-        items.append(Item(imageName: "f6", likes: 17, author: "something"))
-        items.append(Item(imageName: "f7", likes: 18, author: "something"))
+        items.append(Item(imageName: "https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/images%2Famberalerts.mp4?alt=media&token=92f4cb5f-0aeb-4674-86f4-9f6ed9e05604", likes: 16, author: "something"))
+        items.append(Item(imageName: "https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/images%2Ffire.mp4?alt=media&token=cb204eee-6444-407e-953c-a6367a8cc7e8", likes: 17, author: "something"))
+        items.append(Item(imageName: "https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/images%2Fwaterbend.mp4?alt=media&token=dd6fb189-03c2-4c3a-9f51-2559645e631a", likes: 18, author: "something"))
     }
     
     /// Adds Select to Segment Control
@@ -125,9 +148,6 @@ class DiscoverController: UIViewController {
         segmentControl.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSegmentTap(_:))))
     }
     
-    @objc func handleViewPan(_ gesture : UISwipeGestureRecognizer) {
-        print("view panning: ")
-    }
     
     func refresh(scrollView : UIScrollView) {
         print("offset error")
@@ -156,90 +176,27 @@ class DiscoverController: UIViewController {
         }
         
         normalize(scrollView: scrollView)
+        print("is refreshing my guy")
         
         // -- or -- //
-//        UIView.animate(withDuration: 0.2, animations: {
-//            self.loadingIcon.frame.size = CGSize(width: 60, height: 60)
-//            self.loadingIcon.center = CGPoint(x: self.view.center.x, y: self.collectionView.frame.origin.y + 55)
-//        }) {
-//            (status) in
-//            //Close refresh icon
-//            UIView.animate(withDuration: 0.2) {
-//                self.loadingIcon.frame.size = CGSize(width: 0, height: 0)
-//                self.loadingIcon.center = CGPoint(x: self.view.center.x, y: self.collectionView.frame.origin.y + 55)
-//            }
-//            UIView.animate(withDuration: 0.2, animations: {
-//                self.loadingIcon.frame.size = CGSize(width: 0, height: 0)
-//                self.loadingIcon.center = CGPoint(x: self.view.center.x, y: self.collectionView.frame.origin.y + 55)
-//            }) { (status) in
-//                self.isRefreshing = false
-//            }
-//        }
+        //        UIView.animate(withDuration: 0.2, animations: {
+        //            self.loadingIcon.frame.size = CGSize(width: 60, height: 60)
+        //            self.loadingIcon.center = CGPoint(x: self.view.center.x, y: self.collectionView.frame.origin.y + 55)
+        //        }) {
+        //            (status) in
+        //            //Close refresh icon
+        //            UIView.animate(withDuration: 0.2) {
+        //                self.loadingIcon.frame.size = CGSize(width: 0, height: 0)
+        //                self.loadingIcon.center = CGPoint(x: self.view.center.x, y: self.collectionView.frame.origin.y + 55)
+        //            }
+        //            UIView.animate(withDuration: 0.2, animations: {
+        //                self.loadingIcon.frame.size = CGSize(width: 0, height: 0)
+        //                self.loadingIcon.center = CGPoint(x: self.view.center.x, y: self.collectionView.frame.origin.y + 55)
+        //            }) { (status) in
+        //                self.isRefreshing = false
+        //            }
+        //        }
         
-    }
-    
-    //when user scrolls in the scrollview, the view should pan and either move the segment control out the view or into the view
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let gesture = scrollView.panGestureRecognizer
-        
-        if (scrollView.contentOffset.y < -60){
-            scrollView.contentOffset.y = -60
-        }
-        
-        //TODO clean this up
-        switch gesture.state {
-            
-            case .began, .changed:
-                let translation = gesture.translation(in: scrollView.superview).y * 0.1
-                
-                
-                //if the segment control is less than or equal to the normalized center, then continue
-                guard (segmentControl.center.y + translation) <= segmentControlCenter!.y else {
-                    return
-                }
-                
-                //if pan is in the negative direction and the segment control hasn't reached its peak height
-                if (translation < 0 && segmentControl.center.y > (-10 - segmentControl.frame.height)){
-                    segmentControl.center.y += translation
-                    buttonBar.center.y += translation
-                    searchBar!.center.y += translation
-                }
-                
-                //if the summation of the translation and scrollview y-axis is within bounds
-                // bounds are: 100 < origin.y < scrollViewFrame.y
-                print("should", scrollView.frame)
-                if(100 < scrollView.frame.origin.y + translation && scrollView.frame.origin.y + translation <= (scrollViewFrame?.origin.y)!){
-                    print("should be doing this")
-                    collectionView.center.y += translation
-                    collectionView.frame.size.height -= translation
-                    
-                    tableView.center.y += translation
-                    tableView.frame.size.height -= translation
-                }
-            case .ended:
-                //refresh the scrollviews
-                if scrollView.contentOffset.y <= -50 && !isRefreshing {
-                    
-                    //vibrate for feedback
-                    let vibration = UIImpactFeedbackGenerator(style: .medium)
-                    vibration.impactOccurred()
-                    
-                    //refresh view
-                    refresh(scrollView: scrollView)
-                }
-                
-                //if user swipes down quickly
-                guard !(gesture.velocity(in: scrollView.superview).y > 120) else{
-                    normalize(scrollView: scrollView)
-                    return
-                }
-                
-                //if user swipes up really quick
-                if(gesture.velocity(in: scrollView.superview).y < -120 && scrollView.frame.origin.y > 100) {
-                    unNormalize(scrollView: scrollView)
-                }
-            default: break
-        }
     }
     
     
@@ -333,31 +290,6 @@ class DiscoverController: UIViewController {
         handleSegmentControl(true)
     }
     
-    func addSearchBar() {
-        let frame = collectionView.frame
-        
-        //sizing
-        searchBar = SearchBar(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: frame.width * 0.88, height: 33)))
-        
-        guard let searchBar = searchBar else {
-            return
-        }
-        
-        //positioning
-        searchBar.center.y = segmentControl.frame.origin.y + 50
-        searchBar.center.x = view.center.x
-        
-        let tapped = UITapGestureRecognizer(target: searchBar, action: #selector(searchBar.revertToNormal))
-        tapped.cancelsTouchesInView = false
-        view.addGestureRecognizer(tapped)
-        searchBar.backgroundColor = .white
-        view.addSubview(searchBar)
-        
-        //TODO consider deleting below
-        segmentControlCenter = segmentControl.center
-        print(segmentControl.center)
-    }
-    
     
     //if the user taps on the collection view icon while on the collection view, then they scroll to the top
     func bringToTop(scrollView : UIScrollView){
@@ -387,13 +319,28 @@ class DiscoverController: UIViewController {
     
     
     @objc func handlePanCollectionView(gesture: UIPanGestureRecognizer) {
+        
+        let translation = gesture.translation(in: self.view)
+        
         gesture.isEnabled = true
+        
         switch gesture.state {
-        case .began, .changed:
-            let translation = gesture.translation(in: self.view)
+        case .began:
+            isScrolling = false
             
+        case .changed:
+            guard abs(translation.x * 2) >= abs(translation.y) else {
+                isScrolling = true
+                return
+            }
+            guard !isScrolling else {
+                return
+            }
+            guard abs(translation.x) > abs(translation.y * 10) else {
+                return
+            }
             //disabling scroll when user is swiping to other view
-            if(collectionView.center.x < (view.center.x - 30)){
+            if(collectionView.center.x < (view.center.x - 15)){
                 collectionView.isScrollEnabled = false
             }
             
@@ -406,7 +353,7 @@ class DiscoverController: UIViewController {
                 gesture.isEnabled = false
             }
             gesture.setTranslation(CGPoint(x: 0,y: 0), in: self.view)
-        
+            
         case .ended:
             collectionView.isScrollEnabled = true //enables scrolling in the y-axis
             
@@ -432,43 +379,55 @@ class DiscoverController: UIViewController {
     
     @objc func handlePanTableView(gesture: UIPanGestureRecognizer) {
         gesture.isEnabled = true
+        let translation = gesture.translation(in: self.view)
         switch (gesture.state) {
             
-            case .began, .changed:
-                if(tableView.center.x > (view.center.x + 30)){
-                    tableView.isScrollEnabled = false
-                }
-                
-                let translation = gesture.translation(in: self.view)
-                if(gesture.view!.center.x >= view.center.x) {
-                    translateTables(translation: translation)
-                }
-                else {
-                    print("elsing")
-                    normalize(scrollView: tableView)
-                    gesture.isEnabled = false
-                }
-                
-                gesture.setTranslation(CGPoint(x: 0,y: 0), in: self.view)
+        case .began:
+            isScrolling = false
             
-            case .ended :
-                tableView.isScrollEnabled = true
-                if(isQuickSwipe(velocity: gesture.velocity(in: view).x)){
-                    let indexPath = collectionView.indexPathsForVisibleItems[0]
-                    summonCollectionView(indexPath)
-                    
-                }
-                else {
-                    if collectionView.center.x < -50 {
-                        summonTableView()
-                    }
-                    else {
-                        let indexPath = collectionView.indexPathsForVisibleItems[0]
-                        summonCollectionView(indexPath)
-                    }
+        case .changed:
+            guard abs(translation.x * 2) >= abs(translation.y) else {
+                isScrolling = true
+                return
+            }
+            guard !isScrolling else {
+                return
+            }
+            guard abs(translation.x) > abs(translation.y * 10) else {
+                return
+            }
+            if(tableView.center.x > (view.center.x + 15)){
+                tableView.isScrollEnabled = false
+            }
+            if(gesture.view!.center.x >= view.center.x) {
+                translateTables(translation: translation)
+            }
+            else {
+                print("elsing")
+                normalize(scrollView: tableView)
+                gesture.isEnabled = false
             }
             
-            default: break
+            gesture.setTranslation(CGPoint(x: 0,y: 0), in: self.view)
+            
+        case .ended :
+            tableView.isScrollEnabled = true
+            if(isQuickSwipe(velocity: gesture.velocity(in: view).x)){
+                let indexPath = collectionView.indexPathsForVisibleItems[0]
+                summonCollectionView(indexPath)
+                
+            }
+            else {
+                if collectionView.center.x < -50 {
+                    summonTableView()
+                }
+                else {
+                    let indexPath = collectionView.indexPathsForVisibleItems[0]
+                    summonCollectionView(indexPath)
+                }
+            }
+            
+        default: break
         }
     }
     
@@ -536,7 +495,6 @@ class DiscoverController: UIViewController {
             isRightSegmented = true
         }
     }
-    
 }
 
 
@@ -556,6 +514,7 @@ extension DiscoverController : UICollectionViewDelegate, UICollectionViewDataSou
         return cell
     }
     
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "ImageSelectedController") as! ImageSelectedController
         for index in indexPath.row...(items.count - 1) {
@@ -572,27 +531,29 @@ extension DiscoverController : UICollectionViewDelegate, UICollectionViewDataSou
 
 
 
-
-
-
-extension DiscoverController : UITableViewDelegate, UITableViewDataSource{
+extension DiscoverController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath) as! TableViewPostCell
-        let item = items[indexPath.row]
-        cell.postImage.image = UIImage.init(named: item.imageName)
-//        cell.nameLabel.text = item.author
-//        cell.viewLabel.text = String(item.likes)
-        cell.postImage.layer.cornerRadius = 8.0
-        cell.postImage.clipsToBounds = true
-        
-        // Configure the cell...
-        
+//<<<<<<< HEAD
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath) as! TableViewPostCell
+//        let item = items[indexPath.row]
+//
+//        guard let image = UIImage(named: item.imageName) else { return UITableViewCell(frame: CGRect.zero) }
+//        cell.postImage.image = image
+//        cell.postImage.layer.cornerRadius = 8.0
+//        cell.postImage.clipsToBounds = true
+//
+//=======
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! TablePostCard
+        cell.buildPostCard(item: items[indexPath.item])
+//>>>>>>> Video
         return cell
     }
+
+    
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "ImageSelectedController") as! ImageSelectedController
@@ -603,12 +564,19 @@ extension DiscoverController : UITableViewDelegate, UITableViewDataSource{
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    
 }
 
 extension DiscoverController : DiscoverLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, sizeOfPhotoAtIndexPath indexPath: IndexPath) -> CGSize {
-        let cellSize = UIImage(named: items[indexPath.item].imageName)!.size
+        var cellSize = CGSize()
+        if(items[indexPath.item].imageName.contains("mp4")) {
+            let url = URL(string: items[indexPath.item].imageName)!
+            playerItem = AVPlayerItem(url: url)
+            player = AVPlayer(playerItem: playerItem)
+            cellSize = CGSize(width: 300, height: 300)
+        } else {
+            cellSize = UIImage(named: items[indexPath.item].imageName)!.size
+        }
         return cellSize
     }
 }

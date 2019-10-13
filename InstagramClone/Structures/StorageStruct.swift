@@ -86,12 +86,10 @@ struct StorageStruct {
         }
         return true
     }
+    
+    
     // TODO
-    //Uploads Images and Videos to storage
-    //T is for user, can be of type UUID or String (username)
-    //folderName is the name of the folder the user wants to upload the image to
-    //U is for content, can be of type UIImage or AVplayer
-    //Uploads the content to the Storage and includes the url in the user's folder's content (In Database)
+    ///Uploads Images and Videos to storage
     func UploadContent(user: String, folderName : String, content : UIImage)->Bool{
             //perform Image given
         var data = Data()

@@ -65,6 +65,7 @@ extension CameraViewController {
                 FolderSliderView.center.y = updatedY
                 
                 solidBar.center.y = updatedY - 30
+                //TODO fix this part
                 sender.setTranslation(CGPoint.zero, in: view)
             }
         case .ended:
@@ -148,12 +149,29 @@ extension CameraViewController {
         Helper().vibrate(style: .light)
     }
     
+    //this creates the folder selector popup view and the tagging input box
     @objc func saveToFolder(_ tapGesture : UITapGestureRecognizer? = nil){
-        if let image = centerView?.image {
-            Helper().vibrate(style: .medium)
-            let folderSelection = Helper().saveToFolder(image: image)
-            present(folderSelection, animated: true, completion: nil)
+        guard selectedImages.count != 0 else {// if the size of the selectedimages array is empty, then vibrate heavy
+            Helper().vibrate(style: .heavy)
+            return
+            
         }
+        if selectedImages.count == 1 {
+            let image = selectedImages[0]
+            Helper().vibrate(style: .light)
+            let folderSelection = Helper().saveToFolder(image: image, viewController: self)
+            present(folderSelection, animated: true, completion: {
+                print("this is now the thing")
+            })
+        }
+        
+        else {
+            let action = Helper().saveMultipleImages(images: selectedImages)
+            present(action, animated: true, completion: {
+                self.handleUndoTap()
+            })
+        }
+        
     }
     
     
@@ -165,7 +183,10 @@ extension CameraViewController {
             print(cell.currentIndex, "is the current index")
             centerIndex = cell.currentIndex
             
-            centerView.image = cell.imageView.image
+            guard let image = cell.imageView.image else { return }
+            centerView.image = image
+            handleImageSelected(image: image)
+            
             if (cell.currentIndex < (imageArray.count - 1)){
                 nextView.image = imageArray[cell.currentIndex + 1]
             }
@@ -173,6 +194,54 @@ extension CameraViewController {
             if cell.currentIndex > 0 {
                 previousView.image = imageArray[cell.currentIndex - 1]
             }
+            
+            
+            //handles the border of the tapped image(s)
+            if !isMultipleSelected {
+                handleUndoTap()
+            }
+            if cell.isTapped {
+                handleUndoTapSingle(index: cell.currentIndex)
+            }
+            else{
+                cell.layer.borderWidth = 3
+                cell.layer.borderColor = UIColor.selected.cgColor
+                tappedImages.append(cell.currentIndex)
+                cell.isTapped = true
+            }
         }
+    }
+
+    
+    ///Appends image to the selectedImages array and updates the counter if necessary
+    func handleImageSelected(image : UIImage) {
+        if !isMultipleSelected {
+            selectedImages = []
+        }
+        selectedImages.append(image)
+        circleCounter.text = String(selectedImages.count)
+    }
+    
+    //TODO this should update the selectedImages and tappedImages array along with the circle counter
+    ///undoes the border for a single cell
+    func handleUndoTapSingle(index : Int){
+        let indexPath = IndexPath(item: index, section: 0)
+        let cell = imageCollectionView.cellForItem(at: indexPath) as! CameraViewCell
+        cell.layer.borderWidth = 0
+        cell.isTapped = false
+    }
+    
+    
+    ///Cycles through the tappedImages array and undoes the border hightlight for each cell
+    func handleUndoTap() {
+        for index in tappedImages{
+            let indexPath = IndexPath(item: index, section: 0)
+            let cell = imageCollectionView.cellForItem(at: indexPath) as! CameraViewCell
+            cell.layer.borderWidth = 0
+            cell.isTapped = false
+        }
+        tappedImages = []
+        selectedImages = []
+        circleCounter.text = "0"
     }
 }
