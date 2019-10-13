@@ -1,16 +1,14 @@
 //
-//  PostCard.swift
-//  InstagramClone
+//  TablePostCard.swift
+//  
 //
-/*
- DiscoverPage
- */
+//  Created by Ahmed Gedi on 10/12/19.
+//
 
 import UIKit
 import AVKit
 
-class PostCard: UICollectionViewCell {
-    
+class TablePostCard: UITableViewCell {
     
     @IBOutlet weak var imageView: UIView!
     @IBOutlet weak var labelContainer: UIView!
@@ -179,19 +177,12 @@ class PostCard: UICollectionViewCell {
                     self.topBorder?.layer.opacity = 1
                     self.leftBorder?.layer.opacity = 1
                     self.rightBorder?.layer.opacity = 1
-                    if(self.player != nil) {
-                        self.player.isMuted = true
-                    }
-                    
                 }
                 else {
                     self.labelContainer.layer.opacity = 0
                     self.topBorder?.layer.opacity = 0
                     self.leftBorder?.layer.opacity = 0
                     self.rightBorder?.layer.opacity = 0
-                    if(self.player != nil) {
-                        self.player.isMuted = false
-                    }
                 }
             }
         }
@@ -202,6 +193,5 @@ class PostCard: UICollectionViewCell {
     func createGestures(target : Any?, action : Selector) {
         self.addGestureRecognizer(UITapGestureRecognizer(target: target, action: action))
     }
-    
     
 }

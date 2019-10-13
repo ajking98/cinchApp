@@ -1,18 +1,17 @@
 //
-//  PostCard.swift
-//  InstagramClone
+//  TablePostCard.swift
 //
-/*
- DiscoverPage
- */
+//
+//  Created by Ahmed Gedi on 10/12/19.
+//
 
 import UIKit
 import AVKit
 
-class PostCard: UICollectionViewCell {
+class TablePostCard: UITableViewCell {
     
     
-    @IBOutlet weak var imageView: UIView!
+    @IBOutlet weak var tableImageView: UIView!
     @IBOutlet weak var labelContainer: UIView!
     var likesView = UILabel(frame: CGRect.zero)
     var authorView = UILabel(frame: CGRect.zero)
@@ -38,22 +37,22 @@ class PostCard: UICollectionViewCell {
         
         //imageView
         let newImage = UIImageView(image: image)
-        newImage.frame = imageView.frame
-        imageView.addSubview(newImage)
-        self.imageView.addSubview(newImage)
+        newImage.frame = contentView.frame
+        tableImageView.addSubview(newImage)
+        contentView.addSubview(newImage)
         //Imageview on Top of View
-        self.imageView.bringSubviewToFront(newImage)
-        imageView!.contentMode = .scaleAspectFill
-        imageView!.clipsToBounds = true
-        imageView.frame.size = size
+        contentView.bringSubviewToFront(newImage)
+        tableImageView!.contentMode = .scaleAspectFill
+        tableImageView!.clipsToBounds = true
+        contentView.frame.size = size
         
         //LikesView and author
         likesView.text = String(likes)
         authorView.text = author
         
         //label container
-        labelContainer.frame.origin.y = size.height - labelContainer.frame.height
-        labelContainer.frame.size.width = self.frame.width
+        labelContainer.frame.origin.x = size.width - labelContainer.frame.width
+        labelContainer.frame.size.height = self.frame.height
         
         
         //adding border to cell
@@ -77,24 +76,23 @@ class PostCard: UICollectionViewCell {
         players.append(player)
         playerLayer = AVPlayerLayer(player: player)
         playerLayer.videoGravity = .resize
-        imageView.layer.addSublayer(playerLayer)
-        playerLayer.frame = imageView.bounds
+        tableImageView.layer.addSublayer(playerLayer)
+        playerLayer.frame = tableImageView.bounds
         player.play()
         player.isMuted = true
         loopVideo(videoPlayer: player)
         
-        imageView!.contentMode = .scaleAspectFill
-        imageView!.clipsToBounds = true
-        imageView.frame.size = size
+        tableImageView!.contentMode = .scaleAspectFill
+        tableImageView!.clipsToBounds = true
+        tableImageView.frame.size = size
         
         //LikesView and author
         likesView.text = String(likes)
         authorView.text = author
         
         //label container
-        labelContainer.frame.origin.y = size.height - labelContainer.frame.height
-        labelContainer.frame.size.width = self.frame.width
-        
+        labelContainer.frame.origin.x = size.width - labelContainer.frame.width
+        labelContainer.frame.size.height = self.frame.height
         
         //adding border to cell
         self.layer.cornerRadius = 5
@@ -124,23 +122,23 @@ class PostCard: UICollectionViewCell {
         
         
         //Sizing
-        likesView.frame.size = CGSize(width: 70, height: 20)
-        authorView.frame.size = CGSize(width: (labelContainer.frame.width / 2) - 10, height: 20)
+        //        likesView.frame.size = CGSize(width: 70, height: 20)
+        //        authorView.frame.size = CGSize(width: (labelContainer.frame.width / 2) - 10, height: 20)
         
         //positioning
-        likesView.frame.origin.x = 38
-        authorView.frame.origin.x = labelContainer.center.x
-        likesView.center.y = labelContainer.frame.height / 2
-        authorView.center.y = likesView.center.y - 1
+        //        likesView.frame.origin.x = 38
+        //        authorView.frame.origin.x = labelContainer.center.x
+        //        likesView.center.y = labelContainer.frame.height / 2
+        //        authorView.center.y = likesView.center.y - 1
         
         //font
         likesView.font = likesView.font.withSize(17)
         authorView.font = authorView.font.withSize(15)
         authorView.textAlignment = .right
         
-        labelContainer.addSubview(likeButton)
-        labelContainer.addSubview(likesView)
-        labelContainer.addSubview(authorView)
+        //        labelContainer.addSubview(likeButton)
+        //        labelContainer.addSubview(likesView)
+        //        labelContainer.addSubview(authorView)
     }
     
     
@@ -171,37 +169,29 @@ class PostCard: UICollectionViewCell {
     }
     
     
-    override var isHighlighted: Bool {
-        didSet {
-            UIView.animate(withDuration: 0.15) {
-                if(self.labelContainer.layer.opacity == 0) {
-                    self.labelContainer.layer.opacity = 1
-                    self.topBorder?.layer.opacity = 1
-                    self.leftBorder?.layer.opacity = 1
-                    self.rightBorder?.layer.opacity = 1
-                    if(self.player != nil) {
-                        self.player.isMuted = true
-                    }
-                    
-                }
-                else {
-                    self.labelContainer.layer.opacity = 0
-                    self.topBorder?.layer.opacity = 0
-                    self.leftBorder?.layer.opacity = 0
-                    self.rightBorder?.layer.opacity = 0
-                    if(self.player != nil) {
-                        self.player.isMuted = false
-                    }
-                }
-            }
-        }
-        
-    }
+    //    override var isHighlighted: Bool {
+    //        didSet {
+    //            UIView.animate(withDuration: 0.15) {
+    //                if(self.labelContainer.layer.opacity == 0) {
+    //                    self.labelContainer.layer.opacity = 1
+    //                    self.topBorder?.layer.opacity = 1
+    //                    self.leftBorder?.layer.opacity = 1
+    //                    self.rightBorder?.layer.opacity = 1
+    //                }
+    //                else {
+    //                    self.labelContainer.layer.opacity = 0
+    //                    self.topBorder?.layer.opacity = 0
+    //                    self.leftBorder?.layer.opacity = 0
+    //                    self.rightBorder?.layer.opacity = 0
+    //                }
+    //            }
+    //        }
+    //
+    //    }
     
     ///gives the cell its gestures
     func createGestures(target : Any?, action : Selector) {
         self.addGestureRecognizer(UITapGestureRecognizer(target: target, action: action))
     }
-    
     
 }

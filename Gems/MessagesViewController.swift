@@ -22,7 +22,7 @@ class MessagesViewController: MSMessagesAppViewController, UICollectionViewDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         addSearchBar()
-        objectImages = defaults?.array(forKey: "testImages") as! [String]
+        objectImages = ["https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/images%2FBSnzTeDsgaftbUCsqEVq?alt=media&token=33656ad4-6005-4d6f-aa55-df834f56826c", "https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/images%2FBSnzTeDsgaftbUCsqEVq?alt=media&token=33656ad4-6005-4d6f-aa55-df834f56826c"]
         
         
         
@@ -52,10 +52,11 @@ class MessagesViewController: MSMessagesAppViewController, UICollectionViewDeleg
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! MessageContentCVCell
         designCell(cell: cell)
         cell.imageView.image = UIImage.init(named: objectImages[indexPath.row])
+        print(objectImages[indexPath.row])
 //        cell.isUserInteractionEnabled = true
 ////        let tapped = UITapGestureRecognizer(target: self, action: #selector(handleTap))
 ////        cell.addGestureRecognizer(tapped)
-        images.append(cell.imageView.image!)
+        images.append(UIImage.init(named: objectImages[indexPath.row])!)
         //        mc.message = message
         //        mc.activeConversation?.insert(message, completionHandler: nil)
         

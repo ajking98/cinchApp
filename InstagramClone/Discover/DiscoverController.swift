@@ -8,6 +8,7 @@
  */
 
 import UIKit
+import AVKit
 
 private let reuseIdentifier = "Cell"
 
@@ -36,6 +37,12 @@ class DiscoverController: UIViewController {
     var loadingIcon = UIImageView()
     var searchBar : SearchBar?
     var isScrolling = false
+    
+    //video
+    var playerItem: AVPlayerItem!
+    var players = [AVPlayer]()
+    var player: AVPlayer!
+    var playerLayer: AVPlayerLayer!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -86,7 +93,9 @@ class DiscoverController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         let nib = UINib(nibName: "PostCard", bundle: nil)
+        let nib2 = UINib(nibName: "TablePostCard", bundle: nil)
         collectionView.register(nib, forCellWithReuseIdentifier: reuseIdentifier)
+        tableView.register(nib2, forCellReuseIdentifier: reuseIdentifier)
         tableView.delegate = self
         tableView.dataSource = self
     }
@@ -110,9 +119,9 @@ class DiscoverController: UIViewController {
         items.append(Item(imageName: "f2", likes: 13, author: "something"))
         items.append(Item(imageName: "f3", likes: 14, author: "something"))
         items.append(Item(imageName: "f4", likes: 15, author: "something"))
-        items.append(Item(imageName: "f5", likes: 16, author: "something"))
-        items.append(Item(imageName: "f6", likes: 17, author: "something"))
-        items.append(Item(imageName: "f7", likes: 18, author: "something"))
+        items.append(Item(imageName: "https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/images%2Famberalerts.mp4?alt=media&token=92f4cb5f-0aeb-4674-86f4-9f6ed9e05604", likes: 16, author: "something"))
+        items.append(Item(imageName: "https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/images%2Ffire.mp4?alt=media&token=cb204eee-6444-407e-953c-a6367a8cc7e8", likes: 17, author: "something"))
+        items.append(Item(imageName: "https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/images%2Fwaterbend.mp4?alt=media&token=dd6fb189-03c2-4c3a-9f51-2559645e631a", likes: 18, author: "something"))
     }
     
     /// Adds Select to Segment Control
@@ -170,23 +179,23 @@ class DiscoverController: UIViewController {
         print("is refreshing my guy")
         
         // -- or -- //
-//        UIView.animate(withDuration: 0.2, animations: {
-//            self.loadingIcon.frame.size = CGSize(width: 60, height: 60)
-//            self.loadingIcon.center = CGPoint(x: self.view.center.x, y: self.collectionView.frame.origin.y + 55)
-//        }) {
-//            (status) in
-//            //Close refresh icon
-//            UIView.animate(withDuration: 0.2) {
-//                self.loadingIcon.frame.size = CGSize(width: 0, height: 0)
-//                self.loadingIcon.center = CGPoint(x: self.view.center.x, y: self.collectionView.frame.origin.y + 55)
-//            }
-//            UIView.animate(withDuration: 0.2, animations: {
-//                self.loadingIcon.frame.size = CGSize(width: 0, height: 0)
-//                self.loadingIcon.center = CGPoint(x: self.view.center.x, y: self.collectionView.frame.origin.y + 55)
-//            }) { (status) in
-//                self.isRefreshing = false
-//            }
-//        }
+        //        UIView.animate(withDuration: 0.2, animations: {
+        //            self.loadingIcon.frame.size = CGSize(width: 60, height: 60)
+        //            self.loadingIcon.center = CGPoint(x: self.view.center.x, y: self.collectionView.frame.origin.y + 55)
+        //        }) {
+        //            (status) in
+        //            //Close refresh icon
+        //            UIView.animate(withDuration: 0.2) {
+        //                self.loadingIcon.frame.size = CGSize(width: 0, height: 0)
+        //                self.loadingIcon.center = CGPoint(x: self.view.center.x, y: self.collectionView.frame.origin.y + 55)
+        //            }
+        //            UIView.animate(withDuration: 0.2, animations: {
+        //                self.loadingIcon.frame.size = CGSize(width: 0, height: 0)
+        //                self.loadingIcon.center = CGPoint(x: self.view.center.x, y: self.collectionView.frame.origin.y + 55)
+        //            }) { (status) in
+        //                self.isRefreshing = false
+        //            }
+        //        }
         
     }
     
@@ -344,7 +353,7 @@ class DiscoverController: UIViewController {
                 gesture.isEnabled = false
             }
             gesture.setTranslation(CGPoint(x: 0,y: 0), in: self.view)
-        
+            
         case .ended:
             collectionView.isScrollEnabled = true //enables scrolling in the y-axis
             
@@ -373,6 +382,46 @@ class DiscoverController: UIViewController {
         let translation = gesture.translation(in: self.view)
         switch (gesture.state) {
             
+//<<<<<<< HEAD
+//        case .began:
+//            isScrolling = false
+//
+//        case .changed:
+//            guard abs(translation.x * 2) >= abs(translation.y) else {
+//                isScrolling = true
+//                return
+//            }
+//            guard !isScrolling else {
+//                return
+//            }
+//            guard abs(translation.x) > abs(translation.y * 10) else {
+//                return
+//            }
+//            if(tableView.center.x > (view.center.x + 15)){
+//                tableView.isScrollEnabled = false
+//            }
+//            if(gesture.view!.center.x >= view.center.x) {
+//                translateTables(translation: translation)
+//            }
+//            else {
+//                print("elsing")
+//                normalize(scrollView: tableView)
+//                gesture.isEnabled = false
+//            }
+//
+//            gesture.setTranslation(CGPoint(x: 0,y: 0), in: self.view)
+//
+//        case .ended :
+//            tableView.isScrollEnabled = true
+//            if(isQuickSwipe(velocity: gesture.velocity(in: view).x)){
+//                let indexPath = collectionView.indexPathsForVisibleItems[0]
+//                summonCollectionView(indexPath)
+//
+//            }
+//            else {
+//                if collectionView.center.x < -50 {
+//                    summonTableView()
+//=======
             case .began:
                 isScrolling = false
             
@@ -392,33 +441,15 @@ class DiscoverController: UIViewController {
                 }
                 if(gesture.view!.center.x >= view.center.x) {
                     translateTables(translation: translation)
+//>>>>>>> 0d325f479fd15372db8571287925db4cf1fcd348
                 }
                 else {
-                    print("elsing")
-                    normalize(scrollView: tableView)
-                    gesture.isEnabled = false
-                }
-                
-                gesture.setTranslation(CGPoint(x: 0,y: 0), in: self.view)
-            
-            case .ended :
-                tableView.isScrollEnabled = true
-                if(isQuickSwipe(velocity: gesture.velocity(in: view).x)){
                     let indexPath = collectionView.indexPathsForVisibleItems[0]
                     summonCollectionView(indexPath)
-                    
                 }
-                else {
-                    if collectionView.center.x < -50 {
-                        summonTableView()
-                    }
-                    else {
-                        let indexPath = collectionView.indexPathsForVisibleItems[0]
-                        summonCollectionView(indexPath)
-                    }
-            }
+//            }
             
-            default: break
+        default: break
         }
     }
     
@@ -522,26 +553,29 @@ extension DiscoverController : UICollectionViewDelegate, UICollectionViewDataSou
 
 
 
-
-
-
-extension DiscoverController : UITableViewDelegate, UITableViewDataSource{
+extension DiscoverController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath) as! TableViewPostCell
-        let item = items[indexPath.row]
-        
-        guard let image = UIImage(named: item.imageName) else { return UITableViewCell(frame: CGRect.zero) }
-        cell.postImage.image = image
-        cell.postImage.layer.cornerRadius = 8.0
-        cell.postImage.clipsToBounds = true
-        
+//<<<<<<< HEAD
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath) as! TableViewPostCell
+//        let item = items[indexPath.row]
+//
+//        guard let image = UIImage(named: item.imageName) else { return UITableViewCell(frame: CGRect.zero) }
+//        cell.postImage.image = image
+//        cell.postImage.layer.cornerRadius = 8.0
+//        cell.postImage.clipsToBounds = true
+//
+//=======
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! TablePostCard
+        cell.buildPostCard(item: items[indexPath.item])
+//>>>>>>> Video
         return cell
     }
 
+    
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "ImageSelectedController") as! ImageSelectedController
@@ -552,12 +586,19 @@ extension DiscoverController : UITableViewDelegate, UITableViewDataSource{
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    
 }
 
 extension DiscoverController : DiscoverLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, sizeOfPhotoAtIndexPath indexPath: IndexPath) -> CGSize {
-        let cellSize = UIImage(named: items[indexPath.item].imageName)!.size
+        var cellSize = CGSize()
+        if(items[indexPath.item].imageName.contains("mp4")) {
+            let url = URL(string: items[indexPath.item].imageName)!
+            playerItem = AVPlayerItem(url: url)
+            player = AVPlayer(playerItem: playerItem)
+            cellSize = CGSize(width: 300, height: 300)
+        } else {
+            cellSize = UIImage(named: items[indexPath.item].imageName)!.size
+        }
         return cellSize
     }
 }

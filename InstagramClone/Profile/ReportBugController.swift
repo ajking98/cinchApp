@@ -80,12 +80,12 @@ extension ReportBugController: UICollectionViewDataSource, UICollectionViewDeleg
         return cell
     }
     
-    //    func loopVideo(videoPlayer: AVPlayer) {
-    //        NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil, queue: nil) { notification in
-    //            videoPlayer.seek(to: CMTime.zero)
-    //            videoPlayer.play()
-    //        }
-    //    }
+//        func loopVideo(videoPlayer: AVPlayer) {
+//            NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil, queue: nil) { notification in
+//                videoPlayer.seek(to: CMTime.zero)
+//                videoPlayer.play()
+//            }
+//        }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath.row)
