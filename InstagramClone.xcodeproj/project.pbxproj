@@ -20,7 +20,6 @@
 		4622495722DFB1F60005B12F /* MessageContentCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4622495622DFB1F60005B12F /* MessageContentCVCell.swift */; };
 		4622495A22E24D5D0005B12F /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891FC3EB22D7F6720024A623 /* SearchBar.swift */; };
 		4622497122E7F3C80005B12F /* TableViewPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4622497022E7F3C80005B12F /* TableViewPostCell.swift */; };
-		4622497322E89D8A0005B12F /* DiscoverTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4622497222E89D8A0005B12F /* DiscoverTableController.swift */; };
 		463A844322F6279A00F9B4CD /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463A844222F6279A00F9B4CD /* CameraViewController.swift */; };
 		463A844522F627F000F9B4CD /* CameraViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463A844422F627F000F9B4CD /* CameraViewCell.swift */; };
 		463A844922F6286A00F9B4CD /* Camera.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 463A844822F6286A00F9B4CD /* Camera.storyboard */; };
@@ -228,7 +227,6 @@
 		4622495422DFB1D20005B12F /* MessageContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageContentViewController.swift; sourceTree = "<group>"; };
 		4622495622DFB1F60005B12F /* MessageContentCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageContentCVCell.swift; sourceTree = "<group>"; };
 		4622497022E7F3C80005B12F /* TableViewPostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewPostCell.swift; sourceTree = "<group>"; };
-		4622497222E89D8A0005B12F /* DiscoverTableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTableController.swift; sourceTree = "<group>"; };
 		463A844222F6279A00F9B4CD /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = SOURCE_ROOT; };
 		463A844422F627F000F9B4CD /* CameraViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewCell.swift; sourceTree = SOURCE_ROOT; };
 		463A844822F6286A00F9B4CD /* Camera.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Camera.storyboard; sourceTree = SOURCE_ROOT; };
@@ -532,7 +530,6 @@
 				891FC3EB22D7F6720024A623 /* SearchBar.swift */,
 				891FC3FA22D7F7050024A623 /* ImageSelectedController.swift */,
 				EB3159B022F4BEF400EB4FA9 /* SelectedTablePostCell.swift */,
-				4622497222E89D8A0005B12F /* DiscoverTableController.swift */,
 				891FC3ED22D7F6930024A623 /* DiscoverController.swift */,
 				46456C2B22FE52FB00D96EB5 /* PrimaryDiscoverController.swift */,
 				46456C2122FE51A700D96EB5 /* SecondaryDiscoverController.swift */,
@@ -1115,7 +1112,6 @@
 				892A4FDF22FC76970012E9AD /* ReportBugController.swift in Sources */,
 				4622486A22D41A920005B12F /* MoodsViewController.swift in Sources */,
 				46D5E07C22A899B1003B41DE /* ParentStruct.swift in Sources */,
-				4622497322E89D8A0005B12F /* DiscoverTableController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

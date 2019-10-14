@@ -18,8 +18,6 @@ class PostCard: UICollectionViewCell {
     var authorView = UILabel(frame: CGRect.zero)
     let likeButton = LikeButton()
     
-    var setHeight : CGFloat?
-    
     //borders
     var topBorder : UIView?
     var leftBorder : UIView?
@@ -33,7 +31,7 @@ class PostCard: UICollectionViewCell {
     
 
     
-    ///given an UIImage, Int, and String, and sets the values of the post to the details given
+    ///given a UIImage, Int, and String, and sets the values of the post to the details given
     func buildPostCard(image : UIImage, likes : Int, author : String) {
         let size = self.frame.size
         
@@ -198,7 +196,6 @@ class PostCard: UICollectionViewCell {
         self.playerItem = nil
         self.player = nil
         self.playerLayer = nil
-        print("this should be nil", imageView.layer.sublayers)
     }
 }
     

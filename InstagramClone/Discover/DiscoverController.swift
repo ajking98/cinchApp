@@ -11,6 +11,7 @@ import UIKit
 import AVKit
 
 private let reuseIdentifier = "Cell"
+private let reuseIdentifierTable = "Cell2"
 
 struct Item {
     var imageName : String
@@ -55,8 +56,6 @@ class DiscoverController: UIViewController {
         addContent()
         addGestures()
         addSelectBar(color: UIColor.darkerGreen)
-        let tvc = DiscoverTableController()
-        tvc.items = items
         
         buildSegmentIcons()
         
@@ -95,7 +94,7 @@ class DiscoverController: UIViewController {
         let nib = UINib(nibName: "PostCard", bundle: nil)
         let nib2 = UINib(nibName: "TablePostCard", bundle: nil)
         collectionView.register(nib, forCellWithReuseIdentifier: reuseIdentifier)
-        tableView.register(nib2, forCellReuseIdentifier: reuseIdentifier)
+        tableView.register(nib2, forCellReuseIdentifier: reuseIdentifierTable)
         tableView.delegate = self
         tableView.dataSource = self
     }
@@ -116,6 +115,24 @@ class DiscoverController: UIViewController {
     ///Adds content to discoverpage
     func addContent() {
         items.append(Item(imageName: "f5", likes: 12, author: "something"))
+        items.append(Item(imageName: "f2", likes: 13, author: "something"))
+        items.append(Item(imageName: "f3", likes: 14, author: "something"))
+        items.append(Item(imageName: "f4", likes: 15, author: "something"))
+        items.append(Item(imageName: "f2", likes: 13, author: "something"))
+        items.append(Item(imageName: "f3", likes: 14, author: "something"))
+        items.append(Item(imageName: "f4", likes: 15, author: "something"))
+        items.append(Item(imageName: "f2", likes: 13, author: "something"))
+        items.append(Item(imageName: "f3", likes: 14, author: "something"))
+        items.append(Item(imageName: "f4", likes: 15, author: "something"))
+        items.append(Item(imageName: "f2", likes: 13, author: "something"))
+        items.append(Item(imageName: "f3", likes: 14, author: "something"))
+        items.append(Item(imageName: "f4", likes: 15, author: "something"))
+        items.append(Item(imageName: "f2", likes: 13, author: "something"))
+        items.append(Item(imageName: "f3", likes: 14, author: "something"))
+        items.append(Item(imageName: "f4", likes: 15, author: "something"))
+        items.append(Item(imageName: "f2", likes: 13, author: "something"))
+        items.append(Item(imageName: "f3", likes: 14, author: "something"))
+        items.append(Item(imageName: "f4", likes: 15, author: "something"))
         items.append(Item(imageName: "f2", likes: 13, author: "something"))
         items.append(Item(imageName: "f3", likes: 14, author: "something"))
         items.append(Item(imageName: "f4", likes: 15, author: "something"))
@@ -506,9 +523,6 @@ class DiscoverController: UIViewController {
 
 
 
-
-
-
 extension DiscoverController : UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return items.count
@@ -516,9 +530,7 @@ extension DiscoverController : UICollectionViewDelegate, UICollectionViewDataSou
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! PostCard
-        print("this is a checker: ", cell.authorView.text)
         cell.buildPostCard(item: items[indexPath.item])
-        print("this the index path:", indexPath.item)
         return cell
     }
     
@@ -536,28 +548,16 @@ extension DiscoverController : UICollectionViewDelegate, UICollectionViewDataSou
 }
 
 
-
-
-
 extension DiscoverController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//<<<<<<< HEAD
-//        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! TableViewPostCell
-//        let item = items[indexPath.row]
-//
-//        guard let image = UIImage(named: item.imageName) else { return UITableViewCell(frame: CGRect.zero) }
-//        cell.postImage.image = image
-//        cell.postImage.layer.cornerRadius = 8.0
-//        cell.postImage.clipsToBounds = true
-//
-//=======
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! TablePostCard
+        //Todo change the string literal to a variable and get rid of the TablePostCard.xib
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath) as! TablePostCard
         cell.buildPostCard(item: items[indexPath.item])
-//>>>>>>> Video
+        print("this is the size of cell", cell.frame)
         return cell
     }
 
@@ -571,25 +571,25 @@ extension DiscoverController : UITableViewDelegate, UITableViewDataSource {
         let item = items[indexPath.row]
         self.navigationController?.pushViewController(vc, animated: true)
     }
-    
+
 }
 
-//TODO what the fuck is this??
+
 extension DiscoverController : DiscoverLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, sizeOfPhotoAtIndexPath indexPath: IndexPath) -> CGSize {
         var cellSize = CGSize()
         if(items[indexPath.item].imageName.contains("mp4")) {
-            let url = URL(string: items[indexPath.item].imageName)!
-            playerItem = AVPlayerItem(url: url)
-            player = AVPlayer(playerItem: playerItem)
-            cellSize = CGSize(width: 300, height: 300)
+            cellSize = CGSize(width: 300, height: 370)
         } else {
             cellSize = UIImage(named: items[indexPath.item].imageName)!.size
         }
+        
         return cellSize
     }
 }
 
+
+//Lets the controller recogonize multiple gestures as they occur
 extension DiscoverController: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true

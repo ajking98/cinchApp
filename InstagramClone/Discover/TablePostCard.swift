@@ -13,11 +13,11 @@ class TablePostCard: UITableViewCell {
     
     @IBOutlet weak var tableImageView: UIImageView!
     @IBOutlet weak var labelContainer: UIView!
-    var likesView = UILabel(frame: CGRect.zero)
-    var authorView = UILabel(frame: CGRect.zero)
-    let likeButton = LikeButton()
+    @IBOutlet weak var topView: UIView!
     
-    var setHeight : CGFloat?
+    var likeButton = LikeButton()
+    var shareButton = ShareButton()
+    var menuOptions = MenuOptions()
     
     //borders
     var topBorder : UIView?
@@ -26,39 +26,29 @@ class TablePostCard: UITableViewCell {
     
     //player variables
     var playerItem: AVPlayerItem!
-    var players = [AVPlayer]()
     var player: AVPlayer!
     var playerLayer: AVPlayerLayer!
     
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        print("this is awaking from nib")
+        
+        setUp()
+    }
+    
+    
+    
     ///given an UIImage, Int, and String, and sets the values of the post to the details given
     func buildPostCard(image : UIImage, likes : Int, author : String) {
-        let size = self.frame.size
         //imageView
         tableImageView.image = image
-        
-//        tableImageView!.contentMode = .scaleAspectFill
+        tableImageView!.contentMode = .scaleAspectFill
         tableImageView!.clipsToBounds = true
 
-        //LikesView and author
-        likesView.text = String(likes)
-        authorView.text = author
-        
-        //label container
-        labelContainer.frame.origin.x = size.width - labelContainer.frame.width
-        labelContainer.frame.size.height = self.frame.height
-        
-        
-        //adding border to cell
-        self.layer.cornerRadius = 5
-        self.clipsToBounds = true
-        
-        
-        //border containers
-        buildBorderViews()
-        
-        addSubviews()
+        setUp()
     }
+    
     
     ///given a URL, Int, and String, and sets the values of the post to the details given
     func buildVideoPostCard(url : URL, likes : Int, author : String) {
@@ -67,7 +57,6 @@ class TablePostCard: UITableViewCell {
         //video
         playerItem = AVPlayerItem(url: url)
         player = AVPlayer(playerItem: playerItem)
-        players.append(player)
         playerLayer = AVPlayerLayer(player: player)
         playerLayer.videoGravity = .resize
         tableImageView.layer.addSublayer(playerLayer)
@@ -80,24 +69,26 @@ class TablePostCard: UITableViewCell {
         tableImageView!.clipsToBounds = true
         tableImageView.frame.size = size
         
-        //LikesView and author
-        likesView.text = String(likes)
-        authorView.text = author
-        
+        setUp()
+    }
+    
+    
+    fileprivate func setUp() {
         //label container
+        let size = self.frame.size
         labelContainer.frame.origin.x = size.width - labelContainer.frame.width
-        labelContainer.frame.size.height = self.frame.height
         
         //adding border to cell
-        self.layer.cornerRadius = 5
+        self.layer.cornerRadius = 8
         self.clipsToBounds = true
+        tableImageView.clipsToBounds = true
         
-        
-        //border containers
-        buildBorderViews()
+//        //border containers
+//        buildBorderViews()
         
         addSubviews()
     }
+    
     
     func loopVideo(videoPlayer: AVPlayer) {
         NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil, queue: nil) { notification in
@@ -108,31 +99,26 @@ class TablePostCard: UITableViewCell {
     
     
     fileprivate func addSubviews() {
+        let centerX = labelContainer.frame.width / 2
+        let bottomY = labelContainer.frame.height
+        print("this is the labelContainer: ", labelContainer.frame.size)
         
-        //likeButton
-        likeButton.frame.size = CGSize(width: 25, height: 25)
-        likeButton.frame.origin = CGPoint(x: 6, y: -2)
-        likeButton.isActive = false
+        //Menu
+        menuOptions.center = CGPoint(x: centerX, y: 30)
+        menuOptions.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(postActivityController)))
+        
+        //share
+        shareButton.center = CGPoint(x: centerX, y: bottomY - 65)
         
         
-        //Sizing
-        //        likesView.frame.size = CGSize(width: 70, height: 20)
-        //        authorView.frame.size = CGSize(width: (labelContainer.frame.width / 2) - 10, height: 20)
+        //like View
+        likeButton.center = CGPoint(x: centerX, y: bottomY - 30)
         
-        //positioning
-        //        likesView.frame.origin.x = 38
-        //        authorView.frame.origin.x = labelContainer.center.x
-        //        likesView.center.y = labelContainer.frame.height / 2
-        //        authorView.center.y = likesView.center.y - 1
         
-        //font
-        likesView.font = likesView.font.withSize(17)
-        authorView.font = authorView.font.withSize(15)
-        authorView.textAlignment = .right
-        
-        //        labelContainer.addSubview(likeButton)
-        //        labelContainer.addSubview(likesView)
-        //        labelContainer.addSubview(authorView)
+        //adding subviews
+        labelContainer.addSubview(menuOptions)
+        labelContainer.addSubview(shareButton)
+        labelContainer.addSubview(likeButton)
     }
     
     
@@ -162,29 +148,65 @@ class TablePostCard: UITableViewCell {
     }
     
     
-    //    override var isHighlighted: Bool {
-    //        didSet {
-    //            UIView.animate(withDuration: 0.15) {
-    //                if(self.labelContainer.layer.opacity == 0) {
-    //                    self.labelContainer.layer.opacity = 1
-    //                    self.topBorder?.layer.opacity = 1
-    //                    self.leftBorder?.layer.opacity = 1
-    //                    self.rightBorder?.layer.opacity = 1
-    //                }
-    //                else {
-    //                    self.labelContainer.layer.opacity = 0
-    //                    self.topBorder?.layer.opacity = 0
-    //                    self.leftBorder?.layer.opacity = 0
-    //                    self.rightBorder?.layer.opacity = 0
-    //                }
-    //            }
-    //        }
-    //
-    //    }
+    override var isHighlighted: Bool {
+        didSet {
+            UIView.animate(withDuration: 0.15) {
+                if(!self.isHighlighted) {
+                    self.labelContainer.layer.opacity = 1
+                    self.topBorder?.layer.opacity = 1
+                    self.leftBorder?.layer.opacity = 1
+                    self.rightBorder?.layer.opacity = 1
+                    if(self.player != nil) {
+                        self.player.isMuted = true
+                    }
+                    
+                }
+                else {
+                    self.labelContainer.layer.opacity = 0
+                    self.topBorder?.layer.opacity = 0
+                    self.leftBorder?.layer.opacity = 0
+                    self.rightBorder?.layer.opacity = 0
+                    if(self.player != nil) {
+                        self.player.isMuted = false
+                    }
+                }
+            }
+        }
+        
+    }
+    
     
     ///gives the cell its gestures
     func createGestures(target : Any?, action : Selector) {
         self.addGestureRecognizer(UITapGestureRecognizer(target: target, action: action))
+    }
+    
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        labelContainer.subviews.forEach({$0.removeFromSuperview()})
+        
+        tableImageView.layer.sublayers = nil
+        tableImageView.image = nil
+        self.playerItem = nil
+        self.player = nil
+        self.playerLayer = nil
+    }
+    
+    
+    
+    //TODO make compatible for videos
+    //creates the activity controller when the user taps on the menu options icon
+    //only works for images right now
+    @objc func postActivityController() {
+        print("we reached this far")
+        guard let viewController = UIApplication.shared.keyWindow?.rootViewController else { return }
+        guard let image = tableImageView.image else { return }
+        let activityController = UIActivityViewController(activityItems: [image], applicationActivities: nil)
+        viewController.present(activityController, animated: true) {
+            print("working with the activity controller")
+        }
     }
     
 }
