@@ -51,9 +51,19 @@ extension CameraViewController : UICollectionViewDataSource, UICollectionViewDel
 //Event handlers
 extension CameraViewController {
     
+    
     @objc func handlePan(sender : UIPanGestureRecognizer) {
         let tableView = sender.view!
         let translation = sender.translation(in: view)
+        
+        let collectionViewY = translation.y + imageCollectionView.frame.origin.y
+        if ((isCollectionViewRaised) && (collectionViewY < (imageCollectionViewFrame?.origin.y)! - 450)) {
+            print("it is raised", isCollectionViewRaised, collectionViewY, "Translation: ", translation.y, "CollectionFrame:", imageCollectionViewFrame?.origin.y)
+            
+//            imageCollectionView.contentOffset.y -= translation.y * 0.4
+//            sender.setTranslation(CGPoint.zero, in: view)
+            return
+        }
         
         switch sender.state {
         case .began, .changed:
@@ -71,20 +81,16 @@ extension CameraViewController {
         case .ended:
             if(isQuickSwipe(velocity: sender.velocity(in: view).y)){
                 if(sender.velocity(in: view).y < 0){
-                    print("swiping upwards")
                     handleSwipeUp()
                 }
                 else {
-                    print("downward")
                     handleSwipeDown()
                 }
             }
             else if(tableView.center.y < 750) {
-                print("fullscreening")
                 handleSwipeUp()
             }
             else {
-                print("snapping back to bottom")
                 handleSwipeDown()
             }
         case .possible, .cancelled, .failed:
@@ -104,7 +110,6 @@ extension CameraViewController {
     
     @objc func handleSwipeUp(_ tapGesture : UITapGestureRecognizer? = nil){
         //perform animation to swipe the collection view upward
-        print("working")
         UIView.animate(withDuration: 0.4) {
             guard let tempFrame = self.imageCollectionViewFrame else{
                 return
@@ -127,12 +132,12 @@ extension CameraViewController {
             self.currentFolderName.frame.size.height = heightFS
             self.nextFolderName.frame.size.height = heightFS
         }
+        isCollectionViewRaised = true
         Helper().vibrate(style: .light)
     }
     
     @objc func handleSwipeDown(_ tapGesture  :UITapGestureRecognizer? = nil){
         UIView.animate(withDuration: 0.2) {
-            print("swiping")
             self.imageCollectionView.frame = self.imageCollectionViewFrame!
             self.solidBar.frame = self.solidBarFrame!
             self.addButton.frame = self.addButtonFrame!
@@ -145,7 +150,7 @@ extension CameraViewController {
             self.currentFolderName.frame.size.height = heightFS
             self.nextFolderName.frame.size.height = heightFS
         }
-        
+        isCollectionViewRaised = false
         Helper().vibrate(style: .light)
     }
     
@@ -160,9 +165,7 @@ extension CameraViewController {
             let image = selectedImages[0]
             Helper().vibrate(style: .light)
             let folderSelection = Helper().saveToFolder(image: image, viewController: self)
-            present(folderSelection, animated: true, completion: {
-                print("this is now the thing")
-            })
+            present(folderSelection, animated: true, completion: nil)
         }
         
         else {
@@ -185,7 +188,6 @@ extension CameraViewController {
             
             guard let image = cell.imageView.image else { return }
             centerView.image = image
-            handleImageSelected(image: image)
             
             if (cell.currentIndex < (imageArray.count - 1)){
                 nextView.image = imageArray[cell.currentIndex + 1]
@@ -207,19 +209,11 @@ extension CameraViewController {
                 cell.layer.borderWidth = 3
                 cell.layer.borderColor = UIColor.selected.cgColor
                 tappedImages.append(cell.currentIndex)
+                selectedImages.append(cell.imageView.image!)
+                circleCounter.text = String(tappedImages.count)
                 cell.isTapped = true
             }
         }
-    }
-
-    
-    ///Appends image to the selectedImages array and updates the counter if necessary
-    func handleImageSelected(image : UIImage) {
-        if !isMultipleSelected {
-            selectedImages = []
-        }
-        selectedImages.append(image)
-        circleCounter.text = String(selectedImages.count)
     }
     
     //TODO this should update the selectedImages and tappedImages array along with the circle counter
@@ -229,6 +223,16 @@ extension CameraViewController {
         let cell = imageCollectionView.cellForItem(at: indexPath) as! CameraViewCell
         cell.layer.borderWidth = 0
         cell.isTapped = false
+        
+        //Using the cell's current index to remove the image from both arrays
+        for x in 0..<tappedImages.count {
+            if tappedImages[x] == index{
+                tappedImages.remove(at: x)
+                selectedImages.remove(at: x)
+                circleCounter.text = String(tappedImages.count)
+                break
+            }
+        }
     }
     
     

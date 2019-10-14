@@ -55,6 +55,7 @@ class CameraViewController: UIViewController {
     //Dynamic values
     var isFullScreen = false
     var isMultipleSelected = false
+    var isCollectionViewRaised = false
     
     var imageArray = [UIImage]()
     var selectedImages = [UIImage]()
@@ -65,7 +66,6 @@ class CameraViewController: UIViewController {
         var authStatus = false
         let photos = PHPhotoLibrary.authorizationStatus()
         if (photos == .authorized){
-            print("has already been pre-authorized")
             authStatus = true
         }
             
@@ -96,7 +96,6 @@ class CameraViewController: UIViewController {
             var mainView: UIStoryboard!
             mainView = UIStoryboard(name : "Permissions", bundle: nil)
             let myviewController  :UIViewController = mainView.instantiateViewController(withIdentifier: "PermissionsView") as UIViewController
-            print("here is the view conroller ", mainView)
             self.present(myviewController, animated: true, completion: nil)
             return
         }
@@ -138,17 +137,23 @@ class CameraViewController: UIViewController {
         
         let requestOptions = PHImageRequestOptions()
         requestOptions.isSynchronous = true
-        requestOptions.deliveryMode = .fastFormat
+        requestOptions.deliveryMode = .opportunistic
         
         let fetchOptions = PHFetchOptions()
         fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
         
+        //setting the fetch limit(if this number is high, the app will run slower)
+        fetchOptions.fetchLimit = 120
         
         if let fetchResult : PHFetchResult = PHAsset.fetchAssets(with: .image, options: fetchOptions) {
             if fetchResult.count > 0 {
                 for i in 0..<fetchResult.count {
                     imageManager.requestImage(for: fetchResult.object(at: i) as! PHAsset, targetSize: CGSize(width: 200, height: 200), contentMode: .aspectFill, options: requestOptions) { (img, error) in
                         self.imageArray.append(img!)
+                    
+                        
+                        //TODO do this for pagination:
+//                        fetchResult.object(at: <#T##Int#>)
                     }
                 }
             }
@@ -228,9 +233,6 @@ class CameraViewController: UIViewController {
         layout.sectionInset = UIEdgeInsets(top: 20, left: 0, bottom: 10, right: 0)
         layout.minimumInteritemSpacing = 3
         layout.minimumLineSpacing = 0
-        
-        
-        //        imageCollectionView.collectionViewLayout = layoutlayou
     }
     
     
@@ -253,6 +255,7 @@ class CameraViewController: UIViewController {
         
         //Panning
         let pan = UIPanGestureRecognizer(target: self, action: #selector(handlePan(sender :)))
+        
         imageCollectionView.addGestureRecognizer(pan)
         
         //segment Control
