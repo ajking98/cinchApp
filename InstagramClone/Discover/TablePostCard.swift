@@ -11,7 +11,7 @@ import AVKit
 class TablePostCard: UITableViewCell {
     
     
-    @IBOutlet weak var tableImageView: UIView!
+    @IBOutlet weak var tableImageView: UIImageView!
     @IBOutlet weak var labelContainer: UIView!
     var likesView = UILabel(frame: CGRect.zero)
     var authorView = UILabel(frame: CGRect.zero)
@@ -34,18 +34,12 @@ class TablePostCard: UITableViewCell {
     ///given an UIImage, Int, and String, and sets the values of the post to the details given
     func buildPostCard(image : UIImage, likes : Int, author : String) {
         let size = self.frame.size
-        
         //imageView
-        let newImage = UIImageView(image: image)
-        newImage.frame = contentView.frame
-        tableImageView.addSubview(newImage)
-        contentView.addSubview(newImage)
-        //Imageview on Top of View
-        contentView.bringSubviewToFront(newImage)
-        tableImageView!.contentMode = .scaleAspectFill
-        tableImageView!.clipsToBounds = true
-        contentView.frame.size = size
+        tableImageView.image = image
         
+//        tableImageView!.contentMode = .scaleAspectFill
+        tableImageView!.clipsToBounds = true
+
         //LikesView and author
         likesView.text = String(likes)
         authorView.text = author
@@ -143,7 +137,6 @@ class TablePostCard: UITableViewCell {
     
     
     func buildBorderViews(){
-        let frame = self.frame
         topBorder = UIView(frame: CGRect(x: 0, y: 0, width: frame.width, height: 4))
         leftBorder = UIView(frame: CGRect(x: 0, y: 0, width: 4, height: frame.height))
         rightBorder = UIView(frame: CGRect(x: frame.width - 4, y: 0, width: 4, height: frame.height))

@@ -119,6 +119,12 @@ class DiscoverController: UIViewController {
         items.append(Item(imageName: "f2", likes: 13, author: "something"))
         items.append(Item(imageName: "f3", likes: 14, author: "something"))
         items.append(Item(imageName: "f4", likes: 15, author: "something"))
+        items.append(Item(imageName: "f2", likes: 13, author: "something"))
+        items.append(Item(imageName: "f3", likes: 14, author: "something"))
+        items.append(Item(imageName: "f4", likes: 15, author: "something"))
+        items.append(Item(imageName: "f2", likes: 13, author: "something"))
+        items.append(Item(imageName: "f3", likes: 14, author: "something"))
+        items.append(Item(imageName: "f4", likes: 15, author: "something"))
         items.append(Item(imageName: "https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/images%2Famberalerts.mp4?alt=media&token=92f4cb5f-0aeb-4674-86f4-9f6ed9e05604", likes: 16, author: "something"))
         items.append(Item(imageName: "https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/images%2Ffire.mp4?alt=media&token=cb204eee-6444-407e-953c-a6367a8cc7e8", likes: 17, author: "something"))
         items.append(Item(imageName: "https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/images%2Fwaterbend.mp4?alt=media&token=dd6fb189-03c2-4c3a-9f51-2559645e631a", likes: 18, author: "something"))
@@ -510,7 +516,9 @@ extension DiscoverController : UICollectionViewDelegate, UICollectionViewDataSou
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! PostCard
+        print("this is a checker: ", cell.authorView.text)
         cell.buildPostCard(item: items[indexPath.item])
+        print("this the index path:", indexPath.item)
         return cell
     }
     
@@ -538,7 +546,7 @@ extension DiscoverController : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 //<<<<<<< HEAD
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath) as! TableViewPostCell
+//        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! TableViewPostCell
 //        let item = items[indexPath.row]
 //
 //        guard let image = UIImage(named: item.imageName) else { return UITableViewCell(frame: CGRect.zero) }
@@ -560,12 +568,13 @@ extension DiscoverController : UITableViewDelegate, UITableViewDataSource {
         for index in indexPath.row...(items.count - 1) {
             vc.items.append(items[index])
         }
-        var item = items[indexPath.row]
+        let item = items[indexPath.row]
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
 }
 
+//TODO what the fuck is this??
 extension DiscoverController : DiscoverLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, sizeOfPhotoAtIndexPath indexPath: IndexPath) -> CGSize {
         var cellSize = CGSize()

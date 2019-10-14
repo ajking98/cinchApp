@@ -19,13 +19,12 @@
                 <rect key="frame" x="0.0" y="0.0" width="445" height="271.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="X5o-Am-Bib">
-                        <rect key="frame" x="0.0" y="0.0" width="385" height="272"/>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pwu-hi-TUk">
+                        <rect key="frame" x="0.0" y="-1" width="381" height="272"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </view>
+                    </imageView>
                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lI6-Mm-0tr">
-                        <rect key="frame" x="385" y="0.0" width="60" height="272"/>
+                        <rect key="frame" x="381" y="0.0" width="64" height="272"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" red="0.63529411759999999" green="0.87843137250000003" blue="0.90980392160000001" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
@@ -34,7 +33,7 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="labelContainer" destination="lI6-Mm-0tr" id="iDH-XB-M4B"/>
-                <outlet property="tableImageView" destination="X5o-Am-Bib" id="Twr-eG-gHd"/>
+                <outlet property="tableImageView" destination="pwu-hi-TUk" id="PJm-cu-LJ2"/>
             </connections>
             <point key="canvasLocation" x="138.40579710144928" y="113.16964285714285"/>
         </tableViewCell>

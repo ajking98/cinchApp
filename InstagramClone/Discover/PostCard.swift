@@ -12,7 +12,7 @@ import AVKit
 class PostCard: UICollectionViewCell {
     
     
-    @IBOutlet weak var imageView: UIView!
+    @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var labelContainer: UIView!
     var likesView = UILabel(frame: CGRect.zero)
     var authorView = UILabel(frame: CGRect.zero)
@@ -27,44 +27,25 @@ class PostCard: UICollectionViewCell {
     
     //player variables
     var playerItem: AVPlayerItem!
-    var players = [AVPlayer]()
     var player: AVPlayer!
     var playerLayer: AVPlayerLayer!
     
+    
+
     
     ///given an UIImage, Int, and String, and sets the values of the post to the details given
     func buildPostCard(image : UIImage, likes : Int, author : String) {
         let size = self.frame.size
         
         //imageView
-        let newImage = UIImageView(image: image)
-        newImage.frame = imageView.frame
-        imageView.addSubview(newImage)
-        self.imageView.addSubview(newImage)
+        imageView.image = image
+        
         //Imageview on Top of View
-        self.imageView.bringSubviewToFront(newImage)
         imageView!.contentMode = .scaleAspectFill
         imageView!.clipsToBounds = true
         imageView.frame.size = size
         
-        //LikesView and author
-        likesView.text = String(likes)
-        authorView.text = author
-        
-        //label container
-        labelContainer.frame.origin.y = size.height - labelContainer.frame.height
-        labelContainer.frame.size.width = self.frame.width
-        
-        
-        //adding border to cell
-        self.layer.cornerRadius = 5
-        self.clipsToBounds = true
-        
-        
-        //border containers
-        buildBorderViews()
-        
-        addSubviews()
+        buildContainer(likes, author, size)
     }
     
     ///given a URL, Int, and String, and sets the values of the post to the details given
@@ -74,7 +55,6 @@ class PostCard: UICollectionViewCell {
         //video
         playerItem = AVPlayerItem(url: url)
         player = AVPlayer(playerItem: playerItem)
-        players.append(player)
         playerLayer = AVPlayerLayer(player: player)
         playerLayer.videoGravity = .resize
         imageView.layer.addSublayer(playerLayer)
@@ -87,6 +67,12 @@ class PostCard: UICollectionViewCell {
         imageView!.clipsToBounds = true
         imageView.frame.size = size
         
+        buildContainer(likes, author, size)
+    }
+    
+    
+    ///builds the view for the likes/author name and borders
+    fileprivate func buildContainer(_ likes: Int, _ author: String, _ size: CGSize) {
         //LikesView and author
         likesView.text = String(likes)
         authorView.text = author
@@ -95,17 +81,17 @@ class PostCard: UICollectionViewCell {
         labelContainer.frame.origin.y = size.height - labelContainer.frame.height
         labelContainer.frame.size.width = self.frame.width
         
-        
         //adding border to cell
         self.layer.cornerRadius = 5
         self.clipsToBounds = true
         
-        
         //border containers
         buildBorderViews()
-        
         addSubviews()
     }
+    
+    
+    
     
     func loopVideo(videoPlayer: AVPlayer) {
         NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil, queue: nil) { notification in
@@ -173,8 +159,9 @@ class PostCard: UICollectionViewCell {
     
     override var isHighlighted: Bool {
         didSet {
+            print("happening: ", self.isHighlighted)
             UIView.animate(withDuration: 0.15) {
-                if(self.labelContainer.layer.opacity == 0) {
+                if(!self.isHighlighted) {
                     self.labelContainer.layer.opacity = 1
                     self.topBorder?.layer.opacity = 1
                     self.leftBorder?.layer.opacity = 1
@@ -203,5 +190,16 @@ class PostCard: UICollectionViewCell {
         self.addGestureRecognizer(UITapGestureRecognizer(target: target, action: action))
     }
     
-    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        imageView.layer.sublayers = nil
+        imageView.image = nil
+        self.playerItem = nil
+        self.player = nil
+        self.playerLayer = nil
+        print("this should be nil", imageView.layer.sublayers)
+    }
 }
+    
+

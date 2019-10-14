@@ -19,11 +19,10 @@
                 <rect key="frame" x="0.0" y="0.0" width="219" height="269"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QY0-4t-OEa">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mEi-H6-4Oe">
                         <rect key="frame" x="0.0" y="0.0" width="219" height="236"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </view>
+                    </imageView>
                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kTT-XH-bSv">
                         <rect key="frame" x="0.0" y="244" width="219" height="25"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -34,7 +33,7 @@
             <viewLayoutGuide key="safeArea" id="XN7-ED-KTu"/>
             <size key="customSize" width="267" height="292"/>
             <connections>
-                <outlet property="imageView" destination="QY0-4t-OEa" id="gH5-KN-owT"/>
+                <outlet property="imageView" destination="mEi-H6-4Oe" id="Vw5-VH-Hgg"/>
                 <outlet property="labelContainer" destination="kTT-XH-bSv" id="eEM-Bk-fa4"/>
             </connections>
             <point key="canvasLocation" x="36.956521739130437" y="84.040178571428569"/>
