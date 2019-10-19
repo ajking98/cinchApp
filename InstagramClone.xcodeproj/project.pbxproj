@@ -10,6 +10,7 @@
 		2C6025F70DDC5657CB7597FE /* Pods_InstagramClone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A02F922BF6A888861EB10FC9 /* Pods_InstagramClone.framework */; };
 		45E0B9E575F52434E5EBEFE1 /* Pods_InstagramCloneUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B447ACE150C3C337574D3FD /* Pods_InstagramCloneUITests.framework */; };
 		4607196E235ACC1900BE17DF /* PanGestureExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4607196D235ACC1900BE17DF /* PanGestureExtension.swift */; };
+		46071978235AF10D00BE17DF /* FolderContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46071977235AF10D00BE17DF /* FolderContent.swift */; };
 		4622486A22D41A920005B12F /* MoodsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4622486922D41A920005B12F /* MoodsViewController.swift */; };
 		4622486C22D41ADF0005B12F /* MoodsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4622486B22D41ADF0005B12F /* MoodsCollectionViewCell.swift */; };
 		4622493722DFAC8F0005B12F /* Messages.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4622493622DFAC8F0005B12F /* Messages.framework */; };
@@ -216,6 +217,7 @@
 		275F63426EF2A9C7A49380AB /* Pods-InstagramClone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramClone.release.xcconfig"; path = "Target Support Files/Pods-InstagramClone/Pods-InstagramClone.release.xcconfig"; sourceTree = "<group>"; };
 		4053B843C77EE909A8C7461F /* Pods-InstagramCloneUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramCloneUITests.release.xcconfig"; path = "Target Support Files/Pods-InstagramCloneUITests/Pods-InstagramCloneUITests.release.xcconfig"; sourceTree = "<group>"; };
 		4607196D235ACC1900BE17DF /* PanGestureExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanGestureExtension.swift; sourceTree = "<group>"; };
+		46071977235AF10D00BE17DF /* FolderContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderContent.swift; sourceTree = "<group>"; };
 		4622486922D41A920005B12F /* MoodsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodsViewController.swift; sourceTree = "<group>"; };
 		4622486B22D41ADF0005B12F /* MoodsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodsCollectionViewCell.swift; sourceTree = "<group>"; };
 		4622493522DFAC8F0005B12F /* Gems.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Gems.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -370,6 +372,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		46071979235AF11500BE17DF /* FolderContent */ = {
+			isa = PBXGroup;
+			children = (
+				46071977235AF10D00BE17DF /* FolderContent.swift */,
+			);
+			path = FolderContent;
+			sourceTree = "<group>";
+		};
 		4622493822DFAC8F0005B12F /* Gems */ = {
 			isa = PBXGroup;
 			children = (
@@ -387,6 +397,7 @@
 		465C438C22D176FB002BD263 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				46071979235AF11500BE17DF /* FolderContent */,
 				46A3E09F22BF0BA1003F6F35 /* ProfilePageViewController.swift */,
 				46668D5F22C98C070021229D /* ProfileContainer.swift */,
 				EB74D3ED22603DC200556399 /* ProfileViewController.swift */,
@@ -1046,6 +1057,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46071978235AF10D00BE17DF /* FolderContent.swift in Sources */,
 				46A3E10822C18749003F6F35 /* FirstProfileHeader.swift in Sources */,
 				EB71602822FA2726009538C2 /* MenuOptionCell.swift in Sources */,
 				46ADC115233FFC8F001B62E8 /* UIImageExtension.swift in Sources */,
