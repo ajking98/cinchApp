@@ -13,6 +13,72 @@ import UIKit
 //Collection View
 extension CameraViewController : UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
+    //TODO make the collectionView panable
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        let gesture = scrollView.panGestureRecognizer
+        let translation = gesture.translation(in: scrollView)
+        let height = view.frame.height / 1.25
+        
+        if scrollView.center.y > height {
+            followFingerVertical(view: scrollView, translation: translation)
+            gesture.setTranslation(CGPoint.zero, in: scrollView)
+        }
+        
+        if isAtTop{
+            if translation.y > 0 && scrollView.center.y + translation.y < view.frame.height {
+                followFingerVertical(view: scrollView, translation: translation) //pans the collectionview downwards
+                gesture.setTranslation(CGPoint.zero, in: scrollView)
+            }
+        }
+    }
+    
+    //Is triggered after the motion of the scroll stops
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let gesture = scrollView.panGestureRecognizer
+        let translation = gesture.translation(in: scrollView)
+        
+    }
+    
+    //Is triggered whenever the scrollView is being moved for the first time
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        print("beginning")
+    }
+    
+    //Is called when the user lifts their finger off the screen when scrolling
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        print("this is center:", scrollView.center)
+        let gesture = scrollView.panGestureRecognizer
+        let velocity = gesture.velocity(in: scrollView)
+        var pullDownQuick = velocity.y > 820 ? true : false
+        if velocity.y > 820 {
+            handleSwipeDown()
+            print("center1")
+        }else if (velocity.y < -820){
+            handleSwipeUp()
+            print("center2")
+        }
+        else {
+            if scrollView.center.y > view.frame.height - 20 {
+                handleSwipeDown()
+                print("center3")
+            }else{
+                handleSwipeUp()
+                print("center4")
+            }
+        }
+    }
+    
+    
+//    func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
+//        print("this is the scrolled")
+//    }
+    
+    //checks if the collectionView is at the top
+    var isAtTop : Bool {
+        return imageCollectionView.contentOffset.y < -60
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return imageArray.count
     }
@@ -52,14 +118,15 @@ extension CameraViewController : UICollectionViewDataSource, UICollectionViewDel
 extension CameraViewController {
     
     
+    
+    //TODO handles the panning of the collectionView
     @objc func handlePan(sender : UIPanGestureRecognizer) {
         let tableView = sender.view!
         let translation = sender.translation(in: view)
         
         let collectionViewY = translation.y + imageCollectionView.frame.origin.y
         if ((isCollectionViewRaised) && (collectionViewY < (imageCollectionViewFrame?.origin.y)! - 450)) {
-            print("it is raised", isCollectionViewRaised, collectionViewY, "Translation: ", translation.y, "CollectionFrame:", imageCollectionViewFrame?.origin.y)
-            
+            //TODO
 //            imageCollectionView.contentOffset.y -= translation.y * 0.4
 //            sender.setTranslation(CGPoint.zero, in: view)
             return

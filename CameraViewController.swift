@@ -254,9 +254,8 @@ class CameraViewController: UIViewController {
         scrollView.addGestureRecognizer(doubleTapped)
         
         //Panning
-        let pan = UIPanGestureRecognizer(target: self, action: #selector(handlePan(sender :)))
-        
-        imageCollectionView.addGestureRecognizer(pan)
+//        let pan = UIPanGestureRecognizer(target: self, action: #selector(handlePan(sender :)))
+//        imageCollectionView.addGestureRecognizer(pan)
         
         //segment Control
         segmentControl.addTarget(self, action: #selector(segmentControlValueChanged), for:.valueChanged)

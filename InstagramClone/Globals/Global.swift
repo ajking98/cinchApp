@@ -22,6 +22,11 @@ func isQuickSwipe(velocity : CGFloat) -> Bool {
     return false
 }
 
+///updates y-axis of view by given translation
+func followFingerVertical(view : UIView, translation : CGPoint) {
+    view.center.y += translation.y
+}
+
 
 
 

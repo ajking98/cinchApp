@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2C6025F70DDC5657CB7597FE /* Pods_InstagramClone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A02F922BF6A888861EB10FC9 /* Pods_InstagramClone.framework */; };
 		45E0B9E575F52434E5EBEFE1 /* Pods_InstagramCloneUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B447ACE150C3C337574D3FD /* Pods_InstagramCloneUITests.framework */; };
+		4607196E235ACC1900BE17DF /* PanGestureExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4607196D235ACC1900BE17DF /* PanGestureExtension.swift */; };
 		4622486A22D41A920005B12F /* MoodsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4622486922D41A920005B12F /* MoodsViewController.swift */; };
 		4622486C22D41ADF0005B12F /* MoodsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4622486B22D41ADF0005B12F /* MoodsCollectionViewCell.swift */; };
 		4622493722DFAC8F0005B12F /* Messages.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4622493622DFAC8F0005B12F /* Messages.framework */; };
@@ -214,6 +215,7 @@
 		1B447ACE150C3C337574D3FD /* Pods_InstagramCloneUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstagramCloneUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		275F63426EF2A9C7A49380AB /* Pods-InstagramClone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramClone.release.xcconfig"; path = "Target Support Files/Pods-InstagramClone/Pods-InstagramClone.release.xcconfig"; sourceTree = "<group>"; };
 		4053B843C77EE909A8C7461F /* Pods-InstagramCloneUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramCloneUITests.release.xcconfig"; path = "Target Support Files/Pods-InstagramCloneUITests/Pods-InstagramCloneUITests.release.xcconfig"; sourceTree = "<group>"; };
+		4607196D235ACC1900BE17DF /* PanGestureExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanGestureExtension.swift; sourceTree = "<group>"; };
 		4622486922D41A920005B12F /* MoodsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodsViewController.swift; sourceTree = "<group>"; };
 		4622486B22D41ADF0005B12F /* MoodsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodsCollectionViewCell.swift; sourceTree = "<group>"; };
 		4622493522DFAC8F0005B12F /* Gems.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Gems.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -452,6 +454,7 @@
 				46ADC110233FFBA1001B62E8 /* UIColorExtension.swift */,
 				46ADC112233FFBD4001B62E8 /* UIImageViewExtension.swift */,
 				46ADC114233FFC8F001B62E8 /* UIImageExtension.swift */,
+				4607196D235ACC1900BE17DF /* PanGestureExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1092,6 +1095,7 @@
 				EB63B7DE226A7933004C7E2C /* CustomImageFlowLayout.swift in Sources */,
 				EB74D3EE22603DC200556399 /* ProfileViewController.swift in Sources */,
 				EB3159B122F4BEF400EB4FA9 /* SelectedTablePostCell.swift in Sources */,
+				4607196E235ACC1900BE17DF /* PanGestureExtension.swift in Sources */,
 				467E5DB922FCE8EF00F23ABD /* Post.swift in Sources */,
 				8EADC50222D16BB3005A7CC0 /* GemsCollectionViewCell.swift in Sources */,
 				46456C2C22FE52FB00D96EB5 /* PrimaryDiscoverController.swift in Sources */,
