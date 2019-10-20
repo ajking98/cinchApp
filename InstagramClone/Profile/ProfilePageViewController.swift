@@ -31,15 +31,6 @@ class ProfilePageViewController: UIViewController {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Toggle Side Menu"), object: nil)
     }
     
-    
-    //TODO temp
-    @objc func handleCellTapped(tapGesture : UITapGestureRecognizer){
-        print("This has been selected for the second time")
-        let vc = storyboard?.instantiateViewController(withIdentifier: "FolderCotent") as! FolderContent
-        self.navigationController?.pushViewController(vc, animated: true)
-        
-    }
-    
     @objc func handleGesture(gesture: UITapGestureRecognizer) -> Void {
         if profileViewTapped == true {
             print("Tapped")
@@ -52,7 +43,7 @@ class ProfilePageViewController: UIViewController {
             profileViewTapped = false
         }
         else {
-            print("Tapped")
+            print("Tapped2")
             firstView.removeFromSuperview()
             UIView.transition(with: self.view, duration: 0.25, options: [.transitionCrossDissolve], animations: {
                 self.topView.addSubview(self.secondView)

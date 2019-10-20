@@ -30,7 +30,8 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("selected")
         let vc = storyboard?.instantiateViewController(withIdentifier: "FolderCotent") as! FolderContent
-        self.navigationController?.pushViewController(vc, animated: true)
+        print("this is reached", vc)
+        present(vc, animated: true, completion: nil)
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -46,7 +47,6 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
             print(indexPath.row)
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! GemsCollectionViewCell
             designCell(cell: cell)
-            cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleCellTapped)))
             cell.title.text = objectNames[indexPath.row]
             cell.imageView.image = UIImage.init(named: objectImages[indexPath.row])
             addSubviews(cell: cell)
@@ -61,10 +61,6 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
             
             return cell
         }
-    }
-    
-    @objc func handleCellTapped(tapGesture : UITapGestureRecognizer){
-        print("This has been selected")
     }
     
     @objc func handleAdd(tapGesture: UITapGestureRecognizer) {
