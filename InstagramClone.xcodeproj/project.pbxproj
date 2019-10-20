@@ -11,6 +11,7 @@
 		45E0B9E575F52434E5EBEFE1 /* Pods_InstagramCloneUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B447ACE150C3C337574D3FD /* Pods_InstagramCloneUITests.framework */; };
 		4607196E235ACC1900BE17DF /* PanGestureExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4607196D235ACC1900BE17DF /* PanGestureExtension.swift */; };
 		46071978235AF10D00BE17DF /* FolderContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46071977235AF10D00BE17DF /* FolderContent.swift */; };
+		461F8221235CAABB0091579D /* FolderContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461F8220235CAABB0091579D /* FolderContentCell.swift */; };
 		4622486A22D41A920005B12F /* MoodsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4622486922D41A920005B12F /* MoodsViewController.swift */; };
 		4622486C22D41ADF0005B12F /* MoodsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4622486B22D41ADF0005B12F /* MoodsCollectionViewCell.swift */; };
 		4622493722DFAC8F0005B12F /* Messages.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4622493622DFAC8F0005B12F /* Messages.framework */; };
@@ -218,6 +219,7 @@
 		4053B843C77EE909A8C7461F /* Pods-InstagramCloneUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramCloneUITests.release.xcconfig"; path = "Target Support Files/Pods-InstagramCloneUITests/Pods-InstagramCloneUITests.release.xcconfig"; sourceTree = "<group>"; };
 		4607196D235ACC1900BE17DF /* PanGestureExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanGestureExtension.swift; sourceTree = "<group>"; };
 		46071977235AF10D00BE17DF /* FolderContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderContent.swift; sourceTree = "<group>"; };
+		461F8220235CAABB0091579D /* FolderContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderContentCell.swift; sourceTree = "<group>"; };
 		4622486922D41A920005B12F /* MoodsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodsViewController.swift; sourceTree = "<group>"; };
 		4622486B22D41ADF0005B12F /* MoodsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodsCollectionViewCell.swift; sourceTree = "<group>"; };
 		4622493522DFAC8F0005B12F /* Gems.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Gems.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -282,7 +284,7 @@
 		891FC3FE22D7F73A0024A623 /* PostCard.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostCard.xib; sourceTree = "<group>"; };
 		892677AB22CFCE390007825E /* SideMenuTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuTableViewController.swift; sourceTree = "<group>"; };
 		892A4FDE22FC76970012E9AD /* ReportBugController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportBugController.swift; sourceTree = "<group>"; };
-		8948646122D3FC280075EB90 /* FolderCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderCard.swift; sourceTree = "<group>"; };
+		8948646122D3FC280075EB90 /* FolderCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FolderCard.swift; path = ../FolderCard.swift; sourceTree = "<group>"; };
 		89871251229DE98200BE8F23 /* ZoomingImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomingImage.swift; sourceTree = "<group>"; };
 		89871253229DEA2700BE8F23 /* DiscoverPageBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverPageBackground.swift; sourceTree = "<group>"; };
 		89CD1D03229201BA004BD0A0 /* DownloadImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadImage.swift; sourceTree = "<group>"; };
@@ -375,9 +377,42 @@
 		46071979235AF11500BE17DF /* FolderContent */ = {
 			isa = PBXGroup;
 			children = (
+				461F821F235C145B0091579D /* Moods */,
+				461F821E235C14550091579D /* Gems */,
+				8948646122D3FC280075EB90 /* FolderCard.swift */,
+				4657E21122F65B6400396087 /* AddFolderViewCell.swift */,
 				46071977235AF10D00BE17DF /* FolderContent.swift */,
+				461F8220235CAABB0091579D /* FolderContentCell.swift */,
 			);
 			path = FolderContent;
+			sourceTree = "<group>";
+		};
+		461F8215235C14340091579D /* Reporting */ = {
+			isa = PBXGroup;
+			children = (
+				EBF7FF1C22FC79F00099037D /* SendFeedbackController.swift */,
+				892A4FDE22FC76970012E9AD /* ReportBugController.swift */,
+				EBF7FF6422FCCB930099037D /* ReportCell.swift */,
+			);
+			path = Reporting;
+			sourceTree = "<group>";
+		};
+		461F821E235C14550091579D /* Gems */ = {
+			isa = PBXGroup;
+			children = (
+				8EADC50022D16BB3005A7CC0 /* GemsCollectionViewCell.swift */,
+				46A3E0B622C0341E003F6F35 /* GemsViewController.swift */,
+			);
+			path = Gems;
+			sourceTree = "<group>";
+		};
+		461F821F235C145B0091579D /* Moods */ = {
+			isa = PBXGroup;
+			children = (
+				4622486922D41A920005B12F /* MoodsViewController.swift */,
+				4622486B22D41ADF0005B12F /* MoodsCollectionViewCell.swift */,
+			);
+			path = Moods;
 			sourceTree = "<group>";
 		};
 		4622493822DFAC8F0005B12F /* Gems */ = {
@@ -397,25 +432,17 @@
 		465C438C22D176FB002BD263 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				461F8215235C14340091579D /* Reporting */,
 				46071979235AF11500BE17DF /* FolderContent */,
 				46A3E09F22BF0BA1003F6F35 /* ProfilePageViewController.swift */,
 				46668D5F22C98C070021229D /* ProfileContainer.swift */,
 				EB74D3ED22603DC200556399 /* ProfileViewController.swift */,
 				EB3A43392263CCC000F6F339 /* ProfileCollectionViewCell.swift */,
-				46A3E0B622C0341E003F6F35 /* GemsViewController.swift */,
-				8EADC50022D16BB3005A7CC0 /* GemsCollectionViewCell.swift */,
-				4622486922D41A920005B12F /* MoodsViewController.swift */,
-				4622486B22D41ADF0005B12F /* MoodsCollectionViewCell.swift */,
-				8948646122D3FC280075EB90 /* FolderCard.swift */,
 				46A3E10922C18784003F6F35 /* SecondProfileHeader.swift */,
 				46A3E10722C18749003F6F35 /* FirstProfileHeader.swift */,
-				4657E21122F65B6400396087 /* AddFolderViewCell.swift */,
 				892677AB22CFCE390007825E /* SideMenuTableViewController.swift */,
 				EB71602722FA2726009538C2 /* MenuOptionCell.swift */,
 				EB0158E022FB65DA008CC63A /* ProfileSettingsController.swift */,
-				EBF7FF1C22FC79F00099037D /* SendFeedbackController.swift */,
-				892A4FDE22FC76970012E9AD /* ReportBugController.swift */,
-				EBF7FF6422FCCB930099037D /* ReportCell.swift */,
 				EB74D3FC226046C800556399 /* Profile.storyboard */,
 				46A3E10322C18661003F6F35 /* FirstProfileHeader.xib */,
 				46A3E10522C18678003F6F35 /* SecondProfileHeader.xib */,
@@ -496,7 +523,6 @@
 				8E5EDB4522C0043B0088FDA9 /* Tags */,
 				46D48D922318AAC300952EDB /* User */,
 				46D48D912318AAB900952EDB /* Folder */,
-				4669B8D122B6DC64004FB38D /* defaultsKeys.swift */,
 				89CD1D03229201BA004BD0A0 /* DownloadImage.swift */,
 				46D5E07B22A899B1003B41DE /* ParentStruct.swift */,
 				EB63B7DF226A7EB5004C7E2C /* ImageInsta.swift */,
@@ -653,6 +679,7 @@
 				46D5E066229EDCEF003B41DE /* Layouts */,
 				8987125B229DF14500BE8F23 /* HelpingStructs */,
 				89871250229DE96A00BE8F23 /* Classes */,
+				4669B8D122B6DC64004FB38D /* defaultsKeys.swift */,
 				EB74D3B5226025E900556399 /* AppDelegate.swift */,
 				EB74D3B7226025E900556399 /* ViewController.swift */,
 				EB74D3E322602B2C00556399 /* SignUpViewController.swift */,
@@ -1082,6 +1109,7 @@
 				4669B8D222B6DC65004FB38D /* defaultsKeys.swift in Sources */,
 				EB74D3B8226025E900556399 /* ViewController.swift in Sources */,
 				EBE992ED226E3B8D002D01CF /* TRCollectionViewController.swift in Sources */,
+				461F8221235CAABB0091579D /* FolderContentCell.swift in Sources */,
 				46D5E08022ADABC3003B41DE /* StorageStruct.swift in Sources */,
 				89871252229DE98200BE8F23 /* ZoomingImage.swift in Sources */,
 				8E92367E229C5B4F0071E63C /* HelperFrontEnd.swift in Sources */,

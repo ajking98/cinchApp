@@ -10,8 +10,10 @@ import Foundation
 import UIKit
 
 class FolderContent: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate  {
+    
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 40
+        return contentCount
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -24,7 +26,11 @@ class FolderContent: UIViewController, UICollectionViewDataSource, UICollectionV
     
     @IBOutlet weak var collectionView: UICollectionView!
     
-    var content : [UIImage] = []
+    //todo add all images to this array
+    var content : [String] = ["1" , "2" , "3"]
+    var folderName = ""
+    var contentCount = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -32,6 +38,9 @@ class FolderContent: UIViewController, UICollectionViewDataSource, UICollectionV
         buildCollectionView()
         
         buildExitButton() //creates an exit button and adds it to the view
+        
+        //retrieves the contents for a folder
+        grabContent()
     }
     
     
@@ -51,6 +60,7 @@ class FolderContent: UIViewController, UICollectionViewDataSource, UICollectionV
     @objc func handleExit(_ tapGesture : UITapGestureRecognizer? = nil) {
         dismiss(animated: true, completion: nil)
     }
+    
     
     
     //sizes and spaces the cells
@@ -74,7 +84,21 @@ class FolderContent: UIViewController, UICollectionViewDataSource, UICollectionV
     
     ///gets posts from Firebase
     func grabContent() {
+        let username = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
+        print("this is temp:", username)
         
-//        FolderStruct().readContent(user: <#T##String#>, folderName: <#T##String#>, completion: <#T##([String : String]) -> Void#>)
+        
+        FolderStruct().addContent(user: username, folderName: folderName, newContent: "f3")
+        FolderStruct().readContent(user: username, folderName: folderName) { (contentDict) in
+            print(contentDict.keys, "is contentDict")
+            var index = 0
+            for (key, value) in contentDict{
+                
+                let temp = self.collectionView.cellForItem(at: IndexPath(row: index, section: 0)) as! FolderContentCell
+                temp.buildPostCard(link: key)
+                print(value, " is the value")
+                index += 1
+            }
+        }
     }
 }

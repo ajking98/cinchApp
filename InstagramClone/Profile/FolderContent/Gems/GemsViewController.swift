@@ -17,7 +17,11 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     @IBOutlet weak var collectionView: UICollectionView!
     let cellIdentifier = "GemCell"
-    let objectNames = ["Dogs", "Cats", "Frogs"]
+    
+    //TODO THESE should hold actual folder objects
+    let folders : [Folder] = []
+    
+    var objectNames = ["Dogs", "Catsassd", "Frogs"]
     let objectImages = ["f1","f2","f3"]
     
     override func viewDidLoad() {
@@ -25,12 +29,44 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         setupCollectionViewLayout()
+        fetchFolders()
+    }
+    
+    ///Retrieves all the folders from Firebase
+    func fetchFolders() {
+        let username = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
+        
+        UserStruct().readFolders(user: username) { (foldernames) in
+            print(foldernames, "are folders")
+            self.objectNames = foldernames
+            
+            //Updates the image, contentNumber, and title on the cell
+            for index in 0..<foldernames.count{
+                let indexPath = IndexPath(row: index, section: 0)
+                let cell = self.collectionView.cellForItem(at: indexPath) as! GemsCollectionViewCell
+                let folderName = foldernames[index]
+                
+                FolderStruct().readIcon(user: username, folderName: folderName, completion: { (imageLink) in
+                    let url = URL(string: imageLink)
+                    cell.imageView.sd_setImage(with: url, placeholderImage: UIImage(named: "n8"), completed: nil)
+                })
+                
+                FolderStruct().readNumOfImages(user: username, folderName: folderName, completion: { (imagesCount) in
+                    FolderStruct().readNumOfVideos(user: username, folderName: folderName, completion: { (videosCount) in
+                        cell.contentNumber.text = String(imagesCount + videosCount)
+                    })
+                })
+                cell.title.text = foldernames[index]
+            }
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("selected")
         let vc = storyboard?.instantiateViewController(withIdentifier: "FolderCotent") as! FolderContent
-        print("this is reached", vc)
+        vc.folderName = objectNames[indexPath.row]
+        
+        vc.contentCount = 12 // TODO uncomment the next line 
+//        vc.contentCount = folders[indexPath.row].numOfImages + folders[indexPath.row].numOfVideos
         present(vc, animated: true, completion: nil)
     }
     
@@ -38,6 +74,7 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
         return 1
     }
     
+    //TODO this need to be made better
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.objectNames.count + 1
     }
@@ -47,9 +84,6 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
             print(indexPath.row)
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! GemsCollectionViewCell
             designCell(cell: cell)
-            cell.title.text = objectNames[indexPath.row]
-            cell.imageView.image = UIImage.init(named: objectImages[indexPath.row])
-            addSubviews(cell: cell)
             return cell
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Create", for: indexPath) as! AddFolderViewCell
@@ -58,7 +92,6 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
             let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleAdd(tapGesture:)))
             cell.isUserInteractionEnabled = true
             cell.addGestureRecognizer(tapGestureRecognizer)
-            
             return cell
         }
     }
