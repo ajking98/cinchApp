@@ -22,7 +22,6 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
     let folders : [Folder] = []
     
     var objectNames = ["Dogs", "Catsassd", "Frogs"]
-    let objectImages = ["f1","f2","f3"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,9 +31,11 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
         fetchFolders()
     }
     
+    
     ///Retrieves all the folders from Firebase
     func fetchFolders() {
         let username = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
+        
         
         UserStruct().readFolders(user: username) { (foldernames) in
             print(foldernames, "are folders")
@@ -43,6 +44,7 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
             //Updates the image, contentNumber, and title on the cell
             for index in 0..<foldernames.count{
                 let indexPath = IndexPath(row: index, section: 0)
+                
                 let cell = self.collectionView.cellForItem(at: indexPath) as! GemsCollectionViewCell
                 let folderName = foldernames[index]
                 
@@ -76,14 +78,16 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     //TODO this need to be made better
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print("this is the count2:", objectNames.count, objectNames)
         return self.objectNames.count + 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.row + 1 < self.objectImages.count+1{
+        if indexPath.row + 1 < self.objectNames.count+1{
             print(indexPath.row)
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! GemsCollectionViewCell
             designCell(cell: cell)
+            print("this is the count1:", objectNames.count, objectNames)
             return cell
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Create", for: indexPath) as! AddFolderViewCell
