@@ -18,4 +18,5 @@ struct defaultsKeys {
     static let dateCreatedKey = "dateCreatedKey"
     static let dateLastActiveKey = "dateLastActiveKey"
     static var folderKey = "folderKey"
+    static let numberOfFolders = "numberOfFolders"
 }

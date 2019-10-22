@@ -34,7 +34,6 @@ class ProfileContainer: UIViewController {
         secondView.addGestureRecognizer(panMenuGesture)
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapOut))
-        firstView.addGestureRecognizer(tapGesture)
         print("First View \(firstView.center.x)" )
         print("Second View \(secondView.center.x)" )
     }

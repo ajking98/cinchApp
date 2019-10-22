@@ -43,7 +43,7 @@ class ProfilePageViewController: UIViewController {
             profileViewTapped = false
         }
         else {
-            print("Tapped")
+            print("Tapped2")
             firstView.removeFromSuperview()
             UIView.transition(with: self.view, duration: 0.25, options: [.transitionCrossDissolve], animations: {
                 self.topView.addSubview(self.secondView)

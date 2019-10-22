@@ -17,8 +17,11 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     @IBOutlet weak var collectionView: UICollectionView!
     let cellIdentifier = "GemCell"
-    let objectNames = ["Dogs", "Cats", "Frogs"]
-    let objectImages = ["f1","f2","f3"]
+    
+    //TODO THESE should hold actual folder objects
+    let folders : [Folder] = []
+    
+    var objectNames = ["Dogs"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,22 +30,51 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
         setupCollectionViewLayout()
     }
     
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = storyboard?.instantiateViewController(withIdentifier: "FolderCotent") as! FolderContent
+        vc.folderName = objectNames[indexPath.row]
+        
+        vc.contentCount = 12 // TODO uncomment the next line 
+//        vc.contentCount = folders[indexPath.row].numOfImages + folders[indexPath.row].numOfVideos
+        present(vc, animated: true, completion: nil)
+    }
+    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
+    //TODO this need to be made better
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.objectNames.count + 1
+        //setting the folders to the value from the user defaults
+        //user defaults was set in the AppDelegate when the app is first run
+        if UserDefaults.standard.object(forKey: defaultsKeys.numberOfFolders) != nil {
+            objectNames = UserDefaults.standard.object(forKey: defaultsKeys.numberOfFolders) as! [String]
+        }
+        return objectNames.count + 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.row + 1 < self.objectImages.count+1{
+        if indexPath.row + 1 < objectNames.count + 1{
             print(indexPath.row)
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! GemsCollectionViewCell
             designCell(cell: cell)
-            cell.title.text = objectNames[indexPath.row]
-            cell.imageView.image = UIImage.init(named: objectImages[indexPath.row])
-            addSubviews(cell: cell)
+            print("this is the count1:", objectNames.count, objectNames)
+            
+            let username = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
+            FolderStruct().readIcon(user: username, folderName: objectNames[indexPath.row]) { (link) in
+                let folder = self.objectNames[indexPath.row]
+                let url = URL(string: link)
+                cell.imageView.sd_setImage(with: url, placeholderImage: UIImage(named: "n4"), completed: nil)
+                cell.title.text = folder
+                
+                FolderStruct().readNumOfImages(user: username, folderName: folder, completion: { (imagesCount) in
+                    FolderStruct().readNumOfVideos(user: username, folderName: folder, completion: { (videosCount) in
+                        cell.contentNumber.text = String(imagesCount + videosCount)
+                    })
+                })
+            }
+            
             return cell
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Create", for: indexPath) as! AddFolderViewCell
@@ -51,7 +83,6 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
             let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleAdd(tapGesture:)))
             cell.isUserInteractionEnabled = true
             cell.addGestureRecognizer(tapGestureRecognizer)
-            
             return cell
         }
     }
