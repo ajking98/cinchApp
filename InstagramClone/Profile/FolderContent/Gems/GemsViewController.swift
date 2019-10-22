@@ -21,47 +21,15 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
     //TODO THESE should hold actual folder objects
     let folders : [Folder] = []
     
-    var objectNames = ["Dogs", "Catsassd", "Frogs"]
+    var objectNames = ["Dogs"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         setupCollectionViewLayout()
-        fetchFolders()
     }
     
-    
-    ///Retrieves all the folders from Firebase
-    func fetchFolders() {
-        let username = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
-        
-        
-        UserStruct().readFolders(user: username) { (foldernames) in
-            print(foldernames, "are folders")
-            self.objectNames = foldernames
-            
-            //Updates the image, contentNumber, and title on the cell
-            for index in 0..<foldernames.count{
-                let indexPath = IndexPath(row: index, section: 0)
-                
-                let cell = self.collectionView.cellForItem(at: indexPath) as! GemsCollectionViewCell
-                let folderName = foldernames[index]
-                
-                FolderStruct().readIcon(user: username, folderName: folderName, completion: { (imageLink) in
-                    let url = URL(string: imageLink)
-                    cell.imageView.sd_setImage(with: url, placeholderImage: UIImage(named: "n8"), completed: nil)
-                })
-                
-                FolderStruct().readNumOfImages(user: username, folderName: folderName, completion: { (imagesCount) in
-                    FolderStruct().readNumOfVideos(user: username, folderName: folderName, completion: { (videosCount) in
-                        cell.contentNumber.text = String(imagesCount + videosCount)
-                    })
-                })
-                cell.title.text = foldernames[index]
-            }
-        }
-    }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "FolderCotent") as! FolderContent
@@ -78,16 +46,35 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     //TODO this need to be made better
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("this is the count2:", objectNames.count, objectNames)
-        return self.objectNames.count + 1
+        //setting the folders to the value from the user defaults
+        //user defaults was set in the AppDelegate when the app is first run
+        if UserDefaults.standard.object(forKey: defaultsKeys.numberOfFolders) != nil {
+            objectNames = UserDefaults.standard.object(forKey: defaultsKeys.numberOfFolders) as! [String]
+        }
+        return objectNames.count + 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.row + 1 < self.objectNames.count+1{
+        if indexPath.row + 1 < objectNames.count + 1{
             print(indexPath.row)
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! GemsCollectionViewCell
             designCell(cell: cell)
             print("this is the count1:", objectNames.count, objectNames)
+            
+            let username = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
+            FolderStruct().readIcon(user: username, folderName: objectNames[indexPath.row]) { (link) in
+                let folder = self.objectNames[indexPath.row]
+                let url = URL(string: link)
+                cell.imageView.sd_setImage(with: url, placeholderImage: UIImage(named: "n4"), completed: nil)
+                cell.title.text = folder
+                
+                FolderStruct().readNumOfImages(user: username, folderName: folder, completion: { (imagesCount) in
+                    FolderStruct().readNumOfVideos(user: username, folderName: folder, completion: { (videosCount) in
+                        cell.contentNumber.text = String(imagesCount + videosCount)
+                    })
+                })
+            }
+            
             return cell
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Create", for: indexPath) as! AddFolderViewCell

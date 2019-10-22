@@ -8,6 +8,8 @@
 
 import UIKit
 import Firebase
+import FirebaseStorage
+import FirebaseDatabase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,6 +20,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
+        
+        //stores the number of folders in userDefaults
+        let username = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
+        UserStruct().readFolders(user: username) { (folders) in
+            UserDefaults.standard.set(folders, forKey: defaultsKeys.numberOfFolders)
+        }
         return true
     }
 
