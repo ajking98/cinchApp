@@ -15,25 +15,34 @@ target 'InstagramClone' do
   pod 'SQLite.swift', '~> 0.12.0'
   
   # Pods for CameraViewFinal
-#  pod "EasyImagy", :path => "../swift-image"
+  #  pod "EasyImagy", :path => "../swift-image"
   pod 'XLActionController/Spotify'
   
   
   #for Profile page
   pod 'Cards'
   pod 'CardParts'
-
-
+  
+  
   # Pods for InstagramClone
-
+  
   target 'InstagramCloneTests' do
     inherit! :search_paths
     # Pods for testing
   end
-
+  
   target 'InstagramCloneUITests' do
     inherit! :search_paths
     # Pods for testing
   end
+  
+end
 
+target 'Gems' do
+  use_frameworks!
+  pod 'Firebase/Core'
+  pod 'Firebase/Auth'
+  pod 'Firebase/Database'
+  pod 'SDWebImage/WebP'
+  pod 'Firebase/Storage','~>4.0'
 end
