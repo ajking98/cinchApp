@@ -31,7 +31,7 @@ struct Helper {
         actionController.headerData = SpotifyHeaderData(title: "select a folder for the image?", subtitle: "", image: image)
         
         let defaults = main.userDefaults
-        let foldersArray = defaults.object(forKey: defaultsKeys.folderKey) as? [String] ?? [String]()
+        let foldersArray = defaults.object(forKey: defaultsKeys.folders) as? [String] ?? [String]()
         print(foldersArray.count)
         for item in foldersArray {
             actionController.addAction(Action(ActionData(title: "\(item.uppercased())", subtitle: "For Content"), style: .default, handler: { action in
@@ -55,7 +55,7 @@ struct Helper {
         let actionController = SpotifyActionController()
         actionController.headerData = SpotifyHeaderData(title: "select a folder for the images?", subtitle: "", image: images[0])
         let defaults = main.userDefaults
-        let foldersArray = defaults.object(forKey: defaultsKeys.folderKey) as? [String] ?? [String]()
+        let foldersArray = defaults.object(forKey: defaultsKeys.folders) as? [String] ?? [String]()
         for item in foldersArray {
             actionController.addAction(Action(ActionData(title: "\(item.uppercased())", subtitle: "For Content"), style: .default, handler: { action in
                 let user = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)

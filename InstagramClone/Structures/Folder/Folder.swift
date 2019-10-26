@@ -50,6 +50,17 @@ class Folder {
         self.isPrivate = false
     }
     
+    init(folderName : String, iconLink : String) {
+        self.folderName = folderName
+        self.iconLink = iconLink
+        self.dateCreated = Date().timeIntervalSince1970
+        self.dateLastModified = Date().timeIntervalSince1970
+        self.content = [:]
+        self.numOfImages = 0
+        self.numOfVideos = 0
+        self.isPrivate = false
+    }
+    
     
     init(folderName : String, icon : UIImage, dateCreated : Date, dateLastModified : Date, content : [String : String], numOfImages : Int, numOfVideos : Int, isPrivate : Bool) {
         self.folderName = folderName

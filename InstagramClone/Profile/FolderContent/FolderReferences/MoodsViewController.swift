@@ -69,10 +69,13 @@ class FolderReferenceController: UIViewController, UICollectionViewDelegate, UIC
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "FolderCotent") as! FolderContent
+        guard let cell = collectionView.cellForItem(at: indexPath) as? MoodsCollectionViewCell else {
+            return
+        }
         
         vc.folderName = folders[indexPath.row].folderName
         vc.contentCount = folders[indexPath.row].content.count
-        
+        vc.username = cell.username
         present(vc, animated: true, completion: nil)
     }
     
@@ -86,6 +89,7 @@ class FolderReferenceController: UIViewController, UICollectionViewDelegate, UIC
         let folderName = folderRef.folderName
         
         cell.title.text = folderName
+        cell.username = username
         
         FolderStruct().readIcon(user: username, folderName: folderName) { (link) in
             let url = URL(string: link)
@@ -104,7 +108,6 @@ class FolderReferenceController: UIViewController, UICollectionViewDelegate, UIC
     
     
     @objc func handleAdd(tapGesture: UITapGestureRecognizer) {
-        print("working dog")
         var folderName : String = ""
         
         let alert = UIAlertController(title: "Name Your Folder", message: "Enter the name you wish to use for your folder", preferredStyle: .alert)

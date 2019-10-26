@@ -30,6 +30,7 @@ class FolderContent: UIViewController, UICollectionViewDataSource, UICollectionV
     var content : [String] = ["1" , "2" , "3"]
     var folderName = ""
     var contentCount = 0
+    var username = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,10 +85,11 @@ class FolderContent: UIViewController, UICollectionViewDataSource, UICollectionV
     
     ///gets posts from Firebase
     func grabContent() {
-        let username = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
-        
+        username = "-%&%-Zl2n5flYQq"
+        print("here is name:", username, "and here is foldername", folderName)
         FolderStruct().readContent(user: username, folderName: folderName) { (contentDict) in
             var index = 0
+            print("reached here")
             for (_, value) in contentDict{
                 let temp = self.collectionView.cellForItem(at: IndexPath(row: index, section: 0)) as! FolderContentCell
                 temp.buildPostCard(link: value)

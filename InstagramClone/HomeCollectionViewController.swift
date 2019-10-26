@@ -254,7 +254,7 @@ class HomeCollectionViewController: UICollectionViewController, UIImagePickerCon
             print(stringSix) // Some String Value
         }
         
-        let foodArray = self.userDefaults.object(forKey: defaultsKeys.folderKey) as? [String] ?? [String]()
+        let foodArray = self.userDefaults.object(forKey: defaultsKeys.folders) as? [String] ?? [String]()
         print(foodArray.count)
         print(foodArray[0])
     }

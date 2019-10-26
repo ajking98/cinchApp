@@ -14,4 +14,15 @@ class MoodsCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var overlayView: UIView!
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var contentNumber: UILabel!
+    
+    var username = ""
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+    }
+    
+    func displayContent(title: String) {
+        self.title.text = title
+    }
 }
