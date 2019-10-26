@@ -24,7 +24,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //stores the number of folders in userDefaults
         let username = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
         UserStruct().readFolders(user: username) { (folders) in
-            UserDefaults.standard.set(folders, forKey: defaultsKeys.numberOfFolders)
+            UserDefaults.standard.set(folders, forKey: defaultsKeys.folders)
+        }
+        
+        UserDefaults.standard.set([], forKey: defaultsKeys.foldersFollowing)
+        UserStruct().readFoldersReference(user: username) { (folderReferences) in
+            var folderRefs : [[String : String]] = []
+            for index in 0..<folderReferences.count {
+                folderRefs.append(folderReferences[index].toString())
+            }
+            UserDefaults.standard.set(folderRefs, forKey: defaultsKeys.foldersFollowing)
         }
         return true
     }

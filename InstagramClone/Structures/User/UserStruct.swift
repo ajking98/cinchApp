@@ -365,8 +365,9 @@ struct UserStruct {
     func readSingleFolder(user : String, folderName : String, completion : @escaping(Folder)-> Void) {
         DB.child(user).child("folders").child(folderName).observeSingleEvent(of: .value) { (snapshot) in
             if let folder = snapshot.value as? [String : Any] {
-                
-                let thisFolder = Folder(folderName: folder["folderName"] as! String, iconLink: folder["icon"] as! String, dateCreated: folder["dateCreated"] as! Double, dateLastModified: folder["dateLastModified"] as! Double, content: folder["content"] != nil ? folder["content"] as! [String : String] : [:] as! [String : String], numOfImages: folder["numOfImages"] as! Int, numOfVideos: folder["numOfVideos"] as! Int, isPrivate: folder["isPrivate"] as! Bool, followers: folder["followers"] != nil ? folder["followers"] as! [String] : [] as! [String], followersCount: folder["followersCount"] as! Int)
+                let folderName = folder["folderName"] as! String
+                let iconLink = folder["icon"] as! String
+                let thisFolder = Folder(folderName: folderName, iconLink: iconLink, dateCreated: folder["dateCreated"] as! Double, dateLastModified: folder["dateLastModified"] as! Double, content: folder["content"] != nil ? folder["content"] as! [String : String] : [:] as! [String : String], numOfImages: folder["numOfImages"] as! Int, numOfVideos: folder["numOfVideos"] as! Int, isPrivate: folder["isPrivate"] as! Bool, followers: folder["followers"] != nil ? folder["followers"] as! [String] : [] as! [String], followersCount: folder["followersCount"] as! Int)
                 
                 completion(thisFolder)
                 
@@ -391,7 +392,6 @@ struct UserStruct {
                 folderArray.sort(by: { (folder1, folder2) -> Bool in
                     return folder1.folderName < folder2.folderName
                 })
-                print("sorted: ", folderArray[0].folderName)
                 
                 completion(folderArray)
             }
@@ -419,7 +419,7 @@ struct UserStruct {
     foldersFollowing
     */
     ///reads the folders the given user is following
-    func readFoldersFollowing(user : String, completion : @escaping([FolderReference])->Void) {
+    func readFoldersReference(user : String, completion : @escaping([FolderReference])->Void) {
         DB.child(user).child("folderReferences").observeSingleEvent(of: .value) { (snapshot) in
             if let folderReferences = snapshot.value as? [String : [String : String]] {
                 var folderReferencesArray : [FolderReference] = []
@@ -432,6 +432,12 @@ struct UserStruct {
                     }
 
                 }
+                
+//                //TODO sort by date created
+                folderReferencesArray.sort(by: { (folder1, folder2) -> Bool in
+                    return folder1.folderName < folder2.folderName
+                })
+                
                 completion(folderReferencesArray)
             }
         }

@@ -55,8 +55,8 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         //setting the folders to the value from the user defaults
         //user defaults was set in the AppDelegate when the app is first run
-        if UserDefaults.standard.object(forKey: defaultsKeys.numberOfFolders) != nil {
-            objectNames = UserDefaults.standard.object(forKey: defaultsKeys.numberOfFolders) as! [String]
+        if UserDefaults.standard.object(forKey: defaultsKeys.folders) != nil {
+            objectNames = UserDefaults.standard.object(forKey: defaultsKeys.folders) as! [String]
         }
         
         let username = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
@@ -72,6 +72,7 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
             print(indexPath.row)
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! GemsCollectionViewCell
             designCell(cell: cell)
+            
             
             let username = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
             FolderStruct().readIcon(user: username, folderName: objectNames[indexPath.row]) { (link) in

@@ -9,12 +9,12 @@
 import UIKit
 
 
-class MoodsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class FolderReferenceController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
     @IBOutlet weak var collectionView: UICollectionView!
     let cellIdentifier = "MoodCell"
-    let objectNames = ["Mad", "Sad", "Angry", "Love", "Jealousy"]
-    let objectImages = ["n1", "n2", "n3", "n4", "n5"]
+    var folderRefs : [FolderReference] = []
+    var folders : [Folder] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,36 +23,85 @@ class MoodsViewController: UIViewController, UICollectionViewDelegate, UICollect
         self.collectionView.dataSource = self
         setupCollectionViewLayout()
         
-    }
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.objectNames.count + 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.row + 1 < self.objectImages.count + 1 {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! MoodsCollectionViewCell
-            designCell(cell: cell)
-            cell.title.text = objectNames[indexPath.row]
-            cell.imageView.image = UIImage.init(named: objectImages[indexPath.row])
-            addSubviews(cell: cell)
+        
+        let folderRefArray = UserDefaults.standard.array(forKey: defaultsKeys.foldersFollowing) as! [[String : String]]
+        for index in 0..<folderRefArray.count {
             
-            return cell
-        } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Create", for: indexPath) as! AddFolderViewCell
-            cell.addFolder.image = UIImage.init(named: "icons8-add-50")
-            
-            let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleAdd(tapGesture:)))
-            cell.isUserInteractionEnabled = true
-            cell.addGestureRecognizer(tapGestureRecognizer)
-            
-            return cell
+            let admin = folderRefArray[index]["admin"]
+            let folderName = folderRefArray[index]["folderName"]
+            folderRefs.append(FolderReference(admin: admin!, folderName: folderName!))
         }
     }
+    
+    
+    ///Pulls the latest changes done and stores them locally
+    func updateLocalFolders() {
+        for index in 0..<folderRefs.count {
+            let username = folderRefs[index].admin
+            let folderName = folderRefs[index].folderName
+            UserStruct().readSingleFolder(user: username, folderName: folderName) { (folder) in
+                self.folders.append(folder)
+            }
+        }
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        //If the user isn't currently following any folders
+        guard folderRefs.count > 0 else {
+            let messageView = UILabel(frame: collectionView.frame)
+            messageView.text = "Folders you follow will appear here"
+            messageView.textAlignment = .center
+            messageView.backgroundColor = .darkerGreen
+            messageView.textColor = .white
+            messageView.center = CGPoint(x: collectionView.center.x, y: collectionView.center.y - 40)
+            collectionView.addSubview(messageView)
+            return 0
+        }
+        
+        
+        if folders.count == 0 {
+            updateLocalFolders()
+        }
+        return folderRefs.count
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = storyboard?.instantiateViewController(withIdentifier: "FolderCotent") as! FolderContent
+        
+        vc.folderName = folders[indexPath.row].folderName
+        vc.contentCount = folders[indexPath.row].content.count
+        
+        present(vc, animated: true, completion: nil)
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! MoodsCollectionViewCell
+        designCell(cell: cell)
+        
+        let folderRef = folderRefs[indexPath.row]
+        let username = folderRef.admin
+        let folderName = folderRef.folderName
+        
+        cell.title.text = folderName
+        
+        FolderStruct().readIcon(user: username, folderName: folderName) { (link) in
+            let url = URL(string: link)
+            cell.imageView.sd_setImage(with: url, placeholderImage: UIImage(named: "n2"), completed: nil)
+        }
+    
+        FolderStruct().readNumOfImages(user: username, folderName: folderName) { (numberOfImages) in
+            FolderStruct().readNumOfVideos(user: username, folderName: folderName, completion: { (numberOfVideos) in
+                cell.contentNumber.text = String(numberOfImages + numberOfVideos)
+            })
+        }
+        
+        addSubviews(cell: cell)
+        return cell
+    }
+    
     
     @objc func handleAdd(tapGesture: UITapGestureRecognizer) {
         print("working dog")

@@ -13,6 +13,34 @@ import FirebaseStorage
 
 
 struct StorageStruct {
+    
+    
+    
+    ///Upload image to storage and uses closure to return URL
+    func uploadImage(image : UIImage, completion: @escaping(String) -> Void) {
+        var imageData = Data()
+        imageData = image.jpegData(compressionQuality: 0.8)!
+        
+        
+        let storageRef = Storage.storage().reference().child("PublicImages/" + randomString(20))
+        storageRef.putData(imageData, metadata: nil, completion: { (metadata, error) in
+            guard (metadata != nil) else{
+                print("Error occurred in the upload process")
+                return
+            }
+            
+            storageRef.downloadURL {(url, error) in
+                guard let downloadURL = url else {
+                    print("Error occurred")
+                    return
+                }
+                completion(downloadURL.absoluteString)
+            }
+        })
+    }
+    
+    
+    
     // WORKS
     //Uploads image to Firebase Storage and adds the path to the firebase database under the user's profile image key
     func UploadProfilePic(user : String, image : UIImage) -> Bool {
@@ -51,28 +79,6 @@ struct StorageStruct {
         return true
     }
     
-    ///Upload image to storage and uses closure to return URL
-    func uploadImage(image : UIImage, completion: @escaping(String) -> Void) {
-        var imageData = Data()
-        imageData = image.jpegData(compressionQuality: 0.8)!
-        
-        
-        let storageRef = Storage.storage().reference().child("PublicImages/" + randomString(20))
-        storageRef.putData(imageData, metadata: nil, completion: { (metadata, error) in
-            guard (metadata != nil) else{
-                print("Error occurred in the upload process")
-                return
-            }
-            
-            storageRef.downloadURL {(url, error) in
-                guard let downloadURL = url else {
-                    print("Error occurred")
-                    return
-                }
-                completion(downloadURL.absoluteString)
-            }
-        })
-    }
     
     // Works
     //Uploads image to storage and sets it as the icon pic for the given folder for that given user
