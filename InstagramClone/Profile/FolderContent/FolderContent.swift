@@ -85,18 +85,12 @@ class FolderContent: UIViewController, UICollectionViewDataSource, UICollectionV
     ///gets posts from Firebase
     func grabContent() {
         let username = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
-        print("this is temp:", username)
         
-        
-        FolderStruct().addContent(user: username, folderName: folderName, newContent: "f3")
         FolderStruct().readContent(user: username, folderName: folderName) { (contentDict) in
-            print(contentDict.keys, "is contentDict")
             var index = 0
-            for (key, value) in contentDict{
-                
+            for (_, value) in contentDict{
                 let temp = self.collectionView.cellForItem(at: IndexPath(row: index, section: 0)) as! FolderContentCell
-                temp.buildPostCard(link: key)
-                print(value, " is the value")
+                temp.buildPostCard(link: value)
                 index += 1
             }
         }

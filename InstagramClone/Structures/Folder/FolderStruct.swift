@@ -191,7 +191,19 @@ struct FolderStruct {
     //Must be given a link representing the post within the Post's dictionary in the DB
     ///adds an extra post content to the Folder's content in DB
     func addContent(user : String, folderName : String, newContent : String) {
-        DB.child(user).child("folders").child(folderName).child("content").updateChildValues([newContent : newContent])
+        var updatedLink = ""   //Updating the link of the url because firebase doesn't take "." in the key
+        for index in newContent {
+            if (index == ".") {
+                updatedLink.append("`")
+            }
+            else if(index == "/") {
+                updatedLink.append("^")
+            }else {
+                updatedLink.append(index)
+            }
+        }
+        DB.child(user).child("folders").child(folderName).child("content").updateChildValues([updatedLink : newContent])
+
     }
     
     

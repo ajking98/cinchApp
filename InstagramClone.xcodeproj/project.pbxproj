@@ -386,7 +386,7 @@
 		46071979235AF11500BE17DF /* FolderContent */ = {
 			isa = PBXGroup;
 			children = (
-				461F821F235C145B0091579D /* Moods */,
+				461F821F235C145B0091579D /* FolderReferences */,
 				461F821E235C14550091579D /* Gems */,
 				8948646122D3FC280075EB90 /* FolderCard.swift */,
 				4657E21122F65B6400396087 /* AddFolderViewCell.swift */,
@@ -415,13 +415,13 @@
 			path = Gems;
 			sourceTree = "<group>";
 		};
-		461F821F235C145B0091579D /* Moods */ = {
+		461F821F235C145B0091579D /* FolderReferences */ = {
 			isa = PBXGroup;
 			children = (
 				4622486922D41A920005B12F /* MoodsViewController.swift */,
 				4622486B22D41ADF0005B12F /* MoodsCollectionViewCell.swift */,
 			);
-			path = Moods;
+			path = FolderReferences;
 			sourceTree = "<group>";
 		};
 		4622493822DFAC8F0005B12F /* Gems */ = {

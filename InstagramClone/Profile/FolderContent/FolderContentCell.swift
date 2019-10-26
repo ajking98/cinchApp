@@ -15,9 +15,7 @@ class FolderContentCell: UICollectionViewCell {
     
     func buildPostCard(link: String) {
         let url = URL(string: link)
-        print("here is your url:" , url)
         imageView.sd_setImage(with: url, completed: nil)
-        imageView.image = UIImage(named: link)
     }
     
 }

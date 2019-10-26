@@ -355,6 +355,7 @@ struct UserStruct {
                 for folder in folders {
                     folderNames.append(folder.key)
                 }
+                folderNames.sort()
                 completion(folderNames)
             }
         }
@@ -385,6 +386,13 @@ struct UserStruct {
                     
                     folderArray.append(thisFolder)
                 }
+                
+                //TODO sort by date created 
+                folderArray.sort(by: { (folder1, folder2) -> Bool in
+                    return folder1.folderName < folder2.folderName
+                })
+                print("sorted: ", folderArray[0].folderName)
+                
                 completion(folderArray)
             }
         }

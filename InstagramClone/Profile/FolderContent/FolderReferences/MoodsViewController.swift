@@ -22,6 +22,7 @@ class MoodsViewController: UIViewController, UICollectionViewDelegate, UICollect
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         setupCollectionViewLayout()
+        
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
