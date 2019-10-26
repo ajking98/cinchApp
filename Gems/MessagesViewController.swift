@@ -8,6 +8,12 @@
 
 import UIKit
 import Messages
+import SDWebImage
+import Firebase
+
+struct Item {
+    var imageName : String
+}
 
 class MessagesViewController: MSMessagesAppViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     let defaults = UserDefaults(suiteName: "group.InstagramClone.messages")
@@ -19,25 +25,35 @@ class MessagesViewController: MSMessagesAppViewController, UICollectionViewDeleg
     var stickers = [MSSticker]()
     
     @IBOutlet weak var collectionView: UICollectionView!
+    let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
     override func viewDidLoad() {
         super.viewDidLoad()
+        setUpCollectionView()
         addSearchBar()
-        objectImages = ["https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/images%2FBSnzTeDsgaftbUCsqEVq?alt=media&token=33656ad4-6005-4d6f-aa55-df834f56826c", "https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/images%2FBSnzTeDsgaftbUCsqEVq?alt=media&token=33656ad4-6005-4d6f-aa55-df834f56826c"]
+        //        objectImages = ["f1","f2","f3"]
+        objectImages = ["https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/images%2FBSnzTeDsgaftbUCsqEVq?alt=media&token=33656ad4-6005-4d6f-aa55-df834f56826c", "https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/images%2Fwaterbend.mp4?alt=media&token=dd6fb189-03c2-4c3a-9f51-2559645e631a", "https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/images%2FmcUGFunXhglGeUAhKYGm?alt=media&token=8985c620-b16c-409b-804d-316f96e07e8d", "https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/images%2Ffire.mp4?alt=media&token=cb204eee-6444-407e-953c-a6367a8cc7e8"]
         
         
         
         activeConversation?.insert(stickers[0], completionHandler: nil)
-//        let lay = MSMessageTemplateLayout()
-//        lay.image = image
-//        let message = MSMessage()
-//        message.layout = lay
-//
-//        activeConversation?.insert(message, completionHandler: nil)
+        //        let lay = MSMessageTemplateLayout()
+        //        lay.image = image
+        //        let message = MSMessage()
+        //        message.layout = lay
+        //
+        //        activeConversation?.insert(message, completionHandler: nil)
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         setupCollectionViewLayout()
         // Do any additional setup after loading the view.
         
+    }
+    
+    func setUpCollectionView() {
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        let nib = UINib(nibName: "MessageCard", bundle: nil)
+        collectionView.register(nib, forCellWithReuseIdentifier: cellIdentifier)
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -49,49 +65,25 @@ class MessagesViewController: MSMessagesAppViewController, UICollectionViewDeleg
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! MessageContentCVCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! MessageCard
         designCell(cell: cell)
-        cell.imageView.image = UIImage.init(named: objectImages[indexPath.row])
-        print(objectImages[indexPath.row])
-//        cell.isUserInteractionEnabled = true
-////        let tapped = UITapGestureRecognizer(target: self, action: #selector(handleTap))
-////        cell.addGestureRecognizer(tapped)
-        images.append(UIImage.init(named: objectImages[indexPath.row])!)
-        //        mc.message = message
-        //        mc.activeConversation?.insert(message, completionHandler: nil)
-        
+        cell.buildPostCard(item: objectImages[indexPath.row])
+        print("baby" + objectImages[indexPath.row])
         
         return cell
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(images.count)
         print(indexPath.row)
-        let layout = MSMessageTemplateLayout()
-        layout.image = UIImage.init(named: objectImages[indexPath.row])
-        let message = MSMessage()
-        message.layout = layout
-        
-        let audioFileName:String = "/testImages/f1"
-        let bundleURL = Bundle.main.bundleURL
-        print(bundleURL)
+        let newImageView = UIImageView()
+        let url = URL(string: objectImages[indexPath.row])
+        newImageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder.png"))
+        print(url!)
         
         activeConversation?.insertAttachment(URL(fileURLWithPath: "/Users/cinch/Desktop/cinchApp/Gems/Assets.xcassets/testImages/\(objectImages[indexPath.row]).imageset/\(objectImages[indexPath.row]).jpg"), withAlternateFilename: "\(objectImages[indexPath.row])", completionHandler: nil)
-//        activeConversation?.insert(message, completionHandler: nil)
+        //                activeConversation?.insert(message, completionHandler: nil)
     }
-    
-//    @objc func handleTap(cell: MessageContentCVCell) {
-//        print("Tapped")
-//        print(images.count)
-//        let layout = MSMessageTemplateLayout()
-//        layout.image = images[3]
-//        let message = MSMessage()
-//        message.layout = layout
-//
-//        activeConversation?.insert(message, completionHandler: nil)
-//
-//    }
     
     func addSearchBar() {
         let frame = searchView.frame
@@ -99,17 +91,17 @@ class MessagesViewController: MSMessagesAppViewController, UICollectionViewDeleg
         searchBar.placeholder = "Search"
         searchBar.center = CGPoint(x: searchView.center.x + 50, y: searchView.center.y)
         searchView.addGestureRecognizer(UITapGestureRecognizer(target: searchBar, action: #selector(searchBar.revertToNormal)))
-        searchBar.backgroundColor = .white
+        searchBar.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1)
         searchView.addSubview(searchBar)
     }
-
+    
     func setupCollectionViewLayout() {
         let collectionViewLayout: UICollectionViewFlowLayout = {
             let layout = UICollectionViewFlowLayout()
             layout.minimumInteritemSpacing = 0
             layout.minimumLineSpacing = 0
             layout.scrollDirection = .vertical
-            layout.itemSize = CGSize(width: collectionView.frame.width / 2.4, height: collectionView.frame.width / 2.3)
+            layout.itemSize = CGSize(width: collectionView.frame.width / 2.35, height: collectionView.frame.width / 2.3)
             print(collectionView.frame.width)
             print(UIScreen.accessibilityFrame().width)
             return layout
@@ -117,16 +109,15 @@ class MessagesViewController: MSMessagesAppViewController, UICollectionViewDeleg
         collectionView.collectionViewLayout = collectionViewLayout
     }
     
-    func designCell(cell: MessageContentCVCell) {
-        cell.layer.cornerRadius = 10
+    func designCell(cell: MessageCard) {
         cell.layer.borderWidth = 1
-        cell.layer.borderColor = UIColor(red: 0.93, green: 0.93, blue: 0.95, alpha: 1.0).cgColor
+        cell.layer.borderColor = UIColor.white.cgColor
         cell.clipsToBounds = true
     }
     
     func run(cell: MessageContentCVCell) {
         let lay = MSMessageTemplateLayout()
-//        lay.image = cell.imageView.image
+        //        lay.image = cell.imageView.image
         let message = MSMessage()
         message.layout = lay
         
@@ -150,7 +141,7 @@ class MessagesViewController: MSMessagesAppViewController, UICollectionViewDeleg
         // and store enough state information to restore your extension to its current state
         // in case it is terminated later.
     }
-   
+    
     override func didReceive(_ message: MSMessage, conversation: MSConversation) {
         // Called when a message arrives that was generated by another instance of this
         // extension on a remote device.
@@ -164,20 +155,20 @@ class MessagesViewController: MSMessagesAppViewController, UICollectionViewDeleg
     
     override func didCancelSending(_ message: MSMessage, conversation: MSConversation) {
         // Called when the user deletes the message without sending it.
-    
+        
         // Use this to clean up state related to the deleted message.
     }
     
     override func willTransition(to presentationStyle: MSMessagesAppPresentationStyle) {
         // Called before the extension transitions to a new presentation style.
-    
+        
         // Use this method to prepare for the change in presentation style.
     }
     
     override func didTransition(to presentationStyle: MSMessagesAppPresentationStyle) {
         // Called after the extension transitions to a new presentation style.
-    
+        
         // Use this method to finalize any behaviors associated with the change in presentation style.
     }
-
+    
 }
