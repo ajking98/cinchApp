@@ -31,6 +31,15 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     
+    ///Is called to pull the latest changes done to a folder
+    func updateLocalFolders() {
+        let username = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
+        UserStruct().readCompleteFolders(user: username) { (folderList) in
+            self.folders = folderList
+        }
+    }
+    
+    
     //Sets up the Viewcontroller for when the folder is tapped
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "FolderCotent") as! FolderContent
