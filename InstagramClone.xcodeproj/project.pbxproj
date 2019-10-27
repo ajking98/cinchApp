@@ -35,6 +35,7 @@
 		467E5DB922FCE8EF00F23ABD /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467E5DB822FCE8EF00F23ABD /* Post.swift */; };
 		467E5DC522FCFE2100F23ABD /* PostStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467E5DC422FCFE2100F23ABD /* PostStruct.swift */; };
 		467E5DC822FD110C00F23ABD /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467E5DC722FD110C00F23ABD /* Buttons.swift */; };
+		46991873236546A4009E85BC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EB41F92622655C26003751FA /* GoogleService-Info.plist */; };
 		46A3E08522BA8156003F6F35 /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A3E08422BA8156003F6F35 /* SQLite.framework */; };
 		46A3E09722BF0B6E003F6F35 /* ProfilePage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46A3E09622BF0B6E003F6F35 /* ProfilePage.storyboard */; };
 		46A3E0A022BF0BA1003F6F35 /* ProfilePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A3E09F22BF0BA1003F6F35 /* ProfilePageViewController.swift */; };
@@ -956,6 +957,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4622493F22DFAC900005B12F /* Assets.xcassets in Resources */,
+				46991873236546A4009E85BC /* GoogleService-Info.plist in Resources */,
 				46FA43F423634FE7005F3046 /* MessageCard.xib in Resources */,
 				4622493D22DFAC8F0005B12F /* MainInterface.storyboard in Resources */,
 			);
