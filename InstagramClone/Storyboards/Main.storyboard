@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xms-95-Wip">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="qpE-qB-mE9">
     <device id="retina6_1" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -9,30 +9,11 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Tab Bar Controller-->
-        <scene sceneID="WOd-ED-kA4">
-            <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="tvY-hI-kxN" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tabBarController storyboardIdentifier="TabBarID" id="xms-95-Wip" sceneMemberID="viewController">
-                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="32D-VP-cqc">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </tabBar>
-                    <connections>
-                        <segue destination="Jhd-ws-8hg" kind="relationship" relationship="viewControllers" id="vGJ-eE-hNT"/>
-                        <segue destination="poY-wD-Fmg" kind="relationship" relationship="viewControllers" id="XkI-ap-gaL"/>
-                        <segue destination="1oR-2O-pdA" kind="relationship" relationship="viewControllers" id="Sob-KS-yEC"/>
-                    </connections>
-                </tabBarController>
-            </objects>
-            <point key="canvasLocation" x="1748" y="139"/>
-        </scene>
         <!--DiscoverID-->
         <scene sceneID="b13-mC-dSV">
             <objects>
                 <viewControllerPlaceholder storyboardName="Discover" referencedIdentifier="DiscoverID" id="Jhd-ws-8hg" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="O7E-Yh-35g"/>
+                    <tabBarItem key="tabBarItem" title="Item" image="home" selectedImage="home" id="O7E-Yh-35g"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gRP-iE-vzH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -42,21 +23,46 @@
         <scene sceneID="jZL-2r-oW2">
             <objects>
                 <viewControllerPlaceholder storyboardIdentifier="Testing" storyboardName="Camera" referencedIdentifier="CameraID" id="poY-wD-Fmg" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="ign-iB-qEF"/>
+                    <tabBarItem key="tabBarItem" title="Item" image="icons8-compass-20" id="ign-iB-qEF"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jw0-YD-D40" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2632" y="139"/>
+            <point key="canvasLocation" x="2633" y="139"/>
         </scene>
         <!--ProfileID-->
         <scene sceneID="bC1-wB-ClT">
             <objects>
                 <viewControllerPlaceholder storyboardName="ProfilePage" referencedIdentifier="ProfileID" id="1oR-2O-pdA" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="Oe0-oU-mic"/>
+                    <tabBarItem key="tabBarItem" title="Item" image="icons8-contacts-20" id="Oe0-oU-mic"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ORK-an-5L1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2640" y="207"/>
         </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="f8c-C6-RDA">
+            <objects>
+                <tabBarController id="qpE-qB-mE9" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="kiX-Rp-33u">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="selectedImageTintColor" red="0.18039215689999999" green="0.80000000000000004" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="Jhd-ws-8hg" kind="relationship" relationship="viewControllers" id="GwU-J3-QbX"/>
+                        <segue destination="poY-wD-Fmg" kind="relationship" relationship="viewControllers" id="o7Y-P8-br4"/>
+                        <segue destination="1oR-2O-pdA" kind="relationship" relationship="viewControllers" id="Dcp-o8-HKv"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ktp-Y2-ozV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3262" y="139"/>
+        </scene>
     </scenes>
+    <resources>
+        <image name="home" width="30" height="30"/>
+        <image name="icons8-compass-20" width="20" height="20"/>
+        <image name="icons8-contacts-20" width="20" height="20"/>
+    </resources>
 </document>

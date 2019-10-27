@@ -16,7 +16,6 @@ class TablePostCard: UITableViewCell {
     @IBOutlet weak var topView: UIView!
     
     var likeButton = LikeButton()
-    var shareButton = ShareButton()
     var menuOptions = MenuOptions()
     
     //borders
@@ -40,9 +39,10 @@ class TablePostCard: UITableViewCell {
     
     
     ///given an UIImage, Int, and String, and sets the values of the post to the details given
-    func buildPostCard(image : UIImage, likes : Int, author : String) {
+    func buildPostCard(url : URL, likes : Int, author : String) {
         //imageView
-        tableImageView.image = image
+        tableImageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder.png"))
+        
         tableImageView!.contentMode = .scaleAspectFill
         tableImageView!.clipsToBounds = true
 
@@ -107,9 +107,6 @@ class TablePostCard: UITableViewCell {
         menuOptions.center = CGPoint(x: centerX, y: 30)
         menuOptions.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(postActivityController)))
         
-        //share
-        shareButton.center = CGPoint(x: centerX, y: bottomY - 65)
-        
         
         //like View
         likeButton.center = CGPoint(x: centerX, y: bottomY - 30)
@@ -117,7 +114,6 @@ class TablePostCard: UITableViewCell {
         
         //adding subviews
         labelContainer.addSubview(menuOptions)
-        labelContainer.addSubview(shareButton)
         labelContainer.addSubview(likeButton)
     }
     
@@ -139,11 +135,11 @@ class TablePostCard: UITableViewCell {
     }
     
     ///Given a item, sets the values of the post to that item's values
-    func buildPostCard(item : Item) {
-        if item.imageName.contains("mp4") {
-            buildVideoPostCard(url: URL(string: item.imageName)!, likes: item.likes, author: item.author)
+    func buildPostCard(item : Post) {
+        if item.link!.contains("mp4") {
+            buildVideoPostCard(url: URL(string: item.link!)!, likes: item.numberOfLikes!, author: item.postOwner!)
         } else {
-            buildPostCard(image: UIImage(named: item.imageName)!, likes: item.likes, author: item.author)
+            buildPostCard(url: URL(string: item.link!)!, likes: item.numberOfLikes!, author: item.postOwner!)
         }
     }
     

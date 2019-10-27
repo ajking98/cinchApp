@@ -80,6 +80,7 @@ class MessagesViewController: MSMessagesAppViewController, UICollectionViewDeleg
         
     }
     
+    
     func loadDB() {
         dbRef.observe(DataEventType.value, with: { (snapshot) in
             var newImages = [ImageInsta]()

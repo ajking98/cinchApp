@@ -9,6 +9,9 @@
 
 import UIKit
 import AVKit
+import Firebase
+import FirebaseStorage
+import FirebaseDatabase
 
 private let reuseIdentifier = "Cell"
 private let reuseIdentifierTable = "Cell2"
@@ -19,7 +22,6 @@ struct Item {
     var author : String
 }
 
-
 class DiscoverController: UIViewController {
     
     @IBOutlet weak var segmentControl: UIView!
@@ -27,7 +29,7 @@ class DiscoverController: UIViewController {
     @IBOutlet weak var tableViewIcon: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var collectionView: UICollectionView!
-    var items : [Item] = [Item]()
+//    var items : [Item] = [Item]()
     let buttonBar = UIView()
     var tapped = true
     var isRightSegmented = true
@@ -45,15 +47,20 @@ class DiscoverController: UIViewController {
     var player: AVPlayer!
     var playerLayer: AVPlayerLayer!
     
+    //firebase
+    var dbRef: DatabaseReference!
+    var posts = [Post]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        dbRef = Database.database().reference().child("posts")
+        loadDB()
         sizeUp()
 //        addSearchBar()
         setUpTableView()
         setUpCollectionView()
         setUpCollectionViewItemSizes()
-        addContent()
+//        addContent()
         addGestures()
         addSelectBar(color: UIColor.darkerGreen)
         
@@ -72,6 +79,24 @@ class DiscoverController: UIViewController {
         collectionView.allowsMultipleSelection = true
         
         setUpNavigation()
+    }
+    
+    func loadDB() {
+        dbRef.observe(DataEventType.value, with: { (snapshot) in
+            var newImages = [Post]()
+            for imageInstaSnapshot in snapshot.children.allObjects as! [DataSnapshot] {
+                let imageInstaObject = imageInstaSnapshot.value as? [String: AnyObject]
+                let imageDate = imageInstaObject?["dateCreated"]
+                let imageOwner = imageInstaObject?["postOwner"]
+                let isImage = imageInstaObject?["isImage"]
+                let imageLink = imageInstaObject?["link"]
+                
+                let post = Post(isImage: (isImage as! Bool), postOwner: imageOwner as! String, link: imageLink as! String)
+                self.posts.append(post)
+            }
+            self.collectionView.reloadData()
+        })
+        
     }
     
     func setUpNavigation() {
@@ -113,39 +138,39 @@ class DiscoverController: UIViewController {
     
     
     ///Adds content to discoverpage
-    func addContent() {
-        items.append(Item(imageName: "f5", likes: 12, author: "something"))
-        items.append(Item(imageName: "f2", likes: 13, author: "something"))
-        items.append(Item(imageName: "f3", likes: 14, author: "something"))
-        items.append(Item(imageName: "f4", likes: 15, author: "something"))
-        items.append(Item(imageName: "f2", likes: 13, author: "something"))
-        items.append(Item(imageName: "f3", likes: 14, author: "something"))
-        items.append(Item(imageName: "f4", likes: 15, author: "something"))
-        items.append(Item(imageName: "f2", likes: 13, author: "something"))
-        items.append(Item(imageName: "f3", likes: 14, author: "something"))
-        items.append(Item(imageName: "f4", likes: 15, author: "something"))
-        items.append(Item(imageName: "f2", likes: 13, author: "something"))
-        items.append(Item(imageName: "f3", likes: 14, author: "something"))
-        items.append(Item(imageName: "f4", likes: 15, author: "something"))
-        items.append(Item(imageName: "f2", likes: 13, author: "something"))
-        items.append(Item(imageName: "f3", likes: 14, author: "something"))
-        items.append(Item(imageName: "f4", likes: 15, author: "something"))
-        items.append(Item(imageName: "f2", likes: 13, author: "something"))
-        items.append(Item(imageName: "f3", likes: 14, author: "something"))
-        items.append(Item(imageName: "f4", likes: 15, author: "something"))
-        items.append(Item(imageName: "f2", likes: 13, author: "something"))
-        items.append(Item(imageName: "f3", likes: 14, author: "something"))
-        items.append(Item(imageName: "f4", likes: 15, author: "something"))
-        items.append(Item(imageName: "f2", likes: 13, author: "something"))
-        items.append(Item(imageName: "f3", likes: 14, author: "something"))
-        items.append(Item(imageName: "f4", likes: 15, author: "something"))
-        items.append(Item(imageName: "f2", likes: 13, author: "something"))
-        items.append(Item(imageName: "f3", likes: 14, author: "something"))
-        items.append(Item(imageName: "f4", likes: 15, author: "something"))
-        items.append(Item(imageName: "https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/images%2Famberalerts.mp4?alt=media&token=92f4cb5f-0aeb-4674-86f4-9f6ed9e05604", likes: 16, author: "something"))
-        items.append(Item(imageName: "https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/images%2Ffire.mp4?alt=media&token=cb204eee-6444-407e-953c-a6367a8cc7e8", likes: 17, author: "something"))
-        items.append(Item(imageName: "https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/images%2Fwaterbend.mp4?alt=media&token=dd6fb189-03c2-4c3a-9f51-2559645e631a", likes: 18, author: "something"))
-    }
+//    func addContent() {
+//        items.append(Item(imageName: "f5", likes: 12, author: "something"))
+//        items.append(Item(imageName: "f2", likes: 13, author: "something"))
+//        items.append(Item(imageName: "f3", likes: 14, author: "something"))
+//        items.append(Item(imageName: "f4", likes: 15, author: "something"))
+//        items.append(Item(imageName: "f2", likes: 13, author: "something"))
+//        items.append(Item(imageName: "f3", likes: 14, author: "something"))
+//        items.append(Item(imageName: "f4", likes: 15, author: "something"))
+//        items.append(Item(imageName: "f2", likes: 13, author: "something"))
+//        items.append(Item(imageName: "f3", likes: 14, author: "something"))
+//        items.append(Item(imageName: "f4", likes: 15, author: "something"))
+//        items.append(Item(imageName: "f2", likes: 13, author: "something"))
+//        items.append(Item(imageName: "f3", likes: 14, author: "something"))
+//        items.append(Item(imageName: "f4", likes: 15, author: "something"))
+//        items.append(Item(imageName: "f2", likes: 13, author: "something"))
+//        items.append(Item(imageName: "f3", likes: 14, author: "something"))
+//        items.append(Item(imageName: "f4", likes: 15, author: "something"))
+//        items.append(Item(imageName: "f2", likes: 13, author: "something"))
+//        items.append(Item(imageName: "f3", likes: 14, author: "something"))
+//        items.append(Item(imageName: "f4", likes: 15, author: "something"))
+//        items.append(Item(imageName: "f2", likes: 13, author: "something"))
+//        items.append(Item(imageName: "f3", likes: 14, author: "something"))
+//        items.append(Item(imageName: "f4", likes: 15, author: "something"))
+//        items.append(Item(imageName: "f2", likes: 13, author: "something"))
+//        items.append(Item(imageName: "f3", likes: 14, author: "something"))
+//        items.append(Item(imageName: "f4", likes: 15, author: "something"))
+//        items.append(Item(imageName: "f2", likes: 13, author: "something"))
+//        items.append(Item(imageName: "f3", likes: 14, author: "something"))
+//        items.append(Item(imageName: "f4", likes: 15, author: "something"))
+//        items.append(Item(imageName: "https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/images%2Famberalerts.mp4?alt=media&token=92f4cb5f-0aeb-4674-86f4-9f6ed9e05604", likes: 16, author: "something"))
+//        items.append(Item(imageName: "https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/images%2Ffire.mp4?alt=media&token=cb204eee-6444-407e-953c-a6367a8cc7e8", likes: 17, author: "something"))
+//        items.append(Item(imageName: "https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/images%2Fwaterbend.mp4?alt=media&token=dd6fb189-03c2-4c3a-9f51-2559645e631a", likes: 18, author: "something"))
+//    }
     
     /// Adds Select to Segment Control
     func addSelectBar(color: UIColor) {
@@ -525,52 +550,56 @@ class DiscoverController: UIViewController {
 
 extension DiscoverController : UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return items.count
+        return posts.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! PostCard
-        cell.buildPostCard(item: items[indexPath.item])
+        let current:Post
+        current = posts[indexPath.row]
+        cell.buildPostCard(item: current)
         return cell
     }
     
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "ImageSelectedController") as! ImageSelectedController
-        for index in indexPath.row...(items.count - 1) {
-            vc.items.append(items[index])
-            vc.discoverController = self
-        }
-        var item = items[indexPath.row]
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        let vc = storyboard?.instantiateViewController(withIdentifier: "ImageSelectedController") as! ImageSelectedController
+//        for index in indexPath.row...(items.count - 1) {
+//            vc.items.append(items[index])
+//            vc.discoverController = self
+//        }
+//        var item = items[indexPath.row]
+//        self.navigationController?.pushViewController(vc, animated: true)
+//    }
     
 }
 
 
 extension DiscoverController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return items.count
+        return posts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         //Todo change the string literal to a variable and get rid of the TablePostCard.xib
         let cell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath) as! TablePostCard
-        cell.buildPostCard(item: items[indexPath.item])
+        let currentPost:Post
+        currentPost = posts[indexPath.row]
+        cell.buildPostCard(item: currentPost)
         print("this is the size of cell", cell.frame)
         return cell
     }
 
     
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "ImageSelectedController") as! ImageSelectedController
-        for index in indexPath.row...(items.count - 1) {
-            vc.items.append(items[index])
-        }
-        let item = items[indexPath.row]
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        let vc = storyboard?.instantiateViewController(withIdentifier: "ImageSelectedController") as! ImageSelectedController
+//        for index in indexPath.row...(items.count - 1) {
+//            vc.items.append(items[index])
+//        }
+//        let item = items[indexPath.row]
+//        self.navigationController?.pushViewController(vc, animated: true)
+//    }
 
 }
 
@@ -578,10 +607,10 @@ extension DiscoverController : UITableViewDelegate, UITableViewDataSource {
 extension DiscoverController : DiscoverLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, sizeOfPhotoAtIndexPath indexPath: IndexPath) -> CGSize {
         var cellSize = CGSize()
-        if(items[indexPath.item].imageName.contains("mp4")) {
+        if(posts[indexPath.item].link!.contains("mp4")) {
             cellSize = CGSize(width: 300, height: 370)
         } else {
-            cellSize = UIImage(named: items[indexPath.item].imageName)!.size
+            cellSize = CGSize(width: 300, height: 370)
         }
         
         return cellSize
