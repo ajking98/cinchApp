@@ -478,6 +478,17 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		46764B3223668A52006362FB /* Main Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				891FC3FA22D7F7050024A623 /* ImageSelectedController.swift */,
+				891FC3ED22D7F6930024A623 /* DiscoverController.swift */,
+				46456C2B22FE52FB00D96EB5 /* PrimaryDiscoverController.swift */,
+				46456C2122FE51A700D96EB5 /* SecondaryDiscoverController.swift */,
+			);
+			path = "Main Controllers";
+			sourceTree = "<group>";
+		};
 		467E5DC622FD044A00F23ABD /* Post */ = {
 			isa = PBXGroup;
 			children = (
@@ -572,6 +583,7 @@
 		891FC3EA22D7F5DD0024A623 /* Discover */ = {
 			isa = PBXGroup;
 			children = (
+				46764B3223668A52006362FB /* Main Controllers */,
 				891FC3F822D7F6D80024A623 /* DiscoverLayout.swift */,
 				891FC3FE22D7F73A0024A623 /* PostCard.xib */,
 				891FC3F622D7F6B50024A623 /* PostCard.swift */,
@@ -581,11 +593,7 @@
 				4622497022E7F3C80005B12F /* TableViewPostCell.swift */,
 				467E5DC722FD110C00F23ABD /* Buttons.swift */,
 				891FC3EB22D7F6720024A623 /* SearchBar.swift */,
-				891FC3FA22D7F7050024A623 /* ImageSelectedController.swift */,
 				EB3159B022F4BEF400EB4FA9 /* SelectedTablePostCell.swift */,
-				891FC3ED22D7F6930024A623 /* DiscoverController.swift */,
-				46456C2B22FE52FB00D96EB5 /* PrimaryDiscoverController.swift */,
-				46456C2122FE51A700D96EB5 /* SecondaryDiscoverController.swift */,
 			);
 			path = Discover;
 			sourceTree = "<group>";

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ZMq-v6-1Wk">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Wfi-yA-fF3">
     <device id="retina6_1" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -13,7 +13,7 @@
         <!--Primary Discover Controller-->
         <scene sceneID="Ozg-zv-aPO">
             <objects>
-                <viewController storyboardIdentifier="DiscoverID" id="tcj-Tb-CIJ" customClass="PrimaryDiscoverController" customModule="InstagramClone" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="tcj-Tb-CIJ" customClass="PrimaryDiscoverController" customModule="InstagramClone" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="peo-QB-grK">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -113,9 +113,6 @@
                         <color key="backgroundColor" red="0.92156862745098034" green="0.92156862745098034" blue="0.93725490196078431" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="6o6-d1-aWb"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="icons8-fire-30" id="Ne8-E0-CsW">
-                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-8"/>
-                    </tabBarItem>
                     <navigationItem key="navigationItem" id="F6L-VB-InV"/>
                     <connections>
                         <outlet property="collectionView" destination="T4Z-Sf-0Sh" id="sMT-NP-pa1"/>
@@ -127,7 +124,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nkx-iF-l1s" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4859.420289855073" y="65.625"/>
+            <point key="canvasLocation" x="5769.5652173913049" y="65.625"/>
         </scene>
         <!--Secondary Discover Controller-->
         <scene sceneID="06J-uk-HBc">
@@ -243,7 +240,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="70G-qi-MJK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6344.9275362318849" y="72.991071428571431"/>
+            <point key="canvasLocation" x="7255.0724637681169" y="72.991071428571431"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="2uG-jg-7LO">
@@ -342,7 +339,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZW7-1C-4hc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7805.7971014492759" y="87.723214285714278"/>
+            <point key="canvasLocation" x="8715.9420289855079" y="87.723214285714278"/>
         </scene>
         <!--Image Selected Controller-->
         <scene sceneID="yAv-ae-LLH">
@@ -400,24 +397,32 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qU3-Vb-CQP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5607.2463768115949" y="65.625"/>
+            <point key="canvasLocation" x="6517.3913043478269" y="65.625"/>
         </scene>
-        <!--Tab Bar Controller-->
-        <scene sceneID="HaR-dv-Yy5">
+        <!--Navigation Controller-->
+        <scene sceneID="WQ9-R7-is6">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="ZMq-v6-1Wk" sceneMemberID="viewController">
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rXh-7h-JLb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationController storyboardIdentifier="DiscoverID" automaticallyAdjustsScrollViewInsets="NO" id="Wfi-yA-fF3" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="" image="icons8-fire-30" id="Ne8-E0-CsW">
+                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-8"/>
+                    </tabBarItem>
                     <toolbarItems/>
-                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="dgN-VC-nOx">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="uWb-IW-SZf">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" red="0.4431372549" green="0.83529411760000005" blue="0.60392156860000001" alpha="1" colorSpace="calibratedRGB"/>
-                    </tabBar>
+                        <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="tcj-Tb-CIJ" kind="relationship" relationship="viewControllers" id="F0O-M7-Kq9"/>
+                        <segue destination="tcj-Tb-CIJ" kind="relationship" relationship="rootViewController" id="1Om-ge-9Sw"/>
                     </connections>
-                </tabBarController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="P8q-ll-H1d" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                </navigationController>
             </objects>
-            <point key="canvasLocation" x="3949.275362318841" y="65.625"/>
+            <point key="canvasLocation" x="4859.420289855073" y="65.625"/>
         </scene>
     </scenes>
     <resources>

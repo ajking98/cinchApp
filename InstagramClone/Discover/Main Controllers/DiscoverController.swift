@@ -54,7 +54,8 @@ class DiscoverController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         dbRef = Database.database().reference().child("posts")
-        loadDB()
+//        loadDB()
+        fetchContent()
         sizeUp()
 //        addSearchBar()
         setUpTableView()
@@ -79,6 +80,27 @@ class DiscoverController: UIViewController {
         collectionView.allowsMultipleSelection = true
         
         setUpNavigation()
+    }
+    
+    
+    ///Updates the content array with values from the DB
+    func fetchContent() {
+        let username = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
+        
+        UserStruct().readNewContent(user: username) { (newContent) in
+            for (_, value) in newContent {
+                let indexPath = IndexPath(row: self.posts.count, section: 0)
+                //TODO this creates a post using the link and uses static data in contstructor, this should instead get the data from the posts section in the database
+                let post = Post(isImage: true, numberOfLikes: 41, postOwner: username, likedBy: ["someone"], dateCreated: Date().timeIntervalSince1970, tags: ["nothing"], link: value)
+                
+                self.posts.append(post)
+                self.collectionView.reloadData()
+                self.tableView.insertRows(at: [indexPath], with: .right)
+            }
+            
+        }
+        
+        
     }
     
     func loadDB() {
@@ -135,42 +157,6 @@ class DiscoverController: UIViewController {
         customLayout.delegate = self
         collectionView.collectionViewLayout = customLayout
     }
-    
-    
-    ///Adds content to discoverpage
-//    func addContent() {
-//        items.append(Item(imageName: "f5", likes: 12, author: "something"))
-//        items.append(Item(imageName: "f2", likes: 13, author: "something"))
-//        items.append(Item(imageName: "f3", likes: 14, author: "something"))
-//        items.append(Item(imageName: "f4", likes: 15, author: "something"))
-//        items.append(Item(imageName: "f2", likes: 13, author: "something"))
-//        items.append(Item(imageName: "f3", likes: 14, author: "something"))
-//        items.append(Item(imageName: "f4", likes: 15, author: "something"))
-//        items.append(Item(imageName: "f2", likes: 13, author: "something"))
-//        items.append(Item(imageName: "f3", likes: 14, author: "something"))
-//        items.append(Item(imageName: "f4", likes: 15, author: "something"))
-//        items.append(Item(imageName: "f2", likes: 13, author: "something"))
-//        items.append(Item(imageName: "f3", likes: 14, author: "something"))
-//        items.append(Item(imageName: "f4", likes: 15, author: "something"))
-//        items.append(Item(imageName: "f2", likes: 13, author: "something"))
-//        items.append(Item(imageName: "f3", likes: 14, author: "something"))
-//        items.append(Item(imageName: "f4", likes: 15, author: "something"))
-//        items.append(Item(imageName: "f2", likes: 13, author: "something"))
-//        items.append(Item(imageName: "f3", likes: 14, author: "something"))
-//        items.append(Item(imageName: "f4", likes: 15, author: "something"))
-//        items.append(Item(imageName: "f2", likes: 13, author: "something"))
-//        items.append(Item(imageName: "f3", likes: 14, author: "something"))
-//        items.append(Item(imageName: "f4", likes: 15, author: "something"))
-//        items.append(Item(imageName: "f2", likes: 13, author: "something"))
-//        items.append(Item(imageName: "f3", likes: 14, author: "something"))
-//        items.append(Item(imageName: "f4", likes: 15, author: "something"))
-//        items.append(Item(imageName: "f2", likes: 13, author: "something"))
-//        items.append(Item(imageName: "f3", likes: 14, author: "something"))
-//        items.append(Item(imageName: "f4", likes: 15, author: "something"))
-//        items.append(Item(imageName: "https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/images%2Famberalerts.mp4?alt=media&token=92f4cb5f-0aeb-4674-86f4-9f6ed9e05604", likes: 16, author: "something"))
-//        items.append(Item(imageName: "https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/images%2Ffire.mp4?alt=media&token=cb204eee-6444-407e-953c-a6367a8cc7e8", likes: 17, author: "something"))
-//        items.append(Item(imageName: "https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/images%2Fwaterbend.mp4?alt=media&token=dd6fb189-03c2-4c3a-9f51-2559645e631a", likes: 18, author: "something"))
-//    }
     
     /// Adds Select to Segment Control
     func addSelectBar(color: UIColor) {
@@ -549,6 +535,7 @@ class DiscoverController: UIViewController {
 
 
 extension DiscoverController : UICollectionViewDelegate, UICollectionViewDataSource {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return posts.count
     }
@@ -562,15 +549,12 @@ extension DiscoverController : UICollectionViewDelegate, UICollectionViewDataSou
     }
     
     
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let vc = storyboard?.instantiateViewController(withIdentifier: "ImageSelectedController") as! ImageSelectedController
-//        for index in indexPath.row...(items.count - 1) {
-//            vc.items.append(items[index])
-//            vc.discoverController = self
-//        }
-//        var item = items[indexPath.row]
-//        self.navigationController?.pushViewController(vc, animated: true)
-//    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = storyboard?.instantiateViewController(withIdentifier: "ImageSelectedController") as! ImageSelectedController
+        vc.post = posts[indexPath.item]
+
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
     
 }
 
@@ -586,20 +570,16 @@ extension DiscoverController : UITableViewDelegate, UITableViewDataSource {
         let currentPost:Post
         currentPost = posts[indexPath.row]
         cell.buildPostCard(item: currentPost)
-        print("this is the size of cell", cell.frame)
         return cell
     }
 
     
     
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let vc = storyboard?.instantiateViewController(withIdentifier: "ImageSelectedController") as! ImageSelectedController
-//        for index in indexPath.row...(items.count - 1) {
-//            vc.items.append(items[index])
-//        }
-//        let item = items[indexPath.row]
-//        self.navigationController?.pushViewController(vc, animated: true)
-//    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = storyboard?.instantiateViewController(withIdentifier: "ImageSelectedController") as! ImageSelectedController
+        vc.post = posts[indexPath.item]
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
 
 }
 

@@ -164,9 +164,9 @@ class PostCard: UICollectionViewCell {
                     self.topBorder?.layer.opacity = 1
                     self.leftBorder?.layer.opacity = 1
                     self.rightBorder?.layer.opacity = 1
-                    if(self.player != nil) {
-                        self.player.isMuted = true
-                    }
+//                    if(self.player != nil) {
+//                        self.player.isMuted = true
+//                    }
                     
                 }
                 else {
@@ -174,9 +174,9 @@ class PostCard: UICollectionViewCell {
                     self.topBorder?.layer.opacity = 0
                     self.leftBorder?.layer.opacity = 0
                     self.rightBorder?.layer.opacity = 0
-                    if(self.player != nil) {
-                        self.player.isMuted = false
-                    }
+//                    if(self.player != nil) {
+//                        self.player.isMuted = false
+//                    }
                 }
             }
         }

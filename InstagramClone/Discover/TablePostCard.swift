@@ -41,8 +41,8 @@ class TablePostCard: UITableViewCell {
     ///given an UIImage, Int, and String, and sets the values of the post to the details given
     func buildPostCard(url : URL, likes : Int, author : String) {
         //imageView
-        tableImageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder.png"))
-        
+        print("building: ,", url)
+        tableImageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholde.png"), completed: nil)
         tableImageView!.contentMode = .scaleAspectFill
         tableImageView!.clipsToBounds = true
 
@@ -136,6 +136,7 @@ class TablePostCard: UITableViewCell {
     
     ///Given a item, sets the values of the post to that item's values
     func buildPostCard(item : Post) {
+        print("got it: ", item.link)
         if item.link!.contains("mp4") {
             buildVideoPostCard(url: URL(string: item.link!)!, likes: item.numberOfLikes!, author: item.postOwner!)
         } else {
