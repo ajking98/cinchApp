@@ -265,6 +265,8 @@ class CameraViewController: UIViewController {
         solidBar.isUserInteractionEnabled = true
         addButton.isUserInteractionEnabled = true
         imageCollectionView.isUserInteractionEnabled = true
+        
+        solidBar.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSwipeDown(_:))))
     }
     
     @objc func handleFullScreenTapped(_ sender : UITapGestureRecognizer? = nil) {
