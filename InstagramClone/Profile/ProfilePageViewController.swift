@@ -9,19 +9,27 @@ import UIKit
 
 class ProfilePageViewController: UIViewController {
     
+    @IBOutlet weak var numberOfFollowersLabel: UILabel!
+    @IBOutlet weak var numberOfFollowingsLabel: UILabel!
+    @IBOutlet weak var numberOfGemsLabel: UILabel!
+    
     @IBOutlet weak var topView: UIView!
-    @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var pageControl: UIPageControl!
-    @IBOutlet weak var viewContainer: UIView!
     @IBOutlet weak var customSegmentedControl: UISegmentedControl!
     var firstView: UIView!
     var secondView: UIView!
     @IBOutlet weak var viewOne: UIView!
     @IBOutlet weak var viewTwo: UIView!
     var profileViewTapped = false
+    var username : String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if username == nil {
+            username = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)
+        }
+        
         buildProfileViews()
         buildTopProfileGestures()
     }
@@ -70,6 +78,17 @@ class ProfilePageViewController: UIViewController {
     }
     
     func buildProfileViews() {
+        UserStruct().readFollowers(user: username) { (followers) in
+            self.numberOfFollowersLabel.text = String(followers.count)
+        }
+        
+        UserStruct().readFollowing(user: username) { (followings) in
+            self.numberOfFollowingsLabel.text = String(followings.count)
+        }
+        
+        //TODO implement read number of Gems - Should be a stored value in the DB 
+//        UserStruct().read
+        
         firstView = FirstProfileHeader().viewWithTag(12) as UIView?
         secondView = SecondProfileHeader().viewWithTag(22) as UIView?
         topView.addSubview(firstView)

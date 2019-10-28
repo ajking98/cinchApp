@@ -12,8 +12,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SecondProfileHeader" customModule="InstagramClone" customModuleProvider="target">
             <connections>
+                <outlet property="bio" destination="CCm-Ur-173" id="I88-mx-kdl"/>
                 <outlet property="secondTopView" destination="SHK-Oi-vp8" id="bIw-Ix-fhy"/>
-                <outlet property="testLabel" destination="xNN-6s-o8J" id="3Qj-HA-DT6"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
