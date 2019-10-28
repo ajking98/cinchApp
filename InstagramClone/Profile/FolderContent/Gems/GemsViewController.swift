@@ -7,13 +7,9 @@
 
 import UIKit
 import Cards
-import FirebaseStorage
-import FirebaseDatabase
 
 class GemsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
-    var dbRef: DatabaseReference!
-    var folderNames: [String]?
     
     @IBOutlet weak var collectionView: UICollectionView!
     let cellIdentifier = "GemCell"
@@ -21,13 +17,42 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
     //TODO THESE should hold actual folder objects
     var folders : [Folder] = []
     
-    var objectNames = ["Dogs"]
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         setupCollectionViewLayout()
+        
+        fetchFolders()
+        buildAddFolderButton()
+    }
+    
+    
+    func buildAddFolderButton() {
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        button.setImage(UIImage(named: "plus_icon_gray"), for: .normal)
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleAdd(tapGesture:)))
+        button.isUserInteractionEnabled = true
+        button.addGestureRecognizer(tapGestureRecognizer)
+        button.backgroundColor = .lightGreen
+        
+        let width = view.frame.width
+        let height = view.frame.height
+        button.layer.cornerRadius = button.frame.width / 2
+        button.clipsToBounds = true
+        button.center = CGPoint(x: (width * 3)/4.5, y: (height) / 4)
+        view.addSubview(button)
+    }
+    
+    func fetchFolders() {
+        let username = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
+        UserStruct().readCompleteFolders(user: username) { (folderList) in
+            for folder in folderList {
+                let indexPath = IndexPath(item: self.folders.count, section: 0)
+                self.folders.append(folder)
+                self.collectionView.insertItems(at: [indexPath])
+            }
+        }
     }
     
     
@@ -53,51 +78,19 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        //setting the folders to the value from the user defaults
-        //user defaults was set in the AppDelegate when the app is first run
-        if UserDefaults.standard.object(forKey: defaultsKeys.folders) != nil {
-            objectNames = UserDefaults.standard.object(forKey: defaultsKeys.folders) as! [String]
-        }
-        
-        let username = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
-        //reading the complete folder from the database
-        UserStruct().readCompleteFolders(user: username) { (folderList) in
-            self.folders = folderList
-        }
-        return objectNames.count + 1
+        return folders.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.row + 1 < objectNames.count + 1{
-            print(indexPath.row)
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! GemsCollectionViewCell
             designCell(cell: cell)
-            
-            
-            let username = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
-            FolderStruct().readIcon(user: username, folderName: objectNames[indexPath.row]) { (link) in
-                let folder = self.objectNames[indexPath.row]
-                let url = URL(string: link)
-                cell.imageView.sd_setImage(with: url, placeholderImage: UIImage(named: "n4"), completed: nil)
-                cell.title.text = folder
-                
-                FolderStruct().readNumOfImages(user: username, folderName: folder, completion: { (imagesCount) in
-                    FolderStruct().readNumOfVideos(user: username, folderName: folder, completion: { (videosCount) in
-                        cell.contentNumber.text = String(imagesCount + videosCount)
-                    })
-                })
-            }
-            
-            return cell
-        } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Create", for: indexPath) as! AddFolderViewCell
-            cell.addFolder.image = UIImage.init(named: "icons8-add-50")
-            
-            let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleAdd(tapGesture:)))
-            cell.isUserInteractionEnabled = true
-            cell.addGestureRecognizer(tapGestureRecognizer)
-            return cell
-        }
+        
+        let folder = folders[indexPath.row]
+        let url = URL(string: folder.iconLink!)
+        cell.imageView.sd_setImage(with: url, placeholderImage: UIImage(named : "n2"), completed: nil)
+        cell.title.text = folder.folderName
+        cell.contentNumber.text = String(folder.numOfImages + folder.numOfVideos)
+        return cell
     }
     
     @objc func handleAdd(tapGesture: UITapGestureRecognizer) {
@@ -110,8 +103,8 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
         alert.addAction(UIAlertAction(title: "Create", style: .default, handler: { [weak alert] (_) in
             let textField = alert?.textFields![0]
             folderName = textField!.text!
-            print("Text field: \(folderName)")
             let newFolder = Folder(folderName: folderName)
+            
             //calling the function to save the folder name to Firebase and create it on the front end
             UserStruct().addFolder(user: UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!, folder: newFolder)
             self.createFolder(folderName: folderName)
@@ -127,35 +120,16 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     
     func createFolder(folderName: String){
-        print("Creating folder: \(folderName)")
-        populateFolders()
+        let folder = Folder(folderName: folderName)
+        let username = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
+        UserStruct().addFolder(user: username, folder: folder)
+        UserStruct().readSingleFolder(user: username, folderName: folderName) { (newFolder) in
+            let indexPath = IndexPath(item: self.folders.count, section: 0)
+            self.folders.append(newFolder)
+            self.collectionView.insertItems(at: [indexPath])
+        }
     }
     
-    
-    //Should add all folder to FrontEnd
-    //The parameter for this function should be an array of Folders (Create the Folders struct)
-    func populateFolders(){
-        print("reloading data")
-    }
-    
-    func loadDB() {
-        print("reached")
-        // Not reading database properly
-        dbRef.queryOrderedByKey().observe(.value, with: {
-            snapshot in
-            let value = snapshot.value as? NSDictionary
-            print("hey")
-            var yourArray = [String]()
-            if let scores = snapshot.value as? NSDictionary{
-                for i in 0..<scores.count {
-                    yourArray.append(scores[i] as! String)
-                    print(scores[i])
-                }
-            }
-            self.folderNames = yourArray
-        })
-        
-    }
     
     func setupCollectionViewLayout() {
         let collectionViewLayout: UICollectionViewFlowLayout = {
