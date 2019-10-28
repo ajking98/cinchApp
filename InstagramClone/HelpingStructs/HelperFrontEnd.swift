@@ -20,33 +20,42 @@ struct Helper {
     var userVar = User()
     var foldersVar = [String]()
     var main = ViewController();
-    let username = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)
+    let username = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
     
     
+    //TODO this should take in a closure to handle the frontend work
     ///takes an image and UIViewController and creates the alert for saving image to folder and tag alertbox 
-    func saveToFolder(image: UIImage, viewController : UIViewController) -> SpotifyActionController {
+    func saveToFolder(image: UIImage, viewController : UIViewController) {
         //Folder pick
         let actionController = SpotifyActionController()
-        
         actionController.headerData = SpotifyHeaderData(title: "select a folder for the image?", subtitle: "", image: image)
         
-        let defaults = main.userDefaults
-        let foldersArray = defaults.object(forKey: defaultsKeys.folders) as? [String] ?? [String]()
-        print(foldersArray.count)
-        for item in foldersArray {
-            actionController.addAction(Action(ActionData(title: "\(item.uppercased())", subtitle: "For Content"), style: .default, handler: { action in
-                
-                
-                //todo Later, this "Testing" string in the next line should be given a link instead of static string
-                let alert = self.createTagsAlert(link: "Testing")//Tagging alert
-                viewController.present(alert, animated: true, completion: nil)
-                StorageStruct().UploadContent(user: UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!, folderName: item, content: image)
-                
-            }))
-
-        }
+        //1.
+        //read in folders live from database
+        //Store image into storage and get link
+        //add new content to Folder in DB using FolderStruct
         
-        return actionController
+        
+        //2.
+        //Should take in tags
+        
+        UserStruct().readFolders(user: username) { (folders) in
+            for item in folders {
+                actionController.addAction(Action(ActionData(title: "\(item.uppercased())", subtitle: "For Content"), style: .default, handler: { action in
+                    
+                    
+                    //todo Later, this "Testing" string in the next line should be given a link instead of static string
+                    let alert = self.createTagsAlert(link: "Testing")//Tagging alert
+                    viewController.present(alert, animated: true, completion: nil)
+                    StorageStruct().uploadImage(image: image, completion: { (link) in
+                        FolderStruct().addContent(user: self.username, folderName: item, link: link)
+                    })
+                    
+                }))
+            }
+            
+            viewController.present(actionController, animated: true, completion: nil)
+        }
     }
     
     
@@ -58,9 +67,8 @@ struct Helper {
         let foldersArray = defaults.object(forKey: defaultsKeys.folders) as? [String] ?? [String]()
         for item in foldersArray {
             actionController.addAction(Action(ActionData(title: "\(item.uppercased())", subtitle: "For Content"), style: .default, handler: { action in
-                let user = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)
                 for image in images {
-                    StorageStruct().UploadContent(user: user!, folderName: item, content: image)
+                    StorageStruct().UploadContent(user: self.username, folderName: item, content: image)
                 }
             }))
             

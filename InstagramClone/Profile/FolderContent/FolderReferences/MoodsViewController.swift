@@ -74,7 +74,6 @@ class FolderReferenceController: UIViewController, UICollectionViewDelegate, UIC
         }
         
         vc.folderName = folders[indexPath.row].folderName
-        vc.contentCount = folders[indexPath.row].content.count
         vc.username = cell.username
         present(vc, animated: true, completion: nil)
     }
