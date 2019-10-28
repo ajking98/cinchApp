@@ -11,7 +11,8 @@ import UIKit
 class SecondProfileHeader: UIView {
 
     @IBOutlet weak var secondTopView: UIView!
-    @IBOutlet weak var testLabel: UILabel!
+    @IBOutlet weak var bio: UILabel!
+    var username : String!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -25,6 +26,13 @@ class SecondProfileHeader: UIView {
     
     private func commonInit() {
         Bundle.main.loadNibNamed("SecondProfileHeader", owner: self, options: nil)
+        if username == nil {
+            username = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)
+        }
+        
+        UserStruct().readBiography(user: username) { (bio) in
+            self.bio.text = bio
+        }
         addSubview(secondTopView)
         secondTopView.frame = self.bounds
         secondTopView.autoresizingMask = [.flexibleHeight, .flexibleWidth]

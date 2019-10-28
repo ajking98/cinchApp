@@ -16,15 +16,21 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     //TODO THESE should hold actual folder objects
     var folders : [Folder] = []
+    var username :String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if username == nil {
+            username = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)
+            buildAddFolderButton()
+        }
+        
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         setupCollectionViewLayout()
         
         fetchFolders()
-        buildAddFolderButton()
     }
     
     
@@ -45,7 +51,6 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     func fetchFolders() {
-        let username = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
         UserStruct().readCompleteFolders(user: username) { (folderList) in
             for folder in folderList {
                 let indexPath = IndexPath(item: self.folders.count, section: 0)
@@ -58,7 +63,6 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     ///Is called to pull the latest changes done to a folder
     func updateLocalFolders() {
-        let username = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
         UserStruct().readCompleteFolders(user: username) { (folderList) in
             self.folders = folderList
         }
@@ -106,7 +110,7 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
             let newFolder = Folder(folderName: folderName)
             
             //calling the function to save the folder name to Firebase and create it on the front end
-            UserStruct().addFolder(user: UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!, folder: newFolder)
+            UserStruct().addFolder(user: self.username, folder: newFolder)
             self.createFolder(folderName: folderName)
         }))
         
@@ -121,7 +125,6 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     func createFolder(folderName: String){
         let folder = Folder(folderName: folderName)
-        let username = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
         UserStruct().addFolder(user: username, folder: folder)
         UserStruct().readSingleFolder(user: username, folderName: folderName) { (newFolder) in
             let indexPath = IndexPath(item: self.folders.count, section: 0)
