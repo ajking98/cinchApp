@@ -23,7 +23,7 @@ struct Helper {
     let username = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
     
     
-    //TODO this should take in a closure to handle the frontend work
+    //TODO this should take in a closure to handle the frontend work or even uses a protocol to send the data back to the Main ViewController and have the vc do the presenting from inside its class
     ///takes an image and UIViewController and creates the alert for saving image to folder and tag alertbox 
     func saveToFolder(image: UIImage, viewController : UIViewController) {
         //Folder pick
@@ -41,7 +41,7 @@ struct Helper {
         
         UserStruct().readFolders(user: username) { (folders) in
             for item in folders {
-                actionController.addAction(Action(ActionData(title: "\(item.uppercased())", subtitle: "For Content"), style: .default, handler: { action in
+                actionController.addAction(Action(ActionData(title: "\(item.lowercased())", subtitle: "For Content"), style: .default, handler: { action in
                     
                     
                     //todo Later, this "Testing" string in the next line should be given a link instead of static string
@@ -49,6 +49,7 @@ struct Helper {
                     viewController.present(alert, animated: true, completion: nil)
                     StorageStruct().uploadImage(image: image, completion: { (link) in
                         FolderStruct().addContent(user: self.username, folderName: item, link: link)
+                        FolderStruct().updateNumOfImagesByConstant(user: self.username, folderName: item, constant: 1)
                     })
                     
                 }))
@@ -60,20 +61,25 @@ struct Helper {
     
     
     ///takes an array of images and appends them to the storage
-    func saveMultipleImages(images : [UIImage]) -> SpotifyActionController{
+    func saveMultipleImages(images : [UIImage], viewController : UIViewController){
         let actionController = SpotifyActionController()
         actionController.headerData = SpotifyHeaderData(title: "select a folder for the images?", subtitle: "", image: images[0])
-        let defaults = main.userDefaults
-        let foldersArray = defaults.object(forKey: defaultsKeys.folders) as? [String] ?? [String]()
-        for item in foldersArray {
-            actionController.addAction(Action(ActionData(title: "\(item.uppercased())", subtitle: "For Content"), style: .default, handler: { action in
-                for image in images {
-                    StorageStruct().UploadContent(user: self.username, folderName: item, content: image)
-                }
-            }))
-            
+        
+        
+        UserStruct().readFolders(user: username) { (folders) in
+            for item in folders {
+                actionController.addAction(Action(ActionData(title: "\(item.lowercased())", subtitle: "For Content"), style: .default, handler: { action in
+                    
+                    for image in images {
+                        StorageStruct().uploadImage(image: image, completion: { (link) in
+                            FolderStruct().addContent(user: self.username, folderName: item, link: link)
+                            FolderStruct().updateNumOfImagesByConstant(user: self.username, folderName: item, constant: 1)
+                        })
+                    }
+                }))
+            }
+            viewController.present(actionController, animated: true, completion: nil)
         }
-        return actionController
     }
     
     

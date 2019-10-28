@@ -193,10 +193,9 @@ extension CameraViewController {
         }
         
         else {
-            let action = Helper().saveMultipleImages(images: selectedImages)
-            present(action, animated: true, completion: {
-                self.handleUndoTap()
-            })
+            Helper().saveMultipleImages(images: selectedImages, viewController: self)
+            self.handleUndoTap()
+            self.handleMultipleTapped()
         }
         
     }
