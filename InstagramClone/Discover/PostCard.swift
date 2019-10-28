@@ -32,11 +32,11 @@ class PostCard: UICollectionViewCell {
 
     
     ///given a UIImage, Int, and String, and sets the values of the post to the details given
-    func buildPostCard(image : UIImage, likes : Int, author : String) {
+    func buildPostCard(url : URL, likes : Int, author : String) {
         let size = self.frame.size
         
         //imageView
-        imageView.image = image
+        imageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder.png"))
         
         //Imageview on Top of View
         imageView!.contentMode = .scaleAspectFill
@@ -146,11 +146,11 @@ class PostCard: UICollectionViewCell {
     }
     
     ///Given a item, sets the values of the post to that item's values
-    func buildPostCard(item : Item) {
-        if item.imageName.contains("mp4") {
-            buildVideoPostCard(url: URL(string: item.imageName)!, likes: item.likes, author: item.author)
+    func buildPostCard(item : Post) {
+        if item.link!.contains("mp4") {
+            buildVideoPostCard(url: URL(string: item.link!)!, likes: item.numberOfLikes!, author: item.postOwner!)
         } else {
-            buildPostCard(image: UIImage(named: item.imageName)!, likes: item.likes, author: item.author)
+            buildPostCard(url: URL(string: item.link!)!, likes: item.numberOfLikes!, author: item.postOwner!)
         }
     }
     
@@ -164,9 +164,9 @@ class PostCard: UICollectionViewCell {
                     self.topBorder?.layer.opacity = 1
                     self.leftBorder?.layer.opacity = 1
                     self.rightBorder?.layer.opacity = 1
-                    if(self.player != nil) {
-                        self.player.isMuted = true
-                    }
+//                    if(self.player != nil) {
+//                        self.player.isMuted = true
+//                    }
                     
                 }
                 else {
@@ -174,9 +174,9 @@ class PostCard: UICollectionViewCell {
                     self.topBorder?.layer.opacity = 0
                     self.leftBorder?.layer.opacity = 0
                     self.rightBorder?.layer.opacity = 0
-                    if(self.player != nil) {
-                        self.player.isMuted = false
-                    }
+//                    if(self.player != nil) {
+//                        self.player.isMuted = false
+//                    }
                 }
             }
         }

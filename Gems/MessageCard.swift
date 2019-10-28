@@ -25,6 +25,7 @@ class MessageCard: UICollectionViewCell {
         
         //imageView
         imageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder.png"))
+        
         //Imageview on Top of View
         imageView!.contentMode = .scaleAspectFill
         imageView!.clipsToBounds = true

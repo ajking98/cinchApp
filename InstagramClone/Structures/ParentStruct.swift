@@ -19,6 +19,7 @@ struct ParentStruct {
     /*
      addUser
     */
+    //todo this adds the name, it should instead asign the user to an ID 
     func addUser(user : User) {
         DB.child(user.username).setValue(user.toString())
     }

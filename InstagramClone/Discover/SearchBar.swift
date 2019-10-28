@@ -93,6 +93,10 @@ class SearchBar: UITextField {
         print("active")
         iconView?.image = UIImage(named: "searchIconGreen")
         
+        guard text!.count == 0 else {
+            return
+        }
+        
         UIView.animate(withDuration: 0.3) {
             //Make border edits
             self.layer.borderWidth = 2

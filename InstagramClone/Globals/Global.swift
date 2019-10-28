@@ -27,7 +27,21 @@ func followFingerVertical(view : UIView, translation : CGPoint) {
     view.center.y += translation.y
 }
 
-
+///Takes in a string to a link and updates to a new value that could be used in the key place on Firebase
+func convertStringToKey(link : String) -> String {
+    var updatedLink = ""   //Updating the link of the url because firebase doesn't take "." in the key
+    for index in link {
+        if (index == ".") {
+            updatedLink.append("`")
+        }
+        else if(index == "/") {
+            updatedLink.append("^")
+        }else {
+            updatedLink.append(index)
+        }
+    }
+    return updatedLink
+}
 
 
 

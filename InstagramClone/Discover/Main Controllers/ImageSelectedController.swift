@@ -7,11 +7,10 @@
 //
 
 import UIKit
+import AVKit
 
 class ImageSelectedController: UIViewController {
-    var items : [Item] = [Item]()
-    var discoverController : DiscoverController?
-    
+    var post : Post!
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var lowerView: UIView!
@@ -23,15 +22,18 @@ class ImageSelectedController: UIViewController {
     var authorView = UILabel(frame: CGRect.zero)
     
     
+    //player variables
+    var playerItem: AVPlayerItem!
+    var player: AVPlayer!
+    var playerLayer: AVPlayerLayer!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("this is your frame: ", discoverController?.collectionView.frame)
         setUp()
         
         setUpScrollView()
-        print(scrollView.isUserInteractionEnabled, "the user interaction is enabled")
         labels.addGestureRecognizer((navigationController?.interactivePopGestureRecognizer)!)
 
     }
@@ -51,6 +53,31 @@ class ImageSelectedController: UIViewController {
     }
     
     func setUp() {
+        //placing image
+        guard let link = post.link else {
+            return
+        }
+        let url = URL(string: link)
+        if link.contains(".mp4") {
+            
+            playerItem = AVPlayerItem(url: url!)
+            player = AVPlayer(playerItem: playerItem)
+            playerLayer = AVPlayerLayer(player: player)
+            playerLayer.videoGravity = .resize
+            postImage.layer.addSublayer(playerLayer)
+            playerLayer.frame = postImage.bounds
+            player.play()
+            player.isMuted = true
+            loopVideo(videoPlayer: player)
+            
+            postImage!.contentMode = .scaleAspectFill
+            postImage!.clipsToBounds = true
+        }
+        else {
+            postImage.sd_setImage(with: url, placeholderImage: UIImage(named: "n2"), completed: nil)
+            
+        }
+        
         let centerY = (labels.frame.height / 2) - 5
         
         //likeButton
@@ -70,8 +97,8 @@ class ImageSelectedController: UIViewController {
         authorView.textAlignment = .center
         
         //adding text TODO get rid of this later
-        likesView.text = "15"
-        authorView.text = "Yassin Alsahlani"
+        likesView.text = String(post.numberOfLikes!)
+        authorView.text = post.postOwner
         
         //add subviews
         labels.addSubview(likeButton)
@@ -116,9 +143,11 @@ class ImageSelectedController: UIViewController {
         lowerView.frame.size.height -= pan
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        lowerView.frame = view.frame
-        print("I am sequing", lowerView.frame)
+    func loopVideo(videoPlayer: AVPlayer) {
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil, queue: nil) { notification in
+            videoPlayer.seek(to: CMTime.zero)
+            videoPlayer.play()
+        }
     }
     
     

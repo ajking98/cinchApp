@@ -272,7 +272,8 @@ struct UserStruct {
     
     ///adds new post links to the user's new content
     func addNewContent(user : String, link : String) {
-        DB.child(user).child("newContent").child(link).setValue(link)
+        let updatedLink = convertStringToKey(link: link)
+        DB.child(user).child("newContent").updateChildValues([updatedLink : link])
     }
     
     
