@@ -13,12 +13,12 @@ class FolderContent: UIViewController, UICollectionViewDataSource, UICollectionV
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return contentCount
+        return content.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
-        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! FolderContentCell
+        cell.buildPostCard(link: content[indexPath.item])
         cell.backgroundColor = .lightGreen
         return cell
     }
@@ -27,13 +27,17 @@ class FolderContent: UIViewController, UICollectionViewDataSource, UICollectionV
     @IBOutlet weak var collectionView: UICollectionView!
     
     //todo add all images to this array
-    var content : [String] = ["1" , "2" , "3"]
+    var content : [String] = []
     var folderName = ""
-    var contentCount = 0
-    var username = ""
+    var username : String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("we are building")
+        if username == nil {
+            username = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)
+        }
+        
         
         //sizes and spaces the cells
         buildCollectionView()
@@ -41,9 +45,22 @@ class FolderContent: UIViewController, UICollectionViewDataSource, UICollectionV
         buildExitButton() //creates an exit button and adds it to the view
         
         //retrieves the contents for a folder
-        grabContent()
+        fetchContent()
     }
     
+    
+    ///gets posts from Firebase
+    func fetchContent() {
+        print("here is name:", username, "and here is foldername", folderName)
+        FolderStruct().readContent(user: username, folderName: folderName) { (contentDict) in
+            print("reached here")
+            for (_, value) in contentDict{
+                let indexPath = IndexPath(item: self.content.count, section: 0)
+                self.content.append(value)
+                self.collectionView.insertItems(at: [indexPath])
+            }
+        }
+    }
     
     func buildExitButton() {
         let width = view.frame.width
@@ -80,21 +97,4 @@ class FolderContent: UIViewController, UICollectionViewDataSource, UICollectionV
         collectionView.showsVerticalScrollIndicator = false
     }
     
-    
-    
-    
-    ///gets posts from Firebase
-    func grabContent() {
-        username = "-%&%-Zl2n5flYQq"
-        print("here is name:", username, "and here is foldername", folderName)
-        FolderStruct().readContent(user: username, folderName: folderName) { (contentDict) in
-            var index = 0
-            print("reached here")
-            for (_, value) in contentDict{
-                let temp = self.collectionView.cellForItem(at: IndexPath(row: index, section: 0)) as! FolderContentCell
-                temp.buildPostCard(link: value)
-                index += 1
-            }
-        }
-    }
 }

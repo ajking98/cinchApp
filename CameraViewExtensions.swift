@@ -78,11 +78,6 @@ extension CameraViewController : UICollectionViewDataSource, UICollectionViewDel
         }
     }
     
-    
-//    func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
-//        print("this is the scrolled")
-//    }
-    
     //checks if the collectionView is at the top
     var isAtTop : Bool {
         return imageCollectionView.contentOffset.y < -60
@@ -92,14 +87,17 @@ extension CameraViewController : UICollectionViewDataSource, UICollectionViewDel
         return imageArray.count
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as! CameraViewCell
+        handleCellSelected(cell)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! CameraViewCell
         cell.imageView.image = imageArray[indexPath.row]
         cell.currentIndex = indexPath.row
         cell.imageView.contentMode = UIView.ContentMode.scaleAspectFill
         
-        cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleCellTapped)))
-        cell.isUserInteractionEnabled = true
         return cell
     }
     
@@ -181,65 +179,61 @@ extension CameraViewController {
     
     //this creates the folder selector popup view and the tagging input box
     @objc func saveToFolder(_ tapGesture : UITapGestureRecognizer? = nil){
-        guard selectedImages.count != 0 else {// if the size of the selectedimages array is empty, then vibrate heavy
+        // if the selectedimages array is empty, then vibrate heavy
+        guard selectedImages.count != 0 else {
             Helper().vibrate(style: .heavy)
             return
             
         }
+        //if the selected images array has a single value, then present folderselection
         if selectedImages.count == 1 {
             let image = selectedImages[0]
             Helper().vibrate(style: .light)
-            let folderSelection = Helper().saveToFolder(image: image, viewController: self)
-            present(folderSelection, animated: true, completion: nil)
+            Helper().saveToFolder(image: image, viewController: self)
         }
         
         else {
-            let action = Helper().saveMultipleImages(images: selectedImages)
-            present(action, animated: true, completion: {
-                self.handleUndoTap()
-            })
+            Helper().saveMultipleImages(images: selectedImages, viewController: self)
+            self.handleUndoTap()
+            self.handleMultipleTapped()
         }
         
     }
     
-    
-    
-    
-    @objc func handleCellTapped(tapGesture : UITapGestureRecognizer) {
-        if (tapGesture.view is CameraViewCell) {
-            let cell = tapGesture.view as! CameraViewCell
-            print(cell.currentIndex, "is the current index")
-            centerIndex = cell.currentIndex
-            
-            guard let image = cell.imageView.image else { return }
-            centerView.image = image
-            
-            if (cell.currentIndex < (imageArray.count - 1)){
-                nextView.image = imageArray[cell.currentIndex + 1]
-            }
-            
-            if cell.currentIndex > 0 {
-                previousView.image = imageArray[cell.currentIndex - 1]
-            }
-            
-            
-            //handles the border of the tapped image(s)
-            if !isMultipleSelected {
-                handleUndoTap()
-            }
-            if cell.isTapped {
-                handleUndoTapSingle(index: cell.currentIndex)
-            }
-            else{
-                cell.layer.borderWidth = 3
-                cell.layer.borderColor = UIColor.selected.cgColor
-                tappedImages.append(cell.currentIndex)
-                selectedImages.append(cell.imageView.image!)
-                circleCounter.text = String(tappedImages.count)
-                cell.isTapped = true
-            }
+    //handles the border and insertion into the arrays
+    ///Handles the functionality for when a cell is selected from the collectionview
+    func handleCellSelected(_ cell : CameraViewCell) {
+        centerIndex = cell.currentIndex
+        
+        guard let image = cell.imageView.image else { return }
+        centerView.image = image
+        
+        if (cell.currentIndex < (imageArray.count - 1)){
+            nextView.image = imageArray[cell.currentIndex + 1]
+        }
+        
+        if cell.currentIndex > 0 {
+            previousView.image = imageArray[cell.currentIndex - 1]
+        }
+        
+        
+        //handles the border of the tapped image(s)
+        if !isMultipleSelected {
+            handleUndoTap()
+        }
+        if cell.isTapped {
+            handleUndoTapSingle(index: cell.currentIndex)
+        }
+        else{
+            cell.layer.borderWidth = 3
+            cell.layer.borderColor = UIColor.selected.cgColor
+            tappedImages.append(cell.currentIndex)
+            selectedImages.append(cell.imageView.image!)
+            circleCounter.text = String(tappedImages.count)
+            cell.isTapped = true
         }
     }
+    
     
     //TODO this should update the selectedImages and tappedImages array along with the circle counter
     ///undoes the border for a single cell

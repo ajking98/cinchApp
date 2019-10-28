@@ -190,16 +190,16 @@ struct FolderStruct {
     
     //Must be given a link representing the post within the Post's dictionary in the DB
     ///adds an extra post content to the Folder's content in DB
-    func addContent(user : String, folderName : String, newContent : String) {
-        let updatedLink = convertStringToKey(link: newContent)
-        DB.child(user).child("folders").child(folderName).child("content").updateChildValues([updatedLink : newContent])
+    func addContent(user : String, folderName : String, link : String) {
+        let updatedLink = convertStringToKey(link: link)
+        DB.child(user).child("folders").child(folderName).child("content").updateChildValues([updatedLink : link])
 
     }
     
     
     ///deletes a given post from the content's dictionary with in the Folder
-    func deleteContent(user : String, folderName : String, content : String) {
-        DB.child(user).child("folders").child(folderName).child("content").child(content).removeValue()
+    func deleteContent(user : String, folderName : String, link : String) {
+        DB.child(user).child("folders").child(folderName).child("content").child(link).removeValue()
     }
     
     

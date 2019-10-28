@@ -74,8 +74,6 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
         let vc = storyboard?.instantiateViewController(withIdentifier: "FolderCotent") as! FolderContent
         
         vc.folderName = folders[indexPath.row].folderName
-        vc.contentCount = folders[indexPath.row].content.count
-        
         present(vc, animated: true, completion: nil)
     }
     
@@ -101,17 +99,27 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
         print("working dog")
         var folderName : String = ""
         
-        let alert = UIAlertController(title: "Name Your Folder", message: "Enter the name you wish to use for your folder", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Name Your Folder", message: "Assign a title to this folder", preferredStyle: .alert)
         
         alert.addTextField(configurationHandler: nil)
         alert.addAction(UIAlertAction(title: "Create", style: .default, handler: { [weak alert] (_) in
             let textField = alert?.textFields![0]
-            folderName = textField!.text!
+            folderName = textField!.text!.lowercased()
             let newFolder = Folder(folderName: folderName)
             
-            //calling the function to save the folder name to Firebase and create it on the front end
-            UserStruct().addFolder(user: self.username, folder: newFolder)
-            self.createFolder(folderName: folderName)
+            //if a folder with that name already exists, then it wont overwrite it
+            if self.folders.contains(where: { (tempFolder) -> Bool in
+                return tempFolder.folderName == folderName
+            }){
+                let alert = UIAlertController(title: "ERROR", message: "A folder with title: \"\(folderName)\" already exits. \n Try a different title.", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
+            else {
+                //calling the function to save the folder name to Firebase and create it on the front end
+                UserStruct().addFolder(user: self.username, folder: newFolder)
+                self.createFolder(folderName: folderName)
+            }
         }))
         
         alert.addAction(UIAlertAction(title:"Cancel", style: .default, handler: nil))
