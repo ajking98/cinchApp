@@ -31,12 +31,19 @@ extension CameraViewController : UICollectionViewDataSource, UICollectionViewDel
                 gesture.setTranslation(CGPoint.zero, in: scrollView)
             }
         }
+        
+        let screenHeight = UIScreen.main.bounds.height
+        
+        if scrollView.center.y + translation.y > (screenHeight * 5) / 4 {
+            print("ahh fixing", scrollView.center)
+            scrollView.endEditing(true)
+            handleSwipeDown()
+        }
     }
     
     //Is triggered after the motion of the scroll stops
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        let gesture = scrollView.panGestureRecognizer
-        let translation = gesture.translation(in: scrollView)
+        handleGestureEnded(scrollView: scrollView)
         
     }
     
@@ -47,10 +54,12 @@ extension CameraViewController : UICollectionViewDataSource, UICollectionViewDel
     
     //Is called when the user lifts their finger off the screen when scrolling
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        print("this is center:", scrollView.center)
+        handleGestureEnded(scrollView: scrollView)
+    }
+    
+    func handleGestureEnded(scrollView : UIScrollView) {
         let gesture = scrollView.panGestureRecognizer
         let velocity = gesture.velocity(in: scrollView)
-        var pullDownQuick = velocity.y > 820 ? true : false
         if velocity.y > 820 {
             handleSwipeDown()
             print("center1")
@@ -117,57 +126,6 @@ extension CameraViewController : UICollectionViewDataSource, UICollectionViewDel
 //Event handlers
 extension CameraViewController {
     
-    
-    
-    //TODO handles the panning of the collectionView
-    @objc func handlePan(sender : UIPanGestureRecognizer) {
-        let tableView = sender.view!
-        let translation = sender.translation(in: view)
-        
-        let collectionViewY = translation.y + imageCollectionView.frame.origin.y
-        if ((isCollectionViewRaised) && (collectionViewY < (imageCollectionViewFrame?.origin.y)! - 450)) {
-            //TODO
-//            imageCollectionView.contentOffset.y -= translation.y * 0.4
-//            sender.setTranslation(CGPoint.zero, in: view)
-            return
-        }
-        
-        switch sender.state {
-        case .began, .changed:
-            let y = tableView.center.y + translation.y
-            if (Int(y) > 600 && Int(y) < 1040) {
-                tableView.center.y = y
-                
-                let updatedY = tableView.frame.origin.y - FolderSliderView.frame.height/2
-                FolderSliderView.center.y = updatedY
-                
-                solidBar.center.y = updatedY - 30
-                //TODO fix this part
-                sender.setTranslation(CGPoint.zero, in: view)
-            }
-        case .ended:
-            if(isQuickSwipe(velocity: sender.velocity(in: view).y)){
-                if(sender.velocity(in: view).y < 0){
-                    handleSwipeUp()
-                }
-                else {
-                    handleSwipeDown()
-                }
-            }
-            else if(tableView.center.y < 750) {
-                handleSwipeUp()
-            }
-            else {
-                handleSwipeDown()
-            }
-        case .possible, .cancelled, .failed:
-            print("finish later")
-        @unknown default:
-            print("finishing later")
-        }
-    }
-    
-    
     @objc func segmentControlValueChanged(segment : UISegmentedControl){
         if segment.selectedSegmentIndex == 0 {
             handleSwipeDown()
@@ -177,7 +135,7 @@ extension CameraViewController {
     
     @objc func handleSwipeUp(_ tapGesture : UITapGestureRecognizer? = nil){
         //perform animation to swipe the collection view upward
-        UIView.animate(withDuration: 0.4) {
+        UIView.animate(withDuration: 0.3) {
             guard let tempFrame = self.imageCollectionViewFrame else{
                 return
             }
