@@ -13,37 +13,10 @@ import FirebaseDatabase
 import FirebaseStorage
 import FirebaseAuth
 import Firebase
+import SQLite
 
 struct Item {
     var imageName : String
-}
-
-struct ImageInsta {
-    let key:String!
-    let url:String!
-    
-    let itemRef:DatabaseReference?
-    
-    init(url:String, key:String) {
-        self.key = key
-        self.url = url
-        self.itemRef = nil
-    }
-    
-    init(snapshot:DataSnapshot) {
-        key = snapshot.key
-        itemRef = snapshot.ref
-        
-        let snapshotValue = snapshot.value as? NSDictionary
-        
-        if let imageUrl = snapshotValue?["url"] as? String {
-            url = imageUrl
-        } else {
-            url = ""
-        }
-    }
-    
-    
 }
 
 class MessagesViewController: MSMessagesAppViewController, UICollectionViewDelegate, UICollectionViewDataSource {
@@ -52,22 +25,27 @@ class MessagesViewController: MSMessagesAppViewController, UICollectionViewDeleg
     var images:[UIImage] = []
     let cellIdentifier = "ContentCell"
     var objectImages:[String] = []
-    var content = [ImageInsta]()
+    var content = [String]()
+    var stickers = [MSSticker]()
     @IBOutlet weak var searchView: UIView!
     
     var dbRef: DatabaseReference!
-    let imageCache = NSCache<NSString, AnyObject>()
+    
+    let cache = NSCache<NSString, UIImage>()
     
     @IBOutlet weak var collectionView: UICollectionView!
     let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+    
+    let userDefaults = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
         if(FirebaseApp.app() == nil){
             FirebaseApp.configure()
-            dbRef = Database.database().reference().child("images")
         }
-        loadDB()
+        dbRef = Database.database().reference().child("posts")
+        fetchContent()
+//        loadDB()
         setUpCollectionView()
         addSearchBar()
 //        objectImages = ["f1","f2","f3"]
@@ -81,16 +59,32 @@ class MessagesViewController: MSMessagesAppViewController, UICollectionViewDeleg
     }
     
     
-    func loadDB() {
+//    func loadDB() {
+//        dbRef.observe(DataEventType.value, with: { (snapshot) in
+//            var newImages = [ImageInsta]()
+//            for imageInstaSnapshot in snapshot.children {
+//                let imageInstaObject = ImageInsta(snapshot: imageInstaSnapshot as! DataSnapshot)
+//                newImages.insert(imageInstaObject, at: 0)
+//            }
+//            self.content = newImages
+//            self.collectionView.reloadData()
+//        })
+//
+//    }
+    
+    ///Updates the content array with values from the DB
+    func fetchContent() {
         dbRef.observe(DataEventType.value, with: { (snapshot) in
-            var newImages = [ImageInsta]()
-            for imageInstaSnapshot in snapshot.children {
-                let imageInstaObject = ImageInsta(snapshot: imageInstaSnapshot as! DataSnapshot)
-                newImages.insert(imageInstaObject, at: 0)
+            for imageInstaSnapshot in snapshot.children.allObjects as! [DataSnapshot] {
+                let imageInstaObject = imageInstaSnapshot.value as? [String: AnyObject]
+                let imageLink = imageInstaObject?["link"]
+                print("\(imageLink) hhhhh")
+                self.content.append(imageLink as! String)
             }
-            self.content = newImages
+            self.userDefaults.set(self.content, forKey: "content")
             self.collectionView.reloadData()
         })
+        
         
     }
     
@@ -115,7 +109,7 @@ class MessagesViewController: MSMessagesAppViewController, UICollectionViewDeleg
         designCell(cell: cell)
         let image = content[indexPath.row]
 //        cell.imageView.sd_setImage(with: URL(string: image.url), placeholderImage: UIImage(named: "empty"))
-        cell.buildPostCard(item: content[indexPath.row].url)
+        cell.buildPostCard(item: content[indexPath.row])
 //        print("baby" + objectImages[indexPath.row])
         
         return cell
@@ -126,11 +120,11 @@ class MessagesViewController: MSMessagesAppViewController, UICollectionViewDeleg
         print(indexPath.row)
         print(content[indexPath.row])
         let newImageView = UIImageView()
-        let url = URL(string: content[indexPath.row].url)
+        let url = URL(string: content[indexPath.row])
         newImageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder.png"))
         print(url!)
         
-        if let statusImageURL = content[indexPath.row].url {
+        if let statusImageURL = URL(string: content[indexPath.row]) {
             URLSession.shared.dataTask(with: url!) { (data, response, error) -> Void in
                 if error != nil {
                     print(error)
@@ -138,12 +132,29 @@ class MessagesViewController: MSMessagesAppViewController, UICollectionViewDeleg
                 }
                 print("hellooooo")
                 let image = UIImage(data: data!)
+                
+                self.createSticker(url: url!, index: indexPath.row)
                 DispatchQueue.main.async(execute: { () -> Void in
-                    self.activeConversation?.insertAttachment(URL(fileURLWithPath: self.content[indexPath.row].url), withAlternateFilename: "\(self.content[indexPath.row])", completionHandler: nil)
+                    let value = self.userDefaults.array(forKey: "content")![indexPath.row]
+                    print(value)
+                    self.activeConversation?.insert(self.stickers[0], completionHandler: nil)
+//                    self.activeConversation?.insertAttachment(URL(fileURLWithPath: value as! String), withAlternateFilename: "Boo", completionHandler: nil)
+//                    self.activeConversation?.insertAttachment(URL(, withAlternateFilename: self.userDefaults.array(forKey: "content")[indexPath.row]), completionHandler: nil)
                 })
             }.resume()
         }
 //        activeConversation?.insertAttachment(URL(fileURLWithPath: "/Users/cinch/Desktop/cinchApp/Gems/Assets.xcassets/testImages/\(objectImages[indexPath.row]).imageset/\(objectImages[indexPath.row]).jpg"), withAlternateFilename: "\(objectImages[indexPath.row])", completionHandler: nil)
+    }
+    
+    func createSticker(url: URL, index: Int) {
+        do {
+            let sticker = try MSSticker(contentsOfFileURL: url, localizedDescription: "\(index)")
+            stickers.append(sticker)
+            print(sticker)
+            print(stickers[0])
+        } catch {
+            print(error)
+        }
     }
     
     func addSearchBar() {

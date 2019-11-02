@@ -12,14 +12,13 @@ import XLActionController
 import FirebaseAuth
 import FirebaseDatabase
 import FirebaseStorage
-import SQLite
 
 
 struct Helper {
     let uuid = UIDevice.current.identifierForVendor!
     var userVar = User()
     var foldersVar = [String]()
-    var main = ViewController();
+//    var main = ViewController();
     let username = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
     
     

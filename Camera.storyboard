@@ -102,15 +102,6 @@
                                     <constraint firstItem="jzo-4G-77e" firstAttribute="leading" secondItem="0RD-vl-0HW" secondAttribute="leading" constant="-4" id="uyL-l2-bWu"/>
                                 </constraints>
                             </view>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Dfx-fi-Yrj">
-                                <rect key="frame" x="94.5" y="68" width="225" height="29"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <segments>
-                                    <segment title="original" width="112"/>
-                                    <segment title="cropped" width="112"/>
-                                </segments>
-                                <color key="tintColor" red="0.015686274510000001" green="0.81960784310000001" blue="0.59215686270000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </segmentedControl>
                             <view hidden="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="42X-YV-jeA">
                                 <rect key="frame" x="20" y="794" width="374" height="0.0"/>
                                 <subviews>
@@ -224,7 +215,6 @@
                         <outlet property="prevFolderName" destination="OiC-jF-CQi" id="qAX-6C-qmq"/>
                         <outlet property="previousView" destination="nX0-C7-HQ4" id="TqU-kB-RMu"/>
                         <outlet property="scrollView" destination="jzo-4G-77e" id="VAu-Nf-Roe"/>
-                        <outlet property="segmentControl" destination="Dfx-fi-Yrj" id="Sxt-So-a8J"/>
                         <outlet property="solidBar" destination="TBi-vf-7tk" id="G6T-QJ-ece"/>
                     </connections>
                 </viewController>
@@ -238,6 +228,7 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="xV8-EY-c0j" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="z3r-TL-UNy">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>

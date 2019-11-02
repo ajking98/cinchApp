@@ -7,6 +7,7 @@
 
 import UIKit
 import AVKit
+import SDWebImage
 
 class TablePostCard: UITableViewCell {
     
@@ -197,7 +198,7 @@ class TablePostCard: UITableViewCell {
     //creates the activity controller when the user taps on the menu options icon
     //only works for images right now
     @objc func postActivityController() {
-        print("we reached this far")
+        print("we reached this far abbbbbby")
         guard let viewController = UIApplication.shared.keyWindow?.rootViewController else { return }
         guard let image = tableImageView.image else { return }
         let activityController = UIActivityViewController(activityItems: [image], applicationActivities: nil)

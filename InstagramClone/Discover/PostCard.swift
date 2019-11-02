@@ -8,6 +8,7 @@
 
 import UIKit
 import AVKit
+import SDWebImage
 
 class PostCard: UICollectionViewCell {
     
@@ -72,6 +73,7 @@ class PostCard: UICollectionViewCell {
     ///builds the view for the likes/author name and borders
     fileprivate func buildContainer(_ likes: Int, _ author: String, _ size: CGSize) {
         //LikesView and author
+        
         likesView.text = String(likes)
         authorView.text = author
         
@@ -123,7 +125,7 @@ class PostCard: UICollectionViewCell {
         authorView.textAlignment = .right
         
         labelContainer.addSubview(likeButton)
-        labelContainer.addSubview(likesView)
+//        labelContainer.addSubview(likesView)
         labelContainer.addSubview(authorView)
     }
     

@@ -10,9 +10,9 @@
 [![Platform](https://img.shields.io/cocoapods/p/CardParts.svg?style=flat)](http://cocoapods.org/pods/CardParts)
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/Intuit/CardParts/master/images/mintsights.gif" width="300" alt="MintSights by CardParts"/>
-    <img src="https://raw.githubusercontent.com/Intuit/CardParts/master/images/mintCardParts.gif" width="300" alt="CardParts in Mint"/>
-    <img src="https://raw.githubusercontent.com/Intuit/CardParts/master/images/turboCardParts.gif" width="300" alt="CardParts in Turbo"/>
+    <img src="https://raw.githubusercontent.com/Intuit/CardParts/master/images/mintsights.gif" width="290" alt="MintSights by CardParts"/>
+    <img src="https://raw.githubusercontent.com/Intuit/CardParts/master/images/mintCardParts.gif" width="290" alt="CardParts in Mint"/>
+    <img src="https://raw.githubusercontent.com/Intuit/CardParts/master/images/turboCardParts.gif" width="290" alt="CardParts in Turbo"/>
 </p>
 
 CardParts - made with ❤️ by Intuit:
@@ -25,6 +25,7 @@ CardParts - made with ❤️ by Intuit:
 - [Quick Start](#quick-start)
 - [Architecture](#architecture)
   - [CardsViewController](#cardsviewcontroller)
+    - [Custom Card Margins](#custom-card-margins)
   - [Card Traits](#card-traits)
     - [NoTopBottomMarginsCardTrait](#notopbottommarginscardtrait)
     - [TransparentCardTrait](#transparentcardtrait)
@@ -33,6 +34,7 @@ CardParts - made with ❤️ by Intuit:
     - [ShadowCardTrait](#shadowcardtrait)
     - [RoundedCardTrait](#roundedcardtrait)
     - [GradientCardTrait](#gradientcardtrait)
+    - [BorderCardTrait](#bordercardtrait)
   - [CardPartsViewController](#cardpartsviewcontroller)
   - [CardPartsFullScreenViewController](#cardpartsfullscreenviewcontroller)
   - [CardParts](#card-parts)
@@ -41,13 +43,15 @@ CardParts - made with ❤️ by Intuit:
     - [CardPartButtonView](#cardpartbuttonview)
     - [CardPartTitleView](#cardparttitleview)
     - [CardPartTitleDescriptionView](#cardparttitleview)
+    - [CardPartPillLabel](#cardpartpilllabel)
+    - [CardPartIconLabel](#cardparticonlabel)
     - [CardPartSeparatorView](#cardpartseparatorview)
     - [CardPartVerticalSeparatorView](#cardpartverticalseparatorview)
     - [CardPartTableView](#cardparttableview)
     - [CardPartTableViewCell](#cardparttableviewcell)
     - [CardPartTableViewCardPartsCell](#cardparttableviewcardpartscell)
     - [CardPartCollectionView](#cardpartcollectionview)
-    - [CardPartCollectionViewCardPartsCell](#cardpartcollectionviewcardpartcell)
+    - [CardPartCollectionViewCardPartsCell](#cardpartcollectionviewcardpartscell)
     - [CardPartBarView](#cardpartbarview)
     - [CardPartPagedView](#cardpartpagedview)
     - [CardPartSliderView](#cardpartsliderview)
@@ -55,6 +59,11 @@ CardParts - made with ❤️ by Intuit:
     - [CardPartTextField](#cardparttextfield)
     - [CardPartCenteredView](#cardpartcenteredview)
     - [CardPartOrientedView](#cardpartorientedview)
+    - [CardPartConfettiView](#cardpartconfettiview)
+    - [CardPartProgressBarView](#cardpartprogressbarview)
+    - [CardPartMapView](#cardpartmapview)
+    - [CardPartRadioButton](#cardpartradiobutton)
+    - [CardPartHistogramView](#cardparthistogramview)
   - [Card States](#card-states)
   - [Data Binding](#data-binding)
   - [Themes](#themes)
@@ -127,6 +136,8 @@ CardParts is the second generation Card UI framework for the iOS Mint applicatio
 See how quickly you can get a card displayed on the screen while adhering to the MVVM design pattern:
 
 ```swift
+import RxCocoa
+
 class MyCardsViewController: CardsViewController {
 
     let cards: [CardController] = [TestCardController()]
@@ -169,6 +180,8 @@ class TestViewModel {
 }
 ```
 
+_Note:_ `RxCocoa` is required for `BehaviorRelay`, thus you must import it wherever you may find yourself using it.
+
 # Architecture
 
 There are two major parts to the card parts framework. The first is the `CardsViewController` which will display the cards. It is responsible for displaying cards in the proper order and managing the lifetime of the cards. The second major component is the cards themselves which are typically instances of `CardPartsViewController`. Each instance of `CardPartsViewController` displays the content of a single card, using one or more card parts (more details later).
@@ -204,6 +217,23 @@ protocol CardController : NSObjectProtocol {
 ```
 
 The viewController() method must return the viewController that will be added as a child controller to the card cell. If the CardController is a UIViewController it can simply return self for this method.
+
+### Custom Card Margins
+
+By default, the margins of your `CardsViewController` will match the theme's `cardCellMargins` property. You can change the margins for all `CardsViewController`s in your application by applying a new [theme](#themes) or setting `CardParts.theme.cardCellMargins = UIEdgeInsets(...)`. Alternatively, if you want to change the margins for just one `CardsViewController`, you can set the `cardCellMargins` property of that `CardsViewController`. This property will default to use the theme's margins if you do not specify a new value for it. Changing this value should be done in the `init` of your custom `CardsViewController`, but must occur after `super.init` because it is changing a property of the super class. For example:
+
+```swift
+class MyCardsViewController: CardsViewController {
+
+	init() {
+		// set up properties
+		super.init(nibName: nil, bundle: nil)
+		self.cardCellMargins = UIEdgeInsets(/* custom card margins */)
+	}
+	
+	...
+}
+```
 
 ## Card Traits
 
@@ -312,9 +342,30 @@ Use this protocol to add a gradient background for the card. The gradients will 
 <img src="https://raw.githubusercontent.com/Intuit/CardParts/master/images/gradient.png" width="300" alt="Shadow radius 10.0"/>
 </p>
 
+#### `BorderCardTrait`
+
+Use this protocol to add border color and border width for the card, implement `borderWidth()`, and `borderColor()` methods.
+
+```swift
+    func borderWidth() -> CGFloat {
+        return 2.0
+    }
+
+    func borderColor() -> CGColor {
+        return UIColor.darkGray.cgColor
+    }
+
+
+```
+
+<p align="center">
+<img src="https://raw.githubusercontent.com/Intuit/CardParts/master/images/border.png" width="300" alt="border"/>
+</p>
+
 ## `CardPartsViewController`
 
-CardPartsViewController implements the CardController protocol and builds its card UI by displaying one or more card part views using an MVVM pattern that includes automatic data binding. Each CardPartsViewController displays a list of CardPartView as its subviews. Each CardPartView renders as a row in the card. The CardParts framework implements several different types of CardPartView that display basic views, such as title, text, image, button, separator, etc. All CardPartView implemented by the framework are already styled to correctly match the applied themes UI guidelines.
+CardPartsViewController implements the CardController protocol and builds its card UI by displaying one or more card part views using an MVVM pattern that includes automatic data binding. Each CardPartsViewController displays a list of CardPartView as its subviews. Each CardPartView renders as a row in the card. The CardParts framework implements several different types of CardPartView that display basic views, such as title, text, image, button, separator, etc. All CardPartView implemented by the framework are already styled to correctly match the applied 
+s UI guidelines.
 
 In addition to the card parts, a CardPartsViewController also uses a view model to expose data properties that are bound to the card parts. The view model should contain all the business logic for the card, thus keeping the role of the CardPartsViewController to just creating its view parts and setting up bindings from the view model to the card parts. A simple implementation of a CardPartsViewController based card might look like the following:
 
@@ -466,7 +517,40 @@ let rightAligned = CardPartTitleDescriptionView(titlePosition: .top, secondaryPo
 let centerAligned = CardPartTitleDescriptionView(titlePosition: .top, secondaryPosition: .center(amount: 0)) // This will be center aligned with an offset of 0.  You may increase that amount param to shift right your desired amount
 ```
 
+#### `CardPartPillLabel`
+
+CardPartPillLabel provides you the rounded corners, text aligned  being at the center along with vertical and horizontal padding capability.
+
+```swift
+var verticalPadding:CGFloat
+var horizontalPadding:CGFloat
+```
+
+<p align="center">
+<img src="https://raw.githubusercontent.com/Intuit/CardParts/master/images/pillLabels.png" width="300" alt="pillLabel"/>
+</p>
+
 See the example app for a working example.
+
+#### `CardPartIconLabel`
+
+CardPartIconLabel provides the capability to add images in eithet directions supporting left , right and center text alignments.
+
+```swift
+    let iconLabel = CardPartIconLabel()
+    iconLabel.verticalPadding = 10
+    iconLabel.horizontalPadding = 10
+    iconLabel.backgroundColor = UIColor.blue
+    iconLabel.font = UIFont.systemFont(ofSize: 12)
+    iconLabel.textColor = UIColor.black
+    iconLabel.numberOfLines = 0
+    iconLabel.iconPadding = 5
+    iconLabel.icon = UIImage(named: "cardIcon")
+```
+
+<p align="center">
+<img src="https://raw.githubusercontent.com/Intuit/CardParts/master/images/cardPartIconLabel.png" width="300" alt="cardPartIconLabel"/>
+</p>
 
 #### `CardPartSeparatorView`
 
@@ -485,6 +569,17 @@ To add a card part to the stack view call its addArrangedSubview method, specify
 ```swift
 horizStackPart.addArrangedSubview(imagePart)
 ```
+
+Also,provides an option to round the corners of the stackview
+
+```swift
+let roundedStackView = CardPartStackView()
+roundedStackView.cornerRadius = 10.0
+roundedStackView.pinBackground(roundedStackView.backgroundView, to: roundedStackView)
+```
+<p align="center">
+<img src="https://raw.githubusercontent.com/Intuit/CardParts/master/images/roundedStackView.png" width="300" alt="roundedStackView"/>
+</p>
 
 There are no reactive properties defined for CardPartStackView. However you can use the default UIStackView properties (distribution, alignment, spacing, and axis) to configure the stack view.
 
@@ -844,6 +939,90 @@ class TestCardController : CardPartsViewController {
 ```
 
 A `CardPartCenteredView` can take in any card part that conforms to `CardPartView` as the left, center, and right components. To see a graphical example of the centered card part please look at the example application packaged with this cocoapod.
+
+#### `CardPartConfettiView`
+
+Provides the capability to add confetti with various types ( diamonds, star, mixed )  and colors, along with different level of intensity
+
+```swift
+    let confettiView = CardPartConfettiView()
+    confettiView.type  = .diamond
+    confettiView.shape = CAEmitterLayerEmitterShape.line
+    confettiView.startConfetti()
+```
+
+<p align="center">
+<img src="https://raw.githubusercontent.com/Intuit/CardParts/master/images/confetti.gif" width="300" alt="Confetti"/>
+</p>
+
+### `CardPartProgressBarView`
+
+Provides the capability to configure different colors and custom marker , it's position to indicate the progress based on the value provided.
+
+```swift
+    let progressBarView = CardPartProgressBarView(barValues: barValues, barColors: barColors, marker: nil, markerLabelTitle: "", currentValue: Double(720), showShowBarValues: false)
+    progressBarView.barCornerRadius = 4.0
+```
+
+<p align="center">
+<img src="https://raw.githubusercontent.com/Intuit/CardParts/master/images/progressBarView.png" width="300" alt="ProgressBarView"/>
+</p>
+
+### `CardPartMapView`
+
+Provides the capability to display a MapView and reactively configure location, map type, and coordinate span (zoom). You also have direct access to the MKMapView instance so that you can add annotations, hook into it's MKMapViewDelegate, or whatever else you'd normally do with Maps.
+
+By default the card part will be rendered at a height of 300 points but you can set a custom height just be resetting the CardPartMapView.intrensicHeight property.
+
+Here's a small example of how to reactively set the location from a changing address field (See the Example project for a working example):
+
+```swift
+    let initialLocation = CLLocation(latitude: 37.430489, longitude: -122.096260)
+    let cardPartMapView = CardPartMapView(type: .standard, location: initialLocation, span: MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1))
+
+    cardPartTextField.rx.text
+            .flatMap { self.viewModel.getLocation(from: $0) }
+            .bind(to: cardPartMapView.rx.location)
+            .disposed(by: bag)
+```
+
+<p align="center">
+<img src="https://raw.githubusercontent.com/Intuit/CardParts/master/images/mapView.png" width="300" alt="MapView" />
+</p>
+
+### `CardPartRadioButton`
+
+Provides the capability to add  radio buttons with configurable inner/outer circle line width , colors along with tap etc..
+
+```swift
+    let radioButton = CardPartRadioButton()
+    radioButton.outerCircleColor = UIColor.orange
+    radioButton.outerCircleLineWidth = 2.0
+    
+    radioButton2.rx.tap.subscribe(onNext: {
+        print("Radio Button Tapped")
+    }).disposed(by: bag)
+```
+
+<p align="center">
+<img src="https://raw.githubusercontent.com/Intuit/CardParts/master/images/radioButtons.png" width="300" alt="RadioButton" />
+</p>
+
+### `CardPartHistogramView`
+
+Provides the caoability to generate the bar graph based on the data ranges with customizable bars , lines, colors etc..
+
+```swift
+    let dataEntries = self.generateRandomDataEntries()
+    barHistogram.width = 8
+    barHistogram.spacing = 8
+    barHistogram.histogramLines = HistogramLine.lines(bottom: true, middle: false, top: false)
+    self.barHistogram.updateDataEntries(dataEntries: dataEntries, animated: true)
+```
+
+<p align="center">
+<img src="https://raw.githubusercontent.com/Intuit/CardParts/master/images/histogram.gif" width="334" alt="Histogram" />
+</p>
 
 ## Card States
 

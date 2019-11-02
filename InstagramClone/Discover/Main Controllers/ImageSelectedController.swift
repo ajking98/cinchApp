@@ -8,6 +8,7 @@
 
 import UIKit
 import AVKit
+import SDWebImage
 
 class ImageSelectedController: UIViewController {
     var post : Post!
@@ -102,7 +103,7 @@ class ImageSelectedController: UIViewController {
         
         //add subviews
         labels.addSubview(likeButton)
-        labels.addSubview(likesView)
+//        labels.addSubview(likesView)
         labels.addSubview(authorView)
         labels.addSubview(shareButton)
         

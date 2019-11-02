@@ -45,4 +45,5 @@ target 'Gems' do
   pod 'Firebase/Database'
   pod 'SDWebImage/WebP'
   pod 'Firebase/Storage','~>4.0'
+  pod 'SQLite.swift'
 end
