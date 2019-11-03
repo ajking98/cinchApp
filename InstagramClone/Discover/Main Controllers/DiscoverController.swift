@@ -547,7 +547,6 @@ extension DiscoverController : UICollectionViewDelegate, UICollectionViewDataSou
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "ImageSelectedController") as! ImageSelectedController
         vc.post = posts[indexPath.item]
-
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

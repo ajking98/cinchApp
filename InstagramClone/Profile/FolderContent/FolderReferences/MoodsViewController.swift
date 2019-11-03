@@ -76,7 +76,9 @@ class FolderReferenceController: UIViewController, UICollectionViewDelegate, UIC
         
         vc.folderName = folders[indexPath.row].folderName
         vc.username = cell.username
-        present(vc, animated: true, completion: nil)
+        
+        let myNav = UINavigationController(rootViewController: vc)
+        present(myNav, animated: true, completion: nil)
     }
     
     

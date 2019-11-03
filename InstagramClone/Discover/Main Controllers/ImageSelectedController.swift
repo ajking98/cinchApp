@@ -21,6 +21,7 @@ class ImageSelectedController: UIViewController {
     var shareButton = ShareButton()
     var likesView = UILabel(frame: CGRect.zero)
     var authorView = UILabel(frame: CGRect.zero)
+    var isFromDiscover = true
     
     
     //player variables
@@ -36,7 +37,16 @@ class ImageSelectedController: UIViewController {
         setUp()
         
         setUpScrollView()
-//        labels.addGestureRecognizer((navigationController?.interactivePopGestureRecognizer)!)
+        
+        guard isFromDiscover else {
+            lowerView.frame.size = CGSize(width: 0, height: 0)
+            lowerView.isHidden = true
+            scrollView.center.y += 500
+            postImage.center.y += 120
+            return
+        }
+        
+        labels.addGestureRecognizer((navigationController?.interactivePopGestureRecognizer)!)
 
     }
     

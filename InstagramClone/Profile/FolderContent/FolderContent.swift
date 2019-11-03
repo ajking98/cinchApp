@@ -23,8 +23,12 @@ class FolderContent: UIViewController, UICollectionViewDataSource, UICollectionV
         let post = Post(isImage: true, numberOfLikes: 41, postOwner: username, likedBy: ["someone"], dateCreated: Date().timeIntervalSince1970, tags: ["nothing"], link: link)
         
         vc.post = post
-        self.present(vc, animated: true)
+        vc.isFromDiscover = false
+        
+//        let myNav = UINavigationController(rootViewController: self)
+        navigationController?.pushViewController(vc, animated: true)
     }
+    
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return content.count
