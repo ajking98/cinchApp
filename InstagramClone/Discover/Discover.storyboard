@@ -402,7 +402,6 @@
         <!--Navigation Controller-->
         <scene sceneID="WQ9-R7-is6">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="rXh-7h-JLb" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController storyboardIdentifier="DiscoverID" automaticallyAdjustsScrollViewInsets="NO" id="Wfi-yA-fF3" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="icons8-fire-30" id="Ne8-E0-CsW">
                         <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-8"/>
@@ -421,6 +420,7 @@
                         <segue destination="tcj-Tb-CIJ" kind="relationship" relationship="rootViewController" id="1Om-ge-9Sw"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rXh-7h-JLb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4859.420289855073" y="65.625"/>
         </scene>

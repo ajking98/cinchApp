@@ -41,12 +41,6 @@ class DiscoverController: UIViewController {
     var searchBar : SearchBar?
     var isScrolling = false
     
-    //video
-    var playerItem: AVPlayerItem!
-    var players = [AVPlayer]()
-    var player: AVPlayer!
-    var playerLayer: AVPlayerLayer!
-    
     //firebase
     var dbRef: DatabaseReference!
     var posts = [Post]()
@@ -91,6 +85,7 @@ class DiscoverController: UIViewController {
             for (_, value) in newContent {
                 let indexPath = IndexPath(row: self.posts.count, section: 0)
                 //TODO this creates a post using the link and uses static data in contstructor, this should instead get the data from the posts section in the database
+                
                 let post = Post(isImage: true, numberOfLikes: 41, postOwner: username, likedBy: ["someone"], dateCreated: Date().timeIntervalSince1970, tags: ["nothing"], link: value)
                 
                 self.posts.append(post)
@@ -567,8 +562,7 @@ extension DiscoverController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         //Todo change the string literal to a variable and get rid of the TablePostCard.xib
         let cell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath) as! TablePostCard
-        let currentPost:Post
-        currentPost = posts[indexPath.row]
+        let currentPost = posts[indexPath.row]
         cell.buildPostCard(item: currentPost)
         return cell
     }

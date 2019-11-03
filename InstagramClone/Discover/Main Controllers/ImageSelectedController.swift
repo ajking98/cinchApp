@@ -30,12 +30,13 @@ class ImageSelectedController: UIViewController {
     
     
     override func viewDidLoad() {
+        print("okay we are reaching")
         super.viewDidLoad()
         
         setUp()
         
         setUpScrollView()
-        labels.addGestureRecognizer((navigationController?.interactivePopGestureRecognizer)!)
+//        labels.addGestureRecognizer((navigationController?.interactivePopGestureRecognizer)!)
 
     }
     

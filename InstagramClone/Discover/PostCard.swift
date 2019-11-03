@@ -28,8 +28,6 @@ class PostCard: UICollectionViewCell {
     var playerItem: AVPlayerItem!
     var player: AVPlayer!
     var playerLayer: AVPlayerLayer!
-    
-    
 
     
     ///given a UIImage, Int, and String, and sets the values of the post to the details given
@@ -92,7 +90,7 @@ class PostCard: UICollectionViewCell {
     
     
     
-    
+    //keeps the video in a constant loop
     func loopVideo(videoPlayer: AVPlayer) {
         NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil, queue: nil) { notification in
             videoPlayer.seek(to: CMTime.zero)

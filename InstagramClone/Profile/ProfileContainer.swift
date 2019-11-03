@@ -6,8 +6,6 @@
 //  Copyright © 2019 Gedi, Ahmed M. All rights reserved.
 //
 
-//RIBBIT
-//Thanks I guess <3 
 
 
 import Foundation
