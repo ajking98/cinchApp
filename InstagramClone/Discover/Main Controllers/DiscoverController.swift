@@ -23,7 +23,7 @@ struct Item {
     var author : String
 }
 
-class DiscoverController: UIViewController, PostDelegate {
+class DiscoverController: UIViewController, transferDelegate {
     func handleAlert(alert: UIAlertController) {
         present(alert, animated: true, completion: nil)
     }

@@ -11,7 +11,7 @@ import AVKit
 import SDWebImage
 import XLActionController
 
-protocol PostDelegate : class {
+protocol transferDelegate : class {
     func presentContent(content : SpotifyActionController)
     func handleAlert(alert : UIAlertController)
     var something : String { get set }
@@ -27,7 +27,7 @@ class PostCard: UICollectionViewCell {
     var authorView = UILabel(frame: CGRect.zero)
     let transferButton = TransferButton()
     var link = ""
-    var delegate : PostDelegate?
+    var delegate : transferDelegate?
     
     //borders
     var topBorder : UIView?

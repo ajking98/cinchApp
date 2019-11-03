@@ -18,7 +18,7 @@ class TablePostCard: UITableViewCell {
     
     var transferButton = TransferButton()
     var menuOptions = MenuOptions()
-    var delegate : PostDelegate?
+    var delegate : transferDelegate?
     
     //borders
     var topBorder : UIView?

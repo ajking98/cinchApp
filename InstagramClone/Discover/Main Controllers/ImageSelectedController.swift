@@ -9,20 +9,21 @@
 import UIKit
 import AVKit
 import SDWebImage
+import XLActionController
 
 class ImageSelectedController: UIViewController {
-    var post : Post!
+    
+    var post : Post! //post object also has the link to the post 
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var lowerView: UIView!
     @IBOutlet weak var postImage: UIImageView!
     @IBOutlet weak var labels: UIView!
-    var likeButton = LikeButton()
+    var transferButton = TransferButton()
     var shareButton = ShareButton()
     var likesView = UILabel(frame: CGRect.zero)
     var authorView = UILabel(frame: CGRect.zero)
     var isFromDiscover = true
-    
     
     //player variables
     var playerItem: AVPlayerItem!
@@ -106,7 +107,8 @@ class ImageSelectedController: UIViewController {
         let centerY = (labels.frame.height / 2) - 5
         
         //likeButton
-        likeButton.center = CGPoint(x: 30, y: centerY)
+        transferButton.center = CGPoint(x: 30, y: centerY)
+        transferButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTransfer)))
         
         //share Button
         shareButton.center = CGPoint(x: labels.frame.width - 30, y: centerY)
@@ -126,7 +128,7 @@ class ImageSelectedController: UIViewController {
         authorView.text = post.postOwner
         
         //add subviews
-        labels.addSubview(likeButton)
+        labels.addSubview(transferButton)
 //        labels.addSubview(likesView)
         labels.addSubview(authorView)
         labels.addSubview(shareButton)
@@ -136,6 +138,14 @@ class ImageSelectedController: UIViewController {
         
         
         lowerView.isUserInteractionEnabled = true
+    }
+    
+    @objc func handleTransfer() {
+        Helper().saveToFolder(link: post.link!, completion: { (alertController) in
+            self.present(alertController, animated: true, completion: nil)
+        }) { (spotifyController) in
+            self.present(spotifyController, animated: true, completion: nil)
+        }
     }
     
     @objc func handlePan(gesture : UIPanGestureRecognizer) {
