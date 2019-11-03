@@ -50,6 +50,12 @@ class ImageSelectedController: UIViewController {
 
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        if playerLayer != nil {
+            player.isMuted = true
+        }
+    }
+    
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         postImage.centerXAnchor.constraint(equalTo: scrollView.contentLayoutGuide.centerXAnchor)
         postImage.centerYAnchor.constraint(equalTo: scrollView.contentLayoutGuide.centerYAnchor)
@@ -62,6 +68,13 @@ class ImageSelectedController: UIViewController {
         scrollView.maximumZoomScale = 20.0
 //        scrollView.delegate = self //- it is set on the storyboard.
         scrollView.isUserInteractionEnabled = true
+        scrollView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleMute)))
+    }
+    
+    @objc func handleMute() {
+        if playerLayer != nil {
+            player.isMuted = !player.isMuted
+        }
     }
     
     func setUp() {
