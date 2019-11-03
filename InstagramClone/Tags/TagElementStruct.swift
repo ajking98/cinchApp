@@ -46,13 +46,16 @@ struct TagElementStruct {
     }
     
     ///Takes tagLabel, link, and newNumOfUsages and updates the existing value in the DB to the new given value
-    func updateNumOfUsages(tagLabel : String, link : String, newNumOfUsages : Int){ DB.child(tagLabel).child("elements").child(link).child("numOfUsages").setValue(newNumOfUsages)
+    func updateNumOfUsages(tagLabel : String, link : String, newNumOfUsages : Int){
+        let updatedLink = convertStringToKey(link: link)
+        DB.child(tagLabel).child("elements").child(updatedLink).child("numOfUsages").setValue(newNumOfUsages)
     }
     
     ///increments the number for a given tag Element by one point
     func updateNumOfUsages(tagLabel: String, link : String){
-        readNumOfUsages(tagLabel: tagLabel, link: link) { (numberOfUsages) in
-            self.updateNumOfUsages(tagLabel: tagLabel, link: link, newNumOfUsages: Int(numberOfUsages + 1))
+        let updatedLink = convertStringToKey(link: link)
+        readNumOfUsages(tagLabel: tagLabel, link: updatedLink) { (numberOfUsages) in
+            self.updateNumOfUsages(tagLabel: tagLabel, link: updatedLink, newNumOfUsages: Int(numberOfUsages + 1))
         }
         return
     }

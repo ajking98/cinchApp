@@ -16,13 +16,15 @@ class TablePostCard: UITableViewCell {
     @IBOutlet weak var labelContainer: UIView!
     @IBOutlet weak var topView: UIView!
     
-    var likeButton = LikeButton()
+    var transferButton = TransferButton()
     var menuOptions = MenuOptions()
+    var delegate : PostDelegate?
     
     //borders
     var topBorder : UIView?
     var leftBorder : UIView?
     var rightBorder : UIView?
+    var link = ""
     
     //player variables
     var playerItem: AVPlayerItem!
@@ -110,12 +112,21 @@ class TablePostCard: UITableViewCell {
         
         
         //like View
-        likeButton.center = CGPoint(x: centerX, y: bottomY - 30)
-        
+        transferButton.center = CGPoint(x: centerX, y: bottomY - 30)
+        transferButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTransfer)))
         
         //adding subviews
         labelContainer.addSubview(menuOptions)
-        labelContainer.addSubview(likeButton)
+        labelContainer.addSubview(transferButton)
+    }
+    
+    //transfers the image from discover to desired folder
+    @objc func handleTransfer() {
+        Helper().saveToFolder(link: link, completion: { (alertController) in
+            self.delegate?.handleAlert(alert: alertController)
+        }) { (spotifyController) in
+            self.delegate?.presentContent(content: spotifyController)
+        }
     }
     
     
@@ -137,11 +148,13 @@ class TablePostCard: UITableViewCell {
     
     ///Given a item, sets the values of the post to that item's values
     func buildPostCard(item : Post) {
-        print("got it: ", item.link)
-        if item.link!.contains("mp4") {
-            buildVideoPostCard(url: URL(string: item.link!)!, likes: item.numberOfLikes!, author: item.postOwner!)
+        guard let link = item.link else { return }
+        self.link = link
+        
+        if link.contains("mp4") {
+            buildVideoPostCard(url: URL(string: link)!, likes: item.numberOfLikes!, author: item.postOwner!)
         } else {
-            buildPostCard(url: URL(string: item.link!)!, likes: item.numberOfLikes!, author: item.postOwner!)
+            buildPostCard(url: URL(string: link)!, likes: item.numberOfLikes!, author: item.postOwner!)
         }
     }
     

@@ -12,6 +12,7 @@ import AVKit
 import Firebase
 import FirebaseStorage
 import FirebaseDatabase
+import XLActionController
 
 private let reuseIdentifier = "Cell"
 private let reuseIdentifierTable = "Cell2"
@@ -22,7 +23,17 @@ struct Item {
     var author : String
 }
 
-class DiscoverController: UIViewController {
+class DiscoverController: UIViewController, PostDelegate {
+    func handleAlert(alert: UIAlertController) {
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func presentContent(content: SpotifyActionController) {
+        present(content, animated: true, completion: nil)
+    }
+    
+    var something: String = "This is a test"
+    
     
     @IBOutlet weak var segmentControl: UIView!
     @IBOutlet weak var collectionViewIcon: UIImageView!
@@ -537,8 +548,8 @@ extension DiscoverController : UICollectionViewDelegate, UICollectionViewDataSou
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! PostCard
-        let current:Post
-        current = posts[indexPath.row]
+        let current = posts[indexPath.row]
+        cell.delegate = self
         cell.buildPostCard(item: current)
         return cell
     }
@@ -562,6 +573,7 @@ extension DiscoverController : UITableViewDelegate, UITableViewDataSource {
         //Todo change the string literal to a variable and get rid of the TablePostCard.xib
         let cell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath) as! TablePostCard
         let currentPost = posts[indexPath.row]
+        cell.delegate = self
         cell.buildPostCard(item: currentPost)
         return cell
     }

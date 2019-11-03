@@ -49,7 +49,8 @@ class Tag {
         
         if let tagElements = tagElements {
             for element in tagElements {
-                tagElementsDict[element.link] = element.toString()
+                let updatedLink = convertStringToKey(link: element.link)
+                tagElementsDict[updatedLink] = element.toString()
             }
         }
         

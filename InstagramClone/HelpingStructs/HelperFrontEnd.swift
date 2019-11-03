@@ -44,9 +44,10 @@ struct Helper {
                     
                     
                     //todo Later, this "Testing" string in the next line should be given a link instead of static string
-                    let alert = self.createTagsAlert(link: "Testing")//Tagging alert
-                    viewController.present(alert, animated: true, completion: nil)
                     StorageStruct().uploadImage(image: image, completion: { (link) in
+                        let alert = self.createTagsAlert(link: link)//Tagging alert
+                        viewController.present(alert, animated: true, completion: nil)
+                        
                         FolderStruct().addContent(user: self.username, folderName: item, link: link)
                         FolderStruct().updateNumOfImagesByConstant(user: self.username, folderName: item, constant: 1)
                     })
@@ -55,6 +56,28 @@ struct Helper {
             }
             
             viewController.present(actionController, animated: true, completion: nil)
+        }
+    }
+
+    //Takes in a link and two closures
+    //the first closure is for the tagging alert and the second closure is for the folder saving alert
+    func saveToFolder(link: String, completion: @escaping(UIAlertController) -> Void, completion2 : @escaping(SpotifyActionController) -> Void) {
+        //Folder pick
+        let actionController = SpotifyActionController()
+        actionController.headerData = SpotifyHeaderData(title: "select a folder for the image?", subtitle: "", image: UIImage(named: "empty")!)
+        
+        UserStruct().readFolders(user: username) { (folders) in
+            for item in folders {
+                print("required ", item)
+                actionController.addAction(Action(ActionData(title: "\(item.lowercased())", subtitle: "For Content"), style: .default, handler: { action in
+                    
+                    let alert = self.createTagsAlert(link: link)//Tagging alert
+                    completion(alert)
+                    FolderStruct().addContent(user: self.username, folderName: item, link: link)
+                    FolderStruct().updateNumOfImagesByConstant(user: self.username, folderName: item, constant: 1)
+                }))
+            }
+            completion2(actionController)
         }
     }
     

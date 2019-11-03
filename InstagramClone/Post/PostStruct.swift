@@ -128,7 +128,8 @@ struct PostStruct {
     */
     ///Adds a single tag to a single post and also adds the post under the tag in DB
     func addTag(post : String, newTag : String) {
-        DB.child(post).child("tags").updateChildValues([newTag : newTag])
+        let updatedLink = convertStringToKey(link: post)
+        DB.child(updatedLink).child("tags").updateChildValues([newTag : newTag])
         let tag = Tag(tagLabel: newTag, tagElements: [TagElement(link: post)])
         ParentTagStruct().addTag(tag: tag)
     }
@@ -137,14 +138,14 @@ struct PostStruct {
     ///Adds mutliple tags at a time to a single post
     func addTags(post : String, newTags : [String]) {
         var tagDict : [String : String] = [:]
+        let updatedLink = convertStringToKey(link: post)
         
         for tag in newTags {
             tagDict[tag] = tag
+            let myTag = Tag(tagLabel: tag, tagElements: [TagElement(link: post)])
+            ParentTagStruct().addTag(tag: myTag)
         }
-        
-        DB.child(post).child("tags").updateChildValues(tagDict)
-//        let tag = Tag(tagLabel: newTag, tagElements: [TagElement(link: post)])
-//        ParentTagStruct().addTag(tag: tag)
+        DB.child(updatedLink).child("tags").updateChildValues(tagDict)
     }
     
     func deleteTag(post : String, tag : String) {
