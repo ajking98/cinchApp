@@ -19,4 +19,5 @@ struct defaultsKeys {
     static let dateLastActiveKey = "dateLastActiveKey"
     static let folders = "folders"
     static let foldersFollowing = "foldersFollowing"
+    static let otherProfile = "otherProfile" //keeps track of the profile the user is looking at 
 }

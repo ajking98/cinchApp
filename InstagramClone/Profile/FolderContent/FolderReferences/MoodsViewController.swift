@@ -16,6 +16,8 @@ class FolderReferenceController: UIViewController, UICollectionViewDelegate, UIC
     let cellIdentifier = "MoodCell"
     var folderRefs : [FolderReference] = []
     var folders : [Folder] = []
+    var username = ""
+    var isLocalUser = true
     
     override func viewDidLoad() {
         super.viewDidLoad()

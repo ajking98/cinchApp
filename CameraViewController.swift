@@ -90,7 +90,6 @@ class CameraViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         guard isAuthorized() else{
             var mainView: UIStoryboard!
             mainView = UIStoryboard(name : "Permissions", bundle: nil)

@@ -12,11 +12,8 @@ import UIKit
 class FolderContent: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate  {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //todo summon the imageSelectedView and pass the selected image
-        print("I think are reaching", storyboard)
         let vc = UIStoryboard(name: "Discover", bundle: nil).instantiateViewController(withIdentifier: "ImageSelectedController") as! ImageSelectedController
 
-        print("I think are reaching2")
         let link = content[indexPath.item]
         
         //TODO this creates a post using the link and uses static data in contstructor, this should instead get the data from the posts section in the database

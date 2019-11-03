@@ -13,7 +13,7 @@
         <!--Profile Page View Controller-->
         <scene sceneID="YuM-6Y-Ndk">
             <objects>
-                <viewController id="c9c-6r-wGY" customClass="ProfilePageViewController" customModule="InstagramClone" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="profilePage" id="c9c-6r-wGY" customClass="ProfilePageViewController" customModule="InstagramClone" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="wHE-Rp-3dZ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -185,13 +185,13 @@
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6St-9a-kR4">
                                 <rect key="frame" x="20" y="355" width="374" height="453"/>
                                 <connections>
-                                    <segue destination="Whn-zU-23t" kind="embed" id="WEJ-bj-h1i"/>
+                                    <segue destination="Whn-zU-23t" kind="embed" identifier="foldersFollowingSegue" id="WEJ-bj-h1i"/>
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xBA-aM-PrJ">
                                 <rect key="frame" x="20" y="355" width="374" height="453"/>
                                 <connections>
-                                    <segue destination="2As-1P-80a" kind="embed" id="3oD-Wk-cUP"/>
+                                    <segue destination="2As-1P-80a" kind="embed" identifier="gemsSegue" id="3oD-Wk-cUP"/>
                                 </connections>
                             </containerView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JzH-vS-oEo">
@@ -221,7 +221,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.92176705599999997" green="0.92131650450000002" blue="0.93725806469999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="RSC-bE-Tz7" secondAttribute="bottom" constant="642" id="1DI-2X-hEV"/>
                             <constraint firstItem="vc3-DA-azQ" firstAttribute="top" secondItem="RSC-bE-Tz7" secondAttribute="bottom" constant="48" id="9RH-s8-s76"/>
@@ -255,6 +255,7 @@
                         <outlet property="numberOfFollowingsLabel" destination="ldf-dL-4ju" id="7lp-da-cpk"/>
                         <outlet property="numberOfGemsLabel" destination="V50-ua-MJj" id="LLo-PD-w5j"/>
                         <outlet property="pageControl" destination="Jj6-Zp-x7J" id="KPq-KG-fQR"/>
+                        <outlet property="settingsButton" destination="X5C-UY-ysj" id="fan-E1-Oke"/>
                         <outlet property="topView" destination="RSC-bE-Tz7" id="NkR-Up-6tr"/>
                         <outlet property="viewOne" destination="xBA-aM-PrJ" id="RDY-HB-dTx"/>
                         <outlet property="viewTwo" destination="6St-9a-kR4" id="2uc-vw-Aud"/>

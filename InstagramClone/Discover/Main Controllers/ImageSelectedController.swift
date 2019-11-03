@@ -106,13 +106,16 @@ class ImageSelectedController: UIViewController {
         
         let centerY = (labels.frame.height / 2) - 5
         
-        //likeButton
+        //transferButton
         transferButton.center = CGPoint(x: 30, y: centerY)
         transferButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTransfer)))
         
         //share Button
         shareButton.center = CGPoint(x: labels.frame.width - 30, y: centerY)
         
+        //gestures for authorView
+        authorView.isUserInteractionEnabled = true
+        authorView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleAuthorPressed)))
         
         //Sizing
         likesView.frame.size = CGSize(width: 70, height: 20)
@@ -138,6 +141,14 @@ class ImageSelectedController: UIViewController {
         
         
         lowerView.isUserInteractionEnabled = true
+    }
+    
+    @objc func handleAuthorPressed() {
+        let vc = UIStoryboard(name: "ProfilePage", bundle: nil).instantiateViewController(withIdentifier: "profilePage") as! ProfilePageViewController
+        UserDefaults.standard.setValue("Justin2", forKey: defaultsKeys.otherProfile)
+        vc.username = "Justin2"
+        vc.isLocalUser = false
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func handleTransfer() {

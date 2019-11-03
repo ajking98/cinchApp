@@ -16,13 +16,15 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     //TODO THESE should hold actual folder objects
     var folders : [Folder] = []
-    var username :String!
+    var username = ""
+    var isLocalUser = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if username == nil {
-            username = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)
+        
+        if username == "" {
+            username = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
             buildAddFolderButton()
         }
         
@@ -31,6 +33,10 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
         setupCollectionViewLayout()
         
         fetchFolders()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        UserDefaults.standard.set(nil, forKey: defaultsKeys.otherProfile)
     }
     
     
@@ -74,9 +80,7 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
         let vc = storyboard?.instantiateViewController(withIdentifier: "FolderCotent") as! FolderContent
         
         vc.folderName = folders[indexPath.row].folderName
-        
-        let myNav = UINavigationController(rootViewController: vc)
-        present(myNav, animated: true, completion: nil)
+        present(vc, animated: true, completion: nil)
     }
     
     
