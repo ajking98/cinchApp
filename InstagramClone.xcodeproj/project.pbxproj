@@ -60,6 +60,7 @@
 		46D5E08022ADABC3003B41DE /* StorageStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E07F22ADABC3003B41DE /* StorageStruct.swift */; };
 		46F2B5B02370835D00FFC751 /* SearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F2B5AF2370835D00FFC751 /* SearchResultViewController.swift */; };
 		46F2B5BA2370860400FFC751 /* TableSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F2B5B92370860400FFC751 /* TableSearchViewController.swift */; };
+		46F2B5BF2370CB1400FFC751 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EB74D3BC226025EA00556399 /* Assets.xcassets */; };
 		46FA43F323634FE7005F3046 /* MessageCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FA43F123634FE7005F3046 /* MessageCard.swift */; };
 		46FA43F423634FE7005F3046 /* MessageCard.xib in Resources */ = {isa = PBXBuildFile; fileRef = 46FA43F223634FE7005F3046 /* MessageCard.xib */; };
 		4ACC35021E65C4016B75D95E /* Pods_Gems.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 779CD7DF58B8786D507219C6 /* Pods_Gems.framework */; };
@@ -974,6 +975,7 @@
 				46991873236546A4009E85BC /* GoogleService-Info.plist in Resources */,
 				46FA43F423634FE7005F3046 /* MessageCard.xib in Resources */,
 				4622493D22DFAC8F0005B12F /* MainInterface.storyboard in Resources */,
+				46F2B5BF2370CB1400FFC751 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

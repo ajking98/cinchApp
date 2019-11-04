@@ -19,6 +19,8 @@ class MessageContentViewController: UIViewController, UICollectionViewDelegate, 
         super.viewDidLoad()
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
+        
+        print("tryout this is second")
         setupCollectionViewLayout()
         // Do any additional setup after loading the view.
     }
@@ -49,8 +51,7 @@ class MessageContentViewController: UIViewController, UICollectionViewDelegate, 
     
     @objc func handleTap(cell: MessageContentCVCell) {
         let mc = MessagesViewController()
-        print("Tapped")
-        mc.run(cell: cell)
+        print("Tapped", "missed the tryout")
         
     }
 

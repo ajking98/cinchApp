@@ -15,18 +15,13 @@ import FirebaseAuth
 import Firebase
 import SQLite
 
-struct Item {
-    var imageName : String
-}
 
 class MessagesViewController: MSMessagesAppViewController, UICollectionViewDelegate, UICollectionViewDataSource {
-    let defaults = UserDefaults(suiteName: "group.InstagramClone.messages")
-    var message:MSMessage?
-    var images:[UIImage] = []
+
     let cellIdentifier = "ContentCell"
-    var objectImages:[String] = []
+    
+    //Stores the links of the posts
     var content = [String]()
-    var stickers = [MSSticker]()
     @IBOutlet weak var searchView: UIView!
     
     var dbRef: DatabaseReference!
@@ -35,57 +30,36 @@ class MessagesViewController: MSMessagesAppViewController, UICollectionViewDeleg
     
     @IBOutlet weak var collectionView: UICollectionView!
     let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-    
     let userDefaults = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         if(FirebaseApp.app() == nil){
             FirebaseApp.configure()
         }
+        
         dbRef = Database.database().reference().child("posts")
         fetchContent()
-//        loadDB()
+        
+        
         setUpCollectionView()
         addSearchBar()
-//        objectImages = ["f1","f2","f3"]
-//        objectImages = ["https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/images%2FBSnzTeDsgaftbUCsqEVq?alt=media&token=33656ad4-6005-4d6f-aa55-df834f56826c", "https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/images%2Fwaterbend.mp4?alt=media&token=dd6fb189-03c2-4c3a-9f51-2559645e631a", "https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/images%2FmcUGFunXhglGeUAhKYGm?alt=media&token=8985c620-b16c-409b-804d-316f96e07e8d", "https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/images%2Ffire.mp4?alt=media&token=cb204eee-6444-407e-953c-a6367a8cc7e8"]
-        
-        self.collectionView.delegate = self
-        self.collectionView.dataSource = self
         setupCollectionViewLayout()
-        // Do any additional setup after loading the view.
-        
     }
-    
-    
-//    func loadDB() {
-//        dbRef.observe(DataEventType.value, with: { (snapshot) in
-//            var newImages = [ImageInsta]()
-//            for imageInstaSnapshot in snapshot.children {
-//                let imageInstaObject = ImageInsta(snapshot: imageInstaSnapshot as! DataSnapshot)
-//                newImages.insert(imageInstaObject, at: 0)
-//            }
-//            self.content = newImages
-//            self.collectionView.reloadData()
-//        })
-//
-//    }
     
     ///Updates the content array with values from the DB
     func fetchContent() {
-        dbRef.observe(DataEventType.value, with: { (snapshot) in
-            for imageInstaSnapshot in snapshot.children.allObjects as! [DataSnapshot] {
-                let imageInstaObject = imageInstaSnapshot.value as? [String: AnyObject]
-                let imageLink = imageInstaObject?["link"]
-                print("\(imageLink) hhhhh")
-                self.content.append(imageLink as! String)
+        dbRef.observeSingleEvent(of: .value) { (snapshot) in
+            if let listOfPosts = snapshot.value as? [String : [String : Any]] {
+                for singlePost in listOfPosts{
+                    let link = singlePost.value["link"] as! String
+                    let indexPath = IndexPath(item: self.content.count, section: 0)
+                    self.content.append(link)
+                    self.collectionView.insertItems(at: [indexPath])
+                }
             }
-            self.userDefaults.set(self.content, forKey: "content")
-            self.collectionView.reloadData()
-        })
-        
-        
+        }
     }
     
     
@@ -96,9 +70,6 @@ class MessagesViewController: MSMessagesAppViewController, UICollectionViewDeleg
         collectionView.register(nib, forCellWithReuseIdentifier: cellIdentifier)
     }
     
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.content.count
@@ -106,56 +77,74 @@ class MessagesViewController: MSMessagesAppViewController, UICollectionViewDeleg
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! MessageCard
-        designCell(cell: cell)
-        let image = content[indexPath.row]
-//        cell.imageView.sd_setImage(with: URL(string: image.url), placeholderImage: UIImage(named: "empty"))
         cell.buildPostCard(item: content[indexPath.row])
-//        print("baby" + objectImages[indexPath.row])
         
+        designCell(cell: cell)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(content.count)
-        print(indexPath.row)
-        print(content[indexPath.row])
-        let newImageView = UIImageView()
-        let url = URL(string: content[indexPath.row])
-        newImageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder.png"))
-        print(url!)
+        let url = URL(string: content[indexPath.row])  //gets the url of the image
         
-        if let statusImageURL = URL(string: content[indexPath.row]) {
-            URLSession.shared.dataTask(with: url!) { (data, response, error) -> Void in
-                if error != nil {
-                    print(error)
-                    return
-                }
-                print("hellooooo")
-                let image = UIImage(data: data!)
-                
-                self.createSticker(url: url!, index: indexPath.row)
-                DispatchQueue.main.async(execute: { () -> Void in
-                    let value = self.userDefaults.array(forKey: "content")![indexPath.row]
-                    print(value)
-                    self.activeConversation?.insert(self.stickers[0], completionHandler: nil)
-//                    self.activeConversation?.insertAttachment(URL(fileURLWithPath: value as! String), withAlternateFilename: "Boo", completionHandler: nil)
-//                    self.activeConversation?.insertAttachment(URL(, withAlternateFilename: self.userDefaults.array(forKey: "content")[indexPath.row]), completionHandler: nil)
-                })
-            }.resume()
-        }
-//        activeConversation?.insertAttachment(URL(fileURLWithPath: "/Users/cinch/Desktop/cinchApp/Gems/Assets.xcassets/testImages/\(objectImages[indexPath.row]).imageset/\(objectImages[indexPath.row]).jpg"), withAlternateFilename: "\(objectImages[indexPath.row])", completionHandler: nil)
+        let newImageView = UIImageView()
+        newImageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder.png"))
+        
+        //pushes the image onto the message template
+        let lay = MSMessageTemplateLayout()
+        lay.image = newImageView.image
+        let message = MSMessage()
+        message.layout = lay
+        let success = saveImage(image: newImageView.image!)
+        
+        activeConversation?.insertAttachment(url!, withAlternateFilename: "fileName.png", completionHandler: nil)
     }
     
-    func createSticker(url: URL, index: Int) {
+    func saveImage(imageName: String, image: UIImage) {
+        
+        
+        guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
+        
+        let fileName = imageName
+        let fileURL = documentsDirectory.appendingPathComponent(fileName)
+        guard let data = image.jpegData(compressionQuality: 1) else { return }
+        
+        //Checks if file exists, removes it if so.
+        if FileManager.default.fileExists(atPath: fileURL.path) {
+            do {
+                try FileManager.default.removeItem(atPath: fileURL.path)
+                print("Removed old image")
+            } catch let removeError {
+                print("couldn't remove file at path", removeError)
+            }
+            
+        }
+        
         do {
-            let sticker = try MSSticker(contentsOfFileURL: url, localizedDescription: "\(index)")
-            stickers.append(sticker)
-            print(sticker)
-            print(stickers[0])
+            try data.write(to: fileURL)
+        } catch let error {
+            print("error saving file with error", error)
+        }
+        
+    }
+
+    
+    func saveImage(image: UIImage) -> Bool {
+        guard let data = image.jpegData(compressionQuality: 1) ?? image.pngData() else {
+            return false
+        }
+        guard let directory = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) as NSURL else {
+            return false
+        }
+        do {
+            try data.write(to: directory.appendingPathComponent("fileName.png")!)
+            return true
         } catch {
-            print(error)
+            print(error.localizedDescription)
+            return false
         }
     }
+    
+    
     
     func addSearchBar() {
         let frame = searchView.frame
@@ -187,17 +176,11 @@ class MessagesViewController: MSMessagesAppViewController, UICollectionViewDeleg
         cell.clipsToBounds = true
     }
     
-    func run(cell: MessageContentCVCell) {
-        let lay = MSMessageTemplateLayout()
-        //        lay.image = cell.imageView.image
-        let message = MSMessage()
-        message.layout = lay
-        
-        activeConversation?.insert(message, completionHandler: nil)
-    }
+    
     // MARK: - Conversation Handling
     
     override func willBecomeActive(with conversation: MSConversation) {
+        print("we are becoming active")
         // Called when the extension is about to move from the inactive to active state.
         // This will happen when the extension is about to present UI.
         
