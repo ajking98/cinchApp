@@ -123,7 +123,7 @@ class TablePostCard: UITableViewCell {
     //transfers the image from discover to desired folder
     @objc func handleTransfer() {
         Helper().saveToFolder(link: link, completion: { (alertController) in
-            self.delegate?.handleAlert(alert: alertController)
+            self.delegate?.handleAlert(alert: alertController)  //tagging alert 
         }) { (spotifyController) in
             self.delegate?.presentContent(content: spotifyController)
         }

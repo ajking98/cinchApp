@@ -51,6 +51,7 @@ class DiscoverController: UIViewController, transferDelegate {
     var loadingIcon = UIImageView()
     var searchBar : SearchBar?
     var isScrolling = false
+    var isPrimaryViewController = true
     
     //firebase
     var dbRef: DatabaseReference!
@@ -59,8 +60,9 @@ class DiscoverController: UIViewController, transferDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         dbRef = Database.database().reference().child("posts")
-//        loadDB()
-        fetchContent()
+        if isPrimaryViewController {
+            fetchContent()
+        }
         sizeUp()
 //        addSearchBar()
         setUpTableView()
@@ -89,6 +91,7 @@ class DiscoverController: UIViewController, transferDelegate {
     
     
     ///Updates the content array with values from the DB
+    //TODO this only looks at data from the newContent array and not the suggestContent array
     func fetchContent() {
         let username = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
         
@@ -103,28 +106,7 @@ class DiscoverController: UIViewController, transferDelegate {
                 self.collectionView.reloadData()
                 self.tableView.insertRows(at: [indexPath], with: .right)
             }
-            
         }
-        
-        
-    }
-    
-    func loadDB() {
-        dbRef.observe(DataEventType.value, with: { (snapshot) in
-            var newImages = [Post]()
-            for imageInstaSnapshot in snapshot.children.allObjects as! [DataSnapshot] {
-                let imageInstaObject = imageInstaSnapshot.value as? [String: AnyObject]
-                let imageDate = imageInstaObject?["dateCreated"]
-                let imageOwner = imageInstaObject?["postOwner"]
-                let isImage = imageInstaObject?["isImage"]
-                let imageLink = imageInstaObject?["link"]
-                
-                let post = Post(isImage: (isImage as! Bool), postOwner: imageOwner as! String, link: imageLink as! String)
-                self.posts.append(post)
-            }
-            self.collectionView.reloadData()
-        })
-        
     }
     
     func setUpNavigation() {

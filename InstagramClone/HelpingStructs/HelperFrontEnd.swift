@@ -45,7 +45,7 @@ struct Helper {
                     
                     //todo Later, this "Testing" string in the next line should be given a link instead of static string
                     StorageStruct().uploadImage(image: image, completion: { (link) in
-                        let alert = self.createTagsAlert(link: link)//Tagging alert
+                        let alert = self.createTagsAlert(link: link, username: self.username)//Tagging alert
                         viewController.present(alert, animated: true, completion: nil)
                         
                         FolderStruct().addContent(user: self.username, folderName: item, link: link)
@@ -68,7 +68,6 @@ struct Helper {
         
         UserStruct().readFolders(user: username) { (folders) in
             for item in folders {
-                print("required ", item)
                 actionController.addAction(Action(ActionData(title: "\(item.lowercased())", subtitle: "For Content"), style: .default, handler: { action in
                     
                     let alert = self.createTagsAlert(link: link)//Tagging alert
@@ -94,6 +93,8 @@ struct Helper {
                     
                     for image in images {
                         StorageStruct().uploadImage(image: image, completion: { (link) in
+                            
+                            ParentPostStruct().addPost(post: Post(isImage: false, postOwner: self.username, link: link))
                             FolderStruct().addContent(user: self.username, folderName: item, link: link)
                             FolderStruct().updateNumOfImagesByConstant(user: self.username, folderName: item, constant: 1)
                         })
@@ -106,7 +107,7 @@ struct Helper {
     
     
     ///Takes a string to the content, and saves the tags under that string
-    func createTagsAlert(link: String)-> UIAlertController {
+    func createTagsAlert(link: String, username : String? = nil)-> UIAlertController {
         //Add tag
         let alert = UIAlertController(title: "tags", message: "tag this gem to find it later", preferredStyle: .alert)
         alert.addTextField { (textField) in
@@ -114,10 +115,15 @@ struct Helper {
         }
         alert.addAction(UIAlertAction(title: "done", style: .default, handler: { (_) in
             if let messages = alert.textFields {
-                guard let message = messages[0].text?.split(separator: " ") else { return }
+                guard let message = messages[0].text?.components(separatedBy: CharacterSet(charactersIn: " ./")) else { return }
                 var tagArray = [String]()
                 for tag in message{
-                    tagArray.append(String(tag))
+                    if tag.count > 2 {
+                        tagArray.append(String(tag).lowercased())
+                    }
+                }
+                if username != nil {
+                    ParentPostStruct().addPost(post: Post(isImage: !link.contains(".mp4"), postOwner: username!, link: link))
                 }
                 PostStruct().addTags(post: link, newTags: tagArray)
             }
@@ -125,7 +131,6 @@ struct Helper {
         
         return alert
     }
-    
     
     func vibrate(style : UIImpactFeedbackGenerator.FeedbackStyle){
         let vibration = UIImpactFeedbackGenerator(style: style)

@@ -13,10 +13,9 @@ import UIKit
 class SecondaryDiscoverController: DiscoverController {
     
     var y:CGFloat = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        print("yes, this is working")
         
         buildSizes()
     }

@@ -37,9 +37,7 @@ struct ParentTagStruct{
     
     //Takes a tag and adds it the DB under the tag label
     private func createTag(tag : Tag)-> Void{
-        print("next link is required 1")
         DB.child(tag.tagLabel!).setValue(tag.toString())
-        print("required 1")
     }
     
     ///Reads all the names of every tag

@@ -14,7 +14,6 @@ import XLActionController
 protocol transferDelegate : class {
     func presentContent(content : SpotifyActionController)
     func handleAlert(alert : UIAlertController)
-    var something : String { get set }
     
 }
 

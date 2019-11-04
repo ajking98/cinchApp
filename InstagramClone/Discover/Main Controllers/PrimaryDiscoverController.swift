@@ -9,96 +9,44 @@
 import Foundation
 import UIKit
 
-
-//TODO move this to the parent DiscoverController
-class TableSearchViewController : UITableViewController {
-    
-    var listOfTags:[String] = []
-    var updatedListOfTags:[String] = []
-    let reusibleIdentifier = "Cell"
-    var previousSearchTerm = ""
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: reusibleIdentifier)
-        fetchAllTags()
-    }
-    
-    //todo make this search algo O(NLog(N))
-    /*
-        Insert kick ass algorithm here!
-    */
-    func updateTagList(searchTerm : String) {
-        //update list of tags
-        print("updating my tuff", previousSearchTerm, "and ", searchTerm.dropLast(), previousSearchTerm == searchTerm.dropLast())
-        if previousSearchTerm == searchTerm.dropLast() {
-            updatedListOfTags.removeAll()
-            for term in listOfTags {
-                if term.contains(searchTerm) {
-                    updatedListOfTags.append(term)
-                }
-                tableView.reloadData()
-            }
-        }
-        else {
-            print("truing")
-            var index = 0
-            while index < updatedListOfTags.count {
-                if !updatedListOfTags[index].contains(searchTerm) {
-                    let indexPath = IndexPath(row: index, section: 0)
-                    updatedListOfTags.remove(at: index)
-                    tableView.deleteRows(at: [indexPath], with: .bottom)
-                }else {
-                    index += 1
-                }
-            }
-        }
-        previousSearchTerm = searchTerm
-    }
-    
-    
-    func fetchAllTags() {
-        ParentTagStruct().readTagNames(completion: { (tags) in
-            self.listOfTags = tags
-        })
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return updatedListOfTags.count
-    }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: reusibleIdentifier, for: indexPath)
-        cell.textLabel?.text = updatedListOfTags[indexPath.row]
-        return cell
-    }
-}
-
-var searchView : TableSearchViewController?
-
 class PrimaryDiscoverController: DiscoverController, SearchDelegate {
     
-    func search(searchTerm: String) {
-        guard let searchView = searchView else { return }
-        
-        guard searchTerm.count > 1 else {
-            UIView.animate(withDuration: 0.2) {
-                searchView.view.layer.opacity = 0
-            }
-            return
-        }
-        searchView.updateTagList(searchTerm: searchTerm)
-        print("we are searching this: ", searchTerm)
-        UIView.animate(withDuration: 0.2) {
-            searchView.view.layer.opacity = 1
-        }
-    }
+    var searchView : TableSearchViewController? //this is the view with all the suggestions
+    var primarySearchTerm = ""
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         addSearchBar()
         buildSearchView()
+    }
+    
+    //this triggers the next view controller where the posts are from the tag they searched
+    func presentTagElements(searchTerm : String) {
+        let vc = UIStoryboard(name: "Discover", bundle: nil).instantiateViewController(withIdentifier: "SearchResult") as! SearchResultViewController
+        vc.searchTerm = searchTerm
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    //this gets the text as the user types into the textfield
+    func search(searchTerm: String) {
+        guard let searchView = searchView else { return }
+        let standardizedSearchTerm = searchTerm.lowercased()
+        
+        guard standardizedSearchTerm.count > 1 else {
+                UIView.animate(withDuration: 0.2, animations: {
+                    searchView.view.layer.opacity = 0
+                })
+            return
+        }
+        
+        //Calls the method within searchView that will update the words within the suggested hashtag searches
+        searchView.updateTagList(searchTerm: standardizedSearchTerm)
+        UIView.animate(withDuration: 0.2) {
+            searchView.view.layer.opacity = 1
+        }
     }
     
     func addSearchBar() {
@@ -135,13 +83,10 @@ class PrimaryDiscoverController: DiscoverController, SearchDelegate {
         searchView.view.frame = CGRect(x: 0, y: 0, width: width * 0.88, height: height * 0.3)
         searchView.view.center.x = view.center.x
         searchView.view.layer.cornerRadius = 10
+        searchView.pendingFunction = presentTagElements(searchTerm:)
         searchView.view.frame.origin.y = collectionView.frame.origin.y - 15
         view.addSubview(searchView.view)
     }
-
-    
-    
-    
     
     func translateTables(_ translation: CGFloat) {
         collectionView.center.y += translation
