@@ -20,18 +20,23 @@ struct ParentPostStruct {
     
     ///Adds post to DB
     func addPost(post : Post) {
-        DB.child(post.link!).setValue(post.toString())
+        guard let link = post.link else { return }
+        let updatedLink = convertStringToKey(link: link)
+        DB.child(updatedLink).setValue(post.toString())
     }
     
     ///deletes a post from DB with the given Link
     func deletePost(postLink : String) {
-        DB.child(postLink).removeValue()
+        let updatedLink = convertStringToKey(link: postLink)
+        DB.child(updatedLink).removeValue()
     }
     
     
     ///Reads complete post from database
     func readPost(postLink : String, completion : @escaping(Post)-> Void) {
-        DB.child(postLink).observeSingleEvent(of: .value) { (snapshot) in
+        let updatedLink = convertStringToKey(link: postLink)
+        
+        DB.child(updatedLink).observeSingleEvent(of: .value) { (snapshot) in
             if let post = snapshot.value as? [String : Any] {
                 
                 let likedBy = post["likedBy"] != nil ? post["likedBy"] as! [String : String] : [:] as! [String : String]

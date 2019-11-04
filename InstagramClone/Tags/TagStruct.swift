@@ -70,9 +70,10 @@ struct TagStruct {
     //check is data already exists in db and updates or creates depending on the outcome
     func addElement(tagLabel : String, tagElement : TagElement) {
         let link = tagElement.link
-        DB.child(tagLabel).child("elements").child(link).observeSingleEvent(of: .value) { (snapshot) in
+        let updatedLink = convertStringToKey(link: link)
+        DB.child(tagLabel).child("elements").child(updatedLink).observeSingleEvent(of: .value) { (snapshot) in
             if let _ = snapshot.value as? [String : Any] {
-                TagElementStruct().updateNumOfUsages(tagLabel: tagLabel, link: link)
+                TagElementStruct().updateNumOfUsages(tagLabel: tagLabel, link: updatedLink)
                 TagStruct().updateTagOccurance(tagLabel: tagLabel)
             }
             else {
@@ -85,7 +86,8 @@ struct TagStruct {
     ///Takes in a tagLabel and a new tagElement and creates the elements for the given link
     fileprivate func createElement(tagLabel : String, newTagElement : TagElement){
         let link = newTagElement.link
-        DB.child(tagLabel).child("elements").updateChildValues([link : newTagElement.toString()])
+        let updatedLink = convertStringToKey(link: link)
+        DB.child(tagLabel).child("elements").updateChildValues([updatedLink : newTagElement.toString()])
     }
     
     

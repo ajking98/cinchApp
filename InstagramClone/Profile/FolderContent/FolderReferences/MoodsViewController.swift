@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 
 class FolderReferenceController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
@@ -14,33 +15,33 @@ class FolderReferenceController: UIViewController, UICollectionViewDelegate, UIC
     @IBOutlet weak var collectionView: UICollectionView!
     let cellIdentifier = "MoodCell"
     var folderRefs : [FolderReference] = []
-    var folders : [Folder] = []
+    var username = ""
+    var isLocalUser = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if username == "" {
+            username = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
+        }
+        
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         setupCollectionViewLayout()
-        
-        
-        let folderRefArray = UserDefaults.standard.array(forKey: defaultsKeys.foldersFollowing) as! [[String : String]]
-        for index in 0..<folderRefArray.count {
-            
-            let admin = folderRefArray[index]["admin"]
-            let folderName = folderRefArray[index]["folderName"]
-            folderRefs.append(FolderReference(admin: admin!, folderName: folderName!))
-        }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        fetchFolders()
+    }
     
-    ///Pulls the latest changes done and stores them locally
-    func updateLocalFolders() {
-        for index in 0..<folderRefs.count {
-            let username = folderRefs[index].admin
-            let folderName = folderRefs[index].folderName
-            UserStruct().readSingleFolder(user: username, folderName: folderName) { (folder) in
-                self.folders.append(folder)
+    ///fetches all folder References for the given user
+    func fetchFolders() {
+        UserStruct().readFoldersReference(user: username) { (folderReferences) in
+            for folderRef in folderReferences {
+                print("this is aref")
+                let indexPath = IndexPath(item: self.folderRefs.count, section: 0)
+                self.folderRefs.append(folderRef)
+                self.collectionView.insertItems(at: [indexPath])
             }
         }
     }
@@ -48,34 +49,34 @@ class FolderReferenceController: UIViewController, UICollectionViewDelegate, UIC
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         //If the user isn't currently following any folders
-        guard folderRefs.count > 0 else {
-            let messageView = UILabel(frame: collectionView.frame)
-            messageView.text = "Folders you follow will appear here"
-            messageView.textAlignment = .center
-            messageView.backgroundColor = .darkerGreen
-            messageView.textColor = .white
-            messageView.center = CGPoint(x: collectionView.center.x, y: collectionView.center.y - 40)
-            collectionView.addSubview(messageView)
-            return 0
+        let messageView = UILabel(frame: collectionView.frame)
+        
+        messageView.text = "Folders you follow will appear here"
+        messageView.textAlignment = .center
+        messageView.backgroundColor = .darkerGreen
+        messageView.tag = 100 //random number assigned to messageview
+        messageView.textColor = .white
+        messageView.center = CGPoint(x: collectionView.center.x, y: collectionView.center.y - 40)
+        collectionView.backgroundView = messageView
+        
+        if folderRefs.count > 0 {
+            collectionView.backgroundView = UIView(frame: collectionView.frame)
         }
         
-        
-        if folders.count == 0 {
-            updateLocalFolders()
-        }
+        print("this is the count", folderRefs.count)
         return folderRefs.count
     }
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "FolderCotent") as! FolderContent
-        guard let cell = collectionView.cellForItem(at: indexPath) as? MoodsCollectionViewCell else {
-            return
-        }
         
-        vc.folderName = folders[indexPath.row].folderName
-        vc.username = cell.username
-        present(vc, animated: true, completion: nil)
+        vc.folderName = folderRefs[indexPath.row].folderName
+        vc.username = username
+        vc.isLocalUser = isLocalUser
+        
+        let myNav = UINavigationController(rootViewController: vc)
+        present(myNav, animated: true, completion: nil)
     }
     
     
@@ -88,59 +89,15 @@ class FolderReferenceController: UIViewController, UICollectionViewDelegate, UIC
         let folderName = folderRef.folderName
         
         cell.title.text = folderName
-        cell.username = username
+        
+        //TODO this should store the number of elements inside the folder
+        cell.contentNumber.text = username
         
         FolderStruct().readIcon(user: username, folderName: folderName) { (link) in
             let url = URL(string: link)
             cell.imageView.sd_setImage(with: url, placeholderImage: UIImage(named: "n2"), completed: nil)
         }
-    
-        FolderStruct().readNumOfImages(user: username, folderName: folderName) { (numberOfImages) in
-            FolderStruct().readNumOfVideos(user: username, folderName: folderName, completion: { (numberOfVideos) in
-                cell.contentNumber.text = String(numberOfImages + numberOfVideos)
-            })
-        }
-        
-        addSubviews(cell: cell)
         return cell
-    }
-    
-    
-    @objc func handleAdd(tapGesture: UITapGestureRecognizer) {
-        var folderName : String = ""
-        
-        let alert = UIAlertController(title: "Name Your Folder", message: "Enter the name you wish to use for your folder", preferredStyle: .alert)
-        
-        alert.addTextField(configurationHandler: nil)
-        alert.addAction(UIAlertAction(title: "Create", style: .default, handler: { [weak alert] (_) in
-            let textField = alert?.textFields![0]
-            folderName = textField!.text!
-            print("Text field: \(folderName)")
-            let newFolder = Folder(folderName: folderName)
-            //calling the function to save the folder name to Firebase and create it on the front end
-//            UserStruct().addFolder(user: UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!, folder: newFolder)
-            self.createFolder(folderName: folderName)
-        }))
-        
-        alert.addAction(UIAlertAction(title:"Cancel", style: .default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
-    }
-    
-    func saveFolder(folderName : String){
-        print("saving Folder")
-    }
-    
-    
-    func createFolder(folderName: String){
-        print("Creating folder: \(folderName)")
-        populateFolders()
-    }
-    
-    
-    //Should add all folder to FrontEnd
-    //The parameter for this function should be an array of Folders (Create the Folders struct)
-    func populateFolders(){
-        print("Populating")
     }
     
     func setupCollectionViewLayout() {

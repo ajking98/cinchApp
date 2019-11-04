@@ -12,6 +12,7 @@ import AVKit
 import Firebase
 import FirebaseStorage
 import FirebaseDatabase
+import XLActionController
 
 private let reuseIdentifier = "Cell"
 private let reuseIdentifierTable = "Cell2"
@@ -22,7 +23,17 @@ struct Item {
     var author : String
 }
 
-class DiscoverController: UIViewController {
+class DiscoverController: UIViewController, transferDelegate {
+    func handleAlert(alert: UIAlertController) {
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func presentContent(content: SpotifyActionController) {
+        present(content, animated: true, completion: nil)
+    }
+    
+    var something: String = "This is a test"
+    
     
     @IBOutlet weak var segmentControl: UIView!
     @IBOutlet weak var collectionViewIcon: UIImageView!
@@ -40,12 +51,7 @@ class DiscoverController: UIViewController {
     var loadingIcon = UIImageView()
     var searchBar : SearchBar?
     var isScrolling = false
-    
-    //video
-    var playerItem: AVPlayerItem!
-    var players = [AVPlayer]()
-    var player: AVPlayer!
-    var playerLayer: AVPlayerLayer!
+    var isPrimaryViewController = true
     
     //firebase
     var dbRef: DatabaseReference!
@@ -54,8 +60,9 @@ class DiscoverController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         dbRef = Database.database().reference().child("posts")
-//        loadDB()
-        fetchContent()
+        if isPrimaryViewController {
+            fetchContent()
+        }
         sizeUp()
 //        addSearchBar()
         setUpTableView()
@@ -84,6 +91,7 @@ class DiscoverController: UIViewController {
     
     
     ///Updates the content array with values from the DB
+    //TODO this only looks at data from the newContent array and not the suggestContent array
     func fetchContent() {
         let username = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
         
@@ -91,34 +99,14 @@ class DiscoverController: UIViewController {
             for (_, value) in newContent {
                 let indexPath = IndexPath(row: self.posts.count, section: 0)
                 //TODO this creates a post using the link and uses static data in contstructor, this should instead get the data from the posts section in the database
+                
                 let post = Post(isImage: true, numberOfLikes: 41, postOwner: username, likedBy: ["someone"], dateCreated: Date().timeIntervalSince1970, tags: ["nothing"], link: value)
                 
                 self.posts.append(post)
                 self.collectionView.reloadData()
                 self.tableView.insertRows(at: [indexPath], with: .right)
             }
-            
         }
-        
-        
-    }
-    
-    func loadDB() {
-        dbRef.observe(DataEventType.value, with: { (snapshot) in
-            var newImages = [Post]()
-            for imageInstaSnapshot in snapshot.children.allObjects as! [DataSnapshot] {
-                let imageInstaObject = imageInstaSnapshot.value as? [String: AnyObject]
-                let imageDate = imageInstaObject?["dateCreated"]
-                let imageOwner = imageInstaObject?["postOwner"]
-                let isImage = imageInstaObject?["isImage"]
-                let imageLink = imageInstaObject?["link"]
-                
-                let post = Post(isImage: (isImage as! Bool), postOwner: imageOwner as! String, link: imageLink as! String)
-                self.posts.append(post)
-            }
-            self.collectionView.reloadData()
-        })
-        
     }
     
     func setUpNavigation() {
@@ -542,8 +530,8 @@ extension DiscoverController : UICollectionViewDelegate, UICollectionViewDataSou
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! PostCard
-        let current:Post
-        current = posts[indexPath.row]
+        let current = posts[indexPath.row]
+        cell.delegate = self
         cell.buildPostCard(item: current)
         return cell
     }
@@ -552,7 +540,6 @@ extension DiscoverController : UICollectionViewDelegate, UICollectionViewDataSou
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "ImageSelectedController") as! ImageSelectedController
         vc.post = posts[indexPath.item]
-
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -567,8 +554,8 @@ extension DiscoverController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         //Todo change the string literal to a variable and get rid of the TablePostCard.xib
         let cell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath) as! TablePostCard
-        let currentPost:Post
-        currentPost = posts[indexPath.row]
+        let currentPost = posts[indexPath.row]
+        cell.delegate = self
         cell.buildPostCard(item: currentPost)
         return cell
     }

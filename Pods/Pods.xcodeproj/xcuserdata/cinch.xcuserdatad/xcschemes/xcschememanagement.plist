@@ -324,15 +324,25 @@
 			<key>orderHint</key>
 			<integer>43</integer>
 		</dict>
-		<key>SQLite.swift.xcscheme</key>
+		<key>SQLite.swift-iOS10.0.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>SQLite.swift.xcscheme_^#shared#^_</key>
+		<key>SQLite.swift-iOS10.0.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>44</integer>
+		</dict>
+		<key>SQLite.swift-iOS12.2.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>SQLite.swift-iOS12.2.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>45</integer>
 		</dict>
 		<key>TRMosaicLayout.xcscheme</key>
 		<dict>
@@ -342,7 +352,7 @@
 		<key>TRMosaicLayout.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>45</integer>
+			<integer>46</integer>
 		</dict>
 		<key>XLActionController.xcscheme</key>
 		<dict>
@@ -352,7 +362,7 @@
 		<key>XLActionController.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>46</integer>
+			<integer>47</integer>
 		</dict>
 		<key>leveldb-library-iOS10.0.xcscheme</key>
 		<dict>

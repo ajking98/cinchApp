@@ -8,11 +8,17 @@
 
 import UIKit
 
+
+protocol SearchDelegate : class {
+    func search(searchTerm : String)
+}
+
 class SearchBar: UITextField {
     
     var iconView : UIImageView?
     var iconViewSize : CGSize?
     var isDrawn = false
+    weak var searchDelegate : SearchDelegate?
     
     
     override func draw(_ rect: CGRect) {
@@ -62,11 +68,14 @@ class SearchBar: UITextField {
     
     func buildGestures() {
         addTarget(self, action: #selector(handlePressed), for: UIControl.Event.editingDidBegin)
-        addTarget(self, action: #selector(handlePressed), for: UIControl.Event.editingDidEnd)
-        print((self.text)?.count == 0)
-        
+        addTarget(self, action: #selector(textFieldTyping), for: UIControl.Event.editingChanged)
     }
     
+    
+    @objc func textFieldTyping() {
+        guard let text = text else { return }
+        searchDelegate?.search(searchTerm: text)
+    }
     
     //reverts back to original position when the focus is no longer on the search bar and the search bar is empty
     @objc func revertToNormal(){
@@ -86,7 +95,6 @@ class SearchBar: UITextField {
             self.iconView!.center.y = 16
         }
     }
-    
     
     @objc func handlePressed() {
         //making icon green

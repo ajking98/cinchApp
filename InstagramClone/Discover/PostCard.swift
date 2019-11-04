@@ -8,6 +8,14 @@
 
 import UIKit
 import AVKit
+import SDWebImage
+import XLActionController
+
+protocol transferDelegate : class {
+    func presentContent(content : SpotifyActionController)
+    func handleAlert(alert : UIAlertController)
+    
+}
 
 class PostCard: UICollectionViewCell {
     
@@ -16,7 +24,9 @@ class PostCard: UICollectionViewCell {
     @IBOutlet weak var labelContainer: UIView!
     var likesView = UILabel(frame: CGRect.zero)
     var authorView = UILabel(frame: CGRect.zero)
-    let likeButton = LikeButton()
+    let transferButton = TransferButton()
+    var link = ""
+    var delegate : transferDelegate?
     
     //borders
     var topBorder : UIView?
@@ -27,8 +37,6 @@ class PostCard: UICollectionViewCell {
     var playerItem: AVPlayerItem!
     var player: AVPlayer!
     var playerLayer: AVPlayerLayer!
-    
-    
 
     
     ///given a UIImage, Int, and String, and sets the values of the post to the details given
@@ -72,6 +80,7 @@ class PostCard: UICollectionViewCell {
     ///builds the view for the likes/author name and borders
     fileprivate func buildContainer(_ likes: Int, _ author: String, _ size: CGSize) {
         //LikesView and author
+        
         likesView.text = String(likes)
         authorView.text = author
         
@@ -90,7 +99,7 @@ class PostCard: UICollectionViewCell {
     
     
     
-    
+    //keeps the video in a constant loop
     func loopVideo(videoPlayer: AVPlayer) {
         NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil, queue: nil) { notification in
             videoPlayer.seek(to: CMTime.zero)
@@ -101,10 +110,9 @@ class PostCard: UICollectionViewCell {
     
     fileprivate func addSubviews() {
         
-        //likeButton
-        likeButton.frame.size = CGSize(width: 25, height: 25)
-        likeButton.frame.origin = CGPoint(x: 6, y: -2)
-        likeButton.isActive = false
+        //transferButton
+        transferButton.frame.size = CGSize(width: 25, height: 25)
+        transferButton.frame.origin = CGPoint(x: 6, y: -2)
         
         
         //Sizing
@@ -122,9 +130,19 @@ class PostCard: UICollectionViewCell {
         authorView.font = authorView.font.withSize(15)
         authorView.textAlignment = .right
         
-        labelContainer.addSubview(likeButton)
-        labelContainer.addSubview(likesView)
+        transferButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTransfer)))
+        labelContainer.addSubview(transferButton)
+//        labelContainer.addSubview(likesView)
         labelContainer.addSubview(authorView)
+    }
+    
+    //transfers the image from discover to desired folder
+    @objc func handleTransfer() {
+        Helper().saveToFolder(link: link, completion: { (alertController) in
+            self.delegate?.handleAlert(alert: alertController)
+        }) { (spotifyController) in
+            self.delegate?.presentContent(content: spotifyController)
+        }
     }
     
     
@@ -147,10 +165,13 @@ class PostCard: UICollectionViewCell {
     
     ///Given a item, sets the values of the post to that item's values
     func buildPostCard(item : Post) {
-        if item.link!.contains("mp4") {
-            buildVideoPostCard(url: URL(string: item.link!)!, likes: item.numberOfLikes!, author: item.postOwner!)
+        guard let link = item.link else { return }
+        
+        self.link = link
+        if link.contains("mp4") {
+            buildVideoPostCard(url: URL(string: link)!, likes: item.numberOfLikes!, author: item.postOwner!)
         } else {
-            buildPostCard(url: URL(string: item.link!)!, likes: item.numberOfLikes!, author: item.postOwner!)
+            buildPostCard(url: URL(string: link)!, likes: item.numberOfLikes!, author: item.postOwner!)
         }
     }
     

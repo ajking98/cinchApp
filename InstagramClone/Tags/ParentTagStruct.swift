@@ -35,14 +35,23 @@ struct ParentTagStruct{
         }
     }
     
-    
     //Takes a tag and adds it the DB under the tag label
     private func createTag(tag : Tag)-> Void{
         DB.child(tag.tagLabel!).setValue(tag.toString())
     }
     
+    ///Reads all the names of every tag
+    func readTagNames(completion : @escaping([String])->Void) {
+        DB.observeSingleEvent(of: .value) { (snapshot) in
+            if let tag = snapshot.value as? [String : Any] {
+                completion(Array(tag.keys))
+            }
+        }
+    }
+    
     ///Takes a tagLabel and returns the corresponding tag object
     func readTag(tagLabel : String, completion : @escaping(Tag)->Void){
+        
         DB.child(tagLabel).observeSingleEvent(of: .value) { (snapshot) in
             if let tag = snapshot.value as? [String : Any] {
                 print("reading tag")
@@ -58,11 +67,8 @@ struct ParentTagStruct{
                     
                     completion(tag)
                 })
-                
             }
         }
-        TagStruct().updateTagOccurance(tagLabel: tagLabel)
-        TagStruct().updateLastUsed(tagLabel: tagLabel, newLastUsedValue: NSDate().timeIntervalSince1970)
     }
     
     

@@ -11,6 +11,21 @@ import UIKit
 
 class FolderContent: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate  {
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = UIStoryboard(name: "Discover", bundle: nil).instantiateViewController(withIdentifier: "ImageSelectedController") as! ImageSelectedController
+
+        let link = content[indexPath.item]
+        
+        //TODO this creates a post using the link and uses static data in contstructor, this should instead get the data from the posts section in the database
+        let post = Post(isImage: true, numberOfLikes: 41, postOwner: username, likedBy: ["someone"], dateCreated: Date().timeIntervalSince1970, tags: ["nothing"], link: link)
+        
+        vc.post = post
+        vc.isFromDiscover = false
+        
+//        let myNav = UINavigationController(rootViewController: self)
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return content.count
@@ -27,17 +42,21 @@ class FolderContent: UIViewController, UICollectionViewDataSource, UICollectionV
     @IBOutlet weak var collectionView: UICollectionView!
     
     //todo add all images to this array
-    var content : [String] = []
+    var content : [String] = [] //holds the link to each post
     var folderName = ""
-    var username : String!
+    var username = ""
+    var isLocalUser = true
+    var followButton : UIButton?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         print("we are building")
-        if username == nil {
-            username = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)
+        if username == "" {
+            username = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!
         }
-        
+        if !isLocalUser {
+            buildFollowButton()
+        }
         
         //sizes and spaces the cells
         buildCollectionView()
@@ -48,6 +67,34 @@ class FolderContent: UIViewController, UICollectionViewDataSource, UICollectionV
         fetchContent()
     }
     
+    
+    func buildFollowButton() {
+        let width = view.frame.width
+        let height = view.frame.height
+        let tempUser = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
+
+    
+        followButton = UIButton(frame: CGRect(x: 20, y: height * 0.65, width: width / 1.5, height: width / 6))
+        guard let followButton = followButton else { return }
+        followButton.setTitle("Follow +", for: .normal)
+        followButton.setTitleColor(.white, for: .normal)
+        followButton.backgroundColor = .darkerGreen
+        print("reached: ", followButton.frame)
+        followButton.center.x = view.center.x
+        
+        //if the user already follows the folder, then disable the "follow" button
+        UserStruct().readFoldersReference(user: tempUser) { (folderReferences) in
+            for folderReference in folderReferences {
+                if folderReference.admin == self.username && folderReference.folderName == self.folderName { //checks if the user is already following that folder
+                    self.followButton?.isEnabled = false
+                    self.followButton?.backgroundColor = .darkGray
+                    self.followButton?.layer.opacity = 0.7
+                }
+            }
+        }
+        followButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleFolderFollow)))
+        view.addSubview(followButton)
+    }
     
     ///gets posts from Firebase
     func fetchContent() {
@@ -60,6 +107,26 @@ class FolderContent: UIViewController, UICollectionViewDataSource, UICollectionV
                 self.collectionView.insertItems(at: [indexPath])
             }
         }
+    }
+    
+    ///Adds the folder to the local user's folder reference list
+    @objc func handleFolderFollow() {
+        let tempUser = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
+        let folderRef = FolderReference(admin: username, folderName: folderName)
+        
+        self.followButton?.isEnabled = false
+        self.followButton?.backgroundColor = .darkGray
+        self.followButton?.layer.opacity = 0.7
+        UserStruct().addFolderReference(user: tempUser, newFolder: folderRef)
+        
+        let alert = UIAlertController(title: "Following", message: "You are now following this folder", preferredStyle: .alert)
+        present(alert, animated: true) {
+            alert.view.superview?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.alertClose)))
+        }
+    }
+    
+    @objc func alertClose(gesture: UITapGestureRecognizer) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     func buildExitButton() {

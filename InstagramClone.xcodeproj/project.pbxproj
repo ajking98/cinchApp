@@ -58,6 +58,8 @@
 		46D5E07A22A88F14003B41DE /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E07922A88F14003B41DE /* Tag.swift */; };
 		46D5E07C22A899B1003B41DE /* ParentStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E07B22A899B1003B41DE /* ParentStruct.swift */; };
 		46D5E08022ADABC3003B41DE /* StorageStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E07F22ADABC3003B41DE /* StorageStruct.swift */; };
+		46F2B5B02370835D00FFC751 /* SearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F2B5AF2370835D00FFC751 /* SearchResultViewController.swift */; };
+		46F2B5BA2370860400FFC751 /* TableSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F2B5B92370860400FFC751 /* TableSearchViewController.swift */; };
 		46FA43F323634FE7005F3046 /* MessageCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FA43F123634FE7005F3046 /* MessageCard.swift */; };
 		46FA43F423634FE7005F3046 /* MessageCard.xib in Resources */ = {isa = PBXBuildFile; fileRef = 46FA43F223634FE7005F3046 /* MessageCard.xib */; };
 		4ACC35021E65C4016B75D95E /* Pods_Gems.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 779CD7DF58B8786D507219C6 /* Pods_Gems.framework */; };
@@ -276,6 +278,8 @@
 		46D5E07B22A899B1003B41DE /* ParentStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentStruct.swift; sourceTree = "<group>"; };
 		46D5E07F22ADABC3003B41DE /* StorageStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageStruct.swift; sourceTree = "<group>"; };
 		46D5E10A22B54473003B41DE /* SQLite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SQLite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		46F2B5AF2370835D00FFC751 /* SearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewController.swift; sourceTree = "<group>"; };
+		46F2B5B92370860400FFC751 /* TableSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TableSearchViewController.swift; path = "InstagramClone/Discover/Main Controllers/TableSearchViewController.swift"; sourceTree = SOURCE_ROOT; };
 		46FA43F123634FE7005F3046 /* MessageCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCard.swift; sourceTree = "<group>"; };
 		46FA43F223634FE7005F3046 /* MessageCard.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageCard.xib; sourceTree = "<group>"; };
 		487A857B7431BFCFE64AEA4D /* Pods-Gems.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gems.release.xcconfig"; path = "Target Support Files/Pods-Gems/Pods-Gems.release.xcconfig"; sourceTree = "<group>"; };
@@ -481,10 +485,12 @@
 		46764B3223668A52006362FB /* Main Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				46F2B5B92370860400FFC751 /* TableSearchViewController.swift */,
 				891FC3FA22D7F7050024A623 /* ImageSelectedController.swift */,
 				891FC3ED22D7F6930024A623 /* DiscoverController.swift */,
 				46456C2B22FE52FB00D96EB5 /* PrimaryDiscoverController.swift */,
 				46456C2122FE51A700D96EB5 /* SecondaryDiscoverController.swift */,
+				46F2B5AF2370835D00FFC751 /* SearchResultViewController.swift */,
 			);
 			path = "Main Controllers";
 			sourceTree = "<group>";
@@ -1140,6 +1146,7 @@
 				46D48D97231AF48700952EDB /* ParentPostStruct.swift in Sources */,
 				46A3E0B822C0341E003F6F35 /* GemsViewController.swift in Sources */,
 				EB0158E122FB65DA008CC63A /* ProfileSettingsController.swift in Sources */,
+				46F2B5BA2370860400FFC751 /* TableSearchViewController.swift in Sources */,
 				EB41F8E922653170003751FA /* Photo.swift in Sources */,
 				891FC3F722D7F6B50024A623 /* PostCard.swift in Sources */,
 				8E95FFCC22BF25CE0067B5F2 /* TagElement.swift in Sources */,
@@ -1167,6 +1174,7 @@
 				8EF6B3F022F640BF00EECBF6 /* Global.swift in Sources */,
 				46D5E07A22A88F14003B41DE /* Tag.swift in Sources */,
 				46ADC113233FFBD4001B62E8 /* UIImageViewExtension.swift in Sources */,
+				46F2B5B02370835D00FFC751 /* SearchResultViewController.swift in Sources */,
 				89871254229DEA2700BE8F23 /* DiscoverPageBackground.swift in Sources */,
 				46D5E07122A87F15003B41DE /* Folder.swift in Sources */,
 				46D5E07622A87F75003B41DE /* User.swift in Sources */,

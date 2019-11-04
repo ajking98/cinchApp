@@ -8,7 +8,11 @@
 import UIKit
 
 class ProfilePageViewController: UIViewController {
+    var username: String = ""
+    var isLocalUser: Bool = true
     
+    
+    @IBOutlet weak var settingsButton: UIButton!
     @IBOutlet weak var numberOfFollowersLabel: UILabel!
     @IBOutlet weak var numberOfFollowingsLabel: UILabel!
     @IBOutlet weak var numberOfGemsLabel: UILabel!
@@ -21,21 +25,27 @@ class ProfilePageViewController: UIViewController {
     @IBOutlet weak var viewOne: UIView!
     @IBOutlet weak var viewTwo: UIView!
     var profileViewTapped = false
-    var username : String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if username == nil {
-            username = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)
+        if username == "" {
+            username = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
+        }
+        else {
+            settingsButton.isHidden = true
         }
         
         buildProfileViews()
         buildTopProfileGestures()
     }
     
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        UserDefaults.standard.set(nil, forKey: defaultsKeys.otherProfile)
+    }
+    
     @IBAction func toggleSideMenu(_ sender: Any) {
-        print("Toggle Side Menu")
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Toggle Side Menu"), object: nil)
     }
     
@@ -62,6 +72,22 @@ class ProfilePageViewController: UIViewController {
         
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard isLocalUser else {
+            if segue.identifier == "gemsSegue" {
+                let vc = segue.destination as! GemsViewController
+                vc.username = username
+                vc.isLocalUser = isLocalUser
+            }
+            if segue.identifier == "foldersFollowingSegue" {
+                let vc = segue.destination as! FolderReferenceController
+                vc.username = username
+                vc.isLocalUser = isLocalUser
+            }
+            return
+        }
+        
+    }
     @IBAction func switchViewAction(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
@@ -89,8 +115,9 @@ class ProfilePageViewController: UIViewController {
         //TODO implement read number of Gems - Should be a stored value in the DB 
 //        UserStruct().read
         
-        firstView = FirstProfileHeader().viewWithTag(12) as UIView?
-        secondView = SecondProfileHeader().viewWithTag(22) as UIView?
+        firstView = FirstProfileHeader().viewWithTag(12)
+        
+        secondView = SecondProfileHeader().viewWithTag(22)
         topView.addSubview(firstView)
     }
     
