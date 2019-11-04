@@ -145,8 +145,9 @@ class ImageSelectedController: UIViewController {
     
     @objc func handleAuthorPressed() {
         let vc = UIStoryboard(name: "ProfilePage", bundle: nil).instantiateViewController(withIdentifier: "profilePage") as! ProfilePageViewController
-        UserDefaults.standard.setValue("Justin2", forKey: defaultsKeys.otherProfile)
-        vc.username = "Justin2"
+        let author = authorView.text
+        UserDefaults.standard.setValue(author, forKey: defaultsKeys.otherProfile)
+        vc.username = "namho" //todo 
         vc.isLocalUser = false
         navigationController?.pushViewController(vc, animated: true)
     }

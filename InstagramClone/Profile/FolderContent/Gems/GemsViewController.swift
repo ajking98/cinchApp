@@ -80,7 +80,11 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
         let vc = storyboard?.instantiateViewController(withIdentifier: "FolderCotent") as! FolderContent
         
         vc.folderName = folders[indexPath.row].folderName
-        present(vc, animated: true, completion: nil)
+        vc.username = username
+        vc.isLocalUser = isLocalUser
+        
+        let myNav = UINavigationController(rootViewController: vc)
+        present(myNav, animated: true, completion: nil)
     }
     
     
