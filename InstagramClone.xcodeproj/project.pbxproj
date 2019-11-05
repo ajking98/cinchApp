@@ -19,8 +19,6 @@
 		4622493D22DFAC8F0005B12F /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4622493B22DFAC8F0005B12F /* MainInterface.storyboard */; };
 		4622493F22DFAC900005B12F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4622493E22DFAC900005B12F /* Assets.xcassets */; };
 		4622494322DFAC900005B12F /* Gems.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 4622493522DFAC8F0005B12F /* Gems.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		4622495522DFB1D20005B12F /* MessageContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4622495422DFB1D20005B12F /* MessageContentViewController.swift */; };
-		4622495722DFB1F60005B12F /* MessageContentCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4622495622DFB1F60005B12F /* MessageContentCVCell.swift */; };
 		4622495A22E24D5D0005B12F /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891FC3EB22D7F6720024A623 /* SearchBar.swift */; };
 		4622497122E7F3C80005B12F /* TableViewPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4622497022E7F3C80005B12F /* TableViewPostCell.swift */; };
 		463A844322F6279A00F9B4CD /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463A844222F6279A00F9B4CD /* CameraViewController.swift */; };
@@ -237,8 +235,6 @@
 		4622494022DFAC900005B12F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4622495222DFAD240005B12F /* InstagramClone.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = InstagramClone.entitlements; sourceTree = "<group>"; };
 		4622495322DFAD2D0005B12F /* Gems.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Gems.entitlements; sourceTree = "<group>"; };
-		4622495422DFB1D20005B12F /* MessageContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageContentViewController.swift; sourceTree = "<group>"; };
-		4622495622DFB1F60005B12F /* MessageContentCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageContentCVCell.swift; sourceTree = "<group>"; };
 		4622497022E7F3C80005B12F /* TableViewPostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewPostCell.swift; sourceTree = "<group>"; };
 		463A844222F6279A00F9B4CD /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = SOURCE_ROOT; };
 		463A844422F627F000F9B4CD /* CameraViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewCell.swift; sourceTree = SOURCE_ROOT; };
@@ -438,8 +434,6 @@
 				4622493B22DFAC8F0005B12F /* MainInterface.storyboard */,
 				46FA43F123634FE7005F3046 /* MessageCard.swift */,
 				46FA43F223634FE7005F3046 /* MessageCard.xib */,
-				4622495422DFB1D20005B12F /* MessageContentViewController.swift */,
-				4622495622DFB1F60005B12F /* MessageContentCVCell.swift */,
 				4622493E22DFAC900005B12F /* Assets.xcassets */,
 				4622494022DFAC900005B12F /* Info.plist */,
 			);
@@ -1129,11 +1123,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4622495522DFB1D20005B12F /* MessageContentViewController.swift in Sources */,
 				4622495A22E24D5D0005B12F /* SearchBar.swift in Sources */,
 				46FA43F323634FE7005F3046 /* MessageCard.swift in Sources */,
 				4622493A22DFAC8F0005B12F /* MessagesViewController.swift in Sources */,
-				4622495722DFB1F60005B12F /* MessageContentCVCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

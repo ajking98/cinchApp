@@ -53,10 +53,12 @@ class MessagesViewController: MSMessagesAppViewController, UICollectionViewDeleg
         dbRef.observeSingleEvent(of: .value) { (snapshot) in
             if let listOfPosts = snapshot.value as? [String : [String : Any]] {
                 for singlePost in listOfPosts{
-                    let link = singlePost.value["link"] as! String
+                    
+                    if let link = singlePost.value["link"] as? String {
                     let indexPath = IndexPath(item: self.content.count, section: 0)
                     self.content.append(link)
                     self.collectionView.insertItems(at: [indexPath])
+                    }
                 }
             }
         }
@@ -85,28 +87,22 @@ class MessagesViewController: MSMessagesAppViewController, UICollectionViewDeleg
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let url = URL(string: content[indexPath.row])  //gets the url of the image
-        
         let newImageView = UIImageView()
         newImageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder.png"))
         
-        //pushes the image onto the message template
-        let lay = MSMessageTemplateLayout()
-        lay.image = newImageView.image
-        let message = MSMessage()
-        message.layout = lay
-        let success = saveImage(image: newImageView.image!)
-        
-        activeConversation?.insertAttachment(url!, withAlternateFilename: "fileName.png", completionHandler: nil)
+        guard let directory = saveImage(imageName: "SelectedImage.jpg", image: newImageView.image!) else { return }
+        activeConversation?.insertAttachment(directory, withAlternateFilename: nil, completionHandler: nil)
     }
     
-    func saveImage(imageName: String, image: UIImage) {
+    
+    ///saves the image locally, to the user's device, before being sent over
+    func saveImage(imageName: String, image: UIImage)->URL? {
+        guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
         
-        
-        guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
+        guard let data = image.jpegData(compressionQuality: 1) else { return nil }
         
         let fileName = imageName
         let fileURL = documentsDirectory.appendingPathComponent(fileName)
-        guard let data = image.jpegData(compressionQuality: 1) else { return }
         
         //Checks if file exists, removes it if so.
         if FileManager.default.fileExists(atPath: fileURL.path) {
@@ -116,7 +112,6 @@ class MessagesViewController: MSMessagesAppViewController, UICollectionViewDeleg
             } catch let removeError {
                 print("couldn't remove file at path", removeError)
             }
-            
         }
         
         do {
@@ -124,25 +119,25 @@ class MessagesViewController: MSMessagesAppViewController, UICollectionViewDeleg
         } catch let error {
             print("error saving file with error", error)
         }
-        
+        return fileURL
     }
 
     
-    func saveImage(image: UIImage) -> Bool {
-        guard let data = image.jpegData(compressionQuality: 1) ?? image.pngData() else {
-            return false
-        }
-        guard let directory = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) as NSURL else {
-            return false
-        }
-        do {
-            try data.write(to: directory.appendingPathComponent("fileName.png")!)
-            return true
-        } catch {
-            print(error.localizedDescription)
-            return false
-        }
-    }
+//    func saveImage(image: UIImage) -> Bool {
+//        guard let data = image.jpegData(compressionQuality: 1) ?? image.pngData() else {
+//            return false
+//        }
+//        guard let directory = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) as NSURL else {
+//            return false
+//        }
+//        do {
+//            try data.write(to: directory.appendingPathComponent("fileName.png")!)
+//            return true
+//        } catch {
+//            print(error.localizedDescription)
+//            return false
+//        }
+//    }
     
     
     
