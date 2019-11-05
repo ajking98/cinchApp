@@ -30,7 +30,6 @@ class MessagesViewController: MSMessagesAppViewController, UICollectionViewDeleg
     
     @IBOutlet weak var collectionView: UICollectionView!
     let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-    let userDefaults = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
