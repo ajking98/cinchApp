@@ -1,0 +1,6 @@
+framework module Pods_CinchShareExtension {
+  umbrella header "Pods-CinchShareExtension-umbrella.h"
+
+  export *
+  module * { export * }
+}

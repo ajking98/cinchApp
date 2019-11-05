@@ -767,7 +767,7 @@
                                             <outlet property="title" destination="tAo-Ya-I6i" id="fb7-ry-SPk"/>
                                         </connections>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Create" id="NwC-HJ-QTN" customClass="AddFolderViewCell" customModule="InstagramClone" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Create2" id="NwC-HJ-QTN" customClass="AddFolderViewCell" customModule="InstagramClone" customModuleProvider="target">
                                         <rect key="frame" x="135.5" y="0.0" width="103" height="106"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
