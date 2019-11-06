@@ -73,6 +73,9 @@ class FolderSelection: UITableViewController {
         super.viewDidLoad()
         
         fetchFolders()
+        
+        //register a cell for the table view
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: reusableIdentifier)
     }
     
     
@@ -80,19 +83,19 @@ class FolderSelection: UITableViewController {
     func fetchFolders() {
         print("we are fetching")
         // TODO create a DB instance and call the folders
-        guard let user = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
+        guard let userDefaults = UserDefaults(suiteName: "group.InstagramClone.messages") else {
+            print("passing error a second time")
+            return }
+        guard let user = userDefaults.string(forKey: defaultsKeys.usernameKey) else {
+            print("passing error")
+            print("passing the defaults hear", userDefaults.dictionaryRepresentation().keys)
+            return }
         
-        print("passing the defaults hear")
         DB.child(user).child("folders").observeSingleEvent(of: .value) { (snapshot) in
-            print("hear we are done")
-            if let folders = snapshot.value as? [String : Any] {
-                var folderNames : [String] = []
-                for folder in folders {
-                    folderNames.append(folder.key)
-                }
-                folderNames.sort()
-                self.folders = folderNames
-                print("we are hear", folderNames)
+            if let folderNames = snapshot.value as? [String : Any] {
+                self.folders = Array(folderNames.keys)
+                self.folders.sort()
+                self.tableView.reloadData()
             }
         }
     }

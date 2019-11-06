@@ -24,9 +24,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             FirebaseApp.configure()
         }
         
+        //TODO get rid of all this
+        
         //stores the number of folders in userDefaults
         UserDefaults.standard.set([], forKey: defaultsKeys.folders)
         let username = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
+        
+        if let userDefaults = UserDefaults(suiteName: "group.InstagramClone.messages") {
+            userDefaults.set(username, forKey: defaultsKeys.usernameKey)
+        }
+        
         UserStruct().readFolders(user: username) { (folders) in
             UserDefaults.standard.set(folders, forKey: defaultsKeys.folders)
         }
