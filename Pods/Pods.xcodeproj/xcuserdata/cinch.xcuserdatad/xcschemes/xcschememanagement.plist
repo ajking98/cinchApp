@@ -13,8 +13,6 @@
 		</dict>
 		<key>CardParts.xcscheme_^#shared#^_</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>2</integer>
 		</dict>
@@ -27,8 +25,6 @@
 		</dict>
 		<key>Cards.xcscheme_^#shared#^_</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>5</integer>
 		</dict>
@@ -41,8 +37,6 @@
 		</dict>
 		<key>Differentiator.xcscheme_^#shared#^_</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>7</integer>
 		</dict>
@@ -55,8 +49,6 @@
 		</dict>
 		<key>Firebase-iOS10.0.xcscheme_^#shared#^_</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>8</integer>
 		</dict>
@@ -69,8 +61,6 @@
 		</dict>
 		<key>Firebase-iOS12.2.xcscheme_^#shared#^_</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>11</integer>
 		</dict>
@@ -83,8 +73,6 @@
 		</dict>
 		<key>FirebaseAnalytics-iOS10.0.xcscheme_^#shared#^_</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>12</integer>
 		</dict>
@@ -97,8 +85,6 @@
 		</dict>
 		<key>FirebaseAnalytics-iOS12.2.xcscheme_^#shared#^_</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>15</integer>
 		</dict>
@@ -111,8 +97,6 @@
 		</dict>
 		<key>FirebaseAuth-iOS10.0.xcscheme_^#shared#^_</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>16</integer>
 		</dict>
@@ -125,8 +109,6 @@
 		</dict>
 		<key>FirebaseAuth-iOS12.2.xcscheme_^#shared#^_</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>18</integer>
 		</dict>
@@ -139,8 +121,6 @@
 		</dict>
 		<key>FirebaseCore-iOS10.0.xcscheme_^#shared#^_</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>21</integer>
 		</dict>
@@ -153,8 +133,6 @@
 		</dict>
 		<key>FirebaseCore-iOS12.2.xcscheme_^#shared#^_</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>23</integer>
 		</dict>
@@ -167,8 +145,6 @@
 		</dict>
 		<key>FirebaseDatabase-iOS10.0.xcscheme_^#shared#^_</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>25</integer>
 		</dict>
@@ -181,8 +157,6 @@
 		</dict>
 		<key>FirebaseDatabase-iOS12.2.xcscheme_^#shared#^_</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>27</integer>
 		</dict>
@@ -195,8 +169,6 @@
 		</dict>
 		<key>FirebaseInstanceID-iOS10.0.xcscheme_^#shared#^_</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>28</integer>
 		</dict>
@@ -209,8 +181,6 @@
 		</dict>
 		<key>FirebaseInstanceID-iOS12.2.xcscheme_^#shared#^_</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>31</integer>
 		</dict>
@@ -223,8 +193,6 @@
 		</dict>
 		<key>FirebaseStorage-iOS10.0.xcscheme_^#shared#^_</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>33</integer>
 		</dict>
@@ -237,8 +205,6 @@
 		</dict>
 		<key>FirebaseStorage-iOS12.2.xcscheme_^#shared#^_</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>35</integer>
 		</dict>
@@ -251,8 +217,6 @@
 		</dict>
 		<key>GTMSessionFetcher-iOS10.0.xcscheme_^#shared#^_</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>40</integer>
 		</dict>
@@ -265,8 +229,6 @@
 		</dict>
 		<key>GTMSessionFetcher-iOS12.2.xcscheme_^#shared#^_</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>42</integer>
 		</dict>
@@ -279,8 +241,6 @@
 		</dict>
 		<key>GoogleToolboxForMac-iOS10.0.xcscheme_^#shared#^_</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>36</integer>
 		</dict>
@@ -293,8 +253,6 @@
 		</dict>
 		<key>GoogleToolboxForMac-iOS12.2.xcscheme_^#shared#^_</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>38</integer>
 		</dict>
@@ -307,8 +265,6 @@
 		</dict>
 		<key>Player.xcscheme_^#shared#^_</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>57</integer>
 		</dict>
@@ -335,8 +291,6 @@
 		</dict>
 		<key>Pods-CinchShareExtension.xcscheme_^#shared#^_</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>60</integer>
 		</dict>
@@ -356,29 +310,21 @@
 		</dict>
 		<key>Pods-Gems.xcscheme_^#shared#^_</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>64</integer>
 		</dict>
 		<key>Pods-InstagramClone.xcscheme_^#shared#^_</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>65</integer>
 		</dict>
 		<key>Pods-InstagramCloneTests.xcscheme_^#shared#^_</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>66</integer>
 		</dict>
 		<key>Pods-InstagramCloneUITests.xcscheme_^#shared#^_</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>67</integer>
 		</dict>
@@ -391,8 +337,6 @@
 		</dict>
 		<key>RxCocoa.xcscheme_^#shared#^_</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>68</integer>
 		</dict>
@@ -405,8 +349,6 @@
 		</dict>
 		<key>RxDataSources.xcscheme_^#shared#^_</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>70</integer>
 		</dict>
@@ -419,8 +361,6 @@
 		</dict>
 		<key>RxGesture.xcscheme_^#shared#^_</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>72</integer>
 		</dict>
@@ -433,8 +373,6 @@
 		</dict>
 		<key>RxSwift.xcscheme_^#shared#^_</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>75</integer>
 		</dict>
@@ -447,8 +385,6 @@
 		</dict>
 		<key>SDWebImage-iOS10.0.xcscheme_^#shared#^_</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>76</integer>
 		</dict>
@@ -461,8 +397,6 @@
 		</dict>
 		<key>SDWebImage-iOS12.2.xcscheme_^#shared#^_</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>79</integer>
 		</dict>
@@ -475,8 +409,6 @@
 		</dict>
 		<key>SQLite.swift-iOS10.0.xcscheme_^#shared#^_</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>81</integer>
 		</dict>
@@ -489,8 +421,6 @@
 		</dict>
 		<key>SQLite.swift-iOS12.2.xcscheme_^#shared#^_</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>82</integer>
 		</dict>
@@ -503,8 +433,6 @@
 		</dict>
 		<key>TRMosaicLayout.xcscheme_^#shared#^_</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>84</integer>
 		</dict>
@@ -517,8 +445,6 @@
 		</dict>
 		<key>XLActionController.xcscheme_^#shared#^_</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>86</integer>
 		</dict>
@@ -531,8 +457,6 @@
 		</dict>
 		<key>leveldb-library-iOS10.0.xcscheme_^#shared#^_</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>45</integer>
 		</dict>
@@ -545,8 +469,6 @@
 		</dict>
 		<key>leveldb-library-iOS12.2.xcscheme_^#shared#^_</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>47</integer>
 		</dict>
@@ -559,8 +481,6 @@
 		</dict>
 		<key>libwebp-iOS10.0.xcscheme_^#shared#^_</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>48</integer>
 		</dict>
@@ -573,8 +493,6 @@
 		</dict>
 		<key>libwebp-iOS12.2.xcscheme_^#shared#^_</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>50</integer>
 		</dict>
@@ -587,8 +505,6 @@
 		</dict>
 		<key>nanopb-iOS10.0.xcscheme_^#shared#^_</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>52</integer>
 		</dict>
@@ -601,8 +517,6 @@
 		</dict>
 		<key>nanopb-iOS12.2.xcscheme_^#shared#^_</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
 			<integer>55</integer>
 		</dict>

@@ -33,7 +33,6 @@
 		467E5DB922FCE8EF00F23ABD /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467E5DB822FCE8EF00F23ABD /* Post.swift */; };
 		467E5DC522FCFE2100F23ABD /* PostStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467E5DC422FCFE2100F23ABD /* PostStruct.swift */; };
 		467E5DC822FD110C00F23ABD /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467E5DC722FD110C00F23ABD /* Buttons.swift */; };
-		46991873236546A4009E85BC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EB41F92622655C26003751FA /* GoogleService-Info.plist */; };
 		46A3E08522BA8156003F6F35 /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A3E08422BA8156003F6F35 /* SQLite.framework */; };
 		46A3E09722BF0B6E003F6F35 /* ProfilePage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46A3E09622BF0B6E003F6F35 /* ProfilePage.storyboard */; };
 		46A3E0A022BF0BA1003F6F35 /* ProfilePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A3E09F22BF0BA1003F6F35 /* ProfilePageViewController.swift */; };
@@ -57,6 +56,7 @@
 		46D5E07A22A88F14003B41DE /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E07922A88F14003B41DE /* Tag.swift */; };
 		46D5E07C22A899B1003B41DE /* ParentStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E07B22A899B1003B41DE /* ParentStruct.swift */; };
 		46D5E08022ADABC3003B41DE /* StorageStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E07F22ADABC3003B41DE /* StorageStruct.swift */; };
+		46E0B87B2374B4B600EF42FD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46E0B87A2374B4B600EF42FD /* GoogleService-Info.plist */; };
 		46F2B5B02370835D00FFC751 /* SearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F2B5AF2370835D00FFC751 /* SearchResultViewController.swift */; };
 		46F2B5BF2370CB1400FFC751 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EB74D3BC226025EA00556399 /* Assets.xcassets */; };
 		46F2B5C82371274600FFC751 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F2B5C72371274600FFC751 /* ShareViewController.swift */; };
@@ -64,7 +64,6 @@
 		46F2B5CF2371274600FFC751 /* CinchShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 46F2B5C52371274600FFC751 /* CinchShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		46F2B5D32371278800FFC751 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EB74D3BC226025EA00556399 /* Assets.xcassets */; };
 		46F2B5E0237136A500FFC751 /* defaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4669B8D122B6DC64004FB38D /* defaultsKeys.swift */; };
-		46F2B5E223713E7A00FFC751 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EB41F92622655C26003751FA /* GoogleService-Info.plist */; };
 		46FA43F323634FE7005F3046 /* MessageCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FA43F123634FE7005F3046 /* MessageCard.swift */; };
 		46FA43F423634FE7005F3046 /* MessageCard.xib in Resources */ = {isa = PBXBuildFile; fileRef = 46FA43F223634FE7005F3046 /* MessageCard.xib */; };
 		8836CB324461B6BEE1D7B50C /* Pods_CinchUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4DC95FD178508B2961CE4E0 /* Pods_CinchUITests.framework */; };
@@ -101,7 +100,6 @@
 		EB40EF992263E9940093BB5B /* FolderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB40EF982263E9940093BB5B /* FolderCollectionViewCell.swift */; };
 		EB40EF9D2263F7E20093BB5B /* InsideFolderCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB40EF9C2263F7E20093BB5B /* InsideFolderCollectionViewController.swift */; };
 		EB41F8E922653170003751FA /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB41F8E822653170003751FA /* Photo.swift */; };
-		EB41F92722655C26003751FA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EB41F92622655C26003751FA /* GoogleService-Info.plist */; };
 		EB63B7DC226A7584004C7E2C /* HomeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB63B7DB226A7584004C7E2C /* HomeCollectionViewCell.swift */; };
 		EB63B7DE226A7933004C7E2C /* CustomImageFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB63B7DD226A7933004C7E2C /* CustomImageFlowLayout.swift */; };
 		EB63B7E0226A7EB5004C7E2C /* ImageInsta.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB63B7DF226A7EB5004C7E2C /* ImageInsta.swift */; };
@@ -115,7 +113,6 @@
 		EB74D3E422602B2C00556399 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB74D3E322602B2C00556399 /* SignUpViewController.swift */; };
 		EB74D3EE22603DC200556399 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB74D3ED22603DC200556399 /* ProfileViewController.swift */; };
 		EB74D3F4226045A600556399 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB74D3F2226045A600556399 /* Home.storyboard */; };
-		EB74D3FE226046C800556399 /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB74D3FC226046C800556399 /* Profile.storyboard */; };
 		EBE992ED226E3B8D002D01CF /* TRCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE992EC226E3B8D002D01CF /* TRCollectionViewController.swift */; };
 		EBF7FF1D22FC79F00099037D /* SendFeedbackController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF7FF1C22FC79F00099037D /* SendFeedbackController.swift */; };
 		EBF7FF6522FCCB930099037D /* ReportCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF7FF6422FCCB930099037D /* ReportCell.swift */; };
@@ -238,6 +235,7 @@
 		46D5E07B22A899B1003B41DE /* ParentStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentStruct.swift; sourceTree = "<group>"; };
 		46D5E07F22ADABC3003B41DE /* StorageStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageStruct.swift; sourceTree = "<group>"; };
 		46D5E10A22B54473003B41DE /* SQLite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SQLite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		46E0B87A2374B4B600EF42FD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		46F2B5AF2370835D00FFC751 /* SearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewController.swift; sourceTree = "<group>"; };
 		46F2B5C52371274600FFC751 /* CinchShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CinchShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		46F2B5C72371274600FFC751 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
@@ -292,7 +290,6 @@
 		EB40EF982263E9940093BB5B /* FolderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderCollectionViewCell.swift; sourceTree = "<group>"; };
 		EB40EF9C2263F7E20093BB5B /* InsideFolderCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsideFolderCollectionViewController.swift; sourceTree = "<group>"; };
 		EB41F8E822653170003751FA /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
-		EB41F92622655C26003751FA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		EB63B7DB226A7584004C7E2C /* HomeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewCell.swift; sourceTree = "<group>"; };
 		EB63B7DD226A7933004C7E2C /* CustomImageFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImageFlowLayout.swift; sourceTree = "<group>"; };
 		EB63B7DF226A7EB5004C7E2C /* ImageInsta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageInsta.swift; sourceTree = "<group>"; };
@@ -312,7 +309,6 @@
 		EB74D3E322602B2C00556399 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		EB74D3ED22603DC200556399 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		EB74D3F3226045A600556399 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = InstagramClone/InstagramClone/Base.lproj/Home.storyboard; sourceTree = "<group>"; };
-		EB74D3FD226046C800556399 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = InstagramClone/InstagramClone/Base.lproj/Profile.storyboard; sourceTree = "<group>"; };
 		EBE992EC226E3B8D002D01CF /* TRCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TRCollectionViewController.swift; sourceTree = "<group>"; };
 		EBF7FF1C22FC79F00099037D /* SendFeedbackController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendFeedbackController.swift; sourceTree = "<group>"; };
 		EBF7FF6422FCCB930099037D /* ReportCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportCell.swift; sourceTree = "<group>"; };
@@ -436,7 +432,6 @@
 				892677AB22CFCE390007825E /* SideMenuTableViewController.swift */,
 				EB71602722FA2726009538C2 /* MenuOptionCell.swift */,
 				EB0158E022FB65DA008CC63A /* ProfileSettingsController.swift */,
-				EB74D3FC226046C800556399 /* Profile.storyboard */,
 				46A3E10322C18661003F6F35 /* FirstProfileHeader.xib */,
 				46A3E10522C18678003F6F35 /* SecondProfileHeader.xib */,
 				46A3E09622BF0B6E003F6F35 /* ProfilePage.storyboard */,
@@ -707,7 +702,7 @@
 				EB74D3FF2260520C00556399 /* Storyboards */,
 				EB74D3BC226025EA00556399 /* Assets.xcassets */,
 				EB74D3C1226025EA00556399 /* Info.plist */,
-				EB41F92622655C26003751FA /* GoogleService-Info.plist */,
+				46E0B87A2374B4B600EF42FD /* GoogleService-Info.plist */,
 			);
 			path = Cinch;
 			sourceTree = "<group>";
@@ -919,7 +914,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4622493F22DFAC900005B12F /* Assets.xcassets in Resources */,
-				46991873236546A4009E85BC /* GoogleService-Info.plist in Resources */,
 				46FA43F423634FE7005F3046 /* MessageCard.xib in Resources */,
 				4622493D22DFAC8F0005B12F /* MainInterface.storyboard in Resources */,
 				46F2B5BF2370CB1400FFC751 /* Assets.xcassets in Resources */,
@@ -932,7 +926,6 @@
 			files = (
 				46F2B5D32371278800FFC751 /* Assets.xcassets in Resources */,
 				46F2B5CB2371274600FFC751 /* MainInterface.storyboard in Resources */,
-				46F2B5E223713E7A00FFC751 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -952,8 +945,7 @@
 				EB74D3BD226025EA00556399 /* Assets.xcassets in Resources */,
 				46A3E10622C18678003F6F35 /* SecondProfileHeader.xib in Resources */,
 				46A3E10422C18661003F6F35 /* FirstProfileHeader.xib in Resources */,
-				EB74D3FE226046C800556399 /* Profile.storyboard in Resources */,
-				EB41F92722655C26003751FA /* GoogleService-Info.plist in Resources */,
+				46E0B87B2374B4B600EF42FD /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1278,14 +1270,6 @@
 			name = Home.storyboard;
 			sourceTree = "<group>";
 		};
-		EB74D3FC226046C800556399 /* Profile.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				EB74D3FD226046C800556399 /* Base */,
-			);
-			name = Profile.storyboard;
-			sourceTree = "<group>";
-		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -1304,7 +1288,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.InstagramClone.Gems;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.CinchMemes.Gems;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -1327,7 +1311,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.InstagramClone.Gems;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.CinchMemes.Gems;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -1349,7 +1333,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.InstagramClone.CinchShareExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.CinchMemes.CinchShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -1371,7 +1355,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.InstagramClone.CinchShareExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.CinchMemes.CinchShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -1510,7 +1494,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.InstagramClone;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.CinchMemes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -1533,7 +1517,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.InstagramClone;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.CinchMemes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -1555,7 +1539,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.InstagramCloneTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.CinchTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1577,7 +1561,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.InstagramCloneTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.CinchTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1598,11 +1582,11 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.InstagramCloneUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.CinchUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = InstagramClone;
+				TEST_TARGET_NAME = Cinch;
 			};
 			name = Debug;
 		};
@@ -1619,11 +1603,11 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.InstagramCloneUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.CinchUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = InstagramClone;
+				TEST_TARGET_NAME = Cinch;
 			};
 			name = Release;
 		};
