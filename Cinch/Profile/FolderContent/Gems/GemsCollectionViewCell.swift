@@ -1,6 +1,6 @@
 //
 //  GemsCollectionViewCell.swift
-//  InstagramClone
+//  Cinch
 //
 //  Created by Gedi on 7/6/19.
 //  Copyright © 2019 Gedi, Ahmed M. All rights reserved.

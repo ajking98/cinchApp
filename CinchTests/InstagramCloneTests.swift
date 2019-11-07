@@ -1,15 +1,15 @@
 //
-//  InstagramCloneTests.swift
-//  InstagramCloneTests
+//  CinchTests.swift
+//  CinchTests
 //
 //  Created by Gedi, Ahmed M on 4/11/19.
 //  Copyright © 2019 Gedi, Ahmed M. All rights reserved.
 //
 
 import XCTest
-@testable import InstagramClone
+@testable import Cinch
 
-class InstagramCloneTests: XCTestCase {
+class CinchTests: XCTestCase {
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.

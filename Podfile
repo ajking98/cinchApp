@@ -24,7 +24,7 @@ target 'Cinch' do
   pod 'CardParts'
   
   
-  # Pods for InstagramClone
+  # Pods for Cinch
   
   target 'CinchTests' do
     inherit! :search_paths

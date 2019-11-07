@@ -1,6 +1,6 @@
 //
 //  PermissionsController.swift
-//  InstagramClone
+//  Cinch
 //
 //  Created by Alsahlani, Yassin K on 6/19/19.
 //  Copyright © 2019 Gedi, Ahmed M. All rights reserved.

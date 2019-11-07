@@ -1,6 +1,6 @@
 //
 //  ReactionsViewController.swift
-//  InstagramClone
+//  Cinch
 //
 //  Created by Ahmed Gedi on 6/23/19.
 //  Copyright © 2019 Gedi, Ahmed M. All rights reserved.

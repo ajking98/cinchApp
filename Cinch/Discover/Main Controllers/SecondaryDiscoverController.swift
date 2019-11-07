@@ -1,6 +1,6 @@
 //
 //  DiscoverController2.swift
-//  InstagramClone
+//  Cinch
 //
 //  Created by Ahmed Gedi on 8/9/19.
 //  Copyright © 2019 Gedi, Ahmed M. All rights reserved.

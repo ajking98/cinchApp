@@ -1,6 +1,6 @@
 //
 //  DiscoverLayout.swift
-//  InstagramClone
+//  Cinch
 //
 //  Created by Ahmed Gedi on 7/5/19.
 //  Copyright © 2019 Gedi, Ahmed M. All rights reserved.

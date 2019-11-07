@@ -1,6 +1,6 @@
 //
 //  SelectedTablePostCell.swift
-//  InstagramClone
+//  Cinch
 //
 //  Created by Gedi, Ahmed M on 8/2/19.
 //  Copyright © 2019 Gedi, Ahmed M. All rights reserved.

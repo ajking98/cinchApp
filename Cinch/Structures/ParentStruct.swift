@@ -1,6 +1,6 @@
 //
 //  ParentStruct.swift
-//  InstagramClone
+//  Cinch
 /*
     Responsible for Creating, Reading, Updating, and Deleting users from the database
  */

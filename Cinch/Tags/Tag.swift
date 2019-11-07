@@ -1,6 +1,6 @@
 //
 //  Tag.swift
-//  InstagramClone
+//  Cinch
 //
 
 

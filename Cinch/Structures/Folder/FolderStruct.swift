@@ -1,6 +1,6 @@
 //
 //  FolderStruct2.swift
-//  InstagramClone
+//  Cinch
 /*
     Responsible for interacting within the Folders dropdown in the database
  

@@ -1,6 +1,6 @@
 //
 //  DiscoverController.swift
-//  InstagramClone
+//  Cinch
 //
 //
 /*

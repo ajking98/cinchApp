@@ -1,6 +1,6 @@
 //
 //  TableSearchViewController.swift
-//  InstagramClone
+//  Cinch
 //
 //  Created by Ahmed Gedi on 11/4/19.
 //  Copyright © 2019 Gedi, Ahmed M. All rights reserved.

@@ -1,6 +1,6 @@
 //
 //  StorageStruct.swift
-//  InstagramClone
+//  Cinch
 /*
         Adds Images and videos to storage
             -For profile image, Folder icon, and Images/Videos to Folder

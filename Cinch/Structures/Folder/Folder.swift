@@ -1,6 +1,6 @@
 //
 //  FolderClass2.swift
-//  InstagramClone
+//  Cinch
 //
 
 import Foundation

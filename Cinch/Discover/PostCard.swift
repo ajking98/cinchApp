@@ -1,6 +1,6 @@
 //
 //  PostCard.swift
-//  InstagramClone
+//  Cinch
 //
 /*
  DiscoverPage

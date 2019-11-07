@@ -1,6 +1,6 @@
 //
 //  FolderContent.swift
-//  InstagramClone
+//  Cinch
 //
 //  Created by Ahmed Gedi on 10/19/19.
 //  Copyright © 2019 Gedi, Ahmed M. All rights reserved.
@@ -8,22 +8,45 @@
 
 import Foundation
 import UIKit
+import SDWebImage
 
 class FolderContent: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate  {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = UIStoryboard(name: "Discover", bundle: nil).instantiateViewController(withIdentifier: "ImageSelectedController") as! ImageSelectedController
+//        let vc = UIStoryboard(name: "Discover", bundle: nil).instantiateViewController(withIdentifier: "ImageSelectedController") as! ImageSelectedController
 
         let link = content[indexPath.item]
-        
-        //TODO this creates a post using the link and uses static data in contstructor, this should instead get the data from the posts section in the database
-        let post = Post(isImage: true, numberOfLikes: 41, postOwner: username, likedBy: ["someone"], dateCreated: Date().timeIntervalSince1970, tags: ["nothing"], link: link)
-        
-        vc.post = post
-        vc.isFromDiscover = false
+        let url = URL(string: link)
         
 //        let myNav = UINavigationController(rootViewController: self)
-        navigationController?.pushViewController(vc, animated: true)
+//        navigationController?.pushViewController(vc, animated: true)
+        
+//        let imageView = UIImageView()
+//        imageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder.png"))
+//        let newImageView = UIImageView(image: imageView.image)
+//        newImageView.frame = UIScreen.main.bounds
+//        newImageView.backgroundColor = .black
+//        newImageView.contentMode = .scaleAspectFit
+////        newImageView.isUserInteractionEnabled = true
+////        let tap = UITapGestureRecognizer(target: self, action: "dismissFullscreenImage:")
+////        newImageView.addGestureRecognizer(tap)
+//        self.view.addSubview(newImageView)
+//        self.navigationController?.isNavigationBarHidden = true
+//        self.tabBarController?.tabBar.isHidden = true
+    }
+    
+//    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+//        self.navigationController?.isNavigationBarHidden = false
+//        self.tabBarController?.tabBar.isHidden = false
+//        self.view.removeFromSuperview()
+////        sender.view?.removeFromSuperview()
+//    }
+    
+    func dismissFullscreenImage(sender: UITapGestureRecognizer) {
+//        self.navigationController?.isNavigationBarHidden = false
+//        self.tabBarController?.tabBar.isHidden = false
+//        sender.view?.removeFromSuperview()
+        print("hey")
     }
     
     
@@ -37,7 +60,6 @@ class FolderContent: UIViewController, UICollectionViewDataSource, UICollectionV
         cell.backgroundColor = .lightGreen
         return cell
     }
-    
     
     @IBOutlet weak var collectionView: UICollectionView!
     

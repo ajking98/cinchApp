@@ -1,6 +1,6 @@
 //
 //  CameraViewController.swift
-//  InstagramClone
+//  Cinch
 //
 /*
  Prompted when user uploads image from camera roll and a delegate is used

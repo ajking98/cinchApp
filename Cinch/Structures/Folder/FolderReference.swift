@@ -1,6 +1,6 @@
 //
 //  FolderReference.swift
-//  InstagramClone
+//  Cinch
 //
 //  Created by Ahmed Gedi on 8/29/19.
 //  Copyright © 2019 Gedi, Ahmed M. All rights reserved.

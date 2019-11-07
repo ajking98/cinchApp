@@ -1,6 +1,6 @@
 //
 //  TagElement.swift
-//  InstagramClone
+//  Cinch
 //
 
 import Foundation

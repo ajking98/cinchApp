@@ -1,6 +1,6 @@
 //
 //  TagElementStruct.swift
-//  InstagramClone
+//  Cinch
 //
 /*
  Responsible for the RU commands for the tag Elements : MUST take in a link to know which one to delete
