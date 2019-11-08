@@ -77,7 +77,7 @@ class User  {
     
     
     ///Called when all the data is available
-    init(name : String, username : String, email : String, password: String, isPrivate : Bool, profilePicLink : String, folders : [Folder], dateCreated : Double, dateLastActive : Double, followers : [String], followings : [String], biography : String, isDarkModeEnabled : Bool, newContent : [String], suggestedContent : [String], folderReferences : [FolderReference]) {
+    init(name : String, username : String, email : String, password: String, isPrivate : Bool, profilePicLink : String, folders : [Folder], followers : [String], followings : [String], biography : String, isDarkModeEnabled : Bool, newContent : [String], suggestedContent : [String], folderReferences : [FolderReference]) {
         self.name = name
         self.username = username
         self.email = email

@@ -33,6 +33,7 @@
 		467E5DB922FCE8EF00F23ABD /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467E5DB822FCE8EF00F23ABD /* Post.swift */; };
 		467E5DC522FCFE2100F23ABD /* PostStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467E5DC422FCFE2100F23ABD /* PostStruct.swift */; };
 		467E5DC822FD110C00F23ABD /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467E5DC722FD110C00F23ABD /* Buttons.swift */; };
+		467EB4F02375E58E00BBB1FE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46E0B87A2374B4B600EF42FD /* GoogleService-Info.plist */; };
 		46A3E08522BA8156003F6F35 /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A3E08422BA8156003F6F35 /* SQLite.framework */; };
 		46A3E09722BF0B6E003F6F35 /* ProfilePage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46A3E09622BF0B6E003F6F35 /* ProfilePage.storyboard */; };
 		46A3E0A022BF0BA1003F6F35 /* ProfilePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A3E09F22BF0BA1003F6F35 /* ProfilePageViewController.swift */; };
@@ -94,18 +95,15 @@
 		DABE01394F99A3F9D7ACF560 /* Pods_CinchShareExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B29698019875B2D4CBCC4F2E /* Pods_CinchShareExtension.framework */; };
 		EB0158E122FB65DA008CC63A /* ProfileSettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0158E022FB65DA008CC63A /* ProfileSettingsController.swift */; };
 		EB3159B122F4BEF400EB4FA9 /* SelectedTablePostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3159B022F4BEF400EB4FA9 /* SelectedTablePostCell.swift */; };
-		EB3A43322263A07600F6F339 /* HomeCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3A43312263A07600F6F339 /* HomeCollectionViewController.swift */; };
 		EB3A43342263ACB500F6F339 /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3A43332263ACB500F6F339 /* PhotoCell.swift */; };
 		EB3A433A2263CCC000F6F339 /* ProfileCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3A43392263CCC000F6F339 /* ProfileCollectionViewCell.swift */; };
 		EB40EF992263E9940093BB5B /* FolderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB40EF982263E9940093BB5B /* FolderCollectionViewCell.swift */; };
 		EB40EF9D2263F7E20093BB5B /* InsideFolderCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB40EF9C2263F7E20093BB5B /* InsideFolderCollectionViewController.swift */; };
 		EB41F8E922653170003751FA /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB41F8E822653170003751FA /* Photo.swift */; };
-		EB63B7DC226A7584004C7E2C /* HomeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB63B7DB226A7584004C7E2C /* HomeCollectionViewCell.swift */; };
 		EB63B7DE226A7933004C7E2C /* CustomImageFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB63B7DD226A7933004C7E2C /* CustomImageFlowLayout.swift */; };
 		EB63B7E0226A7EB5004C7E2C /* ImageInsta.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB63B7DF226A7EB5004C7E2C /* ImageInsta.swift */; };
 		EB71602822FA2726009538C2 /* MenuOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB71602722FA2726009538C2 /* MenuOptionCell.swift */; };
 		EB74D3B6226025E900556399 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB74D3B5226025E900556399 /* AppDelegate.swift */; };
-		EB74D3B8226025E900556399 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB74D3B7226025E900556399 /* ViewController.swift */; };
 		EB74D3BD226025EA00556399 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EB74D3BC226025EA00556399 /* Assets.xcassets */; };
 		EB74D3C0226025EA00556399 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB74D3BE226025EA00556399 /* LaunchScreen.storyboard */; };
 		EB74D3CB226025EA00556399 /* InstagramCloneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB74D3CA226025EA00556399 /* InstagramCloneTests.swift */; };
@@ -113,7 +111,6 @@
 		EB74D3E422602B2C00556399 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB74D3E322602B2C00556399 /* SignUpViewController.swift */; };
 		EB74D3EE22603DC200556399 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB74D3ED22603DC200556399 /* ProfileViewController.swift */; };
 		EB74D3F4226045A600556399 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB74D3F2226045A600556399 /* Home.storyboard */; };
-		EBE992ED226E3B8D002D01CF /* TRCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE992EC226E3B8D002D01CF /* TRCollectionViewController.swift */; };
 		EBF7FF1D22FC79F00099037D /* SendFeedbackController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF7FF1C22FC79F00099037D /* SendFeedbackController.swift */; };
 		EBF7FF6522FCCB930099037D /* ReportCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF7FF6422FCCB930099037D /* ReportCell.swift */; };
 /* End PBXBuildFile section */
@@ -284,19 +281,16 @@
 		E4B2D05AE2BF2F59DB788D43 /* Pods-InstagramCloneUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramCloneUITests.debug.xcconfig"; path = "Target Support Files/Pods-InstagramCloneUITests/Pods-InstagramCloneUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		EB0158E022FB65DA008CC63A /* ProfileSettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsController.swift; sourceTree = "<group>"; };
 		EB3159B022F4BEF400EB4FA9 /* SelectedTablePostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedTablePostCell.swift; sourceTree = "<group>"; };
-		EB3A43312263A07600F6F339 /* HomeCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewController.swift; sourceTree = "<group>"; };
 		EB3A43332263ACB500F6F339 /* PhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
 		EB3A43392263CCC000F6F339 /* ProfileCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCollectionViewCell.swift; sourceTree = "<group>"; };
 		EB40EF982263E9940093BB5B /* FolderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderCollectionViewCell.swift; sourceTree = "<group>"; };
 		EB40EF9C2263F7E20093BB5B /* InsideFolderCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsideFolderCollectionViewController.swift; sourceTree = "<group>"; };
 		EB41F8E822653170003751FA /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
-		EB63B7DB226A7584004C7E2C /* HomeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewCell.swift; sourceTree = "<group>"; };
 		EB63B7DD226A7933004C7E2C /* CustomImageFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImageFlowLayout.swift; sourceTree = "<group>"; };
 		EB63B7DF226A7EB5004C7E2C /* ImageInsta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageInsta.swift; sourceTree = "<group>"; };
 		EB71602722FA2726009538C2 /* MenuOptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuOptionCell.swift; sourceTree = "<group>"; };
 		EB74D3B2226025E900556399 /* Cinch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cinch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB74D3B5226025E900556399 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		EB74D3B7226025E900556399 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		EB74D3BC226025EA00556399 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EB74D3BF226025EA00556399 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EB74D3C1226025EA00556399 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -309,7 +303,6 @@
 		EB74D3E322602B2C00556399 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		EB74D3ED22603DC200556399 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		EB74D3F3226045A600556399 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = InstagramClone/InstagramClone/Base.lproj/Home.storyboard; sourceTree = "<group>"; };
-		EBE992EC226E3B8D002D01CF /* TRCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TRCollectionViewController.swift; sourceTree = "<group>"; };
 		EBF7FF1C22FC79F00099037D /* SendFeedbackController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendFeedbackController.swift; sourceTree = "<group>"; };
 		EBF7FF6422FCCB930099037D /* ReportCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportCell.swift; sourceTree = "<group>"; };
 		F0F04CCF56E32255BCFC3F5E /* Pods-CinchTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CinchTests.release.xcconfig"; path = "Target Support Files/Pods-CinchTests/Pods-CinchTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -690,11 +683,7 @@
 				89871250229DE96A00BE8F23 /* Classes */,
 				4669B8D122B6DC64004FB38D /* defaultsKeys.swift */,
 				EB74D3B5226025E900556399 /* AppDelegate.swift */,
-				EB74D3B7226025E900556399 /* ViewController.swift */,
 				EB74D3E322602B2C00556399 /* SignUpViewController.swift */,
-				EB3A43312263A07600F6F339 /* HomeCollectionViewController.swift */,
-				EB63B7DB226A7584004C7E2C /* HomeCollectionViewCell.swift */,
-				EBE992EC226E3B8D002D01CF /* TRCollectionViewController.swift */,
 				46D5E065229EDCD8003B41DE /* Structures */,
 				EB3A43332263ACB500F6F339 /* PhotoCell.swift */,
 				EB40EF9C2263F7E20093BB5B /* InsideFolderCollectionViewController.swift */,
@@ -915,6 +904,7 @@
 			files = (
 				4622493F22DFAC900005B12F /* Assets.xcassets in Resources */,
 				46FA43F423634FE7005F3046 /* MessageCard.xib in Resources */,
+				467EB4F02375E58E00BBB1FE /* GoogleService-Info.plist in Resources */,
 				4622493D22DFAC8F0005B12F /* MainInterface.storyboard in Resources */,
 				46F2B5BF2370CB1400FFC751 /* Assets.xcassets in Resources */,
 			);
@@ -1133,7 +1123,6 @@
 				892677AC22CFCE390007825E /* SideMenuTableViewController.swift in Sources */,
 				890608B222BAE2B1004C03CF /* PermissionsController.swift in Sources */,
 				46ADC111233FFBA1001B62E8 /* UIColorExtension.swift in Sources */,
-				EB3A43322263A07600F6F339 /* HomeCollectionViewController.swift in Sources */,
 				467E5DC822FD110C00F23ABD /* Buttons.swift in Sources */,
 				8E95FFC322BF252D0067B5F2 /* TagStruct.swift in Sources */,
 				4657E21A22F65B6400396087 /* AddFolderViewCell.swift in Sources */,
@@ -1143,14 +1132,11 @@
 				EB74D3E422602B2C00556399 /* SignUpViewController.swift in Sources */,
 				4622486C22D41ADF0005B12F /* MoodsCollectionViewCell.swift in Sources */,
 				4669B8D222B6DC65004FB38D /* defaultsKeys.swift in Sources */,
-				EB74D3B8226025E900556399 /* ViewController.swift in Sources */,
-				EBE992ED226E3B8D002D01CF /* TRCollectionViewController.swift in Sources */,
 				461F8221235CAABB0091579D /* FolderContentCell.swift in Sources */,
 				46D5E08022ADABC3003B41DE /* StorageStruct.swift in Sources */,
 				89871252229DE98200BE8F23 /* ZoomingImage.swift in Sources */,
 				8E92367E229C5B4F0071E63C /* HelperFrontEnd.swift in Sources */,
 				EB74D3B6226025E900556399 /* AppDelegate.swift in Sources */,
-				EB63B7DC226A7584004C7E2C /* HomeCollectionViewCell.swift in Sources */,
 				8EF6B3F022F640BF00EECBF6 /* Global.swift in Sources */,
 				46D5E07A22A88F14003B41DE /* Tag.swift in Sources */,
 				46ADC113233FFBD4001B62E8 /* UIImageViewExtension.swift in Sources */,

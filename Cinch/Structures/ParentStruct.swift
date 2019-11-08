@@ -82,7 +82,7 @@ struct ParentStruct {
                         }
                     }
                     
-                    let thisUser = User(name: name, username: username, email: email, password: password, isPrivate: isPrivate, profilePicLink: profilePicLink, folders: folders, dateCreated: dateCreated, dateLastActive: dateLastActive, followers: followers, followings: followings, biography: biography, isDarkModeEnabled: isDarkModeEnabled, newContent: newContent, suggestedContent: suggestedContent, folderReferences: folderReferences)
+                    let thisUser = User(name: name, username: username, email: email, password: password, isPrivate: isPrivate, profilePicLink: profilePicLink, folders: folders, followers: followers, followings: followings, biography: biography, isDarkModeEnabled: isDarkModeEnabled, newContent: newContent, suggestedContent: suggestedContent, folderReferences: folderReferences)
                     
                     completion(thisUser)
                 })

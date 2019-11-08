@@ -59,6 +59,7 @@ class DiscoverController: UIViewController, transferDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setUserDefaults()
         dbRef = Database.database().reference().child("posts")
         if isPrimaryViewController {
             fetchContent()
@@ -89,11 +90,35 @@ class DiscoverController: UIViewController, transferDelegate {
         setUpNavigation()
     }
     
+    func setUserDefaults() {
+        UserDefaults.standard.set([], forKey: defaultsKeys.folders)
+        
+        UserDefaults.standard.set("Justin", forKey: defaultsKeys.usernameKey)
+        if let userDefaults = UserDefaults(suiteName: "group.InstagramClone.messages") {
+            userDefaults.set("Justin", forKey: defaultsKeys.usernameKey)
+        }
+        
+        let username = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)
+        
+        UserStruct().readFolders(user: username!) { (folders) in
+            UserDefaults.standard.set(folders, forKey: defaultsKeys.folders)
+        }
+        
+        UserDefaults.standard.set([], forKey: defaultsKeys.foldersFollowing)
+        UserStruct().readFoldersReference(user: username!) { (folderReferences) in
+            var folderRefs : [[String : String]] = []
+            for index in 0..<folderReferences.count {
+                folderRefs.append(folderReferences[index].toString())
+            }
+            UserDefaults.standard.set(folderRefs, forKey: defaultsKeys.foldersFollowing)
+        }
+    }
+    
     
     ///Updates the content array with values from the DB
     //TODO this only looks at data from the newContent array and not the suggestContent array
     func fetchContent() {
-        let username = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
+        let username = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) ?? "namho"
         
         UserStruct().readNewContent(user: username) { (newContent) in
             for (_, value) in newContent {
