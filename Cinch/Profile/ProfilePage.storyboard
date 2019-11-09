@@ -81,6 +81,25 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
+                                    <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="dO5-Wm-9Ox">
+                                        <rect key="frame" x="37" y="21" width="50" height="41"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cYc-ab-nc7">
+                                                <rect key="frame" x="0.0" y="0.0" width="50" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Followers" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hE1-1f-TCA">
+                                                <rect key="frame" x="0.0" y="20.5" width="50" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <viewLayoutGuide key="safeArea" id="tz6-yF-QYY"/>
+                                    </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="t2J-cR-4SI">
                                         <rect key="frame" x="162" y="12" width="50" height="41"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -116,25 +135,6 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
-                                    </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="dO5-Wm-9Ox">
-                                        <rect key="frame" x="43" y="11" width="50" height="41"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cYc-ab-nc7">
-                                                <rect key="frame" x="0.0" y="0.0" width="50" height="20.5"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Followers" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hE1-1f-TCA">
-                                                <rect key="frame" x="0.0" y="20.5" width="50" height="20.5"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                        <viewLayoutGuide key="safeArea" id="tz6-yF-QYY"/>
                                     </stackView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -739,6 +739,35 @@
             </objects>
             <point key="canvasLocation" x="-1468.1159420289857" y="646.54017857142856"/>
         </scene>
+        <!--Folder Image Zoom Controller-->
+        <scene sceneID="OYx-Nu-R99">
+            <objects>
+                <viewController id="kUn-Mn-xrr" customClass="FolderImageZoomController" customModule="Cinch" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="sFg-Vv-Fw3">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="W4n-KP-J18">
+                                <rect key="frame" x="0.0" y="197" width="414" height="414"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="W4n-KP-J18" firstAttribute="leading" secondItem="sFg-Vv-Fw3" secondAttribute="leading" id="Cu3-aB-HSY"/>
+                            <constraint firstItem="W4n-KP-J18" firstAttribute="centerY" secondItem="sFg-Vv-Fw3" secondAttribute="centerY" id="bdO-Ti-0aw"/>
+                            <constraint firstAttribute="trailing" secondItem="W4n-KP-J18" secondAttribute="trailing" id="k3K-ph-d1D"/>
+                            <constraint firstItem="W4n-KP-J18" firstAttribute="top" secondItem="OAg-qe-R4Z" secondAttribute="top" constant="153" id="u2u-sg-CIq"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="OAg-qe-R4Z"/>
+                    </view>
+                    <connections>
+                        <outlet property="imageView" destination="W4n-KP-J18" id="8lR-Pp-RGe"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QMl-DS-MgP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3130.434782608696" y="180.80357142857142"/>
+        </scene>
         <!--Folder Content-->
         <scene sceneID="zp7-TK-3DO">
             <objects>
@@ -779,6 +808,7 @@
                                         <size key="customSize" width="82" height="84"/>
                                         <connections>
                                             <outlet property="imageView" destination="Lj7-Dq-gOo" id="iXd-NF-UTM"/>
+                                            <segue destination="kUn-Mn-xrr" kind="show" identifier="" id="ToZ-sw-VRD"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>

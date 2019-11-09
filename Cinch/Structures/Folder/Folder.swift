@@ -24,13 +24,12 @@ class Folder {
     var iconLink : String?
     
     //default variables
-    let defaultIcon = UIImage(named: "nature")
     let defaultContentImage = UIImage(named: "addImage")
     
     
     init(folderName : String) {
         self.folderName = folderName
-        self.icon = defaultIcon
+        self.icon = UIImage(named: "1")
         self.dateCreated = Date().timeIntervalSince1970
         self.dateLastModified = Date().timeIntervalSince1970
         self.content = [:]

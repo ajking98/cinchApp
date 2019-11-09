@@ -61,6 +61,7 @@ extension SideMenuViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! MenuOptionCell
         cell.selectionStyle = .none
         let switchDemo = UISwitch(frame:CGRect(x: 0, y: 10, width: 150, height: 300))
+        switchDemo.isEnabled = false
         switchDemo.isOn = true
         switchDemo.setOn(false, animated: false)
         switchDemo.tintColor = UIColor(red:0.86, green:0.86, blue:0.86, alpha:1.0)

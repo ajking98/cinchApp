@@ -41,18 +41,18 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     
     func buildAddFolderButton() {
-        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-        button.setImage(UIImage(named: "plus_icon_gray"), for: .normal)
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 80, height: 80))
+        button.setImage(UIImage(named: "icons8-plus-math-30"), for: .normal)
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleAdd(tapGesture:)))
         button.isUserInteractionEnabled = true
         button.addGestureRecognizer(tapGestureRecognizer)
-        button.backgroundColor = .lightGreen
+        button.backgroundColor = UIColor(red: 4/255, green: 209/255, blue: 151/255, alpha: 1.0)
         
         let width = view.frame.width
         let height = view.frame.height
         button.layer.cornerRadius = button.frame.width / 2
         button.clipsToBounds = true
-        button.center = CGPoint(x: (width * 3)/4.5, y: (height) / 4)
+        button.center = CGPoint(x: (width * 3)/3.75, y: (height) / 3)
         view.addSubview(button)
     }
     

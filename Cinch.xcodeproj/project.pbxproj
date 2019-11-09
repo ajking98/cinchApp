@@ -34,6 +34,7 @@
 		467E5DC522FCFE2100F23ABD /* PostStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467E5DC422FCFE2100F23ABD /* PostStruct.swift */; };
 		467E5DC822FD110C00F23ABD /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467E5DC722FD110C00F23ABD /* Buttons.swift */; };
 		467EB4F02375E58E00BBB1FE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46E0B87A2374B4B600EF42FD /* GoogleService-Info.plist */; };
+		467EB4F323766D4F00BBB1FE /* FolderImageZoomController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467EB4F223766D4F00BBB1FE /* FolderImageZoomController.swift */; };
 		46A3E08522BA8156003F6F35 /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A3E08422BA8156003F6F35 /* SQLite.framework */; };
 		46A3E09722BF0B6E003F6F35 /* ProfilePage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46A3E09622BF0B6E003F6F35 /* ProfilePage.storyboard */; };
 		46A3E0A022BF0BA1003F6F35 /* ProfilePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A3E09F22BF0BA1003F6F35 /* ProfilePageViewController.swift */; };
@@ -106,7 +107,6 @@
 		EB74D3D6226025EA00556399 /* InstagramCloneUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB74D3D5226025EA00556399 /* InstagramCloneUITests.swift */; };
 		EB74D3E422602B2C00556399 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB74D3E322602B2C00556399 /* SignUpViewController.swift */; };
 		EB74D3EE22603DC200556399 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB74D3ED22603DC200556399 /* ProfileViewController.swift */; };
-		EB74D3F4226045A600556399 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB74D3F2226045A600556399 /* Home.storyboard */; };
 		EBF7FF1D22FC79F00099037D /* SendFeedbackController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF7FF1C22FC79F00099037D /* SendFeedbackController.swift */; };
 		EBF7FF6522FCCB930099037D /* ReportCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF7FF6422FCCB930099037D /* ReportCell.swift */; };
 /* End PBXBuildFile section */
@@ -201,6 +201,7 @@
 		467E5DB822FCE8EF00F23ABD /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		467E5DC422FCFE2100F23ABD /* PostStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostStruct.swift; sourceTree = "<group>"; };
 		467E5DC722FD110C00F23ABD /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
+		467EB4F223766D4F00BBB1FE /* FolderImageZoomController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderImageZoomController.swift; sourceTree = "<group>"; };
 		46A3E06622B8577A003F6F35 /* SDWebImage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SDWebImage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		46A3E06C22B85825003F6F35 /* SDWebImage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SDWebImage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		46A3E06E22B8582D003F6F35 /* EasyImagy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = EasyImagy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -294,7 +295,6 @@
 		EB74D3D7226025EA00556399 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EB74D3E322602B2C00556399 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		EB74D3ED22603DC200556399 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
-		EB74D3F3226045A600556399 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = InstagramClone/InstagramClone/Base.lproj/Home.storyboard; sourceTree = "<group>"; };
 		EBF7FF1C22FC79F00099037D /* SendFeedbackController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendFeedbackController.swift; sourceTree = "<group>"; };
 		EBF7FF6422FCCB930099037D /* ReportCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportCell.swift; sourceTree = "<group>"; };
 		F0F04CCF56E32255BCFC3F5E /* Pods-CinchTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CinchTests.release.xcconfig"; path = "Target Support Files/Pods-CinchTests/Pods-CinchTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -416,6 +416,7 @@
 				EB71602722FA2726009538C2 /* MenuOptionCell.swift */,
 				EB0158E022FB65DA008CC63A /* ProfileSettingsController.swift */,
 				46A3E09622BF0B6E003F6F35 /* ProfilePage.storyboard */,
+				467EB4F223766D4F00BBB1FE /* FolderImageZoomController.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -707,7 +708,6 @@
 			children = (
 				EB74D3BE226025EA00556399 /* LaunchScreen.storyboard */,
 				8E123EF922B7229400F3ED5D /* Main.storyboard */,
-				EB74D3F2226045A600556399 /* Home.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -914,7 +914,6 @@
 				EB74D3C0226025EA00556399 /* LaunchScreen.storyboard in Resources */,
 				890608A922BAE27F004C03CF /* Permissions.storyboard in Resources */,
 				463A844922F6286A00F9B4CD /* Camera.storyboard in Resources */,
-				EB74D3F4226045A600556399 /* Home.storyboard in Resources */,
 				46ADC1322352BC48001B62E8 /* TablePostCard.xib in Resources */,
 				46A3E09722BF0B6E003F6F35 /* ProfilePage.storyboard in Resources */,
 				891FC3FF22D7F73A0024A623 /* PostCard.xib in Resources */,
@@ -1118,6 +1117,7 @@
 				4622486C22D41ADF0005B12F /* MoodsCollectionViewCell.swift in Sources */,
 				4669B8D222B6DC65004FB38D /* defaultsKeys.swift in Sources */,
 				461F8221235CAABB0091579D /* FolderContentCell.swift in Sources */,
+				467EB4F323766D4F00BBB1FE /* FolderImageZoomController.swift in Sources */,
 				46D5E08022ADABC3003B41DE /* StorageStruct.swift in Sources */,
 				89871252229DE98200BE8F23 /* ZoomingImage.swift in Sources */,
 				8E92367E229C5B4F0071E63C /* HelperFrontEnd.swift in Sources */,
@@ -1230,14 +1230,6 @@
 				EB74D3BF226025EA00556399 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-		EB74D3F2226045A600556399 /* Home.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				EB74D3F3226045A600556399 /* Base */,
-			);
-			name = Home.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

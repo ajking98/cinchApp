@@ -20,6 +20,7 @@ class PrimaryDiscoverController: DiscoverController, SearchDelegate {
         super.viewDidLoad()
         
         addSearchBar()
+        searchBar?.endEditing(true)
         buildSearchView()
     }
     

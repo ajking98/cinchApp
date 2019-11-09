@@ -13,40 +13,17 @@ import SDWebImage
 class FolderContent: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate  {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let vc = UIStoryboard(name: "Discover", bundle: nil).instantiateViewController(withIdentifier: "ImageSelectedController") as! ImageSelectedController
+//        let vc = UIStoryboard(2name: "Discover", bundle: nil).instantiateViewController(withIdentifier: "ImageSelectedController") as! ImageSelectedController
 
         let link = content[indexPath.item]
         let url = URL(string: link)
         
-//        let myNav = UINavigationController(rootViewController: self)
-//        navigationController?.pushViewController(vc, animated: true)
-        
-//        let imageView = UIImageView()
-//        imageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder.png"))
-//        let newImageView = UIImageView(image: imageView.image)
-//        newImageView.frame = UIScreen.main.bounds
-//        newImageView.backgroundColor = .black
-//        newImageView.contentMode = .scaleAspectFit
-////        newImageView.isUserInteractionEnabled = true
-////        let tap = UITapGestureRecognizer(target: self, action: "dismissFullscreenImage:")
-////        newImageView.addGestureRecognizer(tap)
-//        self.view.addSubview(newImageView)
-//        self.navigationController?.isNavigationBarHidden = true
-//        self.tabBarController?.tabBar.isHidden = true
-    }
-    
-//    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-//        self.navigationController?.isNavigationBarHidden = false
-//        self.tabBarController?.tabBar.isHidden = false
-//        self.view.removeFromSuperview()
-////        sender.view?.removeFromSuperview()
-//    }
-    
-    func dismissFullscreenImage(sender: UITapGestureRecognizer) {
-//        self.navigationController?.isNavigationBarHidden = false
-//        self.tabBarController?.tabBar.isHidden = false
-//        sender.view?.removeFromSuperview()
-        print("hey")
+        let vc = storyboard?.instantiateViewController(withIdentifier: "FolderImageZoomController") as? FolderImageZoomController
+        let imageView = UIImageView()
+        imageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder.png"))
+        vc!.imageView.image = imageView.image
+//        self.navigationController?.pushViewController(vc, animated: true)
+//        performSegue(withIdentifier: "imagezoom", sender: self)
     }
     
     

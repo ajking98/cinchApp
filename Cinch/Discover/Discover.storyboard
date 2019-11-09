@@ -13,7 +13,7 @@
         <!--Primary Discover Controller-->
         <scene sceneID="Ozg-zv-aPO">
             <objects>
-                <viewController storyboardIdentifier="FirstController" id="tcj-Tb-CIJ" customClass="PrimaryDiscoverController" customModule="InstagramClone" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FirstController" id="tcj-Tb-CIJ" customClass="PrimaryDiscoverController" customModule="Cinch" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="peo-QB-grK">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -44,7 +44,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.92156862750000001" green="0.92156862750000001" blue="0.93725490199999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TableCell" rowHeight="328" id="JWE-AT-6cL" customClass="TablePostCard" customModule="InstagramClone" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TableCell" rowHeight="328" id="JWE-AT-6cL" customClass="TablePostCard" customModule="Cinch" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="328"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="JWE-AT-6cL" id="VlL-Aa-TRm">
@@ -129,7 +129,7 @@
         <!--Secondary Discover Controller-->
         <scene sceneID="06J-uk-HBc">
             <objects>
-                <viewController storyboardIdentifier="NextView" id="kcC-9Y-2Fo" customClass="SecondaryDiscoverController" customModule="InstagramClone" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NextView" id="kcC-9Y-2Fo" customClass="SecondaryDiscoverController" customModule="Cinch" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="TUd-Hp-agO">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -176,7 +176,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TableCell" rowHeight="328" id="dn0-6e-cwn" customClass="TablePostCard" customModule="InstagramClone" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TableCell" rowHeight="328" id="dn0-6e-cwn" customClass="TablePostCard" customModule="Cinch" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="328"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dn0-6e-cwn" id="VGf-gJ-WqD">
@@ -344,52 +344,69 @@
         <!--Image Selected Controller-->
         <scene sceneID="yAv-ae-LLH">
             <objects>
-                <viewController storyboardIdentifier="ImageSelectedController" id="FAe-mK-Ymq" customClass="ImageSelectedController" customModule="InstagramClone" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ImageSelectedController" id="FAe-mK-Ymq" customClass="ImageSelectedController" customModule="Cinch" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fh1-XK-9Ju">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wqc-bG-lfN">
-                                <rect key="frame" x="0.0" y="480" width="414" height="431"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wqc-bG-lfN">
+                                <rect key="frame" x="0.0" y="633" width="414" height="431"/>
                                 <color key="backgroundColor" red="0.63921568630000003" green="0.63921568630000003" blue="0.63921568630000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <segue destination="kcC-9Y-2Fo" kind="embed" id="85Y-YD-Ah3"/>
                                 </connections>
                             </containerView>
-                            <view clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bmi-Qm-isQ">
-                                <rect key="frame" x="0.0" y="415" width="414" height="57"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bmi-Qm-isQ">
+                                <rect key="frame" x="0.0" y="494" width="414" height="57"/>
                                 <color key="backgroundColor" red="0.75294117647058822" green="0.90588235294117647" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hlQ-dQ-mAm">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="415"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="f2" translatesAutoresizingMaskIntoConstraints="NO" id="Gn8-fQ-bRZ">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="415"/>
+                                        <rect key="frame" x="0.0" y="89" width="414" height="415"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </imageView>
                                 </subviews>
-                                <color key="backgroundColor" red="1" green="0.96470588235294119" blue="0.88235294117647056" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="415" id="8HW-sp-Cdx"/>
-                                    <constraint firstAttribute="bottom" secondItem="Gn8-fQ-bRZ" secondAttribute="bottom" id="CEd-zG-vmg"/>
+                                    <constraint firstAttribute="bottom" secondItem="Gn8-fQ-bRZ" secondAttribute="bottom" constant="-89" id="CEd-zG-vmg"/>
                                     <constraint firstItem="Gn8-fQ-bRZ" firstAttribute="centerX" secondItem="hlQ-dQ-mAm" secondAttribute="centerX" id="Ck4-eS-ffn"/>
                                     <constraint firstAttribute="trailing" secondItem="Gn8-fQ-bRZ" secondAttribute="trailing" id="TDT-UY-Ahn"/>
                                     <constraint firstItem="Gn8-fQ-bRZ" firstAttribute="leading" secondItem="hlQ-dQ-mAm" secondAttribute="leading" id="iKT-2U-yln"/>
-                                    <constraint firstItem="Gn8-fQ-bRZ" firstAttribute="top" secondItem="hlQ-dQ-mAm" secondAttribute="top" id="kMe-L7-dVv"/>
-                                    <constraint firstItem="Gn8-fQ-bRZ" firstAttribute="centerY" secondItem="hlQ-dQ-mAm" secondAttribute="centerY" id="zs3-BG-Y6V"/>
+                                    <constraint firstItem="Gn8-fQ-bRZ" firstAttribute="top" secondItem="hlQ-dQ-mAm" secondAttribute="top" constant="89" id="kMe-L7-dVv"/>
+                                    <constraint firstItem="Gn8-fQ-bRZ" firstAttribute="centerY" secondItem="hlQ-dQ-mAm" secondAttribute="centerY" constant="89" id="zs3-BG-Y6V"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="delegate" destination="FAe-mK-Ymq" id="DGX-CV-clc"/>
                                 </connections>
                             </scrollView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="More Like This" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7KT-a8-Htn">
+                                <rect key="frame" x="0.0" y="604" width="414" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="wqc-bG-lfN" firstAttribute="top" secondItem="bmi-Qm-isQ" secondAttribute="bottom" constant="82" id="H5B-Ub-dZR"/>
+                            <constraint firstItem="wqc-bG-lfN" firstAttribute="trailing" secondItem="bmi-Qm-isQ" secondAttribute="trailing" id="M0F-Rv-hGH"/>
+                            <constraint firstItem="wqc-bG-lfN" firstAttribute="trailing" secondItem="4pr-17-I5t" secondAttribute="trailing" id="WAG-9h-1co"/>
                             <constraint firstItem="hlQ-dQ-mAm" firstAttribute="trailing" secondItem="4pr-17-I5t" secondAttribute="trailing" id="X2A-c8-zLI"/>
+                            <constraint firstAttribute="bottom" secondItem="wqc-bG-lfN" secondAttribute="bottom" constant="-168" id="dIe-7F-qi9"/>
+                            <constraint firstItem="wqc-bG-lfN" firstAttribute="top" secondItem="7KT-a8-Htn" secondAttribute="bottom" constant="8" id="eRB-vP-4YM"/>
+                            <constraint firstItem="bmi-Qm-isQ" firstAttribute="top" secondItem="hlQ-dQ-mAm" secondAttribute="bottom" constant="79" id="eXs-cz-Qr3"/>
                             <constraint firstItem="hlQ-dQ-mAm" firstAttribute="top" secondItem="fh1-XK-9Ju" secondAttribute="top" id="iiM-Kc-ace"/>
                             <constraint firstItem="hlQ-dQ-mAm" firstAttribute="leading" secondItem="4pr-17-I5t" secondAttribute="leading" id="lre-Tu-DGF"/>
+                            <constraint firstItem="wqc-bG-lfN" firstAttribute="top" secondItem="fh1-XK-9Ju" secondAttribute="top" constant="633" id="osj-Xg-GMU"/>
+                            <constraint firstItem="wqc-bG-lfN" firstAttribute="leading" secondItem="bmi-Qm-isQ" secondAttribute="leading" id="tI5-2M-aVV"/>
+                            <constraint firstItem="wqc-bG-lfN" firstAttribute="top" secondItem="bmi-Qm-isQ" secondAttribute="bottom" constant="82" id="vRH-nM-A1V"/>
+                            <constraint firstItem="7KT-a8-Htn" firstAttribute="centerX" secondItem="bmi-Qm-isQ" secondAttribute="centerX" id="xEA-m6-OfX"/>
+                            <constraint firstItem="7KT-a8-Htn" firstAttribute="leading" secondItem="fh1-XK-9Ju" secondAttribute="leadingMargin" constant="-20" id="xhG-EH-hdE"/>
+                            <constraint firstItem="wqc-bG-lfN" firstAttribute="leading" secondItem="4pr-17-I5t" secondAttribute="leading" id="zss-wI-hRg"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="4pr-17-I5t"/>
                     </view>
@@ -432,7 +449,7 @@
         <!--Search Result View Controller-->
         <scene sceneID="Dvu-me-H5a">
             <objects>
-                <viewController storyboardIdentifier="SearchResult" id="ZKO-v0-KTk" customClass="SearchResultViewController" customModule="InstagramClone" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SearchResult" id="ZKO-v0-KTk" customClass="SearchResultViewController" customModule="Cinch" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Lhz-bT-QxI">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -442,7 +459,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.92156862750000001" green="0.92156862750000001" blue="0.93725490199999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="328" id="El3-Xh-aeq" customClass="TablePostCard" customModule="InstagramClone" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="328" id="El3-Xh-aeq" customClass="TablePostCard" customModule="Cinch" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="328"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="El3-Xh-aeq" id="eae-7N-fUN">

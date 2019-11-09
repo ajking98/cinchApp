@@ -19,7 +19,7 @@ class ImageSelectedController: UIViewController {
     @IBOutlet weak var lowerView: UIView!
     @IBOutlet weak var postImage: UIImageView!
     @IBOutlet weak var labels: UIView!
-    var transferButton = TransferButton()
+    var menuOptions = MenuOptions()
     var shareButton = ShareButton()
     var likesView = UILabel(frame: CGRect.zero)
     var authorView = UILabel(frame: CGRect.zero)
@@ -106,12 +106,13 @@ class ImageSelectedController: UIViewController {
         
         let centerY = (labels.frame.height / 2) - 5
         
-        //transferButton
-        transferButton.center = CGPoint(x: 30, y: centerY)
-        transferButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTransfer)))
+        //Menu
+        menuOptions.center = CGPoint(x: labels.frame.width - 30, y: centerY)
+        menuOptions.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(postActivityController)))
         
         //share Button
-        shareButton.center = CGPoint(x: labels.frame.width - 30, y: centerY)
+        shareButton.center = CGPoint(x: 30, y: centerY)
+        shareButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTransfer)))
         
         //gestures for authorView
         authorView.isUserInteractionEnabled = true
@@ -131,7 +132,7 @@ class ImageSelectedController: UIViewController {
         authorView.text = post.postOwner
         
         //add subviews
-        labels.addSubview(transferButton)
+        labels.addSubview(menuOptions)
 //        labels.addSubview(likesView)
         labels.addSubview(authorView)
         labels.addSubview(shareButton)
@@ -197,7 +198,17 @@ class ImageSelectedController: UIViewController {
         }
     }
     
-    
+    //TODO make compatible for videos
+    //creates the activity controller when the user taps on the menu options icon
+    //only works for images right now
+    @objc func postActivityController() {
+        guard let viewController = UIApplication.shared.keyWindow?.rootViewController else { return }
+        guard let image = postImage.image else { return }
+        let activityController = UIActivityViewController(activityItems: [image], applicationActivities: nil)
+        viewController.present(activityController, animated: true) {
+            print("working with the activity controller")
+        }
+    }
     
 }
 
