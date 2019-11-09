@@ -17,8 +17,14 @@ class ProfilePageViewController: UIViewController {
     @IBOutlet weak var numberOfFollowingsLabel: UILabel!
     @IBOutlet weak var numberOfGemsLabel: UILabel!
     
-    @IBOutlet weak var topView: UIView!
-    @IBOutlet weak var pageControl: UIPageControl!
+    
+    @IBOutlet weak var profileImage: UIImageView!
+    @IBOutlet weak var editImage: UIButton!
+    @IBOutlet weak var editProfile: UIButton!
+    @IBOutlet weak var profileName: UILabel!
+    @IBOutlet weak var profileUsername: UILabel!
+    @IBOutlet weak var followButton: UIButton!
+    
     @IBOutlet weak var customSegmentedControl: UISegmentedControl!
     var firstView: UIView!
     var secondView: UIView!
@@ -31,13 +37,15 @@ class ProfilePageViewController: UIViewController {
         
         if username == "" {
             username = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
+            followButton.isHidden = true
         }
         else {
             settingsButton.isHidden = true
+            editProfile.isHidden = true
+            editImage.isHidden = true
         }
         
         buildProfileViews()
-        buildTopProfileGestures()
     }
     
     
@@ -47,29 +55,6 @@ class ProfilePageViewController: UIViewController {
     
     @IBAction func toggleSideMenu(_ sender: Any) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Toggle Side Menu"), object: nil)
-    }
-    
-    @objc func handleGesture(gesture: UITapGestureRecognizer) -> Void {
-        if profileViewTapped == true {
-            print("Tapped")
-            secondView.removeFromSuperview()
-            UIView.transition(with: self.view, duration: 0.25, options: [.transitionCrossDissolve], animations: {
-                self.topView.addSubview(self.firstView)
-            }, completion: nil)
-            
-            pageControl.currentPage = 0
-            profileViewTapped = false
-        }
-        else {
-            print("Tapped2")
-            firstView.removeFromSuperview()
-            UIView.transition(with: self.view, duration: 0.25, options: [.transitionCrossDissolve], animations: {
-                self.topView.addSubview(self.secondView)
-            }, completion: nil)
-            pageControl.currentPage = 1
-            profileViewTapped = true
-        }
-        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -112,18 +97,28 @@ class ProfilePageViewController: UIViewController {
             self.numberOfFollowingsLabel.text = String(followings.count)
         }
         
+        //sets the full name
+        UserStruct().readName(user: username) { (name) in
+            if (name == "") {
+                self.profileName.text = "Add Name"
+            } else {
+                self.profileName.text = name
+            }
+        }
+        
+        //sets profile picture
+        UserStruct().readProfilePic(user: username) { (link) in
+            let url = URL(string: link)
+            self.profileImage.sd_setImage(with: url, placeholderImage: UIImage(named: "n2"), completed: nil)
+        }
+        
+        self.profileImage.contentMode = .scaleAspectFill
+//        self.profileImage.layer.cornerRadius = self.profileImage.frame.height / 2
+        
+        profileUsername.text = username
         //TODO implement read number of Gems - Should be a stored value in the DB 
 //        UserStruct().read
         
-        firstView = FirstProfileHeader().viewWithTag(12)
-        
-        secondView = SecondProfileHeader().viewWithTag(22)
-        topView.addSubview(firstView)
-    }
-    
-    func buildTopProfileGestures() {
-        let tapped = UITapGestureRecognizer(target: self, action: #selector(handleGesture))
-        topView.addGestureRecognizer(tapped)
     }
     
 }

@@ -38,10 +38,6 @@
 		46A3E09722BF0B6E003F6F35 /* ProfilePage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46A3E09622BF0B6E003F6F35 /* ProfilePage.storyboard */; };
 		46A3E0A022BF0BA1003F6F35 /* ProfilePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A3E09F22BF0BA1003F6F35 /* ProfilePageViewController.swift */; };
 		46A3E0B822C0341E003F6F35 /* GemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A3E0B622C0341E003F6F35 /* GemsViewController.swift */; };
-		46A3E10422C18661003F6F35 /* FirstProfileHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 46A3E10322C18661003F6F35 /* FirstProfileHeader.xib */; };
-		46A3E10622C18678003F6F35 /* SecondProfileHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 46A3E10522C18678003F6F35 /* SecondProfileHeader.xib */; };
-		46A3E10822C18749003F6F35 /* FirstProfileHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A3E10722C18749003F6F35 /* FirstProfileHeader.swift */; };
-		46A3E10A22C18784003F6F35 /* SecondProfileHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A3E10922C18784003F6F35 /* SecondProfileHeader.swift */; };
 		46ADC111233FFBA1001B62E8 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46ADC110233FFBA1001B62E8 /* UIColorExtension.swift */; };
 		46ADC113233FFBD4001B62E8 /* UIImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46ADC112233FFBD4001B62E8 /* UIImageViewExtension.swift */; };
 		46ADC115233FFC8F001B62E8 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46ADC114233FFC8F001B62E8 /* UIImageExtension.swift */; };
@@ -212,10 +208,6 @@
 		46A3E09622BF0B6E003F6F35 /* ProfilePage.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ProfilePage.storyboard; sourceTree = "<group>"; };
 		46A3E09F22BF0BA1003F6F35 /* ProfilePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageViewController.swift; sourceTree = "<group>"; };
 		46A3E0B622C0341E003F6F35 /* GemsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GemsViewController.swift; sourceTree = "<group>"; };
-		46A3E10322C18661003F6F35 /* FirstProfileHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FirstProfileHeader.xib; sourceTree = "<group>"; };
-		46A3E10522C18678003F6F35 /* SecondProfileHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SecondProfileHeader.xib; sourceTree = "<group>"; };
-		46A3E10722C18749003F6F35 /* FirstProfileHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstProfileHeader.swift; sourceTree = "<group>"; };
-		46A3E10922C18784003F6F35 /* SecondProfileHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondProfileHeader.swift; sourceTree = "<group>"; };
 		46ADC110233FFBA1001B62E8 /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		46ADC112233FFBD4001B62E8 /* UIImageViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageViewExtension.swift; sourceTree = "<group>"; };
 		46ADC114233FFC8F001B62E8 /* UIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
@@ -420,13 +412,9 @@
 				46668D5F22C98C070021229D /* ProfileContainer.swift */,
 				EB74D3ED22603DC200556399 /* ProfileViewController.swift */,
 				EB3A43392263CCC000F6F339 /* ProfileCollectionViewCell.swift */,
-				46A3E10922C18784003F6F35 /* SecondProfileHeader.swift */,
-				46A3E10722C18749003F6F35 /* FirstProfileHeader.swift */,
 				892677AB22CFCE390007825E /* SideMenuTableViewController.swift */,
 				EB71602722FA2726009538C2 /* MenuOptionCell.swift */,
 				EB0158E022FB65DA008CC63A /* ProfileSettingsController.swift */,
-				46A3E10322C18661003F6F35 /* FirstProfileHeader.xib */,
-				46A3E10522C18678003F6F35 /* SecondProfileHeader.xib */,
 				46A3E09622BF0B6E003F6F35 /* ProfilePage.storyboard */,
 			);
 			path = Profile;
@@ -933,8 +921,6 @@
 				891FC3FD22D7F72E0024A623 /* Discover.storyboard in Resources */,
 				8E123EFA22B7229400F3ED5D /* Main.storyboard in Resources */,
 				EB74D3BD226025EA00556399 /* Assets.xcassets in Resources */,
-				46A3E10622C18678003F6F35 /* SecondProfileHeader.xib in Resources */,
-				46A3E10422C18661003F6F35 /* FirstProfileHeader.xib in Resources */,
 				46E0B87B2374B4B600EF42FD /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1110,7 +1096,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				46071978235AF10D00BE17DF /* FolderContent.swift in Sources */,
-				46A3E10822C18749003F6F35 /* FirstProfileHeader.swift in Sources */,
 				EB71602822FA2726009538C2 /* MenuOptionCell.swift in Sources */,
 				46ADC115233FFC8F001B62E8 /* UIImageExtension.swift in Sources */,
 				46D48D97231AF48700952EDB /* ParentPostStruct.swift in Sources */,
@@ -1168,7 +1153,6 @@
 				8E5EDB4E22C025990088FDA9 /* TagElementStruct.swift in Sources */,
 				891FC3EE22D7F6930024A623 /* DiscoverController.swift in Sources */,
 				46A3E0A022BF0BA1003F6F35 /* ProfilePageViewController.swift in Sources */,
-				46A3E10A22C18784003F6F35 /* SecondProfileHeader.swift in Sources */,
 				891FC3EC22D7F6720024A623 /* SearchBar.swift in Sources */,
 				EB63B7E0226A7EB5004C7E2C /* ImageInsta.swift in Sources */,
 				8948646222D3FC280075EB90 /* FolderCard.swift in Sources */,
