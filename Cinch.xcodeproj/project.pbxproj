@@ -35,6 +35,7 @@
 		467E5DC822FD110C00F23ABD /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467E5DC722FD110C00F23ABD /* Buttons.swift */; };
 		467EB4F02375E58E00BBB1FE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46E0B87A2374B4B600EF42FD /* GoogleService-Info.plist */; };
 		467EB4F323766D4F00BBB1FE /* FolderImageZoomController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467EB4F223766D4F00BBB1FE /* FolderImageZoomController.swift */; };
+		467EB5242377D4C400BBB1FE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467EB5232377D4C400BBB1FE /* LoginViewController.swift */; };
 		46A3E08522BA8156003F6F35 /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A3E08422BA8156003F6F35 /* SQLite.framework */; };
 		46A3E09722BF0B6E003F6F35 /* ProfilePage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46A3E09622BF0B6E003F6F35 /* ProfilePage.storyboard */; };
 		46A3E0A022BF0BA1003F6F35 /* ProfilePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A3E09F22BF0BA1003F6F35 /* ProfilePageViewController.swift */; };
@@ -202,6 +203,7 @@
 		467E5DC422FCFE2100F23ABD /* PostStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostStruct.swift; sourceTree = "<group>"; };
 		467E5DC722FD110C00F23ABD /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
 		467EB4F223766D4F00BBB1FE /* FolderImageZoomController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderImageZoomController.swift; sourceTree = "<group>"; };
+		467EB5232377D4C400BBB1FE /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		46A3E06622B8577A003F6F35 /* SDWebImage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SDWebImage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		46A3E06C22B85825003F6F35 /* SDWebImage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SDWebImage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		46A3E06E22B8582D003F6F35 /* EasyImagy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = EasyImagy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -407,6 +409,7 @@
 		465C438C22D176FB002BD263 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				467EB5202377D47100BBB1FE /* Login */,
 				461F8215235C14340091579D /* Reporting */,
 				46071979235AF11500BE17DF /* FolderContent */,
 				46A3E09F22BF0BA1003F6F35 /* ProfilePageViewController.swift */,
@@ -443,6 +446,14 @@
 			);
 			name = Post;
 			path = ../Post;
+			sourceTree = "<group>";
+		};
+		467EB5202377D47100BBB1FE /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				467EB5232377D4C400BBB1FE /* LoginViewController.swift */,
+			);
+			path = Login;
 			sourceTree = "<group>";
 		};
 		46ADC10E233FFB0F001B62E8 /* Globals */ = {
@@ -1122,6 +1133,7 @@
 				89871252229DE98200BE8F23 /* ZoomingImage.swift in Sources */,
 				8E92367E229C5B4F0071E63C /* HelperFrontEnd.swift in Sources */,
 				EB74D3B6226025E900556399 /* AppDelegate.swift in Sources */,
+				467EB5242377D4C400BBB1FE /* LoginViewController.swift in Sources */,
 				8EF6B3F022F640BF00EECBF6 /* Global.swift in Sources */,
 				46D5E07A22A88F14003B41DE /* Tag.swift in Sources */,
 				46ADC113233FFBD4001B62E8 /* UIImageViewExtension.swift in Sources */,

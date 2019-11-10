@@ -10,7 +10,7 @@ import UIKit
 class SideMenuViewController: UIViewController {
     enum MenuSection {
         case General
-        case Logout
+        case Login
     }
     enum MenuItem {
         case Private
@@ -19,7 +19,7 @@ class SideMenuViewController: UIViewController {
         case SendFeedback
         case ReportBug
         case Share
-        case Logout
+        case Login
     }
     
     struct Section {
@@ -40,7 +40,7 @@ class SideMenuViewController: UIViewController {
     
     func configureTableView() {
         sections.append(Section(type: .General, items: [.Private, .NightMode, .ProfileSettings, .SendFeedback, .ReportBug, .Share]))
-        sections.append(Section(type: .Logout, items: [.Logout]))
+        sections.append(Section(type: .Login, items: [.Login]))
         tableView.delegate = self
         tableView.dataSource = self
     }
@@ -83,8 +83,8 @@ extension SideMenuViewController: UITableViewDelegate, UITableViewDataSource {
             cell.menuLabel.text = "Report Problem"
         case .Share:
             cell.menuLabel.text = "Share"
-        case .Logout:
-            cell.menuLabel.text = "Logout"
+        case .Login:
+            cell.menuLabel.text = "Login"
         }
         return cell
     }
@@ -101,10 +101,14 @@ extension SideMenuViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         var item = sections[indexPath.section].items[indexPath.row]
         print(item)
-        if !(item == .Private || item == .NightMode || item == .Share || item == .Logout) {
+        if (item == .Login) {
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Toggle Side Menu"), object: nil)
+            let vc = storyboard?.instantiateViewController(withIdentifier: "LoginViewController")
+            self.present(vc!, animated: true, completion: nil)
+        } else if !(item == .Private || item == .NightMode || item == .Share) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Toggle Side Menu"), object: nil)
             let vc = storyboard?.instantiateViewController(withIdentifier: "\(item)")
-    
+            
             self.present(vc!, animated: true, completion: nil)
         }
 
