@@ -357,6 +357,7 @@
 				4657E21122F65B6400396087 /* AddFolderViewCell.swift */,
 				46071977235AF10D00BE17DF /* FolderContent.swift */,
 				461F8220235CAABB0091579D /* FolderContentCell.swift */,
+				467EB4F223766D4F00BBB1FE /* FolderImageZoomController.swift */,
 			);
 			path = FolderContent;
 			sourceTree = "<group>";
@@ -416,7 +417,6 @@
 				EB71602722FA2726009538C2 /* MenuOptionCell.swift */,
 				EB0158E022FB65DA008CC63A /* ProfileSettingsController.swift */,
 				46A3E09622BF0B6E003F6F35 /* ProfilePage.storyboard */,
-				467EB4F223766D4F00BBB1FE /* FolderImageZoomController.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";

@@ -86,6 +86,7 @@ class MessagesViewController: MSMessagesAppViewController, UICollectionViewDeleg
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let url = URL(string: content[indexPath.row])  //gets the url of the image
+        print(url)
         let newImageView = UIImageView()
         newImageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder.png"))
         
@@ -120,25 +121,6 @@ class MessagesViewController: MSMessagesAppViewController, UICollectionViewDeleg
         }
         return fileURL
     }
-
-    
-//    func saveImage(image: UIImage) -> Bool {
-//        guard let data = image.jpegData(compressionQuality: 1) ?? image.pngData() else {
-//            return false
-//        }
-//        guard let directory = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) as NSURL else {
-//            return false
-//        }
-//        do {
-//            try data.write(to: directory.appendingPathComponent("fileName.png")!)
-//            return true
-//        } catch {
-//            print(error.localizedDescription)
-//            return false
-//        }
-//    }
-    
-    
     
     func addSearchBar() {
         let frame = searchView.frame

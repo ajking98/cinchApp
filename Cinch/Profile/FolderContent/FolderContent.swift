@@ -12,32 +12,6 @@ import SDWebImage
 
 class FolderContent: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate  {
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let vc = UIStoryboard(2name: "Discover", bundle: nil).instantiateViewController(withIdentifier: "ImageSelectedController") as! ImageSelectedController
-
-        let link = content[indexPath.item]
-        let url = URL(string: link)
-        
-        let vc = storyboard?.instantiateViewController(withIdentifier: "FolderImageZoomController") as? FolderImageZoomController
-        let imageView = UIImageView()
-        imageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder.png"))
-        vc!.imageView.image = imageView.image
-//        self.navigationController?.pushViewController(vc, animated: true)
-//        performSegue(withIdentifier: "imagezoom", sender: self)
-    }
-    
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return content.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! FolderContentCell
-        cell.buildPostCard(link: content[indexPath.item])
-        cell.backgroundColor = .lightGreen
-        return cell
-    }
-    
     @IBOutlet weak var collectionView: UICollectionView!
     
     //todo add all images to this array
@@ -149,8 +123,8 @@ class FolderContent: UIViewController, UICollectionViewDataSource, UICollectionV
     
     //sizes and spaces the cells
     func buildCollectionView() {
-        collectionView.delegate = self
-        collectionView.dataSource = self
+        self.collectionView.delegate = self
+        self.collectionView.dataSource = self
         
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         
@@ -161,6 +135,43 @@ class FolderContent: UIViewController, UICollectionViewDataSource, UICollectionV
         layout.minimumLineSpacing = 1
         collectionView!.collectionViewLayout = layout
         collectionView.showsVerticalScrollIndicator = false
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return content.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FolderContentCell", for: indexPath) as! FolderContentCell
+        cell.buildPostCard(link: content[indexPath.item])
+        cell.backgroundColor = .lightGreen
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let link = content[indexPath.item]
+        let url = URL(string: link)
+        
+        let vc = storyboard?.instantiateViewController(withIdentifier: "FolderImageZoomController") as! FolderImageZoomController
+        if link.contains("mp4") {
+            vc.isImage = false
+            vc.link = link
+        } else {
+            let imageView = UIImageView()
+            imageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder.png"))
+            print(imageView.image)
+            vc.image = imageView.image!
+        }
+        
+        let myNav = UINavigationController(rootViewController: vc)
+        present(myNav, animated: true, completion: nil)
+        
+//        let vc = storyboard?.instantiateViewController(withIdentifier: "FolderImageZoomController") as? FolderImageZoomController
+//        let imageView = UIImageView()
+//        imageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder.png"))
+//        vc!.imageView?.image = imageView.image
+//        self.performSegue(withIdentifier: "segueWithData", sender: self)
     }
     
 }
