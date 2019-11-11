@@ -15,8 +15,8 @@ protocol SearchDelegate : class {
 
 class SearchBar: UITextField {
     
-    var iconView : UIImageView?
-    var iconViewSize : CGSize?
+//    var iconView : UIImageView?
+//    var iconViewSize : CGSize?
     var isDrawn = false
     weak var searchDelegate : SearchDelegate?
     
@@ -26,9 +26,10 @@ class SearchBar: UITextField {
             return
         }
         buildBorder()
-        buildIcon() //adds search icon to the left with padding
+        buildSpacing()
+//        buildIcon() //adds search icon to the left with padding
         buildGestures() //builds all gestures for view
-        iconViewSize = iconView?.frame.size
+//        iconViewSize = iconView?.frame.size
         
         isDrawn = true
     }
@@ -49,20 +50,28 @@ class SearchBar: UITextField {
         self.layer.cornerRadius = size.height/2
     }
     
+    // TODO Consider deleting icon completely
+//    fileprivate func buildIcon() {
+//        //spacing
+//        let leftView = UILabel(frame: CGRect(x: 0, y: 0, width: 20, height: 0))
+//        self.leftView = leftView
+//        self.leftViewMode = .always
+//        self.contentVerticalAlignment = .center
+//
+//
+//        //adding search icon
+//        let searchIcon = UIImage(named: "searchIcon")
+//        iconView = UIImageView(image: searchIcon)
+//        iconView!.frame.origin = CGPoint(x: 290, y: 5)
+//        self.addSubview(iconView!)
+//    }
     
-    fileprivate func buildIcon() {
-        //spacing
+    func buildSpacing() {
         let leftView = UILabel(frame: CGRect(x: 0, y: 0, width: 20, height: 0))
         self.leftView = leftView
         self.leftViewMode = .always
         self.contentVerticalAlignment = .center
-        
-        
-        //adding search icon
-        let searchIcon = UIImage(named: "searchIcon")
-        iconView = UIImageView(image: searchIcon)
-        iconView!.frame.origin = CGPoint(x: 290, y: 5)
-        self.addSubview(iconView!)
+
     }
     
     
@@ -85,21 +94,21 @@ class SearchBar: UITextField {
             return
         }
         //reseting icon back to original color
-        iconView?.image = UIImage(named: "searchIcon")
+//        iconView?.image = UIImage(named: "searchIcon")
         UIView.animate(withDuration: 0.3) {
             //reserse border edits
             self.layer.borderWidth = 0
             
             //reverse icon edits
-            self.iconView!.frame.size = self.iconViewSize!
-            self.iconView!.center.y = 16
+//            self.iconView!.frame.size = self.iconViewSize!
+//            self.iconView!.center.y = 16
         }
     }
     
     @objc func handlePressed() {
         //making icon green
         print("active")
-        iconView?.image = UIImage(named: "searchIconGreen")
+//        iconView?.image = UIImage(named: "searchIconGreen")
         
         guard text!.count == 0 else {
             return
@@ -110,9 +119,9 @@ class SearchBar: UITextField {
             self.layer.borderWidth = 2
             
             //make icon edits
-            let size = CGSize(width: self.iconViewSize!.width + 10, height: self.iconViewSize!.height + 10)
-            self.iconView?.frame.size = size
-            self.iconView?.center.y -= 5
+//            let size = CGSize(width: self.iconViewSize!.width + 10, height: self.iconViewSize!.height + 10)
+//            self.iconView?.frame.size = size
+//            self.iconView?.center.y -= 5
         }
     }
     

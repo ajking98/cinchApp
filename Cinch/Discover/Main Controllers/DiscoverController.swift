@@ -59,24 +59,22 @@ class DiscoverController: UIViewController, transferDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setUserDefaults()
         dbRef = Database.database().reference().child("posts")
         if isPrimaryViewController {
             fetchContent()
         }
         sizeUp()
-//        addSearchBar()
         setUpTableView()
         setUpCollectionView()
         setUpCollectionViewItemSizes()
-//        addContent()
         addGestures()
         addSelectBar(color: UIColor.darkerGreen)
         
         buildSegmentIcons()
         
         scrollViewFrame = collectionView.frame
-        
         
         loadingIcon.loadGif(asset: "loadingIcon")
         loadingIcon.frame.size = CGSize(width: 0, height: 0)
@@ -90,6 +88,7 @@ class DiscoverController: UIViewController, transferDelegate {
         setUpNavigation()
     }
     
+    // TODO taken from AppDelegate and placed here, but you need to actually allow it to set up user info
     func setUserDefaults() {
         UserDefaults.standard.set([], forKey: defaultsKeys.folders)
         
@@ -135,7 +134,6 @@ class DiscoverController: UIViewController, transferDelegate {
     }
     
     func setUpNavigation() {
-//        self.navigationController?.navigationBar.barTintColor = UIColor.lightGreen
         self.navigationController?.navigationBar.tintColor = UIColor.darkerGreen
     }
     
@@ -325,10 +323,6 @@ class DiscoverController: UIViewController, transferDelegate {
             self.searchBar?.center.y = self.segmentControl.frame.origin.y + self.segmentControl.frame.height + 30
         }
     }
-    
-    
-    
-    
     
     
     func buildSegmentIcons() {

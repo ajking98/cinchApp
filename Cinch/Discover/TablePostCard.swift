@@ -86,9 +86,6 @@ class TablePostCard: UITableViewCell {
         self.clipsToBounds = true
         tableImageView.clipsToBounds = true
         
-//        //border containers
-//        buildBorderViews()
-        
         addSubviews()
     }
     

@@ -31,6 +31,7 @@ class TableSearchViewController : UITableViewController {
         print("you have selected the : ", updatedListOfTags[indexPath.row])
         pendingFunction!(updatedListOfTags[indexPath.row])
     }
+    
     func updateTagList(searchTerm : String) {
         //update list of tags
         print("updating my tuff", previousSearchTerm, "and ", searchTerm.dropLast(), previousSearchTerm == searchTerm.dropLast())

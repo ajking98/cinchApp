@@ -11,7 +11,6 @@ target 'Cinch' do
   pod 'SDWebImage/WebP'
   pod 'Firebase/Storage','~>4.0'
   platform :ios, '10.0'
-  pod 'TRMosaicLayout'
   pod 'SQLite.swift', '~> 0.12.0'
   
   # Pods for CameraViewFinal

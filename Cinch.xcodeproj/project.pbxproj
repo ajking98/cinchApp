@@ -28,6 +28,7 @@
 		46456C2C22FE52FB00D96EB5 /* PrimaryDiscoverController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46456C2B22FE52FB00D96EB5 /* PrimaryDiscoverController.swift */; };
 		4657E21A22F65B6400396087 /* AddFolderViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4657E21122F65B6400396087 /* AddFolderViewCell.swift */; };
 		4657E21D22F72DA700396087 /* CameraViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4657E21C22F72DA700396087 /* CameraViewExtensions.swift */; };
+		465D6372237A09DB007B91CD /* defaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4669B8D122B6DC64004FB38D /* defaultsKeys.swift */; };
 		46668D6022C98C070021229D /* ProfileContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46668D5F22C98C070021229D /* ProfileContainer.swift */; };
 		4669B8D222B6DC65004FB38D /* defaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4669B8D122B6DC64004FB38D /* defaultsKeys.swift */; };
 		467E5DB922FCE8EF00F23ABD /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467E5DB822FCE8EF00F23ABD /* Post.swift */; };
@@ -63,7 +64,6 @@
 		46F2B5CB2371274600FFC751 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46F2B5C92371274600FFC751 /* MainInterface.storyboard */; };
 		46F2B5CF2371274600FFC751 /* CinchShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 46F2B5C52371274600FFC751 /* CinchShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		46F2B5D32371278800FFC751 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EB74D3BC226025EA00556399 /* Assets.xcassets */; };
-		46F2B5E0237136A500FFC751 /* defaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4669B8D122B6DC64004FB38D /* defaultsKeys.swift */; };
 		46FA43F323634FE7005F3046 /* MessageCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FA43F123634FE7005F3046 /* MessageCard.swift */; };
 		46FA43F423634FE7005F3046 /* MessageCard.xib in Resources */ = {isa = PBXBuildFile; fileRef = 46FA43F223634FE7005F3046 /* MessageCard.xib */; };
 		8836CB324461B6BEE1D7B50C /* Pods_CinchUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4DC95FD178508B2961CE4E0 /* Pods_CinchUITests.framework */; };
@@ -93,8 +93,6 @@
 		B106AA9765C10564489351DB /* Pods_CinchTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59D6DA5D887F23C80EC2A8C8 /* Pods_CinchTests.framework */; };
 		DABE01394F99A3F9D7ACF560 /* Pods_CinchShareExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B29698019875B2D4CBCC4F2E /* Pods_CinchShareExtension.framework */; };
 		EB0158E122FB65DA008CC63A /* ProfileSettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0158E022FB65DA008CC63A /* ProfileSettingsController.swift */; };
-		EB3159B122F4BEF400EB4FA9 /* SelectedTablePostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3159B022F4BEF400EB4FA9 /* SelectedTablePostCell.swift */; };
-		EB3A43342263ACB500F6F339 /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3A43332263ACB500F6F339 /* PhotoCell.swift */; };
 		EB3A433A2263CCC000F6F339 /* ProfileCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3A43392263CCC000F6F339 /* ProfileCollectionViewCell.swift */; };
 		EB40EF992263E9940093BB5B /* FolderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB40EF982263E9940093BB5B /* FolderCollectionViewCell.swift */; };
 		EB40EF9D2263F7E20093BB5B /* InsideFolderCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB40EF9C2263F7E20093BB5B /* InsideFolderCollectionViewController.swift */; };
@@ -107,10 +105,8 @@
 		EB74D3C0226025EA00556399 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB74D3BE226025EA00556399 /* LaunchScreen.storyboard */; };
 		EB74D3CB226025EA00556399 /* InstagramCloneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB74D3CA226025EA00556399 /* InstagramCloneTests.swift */; };
 		EB74D3D6226025EA00556399 /* InstagramCloneUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB74D3D5226025EA00556399 /* InstagramCloneUITests.swift */; };
-		EB74D3E422602B2C00556399 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB74D3E322602B2C00556399 /* SignUpViewController.swift */; };
 		EB74D3EE22603DC200556399 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB74D3ED22603DC200556399 /* ProfileViewController.swift */; };
 		EBF7FF1D22FC79F00099037D /* SendFeedbackController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF7FF1C22FC79F00099037D /* SendFeedbackController.swift */; };
-		EBF7FF6522FCCB930099037D /* ReportCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF7FF6422FCCB930099037D /* ReportCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -277,17 +273,15 @@
 		E11F40163552A3656E8CBE99 /* Pods-InstagramClone-Gems.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramClone-Gems.debug.xcconfig"; path = "Target Support Files/Pods-InstagramClone-Gems/Pods-InstagramClone-Gems.debug.xcconfig"; sourceTree = "<group>"; };
 		E4B2D05AE2BF2F59DB788D43 /* Pods-InstagramCloneUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramCloneUITests.debug.xcconfig"; path = "Target Support Files/Pods-InstagramCloneUITests/Pods-InstagramCloneUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		EB0158E022FB65DA008CC63A /* ProfileSettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsController.swift; sourceTree = "<group>"; };
-		EB3159B022F4BEF400EB4FA9 /* SelectedTablePostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedTablePostCell.swift; sourceTree = "<group>"; };
-		EB3A43332263ACB500F6F339 /* PhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
 		EB3A43392263CCC000F6F339 /* ProfileCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCollectionViewCell.swift; sourceTree = "<group>"; };
-		EB40EF982263E9940093BB5B /* FolderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderCollectionViewCell.swift; sourceTree = "<group>"; };
-		EB40EF9C2263F7E20093BB5B /* InsideFolderCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsideFolderCollectionViewController.swift; sourceTree = "<group>"; };
+		EB40EF982263E9940093BB5B /* FolderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FolderCollectionViewCell.swift; path = ../../FolderCollectionViewCell.swift; sourceTree = "<group>"; };
+		EB40EF9C2263F7E20093BB5B /* InsideFolderCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = InsideFolderCollectionViewController.swift; path = ../../InsideFolderCollectionViewController.swift; sourceTree = "<group>"; };
 		EB41F8E822653170003751FA /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		EB63B7DD226A7933004C7E2C /* CustomImageFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImageFlowLayout.swift; sourceTree = "<group>"; };
 		EB63B7DF226A7EB5004C7E2C /* ImageInsta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageInsta.swift; sourceTree = "<group>"; };
 		EB71602722FA2726009538C2 /* MenuOptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuOptionCell.swift; sourceTree = "<group>"; };
 		EB74D3B2226025E900556399 /* Cinch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cinch.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		EB74D3B5226025E900556399 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		EB74D3B5226025E900556399 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ../AppDelegate.swift; sourceTree = "<group>"; };
 		EB74D3BC226025EA00556399 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EB74D3BF226025EA00556399 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EB74D3C1226025EA00556399 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -297,10 +291,8 @@
 		EB74D3D1226025EA00556399 /* CinchUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CinchUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB74D3D5226025EA00556399 /* InstagramCloneUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramCloneUITests.swift; sourceTree = "<group>"; };
 		EB74D3D7226025EA00556399 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EB74D3E322602B2C00556399 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		EB74D3ED22603DC200556399 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		EBF7FF1C22FC79F00099037D /* SendFeedbackController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendFeedbackController.swift; sourceTree = "<group>"; };
-		EBF7FF6422FCCB930099037D /* ReportCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportCell.swift; sourceTree = "<group>"; };
 		F0F04CCF56E32255BCFC3F5E /* Pods-CinchTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CinchTests.release.xcconfig"; path = "Target Support Files/Pods-CinchTests/Pods-CinchTests.release.xcconfig"; sourceTree = "<group>"; };
 		F4DC95FD178508B2961CE4E0 /* Pods_CinchUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CinchUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6ABF4619C5F19733B490B61 /* Pods-Cinch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cinch.release.xcconfig"; path = "Target Support Files/Pods-Cinch/Pods-Cinch.release.xcconfig"; sourceTree = "<group>"; };
@@ -362,6 +354,8 @@
 				46071977235AF10D00BE17DF /* FolderContent.swift */,
 				461F8220235CAABB0091579D /* FolderContentCell.swift */,
 				467EB4F223766D4F00BBB1FE /* FolderImageZoomController.swift */,
+				EB40EF9C2263F7E20093BB5B /* InsideFolderCollectionViewController.swift */,
+				EB40EF982263E9940093BB5B /* FolderCollectionViewCell.swift */,
 			);
 			path = FolderContent;
 			sourceTree = "<group>";
@@ -371,7 +365,6 @@
 			children = (
 				EBF7FF1C22FC79F00099037D /* SendFeedbackController.swift */,
 				892A4FDE22FC76970012E9AD /* ReportBugController.swift */,
-				EBF7FF6422FCCB930099037D /* ReportCell.swift */,
 			);
 			path = Reporting;
 			sourceTree = "<group>";
@@ -464,6 +457,7 @@
 			children = (
 				46ADC10F233FFB61001B62E8 /* Extensions */,
 				8EF6B3EF22F640BF00EECBF6 /* Global.swift */,
+				EB74D3B5226025E900556399 /* AppDelegate.swift */,
 			);
 			path = Globals;
 			sourceTree = "<group>";
@@ -564,7 +558,6 @@
 				4622497022E7F3C80005B12F /* TableViewPostCell.swift */,
 				467E5DC722FD110C00F23ABD /* Buttons.swift */,
 				891FC3EB22D7F6720024A623 /* SearchBar.swift */,
-				EB3159B022F4BEF400EB4FA9 /* SelectedTablePostCell.swift */,
 			);
 			path = Discover;
 			sourceTree = "<group>";
@@ -675,23 +668,18 @@
 		EB74D3B4226025E900556399 /* Cinch */ = {
 			isa = PBXGroup;
 			children = (
-				46ADC10E233FFB0F001B62E8 /* Globals */,
 				4622495222DFAD240005B12F /* Cinch.entitlements */,
+				EB74D3FF2260520C00556399 /* Storyboards */,
+				46ADC10E233FFB0F001B62E8 /* Globals */,
+				89871250229DE96A00BE8F23 /* Classes */,
+				46D5E065229EDCD8003B41DE /* Structures */,
+				8987125B229DF14500BE8F23 /* HelpingStructs */,
+				46D5E066229EDCEF003B41DE /* Layouts */,
+				891FC3EA22D7F5DD0024A623 /* Discover */,
 				89503D6C22D92D37004EFC06 /* PermissionsView */,
 				89503D6422D92D09004EFC06 /* CameraView */,
-				891FC3EA22D7F5DD0024A623 /* Discover */,
 				465C438C22D176FB002BD263 /* Profile */,
-				46D5E066229EDCEF003B41DE /* Layouts */,
-				8987125B229DF14500BE8F23 /* HelpingStructs */,
-				89871250229DE96A00BE8F23 /* Classes */,
 				4669B8D122B6DC64004FB38D /* defaultsKeys.swift */,
-				EB74D3B5226025E900556399 /* AppDelegate.swift */,
-				EB74D3E322602B2C00556399 /* SignUpViewController.swift */,
-				46D5E065229EDCD8003B41DE /* Structures */,
-				EB3A43332263ACB500F6F339 /* PhotoCell.swift */,
-				EB40EF9C2263F7E20093BB5B /* InsideFolderCollectionViewController.swift */,
-				EB40EF982263E9940093BB5B /* FolderCollectionViewCell.swift */,
-				EB74D3FF2260520C00556399 /* Storyboards */,
 				EB74D3BC226025EA00556399 /* Assets.xcassets */,
 				EB74D3C1226025EA00556399 /* Info.plist */,
 				46E0B87A2374B4B600EF42FD /* GoogleService-Info.plist */,
@@ -1100,7 +1088,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				46F2B5C82371274600FFC751 /* ShareViewController.swift in Sources */,
-				46F2B5E0237136A500FFC751 /* defaultsKeys.swift in Sources */,
+				465D6372237A09DB007B91CD /* defaultsKeys.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1128,7 +1116,6 @@
 				467E5DC522FCFE2100F23ABD /* PostStruct.swift in Sources */,
 				463A844522F627F000F9B4CD /* CameraViewCell.swift in Sources */,
 				463A844322F6279A00F9B4CD /* CameraViewController.swift in Sources */,
-				EB74D3E422602B2C00556399 /* SignUpViewController.swift in Sources */,
 				4622486C22D41ADF0005B12F /* MoodsCollectionViewCell.swift in Sources */,
 				4669B8D222B6DC65004FB38D /* defaultsKeys.swift in Sources */,
 				461F8221235CAABB0091579D /* FolderContentCell.swift in Sources */,
@@ -1147,18 +1134,15 @@
 				46D5E07622A87F75003B41DE /* User.swift in Sources */,
 				46668D6022C98C070021229D /* ProfileContainer.swift in Sources */,
 				46D5E07822A87F89003B41DE /* UserStruct.swift in Sources */,
-				EB3A43342263ACB500F6F339 /* PhotoCell.swift in Sources */,
 				46D5E07422A87F5F003B41DE /* FolderStruct.swift in Sources */,
 				4622497122E7F3C80005B12F /* TableViewPostCell.swift in Sources */,
 				EB3A433A2263CCC000F6F339 /* ProfileCollectionViewCell.swift in Sources */,
 				89CD1D04229201BA004BD0A0 /* DownloadImage.swift in Sources */,
 				EB40EF992263E9940093BB5B /* FolderCollectionViewCell.swift in Sources */,
-				EBF7FF6522FCCB930099037D /* ReportCell.swift in Sources */,
 				46D48D902318A7D100952EDB /* FolderReference.swift in Sources */,
 				891FC3F922D7F6D80024A623 /* DiscoverLayout.swift in Sources */,
 				EB63B7DE226A7933004C7E2C /* CustomImageFlowLayout.swift in Sources */,
 				EB74D3EE22603DC200556399 /* ProfileViewController.swift in Sources */,
-				EB3159B122F4BEF400EB4FA9 /* SelectedTablePostCell.swift in Sources */,
 				4607196E235ACC1900BE17DF /* PanGestureExtension.swift in Sources */,
 				467E5DB922FCE8EF00F23ABD /* Post.swift in Sources */,
 				8EADC50222D16BB3005A7CC0 /* GemsCollectionViewCell.swift in Sources */,

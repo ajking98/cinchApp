@@ -104,6 +104,7 @@ class DiscoverLayout: UICollectionViewLayout {
         return visibleLayoutAttributes
     }
     
+    // TODO Consider deleting line below
 //    override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
 //        return cache[indexPath.item]
 //    }

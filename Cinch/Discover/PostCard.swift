@@ -132,7 +132,6 @@ class PostCard: UICollectionViewCell {
         
         transferButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTransfer)))
         labelContainer.addSubview(transferButton)
-//        labelContainer.addSubview(likesView)
         labelContainer.addSubview(authorView)
     }
     

@@ -13,8 +13,6 @@
 import Foundation
 import UIKit
 
-// zoomingImageView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleZoomOut)))
-
 class ZoomingImage : UIImageView {
     var longPressedBool = false
     

@@ -32,11 +32,9 @@ class ImageSelectedController: UIViewController {
     
     
     override func viewDidLoad() {
-        print("okay we are reaching")
         super.viewDidLoad()
         
         setUp()
-        
         setUpScrollView()
         
         guard isFromDiscover else {
@@ -67,7 +65,6 @@ class ImageSelectedController: UIViewController {
     func setUpScrollView() {
         scrollView.minimumZoomScale = 1.0
         scrollView.maximumZoomScale = 20.0
-//        scrollView.delegate = self //- it is set on the storyboard.
         scrollView.isUserInteractionEnabled = true
         scrollView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleMute)))
     }
@@ -133,7 +130,6 @@ class ImageSelectedController: UIViewController {
         
         //add subviews
         labels.addSubview(menuOptions)
-//        labels.addSubview(likesView)
         labels.addSubview(authorView)
         labels.addSubview(shareButton)
         

@@ -94,6 +94,7 @@ class TransferButton : UIButton {
 }
 
 
+// TODO Consider deleting like button since we won't have an avaible like button
 class LikeButton : UIButton {
     
     var isActive = false
