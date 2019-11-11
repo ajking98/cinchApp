@@ -1,6 +1,6 @@
 //
 //  CameraViewController.swift
-//  InstagramClone
+//  Cinch
 //
 /*
  Prompted when user uploads image from camera roll and a delegate is used
@@ -231,6 +231,8 @@ class CameraViewController: UIViewController {
         layout.sectionInset = UIEdgeInsets(top: 20, left: 0, bottom: 10, right: 0)
         layout.minimumInteritemSpacing = 3
         layout.minimumLineSpacing = 0
+        
+        addButton.tintColor = .lightGreen
     }
     
     

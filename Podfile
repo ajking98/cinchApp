@@ -2,7 +2,7 @@
 # platform :ios, '9.0'
 source 'https://github.com/CocoaPods/Specs.git'
 
-target 'InstagramClone' do
+target 'Cinch' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
   pod 'Firebase/Core'
@@ -11,7 +11,6 @@ target 'InstagramClone' do
   pod 'SDWebImage/WebP'
   pod 'Firebase/Storage','~>4.0'
   platform :ios, '10.0'
-  pod 'TRMosaicLayout'
   pod 'SQLite.swift', '~> 0.12.0'
   
   # Pods for CameraViewFinal
@@ -24,21 +23,21 @@ target 'InstagramClone' do
   pod 'CardParts'
   
   
-  # Pods for InstagramClone
+  # Pods for Cinch
   
-  target 'InstagramCloneTests' do
+  target 'CinchTests' do
     inherit! :search_paths
     # Pods for testing
   end
   
-  target 'InstagramCloneUITests' do
+  target 'CinchUITests' do
     inherit! :search_paths
     # Pods for testing
   end
   
 end
 
-target 'Gems' do
+target 'CinchIMessageExtension' do
   use_frameworks!
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
