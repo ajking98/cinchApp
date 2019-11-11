@@ -36,6 +36,7 @@
 		467EB4F02375E58E00BBB1FE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46E0B87A2374B4B600EF42FD /* GoogleService-Info.plist */; };
 		467EB4F323766D4F00BBB1FE /* FolderImageZoomController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467EB4F223766D4F00BBB1FE /* FolderImageZoomController.swift */; };
 		467EB5242377D4C400BBB1FE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467EB5232377D4C400BBB1FE /* LoginViewController.swift */; };
+		467EB5262379C3FE00BBB1FE /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467EB5252379C3FE00BBB1FE /* EditProfileViewController.swift */; };
 		46A3E08522BA8156003F6F35 /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A3E08422BA8156003F6F35 /* SQLite.framework */; };
 		46A3E09722BF0B6E003F6F35 /* ProfilePage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46A3E09622BF0B6E003F6F35 /* ProfilePage.storyboard */; };
 		46A3E0A022BF0BA1003F6F35 /* ProfilePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A3E09F22BF0BA1003F6F35 /* ProfilePageViewController.swift */; };
@@ -204,6 +205,7 @@
 		467E5DC722FD110C00F23ABD /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
 		467EB4F223766D4F00BBB1FE /* FolderImageZoomController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderImageZoomController.swift; sourceTree = "<group>"; };
 		467EB5232377D4C400BBB1FE /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		467EB5252379C3FE00BBB1FE /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		46A3E06622B8577A003F6F35 /* SDWebImage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SDWebImage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		46A3E06C22B85825003F6F35 /* SDWebImage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SDWebImage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		46A3E06E22B8582D003F6F35 /* EasyImagy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = EasyImagy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -419,6 +421,7 @@
 				892677AB22CFCE390007825E /* SideMenuTableViewController.swift */,
 				EB71602722FA2726009538C2 /* MenuOptionCell.swift */,
 				EB0158E022FB65DA008CC63A /* ProfileSettingsController.swift */,
+				467EB5252379C3FE00BBB1FE /* EditProfileViewController.swift */,
 				46A3E09622BF0B6E003F6F35 /* ProfilePage.storyboard */,
 			);
 			path = Profile;
@@ -1108,6 +1111,7 @@
 				46071978235AF10D00BE17DF /* FolderContent.swift in Sources */,
 				EB71602822FA2726009538C2 /* MenuOptionCell.swift in Sources */,
 				46ADC115233FFC8F001B62E8 /* UIImageExtension.swift in Sources */,
+				467EB5262379C3FE00BBB1FE /* EditProfileViewController.swift in Sources */,
 				46D48D97231AF48700952EDB /* ParentPostStruct.swift in Sources */,
 				46A3E0B822C0341E003F6F35 /* GemsViewController.swift in Sources */,
 				EB0158E122FB65DA008CC63A /* ProfileSettingsController.swift in Sources */,
