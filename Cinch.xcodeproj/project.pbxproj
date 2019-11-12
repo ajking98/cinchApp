@@ -28,7 +28,6 @@
 		46456C2C22FE52FB00D96EB5 /* PrimaryDiscoverController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46456C2B22FE52FB00D96EB5 /* PrimaryDiscoverController.swift */; };
 		4657E21A22F65B6400396087 /* AddFolderViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4657E21122F65B6400396087 /* AddFolderViewCell.swift */; };
 		4657E21D22F72DA700396087 /* CameraViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4657E21C22F72DA700396087 /* CameraViewExtensions.swift */; };
-		465D6372237A09DB007B91CD /* defaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4669B8D122B6DC64004FB38D /* defaultsKeys.swift */; };
 		46668D6022C98C070021229D /* ProfileContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46668D5F22C98C070021229D /* ProfileContainer.swift */; };
 		4669B8D222B6DC65004FB38D /* defaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4669B8D122B6DC64004FB38D /* defaultsKeys.swift */; };
 		467E5DB922FCE8EF00F23ABD /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467E5DB822FCE8EF00F23ABD /* Post.swift */; };
@@ -58,6 +57,8 @@
 		46D5E07C22A899B1003B41DE /* ParentStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E07B22A899B1003B41DE /* ParentStruct.swift */; };
 		46D5E08022ADABC3003B41DE /* StorageStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E07F22ADABC3003B41DE /* StorageStruct.swift */; };
 		46E0B87B2374B4B600EF42FD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46E0B87A2374B4B600EF42FD /* GoogleService-Info.plist */; };
+		46ED0388237B37B8003E1525 /* defaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4669B8D122B6DC64004FB38D /* defaultsKeys.swift */; };
+		46ED038A237B38F0003E1525 /* SearchZoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46ED0389237B38F0003E1525 /* SearchZoomViewController.swift */; };
 		46F2B5B02370835D00FFC751 /* SearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F2B5AF2370835D00FFC751 /* SearchResultViewController.swift */; };
 		46F2B5BF2370CB1400FFC751 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EB74D3BC226025EA00556399 /* Assets.xcassets */; };
 		46F2B5C82371274600FFC751 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F2B5C72371274600FFC751 /* ShareViewController.swift */; };
@@ -226,6 +227,7 @@
 		46D5E07F22ADABC3003B41DE /* StorageStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageStruct.swift; sourceTree = "<group>"; };
 		46D5E10A22B54473003B41DE /* SQLite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SQLite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		46E0B87A2374B4B600EF42FD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
+		46ED0389237B38F0003E1525 /* SearchZoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchZoomViewController.swift; sourceTree = "<group>"; };
 		46F2B5AF2370835D00FFC751 /* SearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewController.swift; sourceTree = "<group>"; };
 		46F2B5C52371274600FFC751 /* CinchShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CinchShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		46F2B5C72371274600FFC751 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
@@ -429,6 +431,7 @@
 				46456C2B22FE52FB00D96EB5 /* PrimaryDiscoverController.swift */,
 				46456C2122FE51A700D96EB5 /* SecondaryDiscoverController.swift */,
 				46F2B5AF2370835D00FFC751 /* SearchResultViewController.swift */,
+				46ED0389237B38F0003E1525 /* SearchZoomViewController.swift */,
 			);
 			path = "Main Controllers";
 			sourceTree = "<group>";
@@ -458,6 +461,7 @@
 				46ADC10F233FFB61001B62E8 /* Extensions */,
 				8EF6B3EF22F640BF00EECBF6 /* Global.swift */,
 				EB74D3B5226025E900556399 /* AppDelegate.swift */,
+				4669B8D122B6DC64004FB38D /* defaultsKeys.swift */,
 			);
 			path = Globals;
 			sourceTree = "<group>";
@@ -679,7 +683,6 @@
 				89503D6C22D92D37004EFC06 /* PermissionsView */,
 				89503D6422D92D09004EFC06 /* CameraView */,
 				465C438C22D176FB002BD263 /* Profile */,
-				4669B8D122B6DC64004FB38D /* defaultsKeys.swift */,
 				EB74D3BC226025EA00556399 /* Assets.xcassets */,
 				EB74D3C1226025EA00556399 /* Info.plist */,
 				46E0B87A2374B4B600EF42FD /* GoogleService-Info.plist */,
@@ -1088,7 +1091,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				46F2B5C82371274600FFC751 /* ShareViewController.swift in Sources */,
-				465D6372237A09DB007B91CD /* defaultsKeys.swift in Sources */,
+				46ED0388237B37B8003E1525 /* defaultsKeys.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1139,6 +1142,7 @@
 				EB3A433A2263CCC000F6F339 /* ProfileCollectionViewCell.swift in Sources */,
 				89CD1D04229201BA004BD0A0 /* DownloadImage.swift in Sources */,
 				EB40EF992263E9940093BB5B /* FolderCollectionViewCell.swift in Sources */,
+				46ED038A237B38F0003E1525 /* SearchZoomViewController.swift in Sources */,
 				46D48D902318A7D100952EDB /* FolderReference.swift in Sources */,
 				891FC3F922D7F6D80024A623 /* DiscoverLayout.swift in Sources */,
 				EB63B7DE226A7933004C7E2C /* CustomImageFlowLayout.swift in Sources */,

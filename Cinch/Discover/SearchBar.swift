@@ -22,6 +22,7 @@ class SearchBar: UITextField {
     
     
     override func draw(_ rect: CGRect) {
+        self.placeholder = "Search"
         if isDrawn {
             return
         }

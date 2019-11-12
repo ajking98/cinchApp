@@ -105,7 +105,13 @@ extension SideMenuViewController: UITableViewDelegate, UITableViewDataSource {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Toggle Side Menu"), object: nil)
             let vc = storyboard?.instantiateViewController(withIdentifier: "LoginViewController")
             self.present(vc!, animated: true, completion: nil)
-        } else if !(item == .Private || item == .NightMode || item == .Share) {
+        } else if (item == .Private || item == .NightMode) {
+            let alert = UIAlertController(title: "Function not Available", message: "Sorry, we are currently working on this feature.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            
+            self.present(alert, animated: true)
+    
+        } else if !(item == .Share) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Toggle Side Menu"), object: nil)
             let vc = storyboard?.instantiateViewController(withIdentifier: "\(item)")
             
