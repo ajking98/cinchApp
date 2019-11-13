@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import MobileCoreServices
 
 class ProfilePageViewController: UIViewController {
     var username: String = ""
@@ -16,6 +17,15 @@ class ProfilePageViewController: UIViewController {
     @IBOutlet weak var numberOfFollowersLabel: UILabel!
     @IBOutlet weak var numberOfFollowingsLabel: UILabel!
     @IBOutlet weak var numberOfGemsLabel: UILabel!
+    
+    // Stats Views
+    @IBOutlet weak var statsView: UIView!
+    @IBOutlet weak var followerStack: UIStackView!
+    @IBOutlet weak var firstBreak: UIView!
+    @IBOutlet weak var followingsStack: UIStackView!
+    @IBOutlet weak var secondBreak: UIView!
+    @IBOutlet weak var GemsStack: UIStackView!
+    
     
     
     @IBOutlet weak var profileImage: UIImageView!
@@ -44,13 +54,17 @@ class ProfilePageViewController: UIViewController {
             editProfile.isHidden = true
             editImage.isHidden = true
         }
-        
+        buildStatView()
         buildProfileViews()
     }
     
     
     override func viewDidDisappear(_ animated: Bool) {
         UserDefaults.standard.set(nil, forKey: defaultsKeys.otherProfile)
+    }
+    
+    func buildStatView() {
+        
     }
     
     @IBAction func toggleSideMenu(_ sender: Any) {

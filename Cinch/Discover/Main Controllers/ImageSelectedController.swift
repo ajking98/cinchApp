@@ -89,6 +89,7 @@ class ImageSelectedController: UIViewController {
             playerLayer.videoGravity = .resize
             postImage.layer.addSublayer(playerLayer)
             playerLayer.frame = postImage.bounds
+            playerLayer.frame.origin.y = playerLayer.frame.origin.y + 50
             player.play()
             player.isMuted = true
             loopVideo(videoPlayer: player)

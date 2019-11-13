@@ -106,7 +106,7 @@ class FolderReferenceController: UIViewController, UICollectionViewDelegate, UIC
             layout.minimumInteritemSpacing = 5
             layout.minimumLineSpacing = 5
             layout.scrollDirection = .vertical
-            layout.itemSize = CGSize(width: 180, height: 180)
+            layout.itemSize = CGSize(width: view.frame.width / 2.3, height: view.frame.width / 2.3)
             return layout
         }()
         collectionView.collectionViewLayout = collectionViewLayout
