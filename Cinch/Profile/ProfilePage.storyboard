@@ -28,6 +28,9 @@
                                     <constraint firstAttribute="width" constant="23" id="Tyd-FY-XWA"/>
                                 </constraints>
                                 <state key="normal" image="plus"/>
+                                <connections>
+                                    <action selector="editImage:" destination="c9c-6r-wGY" eventType="touchUpInside" id="lMb-sO-CVF"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="deV-KM-SBd">
                                 <rect key="frame" x="156" y="96" width="99" height="40"/>
@@ -159,7 +162,7 @@
                                 </connections>
                             </containerView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X5C-UY-ysj" userLabel="settingsButton">
-                                <rect key="frame" x="374" y="20" width="20" height="22"/>
+                                <rect key="frame" x="378" y="20" width="16" height="22"/>
                                 <state key="normal" image="icons8-menu-20"/>
                                 <connections>
                                     <action selector="toggleSideMenu:" destination="c9c-6r-wGY" eventType="touchUpInside" id="6Ga-h8-cAH"/>
@@ -225,7 +228,7 @@
                     <connections>
                         <outlet property="GemsStack" destination="G1j-PN-mLq" id="xXj-Ge-lqX"/>
                         <outlet property="customSegmentedControl" destination="kO4-eZ-RS4" id="Oaw-s1-13o"/>
-                        <outlet property="editImage" destination="BYl-7q-P0H" id="w2l-Tc-zKe"/>
+                        <outlet property="editImage" destination="BYl-7q-P0H" id="rim-xy-a4l"/>
                         <outlet property="editProfile" destination="deV-KM-SBd" id="6Il-mS-YXl"/>
                         <outlet property="firstBreak" destination="ArF-A3-IeU" id="QaP-hd-KOF"/>
                         <outlet property="followButton" destination="GNp-Fb-8tZ" id="yuA-95-Uow"/>
@@ -257,8 +260,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="userPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="UEa-Nw-iby">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="UEa-Nw-iby">
                                 <rect key="frame" x="142" y="141" width="130" height="125"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="125" id="ljO-G6-ARS"/>
                                 </constraints>
@@ -285,10 +289,16 @@
                                 <state key="normal" title="Submit Change">
                                     <color key="titleColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 </state>
+                                <connections>
+                                    <action selector="submitChange:" destination="ZUq-NF-1wf" eventType="touchUpInside" id="Hal-3I-Ssi"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Xp-Nl-UTC">
                                 <rect key="frame" x="158" y="274" width="98" height="30"/>
                                 <state key="normal" title="Change Photo"/>
+                                <connections>
+                                    <action selector="changePhoto:" destination="ZUq-NF-1wf" eventType="touchUpInside" id="UL7-HT-GpP"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G0e-ve-J29">
                                 <rect key="frame" x="20" y="17" width="38" height="38"/>
@@ -329,7 +339,6 @@
                         <outlet property="bioText" destination="zMq-Fy-kd7" id="gkX-6h-a3J"/>
                         <outlet property="imageView" destination="UEa-Nw-iby" id="9zn-Tf-Kyb"/>
                         <outlet property="nameText" destination="TWj-ma-X9e" id="DcS-1i-SlD"/>
-                        <outlet property="submitButton" destination="YOq-Fq-JtI" id="Clw-CJ-EsH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TrM-X5-OmK" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1032,7 +1041,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Create Account/Login" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gFR-MY-QSK">
                                 <rect key="frame" x="66" y="70" width="282" height="93"/>
@@ -1049,6 +1058,9 @@
                                 <state key="normal" title="Sign Up">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="signUp:" destination="bOb-fj-JXC" eventType="touchUpInside" id="fYg-YM-jgL"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Cancel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KXK-jY-d3N">
                                 <rect key="frame" x="182" y="735" width="51" height="21"/>
@@ -1082,6 +1094,5 @@
         <image name="icons8-multiply-50" width="50" height="50"/>
         <image name="icons8-multiply-51" width="50" height="50"/>
         <image name="plus" width="256" height="256"/>
-        <image name="userPlaceholder" width="220" height="229"/>
     </resources>
 </document>

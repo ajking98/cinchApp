@@ -22,6 +22,13 @@ class LoginViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    @IBAction func signUp(_ sender: Any) {
+        if (createUser()) {
+            UIView.animateKeyframes(withDuration: 0.3, delay: 0, options: [], animations: {
+                self.dismiss(animated: true, completion: nil)
+            }, completion: nil)
+        }
+    }
     func buildGestures(){
         //cancel label
         cancelLabel.isUserInteractionEnabled = true
@@ -43,5 +50,43 @@ class LoginViewController: UIViewController {
             self.dismiss(animated: true, completion: nil)
         }, completion: nil)
     }
+    
+    func warnUser(textField: UITextField) {
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor.red.cgColor
+        textField.shake()
+    }
+    
+    func createUser() -> Bool {
+        if (nameText.text == "") {
+            print("Add Name")
+            warnUser(textField: nameText)
+        } else if (usernameText.text == "") {
+            print("Add Username")
+            warnUser(textField: usernameText)
+        } else if (emailText.text == "") {
+            print("Add Email")
+            warnUser(textField: emailText)
+        } else if (passwordText.text == "") {
+            print("Add Password")
+            warnUser(textField: passwordText)
+        } else {
+            let user = User(name: nameText.text!, username: usernameText.text!, email: emailText.text!, password: passwordText.text!, isPrivate: false)
+            ParentStruct().addUser(user: user)
+            print("User Created")
+            return true
+        }
+        return false
+    }
+    
+}
 
+extension UIView {
+    func shake() {
+        let animation = CAKeyframeAnimation(keyPath: "transform.translation.x")
+        animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
+        animation.duration = 0.4
+        animation.values = [-20.0, 20.0, -20.0, 20.0, -10.0, 10.0, -5.0, 5.0, 0.0 ]
+        layer.add(animation, forKey: "shake")
+    }
 }

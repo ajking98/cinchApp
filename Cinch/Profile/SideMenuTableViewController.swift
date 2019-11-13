@@ -10,7 +10,7 @@ import UIKit
 class SideMenuViewController: UIViewController {
     enum MenuSection {
         case General
-        case Login
+        case SignUp
     }
     enum MenuItem {
         case Private
@@ -19,7 +19,7 @@ class SideMenuViewController: UIViewController {
         case SendFeedback
         case ReportBug
         case Share
-        case Login
+        case SignUp
     }
     
     struct Section {
@@ -40,7 +40,7 @@ class SideMenuViewController: UIViewController {
     
     func configureTableView() {
         sections.append(Section(type: .General, items: [.Private, .NightMode, .ProfileSettings, .SendFeedback, .ReportBug, .Share]))
-        sections.append(Section(type: .Login, items: [.Login]))
+        sections.append(Section(type: .SignUp, items: [.SignUp]))
         tableView.delegate = self
         tableView.dataSource = self
     }
@@ -83,8 +83,8 @@ extension SideMenuViewController: UITableViewDelegate, UITableViewDataSource {
             cell.menuLabel.text = "Report Problem"
         case .Share:
             cell.menuLabel.text = "Share"
-        case .Login:
-            cell.menuLabel.text = "Login"
+        case .SignUp:
+            cell.menuLabel.text = "Sign Up"
         }
         return cell
     }
@@ -101,7 +101,7 @@ extension SideMenuViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         var item = sections[indexPath.section].items[indexPath.row]
         print(item)
-        if (item == .Login) {
+        if (item == .SignUp) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Toggle Side Menu"), object: nil)
             let vc = storyboard?.instantiateViewController(withIdentifier: "LoginViewController")
             self.present(vc!, animated: true, completion: nil)

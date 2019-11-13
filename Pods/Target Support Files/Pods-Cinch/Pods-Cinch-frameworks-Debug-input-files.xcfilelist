@@ -11,7 +11,6 @@ ${BUILT_PRODUCTS_DIR}/RxGesture/RxGesture.framework
 ${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework
 ${BUILT_PRODUCTS_DIR}/SDWebImage-iOS10.0/SDWebImage.framework
 ${BUILT_PRODUCTS_DIR}/SQLite.swift-iOS10.0/SQLite.framework
-${BUILT_PRODUCTS_DIR}/TRMosaicLayout/TRMosaicLayout.framework
 ${BUILT_PRODUCTS_DIR}/XLActionController/XLActionController.framework
 ${BUILT_PRODUCTS_DIR}/leveldb-library-iOS10.0/leveldb.framework
 ${BUILT_PRODUCTS_DIR}/libwebp-iOS10.0/libwebp.framework

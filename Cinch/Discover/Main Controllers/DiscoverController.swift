@@ -91,9 +91,9 @@ class DiscoverController: UIViewController, transferDelegate {
     func setUserDefaults() {
         UserDefaults.standard.set([], forKey: defaultsKeys.folders)
         
-        UserDefaults.standard.set("Justin", forKey: defaultsKeys.usernameKey)
+        UserDefaults.standard.set("Rileboondocks", forKey: defaultsKeys.usernameKey)
         if let userDefaults = UserDefaults(suiteName: "group.InstagramClone.messages") {
-            userDefaults.set("Justin", forKey: defaultsKeys.usernameKey)
+            userDefaults.set("Rileboondocks", forKey: defaultsKeys.usernameKey)
         }
         
         let username = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)

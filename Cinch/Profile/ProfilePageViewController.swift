@@ -26,7 +26,7 @@ class ProfilePageViewController: UIViewController {
     @IBOutlet weak var secondBreak: UIView!
     @IBOutlet weak var GemsStack: UIStackView!
     
-    
+    var imagePicker = UIImagePickerController()
     
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var editImage: UIButton!
@@ -42,8 +42,15 @@ class ProfilePageViewController: UIViewController {
     @IBOutlet weak var viewTwo: UIView!
     var profileViewTapped = false
     
+    @IBAction func editImage(_ sender: Any) {
+        print("Hello")
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.allowsEditing = true
+        present(imagePicker, animated: true, completion: nil)
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
+        imagePicker.delegate = self
         
         if username == "" {
             username = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
@@ -123,7 +130,7 @@ class ProfilePageViewController: UIViewController {
         //sets profile picture
         UserStruct().readProfilePic(user: username) { (link) in
             let url = URL(string: link)
-            self.profileImage.sd_setImage(with: url, placeholderImage: UIImage(named: "n2"), completed: nil)
+            self.profileImage.sd_setImage(with: url, placeholderImage: UIImage(named: "empty"), completed: nil)
         }
         
         self.profileImage.contentMode = .scaleAspectFill
@@ -135,4 +142,18 @@ class ProfilePageViewController: UIViewController {
         
     }
     
+}
+
+extension ProfilePageViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+            profileImage.image = image
+            let username = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)
+            StorageStruct().uploadImage(image: image) { (string) in
+                UserStruct().updateProfilePic(user: username!, newProfilePic: string)
+            }
+        }
+        
+        dismiss(animated: true, completion: nil)
+    }
 }
