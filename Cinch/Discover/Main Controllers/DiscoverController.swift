@@ -40,7 +40,7 @@ class DiscoverController: UIViewController, transferDelegate {
     @IBOutlet weak var tableViewIcon: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var collectionView: UICollectionView!
-//    var items : [Item] = [Item]()
+    
     let buttonBar = UIView()
     var tapped = true
     var isRightSegmented = true
@@ -59,7 +59,6 @@ class DiscoverController: UIViewController, transferDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setUserDefaults()
         dbRef = Database.database().reference().child("posts")
         if isPrimaryViewController {
@@ -92,9 +91,9 @@ class DiscoverController: UIViewController, transferDelegate {
     func setUserDefaults() {
         UserDefaults.standard.set([], forKey: defaultsKeys.folders)
         
-        UserDefaults.standard.set("Justin", forKey: defaultsKeys.usernameKey)
+        UserDefaults.standard.set("Rileboondocks", forKey: defaultsKeys.usernameKey)
         if let userDefaults = UserDefaults(suiteName: "group.InstagramClone.messages") {
-            userDefaults.set("Justin", forKey: defaultsKeys.usernameKey)
+            userDefaults.set("Rileboondocks", forKey: defaultsKeys.usernameKey)
         }
         
         let username = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)

@@ -18,7 +18,6 @@ class PrimaryDiscoverController: DiscoverController, SearchDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         addSearchBar()
         searchBar?.endEditing(true)
         buildSearchView()

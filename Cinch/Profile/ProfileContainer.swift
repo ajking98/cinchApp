@@ -74,7 +74,7 @@ class ProfileContainer: UIViewController {
                 gesture.view!.center = self.firstView.center
             }else {
                 UIView.animateKeyframes(withDuration: 0.5, delay: 0, options: [], animations: {
-                    self.firstView.center = CGPoint(x: 207, y: gesture.view!.center.y)
+                    self.firstView.center = CGPoint(x: self.view.center.x, y: gesture.view!.center.y)
                     self.secondView.center = CGPoint(x: 564, y: gesture.view!.center.y)
                     self.isExpanded = false
                     gesture.isEnabled = false
@@ -95,7 +95,7 @@ class ProfileContainer: UIViewController {
                 
             } else {
                 UIView.animateKeyframes(withDuration: 0.3, delay: 0, options: [], animations: {
-                    self.firstView.center = CGPoint(x: 207, y: gesture.view!.center.y)
+                    self.firstView.center = CGPoint(x: self.view.center.x, y: gesture.view!.center.y)
                     self.secondView.center = CGPoint(x: 564, y: gesture.view!.center.y)
                     self.isExpanded = false
                 }, completion: nil)

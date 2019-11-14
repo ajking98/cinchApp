@@ -18,12 +18,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="launchIcon" translatesAutoresizingMaskIntoConstraints="NO" id="wDd-c4-iOg">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launchIcon" translatesAutoresizingMaskIntoConstraints="NO" id="wDd-c4-iOg">
                                 <rect key="frame" x="132" y="168" width="150" height="150"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="YkZ-fk-VLv"/>
+                                    <constraint firstAttribute="height" constant="150" id="ZTN-yh-qTG"/>
+                                </constraints>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="wDd-c4-iOg" secondAttribute="trailing" constant="132" id="Jc6-WS-RDu"/>
+                            <constraint firstItem="wDd-c4-iOg" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="132" id="Tbo-ug-vaW"/>
+                            <constraint firstItem="wDd-c4-iOg" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="124" id="ZJx-yC-LQV"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                 </viewController>

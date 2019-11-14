@@ -24,7 +24,7 @@ class PostCard: UICollectionViewCell {
     @IBOutlet weak var labelContainer: UIView!
     var likesView = UILabel(frame: CGRect.zero)
     var authorView = UILabel(frame: CGRect.zero)
-    let transferButton = TransferButton()
+    var shareButton = ShareButton()
     var link = ""
     var delegate : transferDelegate?
     
@@ -110,9 +110,9 @@ class PostCard: UICollectionViewCell {
     
     fileprivate func addSubviews() {
         
-        //transferButton
-        transferButton.frame.size = CGSize(width: 25, height: 25)
-        transferButton.frame.origin = CGPoint(x: 6, y: -2)
+        //shareButton
+        shareButton.frame.size = CGSize(width: 25, height: 25)
+        shareButton.frame.origin = CGPoint(x: 6, y: -2)
         
         
         //Sizing
@@ -130,8 +130,8 @@ class PostCard: UICollectionViewCell {
         authorView.font = authorView.font.withSize(15)
         authorView.textAlignment = .right
         
-        transferButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTransfer)))
-        labelContainer.addSubview(transferButton)
+        shareButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTransfer)))
+        labelContainer.addSubview(shareButton)
         labelContainer.addSubview(authorView)
     }
     

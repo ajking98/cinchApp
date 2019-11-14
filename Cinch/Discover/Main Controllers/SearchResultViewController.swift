@@ -73,4 +73,24 @@ class SearchResultViewController: UIViewController, UITableViewDelegate, UITable
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let item = posts[indexPath.row]
+        let link = item.link
+        let url = URL(string: link!)
+        
+        let vc = storyboard?.instantiateViewController(withIdentifier: "SearchZoomViewController") as! SearchZoomViewController
+        if link!.contains("mp4") {
+            vc.isImage = false
+            vc.link = link!
+        } else {
+            let imageView = UIImageView()
+            imageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder.png"))
+            print(imageView.image)
+            vc.image = imageView.image!
+        }
+        
+        let myNav = UINavigationController(rootViewController: vc)
+        present(myNav, animated: true, completion: nil)
+    }
+    
 }

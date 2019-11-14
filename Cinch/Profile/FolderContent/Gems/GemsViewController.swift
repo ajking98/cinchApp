@@ -52,7 +52,7 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
         let height = view.frame.height
         button.layer.cornerRadius = button.frame.width / 2
         button.clipsToBounds = true
-        button.center = CGPoint(x: (width * 3)/3.75, y: (height) / 3)
+        button.center = CGPoint(x: (width * 3)/3.75, y: (height) / 3.5)
         view.addSubview(button)
     }
     
@@ -158,7 +158,7 @@ class GemsViewController: UIViewController, UICollectionViewDelegate, UICollecti
             layout.minimumInteritemSpacing = 5
             layout.minimumLineSpacing = 5
             layout.scrollDirection = .vertical
-            layout.itemSize = CGSize(width: 180, height: 180)
+            layout.itemSize = CGSize(width: view.frame.width / 2.3, height: view.frame.width / 2.3)
             return layout
         }()
         collectionView.collectionViewLayout = collectionViewLayout

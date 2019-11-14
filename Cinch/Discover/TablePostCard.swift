@@ -16,7 +16,7 @@ class TablePostCard: UITableViewCell {
     @IBOutlet weak var labelContainer: UIView!
     @IBOutlet weak var topView: UIView!
     
-    var transferButton = TransferButton()
+    var shareButton = ShareButton()
     var menuOptions = MenuOptions()
     var delegate : transferDelegate?
     
@@ -109,12 +109,12 @@ class TablePostCard: UITableViewCell {
         
         
         //like View
-        transferButton.center = CGPoint(x: centerX, y: bottomY - 30)
-        transferButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTransfer)))
+        shareButton.center = CGPoint(x: centerX, y: bottomY - 30)
+        shareButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTransfer)))
         
         //adding subviews
         labelContainer.addSubview(menuOptions)
-        labelContainer.addSubview(transferButton)
+        labelContainer.addSubview(shareButton)
     }
     
     //transfers the image from discover to desired folder
