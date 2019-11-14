@@ -123,7 +123,27 @@ class DiscoverController: UIViewController, transferDelegate {
                 let indexPath = IndexPath(row: self.posts.count, section: 0)
                 //TODO this creates a post using the link and uses static data in contstructor, this should instead get the data from the posts section in the database
                 
-                let post = Post(isImage: true, numberOfLikes: 41, postOwner: username, likedBy: ["someone"], dateCreated: Date().timeIntervalSince1970, tags: ["nothing"], link: value)
+                let post = Post(isImage: true, numberOfLikes: 0, postOwner: "", likedBy: ["someone"], dateCreated: Date().timeIntervalSince1970, tags: ["nothing"], link: value)
+                
+                PostStruct().readPostOwner(post: value, completion: { (owner) in
+                    post.postOwner = owner;
+                })
+                
+                self.posts.append(post)
+                self.collectionView.reloadData()
+                self.tableView.insertRows(at: [indexPath], with: .right)
+            }
+        }
+        UserStruct().readSuggestedContent(user: username) { (suggestedContent) in
+            for (_, value) in suggestedContent {
+                let indexPath = IndexPath(row: self.posts.count, section: 0)
+                //TODO this creates a post using the link and uses static data in contstructor, this should instead get the data from the posts section in the database
+                
+                let post = Post(isImage: true, numberOfLikes: 0, postOwner: "", likedBy: ["someone"], dateCreated: Date().timeIntervalSince1970, tags: ["nothing"], link: value)
+                
+                PostStruct().readPostOwner(post: value, completion: { (owner) in
+                    post.postOwner = owner;
+                })
                 
                 self.posts.append(post)
                 self.collectionView.reloadData()
