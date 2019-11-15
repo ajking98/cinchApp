@@ -23,9 +23,9 @@ func isQuickSwipe(velocity : CGFloat) -> Bool {
 }
 
 ///updates y-axis of view by given translation
-func followFingerVertical(view : UIView, translation : CGPoint) {
-    view.center.y += translation.y
-}
+//func followFingerVertical(view : UIView, translation : CGPoint) {
+//    view.center.y += translation.y
+//}
 
 ///Takes in a string to a link and updates to a new value that could be used in the key place on Firebase
 func convertStringToKey(link : String) -> String {

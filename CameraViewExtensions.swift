@@ -15,36 +15,31 @@ extension CameraViewController : UICollectionViewDataSource, UICollectionViewDel
     
     //TODO make the collectionView panable
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        print("we are moving")
         let gesture = scrollView.panGestureRecognizer
         let translation = gesture.translation(in: scrollView)
-        let height = view.frame.height / 1.25
+        let height = view.frame.height * 0.8
+        
         
         if scrollView.center.y > height {
-            followFingerVertical(view: scrollView, translation: translation)
+            scrollView.center.y += translation.y
             gesture.setTranslation(CGPoint.zero, in: scrollView)
         }
         
-        if isAtTop{
-            if translation.y > 0 && scrollView.center.y + translation.y < view.frame.height {
-                followFingerVertical(view: scrollView, translation: translation) //pans the collectionview downwards
-                gesture.setTranslation(CGPoint.zero, in: scrollView)
-            }
+        if translation.y > 0 && scrollView.center.y + translation.y < view.frame.height {
+            scrollView.center.y += translation.y //pans the collectionview downwards
+            gesture.setTranslation(CGPoint.zero, in: scrollView)
         }
         
         let screenHeight = UIScreen.main.bounds.height
         
         if scrollView.center.y + translation.y > (screenHeight * 5) / 4 {
-            print("ahh fixing", scrollView.center)
             scrollView.endEditing(true)
-            handleSwipeDown()
         }
     }
     
     //Is triggered after the motion of the scroll stops
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         handleGestureEnded(scrollView: scrollView)
-        
     }
     
     //Is triggered whenever the scrollView is being moved for the first time
@@ -77,11 +72,6 @@ extension CameraViewController : UICollectionViewDataSource, UICollectionViewDel
                 print("center4")
             }
         }
-    }
-    
-    //checks if the collectionView is at the top
-    var isAtTop : Bool {
-        return imageCollectionView.contentOffset.y < -60
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -125,12 +115,6 @@ extension CameraViewController : UICollectionViewDataSource, UICollectionViewDel
 //Event handlers
 extension CameraViewController {
     
-    @objc func segmentControlValueChanged(segment : UISegmentedControl){
-        if segment.selectedSegmentIndex == 0 {
-            handleSwipeDown()
-        }
-    }
-    
     
     @objc func handleSwipeUp(_ tapGesture : UITapGestureRecognizer? = nil){
         print("we are moving upward")
@@ -162,7 +146,7 @@ extension CameraViewController {
             self.addButton.frame = self.addButtonFrame!
         }
         isCollectionViewRaised = false
-//        Helper().vibrate(style: .light)
+        Helper().vibrate(style: .light)
     }
     
     //this creates the folder selector popup view and the tagging input box
