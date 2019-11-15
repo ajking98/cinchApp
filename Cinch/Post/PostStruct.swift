@@ -73,7 +73,8 @@ struct PostStruct {
     postOwner
     */
     func readPostOwner(post : String, completion : @escaping(String)-> Void) {
-        DB.child(post).child("postOwner").observeSingleEvent(of: .value) { (snapshot) in
+        let updatedLink = convertStringToKey(link: post)
+        DB.child(updatedLink).child("postOwner").observeSingleEvent(of: .value) { (snapshot) in
             if let postOwner = snapshot.value as? String {
                 completion(postOwner)
             }
@@ -90,7 +91,9 @@ struct PostStruct {
     dateCreated
     */
     func readDateCreated(post : String, completion : @escaping(Double)-> Void) {
-        DB.child(post).child("dateCreated").observeSingleEvent(of: .value) { (snapshot) in
+        let updatedLink = convertStringToKey(link: post)
+
+        DB.child(updatedLink).child("dateCreated").observeSingleEvent(of: .value) { (snapshot) in
             if let dateCreated = snapshot.value as? Double {
                 completion(dateCreated)
             }
@@ -98,7 +101,8 @@ struct PostStruct {
     }
     
     func updateDateCreated(post : String, newDateCreated : Double) {
-        DB.child(post).child("dateCreated").setValue(newDateCreated)
+        let updatedLink = convertStringToKey(link: post)
+        DB.child(updatedLink).child("dateCreated").setValue(newDateCreated)
     }
     
     
@@ -107,15 +111,18 @@ struct PostStruct {
     likedBy
     */
     func addLikedBy(post : String, newLiker : String) {
-        DB.child(post).child("likedBy").child(newLiker).child(newLiker)
+        let updatedLink = convertStringToKey(link: post)
+        DB.child(updatedLink).child("likedBy").child(newLiker).child(newLiker)
     }
     
     func deleteLikedBy(post : String, liker : String) {
-        DB.child(post).child("likedBy").child(liker).removeValue()
+        let updatedLink = convertStringToKey(link: post)
+        DB.child(updatedLink).child("likedBy").child(liker).removeValue()
     }
     
     func readLikedBy(post : String, completion : @escaping([String])-> Void) {
-        DB.child(post).child("likedBy").observeSingleEvent(of: .value) { (snapshot) in
+        let updatedLink = convertStringToKey(link: post)
+        DB.child(updatedLink).child("likedBy").observeSingleEvent(of: .value) { (snapshot) in
             if let likedBy = snapshot.value as? [String : String] {
                 completion(Array(likedBy.keys))
             }

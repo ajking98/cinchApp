@@ -59,7 +59,6 @@ class DiscoverController: UIViewController, transferDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUserDefaults()
         dbRef = Database.database().reference().child("posts")
         if isPrimaryViewController {
             fetchContent()
@@ -70,7 +69,6 @@ class DiscoverController: UIViewController, transferDelegate {
         setUpCollectionViewItemSizes()
         addGestures()
         addSelectBar(color: UIColor.darkerGreen)
-        
         buildSegmentIcons()
         
         scrollViewFrame = collectionView.frame
@@ -85,50 +83,32 @@ class DiscoverController: UIViewController, transferDelegate {
         collectionView.allowsMultipleSelection = true
         
         setUpNavigation()
+        
+        //TODO remove this when done testing
+        addPostTemp()
     }
     
-    // TODO taken from AppDelegate and placed here, but you need to actually allow it to set up user info
-    func setUserDefaults() {
-        UserDefaults.standard.set([], forKey: defaultsKeys.folders)
-        
-        UserDefaults.standard.set("Rileboondocks", forKey: defaultsKeys.usernameKey)
-        if let userDefaults = UserDefaults(suiteName: "group.InstagramClone.messages") {
-            userDefaults.set("Rileboondocks", forKey: defaultsKeys.usernameKey)
-        }
-        
-        let username = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)
-        
-        UserStruct().readFolders(user: username!) { (folders) in
-            UserDefaults.standard.set(folders, forKey: defaultsKeys.folders)
-        }
-        
-        UserDefaults.standard.set([], forKey: defaultsKeys.foldersFollowing)
-        UserStruct().readFoldersReference(user: username!) { (folderReferences) in
-            var folderRefs : [[String : String]] = []
-            for index in 0..<folderReferences.count {
-                folderRefs.append(folderReferences[index].toString())
-            }
-            UserDefaults.standard.set(folderRefs, forKey: defaultsKeys.foldersFollowing)
-        }
+    //TODO remove this when done testing
+    func addPostTemp() {
+        let username = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
+        UserStruct().addNewContent(user: username, link:"https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/PublicImages%2FIloicBBWASeGENxAHyfe?alt=media&token=09136e15-afe7-4cbe-ac75-c925d7c96b45")
     }
     
     
     ///Updates the content array with values from the DB
     //TODO this only looks at data from the newContent array and not the suggestContent array
     func fetchContent() {
-        let username = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) ?? "namho"
-        
+        let username = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
         UserStruct().readNewContent(user: username) { (newContent) in
             for (_, value) in newContent {
                 let indexPath = IndexPath(row: self.posts.count, section: 0)
                 //TODO this creates a post using the link and uses static data in contstructor, this should instead get the data from the posts section in the database
                 
                 let post = Post(isImage: true, numberOfLikes: 0, postOwner: "", likedBy: ["someone"], dateCreated: Date().timeIntervalSince1970, tags: ["nothing"], link: value)
-                
                 PostStruct().readPostOwner(post: value, completion: { (owner) in
                     post.postOwner = owner;
                 })
-                
+                print("we are getting here")
                 self.posts.append(post)
                 self.collectionView.reloadData()
                 self.tableView.insertRows(at: [indexPath], with: .right)
@@ -419,14 +399,18 @@ class DiscoverController: UIViewController, transferDelegate {
             
             //if the user swipes quickly to the left, then they are presented with the table view
             if(isQuickSwipe(velocity: gesture.velocity(in: view).x)){
-                let indexPath = collectionView.indexPathsForVisibleItems[0]
-                summonTableView(indexPath)
+                if collectionView.indexPathsForVisibleItems.count > 1 {
+                    let indexPath = collectionView.indexPathsForVisibleItems[0]
+                    summonTableView(indexPath)
+                }
             }
             else {
                 //checks to see if the user's gesture traveled far enough to summon the table view
                 if tableView.center.x < view.frame.width {
-                    let indexPath = collectionView.indexPathsForVisibleItems[0]
-                    summonTableView(indexPath)
+                    if collectionView.indexPathsForVisibleItems.count > 1 {
+                        let indexPath = collectionView.indexPathsForVisibleItems[0]
+                        summonTableView(indexPath)
+                    }
                     
                 } else {
                     summonCollectionView()
@@ -473,8 +457,10 @@ class DiscoverController: UIViewController, transferDelegate {
         case .ended :
             tableView.isScrollEnabled = true
             if(isQuickSwipe(velocity: gesture.velocity(in: view).x)){
-                let indexPath = collectionView.indexPathsForVisibleItems[0]
-                summonCollectionView(indexPath)
+                if collectionView.indexPathsForVisibleItems.count > 1 {
+                    let indexPath = collectionView.indexPathsForVisibleItems[0]
+                    summonCollectionView(indexPath)
+                }
 
             }
             else {
@@ -482,8 +468,10 @@ class DiscoverController: UIViewController, transferDelegate {
                     summonTableView()
                 }
                 else {
-                    let indexPath = collectionView.indexPathsForVisibleItems[0]
-                    summonCollectionView(indexPath)
+                    if collectionView.indexPathsForVisibleItems.count > 1 {
+                        let indexPath = collectionView.indexPathsForVisibleItems[0]
+                        summonCollectionView(indexPath)
+                    }
                 }
             }
             

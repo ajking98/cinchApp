@@ -17,7 +17,5 @@ struct defaultsKeys {
     static let profilePicKey = "profilePicKey"
     static let dateCreatedKey = "dateCreatedKey"
     static let dateLastActiveKey = "dateLastActiveKey"
-    static let folders = "folders"
-    static let foldersFollowing = "foldersFollowing"
     static let otherProfile = "otherProfile" //keeps track of the profile the user is looking at 
 }

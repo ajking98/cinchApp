@@ -39,9 +39,19 @@ class FolderReferenceController: UIViewController, UICollectionViewDelegate, UIC
         UserStruct().readFoldersReference(user: username) { (folderReferences) in
             for folderRef in folderReferences {
                 print("this is aref")
-                let indexPath = IndexPath(item: self.folderRefs.count, section: 0)
-                self.folderRefs.append(folderRef)
-                self.collectionView.insertItems(at: [indexPath])
+                
+                //Checks if the current folderRef is within the folderRefs array
+                let doesContain = self.folderRefs.contains(where: { (currentFolder) -> Bool in
+                    let adminBool = currentFolder.admin == folderRef.admin
+                    let folderNameBool = currentFolder.folderName == folderRef.folderName
+                    return adminBool && folderNameBool
+                })
+                
+                if !doesContain {
+                    let indexPath = IndexPath(item: self.folderRefs.count, section: 0)
+                    self.folderRefs.append(folderRef)
+                    self.collectionView.insertItems(at: [indexPath])
+                }
             }
         }
     }

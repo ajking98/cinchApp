@@ -36,10 +36,16 @@ class User  {
     let folder2 = Folder(folderName: "reactions")
 
     
+    func generateUserID() -> String {
+        //Todo this should be an actual function that Ahmed has
+        //it should also check if that userID exists in the DB, if does, then generate a different userID 
+        return "121212"
+    }
+    
     
     ///should only be called when first making a user to add them to the database
     init() {
-        username = "" //TODO this should not be blank, it should instead generate a generic key that doesn't exist in the DB
+        username = generateUserID() //TODO this should not be static, it should instead generate a generic key that doesn't exist in the DB
         name = ""
         email = ""
         password = ""
@@ -139,26 +145,6 @@ class User  {
         let userString : [String : Any] = ["name": name, "email": email, "username": username, "password": password, "isPrivate": isPrivate, "profilePic": "https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/userImages%2FhKaBCKrdabATDWHqnWIa?alt=media&token=3c8756d0-326c-42cf-86a3-b9901797749c", "folders": foldersDict, "dateCreated": dateCreated!, "dateLastActive": dateLastActive!, "followers" : followersDict, "followings" : followingsDict, "biography" : biography, "isDarkModeEnabled" : isDarkModeEnabled, "newContent" : newContentDict, "suggestedContent" : suggestedContentDict, "folderReferences" : folderReferencesDict]
         
         return userString
-    }
-}
-
-
-
-//TODO what the fuck is this Below???
-
-extension UIImage {
-    func toString() -> String? {
-        let data: Data? = self.pngData()
-        return data?.base64EncodedString(options: .endLineWithLineFeed)
-    }
-}
-
-extension String {
-    func toImage() -> UIImage? {
-        if let data = Data(base64Encoded: self, options: .ignoreUnknownCharacters){
-            return UIImage(data: data)
-        }
-        return nil
     }
 }
 

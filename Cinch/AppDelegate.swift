@@ -23,29 +23,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if(FirebaseApp.app() == nil){
             FirebaseApp.configure()
         }
-        
-        //TODO get rid of all this
-        
-        //stores the number of folders in userDefaults
-//        UserDefaults.standard.set([], forKey: defaultsKeys.folders)
-//        let username = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
-//        
-//        if let userDefaults = UserDefaults(suiteName: "group.InstagramClone.messages") {
-//            userDefaults.set(username, forKey: defaultsKeys.usernameKey)
-//        }
-//        
-//        UserStruct().readFolders(user: username) { (folders) in
-//            UserDefaults.standard.set(folders, forKey: defaultsKeys.folders)
-//        }
-//        
-//        UserDefaults.standard.set([], forKey: defaultsKeys.foldersFollowing)
-//        UserStruct().readFoldersReference(user: username) { (folderReferences) in
-//            var folderRefs : [[String : String]] = []
-//            for index in 0..<folderReferences.count {
-//                folderRefs.append(folderReferences[index].toString())
-//            }
-//            UserDefaults.standard.set(folderRefs, forKey: defaultsKeys.foldersFollowing)
-//        }
+        //checks if the user already exists, and if they do, they save the username to the global user defaults
+        if let username = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) {
+            UserDefaults(suiteName: "group.InstagramClone.messages")?.set(username, forKey: defaultsKeys.usernameKey)
+            print("here is your username: ", username)
+        }
+        else {
+            //TODO user should be constructed with a preset SuggestedContent list
+            let user = User()
+            ParentStruct().addUser(user: user)
+            print("here is your created username:", user.username)
+            
+            
+            UserDefaults.standard.set(user.username, forKey: defaultsKeys.usernameKey)
+            UserDefaults(suiteName: "group.InstagramClone.messages")?.set(user.username, forKey: defaultsKeys.usernameKey)
+
+            //TODO add the other default values here as needed (Use a few user defaults as possible)
+            
+        }
         return true
     }
 
