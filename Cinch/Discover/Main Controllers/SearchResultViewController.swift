@@ -50,12 +50,16 @@ class SearchResultViewController: UIViewController, UITableViewDelegate, UITable
             
             //cycle through all the tag elements in the tag object
             for element in elements {
-                
-                ParentPostStruct().readPost(postLink: element.link, completion: { (post) in
-                    let indexPath = IndexPath(item: self.posts.count, section: 0)
-                    self.posts.append(post)
-                    self.tableView.insertRows(at: [indexPath], with: .right)
-                })
+                do {
+                    try ParentPostStruct().readPost(postLink: element.link, completion: { (post) in
+                        let indexPath = IndexPath(item: self.posts.count, section: 0)
+                        self.posts.append(post)
+                        self.tableView.insertRows(at: [indexPath], with: .right)
+                    })
+                }
+                catch {
+                    print("messing up")
+                }
             }
         }
     }

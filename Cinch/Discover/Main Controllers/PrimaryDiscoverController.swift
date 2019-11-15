@@ -49,6 +49,15 @@ class PrimaryDiscoverController: DiscoverController, SearchDelegate {
         }
     }
     
+    func endSearchEditing() {
+        guard let searchView = searchView else { return }
+        UIView.animate(withDuration: 0.2, animations: {
+            searchView.view.layer.opacity = 0
+        })
+        //resets the search bar back to normal if empty 
+        searchBar?.revertToNormal()
+    }
+    
     func addSearchBar() {
         let frame = collectionView.frame
         
@@ -98,6 +107,7 @@ class PrimaryDiscoverController: DiscoverController, SearchDelegate {
     
     //when user scrolls in the scrollview, the view should pan and either move the segment control out the view or into the view
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        endSearchEditing()
         let gesture = scrollView.panGestureRecognizer
         
         if (scrollView.contentOffset.y < -80){

@@ -38,11 +38,6 @@ class CameraViewController: UIViewController {
     
     @IBOutlet weak var imageCollectionView: UICollectionView!
     
-    @IBOutlet weak var FolderSliderView: UIView!
-    @IBOutlet weak var prevFolderName: UILabel!
-    @IBOutlet weak var currentFolderName: UILabel!
-    @IBOutlet weak var nextFolderName: UILabel!
-    
     
     //static values
     let cornerRadius = [6.0, 4.0, 5.0]

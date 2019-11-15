@@ -47,7 +47,7 @@ struct ParentPostStruct {
         
         DB.child(updatedLink).observeSingleEvent(of: .value) { (snapshot) in
             if let post = snapshot.value as? [String : Any] {
-                
+                guard post["dateCreated"] != nil else { return }// this just makes sure that the given post has been properly created
                 let likedBy = post["likedBy"] != nil ? post["likedBy"] as! [String : String] : [:] as! [String : String]
                 
                 let tags = post["tags"] != nil ? post["tags"] as! [String : String] : [:] as! [String : String]

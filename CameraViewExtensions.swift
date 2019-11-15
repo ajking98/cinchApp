@@ -15,7 +15,7 @@ extension CameraViewController : UICollectionViewDataSource, UICollectionViewDel
     
     //TODO make the collectionView panable
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
+        print("we are moving")
         let gesture = scrollView.panGestureRecognizer
         let translation = gesture.translation(in: scrollView)
         let height = view.frame.height / 1.25
@@ -58,6 +58,7 @@ extension CameraViewController : UICollectionViewDataSource, UICollectionViewDel
     }
     
     func handleGestureEnded(scrollView : UIScrollView) {
+        print("handling")
         let gesture = scrollView.panGestureRecognizer
         let velocity = gesture.velocity(in: scrollView)
         if velocity.y > 820 {
@@ -132,6 +133,7 @@ extension CameraViewController {
     
     
     @objc func handleSwipeUp(_ tapGesture : UITapGestureRecognizer? = nil){
+        print("we are moving upward")
         //perform animation to swipe the collection view upward
         UIView.animate(withDuration: 0.3) {
             guard let tempFrame = self.imageCollectionViewFrame else{
@@ -139,7 +141,6 @@ extension CameraViewController {
             }
             let originX = tempFrame.origin.x
             let originY = tempFrame.origin.y
-            let heightFS : CGFloat = 30.0
             
             
             //Updated values
@@ -147,34 +148,21 @@ extension CameraViewController {
             
             self.imageCollectionView.frame.origin = CGPoint(x: originX, y: updatedOriginY)
             
-            self.solidBar.frame.origin.y = (updatedOriginY - 24) - heightFS
-            self.FolderSliderView.frame.origin.y = updatedOriginY - heightFS
-            
-            self.FolderSliderView.frame.size.height = heightFS
-            self.prevFolderName.frame.size.height = heightFS
-            self.currentFolderName.frame.size.height = heightFS
-            self.nextFolderName.frame.size.height = heightFS
+            self.solidBar.frame.origin.y = (updatedOriginY - 24)
         }
         isCollectionViewRaised = true
         Helper().vibrate(style: .light)
     }
     
     @objc func handleSwipeDown(_ tapGesture  :UITapGestureRecognizer? = nil){
+        print("are we swiping down now?")
         UIView.animate(withDuration: 0.2) {
             self.imageCollectionView.frame = self.imageCollectionViewFrame!
             self.solidBar.frame = self.solidBarFrame!
             self.addButton.frame = self.addButtonFrame!
-            
-            let heightFS : CGFloat = 0
-            
-            self.FolderSliderView.frame.origin.y = self.imageCollectionViewFrame!.origin.y
-            self.FolderSliderView.frame.size.height = heightFS
-            self.prevFolderName.frame.size.height = heightFS
-            self.currentFolderName.frame.size.height = heightFS
-            self.nextFolderName.frame.size.height = heightFS
         }
         isCollectionViewRaised = false
-        Helper().vibrate(style: .light)
+//        Helper().vibrate(style: .light)
     }
     
     //this creates the folder selector popup view and the tagging input box

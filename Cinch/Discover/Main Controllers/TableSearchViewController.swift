@@ -28,13 +28,11 @@ class TableSearchViewController : UITableViewController {
      Insert kick ass algorithm here!
      */
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("you have selected the : ", updatedListOfTags[indexPath.row])
         pendingFunction!(updatedListOfTags[indexPath.row])
     }
     
     func updateTagList(searchTerm : String) {
         //update list of tags
-        print("updating my tuff", previousSearchTerm, "and ", searchTerm.dropLast(), previousSearchTerm == searchTerm.dropLast())
         if previousSearchTerm == searchTerm.dropLast() {
             updatedListOfTags.removeAll()
             for term in listOfTags {
@@ -45,7 +43,6 @@ class TableSearchViewController : UITableViewController {
             }
         }
         else {
-            print("truing")
             var index = 0
             while index < updatedListOfTags.count {
                 if !updatedListOfTags[index].contains(searchTerm) {
