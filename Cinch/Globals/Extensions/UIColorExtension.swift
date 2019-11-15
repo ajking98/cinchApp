@@ -15,6 +15,8 @@ extension UIColor {
     static let lightGreen = UIColor(red: 0.608, green: 0.937, blue: 0.847, alpha: 1)
     static let darkerGreen = UIColor(red: 0.247, green: 0.627, blue: 0.522, alpha: 1)
     
+    static let normalBlue = UIColor(red: 0.55, green: 0.741, blue: 0.769, alpha: 1)
+    
     
     static let selected = UIColor(red: 0.247, green: 0.33, blue: 0.671, alpha: 1)
 }

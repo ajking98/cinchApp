@@ -20,7 +20,7 @@
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="T4Z-Sf-0Sh">
                                 <rect key="frame" x="0.0" y="226" width="414" height="670"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="OKv-0Z-GEc">
                                     <size key="itemSize" width="50" height="50"/>
@@ -41,12 +41,12 @@
                             </collectionView>
                             <tableView clipsSubviews="YES" contentMode="scaleAspectFill" fixedFrame="YES" alwaysBounceVertical="YES" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="xiB-k2-qHT">
                                 <rect key="frame" x="414" y="226" width="414" height="670"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TableCell" rowHeight="328" id="JWE-AT-6cL" customClass="TablePostCard" customModule="Cinch" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="328"/>
-                                        <autoresizingMask key="autoresizingMask"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="JWE-AT-6cL" id="VlL-Aa-TRm">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="327.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
@@ -60,8 +60,11 @@
                                                 </imageView>
                                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="42B-cF-Khz">
                                                     <rect key="frame" x="354" y="64" width="40" height="214"/>
-                                                    <color key="backgroundColor" red="0.63529411759999999" green="0.87843137250000003" blue="0.90980392160000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="backgroundColor" red="0.54509803921568623" green="0.74117647058823533" blue="0.76862745098039209" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="40" id="gXl-4C-jxU"/>
+                                                    </constraints>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7N2-bm-xYR">
                                                     <rect key="frame" x="20" y="34" width="374" height="30"/>
@@ -69,7 +72,6 @@
                                                 </view>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="42B-cF-Khz" firstAttribute="leading" secondItem="VlL-Aa-TRm" secondAttribute="leading" constant="354" id="4Pf-X9-n4w"/>
                                                 <constraint firstItem="7N2-bm-xYR" firstAttribute="trailing" secondItem="VlL-Aa-TRm" secondAttribute="trailingMargin" id="6eo-ZF-rDF"/>
                                                 <constraint firstItem="g7B-Dv-HjR" firstAttribute="top" secondItem="7N2-bm-xYR" secondAttribute="bottom" id="LqV-qC-hng"/>
                                                 <constraint firstItem="7N2-bm-xYR" firstAttribute="top" secondItem="VlL-Aa-TRm" secondAttribute="topMargin" constant="23" id="VXN-0y-TvT"/>
@@ -377,7 +379,7 @@
                                                 </imageView>
                                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gzw-gE-iSx">
                                                     <rect key="frame" x="354" y="64" width="40" height="214"/>
-                                                    <color key="backgroundColor" red="0.63529411759999999" green="0.87843137250000003" blue="0.90980392160000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="backgroundColor" red="0.54509803921568623" green="0.74117647058823533" blue="0.76862745098039209" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GjS-Tn-Nff">

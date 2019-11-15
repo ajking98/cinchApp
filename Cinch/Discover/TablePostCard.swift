@@ -79,7 +79,6 @@ class TablePostCard: UITableViewCell {
     fileprivate func setUp() {
         //label container
         let size = self.frame.size
-        labelContainer.frame.origin.x = size.width - labelContainer.frame.width
         
         //adding border to cell
         self.layer.cornerRadius = 8

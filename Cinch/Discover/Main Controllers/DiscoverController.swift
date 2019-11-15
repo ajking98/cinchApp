@@ -68,7 +68,7 @@ class DiscoverController: UIViewController, transferDelegate {
         setUpCollectionView()
         setUpCollectionViewItemSizes()
         addGestures()
-        addSelectBar(color: UIColor.darkerGreen)
+        addSelectBar(color: UIColor.normalBlue)
         buildSegmentIcons()
         
         scrollViewFrame = collectionView.frame
