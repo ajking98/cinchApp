@@ -43,7 +43,6 @@ class ProfilePageViewController: UIViewController {
     var profileViewTapped = false
     
     @IBAction func editImage(_ sender: Any) {
-        print("Hello")
         imagePicker.sourceType = .photoLibrary
         imagePicker.allowsEditing = true
         present(imagePicker, animated: true, completion: nil)
@@ -62,7 +61,7 @@ class ProfilePageViewController: UIViewController {
             editImage.isHidden = true
         }
         buildStatView()
-        buildProfileViews()
+        fetchData()
     }
     
     
@@ -90,7 +89,14 @@ class ProfilePageViewController: UIViewController {
                 vc.username = username
                 vc.isLocalUser = isLocalUser
             }
+            
             return
+        }
+        if segue.identifier == "editProfileSegue" {
+            let vc = segue.destination as! EditProfileViewController
+            vc.profileImage = profileImage
+            vc.profileName = profileName
+            print("we are executing this")
         }
         
     }
@@ -109,7 +115,8 @@ class ProfilePageViewController: UIViewController {
         }
     }
     
-    func buildProfileViews() {
+    func fetchData() {
+        print("fetching data")
         UserStruct().readFollowers(user: username) { (followers) in
             self.numberOfFollowersLabel.text = String(followers.count)
         }

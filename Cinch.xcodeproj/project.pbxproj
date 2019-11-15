@@ -104,7 +104,6 @@
 		EB74D3C0226025EA00556399 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB74D3BE226025EA00556399 /* LaunchScreen.storyboard */; };
 		EB74D3CB226025EA00556399 /* InstagramCloneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB74D3CA226025EA00556399 /* InstagramCloneTests.swift */; };
 		EB74D3D6226025EA00556399 /* InstagramCloneUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB74D3D5226025EA00556399 /* InstagramCloneUITests.swift */; };
-		EB74D3EE22603DC200556399 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB74D3ED22603DC200556399 /* ProfileViewController.swift */; };
 		EBF7FF1D22FC79F00099037D /* SendFeedbackController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF7FF1C22FC79F00099037D /* SendFeedbackController.swift */; };
 /* End PBXBuildFile section */
 
@@ -289,7 +288,6 @@
 		EB74D3D1226025EA00556399 /* CinchUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CinchUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB74D3D5226025EA00556399 /* InstagramCloneUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramCloneUITests.swift; sourceTree = "<group>"; };
 		EB74D3D7226025EA00556399 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EB74D3ED22603DC200556399 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		EBF7FF1C22FC79F00099037D /* SendFeedbackController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendFeedbackController.swift; sourceTree = "<group>"; };
 		F0F04CCF56E32255BCFC3F5E /* Pods-CinchTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CinchTests.release.xcconfig"; path = "Target Support Files/Pods-CinchTests/Pods-CinchTests.release.xcconfig"; sourceTree = "<group>"; };
 		F4DC95FD178508B2961CE4E0 /* Pods_CinchUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CinchUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -407,7 +405,6 @@
 				46071979235AF11500BE17DF /* FolderContent */,
 				46A3E09F22BF0BA1003F6F35 /* ProfilePageViewController.swift */,
 				46668D5F22C98C070021229D /* ProfileContainer.swift */,
-				EB74D3ED22603DC200556399 /* ProfileViewController.swift */,
 				EB3A43392263CCC000F6F339 /* ProfileCollectionViewCell.swift */,
 				892677AB22CFCE390007825E /* SideMenuTableViewController.swift */,
 				EB71602722FA2726009538C2 /* MenuOptionCell.swift */,
@@ -1138,7 +1135,6 @@
 				46D48D902318A7D100952EDB /* FolderReference.swift in Sources */,
 				891FC3F922D7F6D80024A623 /* DiscoverLayout.swift in Sources */,
 				EB63B7DE226A7933004C7E2C /* CustomImageFlowLayout.swift in Sources */,
-				EB74D3EE22603DC200556399 /* ProfileViewController.swift in Sources */,
 				4607196E235ACC1900BE17DF /* PanGestureExtension.swift in Sources */,
 				467E5DB922FCE8EF00F23ABD /* Post.swift in Sources */,
 				8EADC50222D16BB3005A7CC0 /* GemsCollectionViewCell.swift in Sources */,
