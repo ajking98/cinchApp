@@ -44,7 +44,10 @@ class SearchBar: UITextField {
         let size = frame.size
         
         //border
-        self.layer.borderColor = UIColor(red: 0.012, green: 0.992, blue: 0.716, alpha: 1.0).cgColor
+//        self.layer.borderColor = UIColor(red: 0.012, green: 0.992, blue: 0.716, alpha: 1.0).cgColor
+        
+        self.layer.borderColor = UIColor.black.cgColor
+        self.layer.borderWidth = 1
         self.clipsToBounds = true
         
         //radius
@@ -98,7 +101,8 @@ class SearchBar: UITextField {
 //        iconView?.image = UIImage(named: "searchIcon")
         UIView.animate(withDuration: 0.3) {
             //reserse border edits
-            self.layer.borderWidth = 0
+            self.layer.borderWidth = 1
+            self.layer.borderColor = UIColor.black.cgColor
             
             //reverse icon edits
 //            self.iconView!.frame.size = self.iconViewSize!

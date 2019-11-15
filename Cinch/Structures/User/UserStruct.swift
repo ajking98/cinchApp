@@ -310,7 +310,8 @@ struct UserStruct {
     
     ///adds new post links to the user's suggestedContent
     func addSuggestedContent(user : String, link : String) {
-        DB.child(user).child("suggestedContent").updateChildValues([link : link])
+        let updatedLink = convertStringToKey(link: link)
+        DB.child(user).child("suggestedContent").updateChildValues([updatedLink : link])
         print("wer are adding the content")
     }
     

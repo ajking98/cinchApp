@@ -50,12 +50,16 @@ class SearchResultViewController: UIViewController, UITableViewDelegate, UITable
             
             //cycle through all the tag elements in the tag object
             for element in elements {
-                
-                ParentPostStruct().readPost(postLink: element.link, completion: { (post) in
-                    let indexPath = IndexPath(item: self.posts.count, section: 0)
-                    self.posts.append(post)
-                    self.tableView.insertRows(at: [indexPath], with: .right)
-                })
+                do {
+                    try ParentPostStruct().readPost(postLink: element.link, completion: { (post) in
+                        let indexPath = IndexPath(item: self.posts.count, section: 0)
+                        self.posts.append(post)
+                        self.tableView.insertRows(at: [indexPath], with: .right)
+                    })
+                }
+                catch {
+                    print("messing up")
+                }
             }
         }
     }
@@ -85,12 +89,9 @@ class SearchResultViewController: UIViewController, UITableViewDelegate, UITable
         } else {
             let imageView = UIImageView()
             imageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder.png"))
-            print(imageView.image)
             vc.image = imageView.image!
         }
-        
-        let myNav = UINavigationController(rootViewController: vc)
-        present(myNav, animated: true, completion: nil)
+        present(vc, animated: true, completion: nil)
     }
     
 }

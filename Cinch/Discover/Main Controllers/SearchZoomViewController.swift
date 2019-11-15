@@ -11,6 +11,13 @@ import AVKit
 
 class SearchZoomViewController: UIViewController {
 
+    //Labels
+    @IBOutlet weak var labelContainer: UIView!
+    var authorView = UILabel(frame: CGRect.zero)
+    var menuOptions = MenuOptions()
+    var shareButton = ShareButton()
+    
+    
     @IBOutlet weak var imageView: UIImageView!
     var image = UIImage(named: "placeholder.png")
     var link = ""
@@ -20,6 +27,7 @@ class SearchZoomViewController: UIViewController {
     var playerItem: AVPlayerItem!
     var player: AVPlayer!
     var playerLayer: AVPlayerLayer!
+    var post: Post?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +40,40 @@ class SearchZoomViewController: UIViewController {
         addGestures()
 
         // Do any additional setup after loading the view.
+        setUp()
+    }
+    
+    func setUp() {
+        
+        let centerY = (labelContainer.frame.height / 2) - 5
+        //Menu
+        menuOptions.center = CGPoint(x: labelContainer.frame.width - 30, y: centerY)
+        menuOptions.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(postActivityController)))
+        
+        //share Button
+        shareButton.center = CGPoint(x: 30, y: centerY)
+        shareButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTransfer)))
+        
+        //gestures for authorView
+        authorView.isUserInteractionEnabled = true
+        authorView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleAuthorPressed)))
+        
+        
+        authorView.frame.size = CGSize(width: (labelContainer.frame.width / 2) - 10, height: 20)
+        authorView.center = CGPoint(x: labelContainer.frame.width / 2, y: centerY)
+        authorView.textAlignment = .center
+        
+        print("step 1")
+        if let post = post {
+            print("step 2", post.postOwner)
+            authorView.text = post.postOwner
+        }
+        
+        //add subviews
+        labelContainer.addSubview(menuOptions)
+        labelContainer.addSubview(authorView)
+        labelContainer.addSubview(shareButton)
+        
     }
     
     func addVideo(link: String) {
@@ -96,6 +138,45 @@ class SearchZoomViewController: UIViewController {
         }
     }
 
+    
+    @objc func handleAuthorPressed() {
+        let vc = UIStoryboard(name: "ProfilePage", bundle: nil).instantiateViewController(withIdentifier: "profilePage") as! ProfilePageViewController
+        guard let author = authorView.text else { return }
+        UserDefaults.standard.setValue(author, forKey: defaultsKeys.otherProfile)
+        vc.username = author
+        vc.isLocalUser = false
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    //TODO make compatible for videos
+    //creates the activity controller when the user taps on the menu options icon
+    //only works for images right now
+    @objc func postActivityController() {
+        var activityController : UIActivityViewController
+        if isImage {
+            guard let image = image else { return }
+            activityController = UIActivityViewController(activityItems: [image], applicationActivities: nil)
+        }
+        else {
+            //todo add compatibility for video sharing - Right now it only shares the link 
+            activityController = UIActivityViewController(activityItems: [link], applicationActivities: nil)
+        }
+        present(activityController, animated: true)
+    }
+    
+    
+    
+    @objc func handleTransfer() {
+        guard let post = post else { return }
+        Helper().saveToFolder(link: post.link!, completion: { (alertController) in
+            self.present(alertController, animated: true, completion: nil)
+        }) { (spotifyController) in
+            self.present(spotifyController, animated: true, completion: nil)
+        }
+    }
+    
+    
+    
     /*
     // MARK: - Navigation
 

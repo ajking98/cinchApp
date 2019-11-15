@@ -23,6 +23,15 @@ struct ParentPostStruct {
         guard let link = post.link else { return }
         let updatedLink = convertStringToKey(link: link)
         DB.child(updatedLink).setValue(post.toString())
+        
+        //TODO THIS SHOULD BE DONE WITHIN A GOOGLE CLOUD FUNCTION INSTEAD TO OFFLOAD TO THE CLOUD INSTEAD OF LETTING THE USER DO IT ON THEIR DEVICE
+        guard let username = post.postOwner else { return }
+        UserStruct().readFollowers(user: username) { (followers) in
+            for (_, follower) in followers {
+                print("adding newContent to user: ", follower)
+                UserStruct().addNewContent(user: follower, link: link)
+            }
+        }
     }
     
     ///deletes a post from DB with the given Link
@@ -38,7 +47,7 @@ struct ParentPostStruct {
         
         DB.child(updatedLink).observeSingleEvent(of: .value) { (snapshot) in
             if let post = snapshot.value as? [String : Any] {
-                
+                guard post["dateCreated"] != nil else { return }// this just makes sure that the given post has been properly created
                 let likedBy = post["likedBy"] != nil ? post["likedBy"] as! [String : String] : [:] as! [String : String]
                 
                 let tags = post["tags"] != nil ? post["tags"] as! [String : String] : [:] as! [String : String]

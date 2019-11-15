@@ -23,10 +23,8 @@ class FolderContent: UIViewController, UICollectionViewDataSource, UICollectionV
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("we are building")
-        if username == "" {
-            username = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!
-        }
+        
+        
         if !isLocalUser {
             buildFollowButton()
         }
@@ -163,15 +161,7 @@ class FolderContent: UIViewController, UICollectionViewDataSource, UICollectionV
             print(imageView.image)
             vc.image = imageView.image!
         }
-        
-        let myNav = UINavigationController(rootViewController: vc)
-        present(myNav, animated: true, completion: nil)
-        
-//        let vc = storyboard?.instantiateViewController(withIdentifier: "FolderImageZoomController") as? FolderImageZoomController
-//        let imageView = UIImageView()
-//        imageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder.png"))
-//        vc!.imageView?.image = imageView.image
-//        self.performSegue(withIdentifier: "segueWithData", sender: self)
+        present(vc, animated: true, completion: nil)
     }
     
 }

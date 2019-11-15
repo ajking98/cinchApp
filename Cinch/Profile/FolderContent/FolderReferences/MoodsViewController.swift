@@ -39,9 +39,19 @@ class FolderReferenceController: UIViewController, UICollectionViewDelegate, UIC
         UserStruct().readFoldersReference(user: username) { (folderReferences) in
             for folderRef in folderReferences {
                 print("this is aref")
-                let indexPath = IndexPath(item: self.folderRefs.count, section: 0)
-                self.folderRefs.append(folderRef)
-                self.collectionView.insertItems(at: [indexPath])
+                
+                //Checks if the current folderRef is within the folderRefs array
+                let doesContainFolder = self.folderRefs.contains(where: { (currentFolder) -> Bool in
+                    let adminBool = currentFolder.admin == folderRef.admin
+                    let folderNameBool = currentFolder.folderName == folderRef.folderName
+                    return adminBool && folderNameBool
+                })
+                
+                if !doesContainFolder {
+                    let indexPath = IndexPath(item: self.folderRefs.count, section: 0)
+                    self.folderRefs.append(folderRef)
+                    self.collectionView.insertItems(at: [indexPath])
+                }
             }
         }
     }
@@ -72,11 +82,9 @@ class FolderReferenceController: UIViewController, UICollectionViewDelegate, UIC
         let vc = storyboard?.instantiateViewController(withIdentifier: "FolderCotent") as! FolderContent
         
         vc.folderName = folderRefs[indexPath.row].folderName
-        vc.username = username
+        vc.username = folderRefs[indexPath.row].admin
         vc.isLocalUser = isLocalUser
-        
-        let myNav = UINavigationController(rootViewController: vc)
-        present(myNav, animated: true, completion: nil)
+        present(vc, animated: true, completion: nil)
     }
     
     
@@ -90,8 +98,12 @@ class FolderReferenceController: UIViewController, UICollectionViewDelegate, UIC
         
         cell.title.text = folderName
         
-        //TODO this should store the number of elements inside the folder
-        cell.contentNumber.text = username
+        //sets the content count to the appropriate number from the database
+        FolderStruct().readNumOfImages(user: username, folderName: folderName) { (imagesCount) in
+            FolderStruct().readNumOfVideos(user: username, folderName: folderName, completion: { (videoCount) in
+                cell.contentNumber.text = String(Int(imagesCount) + Int(videoCount))
+            })
+        }
         
         FolderStruct().readIcon(user: username, folderName: folderName) { (link) in
             let url = URL(string: link)
