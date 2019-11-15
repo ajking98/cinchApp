@@ -108,7 +108,6 @@ class DiscoverController: UIViewController, transferDelegate {
                 PostStruct().readPostOwner(post: value, completion: { (owner) in
                     post.postOwner = owner;
                 })
-                print("we are getting here")
                 self.posts.append(post)
                 self.collectionView.reloadData()
                 self.tableView.insertRows(at: [indexPath], with: .right)
@@ -564,9 +563,21 @@ extension DiscoverController : UICollectionViewDelegate, UICollectionViewDataSou
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "ImageSelectedController") as! ImageSelectedController
+        let vc = storyboard?.instantiateViewController(withIdentifier: "SearchZoomViewController") as! SearchZoomViewController
+        let link = posts[indexPath.item].link
+        let url = URL(string: link!)
         vc.post = posts[indexPath.item]
-        self.navigationController?.pushViewController(vc, animated: true)
+        if link!.contains("mp4") {
+            vc.isImage = false
+            vc.link = link!
+        } else {
+            let imageView = UIImageView()
+            imageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder.png"))
+            vc.image = imageView.image!
+        }
+        
+        let myNav = UINavigationController(rootViewController: vc)
+        present(myNav, animated: true, completion: nil)
     }
     
 }
@@ -589,9 +600,21 @@ extension DiscoverController : UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "ImageSelectedController") as! ImageSelectedController
+        let vc = storyboard?.instantiateViewController(withIdentifier: "SearchZoomViewController") as! SearchZoomViewController
+        let link = posts[indexPath.item].link
+        let url = URL(string: link!)
         vc.post = posts[indexPath.item]
-        self.navigationController?.pushViewController(vc, animated: true)
+        if link!.contains("mp4") {
+            vc.isImage = false
+            vc.link = link!
+        } else {
+            let imageView = UIImageView()
+            imageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder.png"))
+            vc.image = imageView.image!
+        }
+        
+        let myNav = UINavigationController(rootViewController: vc)
+        present(myNav, animated: true, completion: nil)
     }
 
 }

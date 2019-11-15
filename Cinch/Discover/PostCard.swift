@@ -152,9 +152,9 @@ class PostCard: UICollectionViewCell {
         rightBorder = UIView(frame: CGRect(x: frame.width - 4, y: 0, width: 4, height: frame.height))
         
         //coloring (Should add these to the enum of colors)
-        topBorder?.backgroundColor = .normalBlue
-        leftBorder?.backgroundColor = .normalBlue
-        rightBorder?.backgroundColor = .normalBlue
+        topBorder?.backgroundColor = .lightGreen
+        leftBorder?.backgroundColor = .lightGreen
+        rightBorder?.backgroundColor = .lightGreen
         
         //adding to view
         self.addSubview(topBorder!)

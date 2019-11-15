@@ -85,12 +85,9 @@ class SearchResultViewController: UIViewController, UITableViewDelegate, UITable
         } else {
             let imageView = UIImageView()
             imageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder.png"))
-            print(imageView.image)
             vc.image = imageView.image!
         }
-        
-        let myNav = UINavigationController(rootViewController: vc)
-        present(myNav, animated: true, completion: nil)
+        present(vc, animated: true, completion: nil)
     }
     
 }
