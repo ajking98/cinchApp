@@ -13,22 +13,26 @@ import UIKit
 //Collection View
 extension CameraViewController : UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
-    //TODO make the collectionView panable
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let gesture = scrollView.panGestureRecognizer
         let translation = gesture.translation(in: scrollView)
         let height = view.frame.height * 0.8
+        let height2 = view.frame.height * 1.15
         
+        let change = scrollView.center.y
+
         
-        if scrollView.center.y > height {
-            scrollView.center.y += translation.y
-            gesture.setTranslation(CGPoint.zero, in: scrollView)
+        if isAtTop {
+            if translation.y > 0 && scrollView.center.y + translation.y < view.frame.height {
+                scrollView.center.y += translation.y //pans the collectionview downwards
+                gesture.setTranslation(CGPoint.zero, in: scrollView)
+            }
         }
-        
-        if translation.y > 0 && scrollView.center.y + translation.y < view.frame.height {
-            scrollView.center.y += translation.y //pans the collectionview downwards
-            gesture.setTranslation(CGPoint.zero, in: scrollView)
-        }
+        else if change > height && change < height2 {
+                scrollView.center.y += translation.y
+                gesture.setTranslation(CGPoint.zero, in: scrollView)
+            }
         
         let screenHeight = UIScreen.main.bounds.height
         
@@ -40,6 +44,7 @@ extension CameraViewController : UICollectionViewDataSource, UICollectionViewDel
     //Is triggered after the motion of the scroll stops
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         handleGestureEnded(scrollView: scrollView)
+        isAtTop = scrollView.contentOffset.y == 0
     }
     
     //Is triggered whenever the scrollView is being moved for the first time
@@ -53,10 +58,10 @@ extension CameraViewController : UICollectionViewDataSource, UICollectionViewDel
     }
     
     func handleGestureEnded(scrollView : UIScrollView) {
-        print("handling")
+        print("handling", isAtTop)
         let gesture = scrollView.panGestureRecognizer
         let velocity = gesture.velocity(in: scrollView)
-        if velocity.y > 820 {
+        if velocity.y > 820 && isAtTop {
             handleSwipeDown()
             print("center1")
         }else if (velocity.y < -820){
@@ -73,6 +78,11 @@ extension CameraViewController : UICollectionViewDataSource, UICollectionViewDel
             }
         }
     }
+    
+    //checks if the collectionView is at the top
+//    var isAtTop : Bool {
+//        return imageCollectionView.contentOffset.y > -60
+//    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return imageArray.count
@@ -207,7 +217,7 @@ extension CameraViewController {
     }
     
     
-    //TODO this should update the selectedImages and tappedImages array along with the circle counter
+    //updates the selectedImages and tappedImages array along with the circle counter
     ///undoes the border for a single cell
     func handleUndoTapSingle(index : Int){
         let indexPath = IndexPath(item: index, section: 0)

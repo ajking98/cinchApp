@@ -56,6 +56,9 @@ class CameraViewController: UIViewController {
     var tappedImages = [Int]() //holds the indexes of the tapped images
     
     
+    var isAtTop = false //holds the value on whether or not the scroll for the imagecollectionview is a the top - in terms of offset
+    
+    
     func isAuthorized() ->Bool{
         var authStatus = false
         let photos = PHPhotoLibrary.authorizationStatus()
