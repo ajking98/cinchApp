@@ -74,38 +74,32 @@ class PermissionsController: UIViewController {
         cancelLabel.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[line(1)]-(\(-spacing))-|", metrics: nil, views: ["line":line]))
     }
     
-    func enterCameraView(){
-        var mainView: UIStoryboard!
-        mainView = UIStoryboard(name : "Main", bundle: nil)
-        let myviewController  :UIViewController = mainView.instantiateViewController(withIdentifier: "TabBarID") as UIViewController
-        self.present(myviewController, animated: true, completion: nil)
-    }
     
     @objc func askForPermission(_ tapGesture : UITapGestureRecognizer? = nil) {
         PHPhotoLibrary.requestAuthorization({status in
             if status == .authorized{
-                self.enterCameraView()
-            } else { PHPhotoLibrary.requestAuthorization({status in
-                print(status)
+                self.dismiss(animated: true, completion: nil)
+            }
+            else { PHPhotoLibrary.requestAuthorization({status in
+                if status == .authorized {
+                    self.dismiss(animated: true, completion: nil)
+                }
             }) }
         })
-        
-        
+
+
         let permissionStatus = PHPhotoLibrary.authorizationStatus()
         if(permissionStatus == .restricted || permissionStatus == .denied){
             let alert = UIAlertController(title: "APP RESTRICTED", message: "you have restricted this app from accessing your photos. Grant permission by going into your settings", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            
+
             self.present(alert, animated: true)
         }
     }
     
     
     @objc func exitView(_ tapGesture : UITapGestureRecognizer? = nil){
-        var mainView: UIStoryboard!
-        mainView = UIStoryboard(name : "Main", bundle: nil)
-        let myviewController  :UIViewController = mainView.instantiateViewController(withIdentifier: "TabBarID") as UIViewController
-        self.present(myviewController, animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
 
 

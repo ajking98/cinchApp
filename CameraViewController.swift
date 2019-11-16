@@ -56,6 +56,9 @@ class CameraViewController: UIViewController {
     var tappedImages = [Int]() //holds the indexes of the tapped images
     
     
+    var isAtTop = false //holds the value on whether or not the scroll for the imagecollectionview is a the top - in terms of offset
+    
+    
     func isAuthorized() ->Bool{
         var authStatus = false
         let photos = PHPhotoLibrary.authorizationStatus()
@@ -77,22 +80,19 @@ class CameraViewController: UIViewController {
         return authStatus
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        let post = Post(isImage: false, postOwner: "James", link: "wwwfungamescom")
-        ParentPostStruct().addPost(post: post)
-        PostStruct().addTag(post: post.link!, newTag: "Games")
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        guard isAuthorized() else{
+        if !isAuthorized(){
             var mainView: UIStoryboard!
             mainView = UIStoryboard(name : "Permissions", bundle: nil)
-            let myviewController  :UIViewController = mainView.instantiateViewController(withIdentifier: "PermissionsView") as UIViewController
-            self.present(myviewController, animated: true, completion: nil)
-            return
+            let vc = mainView.instantiateViewController(withIdentifier: "PermissionsView") as! PermissionsController
+            self.present(vc, animated: true, completion: nil)
         }
-        
+        setUp()
+    }
+    
+    func setUp() {
+        print("it is true, we are running")
         buildShadow() //Builds the shadows for the icons (AddButton and swipe bar)
         buildSizes() //builds the sizes for the images in the scroll view
         buildPositioning()
@@ -117,6 +117,7 @@ class CameraViewController: UIViewController {
         scrollView.maximumZoomScale = 6.0
         scrollView.isUserInteractionEnabled = true
     }
+    
     
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         centerView.centerXAnchor.constraint(equalTo: scrollView.contentLayoutGuide.centerXAnchor)

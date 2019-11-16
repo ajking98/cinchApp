@@ -138,7 +138,8 @@ class PostCard: UICollectionViewCell {
     //transfers the image from discover to desired folder
     @objc func handleTransfer() {
         Helper().saveToFolder(link: link, completion: { (alertController) in
-            self.delegate?.handleAlert(alert: alertController)
+            //TODO this should be fixed and uncommented - Yassin
+//            self.delegate?.handleAlert(alert: alertController)
         }) { (spotifyController) in
             self.delegate?.presentContent(content: spotifyController)
         }
