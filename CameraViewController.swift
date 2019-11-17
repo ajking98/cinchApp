@@ -86,10 +86,14 @@ class CameraViewController: UIViewController {
             var mainView: UIStoryboard!
             mainView = UIStoryboard(name : "Permissions", bundle: nil)
             let vc = mainView.instantiateViewController(withIdentifier: "PermissionsView") as! PermissionsController
+            vc.render = setUp
             self.present(vc, animated: true, completion: nil)
         }
-        setUp()
+        else {
+            setUp()
+        }
     }
+    
     
     func setUp() {
         print("it is true, we are running")
@@ -144,11 +148,15 @@ class CameraViewController: UIViewController {
                 for i in 0..<fetchResult.count {
                     imageManager.requestImage(for: fetchResult.object(at: i) as! PHAsset, targetSize: CGSize(width: 200, height: 200), contentMode: .aspectFill, options: requestOptions) { (img, error) in
                         self.imageArray.append(img!)
-                    
                         
                         //TODO do this for pagination:
 //                        fetchResult.object(at: <#T##Int#>)
                     }
+                }
+                imageCollectionView.reloadData()
+                if imageArray.count > 2 {
+                    centerView.image = imageArray[0]
+                    nextView.image = imageArray[1]
                 }
             }
         }

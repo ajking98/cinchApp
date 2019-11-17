@@ -44,5 +44,11 @@ func convertStringToKey(link : String) -> String {
 }
 
 
+//todo this should better done 
+///Returns true if the given link is a video
+func checkIfVideo(link : String) -> Bool {
+    return link.contains(".mp4")
+}
+
 
 

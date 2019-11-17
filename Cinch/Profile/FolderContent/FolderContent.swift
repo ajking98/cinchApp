@@ -69,14 +69,23 @@ class FolderContent: UIViewController, UICollectionViewDataSource, UICollectionV
     
     ///gets posts from Firebase
     func fetchContent() {
-        print("here is name:", username, "and here is foldername", folderName)
         FolderStruct().readContent(user: username, folderName: folderName) { (contentDict) in
-            print("reached here")
+            var numberOfVideos = 0
+            var numberOfImages = 0
             for (_, value) in contentDict{
                 let indexPath = IndexPath(item: self.content.count, section: 0)
                 self.content.append(value)
                 self.collectionView.insertItems(at: [indexPath])
+                if checkIfVideo(link : value) {
+                    numberOfVideos += 1
+                }
+                else {
+                    numberOfImages += 1
+                }
             }
+            //TODO this is executed everytime a person opens a folder (thats very redundant) 
+            FolderStruct().updateNumOfImages(user: self.username, folderName: self.folderName, newNumOfImages: numberOfImages)
+            FolderStruct().updateNumOfVideos(user: self.username, folderName: self.folderName, newNumOfVideos: numberOfVideos)
         }
     }
     

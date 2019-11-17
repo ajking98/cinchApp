@@ -17,6 +17,7 @@ class PermissionsController: UIViewController {
     @IBOutlet weak var cancelLabel: UILabel!
     @IBOutlet weak var centerIcon: UIImageView!
     @IBOutlet weak var permissionMessage: UILabel!
+    var render : (() -> ())?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,6 +80,10 @@ class PermissionsController: UIViewController {
         PHPhotoLibrary.requestAuthorization({status in
             if status == .authorized{
                 self.dismiss(animated: true, completion: nil)
+                print("rendering")
+                if let render = self.render {
+                    render()
+                }
             }
             else { PHPhotoLibrary.requestAuthorization({status in
                 if status == .authorized {
