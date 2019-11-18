@@ -39,8 +39,10 @@ class User  {
     func generateUserID() -> String {
         //Todo this should be an actual function that Ahmed has
         //it should also check if that userID exists in the DB, if does, then generate a different userID 
-        return "121212"
+        return randomString(10)
     }
+    
+    
     
     
     ///should only be called when first making a user to add them to the database
