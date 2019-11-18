@@ -129,9 +129,7 @@
                         <color key="backgroundColor" red="0.92156862750000001" green="0.92156862750000001" blue="0.93725490199999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="cbd-ar-5of"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="icons8-add-60" id="B3f-1S-1xL">
-                        <inset key="imageInsets" minX="0.0" minY="10" maxX="0.0" maxY="-15"/>
-                    </tabBarItem>
+                    <tabBarItem key="tabBarItem" title="Upload" image="icons8-plus-30" id="B3f-1S-1xL"/>
                     <navigationItem key="navigationItem" title="UPLOAD" id="r4Y-rZ-lW6"/>
                     <connections>
                         <outlet property="addButton" destination="d98-yt-gyt" id="9YD-7h-FCq"/>
@@ -177,7 +175,7 @@
         <image name="addLarge" width="90" height="90"/>
         <image name="f2-1" width="1080" height="1270"/>
         <image name="fullscreen" width="36" height="36"/>
-        <image name="icons8-add-60" width="60" height="60"/>
+        <image name="icons8-plus-30" width="30" height="30"/>
         <image name="multiple" width="36" height="36"/>
         <image name="solidBar" width="45" height="9"/>
     </resources>
