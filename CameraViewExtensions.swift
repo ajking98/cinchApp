@@ -207,23 +207,21 @@ extension CameraViewController {
             handleUndoTapSingle(index: cell.currentIndex)
         }
         else{
-            cell.layer.borderWidth = 3
-            cell.layer.borderColor = UIColor.selected.cgColor
+            cell.handleTap()
             tappedImages.append(cell.currentIndex)
             selectedImages.append(cell.imageView.image!)
             circleCounter.text = String(tappedImages.count)
-            cell.isTapped = true
         }
     }
     
-    
+    //This isn't being called for some reason
     //updates the selectedImages and tappedImages array along with the circle counter
     ///undoes the border for a single cell
     func handleUndoTapSingle(index : Int){
+        print("doing the single tapp")
         let indexPath = IndexPath(item: index, section: 0)
         let cell = imageCollectionView.cellForItem(at: indexPath) as! CameraViewCell
-        cell.layer.borderWidth = 0
-        cell.isTapped = false
+        cell.undoTap()
         
         //Using the cell's current index to remove the image from both arrays
         for x in 0..<tappedImages.count {
@@ -239,11 +237,13 @@ extension CameraViewController {
     
     ///Cycles through the tappedImages array and undoes the border hightlight for each cell
     func handleUndoTap() {
+        print("we are undoing", imageCollectionView.indexPathsForSelectedItems)
         for index in tappedImages{
             let indexPath = IndexPath(item: index, section: 0)
-            let cell = imageCollectionView.cellForItem(at: indexPath) as! CameraViewCell
-            cell.layer.borderWidth = 0
-            cell.isTapped = false
+            if imageCollectionView.indexPathsForVisibleItems.contains(indexPath) {
+                let cell = imageCollectionView.cellForItem(at: indexPath) as! CameraViewCell
+                cell.undoTap()
+            }
         }
         tappedImages = []
         selectedImages = []

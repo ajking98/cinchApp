@@ -53,7 +53,7 @@ class CameraViewController: UIViewController {
     
     var imageArray = [UIImage]()
     var selectedImages = [UIImage]()
-    var tappedImages = [Int]() //holds the indexes of the tapped images
+    var tappedImages = [Int]() //holds the indexes of the tapped images (Maybe change it so that it holds the index path?) 
     
     
     var isAtTop = false //holds the value on whether or not the scroll for the imagecollectionview is a the top - in terms of offset
