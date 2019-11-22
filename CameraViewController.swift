@@ -56,7 +56,10 @@ class CameraViewController: UIViewController {
     var tappedImages = [Int]() //holds the indexes of the tapped images (Maybe change it so that it holds the index path?) 
     
     
-    var isAtTop = false //holds the value on whether or not the scroll for the imagecollectionview is a the top - in terms of offset
+    var isAtTop = false //holds the value on whether or not the scroll for the imagecollectionview is a the top
+    var globalContentOffset : CGFloat = 0
+    var isFollowingGesture = false
+    var isContentOffsetZero = false
     
     
     func isAuthorized() ->Bool{
@@ -103,7 +106,7 @@ class CameraViewController: UIViewController {
         buildRadius() //Sets the radius for the imageViews (Needs to only be called once)
         buildLayout()
         buildGestures()
-        
+        globalContentOffset = imageCollectionView.contentOffset.y
         grabPhotos()
         
         //Panning
@@ -124,8 +127,9 @@ class CameraViewController: UIViewController {
     
     
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-        centerView.centerXAnchor.constraint(equalTo: scrollView.contentLayoutGuide.centerXAnchor)
-        centerView.centerYAnchor.constraint(equalTo: scrollView.contentLayoutGuide.centerYAnchor)
+        fullscreen.image = UIImage(named: "zoomIn")
+        centerView.contentMode = .scaleAspectFill
+        centerView.center = scrollView.center
         return self.centerView
     }
     
@@ -232,7 +236,7 @@ class CameraViewController: UIViewController {
     
     func buildLayout(){
         let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 20, left: 0, bottom: 10, right: 0)
+//        layout.sectionInset = UIEdgeInsets(top: 20, left: 0, bottom: 10, right: 0)
         layout.minimumInteritemSpacing = 3
         layout.minimumLineSpacing = 0
         
