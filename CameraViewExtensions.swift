@@ -177,10 +177,10 @@ extension CameraViewController {
     @objc func saveToFolder(_ tapGesture : UITapGestureRecognizer? = nil){
         // if the selectedimages array is empty, then vibrate heavy
         guard selectedImages.count != 0 else {
-            Helper().vibrate(style: .heavy)
             return
             
         }
+        Helper().vibrate(style: .light)
         //if the selected images array has a single value, then present folderselection
         if selectedImages.count == 1 {
             let image = selectedImages[0]
