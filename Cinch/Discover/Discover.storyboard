@@ -324,13 +324,11 @@
             </objects>
             <point key="canvasLocation" x="6517.3913043478269" y="65.625"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Discover-->
         <scene sceneID="WQ9-R7-is6">
             <objects>
                 <navigationController storyboardIdentifier="DiscoverID" automaticallyAdjustsScrollViewInsets="NO" id="Wfi-yA-fF3" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="icons8-fire-50" id="Ne8-E0-CsW">
-                        <inset key="imageInsets" minX="0.0" minY="15" maxX="0.0" maxY="-5"/>
-                    </tabBarItem>
+                    <tabBarItem key="tabBarItem" title="Discover" image="icons8-fire-30" id="Ne8-E0-CsW"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="uWb-IW-SZf">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -489,7 +487,7 @@
         <image name="collectionIconGreen" width="30" height="30"/>
         <image name="empty" width="2362" height="2362"/>
         <image name="icons8-arrow-pointing-down-50" width="50" height="50"/>
-        <image name="icons8-fire-50" width="50" height="50"/>
+        <image name="icons8-fire-30" width="30" height="30"/>
         <image name="tableIconBlack" width="30" height="30"/>
     </resources>
 </document>

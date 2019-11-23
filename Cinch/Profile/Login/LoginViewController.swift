@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var nameText: UITextField!
     @IBOutlet weak var usernameText: UITextField!
@@ -20,6 +20,16 @@ class LoginViewController: UIViewController {
         buildGestures()
         underline()
         // Do any additional setup after loading the view.
+        self.hideKeyboardWhenTappedAround()
+        nameText.delegate = self
+        usernameText.delegate = self
+        emailText.delegate = self
+        passwordText.delegate = self
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        dismissKeyboard()
+        return true
     }
     
     @IBAction func signUp(_ sender: Any) {
@@ -74,6 +84,8 @@ class LoginViewController: UIViewController {
             let user = User(name: nameText.text!, username: usernameText.text!, email: emailText.text!, password: passwordText.text!, isPrivate: false)
             ParentStruct().addUser(user: user)
             print("User Created")
+            UserDefaults.standard.set(user.username, forKey: defaultsKeys.usernameKey)
+            UserDefaults(suiteName: "group.InstagramClone.messages")?.set(user.username, forKey: defaultsKeys.usernameKey)
             return true
         }
         return false
@@ -88,5 +100,17 @@ extension UIView {
         animation.duration = 0.4
         animation.values = [-20.0, 20.0, -20.0, 20.0, -10.0, 10.0, -5.0, 5.0, 0.0 ]
         layer.add(animation, forKey: "shake")
+    }
+}
+
+extension UIViewController {
+    func hideKeyboardWhenTappedAround() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
 }

@@ -17,5 +17,6 @@ struct defaultsKeys {
     static let profilePicKey = "profilePicKey"
     static let dateCreatedKey = "dateCreatedKey"
     static let dateLastActiveKey = "dateLastActiveKey"
-    static let otherProfile = "otherProfile" //keeps track of the profile the user is looking at 
+    static let otherProfile = "otherProfile" //keeps track of the profile the user is looking at
+    static let typeOfUser = "typeOfUser" //either user with uniquely generated string or not
 }

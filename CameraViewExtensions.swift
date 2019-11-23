@@ -13,55 +13,74 @@ import UIKit
 //Collection View
 extension CameraViewController : UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
-    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        //Checks if the scrollview that is being called is a collectionView
+        guard let scrollView = scrollView as? UICollectionView else { return }
+        
+//        print("disabling the scroll", imageCollectionView.frame, " and this the ther ogther", scrollView.panGestureRecognizer.location(in: view))
+        //If pangesture location.y < imageCollectionView.frame.origin.y then the imageCollectionView.y should follow the gesture
         let gesture = scrollView.panGestureRecognizer
-        let translation = gesture.translation(in: scrollView)
-        let height = view.frame.height * 0.8
+        let translation = gesture.translation(in: view)
+        let height = view.frame.height * 0.65
         let height2 = view.frame.height * 1.15
         
-        let change = scrollView.center.y
-
         
-        if isAtTop {
+        if gesture.location(in: view).y < scrollView.frame.origin.y {
+            isFollowingGesture = true
+        }
+        
+        
+        
+        
+        if isFollowingGesture {
+            guard scrollView.center.y > height else { return }
+            guard scrollView.center.y < height2 else { return }
+            scrollView.contentOffset.y = globalContentOffset
+            scrollView.frame.origin.y = gesture.location(in: view).y
+            solidBar.center.y = scrollView.frame.origin.y - 10
+            gesture.setTranslation(CGPoint.zero, in: scrollView)
+        }
+        else if isContentOffsetZero && isAtTop {
+            print("we at top")
             if translation.y > 0 && scrollView.center.y + translation.y < view.frame.height {
-                scrollView.center.y += translation.y //pans the collectionview downwards
+                scrollView.contentOffset.y = globalContentOffset
+                scrollView.center.y += translation.y * 0.5 //pans the collectionview downwards
+                solidBar.center.y = scrollView.frame.origin.y - 10
                 gesture.setTranslation(CGPoint.zero, in: scrollView)
             }
         }
-        else if change > height && change < height2 {
-                scrollView.center.y += translation.y
-                gesture.setTranslation(CGPoint.zero, in: scrollView)
-            }
-        
-        let screenHeight = UIScreen.main.bounds.height
-        
-        if scrollView.center.y + translation.y > (screenHeight * 5) / 4 {
-            scrollView.endEditing(true)
+        else {
+            globalContentOffset = scrollView.contentOffset.y
         }
     }
     
     //Is triggered after the motion of the scroll stops
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        guard let scrollView = scrollView as? UICollectionView else { return }
         handleGestureEnded(scrollView: scrollView)
-        isAtTop = scrollView.contentOffset.y == 0
     }
     
     //Is triggered whenever the scrollView is being moved for the first time
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        guard let scrollView = scrollView as? UICollectionView else { return }
+        isContentOffsetZero = abs(scrollView.contentOffset.y) < 2
         print("beginning")
     }
     
     //Is called when the user lifts their finger off the screen when scrolling
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        guard let scrollView = scrollView as? UICollectionView else { return }
         handleGestureEnded(scrollView: scrollView)
     }
     
     func handleGestureEnded(scrollView : UIScrollView) {
-        print("handling", isAtTop)
+        guard let scrollView = scrollView as? UICollectionView else { return }
+        isFollowingGesture = false
+        isAtTop = scrollView.frame.origin.y < view.frame.height * 0.5
+        
         let gesture = scrollView.panGestureRecognizer
         let velocity = gesture.velocity(in: scrollView)
-        if velocity.y > 820 && isAtTop {
+        if velocity.y > 820 && isContentOffsetZero {
             handleSwipeDown()
             print("center1")
         }else if (velocity.y < -820){
@@ -78,11 +97,6 @@ extension CameraViewController : UICollectionViewDataSource, UICollectionViewDel
             }
         }
     }
-    
-    //checks if the collectionView is at the top
-//    var isAtTop : Bool {
-//        return imageCollectionView.contentOffset.y > -60
-//    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return imageArray.count
@@ -145,7 +159,7 @@ extension CameraViewController {
             self.solidBar.frame.origin.y = (updatedOriginY - 24)
         }
         isCollectionViewRaised = true
-        Helper().vibrate(style: .light)
+//        Helper().vibrate(style: .light)
     }
     
     @objc func handleSwipeDown(_ tapGesture  :UITapGestureRecognizer? = nil){
@@ -156,17 +170,17 @@ extension CameraViewController {
             self.addButton.frame = self.addButtonFrame!
         }
         isCollectionViewRaised = false
-        Helper().vibrate(style: .light)
+//        Helper().vibrate(style: .light)
     }
     
     //this creates the folder selector popup view and the tagging input box
     @objc func saveToFolder(_ tapGesture : UITapGestureRecognizer? = nil){
         // if the selectedimages array is empty, then vibrate heavy
         guard selectedImages.count != 0 else {
-            Helper().vibrate(style: .heavy)
             return
             
         }
+        Helper().vibrate(style: .light)
         //if the selected images array has a single value, then present folderselection
         if selectedImages.count == 1 {
             let image = selectedImages[0]
@@ -207,23 +221,21 @@ extension CameraViewController {
             handleUndoTapSingle(index: cell.currentIndex)
         }
         else{
-            cell.layer.borderWidth = 3
-            cell.layer.borderColor = UIColor.selected.cgColor
+            cell.handleTap()
             tappedImages.append(cell.currentIndex)
             selectedImages.append(cell.imageView.image!)
             circleCounter.text = String(tappedImages.count)
-            cell.isTapped = true
         }
     }
     
-    
+    //This isn't being called for some reason
     //updates the selectedImages and tappedImages array along with the circle counter
     ///undoes the border for a single cell
     func handleUndoTapSingle(index : Int){
+        print("doing the single tapp")
         let indexPath = IndexPath(item: index, section: 0)
         let cell = imageCollectionView.cellForItem(at: indexPath) as! CameraViewCell
-        cell.layer.borderWidth = 0
-        cell.isTapped = false
+        cell.undoTap()
         
         //Using the cell's current index to remove the image from both arrays
         for x in 0..<tappedImages.count {
@@ -239,11 +251,13 @@ extension CameraViewController {
     
     ///Cycles through the tappedImages array and undoes the border hightlight for each cell
     func handleUndoTap() {
+        print("we are undoing", imageCollectionView.indexPathsForSelectedItems)
         for index in tappedImages{
             let indexPath = IndexPath(item: index, section: 0)
-            let cell = imageCollectionView.cellForItem(at: indexPath) as! CameraViewCell
-            cell.layer.borderWidth = 0
-            cell.isTapped = false
+            if imageCollectionView.indexPathsForVisibleItems.contains(indexPath) {
+                let cell = imageCollectionView.cellForItem(at: indexPath) as! CameraViewCell
+                cell.undoTap()
+            }
         }
         tappedImages = []
         selectedImages = []

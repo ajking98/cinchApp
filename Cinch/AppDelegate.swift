@@ -25,11 +25,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         //checks if the user already exists, and if they do, they save the username to the global user defaults
         if let username = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) {
+            print("Existing User")
             UserDefaults(suiteName: "group.InstagramClone.messages")?.set(username, forKey: defaultsKeys.usernameKey)
             print("here is your username: ", username)
         }
         else {
             //TODO user should be constructed with a preset SuggestedContent list
+            print("New User")
             let user = User()
             ParentStruct().addUser(user: user)
             print("here is your created username:", user.username)
@@ -39,7 +41,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UserDefaults(suiteName: "group.InstagramClone.messages")?.set(user.username, forKey: defaultsKeys.usernameKey)
 
             //TODO add the other default values here as needed (Use a few user defaults as possible)
-            
         }
         return true
     }

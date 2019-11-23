@@ -50,5 +50,20 @@ func checkIfVideo(link : String) -> Bool {
     return link.contains(".mp4")
 }
 
+func randomString(_ length: Int) -> String {
+    let letters : NSString = "asdfghjkloiuytrewqazxcvbnmWERTYUIASDFGHJKXCVBN!@#$%^&*()_+=-"
+    let len = UInt32(letters.length)
+    
+    var randomString = ""
+    
+    for _ in 0 ..< length {
+        let rand = arc4random_uniform(len)
+        var nextChar = letters.character(at: Int(rand))
+        randomString += NSString(characters: &nextChar, length: 1) as String
+    }
+    
+    return randomString
+}
+
 
 
