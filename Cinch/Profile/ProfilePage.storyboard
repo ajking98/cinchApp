@@ -156,7 +156,7 @@
                                 </connections>
                             </containerView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X5C-UY-ysj" userLabel="settingsButton">
-                                <rect key="frame" x="339" y="-4" width="20" height="22"/>
+                                <rect key="frame" x="343" y="-4" width="16" height="22"/>
                                 <state key="normal" image="icons8-menu-20"/>
                                 <connections>
                                     <action selector="toggleSideMenu:" destination="c9c-6r-wGY" eventType="touchUpInside" id="6Ga-h8-cAH"/>

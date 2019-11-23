@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVKit
 import Messages
 import SDWebImage
 import FirebaseDatabase
@@ -79,7 +80,7 @@ class MessagesViewController: MSMessagesAppViewController, UICollectionViewDeleg
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! MessageCard
         cell.buildPostCard(item: content[indexPath.row])
-        
+        print(content[indexPath.row])
         designCell(cell: cell)
         return cell
     }
@@ -89,8 +90,15 @@ class MessagesViewController: MSMessagesAppViewController, UICollectionViewDeleg
         print(url)
         let newImageView = UIImageView()
         newImageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder.png"))
-        
-        guard let directory = saveImage(imageName: "SelectedImage.jpg", image: newImageView.image!) else { return }
+        var directory:URL
+        if (content[indexPath.row].contains("mp4") || content[indexPath.row].contains("mov")) {
+            let videoUrl = URL(string: content[indexPath.row])
+            var playerItem = AVPlayerItem(url: videoUrl!)
+            var player = AVPlayer(playerItem: playerItem)
+            directory = saveVideo(videName: "SelectedVideo.mp4", video: player)!
+        } else {
+            directory = saveImage(imageName: "SelectedImage.jpg", image: newImageView.image!)!
+        }
         activeConversation?.insertAttachment(directory, withAlternateFilename: nil, completionHandler: nil)
     }
     
@@ -116,6 +124,31 @@ class MessagesViewController: MSMessagesAppViewController, UICollectionViewDeleg
         
         do {
             try data.write(to: fileURL)
+        } catch let error {
+            print("error saving file with error", error)
+        }
+        return fileURL
+    }
+    //TODO fix saving video
+    ///saves the video locally, to the user's device, before being sent over
+    func saveVideo(videName: String, video: AVPlayer)->URL? {
+        guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
+        let data = NSData(contentsOf: URL(string: videName)!)
+        let fileName = videName
+        let fileURL = documentsDirectory.appendingPathComponent(fileName)
+        
+        //Checks if file exists, removes it if so.
+        if FileManager.default.fileExists(atPath: fileURL.path) {
+            do {
+                try FileManager.default.removeItem(atPath: fileURL.path)
+                print("Removed old video")
+            } catch let removeError {
+                print("couldn't remove file at path", removeError)
+            }
+        }
+        
+        do {
+            try data!.write(to: fileURL)
         } catch let error {
             print("error saving file with error", error)
         }

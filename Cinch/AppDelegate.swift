@@ -41,7 +41,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UserDefaults(suiteName: "group.InstagramClone.messages")?.set(user.username, forKey: defaultsKeys.usernameKey)
 
             //TODO add the other default values here as needed (Use a few user defaults as possible)
-            
         }
         return true
     }

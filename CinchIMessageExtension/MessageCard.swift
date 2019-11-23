@@ -62,11 +62,21 @@ class MessageCard: UICollectionViewCell {
     
     ///Given a item, sets the values of the post to that item's values
     func buildPostCard(item : String) {
-        if item.contains("mp4") {
+        if item.contains("mp4") || item.contains("mov") {
             buildVideoPostCard(url: URL(string: item)!)
         }
         else {
             buildPostCard(url: URL(string: item)!)
         }
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        imageView.layer.sublayers = nil
+        imageView.image = nil
+        self.playerItem = nil
+        self.player = nil
+        self.playerLayer = nil
     }
 }

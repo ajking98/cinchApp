@@ -50,7 +50,7 @@ class ProfilePageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         imagePicker.delegate = self
-        
+        self.profileUsername.isHidden = true
         if username == "" {
             username = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
             followButton.isHidden = true
