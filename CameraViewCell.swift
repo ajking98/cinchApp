@@ -16,8 +16,34 @@ class CameraViewCell: UICollectionViewCell {
     
     ///returns the index of the image it was given
     var currentIndex = 0
-    
     var isTapped = false
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        setUp()
+    }
+    
+    ///builds the style for the cell
+    func setUp() {
+        layer.borderColor = UIColor.selected.cgColor
+    }
+    
+    override func prepareForReuse() {
+        print("falsing this cell", currentIndex)
+        undoTap()
+    }
+    
+    ///reverts the cell back to its normal state
+    func undoTap() {
+        isTapped = false
+        layer.borderWidth = 0
+    }
+    
+    func handleTap() {
+        isTapped = true
+        layer.borderWidth = 3
+        print("We are doing the tapping asdf ")
+    }
     
     //player variables
 //    var playerItem: AVPlayerItem!

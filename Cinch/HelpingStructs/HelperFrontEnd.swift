@@ -115,6 +115,7 @@ struct Helper {
         }
         alert.addAction(UIAlertAction(title: "done", style: .default, handler: { (_) in
             if let messages = alert.textFields {
+                Helper().vibrate(style: .heavy)
                 guard let message = messages[0].text?.components(separatedBy: CharacterSet(charactersIn: " ./")) else { return }
                 var tagArray = [String]()
                 for tag in message{
