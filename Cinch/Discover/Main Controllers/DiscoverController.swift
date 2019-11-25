@@ -98,12 +98,14 @@ class DiscoverController: UIViewController, transferDelegate {
     
     
     ///Updates the content array with values from the DB
-    //TODO this only looks at data from the newContent array and not the suggestContent array
+    //TODO this is not updating the collectionView, it is only updating the tableview
     func fetchContent(_ completion: ((Bool) -> Void)? = nil) {
         let username = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
         
         UserStruct().readNewContent(user: username) { (newContent) in
             for (_, value) in newContent {
+
+                print("we are atleast going here2")
                 let indexPath = IndexPath(row: self.posts.count, section: 0)
                 //TODO this creates a post using the link and uses static data in contstructor, this should instead get the data from the posts section in the database
                 
@@ -111,9 +113,9 @@ class DiscoverController: UIViewController, transferDelegate {
                 PostStruct().readPostOwner(post: value, completion: { (owner) in
                     post.postOwner = owner;
                 })
-                guard !self.posts.contains(where: { (selectedPost) -> Bool in
+                if self.posts.contains(where: { (selectedPost) -> Bool in
                     return selectedPost.link == post.link
-                }) else { return }
+                }) { continue }
                 self.posts.append(post)
                 self.collectionView.reloadData()
                 self.tableView.insertRows(at: [indexPath], with: .right)
@@ -132,9 +134,9 @@ class DiscoverController: UIViewController, transferDelegate {
                     post.postOwner = owner;
                 })
                 
-                guard !self.posts.contains(where: { (selectedPost) -> Bool in
+                if self.posts.contains(where: { (selectedPost) -> Bool in
                     return selectedPost.link == post.link
-                }) else { return }
+                }) { continue }
                 self.posts.append(post)
                 self.collectionView.reloadData()
                 self.tableView.insertRows(at: [indexPath], with: .right)
@@ -487,12 +489,12 @@ extension DiscoverController : UICollectionViewDelegate, UICollectionViewDataSou
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "SearchZoomViewController") as! SearchZoomViewController
-        let link = posts[indexPath.item].link
-        let url = URL(string: link!)
+        guard let link = posts[indexPath.item].link else { return }
+        let url = URL(string: link)
         vc.post = posts[indexPath.item]
-        if link!.contains("mp4") {
+        if checkIfVideo(link: link) {
             vc.isImage = false
-            vc.link = link!
+            vc.link = link
         } else {
             let imageView = UIImageView()
             imageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder.png"))

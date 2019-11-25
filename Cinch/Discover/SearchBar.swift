@@ -92,7 +92,6 @@ class SearchBar: UITextField {
     
     //reverts back to original position when the focus is no longer on the search bar and the search bar is empty
     @objc func revertToNormal(){
-        print("active2")
         self.endEditing(true)
         guard (self.text?.count == 0) else {
             return

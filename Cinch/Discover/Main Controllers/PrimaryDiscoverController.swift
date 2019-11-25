@@ -111,36 +111,56 @@ class PrimaryDiscoverController: DiscoverController, SearchDelegate {
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        handleScrollEnded(scrollView)
+        isRefreshing = false
     }
     
     func handleScrollEnded(_ scrollView : UIScrollView) {
         if isRefreshing {
-            scrollView.panGestureRecognizer.isEnabled = true
+            Helper().vibrate(style: .light)
             //after the refresh is complete, set the offset to zero
+        
             fetchContent { (isCompleted) in
-                print("we have fetched the content")
+                print("we have fetched the content", self.posts.count)
+                self.normalize(scrollView: scrollView)
+                UIView.animate(withDuration: 0.2) {
+                    self.loadingIcon.frame.size = CGSize(width: 0, height: 0)
+                    self.loadingIcon.center = CGPoint(x: self.view.center.x, y: self.collectionView.frame.origin.y + 55)
+                }
             }
-            scrollView.setContentOffset(CGPoint.zero, animated: true)
         }
     }
     
     //when user scrolls in the scrollview, the view should pan and either move the segment control out the view or into the view
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        endSearchEditing()
         let gesture = scrollView.panGestureRecognizer
-        
         guard !isRefreshing else { return }
-        if (scrollView.contentOffset.y < -85){
+        
+        let contentOffset = scrollView.contentOffset.y
+        if (contentOffset < -85){
+            Helper().vibrate(style: .heavy)
+            UIView.animate(withDuration: 0.2) {
+                self.loadingIcon.frame.size = CGSize(width: 55, height: 55)
+                self.loadingIcon.center = CGPoint(x: self.view.center.x, y: self.collectionView.frame.origin.y + 55)
+            }
+            print("exceeding 1")
             isRefreshing = true
-            gesture.isEnabled = false
-            scrollView.contentOffset.y = -85
+        }
+        else if contentOffset < 1{
+            self.loadingIcon.frame.size = CGSize(width: contentOffset, height: contentOffset)
+            self.loadingIcon.center = CGPoint(x: self.view.center.x, y: self.collectionView.frame.origin.y + 55)
+        }
+        else if self.loadingIcon.frame.width > 1 {
+            UIView.animate(withDuration: 0.2) {
+                self.loadingIcon.frame.size = CGSize(width: 0, height: 0)
+                self.loadingIcon.center = CGPoint(x: self.view.center.x, y: self.collectionView.frame.origin.y + 55)
+            }
         }
         
         
         //TODO clean this up
         switch gesture.state {
-            
+        case .began:
+            endSearchEditing()
         case .changed:
             let translation = gesture.translation(in: scrollView.superview).y * 0.1
             
