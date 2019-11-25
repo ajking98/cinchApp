@@ -51,11 +51,22 @@ class ProfilePageViewController: UIViewController {
         super.viewDidLoad()
         imagePicker.delegate = self
         self.profileUsername.isHidden = true
-        if username == "" {
-            username = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
+        let localUser = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
+        print("these are the two usernames:", username, " VS ", localUser)
+        if username == ""  || username == localUser { //checks if the user is looking at their profile or someone else's 
+            username = localUser
             followButton.isHidden = true
         }
         else {
+            followButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleFollowTapped)))
+            UserStruct().readFollowing(user: localUser) { (followers) in
+                if followers.values.contains(localUser) {
+                    //make the button disabled and greyed out
+                    self.followButton.isEnabled = false
+                    self.followButton.backgroundColor = .darkGray
+                    self.followButton.layer.opacity = 0.7
+                }
+            }
             settingsButton.isHidden = true
             editProfile.isHidden = true
             editImage.isHidden = true
@@ -64,6 +75,16 @@ class ProfilePageViewController: UIViewController {
         fetchData()
     }
     
+    @objc func handleFollowTapped() {
+        let localUser = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
+        UserStruct().addFollower(user: username, newFollower: localUser) //the local user is a follower of the actual user
+        UserStruct().addFollowing(user: localUser, newFollowing: username)
+        
+        //make the button disabled and greyed out
+        self.followButton.isEnabled = false
+        self.followButton.backgroundColor = .darkGray
+        self.followButton.layer.opacity = 0.7
+    }
     
     override func viewDidDisappear(_ animated: Bool) {
         UserDefaults.standard.set(nil, forKey: defaultsKeys.otherProfile)

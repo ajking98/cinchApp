@@ -58,6 +58,15 @@ struct Helper {
             viewController.present(actionController, animated: true, completion: nil)
         }
     }
+    
+    ///Cycles through everyone in the followers list and appends the link to their newContent array
+    func broadcastPost(link: String) {
+        UserStruct().readFollowers(user: username) { (followers) in
+            for (_, follower) in followers {
+                UserStruct().addNewContent(user: follower, link: link)
+            }
+        }
+    }
 
     //Takes in a link and two closures
     //the first closure is for the tagging alert and the second closure is for the folder saving alert
@@ -76,6 +85,11 @@ struct Helper {
                     FolderStruct().updateNumOfImagesByConstant(user: self.username, folderName: item, constant: 1)
                 }))
             }
+            
+            //BroadCast the post
+            self.broadcastPost(link: link)
+            
+            
             completion2(actionController)
         }
     }
