@@ -68,6 +68,12 @@ class SearchZoomViewController: UIViewController {
             print("step 2", post.postOwner)
             authorView.text = post.postOwner
         }
+        else if link.count > 1 {
+            print("this is the limit reached", link)
+            PostStruct().readPostOwner(post: link) { (author) in
+                self.authorView.text = author
+            }
+        }
         
         //add subviews
         labelContainer.addSubview(menuOptions)
@@ -145,7 +151,8 @@ class SearchZoomViewController: UIViewController {
         UserDefaults.standard.setValue(author, forKey: defaultsKeys.otherProfile)
         vc.username = author
         vc.isLocalUser = false
-        navigationController?.pushViewController(vc, animated: true)
+        print("this is the author", authorView.text)
+        self.present(vc, animated: true)
     }
     
     //TODO make compatible for videos

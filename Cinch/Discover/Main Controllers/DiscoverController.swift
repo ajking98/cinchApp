@@ -50,7 +50,6 @@ class DiscoverController: UIViewController, transferDelegate {
     var isRefreshing = false
     var loadingIcon = UIImageView()
     var searchBar : SearchBar?
-    var isScrolling = false
     var isPrimaryViewController = true
     
     //firebase
@@ -68,7 +67,6 @@ class DiscoverController: UIViewController, transferDelegate {
         setUpCollectionView()
         setUpCollectionViewItemSizes()
         addGestures()
-        addSelectBar(color: UIColor.normalBlue)
         buildSegmentIcons()
         
         scrollViewFrame = collectionView.frame
@@ -91,14 +89,19 @@ class DiscoverController: UIViewController, transferDelegate {
     //TODO remove this when done testing
     func addPostTemp() {
         let username = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
-        UserStruct().addNewContent(user: username, link:"https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/PublicImages%2FIloicBBWASeGENxAHyfe?alt=media&token=09136e15-afe7-4cbe-ac75-c925d7c96b45")
+        UserStruct().addNewContent(user: username, link:"https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/PublicImages%2FrTHalAYTblGaadSUgDIz?alt=media&token=d03fbe52-a664-4f60-9d4e-f0939ae8a7f2")
+        UserStruct().addNewContent(user: username, link: "https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/PublicImages%2FBkdSltqbvHeJunUWcJaf?alt=media&token=10d32ee8-ec34-4d62-bfc6-7b396fd62da9")
+        UserStruct().addNewContent(user: username, link: "https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/PublicImages%2FaFjSqSwakRllHJeHJRHw?alt=media&token=bdd439ef-5f0b-40da-90fe-fa127297ab9e")
+        UserStruct().addNewContent(user: username, link: "https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/PublicImages%2FrBijfzwlNvYugaxaqlFi?alt=media&token=6e596e38-7520-406c-a90a-be3420d9929d")
+        UserStruct().addNewContent(user: username, link: "https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/PublicImages%2FuuehVbKCasEJGxCcAseS?alt=media&token=54045c47-5bbc-4ba4-a44b-485813243dde")
     }
     
     
     ///Updates the content array with values from the DB
     //TODO this only looks at data from the newContent array and not the suggestContent array
-    func fetchContent() {
+    func fetchContent(_ completion: ((Bool) -> Void)? = nil) {
         let username = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
+        
         UserStruct().readNewContent(user: username) { (newContent) in
             for (_, value) in newContent {
                 let indexPath = IndexPath(row: self.posts.count, section: 0)
@@ -108,10 +111,15 @@ class DiscoverController: UIViewController, transferDelegate {
                 PostStruct().readPostOwner(post: value, completion: { (owner) in
                     post.postOwner = owner;
                 })
+                guard !self.posts.contains(where: { (selectedPost) -> Bool in
+                    return selectedPost.link == post.link
+                }) else { return }
                 self.posts.append(post)
                 self.collectionView.reloadData()
                 self.tableView.insertRows(at: [indexPath], with: .right)
             }
+            guard let completion = completion else { return }
+            completion(true)
         }
         UserStruct().readSuggestedContent(user: username) { (suggestedContent) in
             for (_, value) in suggestedContent {
@@ -124,10 +132,15 @@ class DiscoverController: UIViewController, transferDelegate {
                     post.postOwner = owner;
                 })
                 
+                guard !self.posts.contains(where: { (selectedPost) -> Bool in
+                    return selectedPost.link == post.link
+                }) else { return }
                 self.posts.append(post)
                 self.collectionView.reloadData()
                 self.tableView.insertRows(at: [indexPath], with: .right)
             }
+            guard let completion = completion else { return }
+            completion(true)
         }
     }
     
@@ -139,7 +152,6 @@ class DiscoverController: UIViewController, transferDelegate {
     func sizeUp() {
         //TODO consider deleting below
         segmentControlCenter = segmentControl.center
-        print(segmentControl.center)
     }
     
     
@@ -171,11 +183,9 @@ class DiscoverController: UIViewController, transferDelegate {
     func addSelectBar(color: UIColor) {
         buttonBar.translatesAutoresizingMaskIntoConstraints = false
         buttonBar.backgroundColor = color
-        view.addSubview(buttonBar)
-        buttonBar.topAnchor.constraint(equalTo: segmentControl.bottomAnchor).isActive = true
-        buttonBar.heightAnchor.constraint(equalToConstant: 3).isActive = true
-        buttonBar.leftAnchor.constraint(equalTo: segmentControl.leftAnchor).isActive = true
-        buttonBar.widthAnchor.constraint(equalTo: segmentControl.widthAnchor, multiplier: 1 / 2).isActive = true
+        buttonBar.frame.size = CGSize(width: view.frame.width * 0.40, height: 3)
+        buttonBar.frame.origin.y = segmentControl.frame.height
+        segmentControl.addSubview(buttonBar)
     }
     
     func addGestures() {
@@ -193,30 +203,29 @@ class DiscoverController: UIViewController, transferDelegate {
     
     
     func refresh(scrollView : UIScrollView) {
-        print("offset error")
         isRefreshing = true
         
-        
-        UIView.animate(withDuration: 0.2) {
-            self.loadingIcon.frame.size = CGSize(width: 60, height: 60)
-            self.loadingIcon.center = CGPoint(x: self.view.center.x, y: self.collectionView.frame.origin.y + 55)
-        }
-        
-        
-        //TODO call the grab images function here
+//
+//        UIView.animate(withDuration: 0.2) {
+//            self.loadingIcon.frame.size = CGSize(width: 60, height: 60)
+//            self.loadingIcon.center = CGPoint(x: self.view.center.x, y: self.collectionView.frame.origin.y + 55)
+//        }
+        print("this is the frame for the loadingicon", loadingIcon.frame)
         
         
-        //Close refresh icon
-        UIView.animate(withDuration: 0.2) {
-            self.loadingIcon.frame.size = CGSize(width: 0, height: 0)
-            self.loadingIcon.center = CGPoint(x: self.view.center.x, y: self.collectionView.frame.origin.y + 55)
-        }
-        UIView.animate(withDuration: 0.2, animations: {
-            self.loadingIcon.frame.size = CGSize(width: 0, height: 0)
-            self.loadingIcon.center = CGPoint(x: self.view.center.x, y: self.collectionView.frame.origin.y + 55)
-        }) { (status) in
-            self.isRefreshing = false
-        }
+        //TODO call the fetch content function here
+//        fetchContent { (isCompleted) in
+//            print("we have fetched the new content:", isCompleted)
+//
+//            //Close refresh icon
+//            UIView.animate(withDuration: 0.2, animations: {
+//                self.loadingIcon.frame.size = CGSize(width: 0, height: 0)
+//                self.loadingIcon.center = CGPoint(x: self.view.center.x, y: self.collectionView.frame.origin.y + 55)
+//            }) { (status) in
+//                self.isRefreshing = false
+//            }
+//        }
+        
         
         normalize(scrollView: scrollView)
         print("is refreshing my guy")
@@ -286,7 +295,7 @@ class DiscoverController: UIViewController, transferDelegate {
     func unNormalizeSegmentView(velocity : Double){
         UIView.animate(withDuration: velocity) {
             self.segmentControl.center.y = -10 - self.segmentControl.frame.height
-            self.buttonBar.center.y = self.segmentControl.frame.origin.y + self.segmentControl.frame.height
+            self.buttonBar.center.y = self.segmentControl.frame.height
             self.searchBar?.center.y = self.segmentControl.frame.origin.y + self.segmentControl.frame.height + 30
         }
     }
@@ -317,7 +326,7 @@ class DiscoverController: UIViewController, transferDelegate {
     func normalizeSegmentView(velocity : Double){
         UIView.animate(withDuration: velocity) {
             self.segmentControl.center.y = self.segmentControlCenter!.y
-            self.buttonBar.center.y = self.segmentControl.frame.origin.y + self.segmentControl.frame.height
+            self.buttonBar.center.y = self.segmentControl.frame.height
             self.searchBar?.center.y = self.segmentControl.frame.origin.y + self.segmentControl.frame.height + 30
         }
     }
@@ -342,79 +351,25 @@ class DiscoverController: UIViewController, transferDelegate {
         let x = tapGesture.location(in: view).x
         
         if x > view.center.x {
-            if isRightSegmented {
-                //if the user taps on the collection view icon while on the collection view, then they scroll to the top
-                bringToTop(scrollView: tableView)
-            }
-            summonTableView()
+            handleSegmentControl(false) //summons the table view
         }
         else {
-            if !isRightSegmented {
-                bringToTop(scrollView: collectionView)
-            }
-            summonCollectionView()
+            handleSegmentControl(true) //summons the collectionview 
         }
     }
     
     
     @objc func handlePanCollectionView(gesture: UIPanGestureRecognizer) {
-        
-        let translation = gesture.translation(in: self.view)
-        
         gesture.isEnabled = true
-        
         switch gesture.state {
-        case .began:
-            isScrolling = false
-            
         case .changed:
-            guard abs(translation.x * 2) >= abs(translation.y) else {
-                isScrolling = true
-                return
-            }
-            guard !isScrolling else {
-                return
-            }
-            guard abs(translation.x) > abs(translation.y * 10) else {
-                return
-            }
-            //disabling scroll when user is swiping to other view
-            if(collectionView.center.x < (view.center.x - 15)){
-                collectionView.isScrollEnabled = false
-            }
             
             //checking if user is swiping in the wrong direction
-            if(gesture.view!.center.x <= view.center.x) {
-                translateTables(translation: translation)
-            }else {
-                //if user is swiping against the wall, then it normalizes the view
-                normalize(scrollView: collectionView)
-                gesture.isEnabled = false
-            }
+            //if user is swiping against the wall, then it normalizes the view
+            normalize(scrollView: collectionView)
+            gesture.isEnabled = false
             gesture.setTranslation(CGPoint(x: 0,y: 0), in: self.view)
             
-        case .ended:
-            collectionView.isScrollEnabled = true //enables scrolling in the y-axis
-            
-            //if the user swipes quickly to the left, then they are presented with the table view
-            if(isQuickSwipe(velocity: gesture.velocity(in: view).x)){
-                if collectionView.indexPathsForVisibleItems.count > 1 {
-                    let indexPath = collectionView.indexPathsForVisibleItems[0]
-                    summonTableView(indexPath)
-                }
-            }
-            else {
-                //checks to see if the user's gesture traveled far enough to summon the table view
-                if tableView.center.x < view.frame.width {
-                    if collectionView.indexPathsForVisibleItems.count > 1 {
-                        let indexPath = collectionView.indexPathsForVisibleItems[0]
-                        summonTableView(indexPath)
-                    }
-                    
-                } else {
-                    summonCollectionView()
-                }
-            }
         default: break
         }
     }
@@ -422,57 +377,14 @@ class DiscoverController: UIViewController, transferDelegate {
     
     @objc func handlePanTableView(gesture: UIPanGestureRecognizer) {
         gesture.isEnabled = true
-        let translation = gesture.translation(in: self.view)
-        switch (gesture.state) {
-            
-        case .began:
-            isScrolling = false
-
+        switch gesture.state {
         case .changed:
-            guard abs(translation.x * 2) >= abs(translation.y) else {
-                isScrolling = true
-                return
-            }
-            guard !isScrolling else {
-                return
-            }
-            guard abs(translation.x) > abs(translation.y * 10) else {
-                return
-            }
-            if(tableView.center.x > (view.center.x + 15)){
-                tableView.isScrollEnabled = false
-            }
-            if(gesture.view!.center.x >= view.center.x) {
-                translateTables(translation: translation)
-            }
-            else {
-                print("elsing")
-                normalize(scrollView: tableView)
-                gesture.isEnabled = false
-            }
-
+            
+            //checking if user is swiping in the wrong direction
+            //if user is swiping against the wall, then it normalizes the view
+            normalize(scrollView: tableView)
+            gesture.isEnabled = false
             gesture.setTranslation(CGPoint(x: 0,y: 0), in: self.view)
-
-        case .ended :
-            tableView.isScrollEnabled = true
-            if(isQuickSwipe(velocity: gesture.velocity(in: view).x)){
-                if collectionView.indexPathsForVisibleItems.count > 1 {
-                    let indexPath = collectionView.indexPathsForVisibleItems[0]
-                    summonCollectionView(indexPath)
-                }
-
-            }
-            else {
-                if collectionView.center.x < -50 {
-                    summonTableView()
-                }
-                else {
-                    if collectionView.indexPathsForVisibleItems.count > 1 {
-                        let indexPath = collectionView.indexPathsForVisibleItems[0]
-                        summonCollectionView(indexPath)
-                    }
-                }
-            }
             
         default: break
         }
@@ -489,10 +401,8 @@ class DiscoverController: UIViewController, transferDelegate {
     //called to animate in the collectionview
     func summonCollectionView(_ indexPath : IndexPath = IndexPath(item: 0, section: 0)) {
         UIView.animateKeyframes(withDuration: 0.3, delay: 0, options: [], animations: {
-            self.handleSegmentControl(true)
             self.collectionView.center.x = self.view.center.x
             self.tableView.center.x = self.view.center.x + self.view.frame.width
-            self.buttonBar.frame.origin.x = 20
             
             
             //scrolls to index
@@ -506,11 +416,8 @@ class DiscoverController: UIViewController, transferDelegate {
     //called to animate in the collectionview
     func summonTableView(_ indexPath : IndexPath = IndexPath(item: 0, section: 0) ) {
         UIView.animateKeyframes(withDuration: 0.3, delay: 0, options: [], animations: {
-            self.handleSegmentControl(false)
             self.collectionView.center.x = self.view.center.x - self.view.frame.width
             self.tableView.center.x = self.view.center.x
-            self.buttonBar.frame.origin.x = self.view.center.x
-            
             
             //scrolls to the index
             if (indexPath != IndexPath(item: 0, section: 0)){
@@ -521,25 +428,41 @@ class DiscoverController: UIViewController, transferDelegate {
     }
     
     
-    
+    ///handles the action when the user taps on either the collectionViewicon or the tableViewicon
     fileprivate func handleSegmentControl(_ condition : Bool) {
-        if(isRightSegmented && condition){
+        if(condition){ //sets up the CollectionView
+            if isRightSegmented {
+                bringToTop(scrollView: collectionView)
+                return
+            }
             self.tableViewIcon.image = UIImage(named: "tableIconBlack")
             self.collectionViewIcon.image = UIImage(named: "collectionIconGreen")
-            self.collectionViewIcon.center.y -= 5
-            self.tableViewIcon.center.y += 5
-            self.collectionViewIcon.frame.size = CGSize(width: 30, height: 30)
-            self.tableViewIcon.frame.size = CGSize(width: 25, height: 25)
-            isRightSegmented = false
-        }
-        else if(!isRightSegmented && !condition) {
-            self.tableViewIcon.image = UIImage(named: "tableIconGreen")
-            self.collectionViewIcon.image = UIImage(named: "collectionIconBlack")
-            self.collectionViewIcon.center.y += 5
-            self.tableViewIcon.center.y -= 5
-            self.collectionViewIcon.frame.size = CGSize(width: 25, height: 25)
-            self.tableViewIcon.frame.size = CGSize(width: 30, height: 30)
+            UIView.animate(withDuration: 0.2) {
+                self.collectionViewIcon.center.y -= 5
+                self.tableViewIcon.center.y += 5
+                self.collectionViewIcon.frame.size = CGSize(width: 30, height: 30)
+                self.tableViewIcon.frame.size = CGSize(width: 25, height: 25)
+                self.buttonBar.frame.origin.x = 0
+            }
+            summonCollectionView()
             isRightSegmented = true
+        }
+        else { //sets up the tableview
+            if !isRightSegmented {
+                bringToTop(scrollView: tableView)
+                return
+            }
+            UIView.animate(withDuration: 0.2) {
+                self.tableViewIcon.image = UIImage(named: "tableIconGreen")
+                self.collectionViewIcon.image = UIImage(named: "collectionIconBlack")
+                self.collectionViewIcon.center.y += 5
+                self.tableViewIcon.center.y -= 5
+                self.collectionViewIcon.frame.size = CGSize(width: 25, height: 25)
+                self.tableViewIcon.frame.size = CGSize(width: 30, height: 30)
+                self.buttonBar.frame.origin.x = self.view.center.x
+            }
+            summonTableView()
+            isRightSegmented = false
         }
     }
 }
@@ -575,9 +498,7 @@ extension DiscoverController : UICollectionViewDelegate, UICollectionViewDataSou
             imageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder.png"))
             vc.image = imageView.image!
         }
-        
-        let myNav = UINavigationController(rootViewController: vc)
-        present(myNav, animated: true, completion: nil)
+        present(vc, animated: true, completion: nil)
     }
     
 }
@@ -612,9 +533,7 @@ extension DiscoverController : UITableViewDelegate, UITableViewDataSource {
             imageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder.png"))
             vc.image = imageView.image!
         }
-        
-        let myNav = UINavigationController(rootViewController: vc)
-        present(myNav, animated: true, completion: nil)
+        present(vc, animated: true, completion: nil)
     }
 
 }
