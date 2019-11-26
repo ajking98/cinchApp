@@ -12,6 +12,7 @@ import XLActionController
 import FirebaseAuth
 import FirebaseDatabase
 import FirebaseStorage
+import AVKit
 
 
 struct Helper {
@@ -24,38 +25,43 @@ struct Helper {
     
     //TODO this should take in a closure to handle the frontend work or even uses a protocol to send the data back to the Main ViewController and have the vc do the presenting from inside its class
     ///takes an image and UIViewController and creates the alert for saving image to folder and tag alertbox 
-    func saveToFolder(image: UIImage, viewController : UIViewController) {
-        //Folder pick
-        let actionController = SpotifyActionController()
-        actionController.headerData = SpotifyHeaderData(title: "select a folder for the image?", subtitle: "", image: image)
-        
-        //1.
-        //read in folders live from database
-        //Store image into storage and get link
-        //add new content to Folder in DB using FolderStruct
-        
-        
-        //2.
-        //Should take in tags
-        
-        UserStruct().readFolders(user: username) { (folders) in
-            for item in folders {
-                actionController.addAction(Action(ActionData(title: "\(item.lowercased())", subtitle: "For Content"), style: .default, handler: { action in
-                    
-                    
-                    //todo Later, this "Testing" string in the next line should be given a link instead of static string
-                    StorageStruct().uploadImage(image: image, completion: { (link) in
-                        let alert = self.createTagsAlert(link: link, username: self.username)//Tagging alert
-                        viewController.present(alert, animated: true, completion: nil)
-                        
-                        FolderStruct().addContent(user: self.username, folderName: item, link: link)
-                        FolderStruct().updateNumOfImagesByConstant(user: self.username, folderName: item, constant: 1)
-                    })
-                    
-                }))
-            }
+    func saveToFolder(content: NSObject, viewController : UIViewController) {
+        if let video = content as? AVPlayerItem {
+            //handle saving video
+        }
+        else if let image = content as? UIImage {
+            //Folder pick
+            let actionController = SpotifyActionController()
+            actionController.headerData = SpotifyHeaderData(title: "select a folder for the image?", subtitle: "", image: image)
             
-            viewController.present(actionController, animated: true, completion: nil)
+            //1.
+            //read in folders live from database
+            //Store image into storage and get link
+            //add new content to Folder in DB using FolderStruct
+            
+            
+            //2.
+            //Should take in tags
+            
+            UserStruct().readFolders(user: username) { (folders) in
+                for item in folders {
+                    actionController.addAction(Action(ActionData(title: "\(item.lowercased())", subtitle: "For Content"), style: .default, handler: { action in
+                        
+                        
+                        //todo Later, this "Testing" string in the next line should be given a link instead of static string
+                        StorageStruct().uploadImage(image: image, completion: { (link) in
+                            let alert = self.createTagsAlert(link: link, username: self.username)//Tagging alert
+                            viewController.present(alert, animated: true, completion: nil)
+                            
+                            FolderStruct().addContent(user: self.username, folderName: item, link: link)
+                            FolderStruct().updateNumOfImagesByConstant(user: self.username, folderName: item, constant: 1)
+                        })
+                        
+                    }))
+                }
+                
+                viewController.present(actionController, animated: true, completion: nil)
+            }
         }
     }
     

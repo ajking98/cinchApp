@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import ImageIO
+import AVKit
 
 
 public enum constants: CGFloat {
@@ -66,4 +67,34 @@ func randomString(_ length: Int) -> String {
 }
 
 
+///Adds the video to the given uiview
+func addPlayer(view: UIView, playerItem : AVPlayerItem) {
+    let player = AVPlayer(playerItem: playerItem)
+    let playerLayer = AVPlayerLayer(player: player)
+    playerLayer.videoGravity = .resize
+    view.layer.addSublayer(playerLayer)
+    playerLayer.frame = view.bounds
+    player.play()
+    player.isMuted = true
+    loopVideo(videoPlayer: player)
+}
 
+///Assigns an NSObject to a UIView 
+func setContent(view: UIView, content: NSObject) {
+    if let video = content as? AVPlayerItem {
+        addPlayer(view: view, playerItem: video)
+    }
+    else if let image = content as? UIImage {
+        guard let imageView = view as? UIImageView else { return }
+        imageView.image = image
+    }
+}
+
+
+//keeps the video in a constant loop
+func loopVideo(videoPlayer: AVPlayer) {
+    NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil, queue: nil) { notification in
+        videoPlayer.seek(to: CMTime.zero)
+        videoPlayer.play()
+    }
+}

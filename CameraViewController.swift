@@ -12,6 +12,7 @@ import UIKit
 import CoreImage
 import XLActionController
 import Photos
+import AVKit
 
 
 class CameraViewController: UIViewController {
@@ -51,8 +52,8 @@ class CameraViewController: UIViewController {
     var isMultipleSelected = false
     var isCollectionViewRaised = false
     
-    var imageArray = [UIImage]()
-    var selectedImages = [UIImage]()
+    var contentArray = [NSObject]()
+    var selectedImages = [NSObject]() //holds both images and
     var tappedImages = [Int]() //holds the indexes of the tapped images (Maybe change it so that it holds the index path?) 
     
     
@@ -146,24 +147,49 @@ class CameraViewController: UIViewController {
         
         //setting the fetch limit(if this number is high, the app will run slower)
         fetchOptions.fetchLimit = 120
-        
-        if let fetchResult : PHFetchResult = PHAsset.fetchAssets(with: .image, options: fetchOptions) {
+        fetchOptions.predicate = NSPredicate(format: "mediaType = %d || mediaType = %d", PHAssetMediaType.image.rawValue, PHAssetMediaType.video.rawValue)
+        if let fetchResult : PHFetchResult = PHAsset.fetchAssets(with: fetchOptions) {
             if fetchResult.count > 0 {
                 for i in 0..<fetchResult.count {
-                    imageManager.requestImage(for: fetchResult.object(at: i) as! PHAsset, targetSize: CGSize(width: 200, height: 200), contentMode: .aspectFill, options: requestOptions) { (img, error) in
-                        self.imageArray.append(img!)
+                    switch fetchResult.object(at: i).mediaType {
                         
-                        //TODO do this for pagination:
-//                        fetchResult.object(at: <#T##Int#>)
+                    case .image:
+                        imageManager.requestImage(for: fetchResult.object(at: i) , targetSize: CGSize(width: 200, height: 200), contentMode: .aspectFill, options: requestOptions) { (img, error) in
+                            if let image = img {
+                                let indexPath = IndexPath(item: self.contentArray.count, section: 0)
+//                                self.contentArray.append(img!)
+//                                self.imageCollectionView.insertItems(at: [indexPath])
+                            }
+                            
+                            //TODO do this for pagination:
+    //                        fetchResult.object(at: <#T##Int#>)
+                        }
+                    case .video:
+                        imageManager.requestPlayerItem(forVideo: fetchResult.object(at: i), options: nil) { (playerItem, error) in
+                            //todo add the video to the list
+                            
+                            if let playerItem = playerItem {
+                                let indexPath = IndexPath(item: self.contentArray.count, section: 0)
+                                self.contentArray.append(playerItem)
+                                self.imageCollectionView.insertItems(at: [indexPath])
+                            }
+                        }
+                    default:
+                        print("this is something else")
                     }
+//                    imageManager.requestPlayerItem(forVideo: fetchResult.object(at: i), options: requestOptions) { (playerItem, error) in
+//                        print("something")
+//                    }
                 }
-                imageCollectionView.reloadData()
-                if imageArray.count > 2 {
-                    centerView.image = imageArray[0]
-                    nextView.image = imageArray[1]
+//                imageCollectionView.reloadData()
+                if contentArray.count > 2 {
+                    //TODO this should first check if the first two objects are images then does the code below. If they are not images, then it should present them as videos
+                    centerView.image = contentArray[0] as? UIImage
+                    nextView.image = contentArray[1] as? UIImage
                 }
             }
         }
+        
     }
     
     func change(_ imagePrev : UIImage, _ imageCurr : UIImage, _ imageNext : UIImage){
@@ -357,11 +383,12 @@ class CameraViewController: UIViewController {
             
             if(self.centerIndex > 1){
                 self.centerIndex -= 1
-                self.change(self.imageArray[self.centerIndex - 1], self.imageArray[self.centerIndex], self.imageArray[self.centerIndex + 1])
+                //TODO this should check if the index in ContentArray is a UIImage
+                self.change(self.contentArray[self.centerIndex - 1] as! UIImage, self.contentArray[self.centerIndex] as! UIImage, self.contentArray[self.centerIndex + 1] as! UIImage)
             }
             else {
                 self.centerIndex -= 1
-                self.change(UIImage(named: "addImage")!, self.imageArray[self.centerIndex], self.imageArray[self.centerIndex + 1])
+                self.change(UIImage(named: "addImage")!, self.contentArray[self.centerIndex] as! UIImage, self.contentArray[self.centerIndex + 1] as! UIImage)
             }
             self.buildPositioning()
         }
@@ -372,7 +399,7 @@ class CameraViewController: UIViewController {
         
         centerIndex += 1
         
-        guard centerIndex < imageArray.count else{
+        guard centerIndex < contentArray.count else{
             print("maxing out")
             buildPositioning()
             centerIndex -= 1
@@ -384,11 +411,12 @@ class CameraViewController: UIViewController {
             self.centerView.center.x = (0 - self.scrollView.frame.width / 2) - 12
         })
         { (status) in
-            if(self.centerIndex < self.imageArray.count - 1){
-                self.change(self.imageArray[self.centerIndex - 1], self.imageArray[self.centerIndex], self.imageArray[self.centerIndex + 1])
+            //TODO this should check if the index in contentArray is of type UIImage
+            if(self.centerIndex < self.contentArray.count - 1){
+                self.change(self.contentArray[self.centerIndex - 1] as! UIImage, self.contentArray[self.centerIndex] as! UIImage, self.contentArray[self.centerIndex + 1] as! UIImage)
             }
             else {
-                self.change(self.imageArray[self.centerIndex - 1], self.imageArray[self.centerIndex], UIImage(named: "addImage")!)
+                self.change(self.contentArray[self.centerIndex - 1] as! UIImage, self.contentArray[self.centerIndex] as! UIImage, UIImage(named: "addImage")!)
             }
             self.buildPositioning()
         }

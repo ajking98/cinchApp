@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import AVKit
 
 
 //Collection View
@@ -98,20 +99,20 @@ extension CameraViewController : UICollectionViewDataSource, UICollectionViewDel
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return imageArray.count
+        return contentArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath) as! CameraViewCell
-        handleCellSelected(cell)
+        handleCellSelected(indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! CameraViewCell
-        cell.imageView.image = imageArray[indexPath.row]
         cell.currentIndex = indexPath.row
         cell.imageView.contentMode = UIView.ContentMode.scaleAspectFill
         
+        cell.content = contentArray[indexPath.item]
+        cell.setUp()
         return cell
     }
     
@@ -183,33 +184,80 @@ extension CameraViewController {
         Helper().vibrate(style: .light)
         //if the selected images array has a single value, then present folderselection
         if selectedImages.count == 1 {
-            let image = selectedImages[0]
+            let content = selectedImages[0]
             Helper().vibrate(style: .light)
-            Helper().saveToFolder(image: image, viewController: self)
+            Helper().saveToFolder(content: content, viewController: self)
         }
         
         else {
-            Helper().saveMultipleImages(images: selectedImages, viewController: self)
+            //TODO fix this and make it possible to submit multiple things at once
+//            Helper().saveMultipleImages(images: selectedImages, viewController: self)
             self.handleUndoTap()
             self.handleMultipleTapped()
         }
         
     }
     
+    ///Adds an AVPlayer to a UIView
+    func addPlayer(selectedView: UIView, playerItem: AVPlayerItem, _ isMuted: Bool = true) {
+        if let url = (playerItem.asset as? AVURLAsset)?.url {
+            clearView(selectedView: selectedView)
+            let player = AVPlayer(url: url)
+            print("stepping 3", url)
+            let playerLayer = AVPlayerLayer(player: player)
+            playerLayer.videoGravity = .resize
+            selectedView.layer.addSublayer(playerLayer)
+            playerLayer.frame = selectedView.bounds
+            player.play()
+            player.isMuted = isMuted
+            print("Stepping4", centerView.layer.sublayers)
+        }
+    }
+    
+    ///Removes all the sublayers for the given UIView
+    func clearView(selectedView: UIView) {
+        selectedView.layer.sublayers?.forEach({ (layer) in
+            layer.removeFromSuperlayer()
+        })
+    }
+    
     //handles the border and insertion into the arrays
     ///Handles the functionality for when a cell is selected from the collectionview
-    func handleCellSelected(_ cell : CameraViewCell) {
-        centerIndex = cell.currentIndex
+    func handleCellSelected(_ cellIndexPath : IndexPath) {
+        centerIndex = cellIndexPath.item
         
-        guard let image = cell.imageView.image else { return }
-        centerView.image = image
-        
-        if (cell.currentIndex < (imageArray.count - 1)){
-            nextView.image = imageArray[cell.currentIndex + 1]
+        //CenterView
+        if let playerItem = contentArray[centerIndex] as? AVPlayerItem {
+            addPlayer(selectedView: centerView, playerItem: playerItem, false)
+        }
+        else if let image = contentArray[centerIndex] as? UIImage {
+            clearView(selectedView: centerView)
+            centerView.image = image
         }
         
-        if cell.currentIndex > 0 {
-            previousView.image = imageArray[cell.currentIndex - 1]
+        
+        //PreviousView
+        if centerIndex > 0 {
+         if let playerItem = contentArray[centerIndex - 1] as? AVPlayerItem {
+                   addPlayer(selectedView: previousView, playerItem: playerItem, false)
+               }
+               else if let image = contentArray[centerIndex - 1] as? UIImage {
+                   clearView(selectedView: previousView)
+                   previousView.image = image
+               }
+        }
+        
+        
+        //NextView
+        if centerIndex < contentArray.count - 1 {
+            if let playerItem = contentArray[centerIndex - 1] as? AVPlayerItem {
+                      addPlayer(selectedView: nextView, playerItem: playerItem, false)
+                  }
+            else if let image = contentArray[centerIndex - 1] as? UIImage {
+              clearView(selectedView: nextView)
+              nextView.image = image
+            }
+            
         }
         
         
@@ -217,14 +265,15 @@ extension CameraViewController {
         if !isMultipleSelected {
             handleUndoTap()
         }
-        if cell.isTapped {
-            handleUndoTapSingle(index: cell.currentIndex)
+        if tappedImages.contains(centerIndex) {
+            handleUndoTapSingle(index: centerIndex)
         }
         else{
-            cell.handleTap()
-            tappedImages.append(cell.currentIndex)
-            selectedImages.append(cell.imageView.image!)
+            tappedImages.append(centerIndex)
+            selectedImages.append(contentArray[centerIndex])
             circleCounter.text = String(tappedImages.count)
+            guard let cell = imageCollectionView.cellForItem(at: cellIndexPath) as? CameraViewCell else { return }
+            cell.handleTap()
         }
     }
     
