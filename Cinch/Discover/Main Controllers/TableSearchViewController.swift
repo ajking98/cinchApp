@@ -4,7 +4,7 @@
 //
 //  Created by Ahmed Gedi on 11/4/19.
 //  Copyright © 2019 Gedi, Ahmed M. All rights reserved.
-//
+//This is the tableview that controls the suggested search box
 
 import Foundation
 import UIKit
@@ -21,6 +21,7 @@ class TableSearchViewController : UITableViewController {
         super.viewDidLoad()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: reusibleIdentifier)
         fetchAllTags()
+        print("creating the entire shit")
     }
     
     //todo make this search algo O(NLog(N))

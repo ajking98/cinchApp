@@ -4,7 +4,7 @@
 //
 //  Created by Ahmed Gedi on 11/4/19.
 //  Copyright © 2019 Gedi, Ahmed M. All rights reserved.
-//
+//This is the box below the search bar that is updated as the user is typing into it
 
 import UIKit
 import XLActionController
@@ -79,18 +79,18 @@ class SearchResultViewController: UIViewController, UITableViewDelegate, UITable
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = posts[indexPath.row]
-        let link = item.link
-        let url = URL(string: link!)
+        guard let link = item.link else { return }
+        let url = URL(string: link)
         
         let vc = storyboard?.instantiateViewController(withIdentifier: "SearchZoomViewController") as! SearchZoomViewController
-        if link!.contains("mp4") {
+        if checkIfVideo(link: link) {
             vc.isImage = false
-            vc.link = link!
         } else {
             let imageView = UIImageView()
             imageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder.png"))
             vc.image = imageView.image!
         }
+        vc.link = link
         present(vc, animated: true, completion: nil)
     }
     

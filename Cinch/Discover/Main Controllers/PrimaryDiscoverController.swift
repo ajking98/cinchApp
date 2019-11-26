@@ -21,6 +21,7 @@ class PrimaryDiscoverController: DiscoverController, SearchDelegate {
         addSearchBar()
         searchBar?.endEditing(true)
         buildSearchView()
+        addSelectBar(color: UIColor.normalBlue)
     }
     
     //this triggers the next view controller where the posts are from the tag they searched
@@ -76,6 +77,7 @@ class PrimaryDiscoverController: DiscoverController, SearchDelegate {
         tapped.cancelsTouchesInView = false
         view.addGestureRecognizer(tapped)
         searchBar.backgroundColor = .white
+        
         view.addSubview(searchBar)
     }
     
@@ -89,7 +91,7 @@ class PrimaryDiscoverController: DiscoverController, SearchDelegate {
         guard let searchView = searchView else { return }
         
         searchView.view.layer.opacity = 0
-        searchView.view.frame = CGRect(x: 0, y: 0, width: width * 0.88, height: height * 0.3)
+        searchView.view.frame = CGRect(x: 0, y: 0, width: width * 0.88, height: height * 0.2)
         searchView.view.center.x = view.center.x
         searchView.view.layer.cornerRadius = 10
         searchView.pendingFunction = presentTagElements(searchTerm:)
@@ -105,20 +107,62 @@ class PrimaryDiscoverController: DiscoverController, SearchDelegate {
         tableView.frame.size.height -= translation
     }
     
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        handleScrollEnded(scrollView)
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        isRefreshing = false
+    }
+    
+    func handleScrollEnded(_ scrollView : UIScrollView) {
+        if isRefreshing {
+            Helper().vibrate(style: .light)
+            //after the refresh is complete, set the offset to zero
+        
+            fetchContent { (isCompleted) in
+                print("we have fetched the content", self.posts.count)
+                self.normalize(scrollView: scrollView)
+                UIView.animate(withDuration: 0.2) {
+                    self.loadingIcon.frame.size = CGSize(width: 0, height: 0)
+                    self.loadingIcon.center = CGPoint(x: self.view.center.x, y: self.collectionView.frame.origin.y + 55)
+                }
+            }
+        }
+    }
+    
     //when user scrolls in the scrollview, the view should pan and either move the segment control out the view or into the view
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        endSearchEditing()
         let gesture = scrollView.panGestureRecognizer
+        guard !isRefreshing else { return }
         
-        if (scrollView.contentOffset.y < -80){
-            scrollView.contentOffset.y = -80
-            gesture.state = .ended
+        let contentOffset = scrollView.contentOffset.y
+        if (contentOffset < -100){
+            Helper().vibrate(style: .heavy)
+            UIView.animate(withDuration: 0.2) {
+                self.loadingIcon.frame.size = CGSize(width: 55, height: 55)
+                self.loadingIcon.center = CGPoint(x: self.view.center.x, y: self.collectionView.frame.origin.y + 55)
+            }
+            print("exceeding 1")
+            isRefreshing = true
         }
+        else if contentOffset < -50{
+            self.loadingIcon.frame.size = CGSize(width: contentOffset, height: contentOffset)
+            self.loadingIcon.center = CGPoint(x: self.view.center.x, y: self.collectionView.frame.origin.y + 55)
+        }
+        else if self.loadingIcon.frame.width > 1 {
+            UIView.animate(withDuration: 0.2) {
+                self.loadingIcon.frame.size = CGSize(width: 0, height: 0)
+                self.loadingIcon.center = CGPoint(x: self.view.center.x, y: self.collectionView.frame.origin.y + 55)
+            }
+        }
+        
         
         //TODO clean this up
         switch gesture.state {
-            
-        case .began, .changed:
+        case .began:
+            endSearchEditing()
+        case .changed:
             let translation = gesture.translation(in: scrollView.superview).y * 0.1
             
             
@@ -130,7 +174,6 @@ class PrimaryDiscoverController: DiscoverController, SearchDelegate {
             //if pan is in the negative direction and the segment control hasn't reached its peak height
             if (translation < 0 && segmentControl.center.y > (-10 - segmentControl.frame.height)){
                 segmentControl.center.y += translation
-                buttonBar.center.y += translation
                 searchBar!.center.y += translation
             }
             
@@ -145,30 +188,24 @@ class PrimaryDiscoverController: DiscoverController, SearchDelegate {
                     translateTables(translation)
                 }
             }
-        case .ended:
-            print("refreshing", scrollView.contentOffset)
-            //refresh the scrollviews
-            if scrollView.contentOffset.y <= -50 && !isRefreshing {
-                print("reached refreshing")
-                
-                //vibrate for feedback
-                let vibration = UIImpactFeedbackGenerator(style: .medium)
-                vibration.impactOccurred()
-                
-                //refresh view
-                refresh(scrollView: scrollView)
-            }
-            
-            //if user swipes down quickly
-            guard !(gesture.velocity(in: scrollView.superview).y > 120) else{
-                normalize(scrollView: scrollView)
-                return
-            }
-            
-            //if user swipes up really quick
-            if(gesture.velocity(in: scrollView.superview).y < -120 && scrollView.frame.origin.y > 100) {
-                unNormalize(scrollView: scrollView)
-            }
+//        case .ended:
+//            if scrollView.contentOffset.y <= -50 && !isRefreshing {
+//                print("reached refreshing")
+//                isRefreshing = true
+//            }
+//
+//            //if user swipes down quickly
+//            guard !(gesture.velocity(in: scrollView.superview).y > 120) else{
+//                print("Normalize")
+//                normalize(scrollView: scrollView)
+//                return
+//            }
+//
+//            //if user swipes up really quick
+//            if(gesture.velocity(in: scrollView.superview).y < -120 && scrollView.frame.origin.y > 100) {
+//                print("unnormalize")
+//                unNormalize(scrollView: scrollView)
+//            }
         default: break
         }
     }

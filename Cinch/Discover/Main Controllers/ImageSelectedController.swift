@@ -127,6 +127,7 @@ class ImageSelectedController: UIViewController {
         
         //adding text TODO get rid of this later
         likesView.text = String(post.numberOfLikes!)
+        print("this is the post owner:", post.postOwner)
         authorView.text = post.postOwner
         
         //add subviews

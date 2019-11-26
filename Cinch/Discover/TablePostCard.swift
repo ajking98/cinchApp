@@ -100,7 +100,6 @@ class TablePostCard: UITableViewCell {
     fileprivate func addSubviews() {
         let centerX = labelContainer.frame.width / 2
         let bottomY = labelContainer.frame.height
-        print("this is the labelContainer: ", labelContainer.frame.size)
         
         //Menu
         menuOptions.center = CGPoint(x: centerX, y: 30)
@@ -148,7 +147,7 @@ class TablePostCard: UITableViewCell {
         guard let link = item.link else { return }
         self.link = link
         
-        if link.contains("mp4") {
+        if checkIfVideo(link: link) {
             buildVideoPostCard(url: URL(string: link)!, likes: item.numberOfLikes!, author: item.postOwner!)
         } else {
             buildPostCard(url: URL(string: link)!, likes: item.numberOfLikes!, author: item.postOwner!)
@@ -207,13 +206,11 @@ class TablePostCard: UITableViewCell {
     //TODO make compatible for videos
     //creates the activity controller when the user taps on the menu options icon
     //only works for images right now
-    @objc func postActivityController() {
-        print("we reached this far abbbbbby")
+    @objc func postActivityController() { 
         guard let viewController = UIApplication.shared.keyWindow?.rootViewController else { return }
         guard let image = tableImageView.image else { return }
         let activityController = UIActivityViewController(activityItems: [image], applicationActivities: nil)
         viewController.present(activityController, animated: true) {
-            print("working with the activity controller")
         }
     }
     

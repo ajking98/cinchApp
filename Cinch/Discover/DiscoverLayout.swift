@@ -11,7 +11,7 @@ import UIKit
 protocol DiscoverLayoutDelegate: class {
     func collectionView(_ collectionView: UICollectionView, sizeOfPhotoAtIndexPath indexPath: IndexPath) -> CGSize
 }
-class DiscoverLayout: UICollectionViewLayout {
+class DiscoverLayout: UICollectionViewFlowLayout {
     
     weak var delegate : DiscoverLayoutDelegate!
     

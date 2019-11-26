@@ -31,7 +31,7 @@ extension CameraViewController : UICollectionViewDataSource, UICollectionViewDel
         
         
         
-        
+        //follows the finger upwards as the user swipes up the collectionView
         if isFollowingGesture {
             guard scrollView.center.y > height else { return }
             guard scrollView.center.y < height2 else { return }
@@ -64,6 +64,9 @@ extension CameraViewController : UICollectionViewDataSource, UICollectionViewDel
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         guard let scrollView = scrollView as? UICollectionView else { return }
         isContentOffsetZero = abs(scrollView.contentOffset.y) < 2
+        if isContentOffsetZero && isAtTop {
+            Helper().vibrate(style: .light)
+        }
         print("beginning")
     }
     
@@ -82,18 +85,14 @@ extension CameraViewController : UICollectionViewDataSource, UICollectionViewDel
         let velocity = gesture.velocity(in: scrollView)
         if velocity.y > 820 && isContentOffsetZero {
             handleSwipeDown()
-            print("center1")
         }else if (velocity.y < -820){
             handleSwipeUp()
-            print("center2")
         }
         else {
             if scrollView.center.y > view.frame.height - 20 {
                 handleSwipeDown()
-                print("center3")
             }else{
                 handleSwipeUp()
-                print("center4")
             }
         }
     }
@@ -173,13 +172,14 @@ extension CameraViewController {
 //        Helper().vibrate(style: .light)
     }
     
-    //this creates the folder selector popup view and the tagging input box
+    ///Creates the folder selector popup view and the tagging input box
     @objc func saveToFolder(_ tapGesture : UITapGestureRecognizer? = nil){
         // if the selectedimages array is empty, then vibrate heavy
         guard selectedImages.count != 0 else {
             return
             
         }
+        
         Helper().vibrate(style: .light)
         //if the selected images array has a single value, then present folderselection
         if selectedImages.count == 1 {
