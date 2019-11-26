@@ -77,6 +77,7 @@ class PrimaryDiscoverController: DiscoverController, SearchDelegate {
         tapped.cancelsTouchesInView = false
         view.addGestureRecognizer(tapped)
         searchBar.backgroundColor = .white
+        
         view.addSubview(searchBar)
     }
     
@@ -136,7 +137,7 @@ class PrimaryDiscoverController: DiscoverController, SearchDelegate {
         guard !isRefreshing else { return }
         
         let contentOffset = scrollView.contentOffset.y
-        if (contentOffset < -85){
+        if (contentOffset < -100){
             Helper().vibrate(style: .heavy)
             UIView.animate(withDuration: 0.2) {
                 self.loadingIcon.frame.size = CGSize(width: 55, height: 55)
@@ -145,7 +146,7 @@ class PrimaryDiscoverController: DiscoverController, SearchDelegate {
             print("exceeding 1")
             isRefreshing = true
         }
-        else if contentOffset < 1{
+        else if contentOffset < -50{
             self.loadingIcon.frame.size = CGSize(width: contentOffset, height: contentOffset)
             self.loadingIcon.center = CGPoint(x: self.view.center.x, y: self.collectionView.frame.origin.y + 55)
         }
