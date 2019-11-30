@@ -1,16 +1,17 @@
 //
-//  LoginViewController.swift
+//  SignUpViewController.swift
 //  Cinch
 //
-//  Created by Ahmed Gedi on 11/10/19.
+//  Created by Ahmed Gedi on 11/30/19.
 //  Copyright © 2019 Gedi, Ahmed M. All rights reserved.
 //
 
 import UIKit
 import FirebaseAuth
 
-class LoginViewController: UIViewController, UITextFieldDelegate {
+class SignUpViewController: UIViewController, UITextFieldDelegate {
 
+    @IBOutlet weak var nameText: UITextField!
     @IBOutlet weak var usernameText: UITextField!
     @IBOutlet weak var emailText: UITextField!
     @IBOutlet weak var passwordText: UITextField!
@@ -30,26 +31,23 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
-    @IBAction func login(_ sender: Any) {
+    @IBAction func signUp(_ sender: Any) {
         if (!checkIfEmpty()) {
-            ParentStruct().readUser(user: usernameText.text!) { (user) in
-                print("User Existed")
+            Auth.auth().createUser(withEmail: emailText.text!, password: passwordText.text!) { (user, error) in
                 if user != nil {
-                    Auth.auth().signIn(withEmail: self.emailText.text!, password: self.passwordText.text!) { (user, error) in
-                        if user != nil {
-                            print("Signed In")
-                        } else {
-                            if let myError = error?.localizedDescription {
-                                print(myError)
-                            } else {
-                                print("ERROR")
-                            }
-                        }
+                    print("User Created")
+                } else {
+                    if let myError = error?.localizedDescription {
+                        print(myError)
+                    } else {
+                        print("ERROR")
                     }
-                    UserDefaults.standard.set(self.usernameText.text!, forKey: defaultsKeys.usernameKey)
-                    UserDefaults(suiteName: "group.InstagramClone.messages")?.set(self.usernameText.text!, forKey: defaultsKeys.usernameKey)
                 }
             }
+            let user = User(name: nameText.text!, username: usernameText.text!, email: emailText.text!, password: passwordText.text!, isPrivate: false)
+            ParentStruct().addUser(user: user)
+            UserDefaults.standard.set(user.username, forKey: defaultsKeys.usernameKey)
+            UserDefaults(suiteName: "group.InstagramClone.messages")?.set(user.username, forKey: defaultsKeys.usernameKey)
             exitView()
         }
     }
@@ -82,10 +80,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     func checkIfEmpty() -> Bool {
-        if (usernameText.text == "") {
+        if (nameText.text == "") {
+            print("Add Name")
+            warnUser(textField: nameText)
+        } else if (usernameText.text == "") {
             print("Add Username")
             warnUser(textField: usernameText)
-        } else if (emailText.text == "") {
+        } else if ((emailText.text == "") || !isValidEmail(emailStr: emailText.text!)) {
             print("Add Email")
             warnUser(textField: emailText)
         } else if (usernameText.text == "") {
@@ -100,26 +101,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
-}
+     func isValidEmail(emailStr:String) -> Bool {
 
-extension UIView {
-    func shake() {
-        let animation = CAKeyframeAnimation(keyPath: "transform.translation.x")
-        animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
-        animation.duration = 0.4
-        animation.values = [-20.0, 20.0, -20.0, 20.0, -10.0, 10.0, -5.0, 5.0, 0.0 ]
-        layer.add(animation, forKey: "shake")
-    }
-}
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
 
-extension UIViewController {
-    func hideKeyboardWhenTappedAround() {
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
-        tap.cancelsTouchesInView = false
-        view.addGestureRecognizer(tap)
+        let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailPred.evaluate(with: emailStr)
     }
-    
-    @objc func dismissKeyboard() {
-        view.endEditing(true)
-    }
+
 }
