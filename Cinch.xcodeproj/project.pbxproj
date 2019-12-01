@@ -36,6 +36,7 @@
 		467EB4F323766D4F00BBB1FE /* FolderImageZoomController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467EB4F223766D4F00BBB1FE /* FolderImageZoomController.swift */; };
 		467EB5242377D4C400BBB1FE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467EB5232377D4C400BBB1FE /* LoginViewController.swift */; };
 		467EB5262379C3FE00BBB1FE /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467EB5252379C3FE00BBB1FE /* EditProfileViewController.swift */; };
+		46A1DAFA239326A2006BADD8 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A1DAF9239326A2006BADD8 /* SignUpViewController.swift */; };
 		46A3E08522BA8156003F6F35 /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A3E08422BA8156003F6F35 /* SQLite.framework */; };
 		46A3E09722BF0B6E003F6F35 /* ProfilePage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46A3E09622BF0B6E003F6F35 /* ProfilePage.storyboard */; };
 		46A3E0A022BF0BA1003F6F35 /* ProfilePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A3E09F22BF0BA1003F6F35 /* ProfilePageViewController.swift */; };
@@ -199,6 +200,7 @@
 		467EB4F223766D4F00BBB1FE /* FolderImageZoomController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderImageZoomController.swift; sourceTree = "<group>"; };
 		467EB5232377D4C400BBB1FE /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		467EB5252379C3FE00BBB1FE /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
+		46A1DAF9239326A2006BADD8 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		46A3E06622B8577A003F6F35 /* SDWebImage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SDWebImage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		46A3E06C22B85825003F6F35 /* SDWebImage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SDWebImage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		46A3E06E22B8582D003F6F35 /* EasyImagy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = EasyImagy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -444,6 +446,7 @@
 			isa = PBXGroup;
 			children = (
 				467EB5232377D4C400BBB1FE /* LoginViewController.swift */,
+				46A1DAF9239326A2006BADD8 /* SignUpViewController.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -1098,6 +1101,7 @@
 				EB0158E122FB65DA008CC63A /* ProfileSettingsController.swift in Sources */,
 				46BC5D39237367A5001870E3 /* TableSearchViewController.swift in Sources */,
 				EB41F8E922653170003751FA /* Photo.swift in Sources */,
+				46A1DAFA239326A2006BADD8 /* SignUpViewController.swift in Sources */,
 				891FC3F722D7F6B50024A623 /* PostCard.swift in Sources */,
 				8E95FFCC22BF25CE0067B5F2 /* TagElement.swift in Sources */,
 				892677AC22CFCE390007825E /* SideMenuTableViewController.swift in Sources */,
