@@ -163,7 +163,6 @@ extension CameraViewController {
     }
     
     @objc func handleSwipeDown(_ tapGesture  :UITapGestureRecognizer? = nil){
-        print("are we swiping down now?")
         UIView.animate(withDuration: 0.2) {
             self.imageCollectionView.frame = self.imageCollectionViewFrame!
             self.solidBar.frame = self.solidBarFrame!
@@ -175,22 +174,24 @@ extension CameraViewController {
     
     ///Creates the folder selector popup view and the tagging input box
     @objc func saveToFolder(_ tapGesture : UITapGestureRecognizer? = nil){
+        print("starting the saving process")
         // if the selectedimages array is empty, then vibrate heavy
-        guard selectedImages.count != 0 else {
+        guard selectedContent.count != 0 else {
+            Helper().vibrate(style: .heavy)
             return
             
         }
-        
         Helper().vibrate(style: .light)
+        
         //if the selected images array has a single value, then present folderselection
-        if selectedImages.count == 1 {
-            let content = selectedImages[0]
-            Helper().vibrate(style: .light)
+        if selectedContent.count == 1 {
+            print("we have one value here")
+            let content = selectedContent[0]
             Helper().saveToFolder(content: content, viewController: self)
         }
         
         else {
-            //TODO fix this and make it possible to submit multiple things at once
+            //TODO fix the line below and make it possible to submit multiple things at once
 //            Helper().saveMultipleImages(images: selectedImages, viewController: self)
             self.handleUndoTap()
             self.handleMultipleTapped()
@@ -198,66 +199,23 @@ extension CameraViewController {
         
     }
     
-    ///Adds an AVPlayer to a UIView
-    func addPlayer(selectedView: UIView, playerItem: AVPlayerItem, _ isMuted: Bool = true) {
-        if let url = (playerItem.asset as? AVURLAsset)?.url {
-            clearView(selectedView: selectedView)
-            let player = AVPlayer(url: url)
-            print("stepping 3", url)
-            let playerLayer = AVPlayerLayer(player: player)
-            playerLayer.videoGravity = .resize
-            selectedView.layer.addSublayer(playerLayer)
-            playerLayer.frame = selectedView.bounds
-            player.play()
-            player.isMuted = isMuted
-            print("Stepping4", centerView.layer.sublayers)
-        }
-    }
-    
-    ///Removes all the sublayers for the given UIView
-    func clearView(selectedView: UIView) {
-        selectedView.layer.sublayers?.forEach({ (layer) in
-            layer.removeFromSuperlayer()
-        })
-    }
     
     //handles the border and insertion into the arrays
-    ///Handles the functionality for when a cell is selected from the collectionview
+    ///Builds a border around the selected cell and adds its content to the selectedContent array
     func handleCellSelected(_ cellIndexPath : IndexPath) {
         centerIndex = cellIndexPath.item
         
         //CenterView
-        if let playerItem = contentArray[centerIndex] as? AVPlayerItem {
-            addPlayer(selectedView: centerView, playerItem: playerItem, false)
-        }
-        else if let image = contentArray[centerIndex] as? UIImage {
-            clearView(selectedView: centerView)
-            centerView.image = image
-        }
-        
+        changeCenterView(object: contentArray[centerIndex])
         
         //PreviousView
         if centerIndex > 0 {
-         if let playerItem = contentArray[centerIndex - 1] as? AVPlayerItem {
-                   addPlayer(selectedView: previousView, playerItem: playerItem, false)
-               }
-               else if let image = contentArray[centerIndex - 1] as? UIImage {
-                   clearView(selectedView: previousView)
-                   previousView.image = image
-               }
+            changePreviousView(object: contentArray[centerIndex - 1])
         }
-        
         
         //NextView
         if centerIndex < contentArray.count - 1 {
-            if let playerItem = contentArray[centerIndex - 1] as? AVPlayerItem {
-                      addPlayer(selectedView: nextView, playerItem: playerItem, false)
-                  }
-            else if let image = contentArray[centerIndex - 1] as? UIImage {
-              clearView(selectedView: nextView)
-              nextView.image = image
-            }
-            
+            changeNextView(object: contentArray[centerIndex + 1])
         }
         
         
@@ -265,13 +223,13 @@ extension CameraViewController {
         if !isMultipleSelected {
             handleUndoTap()
         }
-        if tappedImages.contains(centerIndex) {
+        if selectedIndexes.contains(centerIndex) {
             handleUndoTapSingle(index: centerIndex)
         }
         else{
-            tappedImages.append(centerIndex)
-            selectedImages.append(contentArray[centerIndex])
-            circleCounter.text = String(tappedImages.count)
+            selectedIndexes.append(centerIndex)
+            selectedContent.append(contentArray[centerIndex])
+            circleCounter.text = String(selectedIndexes.count)
             guard let cell = imageCollectionView.cellForItem(at: cellIndexPath) as? CameraViewCell else { return }
             cell.handleTap()
         }
@@ -287,11 +245,11 @@ extension CameraViewController {
         cell.undoTap()
         
         //Using the cell's current index to remove the image from both arrays
-        for x in 0..<tappedImages.count {
-            if tappedImages[x] == index{
-                tappedImages.remove(at: x)
-                selectedImages.remove(at: x)
-                circleCounter.text = String(tappedImages.count)
+        for x in 0..<selectedIndexes.count {
+            if selectedIndexes[x] == index{
+                selectedIndexes.remove(at: x)
+                selectedContent.remove(at: x)
+                circleCounter.text = String(selectedIndexes.count)
                 break
             }
         }
@@ -301,15 +259,15 @@ extension CameraViewController {
     ///Cycles through the tappedImages array and undoes the border hightlight for each cell
     func handleUndoTap() {
         print("we are undoing", imageCollectionView.indexPathsForSelectedItems)
-        for index in tappedImages{
+        for index in selectedIndexes{
             let indexPath = IndexPath(item: index, section: 0)
             if imageCollectionView.indexPathsForVisibleItems.contains(indexPath) {
                 let cell = imageCollectionView.cellForItem(at: indexPath) as! CameraViewCell
                 cell.undoTap()
             }
         }
-        tappedImages = []
-        selectedImages = []
+        selectedIndexes = []
+        selectedContent = []
         circleCounter.text = "0"
     }
 }

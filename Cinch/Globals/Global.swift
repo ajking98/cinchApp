@@ -91,10 +91,28 @@ func setContent(view: UIView, content: NSObject) {
 }
 
 
-//keeps the video in a constant loop
+///keeps the video in a constant loop
 func loopVideo(videoPlayer: AVPlayer) {
     NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil, queue: nil) { notification in
         videoPlayer.seek(to: CMTime.zero)
         videoPlayer.play()
+    }
+}
+
+
+///Creates a thumbnail for a given video asset
+func createThumbnailOfVideo(asset: AVAsset) -> UIImage? {
+    let assetImgGenerate = AVAssetImageGenerator(asset: asset)
+    assetImgGenerate.appliesPreferredTrackTransform = true
+    //Can set this to improve performance if target size is known before hand
+    //assetImgGenerate.maximumSize = CGSize(width,height)
+    let time = CMTimeMakeWithSeconds(1.0, preferredTimescale: 600)
+    do {
+        let img = try assetImgGenerate.copyCGImage(at: time, actualTime: nil)
+        let thumbnail = UIImage(cgImage: img)
+        return thumbnail
+    } catch {
+      print(error.localizedDescription)
+      return nil
     }
 }
