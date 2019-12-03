@@ -47,6 +47,9 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             let user = User(name: nameText.text!, username: usernameText.text!, email: emailText.text!, password: passwordText.text!, isPrivate: false)
             ParentStruct().addUser(user: user)
             UserDefaults.standard.set(user.username, forKey: defaultsKeys.usernameKey)
+            if UserDefaults.standard.string(forKey: defaultsKeys.stateOfUser) == "Signup/Login" {
+                UserDefaults.standard.set("Logout", forKey: defaultsKeys.stateOfUser)
+            }
             UserDefaults(suiteName: "group.InstagramClone.messages")?.set(user.username, forKey: defaultsKeys.usernameKey)
             exitView()
         }

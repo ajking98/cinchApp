@@ -84,7 +84,8 @@ extension SideMenuViewController: UITableViewDelegate, UITableViewDataSource {
         case .Share:
             cell.menuLabel.text = "Share"
         case .SignUp:
-            cell.menuLabel.text = "Sign Up"
+            let sign = UserDefaults.standard.string(forKey: defaultsKeys.stateOfUser)
+            cell.menuLabel.text = sign
         }
         return cell
     }
@@ -102,9 +103,17 @@ extension SideMenuViewController: UITableViewDelegate, UITableViewDataSource {
         var item = sections[indexPath.section].items[indexPath.row]
         print(item)
         if (item == .SignUp) {
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Toggle Side Menu"), object: nil)
-            let vc = storyboard?.instantiateViewController(withIdentifier: "LoginViewController")
-            self.present(vc!, animated: true, completion: nil)
+            let sign = UserDefaults.standard.string(forKey: defaultsKeys.stateOfUser)
+            if sign == "Logout" {
+                // do nothing but refresh the page and set to default data
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Toggle Side Menu"), object: nil)
+                UserDefaults.standard.set("Signup/Login", forKey: defaultsKeys.stateOfUser)
+                print("Logged off account")
+            } else {
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Toggle Side Menu"), object: nil)
+                let vc = storyboard?.instantiateViewController(withIdentifier: "LoginViewController")
+                self.present(vc!, animated: true, completion: nil)
+            }
         } else if (item == .Private || item == .NightMode) {
             let alert = UIAlertController(title: "Function not Available", message: "Sorry, we are currently working on this feature.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
