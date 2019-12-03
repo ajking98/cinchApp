@@ -20,52 +20,83 @@ struct StorageStruct {
     ///Upload image to storage and uses closure to return URL
     func uploadImage(image : UIImage, completion: @escaping(String) -> Void) {
         var imageData = Data()
-        imageData = image.jpegData(compressionQuality: 0.95)!
+        imageData = image.jpegData(compressionQuality: 0.8)!
         
-        
-        let storageRef = Storage.storage().reference().child("videos/" + randomString(20))
-        print("url Nice", storageRef.fullPath)
+        //TODO copy the video part in the sense that you can't upload to an already existing link
+        //This should use .putFile instead of .putData
+        let storageRef = Storage.storage().reference().child("PublicImages/" + randomString(20)) //TODO append .jpg to the randomString(20)
         storageRef.putData(imageData, metadata: nil, completion: { (metadata, error) in
-            print("url 1", storageRef)
             guard (metadata != nil) else{
+                print("Error occurred in the upload process")
                 return
             }
-            print("url 2")
             
             storageRef.downloadURL {(url, error) in
                 guard let downloadURL = url else {
+                    print("Error occurred")
                     return
                 }
-                print("we have completed it url", downloadURL.path)
                 completion(downloadURL.absoluteString)
             }
         })
     }
     
+    
     ///Uploads video to storage and uses closure to return URL
     func uploadVideo(video: AVPlayerItem, completion: @escaping(String)-> Void){
-        let storageRef = Storage.storage().reference().child("videos").child("testing2.mp4")
-        //Start the video storing process
-        print("Oh my url", storageRef, "\n And url this", storageRef.parent())
-         if let url = (video.asset as? AVURLAsset)?.url {
-            storageRef.putFile(from: url.absoluteURL, metadata: nil) { (metadata, error) in
-                print("wer a passing url", url)
-                guard metadata != nil else {
-                    print("url part1", metadata)
-                    return
-                }
-                print("url part2:", url)
+        let storageRef = Storage.storage().reference().child("videos").child(randomString(20) + ".mp4")
+        storageRef.getMetadata { (metadata, error) in
+            if(error != nil){ //checks if the url already exists
+                print("the url does not exist")
                 
-                storageRef.downloadURL { (url, error) in
-                    guard let downloadURL = url else {
-                        print("error with url", error?.localizedDescription)
-                        return
+                //Start the video storing process
+                 if let url = (video.asset as? AVURLAsset)?.url {
+                    let data = NSData(contentsOfFile: url.path)
+                    storageRef.putData(data! as Data, metadata: nil) { (metadata, error) in
+                        print("working url")
+                        guard metadata != nil else {
+                             return
+                         }
+                         if error != nil {
+                             print("there is an error in url", error)
+                         }
+
+
+
+                         storageRef.downloadURL { (url, error) in
+                             guard let downloadURL = url else {
+                                 print("error with url", error?.localizedDescription)
+                                 return
+                             }
+                             print("here is your url:", downloadURL.absoluteString)
+                             completion(downloadURL.absoluteString)
+                         }
                     }
-                    print("here is your url:", downloadURL.absoluteString)
-                    completion(downloadURL.absoluteString)
                 }
             }
+            
+            //TODO this should be used instead of .putData
+//            storageRef.putFile(from: url, metadata: nil) { (metadata, error) in
+//                guard metadata != nil else {
+//                    return
+//                }
+//                if error != nil {
+//                    print("there is an error in url", error)
+//                }
+//
+//
+//
+//                storageRef.downloadURL { (url, error) in
+//                    guard let downloadURL = url else {
+//                        print("error with url", error?.localizedDescription)
+//                        return
+//                    }
+//                    print("here is your url:", downloadURL.absoluteString)
+//                    completion(downloadURL.absoluteString)
+//                }
+//            }
         }
+    
     }
     
     
