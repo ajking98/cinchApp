@@ -61,7 +61,6 @@ class ProfilePageViewController: UIViewController {
             followButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleFollowTapped)))
             UserStruct().readFollowing(user: localUser) { (followers) in
                 if followers.values.contains(self.username) {
-                    print("this contains the given user:", followers)
                     //make the button disabled and greyed out
                     self.followButton.isEnabled = false
                     self.followButton.backgroundColor = .darkGray

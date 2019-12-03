@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import AVKit
 
 
 //Collection View
@@ -98,20 +99,21 @@ extension CameraViewController : UICollectionViewDataSource, UICollectionViewDel
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return imageArray.count
+        return contentArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath) as! CameraViewCell
-        handleCellSelected(cell)
+        handleCellSelected(indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! CameraViewCell
-        cell.imageView.image = imageArray[indexPath.row]
         cell.currentIndex = indexPath.row
         cell.imageView.contentMode = UIView.ContentMode.scaleAspectFill
         
+//        cell.imageView.image = contentArray[indexPath.row] as! UIImage
+        cell.content = contentArray[indexPath.item]
+        cell.setUp()
         return cell
     }
     
@@ -162,7 +164,6 @@ extension CameraViewController {
     }
     
     @objc func handleSwipeDown(_ tapGesture  :UITapGestureRecognizer? = nil){
-        print("are we swiping down now?")
         UIView.animate(withDuration: 0.2) {
             self.imageCollectionView.frame = self.imageCollectionViewFrame!
             self.solidBar.frame = self.solidBarFrame!
@@ -174,42 +175,48 @@ extension CameraViewController {
     
     ///Creates the folder selector popup view and the tagging input box
     @objc func saveToFolder(_ tapGesture : UITapGestureRecognizer? = nil){
+        print("starting the saving process")
         // if the selectedimages array is empty, then vibrate heavy
-        guard selectedImages.count != 0 else {
+        guard selectedContent.count != 0 else {
+            Helper().vibrate(style: .heavy)
             return
             
         }
-        
         Helper().vibrate(style: .light)
+        
         //if the selected images array has a single value, then present folderselection
-        if selectedImages.count == 1 {
-            let image = selectedImages[0]
-            Helper().vibrate(style: .light)
-            Helper().saveToFolder(image: image, viewController: self)
+        if selectedContent.count == 1 {
+            print("we have one value here")
+            let content = selectedContent[0]
+            Helper().saveToFolder(content: content, viewController: self)
         }
         
         else {
-            Helper().saveMultipleImages(images: selectedImages, viewController: self)
+            //TODO fix the line below and make it possible to submit multiple things at once
+//            Helper().saveMultipleImages(images: selectedImages, viewController: self)
             self.handleUndoTap()
             self.handleMultipleTapped()
         }
         
     }
     
+    
     //handles the border and insertion into the arrays
-    ///Handles the functionality for when a cell is selected from the collectionview
-    func handleCellSelected(_ cell : CameraViewCell) {
-        centerIndex = cell.currentIndex
+    ///Builds a border around the selected cell and adds its content to the selectedContent array
+    func handleCellSelected(_ cellIndexPath : IndexPath) {
+        centerIndex = cellIndexPath.item
         
-        guard let image = cell.imageView.image else { return }
-        centerView.image = image
+        //CenterView
+        changeCenterView(object: contentArray[centerIndex])
         
-        if (cell.currentIndex < (imageArray.count - 1)){
-            nextView.image = imageArray[cell.currentIndex + 1]
+        //PreviousView
+        if centerIndex > 0 {
+            changePreviousView(object: contentArray[centerIndex - 1])
         }
         
-        if cell.currentIndex > 0 {
-            previousView.image = imageArray[cell.currentIndex - 1]
+        //NextView
+        if centerIndex < contentArray.count - 1 {
+            changeNextView(object: contentArray[centerIndex + 1])
         }
         
         
@@ -217,14 +224,15 @@ extension CameraViewController {
         if !isMultipleSelected {
             handleUndoTap()
         }
-        if cell.isTapped {
-            handleUndoTapSingle(index: cell.currentIndex)
+        if selectedIndexes.contains(centerIndex) {
+            handleUndoTapSingle(index: centerIndex)
         }
         else{
+            selectedIndexes.append(centerIndex)
+            selectedContent.append(contentArray[centerIndex])
+            circleCounter.text = String(selectedIndexes.count)
+            guard let cell = imageCollectionView.cellForItem(at: cellIndexPath) as? CameraViewCell else { return }
             cell.handleTap()
-            tappedImages.append(cell.currentIndex)
-            selectedImages.append(cell.imageView.image!)
-            circleCounter.text = String(tappedImages.count)
         }
     }
     
@@ -238,11 +246,11 @@ extension CameraViewController {
         cell.undoTap()
         
         //Using the cell's current index to remove the image from both arrays
-        for x in 0..<tappedImages.count {
-            if tappedImages[x] == index{
-                tappedImages.remove(at: x)
-                selectedImages.remove(at: x)
-                circleCounter.text = String(tappedImages.count)
+        for x in 0..<selectedIndexes.count {
+            if selectedIndexes[x] == index{
+                selectedIndexes.remove(at: x)
+                selectedContent.remove(at: x)
+                circleCounter.text = String(selectedIndexes.count)
                 break
             }
         }
@@ -252,15 +260,15 @@ extension CameraViewController {
     ///Cycles through the tappedImages array and undoes the border hightlight for each cell
     func handleUndoTap() {
         print("we are undoing", imageCollectionView.indexPathsForSelectedItems)
-        for index in tappedImages{
+        for index in selectedIndexes{
             let indexPath = IndexPath(item: index, section: 0)
             if imageCollectionView.indexPathsForVisibleItems.contains(indexPath) {
                 let cell = imageCollectionView.cellForItem(at: indexPath) as! CameraViewCell
                 cell.undoTap()
             }
         }
-        tappedImages = []
-        selectedImages = []
+        selectedIndexes = []
+        selectedContent = []
         circleCounter.text = "0"
     }
 }

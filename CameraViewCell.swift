@@ -17,19 +17,28 @@ class CameraViewCell: UICollectionViewCell {
     ///returns the index of the image it was given
     var currentIndex = 0
     var isTapped = false
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        setUp()
-    }
+    var content: NSObject?
     
     ///builds the style for the cell
     func setUp() {
         layer.borderColor = UIColor.selected.cgColor
+        if let image = content as? UIImage {
+            imageView.image = image
+        }
+        else if let playerItem = content as? AVPlayerItem {
+            imageView.image = UIImage(named: "playIcon")
+            //TODO fix this so that the video will be playing inside the cell
+//            let player = addPlayer(view: imageView, playerItem: playerItem)
+        }
     }
     
     override func prepareForReuse() {
         print("falsing this cell", currentIndex)
+        imageView.image = nil
+        imageView.layer.sublayers?.forEach({ (sublayer) in
+            print("this is one sublayer:", sublayer)
+            sublayer.removeFromSuperlayer()
+        })
         undoTap()
     }
     
@@ -44,62 +53,5 @@ class CameraViewCell: UICollectionViewCell {
         layer.borderWidth = 3
         print("We are doing the tapping asdf ")
     }
-    
-    //player variables
-//    var playerItem: AVPlayerItem!
-//    var player: AVPlayer!
-//    var playerLayer: AVPlayerLayer!
-    
-//    func buildPostCard(url : URL) {
-//        let size = self.frame.size
-//
-//        //imageView
-//        imageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder.png"))
-//
-//        //Imageview on Top of View
-//        imageView!.contentMode = .scaleAspectFill
-//        imageView!.clipsToBounds = true
-//        imageView.frame.size = size
-//    }
-    
-    ///given a URL, Int, and String, and sets the values of the post to the details given
-//    func buildVideoPostCard(url : URL) {
-//        let size = self.frame.size
-//
-//        //video
-//        playerItem = AVPlayerItem(url: url)
-//        player = AVPlayer(playerItem: playerItem)
-//        playerLayer = AVPlayerLayer(player: player)
-//        playerLayer.videoGravity = .resize
-//        imageView.layer.addSublayer(playerLayer)
-//        playerLayer.frame = imageView.bounds
-//        player.play()
-//        player.isMuted = true
-//        loopVideo(videoPlayer: player)
-//
-//        imageView!.contentMode = .scaleAspectFill
-//        imageView!.clipsToBounds = true
-//        imageView.frame.size = size
-//    }
-    
-//    ///Given a item, sets the values of the post to that item's values
-//    func buildPostCard(item : Post) {
-//        guard let link = item.link else { return }
-//
-//        self.link = link
-//        if link.contains("mp4") {
-//            buildVideoPostCard(url: URL(string: link)!)
-//        } else {
-//            buildPostCard(url: URL(string: link)!)
-//        }
-//    }
-//
-//    //keeps the video in a constant loop
-//    func loopVideo(videoPlayer: AVPlayer) {
-//        NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil, queue: nil) { notification in
-//            videoPlayer.seek(to: CMTime.zero)
-//            videoPlayer.play()
-//        }
-//    }
     
 }
