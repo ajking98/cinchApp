@@ -28,6 +28,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("Existing User")
             UserDefaults(suiteName: "group.InstagramClone.messages")?.set(username, forKey: defaultsKeys.usernameKey)
             print("here is your username: ", username)
+            if UserDefaults.standard.string(forKey: defaultsKeys.stateOfUser) == nil {
+                UserDefaults.standard.set("Signup/Login", forKey: defaultsKeys.stateOfUser)
+            }
+            let sign = UserDefaults.standard.string(forKey: defaultsKeys.stateOfUser)
+            print(sign)
         }
         else {
             //TODO user should be constructed with a preset SuggestedContent list
@@ -36,9 +41,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             ParentStruct().addUser(user: user)
             print("here is your created username:", user.username)
             
-            
             UserDefaults.standard.set(user.username, forKey: defaultsKeys.usernameKey)
             UserDefaults(suiteName: "group.InstagramClone.messages")?.set(user.username, forKey: defaultsKeys.usernameKey)
+            UserDefaults.standard.set("Signup/Login", forKey: defaultsKeys.stateOfUser)
 
             //TODO add the other default values here as needed (Use a few user defaults as possible)
         }

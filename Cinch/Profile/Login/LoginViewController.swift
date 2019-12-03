@@ -47,6 +47,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                         }
                     }
                     UserDefaults.standard.set(self.usernameText.text!, forKey: defaultsKeys.usernameKey)
+                    if UserDefaults.standard.string(forKey: defaultsKeys.stateOfUser) == "Signup/Login" {
+                        UserDefaults.standard.set("Logout", forKey: defaultsKeys.stateOfUser)
+                    }
                     UserDefaults(suiteName: "group.InstagramClone.messages")?.set(self.usernameText.text!, forKey: defaultsKeys.usernameKey)
                 }
             }
