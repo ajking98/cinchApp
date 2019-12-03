@@ -68,15 +68,16 @@ func randomString(_ length: Int) -> String {
 
 
 ///Adds the video to the given uiview
-func addPlayer(view: UIView, playerItem : AVPlayerItem) {
+func addPlayer(view: UIView, playerItem : AVPlayerItem)-> AVPlayerLayer {
     let player = AVPlayer(playerItem: playerItem)
     let playerLayer = AVPlayerLayer(player: player)
-    playerLayer.videoGravity = .resize
+    playerLayer.videoGravity = .resizeAspectFill
     view.layer.addSublayer(playerLayer)
     playerLayer.frame = view.bounds
     player.play()
     player.isMuted = true
     loopVideo(videoPlayer: player)
+    return playerLayer
 }
 
 ///Assigns an NSObject to a UIView 

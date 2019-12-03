@@ -156,7 +156,9 @@ class CameraViewController: UIViewController {
                         imageManager.requestImage(for: fetchResult.object(at: i) , targetSize: CGSize(width: 200, height: 200), contentMode: .aspectFill, options: requestOptions) { (img, error) in
                             if let image = img {
                                 let indexPath = IndexPath(item: self.contentArray.count, section: 0)
+                                print("index path for image loser: ", indexPath.item, " And then this: ", i)
 //                                self.contentArray.append(img!)
+                                self.contentArray.insert(img!, at: indexPath.item)
 //                                self.imageCollectionView.insertItems(at: [indexPath])
                             }
                             
@@ -169,8 +171,10 @@ class CameraViewController: UIViewController {
                             
                             if let playerItem = playerItem {
                                 let indexPath = IndexPath(item: self.contentArray.count, section: 0)
-                                self.contentArray.append(playerItem)
-                                self.imageCollectionView.insertItems(at: [indexPath])
+                                print("index for video loser: ", indexPath.item, " And then this: ", i) //TODO fix this (it adds the video to the bottom of the collectionView
+                                self.contentArray.insert(playerItem, at: i)
+//                                self.contentArray.append(playerItem)
+//                                self.imageCollectionView.insertItems(at: [indexPath])
                             }
                         }
                     default:
@@ -180,7 +184,7 @@ class CameraViewController: UIViewController {
 //                        print("something")
 //                    }
                 }
-//                imageCollectionView.reloadData()
+                imageCollectionView.reloadData()
                 if contentArray.count > 2 {
                     //TODO this should first check if the first two objects are images then does the code below. If they are not images, then it should present them as videos
                     centerView.image = contentArray[0] as? UIImage

@@ -44,21 +44,12 @@ struct Helper {
                 for item in folders {
                     actionController.addAction(Action(ActionData(title: "\(item.lowercased())", subtitle: "For Content"), style: .default, handler: { action in
                         
-                        
-                        //todo Later, this "Testing" string in the next line should be given a link instead of static string
-//                        StorageStruct().uploadImage(content: playerItem, completion: { (link) in
-//                            let alert = self.createTagsAlert(link: link, username: self.username)//Tagging alert
-//                            viewController.present(alert, animated: true, completion: nil)
-//
-//                            FolderStruct().addContent(user: self.username, folderName: item, link: link)
-//                            FolderStruct().updateNumOfImagesByConstant(user: self.username, folderName: item, constant: 1)
-//                        })
-                        
                         StorageStruct().uploadContent(content: playerItem) { (link) in
                             let alert = self.createTagsAlert(link: link, username: self.username) //Tagging alert
                             viewController.present(alert, animated: true, completion: nil)
                             
                             FolderStruct().addContent(user: self.username, folderName: item, link: link)
+                            FolderStruct().updateNumOfVideosByConstant(user: self.username, folderName: item, constant: 1)
                         }
                     }))
                 }

@@ -74,6 +74,8 @@ struct StorageStruct {
                     }
                 }
             }
+//            let meta = StorageMetadata()
+//            meta.contentType
             
             //TODO this should be used instead of .putData
 //            storageRef.putFile(from: url, metadata: nil) { (metadata, error) in

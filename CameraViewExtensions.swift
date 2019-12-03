@@ -111,6 +111,7 @@ extension CameraViewController : UICollectionViewDataSource, UICollectionViewDel
         cell.currentIndex = indexPath.row
         cell.imageView.contentMode = UIView.ContentMode.scaleAspectFill
         
+//        cell.imageView.image = contentArray[indexPath.row] as! UIImage
         cell.content = contentArray[indexPath.item]
         cell.setUp()
         return cell
