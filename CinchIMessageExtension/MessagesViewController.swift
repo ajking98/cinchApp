@@ -18,12 +18,17 @@ import SQLite
 
 
 class MessagesViewController: MSMessagesAppViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+    
 
     let cellIdentifier = "ContentCell"
     
     //Stores the links of the posts
     var content = [String]()
     @IBOutlet weak var searchView: UIView!
+    
+    //SearchBar
+    let searchBar = SearchBariMessage(frame: CGRect(x: 0, y: 0, width: 0, height: 33))
+    var suggestedSearchView : TableSearchViewController? //this is the view with all the suggestions
     
     var dbRef: DatabaseReference!
     
@@ -50,10 +55,10 @@ class MessagesViewController: MSMessagesAppViewController, UICollectionViewDeleg
     
     ///Updates the content array with values from the DB
     func fetchContent() {
-        dbRef.observeSingleEvent(of: .value) { (snapshot) in
+        dbRef.queryOrdered(byChild: "dateCreated").observeSingleEvent(of: .value) { (snapshot) in
             if let listOfPosts = snapshot.value as? [String : [String : Any]] {
                 for singlePost in listOfPosts{
-                    
+                    print("this is the date: ", singlePost.value["dateCreated"])
                     if let link = singlePost.value["link"] as? String {
                     let indexPath = IndexPath(item: self.content.count, section: 0)
                     self.content.append(link)
@@ -79,91 +84,43 @@ class MessagesViewController: MSMessagesAppViewController, UICollectionViewDeleg
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! MessageCard
-        cell.buildPostCard(item: content[indexPath.row])
-        print(content[indexPath.row])
+        cell.buildPostCard(link: content[indexPath.row])
         designCell(cell: cell)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let url = URL(string: content[indexPath.row])  //gets the url of the image
-        print(url)
-        let newImageView = UIImageView()
-        newImageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder.png"))
+        let link = content[indexPath.item]
+        
         var directory:URL
-        if (content[indexPath.row].contains("mp4") || content[indexPath.row].contains("mov")) {
-            let videoUrl = URL(string: content[indexPath.row])
+        if (link.contains("mp4") || link.contains("mov")) {
+            let videoUrl = URL(string: link)
             var playerItem = AVPlayerItem(url: videoUrl!)
             var player = AVPlayer(playerItem: playerItem)
             directory = saveVideo(videName: "SelectedVideo.mp4", video: player)!
         } else {
+            let newImageView = UIImageView()
+            newImageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder.png"))
             directory = saveImage(imageName: "SelectedImage.jpg", image: newImageView.image!)!
         }
         activeConversation?.insertAttachment(directory, withAlternateFilename: nil, completionHandler: nil)
     }
     
     
-    ///saves the image locally, to the user's device, before being sent over
-    func saveImage(imageName: String, image: UIImage)->URL? {
-        guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
-        
-        guard let data = image.jpegData(compressionQuality: 1) else { return nil }
-        
-        let fileName = imageName
-        let fileURL = documentsDirectory.appendingPathComponent(fileName)
-        
-        //Checks if file exists, removes it if so.
-        if FileManager.default.fileExists(atPath: fileURL.path) {
-            do {
-                try FileManager.default.removeItem(atPath: fileURL.path)
-                print("Removed old image")
-            } catch let removeError {
-                print("couldn't remove file at path", removeError)
-            }
-        }
-        
-        do {
-            try data.write(to: fileURL)
-        } catch let error {
-            print("error saving file with error", error)
-        }
-        return fileURL
-    }
-    //TODO fix saving video
-    ///saves the video locally, to the user's device, before being sent over
-    func saveVideo(videName: String, video: AVPlayer)->URL? {
-        guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
-        let data = NSData(contentsOf: URL(string: videName)!)
-        let fileName = videName
-        let fileURL = documentsDirectory.appendingPathComponent(fileName)
-        
-        //Checks if file exists, removes it if so.
-        if FileManager.default.fileExists(atPath: fileURL.path) {
-            do {
-                try FileManager.default.removeItem(atPath: fileURL.path)
-                print("Removed old video")
-            } catch let removeError {
-                print("couldn't remove file at path", removeError)
-            }
-        }
-        
-        do {
-            try data!.write(to: fileURL)
-        } catch let error {
-            print("error saving file with error", error)
-        }
-        return fileURL
-    }
     
     func addSearchBar() {
         let frame = searchView.frame
-        var searchBar = SearchBar(frame: CGRect(x: 0, y: 0, width: frame.width * 1, height: 33))
+        searchBar.frame.size.width = frame.width
         searchBar.placeholder = "Search"
         searchBar.center = CGPoint(x: searchView.center.x + 50, y: searchView.center.y)
         searchView.addGestureRecognizer(UITapGestureRecognizer(target: searchBar, action: #selector(searchBar.revertToNormal)))
         searchBar.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1)
+        searchBar.delegate2 = self
+        searchBar.searchDelegate = self
         searchView.addSubview(searchBar)
     }
+    
     
     func setupCollectionViewLayout() {
         let collectionViewLayout: UICollectionViewFlowLayout = {
@@ -177,12 +134,6 @@ class MessagesViewController: MSMessagesAppViewController, UICollectionViewDeleg
             return layout
         }()
         collectionView.collectionViewLayout = collectionViewLayout
-    }
-    
-    func designCell(cell: MessageCard) {
-        cell.layer.borderWidth = 1
-        cell.layer.borderColor = UIColor.white.cgColor
-        cell.clipsToBounds = true
     }
     
     
@@ -235,4 +186,60 @@ class MessagesViewController: MSMessagesAppViewController, UICollectionViewDeleg
         // Use this method to finalize any behaviors associated with the change in presentation style.
     }
     
+}
+
+//the delegate
+extension MessagesViewController: SearchDelegate, SearchiMessageDelegate {
+    
+    ///Exands the view to make it take up the whole screen
+    func expandView() {
+        requestPresentationStyle(.expanded)
+    }
+    
+    
+    func search(searchTerm: String) {
+        let standardizedSearchTerm = searchTerm.lowercased()
+        guard let suggestedSearchView = suggestedSearchView else { return }
+        
+        guard standardizedSearchTerm.count > 1 else {
+                UIView.animate(withDuration: 0.2, animations: {
+                    suggestedSearchView.view.layer.opacity = 0
+                })
+            return
+        }
+        
+        //Calls the method within searchView that will update the words within the suggested hashtag searches
+        suggestedSearchView.updateTagList(searchTerm: standardizedSearchTerm)
+        UIView.animate(withDuration: 0.2) {
+            suggestedSearchView.view.layer.opacity = 1
+        }
+        print("handling search")
+    }
+    
+    
+    //builds the table view for the search (to hold the suggested tag)
+    func buildSearchView() {
+        let width = view.frame.width
+        let height = view.frame.height
+        suggestedSearchView = TableSearchViewController(style: .plain)
+        guard let suggestedSearchView = suggestedSearchView else { return }
+        
+        suggestedSearchView.view.layer.opacity = 0
+        suggestedSearchView.view.frame = CGRect(x: 0, y: 0, width: width * 0.88, height: height * 0.2)
+        suggestedSearchView.view.center.x = view.center.x
+        suggestedSearchView.view.layer.cornerRadius = 10
+        print("we are in fact doing this")
+        suggestedSearchView.pendingFunction = presentTagElements(searchTerm:)
+        suggestedSearchView.view.frame.origin.y = collectionView.frame.origin.y - 15
+        view.addSubview(suggestedSearchView.view)
+    }
+    
+    
+    //this triggers the next view controller where the posts are from the tag they searched
+    func presentTagElements(searchTerm : String) {
+        let vc = UIStoryboard(name: "MainInterface", bundle: nil).instantiateViewController(withIdentifier: "SearchResult") as! SearchResultCollectionView
+        vc.searchTerm = searchTerm
+        vc.mainActiveConversation = self.activeConversation
+        self.present(vc, animated: true, completion: nil)
+    }
 }
