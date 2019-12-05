@@ -12,43 +12,38 @@ import AVKit
 
 
 ///saves the image locally, to the user's device, before being sent over
-func saveImage(imageName: String, image: UIImage)->URL? {
+func saveImage(imageName: String, linkToImage: URL)->URL? {
     guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
+    let data = NSData(contentsOf: linkToImage)
+    let fileURL = documentsDirectory.appendingPathComponent(imageName)
     
-    guard let data = image.jpegData(compressionQuality: 1) else { return nil }
-    
-    let fileName = imageName
-    let fileURL = documentsDirectory.appendingPathComponent(fileName)
-    
-    //Checks if file exists, removes it if so.
+    //Checks if file exists, removes it if so
     if FileManager.default.fileExists(atPath: fileURL.path) {
         do {
             try FileManager.default.removeItem(atPath: fileURL.path)
             print("Removed old image")
         } catch let removeError {
-            print("couldn't remove file at path", removeError)
+            print("couldn't remove image at path", removeError)
         }
     }
     
     do {
-        try data.write(to: fileURL)
+        try data?.write(to: fileURL)
     } catch let error {
-        print("error saving file with error", error)
+        print("error saving image with error", error)
     }
     return fileURL
 }
 
 
 
-//TODO fix saving video
 ///saves the video locally, to the user's device, before being sent over
-func saveVideo(videName: String, video: AVPlayer)->URL? {
+func saveVideo(videoName: String, linkToVideo: URL)->URL? {
     guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
-    let data = NSData(contentsOf: URL(string: videName)!)
-    let fileName = videName
-    let fileURL = documentsDirectory.appendingPathComponent(fileName)
+    let data = NSData(contentsOf: linkToVideo)
+    let fileURL = documentsDirectory.appendingPathComponent(videoName)
     
-    //Checks if file exists, removes it if so.
+    //Checks if file exists, removes it if so
     if FileManager.default.fileExists(atPath: fileURL.path) {
         do {
             try FileManager.default.removeItem(atPath: fileURL.path)
@@ -59,7 +54,7 @@ func saveVideo(videName: String, video: AVPlayer)->URL? {
     }
     
     do {
-        try data!.write(to: fileURL)
+        try data?.write(to: fileURL)
     } catch let error {
         print("error saving file with error", error)
     }

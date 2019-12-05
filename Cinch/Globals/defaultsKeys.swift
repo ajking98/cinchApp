@@ -20,4 +20,10 @@ struct defaultsKeys {
     static let otherProfile = "otherProfile" //keeps track of the profile the user is looking at
     static let typeOfUser = "typeOfUser" //either user with uniquely generated string or not
     static let stateOfUser = "stateOfUser" //user login status
+    
+    
+    
+    //Share extension
+    ///Key for the last folder that the user has added to
+    static let lastUsedFolder = "LastUsedFolder"
 }

@@ -9,19 +9,17 @@
 import UIKit
 import Social
 import Firebase
+import MobileCoreServices
 
-class ShareViewController: SLComposeServiceViewController, FolderSelectionDelegate {
+
+class ShareViewController: SLComposeServiceViewController {
     var selectedFolder: String = ""
+    let myItem = SLComposeSheetConfigurationItem()
+    var folders: [String] = [] //list of all the local user's folders
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
 
-        if(FirebaseApp.app() == nil){
-            FirebaseApp.configure()
-        }
-
-        print("fetching ref")
-        print("fetching other")
     }
 
     override func isContentValid() -> Bool {
@@ -30,41 +28,107 @@ class ShareViewController: SLComposeServiceViewController, FolderSelectionDelega
         return true
     }
 
+    // This is called after the user selects Post. Do the upload of contentText and/or NSExtensionContext attachments.
     override func didSelectPost() {
-        // This is called after the user selects Post. Do the upload of contentText and/or NSExtensionContext attachments.
-    
+        if let content = extensionContext!.inputItems[0] as? NSExtensionItem {
+            let contentType = kUTTypeImage as String
+            let contentType2 = kUTTypeURL as String
+            
+            //verify the provided data is valid
+            if let contents = content.attachments as? [NSItemProvider] {
+                //look for image
+                for attachment in contents {
+                    print("this is an item", attachment)
+                    if attachment.hasItemConformingToTypeIdentifier(contentType){
+                        attachment.loadItem(forTypeIdentifier: contentType, options: nil) { (data, error) in
+                            var uploadingImage: UIImage?
+                            switch data{
+                                case let image as UIImage:
+                                    print("Image tst")
+                                    uploadingImage = image
+                                case let data as Data:
+                                    print("data tst")
+                                    uploadingImage = UIImage(data: data)
+                                case let url as URL:
+                                    print("url tst")
+                                    uploadingImage = UIImage(contentsOfFile: url.path)
+                                default:
+                                    print("unexpected tst")
+                            }
+                            if(!self.selectedFolder.isEmpty) {
+                                print("here is your data marker: ", data)
+                                //TODO save the image to the folder
+//                                UIImage(
+                            }
+
+                            self.extensionContext!.completeRequest(returningItems: [], completionHandler: nil)
+                        }
+                    }
+                    
+                    //handles links online
+                    if attachment.hasItemConformingToTypeIdentifier(contentType2) {
+                        attachment.loadItem(forTypeIdentifier: contentType2, options: nil) { (data, error) in
+                            print("something : tst ", data)
+                            if let link = data as? URL {
+                                //TODO check if the url points to an image
+                                print("this is your thingy: tst ", link)
+                            }
+                            
+                            self.extensionContext!.completeRequest(returningItems: [], completionHandler: nil)
+                        }
+                    }
+                }
+            }
+        }
+        
+        
         // Inform the host that we're done, so it un-blocks its UI. Note: Alternatively you could call super's -didSelectPost, which will similarly complete the extension context.
-        self.extensionContext!.completeRequest(returningItems: [], completionHandler: nil)
+        
+        print("this is the value of the input:", self.textView.text)
     }
 
+    
     override func configurationItems() -> [Any]! {
-        // To add configuration options via table cells at the bottom of the sheet, return an array of SLComposeSheetConfigurationItem here.
-        print("reached here too")
-        let myItem = SLComposeSheetConfigurationItem()
-        myItem?.title = "" //is set to the first folder by default
-        myItem?.value = "...select a folder"
+        myItem?.title = "Send to:"
+        myItem?.value = selectedFolder //is set to the first folder by default
         myItem?.tapHandler = handleTap
         
+        if(FirebaseApp.app() == nil){
+            FirebaseApp.configure()
+        }
+        guard let username = UserDefaults(suiteName: "group.com.cinch.CinchApp")?.string(forKey: defaultsKeys.usernameKey) else { return [] }//Should alert the user that they dont have an account set up
+        if let tempLastUsedFolder = UserDefaults(suiteName: "group.com.cinch.CinchApp")?.string(forKey: defaultsKeys.lastUsedFolder)
+        { selectedFolder = tempLastUsedFolder }
+        
+        UserStruct().readFolders(user: username) { (folderList) in
+            self.folders = folderList
+            self.myItem?.value = folderList.contains(self.selectedFolder) ? self.selectedFolder : folderList[0]
+        }
         return [myItem]
     }
     
     func handleTap() {
         let vc = FolderSelection(style: .plain)
-        vc.delegate = self
+        vc.folders = folders
+        vc.pendingFunction = resetSelectedFolder
         pushConfigurationViewController(vc)
+    }
+    
+    func resetSelectedFolder(folderName: String) {
+        selectedFolder = folderName
+        myItem?.value = folderName
     }
 
 }
 
-protocol FolderSelectionDelegate : class {
-    var selectedFolder : String { get set }
-}
 
+
+
+//FolderSelection class
 class FolderSelection: UITableViewController {
-    
+    var pendingFunction: ((String)->())?
     let reusableIdentifier = "Cell"
     var folders:[String] = []
-    var delegate : FolderSelectionDelegate?
     
     
     var DB = Database.database().reference().child("users")
@@ -72,37 +136,11 @@ class FolderSelection: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        fetchFolders()
-        
         //register a cell for the table view
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: reusableIdentifier)
     }
     
-    
-    ///gets all existing folders from the DB for the local user
-    func fetchFolders() {
-        print("we are fetching")
-        // TODO create a DB instance and call the folders
-        guard let userDefaults = UserDefaults(suiteName: "group.InstagramClone.messages") else {
-            print("passing error a second time")
-            return }
-        guard let user = userDefaults.string(forKey: defaultsKeys.usernameKey) else {
-            print("passing error")
-            print("passing the defaults hear", userDefaults.dictionaryRepresentation().keys)
-            return }
-        
-        DB.child(user).child("folders").observeSingleEvent(of: .value) { (snapshot) in
-            if let folderNames = snapshot.value as? [String : Any] {
-                self.folders = Array(folderNames.keys)
-                self.folders.sort()
-                self.tableView.reloadData()
-            }
-        }
-    }
-    
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("this is is number:", folders.count)
         return folders.count
     }
     
@@ -113,6 +151,9 @@ class FolderSelection: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        delegate?.selectedFolder = folders[indexPath.row]
+        let folderName = folders[indexPath.row]
+        pendingFunction?(folderName)
+        UserDefaults(suiteName: "group.com.cinch.CinchApp")?.set(folderName, forKey: defaultsKeys.lastUsedFolder)
+        navigationController?.popViewController(animated: true)
     }
 }

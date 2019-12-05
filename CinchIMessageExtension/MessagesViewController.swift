@@ -55,7 +55,7 @@ class MessagesViewController: MSMessagesAppViewController, UICollectionViewDeleg
     
     ///Updates the content array with values from the DB
     func fetchContent() {
-        dbRef.queryOrdered(byChild: "dateCreated").observeSingleEvent(of: .value) { (snapshot) in
+        dbRef.queryLimited(toFirst: 100).queryOrdered(byChild: "dateCreated").observeSingleEvent(of: .value) { (snapshot) in
             if let listOfPosts = snapshot.value as? [String : [String : Any]] {
                 for singlePost in listOfPosts{
                     print("this is the date: ", singlePost.value["dateCreated"])
@@ -90,21 +90,20 @@ class MessagesViewController: MSMessagesAppViewController, UICollectionViewDeleg
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let url = URL(string: content[indexPath.row])  //gets the url of the image
-        let link = content[indexPath.item]
+        let link = content[indexPath.item] //gets the string version of the link
+        guard let url = URL(string: link) else { return } //converts the link to an actual url
+        var directory:URL?
         
-        var directory:URL
-        if (link.contains("mp4") || link.contains("mov")) {
-            let videoUrl = URL(string: link)
-            var playerItem = AVPlayerItem(url: videoUrl!)
-            var player = AVPlayer(playerItem: playerItem)
-            directory = saveVideo(videName: "SelectedVideo.mp4", video: player)!
-        } else {
-            let newImageView = UIImageView()
-            newImageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder.png"))
-            directory = saveImage(imageName: "SelectedImage.jpg", image: newImageView.image!)!
+        if (checkIfVideo(link: link)) { //handle video
+            directory = (saveVideo(videoName: "SelectedVideo.mp4", linkToVideo: url))
         }
-        activeConversation?.insertAttachment(directory, withAlternateFilename: nil, completionHandler: nil)
+        else { //handle image
+            if (link.contains("/videos")) { return } //checking to make sure the content is not a video
+            directory = saveImage(imageName: "SelectedImage.jpg", linkToImage: url)
+        }
+        guard directory != nil else { return }
+        
+        activeConversation?.insertAttachment(directory!, withAlternateFilename: nil, completionHandler: nil)
     }
     
     

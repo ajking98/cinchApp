@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1020"
+   LastUpgradeVersion = "1120"
    wasCreatedForAppExtension = "YES"
    version = "2.0">
    <BuildAction
@@ -15,9 +15,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4622493422DFAC8F0005B12F"
-               BuildableName = "CinchIMessageExtension.appex"
-               BlueprintName = "CinchIMessageExtension"
+               BlueprintIdentifier = "46F2B5C42371274600FFC751"
+               BuildableName = "CinchShareExtension.appex"
+               BlueprintName = "CinchShareExtension"
                ReferencedContainer = "container:Cinch.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -42,15 +42,6 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4622493422DFAC8F0005B12F"
-            BuildableName = "CinchIMessageExtension.appex"
-            BlueprintName = "CinchIMessageExtension"
-            ReferencedContainer = "container:Cinch.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <Testables>
       </Testables>
    </TestAction>
@@ -66,8 +57,12 @@
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES"
       launchAutomaticallySubstyle = "2">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <RemoteRunnable
+         runnableDebuggingMode = "1"
+         BundleIdentifier = "com.apple.mobileslideshow"
+         RemotePath = "/Applications/MobileSlideShow.app">
+      </RemoteRunnable>
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "EB74D3B1226025E900556399"
@@ -75,7 +70,7 @@
             BlueprintName = "Cinch"
             ReferencedContainer = "container:Cinch.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
