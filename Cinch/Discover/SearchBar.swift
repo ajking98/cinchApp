@@ -11,6 +11,7 @@ import UIKit
 
 protocol SearchDelegate : class {
     func search(searchTerm : String)
+    func buildSearchView()
 }
 
 class SearchBar: UITextField {
@@ -26,6 +27,7 @@ class SearchBar: UITextField {
         if isDrawn {
             return
         }
+        returnKeyType = UIReturnKeyType.done
         buildBorder()
         buildSpacing()
 //        buildIcon() //adds search icon to the left with padding
@@ -73,8 +75,12 @@ class SearchBar: UITextField {
     func buildGestures() {
         addTarget(self, action: #selector(handlePressed), for: UIControl.Event.editingDidBegin)
         addTarget(self, action: #selector(textFieldTyping), for: UIControl.Event.editingChanged)
+        addTarget(self, action: #selector(handleEditingEnded), for: UIControl.Event.editingDidEnd)
     }
     
+    @objc func handleEditingEnded() {
+        print("we are ending the edit")
+    }
     
     @objc func textFieldTyping() {
         guard let text = text else { return }
@@ -98,7 +104,7 @@ class SearchBar: UITextField {
         guard text!.count == 0 else {
             return
         }
-        
+        searchDelegate?.buildSearchView()
         UIView.animate(withDuration: 0.3) {
             //Make border edits
             self.layer.borderWidth = 2

@@ -20,7 +20,7 @@ class PrimaryDiscoverController: DiscoverController, SearchDelegate {
         super.viewDidLoad()
         addSearchBar()
         searchBar?.endEditing(true)
-        buildSearchView()
+//        buildSearchView()
         addSelectBar(color: UIColor.normalBlue)
     }
     

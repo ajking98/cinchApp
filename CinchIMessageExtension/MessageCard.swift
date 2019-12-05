@@ -36,7 +36,7 @@ class MessageCard: UICollectionViewCell {
     ///given a URL, Int, and String, and sets the values of the post to the details given
     func buildVideoPostCard(url : URL) {
         let size = self.frame.size
-        
+        print("we are reaching a video post card")
         //video
         playerItem = AVPlayerItem(url: url)
         player = AVPlayer(playerItem: playerItem)
@@ -61,12 +61,13 @@ class MessageCard: UICollectionViewCell {
     }
     
     ///Given a item, sets the values of the post to that item's values
-    func buildPostCard(item : String) {
-        if item.contains("mp4") || item.contains("mov") {
-            buildVideoPostCard(url: URL(string: item)!)
+    func buildPostCard(link : String) {
+        clipsToBounds = true
+        if link.contains("mp4") || link.contains("mov") {
+            buildVideoPostCard(url: URL(string: link)!)
         }
         else {
-            buildPostCard(url: URL(string: item)!)
+            buildPostCard(url: URL(string: link)!)
         }
     }
     
