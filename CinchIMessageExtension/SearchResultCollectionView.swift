@@ -79,21 +79,20 @@ class SearchResultCollectionView: MSMessagesAppViewController, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let link = posts[indexPath.row].link else { return }
-        let url = URL(string: link)  //gets the url of the image
-        print(url)
-        let newImageView = UIImageView()
-        newImageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder.png"))
-        var directory:URL
-        if (link.contains("mp4") || link.contains("mov")) {
-            let videoUrl = URL(string: link)
-            var playerItem = AVPlayerItem(url: videoUrl!)
-            var player = AVPlayer(playerItem: playerItem)
-            directory = saveVideo(videName: "SelectedVideo.mp4", video: player)!
-        } else {
-            directory = saveImage(imageName: "SelectedImage.jpg", image: newImageView.image!)!
+        guard let link = posts[indexPath.item].link else { return } //gets the string version of the link
+        guard let url = URL(string: link) else { return } //converts the link to an actual url
+        var directory:URL?
+        
+        if (checkIfVideo(link: link)) { //handle video
+            directory = (saveVideo(videoName: "SelectedVideo.mp4", linkToVideo: url))
         }
-        mainActiveConversation?.insertAttachment(directory, withAlternateFilename: nil, completionHandler: nil)
+        else { //handle image
+            if (link.contains("/videos")) { return } //checking to make sure the content is not a video
+            directory = saveImage(imageName: "SelectedImage.jpg", linkToImage: url)
+        }
+        guard directory != nil else { return }
+        
+        mainActiveConversation?.insertAttachment(directory!, withAlternateFilename: nil, completionHandler: nil)
     }
     
 
