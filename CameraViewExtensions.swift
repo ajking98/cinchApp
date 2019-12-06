@@ -180,7 +180,6 @@ extension CameraViewController {
         guard selectedContent.count != 0 else {
             Helper().vibrate(style: .heavy)
             return
-            
         }
         Helper().vibrate(style: .light)
         

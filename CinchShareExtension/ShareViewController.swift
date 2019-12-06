@@ -19,7 +19,7 @@ class ShareViewController: SLComposeServiceViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-
+        view.layer.opacity = 1
     }
 
     override func isContentValid() -> Bool {
@@ -30,35 +30,35 @@ class ShareViewController: SLComposeServiceViewController {
 
     // This is called after the user selects Post. Do the upload of contentText and/or NSExtensionContext attachments.
     override func didSelectPost() {
+        guard !selectedFolder.isEmpty else { return }
+        
         if let content = extensionContext!.inputItems[0] as? NSExtensionItem {
             let contentType = kUTTypeImage as String
             let contentType2 = kUTTypeURL as String
             
             //verify the provided data is valid
-            if let contents = content.attachments as? [NSItemProvider] {
+            if let contents = content.attachments {
                 //look for image
                 for attachment in contents {
-                    print("this is an item", attachment)
                     if attachment.hasItemConformingToTypeIdentifier(contentType){
                         attachment.loadItem(forTypeIdentifier: contentType, options: nil) { (data, error) in
-                            var uploadingImage: UIImage?
                             switch data{
                                 case let image as UIImage:
                                     print("Image tst")
-                                    uploadingImage = image
+                                    self.saveContent(image: image)
+                                
                                 case let data as Data:
                                     print("data tst")
-                                    uploadingImage = UIImage(data: data)
+                                    guard let image = UIImage(data: data) else { return }
+                                    self.saveContent(image: image) //storing
+                                
                                 case let url as URL:
                                     print("url tst")
-                                    uploadingImage = UIImage(contentsOfFile: url.path)
+                                    guard let image = UIImage(contentsOfFile: url.path) else { return }
+                                    self.saveContent(image: image) //storing
+                                
                                 default:
                                     print("unexpected tst")
-                            }
-                            if(!self.selectedFolder.isEmpty) {
-                                print("here is your data marker: ", data)
-                                //TODO save the image to the folder
-//                                UIImage(
                             }
 
                             self.extensionContext!.completeRequest(returningItems: [], completionHandler: nil)
@@ -67,13 +67,13 @@ class ShareViewController: SLComposeServiceViewController {
                     
                     //handles links online
                     if attachment.hasItemConformingToTypeIdentifier(contentType2) {
-                        attachment.loadItem(forTypeIdentifier: contentType2, options: nil) { (data, error) in
-                            print("something : tst ", data)
-                            if let link = data as? URL {
-                                //TODO check if the url points to an image
-                                print("this is your thingy: tst ", link)
+                        attachment.loadItem(forTypeIdentifier: contentType2, options: nil) { (value, error) in
+                            if let url = value as? URL {
+                                
+                                guard let data = try? Data(contentsOf: url) else { return }
+                                guard let image = UIImage(data: data) else { return }
+                                self.saveContent(image: image)  //Storing
                             }
-                            
                             self.extensionContext!.completeRequest(returningItems: [], completionHandler: nil)
                         }
                     }
@@ -87,6 +87,32 @@ class ShareViewController: SLComposeServiceViewController {
         print("this is the value of the input:", self.textView.text)
     }
 
+    ///Stores the given image to DB
+    func saveContent(image: UIImage) {
+        guard let username = UserDefaults(suiteName: "group.com.cinch.CinchApp")?.string(forKey: defaultsKeys.usernameKey) else { return }
+        StorageStruct().uploadContent(content: image) { (link) in
+            let post = Post(isImage: true, postOwner: username, link: link)
+            ParentPostStruct().addPost(post: post)
+            FolderStruct().addContent(user: username, folderName: self.selectedFolder, link: link)
+            self.handleTagging(link: link)
+        }
+    }
+    
+    ///Takes a link to the post and adds the tags from the textView to it
+    func handleTagging(link: String) {
+        let message = textView.text.components(separatedBy: CharacterSet(charactersIn: " ./"))
+        let username = UserDefaults(suiteName: "group.com.cinch.CinchApp")?.string(forKey: defaultsKeys.usernameKey)
+        
+        var tagArray = [String]()
+        for tag in message {
+            if tag.count > 2 {
+                tagArray.append(String(tag).lowercased())
+            }
+        }
+        if username != nil {
+            PostStruct().addTags(post: link, newTags: tagArray)
+        }
+    }
     
     override func configurationItems() -> [Any]! {
         myItem?.title = "Send to:"
