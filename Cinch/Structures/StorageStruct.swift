@@ -190,8 +190,8 @@ struct StorageStruct {
     }
     
     
-    // TODO
-    ///Uploads Images and Videos to storage
+    // TODO DELETE THIS
+    ///DONT USE THIS
     func UploadContent(user: String, folderName : String, content : UIImage)->Bool{
             //perform Image given
         var data = Data()
