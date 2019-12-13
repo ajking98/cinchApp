@@ -32,7 +32,6 @@ class ProfilePageViewController: UIViewController {
     @IBOutlet weak var editImage: UIButton!
     @IBOutlet weak var editProfile: UIButton!
     @IBOutlet weak var profileName: UILabel!
-    @IBOutlet weak var profileUsername: UILabel!
     @IBOutlet weak var followButton: UIButton!
     
     @IBOutlet weak var customSegmentedControl: UISegmentedControl!
@@ -50,7 +49,6 @@ class ProfilePageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         imagePicker.delegate = self
-        self.profileUsername.isHidden = true
         let localUser = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
         print("these are the two usernames:", username, " VS ", localUser)
         if username == ""  || username == localUser { //checks if the user is looking at their profile or someone else's 
@@ -119,6 +117,11 @@ class ProfilePageViewController: UIViewController {
             vc.profileName = profileName
             print("we are executing this")
         }
+        if segue.identifier == "loginSegue" {
+            let vc = segue.destination as! LoginViewController
+            vc.usernameText.text = username
+            print("we are executing login")
+        }
         
     }
     @IBAction func switchViewAction(_ sender: UISegmentedControl) {
@@ -163,8 +166,6 @@ class ProfilePageViewController: UIViewController {
         
         self.profileImage.contentMode = .scaleAspectFill
 //        self.profileImage.layer.cornerRadius = self.profileImage.frame.height / 2
-        
-        profileUsername.text = username
         //TODO implement read number of Gems - Should be a stored value in the DB 
 //        UserStruct().read
         

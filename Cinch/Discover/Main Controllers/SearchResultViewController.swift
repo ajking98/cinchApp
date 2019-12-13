@@ -82,7 +82,7 @@ class SearchResultViewController: UIViewController, UITableViewDelegate, UITable
         let url = URL(string: link)
         
         let vc = storyboard?.instantiateViewController(withIdentifier: "SearchZoomViewController") as! SearchZoomViewController
-        if checkIfVideo(link: link) {
+        if link.contains("mp4") {
             vc.isImage = false
         } else {
             let imageView = UIImageView()

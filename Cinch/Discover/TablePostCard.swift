@@ -56,7 +56,7 @@ class TablePostCard: UITableViewCell {
     ///given a URL, Int, and String, and sets the values of the post to the details given
     func buildVideoPostCard(url : URL, likes : Int, author : String) {
         let size = self.frame.size
-        
+        print("building video: ,", url)
         //video
         playerItem = AVPlayerItem(url: url)
         player = AVPlayer(playerItem: playerItem)
@@ -147,7 +147,7 @@ class TablePostCard: UITableViewCell {
         guard let link = item.link else { return }
         self.link = link
         
-        if checkIfVideo(link: link) {
+        if link.contains("mp4") {
             buildVideoPostCard(url: URL(string: link)!, likes: item.numberOfLikes!, author: item.postOwner!)
         } else {
             buildPostCard(url: URL(string: link)!, likes: item.numberOfLikes!, author: item.postOwner!)

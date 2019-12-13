@@ -12,10 +12,11 @@ import FirebaseAuth
 class SignUpViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var nameText: UITextField!
-    @IBOutlet weak var usernameText: UITextField!
     @IBOutlet weak var emailText: UITextField!
     @IBOutlet weak var passwordText: UITextField!
     @IBOutlet weak var cancelLabel: UILabel!
+    var username = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         buildGestures()
@@ -32,6 +33,8 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func signUp(_ sender: Any) {
+        // Add the user to your system
+        let username = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)
         if (!checkIfEmpty()) {
             Auth.auth().createUser(withEmail: emailText.text!, password: passwordText.text!) { (user, error) in
                 if user != nil {
@@ -44,13 +47,15 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                     }
                 }
             }
-            let user = User(name: nameText.text!, username: usernameText.text!, email: emailText.text!, password: passwordText.text!, isPrivate: false)
-            ParentStruct().addUser(user: user)
-            UserDefaults.standard.set(user.username, forKey: defaultsKeys.usernameKey)
+            UserStruct().updateName(user: username!, newName: self.nameText.text!)
+//            let user = User(name: nameText.text!, username: usernameText.text!, email: emailText.text!, password: passwordText.text!, isPrivate: false)
+//            ParentStruct().addUser(user: user)
+//            UserDefaults.standard.set(user.username, forKey: defaultsKeys.usernameKey)
+//            UserDefaults(suiteName: "group.InstagramClone.messages")?.set(user.username, forKey: defaultsKeys.usernameKey)
             if UserDefaults.standard.string(forKey: defaultsKeys.stateOfUser) == "Signup/Login" {
                 UserDefaults.standard.set("Logout", forKey: defaultsKeys.stateOfUser)
             }
-            UserDefaults(suiteName: "group.InstagramClone.messages")?.set(user.username, forKey: defaultsKeys.usernameKey)
+            self.viewWillAppear(true)
             exitView()
         }
     }
@@ -86,15 +91,9 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         if (nameText.text == "") {
             print("Add Name")
             warnUser(textField: nameText)
-        } else if (usernameText.text == "") {
-            print("Add Username")
-            warnUser(textField: usernameText)
         } else if ((emailText.text == "") || !isValidEmail(emailStr: emailText.text!)) {
             print("Add Email")
             warnUser(textField: emailText)
-        } else if (usernameText.text == "") {
-            print("Add Username")
-            warnUser(textField: usernameText)
         } else if (passwordText.text == "") {
             print("Add Password")
             warnUser(textField: passwordText)
@@ -110,6 +109,14 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
 
         let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
         return emailPred.evaluate(with: emailStr)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "loginSegue" {
+            let vc = segue.destination as! LoginViewController
+            print("we are executing login")
+        }
+        
     }
 
 }
