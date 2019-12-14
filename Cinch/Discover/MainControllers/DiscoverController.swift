@@ -56,6 +56,8 @@ class DiscoverController: UIViewController, transferDelegate {
     var dbRef: DatabaseReference!
     var posts = [Post]()
     
+    let cache = NSCache<NSString, Post>()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         dbRef = Database.database().reference().child("posts")
@@ -119,6 +121,12 @@ class DiscoverController: UIViewController, transferDelegate {
                 self.posts.append(post)
                 self.collectionView.reloadData()
                 self.tableView.insertRows(at: [indexPath], with: .right)
+                
+                if let post = self.cache.object(forKey: post.link as! NSString) {
+                    
+                } else {
+                    self.cache.setObject(post, forKey: post.link as! NSString)
+                }
             }
             guard let completion = completion else { return }
             completion(true)
