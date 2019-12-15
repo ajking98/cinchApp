@@ -72,8 +72,7 @@ class SearchResultViewController: UIViewController, UITableViewDelegate, UITable
         let cell = tableView.dequeueReusableCell(withIdentifier: tableCellIdentifier, for: indexPath) as! TablePostCard
         let currentPost = posts[indexPath.row]
         print(currentPost.link)
-        cell.delegate = self
-        cell.buildPostCard(item: currentPost)
+        cell.buildPostCard(link: currentPost.link!)
         return cell
     }
     

@@ -38,6 +38,7 @@
 		46A1DAFA239326A2006BADD8 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A1DAF9239326A2006BADD8 /* SignUpViewController.swift */; };
 		46A39D6023A1770000EA1E4B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46A39D5F23A1770000EA1E4B /* GoogleService-Info.plist */; };
 		46A39D6223A313C700EA1E4B /* TablePostCard.xib in Resources */ = {isa = PBXBuildFile; fileRef = 46A39D6123A313C600EA1E4B /* TablePostCard.xib */; };
+		46A39D6423A5A05300EA1E4B /* ProfileSettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A39D6323A5A05300EA1E4B /* ProfileSettingsController.swift */; };
 		46A3E08522BA8156003F6F35 /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A3E08422BA8156003F6F35 /* SQLite.framework */; };
 		46A3E09722BF0B6E003F6F35 /* ProfilePage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46A3E09622BF0B6E003F6F35 /* ProfilePage.storyboard */; };
 		46A3E0A022BF0BA1003F6F35 /* ProfilePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A3E09F22BF0BA1003F6F35 /* ProfilePageViewController.swift */; };
@@ -125,7 +126,6 @@
 		8EF6B3F022F640BF00EECBF6 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF6B3EF22F640BF00EECBF6 /* Global.swift */; };
 		B106AA9765C10564489351DB /* Pods_CinchTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59D6DA5D887F23C80EC2A8C8 /* Pods_CinchTests.framework */; };
 		DABE01394F99A3F9D7ACF560 /* Pods_CinchShareExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B29698019875B2D4CBCC4F2E /* Pods_CinchShareExtension.framework */; };
-		EB0158E122FB65DA008CC63A /* ProfileSettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0158E022FB65DA008CC63A /* ProfileSettingsController.swift */; };
 		EB3A433A2263CCC000F6F339 /* ProfileCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3A43392263CCC000F6F339 /* ProfileCollectionViewCell.swift */; };
 		EB40EF992263E9940093BB5B /* FolderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB40EF982263E9940093BB5B /* FolderCollectionViewCell.swift */; };
 		EB40EF9D2263F7E20093BB5B /* InsideFolderCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB40EF9C2263F7E20093BB5B /* InsideFolderCollectionViewController.swift */; };
@@ -236,6 +236,7 @@
 		46A1DAF9239326A2006BADD8 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		46A39D5F23A1770000EA1E4B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		46A39D6123A313C600EA1E4B /* TablePostCard.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TablePostCard.xib; sourceTree = "<group>"; };
+		46A39D6323A5A05300EA1E4B /* ProfileSettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsController.swift; sourceTree = "<group>"; };
 		46A3E06622B8577A003F6F35 /* SDWebImage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SDWebImage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		46A3E06C22B85825003F6F35 /* SDWebImage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SDWebImage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		46A3E06E22B8582D003F6F35 /* EasyImagy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = EasyImagy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -308,7 +309,6 @@
 		D3AD0115DDB06E1A2748C55D /* Pods-CinchShareExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CinchShareExtension.release.xcconfig"; path = "Target Support Files/Pods-CinchShareExtension/Pods-CinchShareExtension.release.xcconfig"; sourceTree = "<group>"; };
 		E11F40163552A3656E8CBE99 /* Pods-InstagramClone-Gems.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramClone-Gems.debug.xcconfig"; path = "Target Support Files/Pods-InstagramClone-Gems/Pods-InstagramClone-Gems.debug.xcconfig"; sourceTree = "<group>"; };
 		E4B2D05AE2BF2F59DB788D43 /* Pods-InstagramCloneUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramCloneUITests.debug.xcconfig"; path = "Target Support Files/Pods-InstagramCloneUITests/Pods-InstagramCloneUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		EB0158E022FB65DA008CC63A /* ProfileSettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsController.swift; sourceTree = "<group>"; };
 		EB3A43392263CCC000F6F339 /* ProfileCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCollectionViewCell.swift; sourceTree = "<group>"; };
 		EB40EF982263E9940093BB5B /* FolderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FolderCollectionViewCell.swift; path = ../../FolderCollectionViewCell.swift; sourceTree = "<group>"; };
 		EB40EF9C2263F7E20093BB5B /* InsideFolderCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = InsideFolderCollectionViewController.swift; path = ../../InsideFolderCollectionViewController.swift; sourceTree = "<group>"; };
@@ -450,14 +450,14 @@
 				EB3A43392263CCC000F6F339 /* ProfileCollectionViewCell.swift */,
 				892677AB22CFCE390007825E /* SideMenuTableViewController.swift */,
 				EB71602722FA2726009538C2 /* MenuOptionCell.swift */,
-				EB0158E022FB65DA008CC63A /* ProfileSettingsController.swift */,
 				467EB5252379C3FE00BBB1FE /* EditProfileViewController.swift */,
 				46A3E09622BF0B6E003F6F35 /* ProfilePage.storyboard */,
+				46A39D6323A5A05300EA1E4B /* ProfileSettingsController.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
 		};
-		46764B3223668A52006362FB /* Main Controllers */ = {
+		46764B3223668A52006362FB /* MainControllers */ = {
 			isa = PBXGroup;
 			children = (
 				46BC5D38237367A5001870E3 /* TableSearchViewController.swift */,
@@ -468,7 +468,7 @@
 				46456C2122FE51A700D96EB5 /* SecondaryDiscoverController.swift */,
 				46ED0389237B38F0003E1525 /* SearchZoomViewController.swift */,
 			);
-			path = "Main Controllers";
+			path = MainControllers;
 			sourceTree = "<group>";
 		};
 		467E5DC622FD044A00F23ABD /* Post */ = {
@@ -588,7 +588,7 @@
 		891FC3EA22D7F5DD0024A623 /* Discover */ = {
 			isa = PBXGroup;
 			children = (
-				46764B3223668A52006362FB /* Main Controllers */,
+				46764B3223668A52006362FB /* MainControllers */,
 				891FC3F822D7F6D80024A623 /* DiscoverLayout.swift */,
 				891FC3FE22D7F73A0024A623 /* PostCard.xib */,
 				891FC3F622D7F6B50024A623 /* PostCard.swift */,
@@ -1172,7 +1172,6 @@
 				467EB5262379C3FE00BBB1FE /* EditProfileViewController.swift in Sources */,
 				46D48D97231AF48700952EDB /* ParentPostStruct.swift in Sources */,
 				46A3E0B822C0341E003F6F35 /* GemsViewController.swift in Sources */,
-				EB0158E122FB65DA008CC63A /* ProfileSettingsController.swift in Sources */,
 				46BC5D39237367A5001870E3 /* TableSearchViewController.swift in Sources */,
 				EB41F8E922653170003751FA /* Photo.swift in Sources */,
 				46A1DAFA239326A2006BADD8 /* SignUpViewController.swift in Sources */,
@@ -1193,6 +1192,7 @@
 				467EB4F323766D4F00BBB1FE /* FolderImageZoomController.swift in Sources */,
 				46D5E08022ADABC3003B41DE /* StorageStruct.swift in Sources */,
 				89871252229DE98200BE8F23 /* ZoomingImage.swift in Sources */,
+				46A39D6423A5A05300EA1E4B /* ProfileSettingsController.swift in Sources */,
 				8E92367E229C5B4F0071E63C /* HelperFrontEnd.swift in Sources */,
 				EB74D3B6226025E900556399 /* AppDelegate.swift in Sources */,
 				467EB5242377D4C400BBB1FE /* LoginViewController.swift in Sources */,
