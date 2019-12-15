@@ -123,7 +123,7 @@ class DiscoverController: UIViewController, transferDelegate {
                 self.tableView.insertRows(at: [indexPath], with: .right)
                 
                 if let post = self.cache.object(forKey: post.link as! NSString) {
-                    
+                    return
                 } else {
                     self.cache.setObject(post, forKey: post.link as! NSString)
                 }

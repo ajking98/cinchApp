@@ -219,7 +219,7 @@ class TablePostCard: UITableViewCell {
             return
         }
         
-        if link.contains(".mp4") {
+        if link.contains("mp4") || link.contains("mov") {
             //video
             playerItem = AVPlayerItem(url: url)
             player = AVPlayer(playerItem: playerItem)

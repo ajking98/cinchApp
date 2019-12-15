@@ -8,6 +8,7 @@
 import UIKit
 import XLActionController
 
+
 class SearchResultViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, transferDelegate {
     
     //when the user is sending a post to their profile
@@ -33,6 +34,8 @@ class SearchResultViewController: UIViewController, UITableViewDelegate, UITable
     var searchTerm = ""
     let tableCellIdentifier = "Cell"
     
+    let cache = NSCache<NSString, Post>()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -54,6 +57,12 @@ class SearchResultViewController: UIViewController, UITableViewDelegate, UITable
                         let indexPath = IndexPath(item: self.posts.count, section: 0)
                         self.posts.append(post)
                         self.tableView.insertRows(at: [indexPath], with: .right)
+                        
+                        if let post = self.cache.object(forKey: post.link as! NSString) {
+                            return
+                        } else {
+                            self.cache.setObject(post, forKey: post.link as! NSString)
+                        }
                     })
                 }
                 catch {
