@@ -89,7 +89,7 @@ class ShareViewController: SLComposeServiceViewController {
 
     ///Stores the given image to DB
     func saveContent(image: UIImage) {
-        guard let username = UserDefaults(suiteName: "group.com.cinch.CinchApp")?.string(forKey: defaultsKeys.usernameKey) else { return }
+        guard let username = UserDefaults(suiteName: "group.InstagramClone.messages")?.string(forKey: defaultsKeys.usernameKey) else { return }
         StorageStruct().uploadContent(content: image) { (link) in
             let post = Post(isImage: true, postOwner: username, link: link)
             ParentPostStruct().addPost(post: post)
@@ -101,7 +101,7 @@ class ShareViewController: SLComposeServiceViewController {
     ///Takes a link to the post and adds the tags from the textView to it
     func handleTagging(link: String) {
         let message = textView.text.components(separatedBy: CharacterSet(charactersIn: " ./"))
-        let username = UserDefaults(suiteName: "group.com.cinch.CinchApp")?.string(forKey: defaultsKeys.usernameKey)
+        let username = UserDefaults(suiteName: "group.InstagramClone.messages")?.string(forKey: defaultsKeys.usernameKey)
         
         var tagArray = [String]()
         for tag in message {
@@ -122,8 +122,8 @@ class ShareViewController: SLComposeServiceViewController {
         if(FirebaseApp.app() == nil){
             FirebaseApp.configure()
         }
-        guard let username = UserDefaults(suiteName: "group.com.cinch.CinchApp")?.string(forKey: defaultsKeys.usernameKey) else { return [] }//Should alert the user that they dont have an account set up
-        if let tempLastUsedFolder = UserDefaults(suiteName: "group.com.cinch.CinchApp")?.string(forKey: defaultsKeys.lastUsedFolder)
+        guard let username = UserDefaults(suiteName: "group.InstagramClone.messages")?.string(forKey: defaultsKeys.usernameKey) else { return [] }//Should alert the user that they dont have an account set up
+        if let tempLastUsedFolder = UserDefaults(suiteName: "group.InstagramClone.messages")?.string(forKey: defaultsKeys.lastUsedFolder)
         { selectedFolder = tempLastUsedFolder }
         
         UserStruct().readFolders(user: username) { (folderList) in
@@ -179,7 +179,7 @@ class FolderSelection: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let folderName = folders[indexPath.row]
         pendingFunction?(folderName)
-        UserDefaults(suiteName: "group.com.cinch.CinchApp")?.set(folderName, forKey: defaultsKeys.lastUsedFolder)
+        UserDefaults(suiteName: "group.InstagramClone.messages")?.set(folderName, forKey: defaultsKeys.lastUsedFolder)
         navigationController?.popViewController(animated: true)
     }
 }
