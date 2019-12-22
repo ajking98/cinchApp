@@ -66,7 +66,7 @@ class SearchZoomViewController: UIViewController {
         print("step 1")
         if let post = post {
             print("step 2", post.postOwner)
-            authorView.text = post.postOwner
+            authorView.text = "Visit Page"
         }
         else if link.count > 1 {
             print("this is the limit reached", link)
@@ -147,7 +147,7 @@ class SearchZoomViewController: UIViewController {
     
     @objc func handleAuthorPressed() {
         let vc = UIStoryboard(name: "ProfilePage", bundle: nil).instantiateViewController(withIdentifier: "profilePage") as! ProfilePageViewController
-        guard let author = authorView.text else { return }
+        guard let author = post?.postOwner else { return }
         UserDefaults.standard.setValue(author, forKey: defaultsKeys.otherProfile)
         vc.username = author
         vc.isLocalUser = false
@@ -165,7 +165,7 @@ class SearchZoomViewController: UIViewController {
             activityController = UIActivityViewController(activityItems: [image], applicationActivities: nil)
         }
         else {
-            //todo add compatibility for video sharing - Right now it only shares the link 
+            //todo add compatibility for video sharing - Right now it only shares the link
             activityController = UIActivityViewController(activityItems: [link], applicationActivities: nil)
         }
         present(activityController, animated: true)

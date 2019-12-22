@@ -48,6 +48,8 @@
 		46ADC115233FFC8F001B62E8 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46ADC114233FFC8F001B62E8 /* UIImageExtension.swift */; };
 		46ADC1312352BC48001B62E8 /* TablePostCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46ADC12F2352BC45001B62E8 /* TablePostCard.swift */; };
 		46BC5D39237367A5001870E3 /* TableSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46BC5D38237367A5001870E3 /* TableSearchViewController.swift */; };
+		46C998CC23B01C5D00681955 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46A39D5F23A1770000EA1E4B /* GoogleService-Info.plist */; };
+		46C998CD23B01C5E00681955 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46A39D5F23A1770000EA1E4B /* GoogleService-Info.plist */; };
 		46D48D902318A7D100952EDB /* FolderReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D48D8F2318A7D100952EDB /* FolderReference.swift */; };
 		46D48D97231AF48700952EDB /* ParentPostStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D48D96231AF48700952EDB /* ParentPostStruct.swift */; };
 		46D5E07122A87F15003B41DE /* Folder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E07022A87F15003B41DE /* Folder.swift */; };
@@ -932,6 +934,7 @@
 			files = (
 				4622493F22DFAC900005B12F /* Assets.xcassets in Resources */,
 				46FA43F423634FE7005F3046 /* MessageCard.xib in Resources */,
+				46C998CC23B01C5D00681955 /* GoogleService-Info.plist in Resources */,
 				4622493D22DFAC8F0005B12F /* MainInterface.storyboard in Resources */,
 				46F2B5BF2370CB1400FFC751 /* Assets.xcassets in Resources */,
 			);
@@ -943,6 +946,7 @@
 			files = (
 				46F2B5D32371278800FFC751 /* Assets.xcassets in Resources */,
 				46F2B5CB2371274600FFC751 /* MainInterface.storyboard in Resources */,
+				46C998CD23B01C5E00681955 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -62,4 +62,24 @@ struct ParentPostStruct {
         }
     }
     
+    
+    ///Reads multiple posts
+    func readMultiplePosts(limit: UInt, completion: @escaping([Post]) -> Void) {
+        DB.queryLimited(toFirst: limit).observeSingleEvent(of: .value) { (snapshot) in
+            if let listOfPosts = snapshot.value as? [String: [String: Any]] {
+                var postArray: [Post] = []
+                
+                for post in listOfPosts.values {
+                    guard post["dateCreated"] != nil else { return }// this just makes sure that the given post has been properly created
+                        let likedBy = post["likedBy"] != nil ? post["likedBy"] as! [String : String] : [:] as! [String : String]
+                        
+                        let tags = post["tags"] != nil ? post["tags"] as! [String : String] : [:] as! [String : String]
+                        let thisPost = Post(isImage: post["isImage"] as! Bool, numberOfLikes: post["numberOfLikes"] as! Int, postOwner: post["postOwner"] as! String, likedBy: Array(likedBy.keys), dateCreated: post["dateCreated"] as! Double, tags: Array(tags.keys), link: post["link"] as! String)
+                        postArray.append(thisPost)
+                }
+                completion(postArray)
+            }
+        }
+    }
+    
 }

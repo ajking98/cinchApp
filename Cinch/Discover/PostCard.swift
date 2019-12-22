@@ -132,7 +132,7 @@ class PostCard: UICollectionViewCell {
         
         shareButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTransfer)))
         labelContainer.addSubview(shareButton)
-        labelContainer.addSubview(authorView)
+//        labelContainer.addSubview(authorView)
     }
     
     //transfers the image from discover to desired folder

@@ -2,12 +2,11 @@
 //  SearchResultViewController.swift
 //  Cinch
 //
-//  Created by Ahmed Gedi on 11/4/19. 
+//  Created by Ahmed Gedi on 11/4/19.
 //This is the view after the user selects the term they want to search for
 
 import UIKit
 import XLActionController
-
 
 class SearchResultViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, transferDelegate {
     
@@ -34,8 +33,6 @@ class SearchResultViewController: UIViewController, UITableViewDelegate, UITable
     var searchTerm = ""
     let tableCellIdentifier = "Cell"
     
-    let cache = NSCache<NSString, Post>()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -57,12 +54,6 @@ class SearchResultViewController: UIViewController, UITableViewDelegate, UITable
                         let indexPath = IndexPath(item: self.posts.count, section: 0)
                         self.posts.append(post)
                         self.tableView.insertRows(at: [indexPath], with: .right)
-                        
-                        if let post = self.cache.object(forKey: post.link as! NSString) {
-                            return
-                        } else {
-                            self.cache.setObject(post, forKey: post.link as! NSString)
-                        }
                     })
                 }
                 catch {
@@ -80,8 +71,8 @@ class SearchResultViewController: UIViewController, UITableViewDelegate, UITable
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: tableCellIdentifier, for: indexPath) as! TablePostCard
         let currentPost = posts[indexPath.row]
-        print(currentPost.link)
-        cell.buildPostCard(link: currentPost.link!)
+        cell.delegate = self
+        cell.buildPostCard(item: currentPost)
         return cell
     }
     

@@ -56,8 +56,6 @@ class DiscoverController: UIViewController, transferDelegate {
     var dbRef: DatabaseReference!
     var posts = [Post]()
     
-    let cache = NSCache<NSString, Post>()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         dbRef = Database.database().reference().child("posts")
@@ -83,75 +81,67 @@ class DiscoverController: UIViewController, transferDelegate {
         collectionView.allowsMultipleSelection = true
         
         setUpNavigation()
-        
-        //TODO remove this when done testing
-        addPostTemp()
     }
     
-    //TODO remove this when done testing
-    func addPostTemp() {
-        let username = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
-        UserStruct().addNewContent(user: username, link:"https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/PublicImages%2FrTHalAYTblGaadSUgDIz?alt=media&token=d03fbe52-a664-4f60-9d4e-f0939ae8a7f2")
-        UserStruct().addNewContent(user: username, link: "https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/PublicImages%2FBkdSltqbvHeJunUWcJaf?alt=media&token=10d32ee8-ec34-4d62-bfc6-7b396fd62da9")
-        UserStruct().addNewContent(user: username, link: "https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/PublicImages%2FaFjSqSwakRllHJeHJRHw?alt=media&token=bdd439ef-5f0b-40da-90fe-fa127297ab9e")
-        UserStruct().addNewContent(user: username, link: "https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/PublicImages%2FrBijfzwlNvYugaxaqlFi?alt=media&token=6e596e38-7520-406c-a90a-be3420d9929d")
-        UserStruct().addNewContent(user: username, link: "https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/PublicImages%2FuuehVbKCasEJGxCcAseS?alt=media&token=54045c47-5bbc-4ba4-a44b-485813243dde")
-    }
     
     
     ///Updates the content array with values from the DB
     //TODO this is not updating the collectionView, it is only updating the tableview
     func fetchContent(_ completion: ((Bool) -> Void)? = nil) {
+        print("This is being called")
         let username = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
         
-        UserStruct().readNewContent(user: username) { (newContent) in
-            for (_, value) in newContent {
-
-                print("we are atleast going here2")
-                let indexPath = IndexPath(row: self.posts.count, section: 0)
-                //TODO this creates a post using the link and uses static data in contstructor, this should instead get the data from the posts section in the database
-                
-                let post = Post(isImage: true, numberOfLikes: 0, postOwner: "", likedBy: ["someone"], dateCreated: Date().timeIntervalSince1970, tags: ["nothing"], link: value)
-                PostStruct().readPostOwner(post: value, completion: { (owner) in
-                    post.postOwner = owner;
-                })
-                if self.posts.contains(where: { (selectedPost) -> Bool in
-                    return selectedPost.link == post.link
-                }) { continue }
-                self.posts.append(post)
-                self.collectionView.reloadData()
-                self.tableView.insertRows(at: [indexPath], with: .right)
-                
-                if let post = self.cache.object(forKey: post.link as! NSString) {
-                    return
-                } else {
-                    self.cache.setObject(post, forKey: post.link as! NSString)
-                }
-            }
-            guard let completion = completion else { return }
-            completion(true)
+        ParentPostStruct().readMultiplePosts(limit: 30) { (postArray) in
+            print("this is something")
+            self.posts = postArray
+            self.collectionView.reloadData()
+            self.tableView.reloadData()
         }
-        UserStruct().readSuggestedContent(user: username) { (suggestedContent) in
-            for (_, value) in suggestedContent {
-                let indexPath = IndexPath(row: self.posts.count, section: 0)
-                //TODO this creates a post using the link and uses static data in contstructor, this should instead get the data from the posts section in the database
-                
-                let post = Post(isImage: true, numberOfLikes: 0, postOwner: "", likedBy: ["someone"], dateCreated: Date().timeIntervalSince1970, tags: ["nothing"], link: value)
-                
-                PostStruct().readPostOwner(post: value, completion: { (owner) in
-                    post.postOwner = owner;
-                })
-                
-                if self.posts.contains(where: { (selectedPost) -> Bool in
-                    return selectedPost.link == post.link
-                }) { continue }
-                self.posts.append(post)
-                self.collectionView.reloadData()
-                self.tableView.insertRows(at: [indexPath], with: .right)
-            }
-            guard let completion = completion else { return }
-            completion(true)
-        }
+        
+        
+        //TODO eventually we would want to emplement the code below
+//        UserStruct().readNewContent(user: username) { (newContent) in
+//            for (_, value) in newContent {
+//
+//                print("we are atleast going here2")
+//                let indexPath = IndexPath(row: self.posts.count, section: 0)
+//                //TODO this creates a post using the link and uses static data in contstructor, this should instead get the data from the posts section in the database
+//
+//                let post = Post(isImage: true, numberOfLikes: 0, postOwner: "", likedBy: ["someone"], dateCreated: Date().timeIntervalSince1970, tags: ["nothing"], link: value)
+//                PostStruct().readPostOwner(post: value, completion: { (owner) in
+//                    post.postOwner = owner;
+//                })
+//                if self.posts.contains(where: { (selectedPost) -> Bool in
+//                    return selectedPost.link == post.link
+//                }) { continue }
+//                self.posts.append(post)
+//                self.collectionView.reloadData()
+//                self.tableView.insertRows(at: [indexPath], with: .right)
+//            }
+//            guard let completion = completion else { return }
+//            completion(true)
+//        }
+//        UserStruct().readSuggestedContent(user: username) { (suggestedContent) in
+//            for (_, value) in suggestedContent {
+//                let indexPath = IndexPath(row: self.posts.count, section: 0)
+//                //TODO this creates a post using the link and uses static data in contstructor, this should instead get the data from the posts section in the database
+//
+//                let post = Post(isImage: true, numberOfLikes: 0, postOwner: "", likedBy: ["someone"], dateCreated: Date().timeIntervalSince1970, tags: ["nothing"], link: value)
+//
+//                PostStruct().readPostOwner(post: value, completion: { (owner) in
+//                    post.postOwner = owner;
+//                })
+//
+//                if self.posts.contains(where: { (selectedPost) -> Bool in
+//                    return selectedPost.link == post.link
+//                }) { continue }
+//                self.posts.append(post)
+//                self.collectionView.reloadData()
+//                self.tableView.insertRows(at: [indexPath], with: .right)
+//            }
+//            guard let completion = completion else { return }
+//            completion(true)
+//        }
     }
     
     func setUpNavigation() {
@@ -277,7 +267,7 @@ class DiscoverController: UIViewController, transferDelegate {
     }
     
     
-    //animates the view upwards and hides the segment controller
+    ///animates the view upwards and hides the segment controller
     func unNormalize(scrollView : UIScrollView, _ speed : Double? = nil) {
         
         UIView.animateKeyframes(withDuration: 0.5, delay: 0, options: [], animations: {
@@ -364,7 +354,7 @@ class DiscoverController: UIViewController, transferDelegate {
             handleSegmentControl(false) //summons the table view
         }
         else {
-            handleSegmentControl(true) //summons the collectionview 
+            handleSegmentControl(true) //summons the collectionview
         }
     }
     
@@ -413,7 +403,6 @@ class DiscoverController: UIViewController, transferDelegate {
         UIView.animateKeyframes(withDuration: 0.3, delay: 0, options: [], animations: {
             self.collectionView.center.x = self.view.center.x
             self.tableView.center.x = self.view.center.x + self.view.frame.width
-            
             
             //scrolls to index
             if (indexPath != IndexPath(item: 0, section: 0)){
@@ -524,7 +513,7 @@ extension DiscoverController : UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath) as! TablePostCard
         let currentPost = posts[indexPath.row]
         cell.delegate = self
-        cell.buildPostCard(link: currentPost.link!)
+        cell.buildPostCard(item: currentPost)
         return cell
     }
 

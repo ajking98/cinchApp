@@ -173,8 +173,8 @@ class PrimaryDiscoverController: DiscoverController, SearchDelegate {
             
             //if pan is in the negative direction and the segment control hasn't reached its peak height
             if (translation < 0 && segmentControl.center.y > (-10 - segmentControl.frame.height)){
-                segmentControl.center.y += translation
-                searchBar!.center.y += translation
+//                segmentControl.center.y += translation //todo uncomment this later
+//                searchBar!.center.y += translation
             }
             
             //if the summation of the translation and scrollview y-axis is within bounds
@@ -185,7 +185,7 @@ class PrimaryDiscoverController: DiscoverController, SearchDelegate {
                 }
                 
                 if translation < 0 {
-                    translateTables(translation)
+//                    translateTables(translation)
                 }
             }
 //        case .ended:
