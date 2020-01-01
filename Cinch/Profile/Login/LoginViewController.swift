@@ -54,6 +54,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 }
             }
             exitView()
+            SignUpViewController().dismiss(animated: true, completion: nil)
+            ProfilePageViewController().viewDidAppear(true)
+
         }
     }
     func buildGestures(){
@@ -74,7 +77,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     @objc func exitView(_ tapGesture : UITapGestureRecognizer? = nil){
         UIView.animateKeyframes(withDuration: 0.3, delay: 0, options: [], animations: {
-            self.dismiss(animated: true, completion: nil)
+            self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+            self.viewWillAppear(true)
         }, completion: nil)
     }
     

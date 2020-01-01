@@ -106,9 +106,20 @@ extension SideMenuViewController: UITableViewDelegate, UITableViewDataSource {
             let sign = UserDefaults.standard.string(forKey: defaultsKeys.stateOfUser)
             if sign == "Logout" {
                 // do nothing but refresh the page and set to default data
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Toggle Side Menu"), object: nil)
-                UserDefaults.standard.set("Signup/Login", forKey: defaultsKeys.stateOfUser)
-                print("Logged off account")
+                let alert = UIAlertController(title: "You Sure?", message: "Are you sure you want to logout?", preferredStyle: .alert)
+
+                alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Toggle Side Menu"), object: nil)
+                    UserDefaults.standard.set("Signup/Login", forKey: defaultsKeys.stateOfUser)
+                    print("Logged off account")
+                    print("Yes, I'm sure")
+                }))
+                
+                alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: { action in
+                    print("Nah, I'll stay")
+                    
+                }))
+                self.present(alert, animated: true)
             } else {
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Toggle Side Menu"), object: nil)
                 let vc = storyboard?.instantiateViewController(withIdentifier: "LoginViewController")

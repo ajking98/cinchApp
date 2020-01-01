@@ -13,7 +13,7 @@ import XLActionController
 
 class ImageSelectedController: UIViewController {
     
-    var post : Post! //post object also has the link to the post 
+    var post : Post! //post object also has the link to the post
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var lowerView: UIView!
@@ -36,7 +36,7 @@ class ImageSelectedController: UIViewController {
         
         setUp()
         setUpScrollView()
-        
+        print("this is okary")
         guard isFromDiscover else {
             lowerView.frame.size = CGSize(width: 0, height: 0)
             lowerView.isHidden = true
@@ -128,7 +128,7 @@ class ImageSelectedController: UIViewController {
         //adding text TODO get rid of this later
         likesView.text = String(post.numberOfLikes!)
         print("this is the post owner:", post.postOwner)
-        authorView.text = post.postOwner
+        authorView.text = "Visit Page"
         
         //add subviews
         labels.addSubview(menuOptions)
@@ -144,7 +144,7 @@ class ImageSelectedController: UIViewController {
     
     @objc func handleAuthorPressed() {
         let vc = UIStoryboard(name: "ProfilePage", bundle: nil).instantiateViewController(withIdentifier: "profilePage") as! ProfilePageViewController
-        guard let author = authorView.text else { return }
+        guard let author = post.postOwner else { return }
         UserDefaults.standard.setValue(author, forKey: defaultsKeys.otherProfile)
         vc.username = author
         vc.isLocalUser = false

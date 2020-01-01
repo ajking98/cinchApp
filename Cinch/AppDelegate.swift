@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //checks if the user already exists, and if they do, they save the username to the global user defaults
         if let username = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) {
             print("Existing User")
-            UserDefaults(suiteName: "group.com.cinch.CinchApp")?.set(username, forKey: defaultsKeys.usernameKey)
+            UserDefaults(suiteName: "group.InstagramClone.messages")?.set(username, forKey: defaultsKeys.usernameKey)
             print("here is your username: ", username)
             if UserDefaults.standard.string(forKey: defaultsKeys.stateOfUser) == nil {
                 UserDefaults.standard.set("Signup/Login", forKey: defaultsKeys.stateOfUser)
@@ -42,7 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("here is your created username:", user.username)
             
             UserDefaults.standard.set(user.username, forKey: defaultsKeys.usernameKey)
-            UserDefaults(suiteName: "group.com.cinch.CinchApp")?.set(user.username, forKey: defaultsKeys.usernameKey)
+            UserDefaults(suiteName: "group.InstagramClone.messages")?.set(user.username, forKey: defaultsKeys.usernameKey)
             UserDefaults.standard.set("Signup/Login", forKey: defaultsKeys.stateOfUser)
 
             //TODO add the other default values here as needed (Use a few user defaults as possible)
