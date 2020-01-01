@@ -80,6 +80,9 @@ class PermissionsController: UIViewController {
         PHPhotoLibrary.requestAuthorization({status in
             if status == .authorized{
                 self.dismiss(animated: true, completion: nil)
+//                DispatchQueue.main.sync {
+//                      self.dismiss(animated: true, completion: nil)
+//                }
                 print("rendering")
                 if let render = self.render {
                     render()
@@ -88,6 +91,9 @@ class PermissionsController: UIViewController {
             else { PHPhotoLibrary.requestAuthorization({status in
                 if status == .authorized {
                     self.dismiss(animated: true, completion: nil)
+//                    DispatchQueue.main.sync {
+//                          self.dismiss(animated: true, completion: nil)
+//                    }
                 }
             }) }
         })
