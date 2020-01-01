@@ -513,7 +513,7 @@ extension DiscoverController : UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath) as! TablePostCard
         let currentPost = posts[indexPath.row]
         cell.delegate = self
-        cell.buildPostCard(item: currentPost)
+        cell.buildPostCard(link: currentPost.link!)
         return cell
     }
 

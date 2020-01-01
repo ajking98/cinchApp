@@ -42,38 +42,38 @@ class TablePostCard: UITableViewCell {
     
     
     ///given an UIImage, Int, and String, and sets the values of the post to the details given
-    func buildPostCard(url : URL, likes : Int, author : String) {
-        //imageView
-        print("building: ,", url)
-        tableImageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholde.png"), completed: nil)
-        tableImageView!.contentMode = .scaleAspectFill
-        tableImageView!.clipsToBounds = true
-
-        setUp()
-    }
-    
+//    func buildPostCard(url : URL, likes : Int, author : String) {
+//        //imageView
+//        print("building: ,", url)
+//        tableImageView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholde.png"), completed: nil)
+//        tableImageView!.contentMode = .scaleAspectFill
+//        tableImageView!.clipsToBounds = true
+//
+//        setUp()
+//    }
+//
     
     ///given a URL, Int, and String, and sets the values of the post to the details given
-    func buildVideoPostCard(url : URL, likes : Int, author : String) {
-        let size = self.frame.size
-        print("building video: ,", url)
-        //video
-        playerItem = AVPlayerItem(url: url)
-        player = AVPlayer(playerItem: playerItem)
-        playerLayer = AVPlayerLayer(player: player)
-        playerLayer.videoGravity = .resize
-        tableImageView.layer.addSublayer(playerLayer)
-        playerLayer.frame = tableImageView.bounds
-        player.play()
-        player.isMuted = true
-        loopVideo(videoPlayer: player)
-        
-        tableImageView!.contentMode = .scaleAspectFill
-        tableImageView!.clipsToBounds = true
-        tableImageView.frame.size = size
-        
-        setUp()
-    }
+//    func buildVideoPostCard(url : URL, likes : Int, author : String) {
+//        let size = self.frame.size
+//        print("building video: ,", url)
+//        //video
+//        playerItem = AVPlayerItem(url: url)
+//        player = AVPlayer(playerItem: playerItem)
+//        playerLayer = AVPlayerLayer(player: player)
+//        playerLayer.videoGravity = .resize
+//        tableImageView.layer.addSublayer(playerLayer)
+//        playerLayer.frame = tableImageView.bounds
+//        player.play()
+//        player.isMuted = true
+//        loopVideo(videoPlayer: player)
+//
+//        tableImageView!.contentMode = .scaleAspectFill
+//        tableImageView!.clipsToBounds = true
+//        tableImageView.frame.size = size
+//
+//        setUp()
+//    }
     
     
     fileprivate func setUp() {
@@ -143,15 +143,30 @@ class TablePostCard: UITableViewCell {
     }
     
     ///Given a item, sets the values of the post to that item's values
-    func buildPostCard(item : Post) {
-        guard let link = item.link else { return }
-        self.link = link
-        
-        if link.contains("mp4") {
-            buildVideoPostCard(url: URL(string: link)!, likes: item.numberOfLikes!, author: item.postOwner!)
-        } else {
-            buildPostCard(url: URL(string: link)!, likes: item.numberOfLikes!, author: item.postOwner!)
+    func buildPostCard(link: String) {
+        guard let url = URL(string: link) else {
+            return
         }
+
+        if link.contains("mp4") || link.contains("mov") {
+            //video
+            playerItem = AVPlayerItem(url: url)
+            player = AVPlayer(playerItem: playerItem)
+            playerLayer = AVPlayerLayer(player: player)
+            playerLayer.videoGravity = .resize
+            tableImageView.layer.addSublayer(playerLayer)
+            playerLayer.frame.size = self.frame.size
+            player.play()
+            player.isMuted = true
+            loopVideo(videoPlayer: player)
+
+            imageView!.contentMode = .scaleAspectFill
+            imageView!.clipsToBounds = true
+        }
+        else {
+            tableImageView.sd_setImage(with: url, completed: nil)
+        }
+
     }
     
     
