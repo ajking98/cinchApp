@@ -79,21 +79,19 @@ class PermissionsController: UIViewController {
     @objc func askForPermission(_ tapGesture : UITapGestureRecognizer? = nil) {
         PHPhotoLibrary.requestAuthorization({status in
             if status == .authorized{
-                self.dismiss(animated: true, completion: nil)
-//                DispatchQueue.main.sync {
-//                      self.dismiss(animated: true, completion: nil)
-//                }
-                print("rendering")
-                if let render = self.render {
-                    render()
+//                self.dismiss(animated: true, completion: nil)
+                DispatchQueue.main.async {
+                    self.dismiss(animated: true) {
+                        print("rendering")
+                        if let render = self.render {
+                            render()
+                        }
+                    }
                 }
             }
             else { PHPhotoLibrary.requestAuthorization({status in
                 if status == .authorized {
                     self.dismiss(animated: true, completion: nil)
-//                    DispatchQueue.main.sync {
-//                          self.dismiss(animated: true, completion: nil)
-//                    }
                 }
             }) }
         })

@@ -16,6 +16,7 @@ import AVKit
 
 
 class CameraViewController: UIViewController {
+    
     var centerIndex = 0
     
     @IBOutlet weak var partition1: UIView!
@@ -100,7 +101,6 @@ class CameraViewController: UIViewController {
     
     
     func setUp() {
-        print("it is true, we are running")
         buildShadow() //Builds the shadows for the icons (AddButton and swipe bar)
         buildSizes() //builds the sizes for the images in the scroll view
         buildPositioning()
