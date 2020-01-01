@@ -13,7 +13,8 @@ class ProfilePageViewController: UIViewController {
     var isLocalUser: Bool = true
     
     
-    @IBOutlet weak var settingsButton: UIButton!
+
+    @IBOutlet weak var settings: UIButton!
     @IBOutlet weak var numberOfFollowersLabel: UILabel!
     @IBOutlet weak var numberOfFollowingsLabel: UILabel!
     @IBOutlet weak var numberOfGemsLabel: UILabel!
@@ -65,7 +66,7 @@ class ProfilePageViewController: UIViewController {
                     self.followButton.layer.opacity = 0.7
                 }
             }
-            settingsButton.isHidden = true
+            settings.isHidden = true
             editProfile.isHidden = true
             editImage.isHidden = true
         }
