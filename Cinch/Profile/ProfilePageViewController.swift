@@ -13,7 +13,9 @@ class ProfilePageViewController: UIViewController {
     var isLocalUser: Bool = true
     
     
-    @IBOutlet weak var settingsButton: UIButton!
+
+    @IBOutlet weak var exitProfile: UIButton!
+    @IBOutlet weak var settings: UIButton!
     @IBOutlet weak var numberOfFollowersLabel: UILabel!
     @IBOutlet weak var numberOfFollowingsLabel: UILabel!
     @IBOutlet weak var numberOfGemsLabel: UILabel!
@@ -54,6 +56,7 @@ class ProfilePageViewController: UIViewController {
         if username == ""  || username == localUser { //checks if the user is looking at their profile or someone else's 
             username = localUser
             followButton.isHidden = true
+            exitProfile.isHidden = true
         }
         else {
             followButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleFollowTapped)))
@@ -65,7 +68,7 @@ class ProfilePageViewController: UIViewController {
                     self.followButton.layer.opacity = 0.7
                 }
             }
-            settingsButton.isHidden = true
+            settings.isHidden = true
             editProfile.isHidden = true
             editImage.isHidden = true
         }
@@ -84,6 +87,9 @@ class ProfilePageViewController: UIViewController {
         self.followButton.layer.opacity = 0.7
     }
     
+    @IBAction func exitView(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
     override func viewDidDisappear(_ animated: Bool) {
         UserDefaults.standard.set(nil, forKey: defaultsKeys.otherProfile)
     }
