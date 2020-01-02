@@ -47,6 +47,9 @@ class CameraViewController: UIViewController {
     var solidBarFrame : CGRect?
     var addButtonFrame : CGRect?
     
+    var fetchResult : PHFetchResult<PHAsset>?
+    let imageManager = PHImageManager.default()
+    let requestOptions = PHImageRequestOptions()
     
     //Dynamic values
     var isFullScreen = false
@@ -136,13 +139,11 @@ class CameraViewController: UIViewController {
     
     
     func grabPhotos() {
-        let imageManager = PHImageManager.default()
-        
-        let requestOptions = PHImageRequestOptions()
-        requestOptions.isSynchronous = true
+        requestOptions.isSynchronous = false
         requestOptions.deliveryMode = .opportunistic
-        
+
         let fetchOptions = PHFetchOptions()
+        
         fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
         
         //setting the fetch limit(if this number is high, the app will run slower)
@@ -150,40 +151,23 @@ class CameraViewController: UIViewController {
         fetchOptions.predicate = NSPredicate(format: "mediaType = %d || mediaType = %d", PHAssetMediaType.image.rawValue, PHAssetMediaType.video.rawValue)
         if let fetchResult : PHFetchResult = PHAsset.fetchAssets(with: fetchOptions) {
             if fetchResult.count > 0 {
-                for i in 0..<fetchResult.count {
-                    switch fetchResult.object(at: i).mediaType {
-                    case .image:
-                        imageManager.requestImage(for: fetchResult.object(at: i) , targetSize: CGSize(width: 200, height: 200), contentMode: .aspectFill, options: requestOptions) { (img, error) in
-                            if let image = img {
-                                let indexPath = IndexPath(item: self.contentArray.count, section: 0)
-                                print("index path for image loser: ", indexPath.item, " And then this: ", i)
-//                                self.contentArray.append(img!)
-                                self.contentArray.insert(img!, at: indexPath.item)
-//                                self.imageCollectionView.insertItems(at: [indexPath])
-                            }
-                            
-                            //TODO do this for pagination:
-    //                        fetchResult.object(at: <#T##Int#>)
-                        }
-                    case .video:
-                        imageManager.requestPlayerItem(forVideo: fetchResult.object(at: i), options: nil) { (playerItem, error) in
-                            //todo add the video to the list
-                            
-                            if let playerItem = playerItem {
-                                let indexPath = IndexPath(item: self.contentArray.count, section: 0)
-                                print("index for video loser: ", indexPath.item, " And then this: ", i) //TODO fix this (it adds the video to the bottom of the collectionView
-                                self.contentArray.insert(playerItem, at: i)
-//                                self.contentArray.append(playerItem)
-//                                self.imageCollectionView.insertItems(at: [indexPath])
-                            }
-                        }
-                    default:
-                        print("this is something else")
-                    }
-//                    imageManager.requestPlayerItem(forVideo: fetchResult.object(at: i), options: requestOptions) { (playerItem, error) in
-//                        print("something")
+                
+                self.fetchResult = fetchResult
+//                for i in 0..<fetchResult.count {
+//                    switch fetchResult.object(at: i).mediaType {
+//                    case .image:
+//                        print("one image")
+//                    case .video:
+//                    print("one video")
+//
+//                    default:
+//                        print("this is something else")
 //                    }
-                }
+////                    imageManager.requestPlayerItem(forVideo: fetchResult.object(at: i), options: requestOptions) { (playerItem, error) in
+////                        print("something")
+////                    }
+//                }
+                
                 imageCollectionView.reloadData()
                 if contentArray.count > 2 {
                     //TODO this should first check if the first two objects are images then does the code below. If they are not images, then it should present them as videos
@@ -212,49 +196,90 @@ class CameraViewController: UIViewController {
     
     
     
-    ///Changes all three views to the objects assigned
-    func change(_ previousObj : NSObject, _ currentObj : NSObject, _ nextObj : NSObject){
-        changeCenterView(object: currentObj)
-        changePreviousView(object: previousObj)
-        changeNextView(object: nextObj)
+    ///Changes all three views to using the center index
+    func change(centerIndexPath: IndexPath){
+        changeCenterView(indexPath: centerIndexPath)
         
+        let prevIndexPath = IndexPath(item: centerIndexPath.item - 1, section: 0)
+        changePreviousView(indexPath: prevIndexPath)
         
-        
+        let nextIndexPath = IndexPath(item: centerIndexPath.item + 1, section: 0)
+        changeNextView(indexPath: nextIndexPath)
+         
         buildSizes()
     }
     
     ///Changes the content of the center View to the object given
-    func changeCenterView(object : NSObject){
-        if let image = object as? UIImage {
-            clearView(selectedView: centerView)
-            centerView.image = image
-        }
-        else if let playerItem = object as? AVPlayerItem {
-            addPlayer(selectedView: centerView, playerItem: playerItem, false)
+    func changeCenterView(indexPath : IndexPath){
+        guard let cellContent = fetchResult?.object(at: indexPath.item) else { return }
+        
+        switch cellContent.mediaType {
+        case .image:
+            imageManager.requestImage(for: cellContent, targetSize: CGSize(width: 200, height: 200), contentMode: .aspectFill, options: requestOptions) { (img, error) in
+                if let image = img {
+                    self.clearView(selectedView: self.centerView)
+                    self.centerView.image = image
+                }
+            }
+        case .video:
+            imageManager.requestPlayerItem(forVideo: cellContent, options: nil) { (playerItem, error) in
+                if let playerItem = playerItem {
+                    self.addPlayer(selectedView: self.centerView, playerItem: playerItem, false)
+                }
+            }
+        default:
+            print("default")
         }
     }
     
     ///Changes content of the previous view to the object given
-    func changePreviousView(object : NSObject){
-        if let image = object as? UIImage {
-            clearView(selectedView: previousView)
-            previousView.image = image
-        }
-        else if let playerItem = object as? AVPlayerItem {
-            addPlayer(selectedView: previousView, playerItem: playerItem)
+    func changePreviousView(indexPath : IndexPath){
+        guard indexPath.item >= 0 else { return }
+        guard let cellContent = fetchResult?.object(at: indexPath.item) else { return }
+
+        switch cellContent.mediaType {
+        case .image:
+            imageManager.requestImage(for: cellContent, targetSize: CGSize(width: 200, height: 200), contentMode: .aspectFill, options: requestOptions) { (img, error) in
+                if let image = img {
+                    self.clearView(selectedView: self.previousView)
+                    self.previousView.image = image
+                }
+            }
+        case .video:
+            imageManager.requestPlayerItem(forVideo: cellContent, options: nil) { (playerItem, error) in
+                if let playerItem = playerItem {
+                    self.addPlayer(selectedView: self.previousView, playerItem: playerItem)
+                }
+            }
+        default:
+            print("default")
         }
     }
     
     ///Changes the content of the next view to the object given
-    func changeNextView(object: NSObject){
-        if let image = object as? UIImage {
-            clearView(selectedView: nextView)
-            nextView.image = image
-        }
-        else if let playerItem = object as? AVPlayerItem {
-            addPlayer(selectedView: nextView, playerItem: playerItem)
+    func changeNextView(indexPath: IndexPath){
+        guard indexPath.item < fetchResult!.count else { return }
+        guard let cellContent = fetchResult?.object(at: indexPath.item) else { return }
+        
+        switch cellContent.mediaType {
+        case .image:
+            imageManager.requestImage(for: cellContent, targetSize: CGSize(width: 200, height: 200), contentMode: .aspectFill, options: requestOptions) { (img, error) in
+                if let image = img {
+                    self.clearView(selectedView: self.nextView)
+                    self.nextView.image = image
+                }
+            }
+        case .video:
+            imageManager.requestPlayerItem(forVideo: cellContent, options: nil) { (playerItem, error) in
+                if let playerItem = playerItem {
+                    self.addPlayer(selectedView: self.nextView, playerItem: playerItem)
+                }
+            }
+        default:
+            print("default")
         }
     }
+    
     
     func buildShadow(){
         //Setting the shadow for the views
@@ -421,15 +446,8 @@ class CameraViewController: UIViewController {
             self.centerView.center.x = (self.view.frame.width + self.scrollView.frame.width / 2) + 12
         })
         { (status) in
-            
-            if(self.centerIndex > 1){
-                self.centerIndex -= 1
-                self.change(self.contentArray[self.centerIndex - 1], self.contentArray[self.centerIndex], self.contentArray[self.centerIndex + 1])
-            }
-            else {
-                self.centerIndex -= 1
-                self.change(UIImage(named: "empty")!, self.contentArray[self.centerIndex], self.contentArray[self.centerIndex + 1])
-            }
+            self.centerIndex -= 1
+            self.change(centerIndexPath: IndexPath(item: self.centerIndex, section: 0))
             self.buildPositioning()
         }
     }
@@ -439,7 +457,7 @@ class CameraViewController: UIViewController {
         
         centerIndex += 1
         
-        guard centerIndex < contentArray.count else{
+        guard centerIndex < fetchResult!.count else{
             buildPositioning()
             centerIndex -= 1
             return
@@ -450,12 +468,7 @@ class CameraViewController: UIViewController {
             self.centerView.center.x = (0 - self.scrollView.frame.width / 2) - 12
         })
         { (status) in
-            if(self.centerIndex < self.contentArray.count - 1){
-                self.change(self.contentArray[self.centerIndex - 1], self.contentArray[self.centerIndex], self.contentArray[self.centerIndex + 1])
-            }
-            else {
-                self.change(self.contentArray[self.centerIndex - 1], self.contentArray[self.centerIndex], UIImage(named: "empty")!)
-            }
+            self.change(centerIndexPath: IndexPath(item: self.centerIndex, section: 0))
             self.buildPositioning()
         }
     }

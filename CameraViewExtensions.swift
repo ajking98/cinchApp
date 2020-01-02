@@ -99,7 +99,10 @@ extension CameraViewController : UICollectionViewDataSource, UICollectionViewDel
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return contentArray.count
+        if let fetchResult = fetchResult {
+            return fetchResult.count
+        }
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -112,8 +115,30 @@ extension CameraViewController : UICollectionViewDataSource, UICollectionViewDel
         cell.imageView.contentMode = UIView.ContentMode.scaleAspectFill
         
 //        cell.imageView.image = contentArray[indexPath.row] as! UIImage
-        cell.content = contentArray[indexPath.item]
-        cell.setUp()
+//        cell.content = contentArray[indexPath.item]
+        guard let cellContent = fetchResult?.object(at: indexPath.item) else { return cell }
+        
+        switch cellContent.mediaType {
+        case .image:
+            imageManager.requestImage(for: cellContent, targetSize: CGSize(width: 200, height: 200), contentMode: .aspectFill, options: requestOptions) { (img, error) in
+                if let image = img {
+                    print("one image here")
+                    cell.content = image
+                    cell.setUp()
+                }
+            }
+            
+        case .video:
+            imageManager.requestPlayerItem(forVideo: cellContent, options: nil) { (playerItem, error) in
+                if let playerItem = playerItem {
+                    print("one video here")
+                    cell.content = playerItem
+                    cell.setUp()
+                }
+            }
+        default:
+            print("default")
+        }
         return cell
     }
     
@@ -205,19 +230,8 @@ extension CameraViewController {
     func handleCellSelected(_ cellIndexPath : IndexPath) {
         centerIndex = cellIndexPath.item
         
-        //CenterView
-        changeCenterView(object: contentArray[centerIndex])
-        
-        //PreviousView
-        if centerIndex > 0 {
-            changePreviousView(object: contentArray[centerIndex - 1])
-        }
-        
-        //NextView
-        if centerIndex < contentArray.count - 1 {
-            changeNextView(object: contentArray[centerIndex + 1])
-        }
-        
+        //changing views
+        change(centerIndexPath: cellIndexPath)
         
         //handles the border of the tapped image(s)
         if !isMultipleSelected {
@@ -228,7 +242,7 @@ extension CameraViewController {
         }
         else{
             selectedIndexes.append(centerIndex)
-            selectedContent.append(contentArray[centerIndex])
+            selectedContent.append((fetchResult?.object(at: centerIndex))!)
             circleCounter.text = String(selectedIndexes.count)
             guard let cell = imageCollectionView.cellForItem(at: cellIndexPath) as? CameraViewCell else { return }
             cell.handleTap()
