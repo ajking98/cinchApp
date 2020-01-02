@@ -127,7 +127,7 @@ class MessagesViewController: MSMessagesAppViewController, UICollectionViewDeleg
             layout.minimumInteritemSpacing = 0
             layout.minimumLineSpacing = 0
             layout.scrollDirection = .vertical
-            layout.itemSize = CGSize(width: collectionView.frame.width / 2.35, height: collectionView.frame.width / 2.3)
+            layout.itemSize = CGSize(width: collectionView.frame.width / 2.6, height: collectionView.frame.width / 2.6)
             print(collectionView.frame.width)
             print(UIScreen.accessibilityFrame().width)
             return layout

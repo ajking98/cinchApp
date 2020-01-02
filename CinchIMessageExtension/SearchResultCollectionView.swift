@@ -14,15 +14,14 @@ import AVKit
 class SearchResultCollectionView: MSMessagesAppViewController, UICollectionViewDelegate, UICollectionViewDataSource{
 
     @IBOutlet weak var collectionView: UICollectionView!
-    private let reuseIdentifier = "Cell"
+    private let reuseIdentifier = "ResultCell"
     var posts: [Post] = []
     
     var searchTerm = ""
     var mainActiveConversation: MSConversation?
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView.delegate = self
-        collectionView.dataSource = self
+        setUpCollectionView()
         setupCollectionViewLayout()
         fetchContent()
     }
@@ -49,6 +48,13 @@ class SearchResultCollectionView: MSMessagesAppViewController, UICollectionViewD
         }
     }
     
+    func setUpCollectionView() {
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        let nib = UINib(nibName: "MessageCard", bundle: nil)
+        collectionView.register(nib, forCellWithReuseIdentifier: reuseIdentifier)
+    }
+    
     
     func setupCollectionViewLayout() {
         let collectionViewLayout: UICollectionViewFlowLayout = {
@@ -56,7 +62,7 @@ class SearchResultCollectionView: MSMessagesAppViewController, UICollectionViewD
             layout.minimumInteritemSpacing = 0
             layout.minimumLineSpacing = 0
             layout.scrollDirection = .vertical
-            layout.itemSize = CGSize(width: collectionView.frame.width / 2.35, height: collectionView.frame.width / 2.3)
+            layout.itemSize = CGSize(width: collectionView.frame.width / 2.6, height: collectionView.frame.width / 2.6)
             print(collectionView.frame.width)
             print(UIScreen.accessibilityFrame().width)
             return layout
