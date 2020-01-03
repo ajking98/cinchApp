@@ -81,6 +81,7 @@
                     <connections>
                         <outlet property="collectionView" destination="xGb-NV-W5k" id="UGR-g2-lel"/>
                         <outlet property="searchView" destination="Tut-x3-Tey" id="SOf-GH-Vyp"/>
+                        <segue destination="MkU-Ax-zb5" kind="show" id="kef-0m-9jY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="p06-Yl-LPE" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -92,12 +93,11 @@
             <objects>
                 <viewController storyboardIdentifier="SearchResult" id="MkU-Ax-zb5" customClass="SearchResultCollectionView" customModule="CinchIMessageExtension" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="TWu-Qr-eSu">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="474"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="pv0-ED-iVs">
-                                <rect key="frame" x="0.0" y="35" width="414" height="817"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="pv0-ED-iVs">
+                                <rect key="frame" x="0.0" y="35" width="320" height="439"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="P1S-Ew-N3x">
                                     <size key="itemSize" width="82" height="84"/>
@@ -106,18 +106,18 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="fQ0-Be-Wqm" customClass="MessageCard" customModule="CinchIMessageExtension" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ResultCell" id="fQ0-Be-Wqm" customClass="MessageCard" customModule="CinchIMessageExtension" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="49"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="50" height="49"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bmm-d6-gbh">
+                                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bmm-d6-gbh">
                                                     <rect key="frame" x="0.0" y="0.0" width="49" height="49"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </view>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oHv-n5-xhP">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oHv-n5-xhP">
                                                     <rect key="frame" x="3" y="3" width="43" height="43"/>
                                                 </imageView>
                                             </subviews>
@@ -141,8 +141,16 @@
                             </collectionView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="pv0-ED-iVs" firstAttribute="bottom" secondItem="qdo-fK-xIS" secondAttribute="bottom" id="BMq-4T-pMU"/>
+                            <constraint firstItem="pv0-ED-iVs" firstAttribute="top" secondItem="qdo-fK-xIS" secondAttribute="top" constant="35" id="hpL-VG-gql"/>
+                            <constraint firstItem="pv0-ED-iVs" firstAttribute="centerX" secondItem="TWu-Qr-eSu" secondAttribute="centerX" id="jLC-Da-7nf"/>
+                            <constraint firstItem="pv0-ED-iVs" firstAttribute="leading" secondItem="qdo-fK-xIS" secondAttribute="leading" id="sDK-Vw-3ka"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="qdo-fK-xIS"/>
                     </view>
+                    <navigationItem key="navigationItem" id="7O6-Ql-Gin"/>
+                    <size key="freeformSize" width="320" height="528"/>
                     <connections>
                         <outlet property="collectionView" destination="pv0-ED-iVs" id="wN6-mR-Xg1"/>
                     </connections>
