@@ -13,74 +13,92 @@ import FirebaseAuth
 import FirebaseDatabase
 import FirebaseStorage
 import AVKit
+import Photos
 
 
 struct Helper {
     let uuid = UIDevice.current.identifierForVendor!
     var userVar = User()
     var foldersVar = [String]()
+    
+    
+    let imageManager = PHImageManager.default()
+    let requestOptions = PHImageRequestOptions()
+    
+    
 //    var main = ViewController();
     let username = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
     
     
     //TODO this should take in a closure to handle the frontend work or even uses a protocol to send the data back to the Main ViewController and have the vc do the presenting from inside its class
     ///takes an image and UIViewController and creates the alert for saving image to folder and tag alertbox 
-    func saveToFolder(content: NSObject, viewController : UIViewController) {
+    func saveToFolder(content: PHAsset, viewController : UIViewController) {
+        
+        
+        requestOptions.isSynchronous = false
+        requestOptions.deliveryMode = .highQualityFormat
+        
         //1.
         //read in folders live from database
         //Store image into storage and get link
         //add new content to Folder in DB using FolderStruct
         
-        
         //2.
         //Should allow for tags
+        switch content.mediaType {
+        case .image:
+            imageManager.requestImage(for: content, targetSize: CGSize(width: content.pixelWidth, height: content.pixelHeight), contentMode: .aspectFill, options: requestOptions) { (image, error) in
+                guard let image = image else { return }
+                let actionController = SpotifyActionController()
+                actionController.headerData = SpotifyHeaderData(title: "select a folder for the image", subtitle: "", image: image)
+                
+                UserStruct().readFolders(user: self.username) { (folders) in
+                                    for item in folders {
+                        actionController.addAction(Action(ActionData(title: "\(item.lowercased())", subtitle: "For Content"), style: .default, handler: { action in
+                            
+                            
+                            StorageStruct().uploadImage(image: image, completion: { (link) in
+                                let alert = self.createTagsAlert(link: link, username: self.username)//Tagging alert
+                                viewController.present(alert, animated: true, completion: nil)
+                                
+                                FolderStruct().addContent(user: self.username, folderName: item, link: link)
+                                FolderStruct().updateNumOfImagesByConstant(user: self.username, folderName: item, constant: 1)
+                            })
+                            
+                        }))
+                    }
+                    viewController.present(actionController, animated: true, completion: nil)
+                }
+            }
         
-        if let playerItem = content as? AVPlayerItem {
-            //handle saving video
-            let actionController = SpotifyActionController()
-            actionController.headerData = SpotifyHeaderData(title: "select a folder for the image?", subtitle: "", image: UIImage(named: "empty")!)
-            
-            UserStruct().readFolders(user: username) { (folders) in
-                for item in folders {
-                    actionController.addAction(Action(ActionData(title: "\(item.lowercased())", subtitle: "For Content"), style: .default, handler: { action in
-                        
-                        StorageStruct().uploadContent(content: playerItem) { (link) in
-                            let alert = self.createTagsAlert(link: link, username: self.username) //Tagging alert
-                            viewController.present(alert, animated: true, completion: nil)
+        case .video:
+            imageManager.requestPlayerItem(forVideo: content, options: nil) { (playerItem, error) in
+                guard let playerItem = playerItem else { return }
+                guard playerItem.duration.seconds < 120 else { return } //checks to see if the video is too long to store
+                //handle saving video
+                let actionController = SpotifyActionController()
+                actionController.headerData = SpotifyHeaderData(title: "select a folder for the video", subtitle: "", image: UIImage(named: "empty")!)
+                
+                UserStruct().readFolders(user: self.username) { (folders) in
+                    for item in folders {
+                        actionController.addAction(Action(ActionData(title: "\(item.lowercased())", subtitle: "For Content"), style: .default, handler: { action in
                             
-                            FolderStruct().addContent(user: self.username, folderName: item, link: link)
-                            FolderStruct().updateNumOfVideosByConstant(user: self.username, folderName: item, constant: 1)
-                        }
-                    }))
+                            StorageStruct().uploadContent(content: playerItem) { (link) in
+                                let alert = self.createTagsAlert(link: link, username: self.username) //Tagging alert
+                                viewController.present(alert, animated: true, completion: nil)
+                                
+                                FolderStruct().addContent(user: self.username, folderName: item, link: link)
+                                FolderStruct().updateNumOfVideosByConstant(user: self.username, folderName: item, constant: 1)
+                            }
+                        }))
+                    }
+                    
+                    viewController.present(actionController, animated: true, completion: nil)
                 }
                 
-                viewController.present(actionController, animated: true, completion: nil)
             }
-        }
-        else if let image = content as? UIImage { //handles images
-            //Folder pick
-            let actionController = SpotifyActionController()
-            actionController.headerData = SpotifyHeaderData(title: "select a folder for the image?", subtitle: "", image: image)
-            
-            UserStruct().readFolders(user: username) { (folders) in
-                for item in folders {
-                    actionController.addAction(Action(ActionData(title: "\(item.lowercased())", subtitle: "For Content"), style: .default, handler: { action in
-                        
-                        
-                        //todo Later, this "Testing" string in the next line should be given a link instead of static string
-                        StorageStruct().uploadImage(image: image, completion: { (link) in
-                            let alert = self.createTagsAlert(link: link, username: self.username)//Tagging alert
-                            viewController.present(alert, animated: true, completion: nil)
-                            
-                            FolderStruct().addContent(user: self.username, folderName: item, link: link)
-                            FolderStruct().updateNumOfImagesByConstant(user: self.username, folderName: item, constant: 1)
-                        })
-                        
-                    }))
-                }
-                
-                viewController.present(actionController, animated: true, completion: nil)
-            }
+        default:
+            print("file type not recognized")
         }
     }
     
@@ -97,6 +115,7 @@ struct Helper {
 
     //Takes in a link and two closures
     //the first closure is for the tagging alert and the second closure is for the folder saving alert
+    ///Saves an image to a user's folder using the link
     func saveToFolder(link: String, completion: @escaping(UIAlertController) -> Void, completion2 : @escaping(SpotifyActionController) -> Void) {
         //Folder pick
         let actionController = SpotifyActionController()
