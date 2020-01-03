@@ -115,6 +115,7 @@ struct Helper {
 
     //Takes in a link and two closures
     //the first closure is for the tagging alert and the second closure is for the folder saving alert
+    ///Saves an image to a user's folder using the link
     func saveToFolder(link: String, completion: @escaping(UIAlertController) -> Void, completion2 : @escaping(SpotifyActionController) -> Void) {
         //Folder pick
         let actionController = SpotifyActionController()
