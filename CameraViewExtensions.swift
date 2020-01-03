@@ -219,7 +219,7 @@ extension CameraViewController {
             //TODO fix the line below and make it possible to submit multiple things at once
 //            Helper().saveMultipleImages(images: selectedImages, viewController: self)
             self.handleUndoTap()
-            self.handleMultipleTapped()
+            self.handleMultipleTapped()  //to undo the multiple tapped
         }
         
     }

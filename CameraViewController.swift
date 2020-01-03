@@ -57,7 +57,8 @@ class CameraViewController: UIViewController {
     var isCollectionViewRaised = false
     
     var contentArray = [NSObject]()
-    var selectedContent = [NSObject]() //holds both images and videos that have been selected
+    
+    var selectedContent = [PHAsset]() //holds both images and videos that have been selected
     var selectedIndexes = [Int]() //holds the indexes of the tapped images (Maybe change it so that it holds the index path?)
     
     
@@ -153,22 +154,9 @@ class CameraViewController: UIViewController {
             if fetchResult.count > 0 {
                 
                 self.fetchResult = fetchResult
-//                for i in 0..<fetchResult.count {
-//                    switch fetchResult.object(at: i).mediaType {
-//                    case .image:
-//                        print("one image")
-//                    case .video:
-//                    print("one video")
-//
-//                    default:
-//                        print("this is something else")
-//                    }
-////                    imageManager.requestPlayerItem(forVideo: fetchResult.object(at: i), options: requestOptions) { (playerItem, error) in
-////                        print("something")
-////                    }
-//                }
-                
                 imageCollectionView.reloadData()
+                
+                
                 if contentArray.count > 2 {
                     //TODO this should first check if the first two objects are images then does the code below. If they are not images, then it should present them as videos
                     centerView.image = contentArray[0] as? UIImage
@@ -215,7 +203,7 @@ class CameraViewController: UIViewController {
         
         switch cellContent.mediaType {
         case .image:
-            imageManager.requestImage(for: cellContent, targetSize: CGSize(width: 200, height: 200), contentMode: .aspectFill, options: requestOptions) { (img, error) in
+            imageManager.requestImage(for: cellContent, targetSize: CGSize(width: cellContent.pixelWidth, height: cellContent.pixelHeight), contentMode: .aspectFill, options: requestOptions) { (img, error) in
                 if let image = img {
                     self.clearView(selectedView: self.centerView)
                     self.centerView.image = image
@@ -239,7 +227,7 @@ class CameraViewController: UIViewController {
 
         switch cellContent.mediaType {
         case .image:
-            imageManager.requestImage(for: cellContent, targetSize: CGSize(width: 200, height: 200), contentMode: .aspectFill, options: requestOptions) { (img, error) in
+            imageManager.requestImage(for: cellContent, targetSize: CGSize(width: cellContent.pixelWidth, height: cellContent.pixelHeight), contentMode: .aspectFill, options: requestOptions) { (img, error) in
                 if let image = img {
                     self.clearView(selectedView: self.previousView)
                     self.previousView.image = image
@@ -263,7 +251,7 @@ class CameraViewController: UIViewController {
         
         switch cellContent.mediaType {
         case .image:
-            imageManager.requestImage(for: cellContent, targetSize: CGSize(width: 200, height: 200), contentMode: .aspectFill, options: requestOptions) { (img, error) in
+            imageManager.requestImage(for: cellContent, targetSize: CGSize(width: cellContent.pixelWidth, height: cellContent.pixelHeight), contentMode: .aspectFill, options: requestOptions) { (img, error) in
                 if let image = img {
                     self.clearView(selectedView: self.nextView)
                     self.nextView.image = image
