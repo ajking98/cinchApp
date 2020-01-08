@@ -52,7 +52,7 @@ func checkIfVideo(link : String) -> Bool {
 }
 
 func randomString(_ length: Int) -> String {
-    let letters : NSString = "asdfghjkloiuytrewqazxcvbnmWERTYUIASDFGHJKXCVBN!@#$%^&*()_+=-"
+    let letters : NSString = "asdfghjkloiuytrewqazxcvbnmWERTYUIASDFGHJKXCVBN!@%^&*()_+=-"
     let len = UInt32(letters.length)
     
     var randomString = ""
