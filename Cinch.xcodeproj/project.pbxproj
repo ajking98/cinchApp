@@ -1317,15 +1317,15 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0.7;
-				DEVELOPMENT_TEAM = 3U2RYAR5C3;
+				CURRENT_PROJECT_VERSION = 1.0.9;
+				DEVELOPMENT_TEAM = 8NHWSCYNF7;
 				INFOPLIST_FILE = CinchIMessageExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.CinchApp.iMessage;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.CinchMemes.iMessage;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -1341,15 +1341,15 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0.7;
-				DEVELOPMENT_TEAM = 3U2RYAR5C3;
+				CURRENT_PROJECT_VERSION = 1.0.9;
+				DEVELOPMENT_TEAM = 8NHWSCYNF7;
 				INFOPLIST_FILE = CinchIMessageExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.CinchApp.iMessage;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.CinchMemes.iMessage;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -1364,15 +1364,15 @@
 				CODE_SIGN_ENTITLEMENTS = CinchShareExtension/CinchShareExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0.7;
-				DEVELOPMENT_TEAM = 3U2RYAR5C3;
+				CURRENT_PROJECT_VERSION = 1.0.9;
+				DEVELOPMENT_TEAM = 8NHWSCYNF7;
 				INFOPLIST_FILE = CinchShareExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.CinchApp.extension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.CinchMemes.ShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -1387,15 +1387,15 @@
 				CODE_SIGN_ENTITLEMENTS = CinchShareExtension/CinchShareExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0.7;
-				DEVELOPMENT_TEAM = 3U2RYAR5C3;
+				CURRENT_PROJECT_VERSION = 1.0.9;
+				DEVELOPMENT_TEAM = 8NHWSCYNF7;
 				INFOPLIST_FILE = CinchShareExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.CinchApp.extension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.CinchMemes.ShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -1528,14 +1528,14 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0.7;
-				DEVELOPMENT_TEAM = 3U2RYAR5C3;
+				CURRENT_PROJECT_VERSION = 1.0.9;
+				DEVELOPMENT_TEAM = 8NHWSCYNF7;
 				INFOPLIST_FILE = Cinch/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.CinchApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.CinchMemes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -1552,14 +1552,14 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0.7;
-				DEVELOPMENT_TEAM = 3U2RYAR5C3;
+				CURRENT_PROJECT_VERSION = 1.0.9;
+				DEVELOPMENT_TEAM = 8NHWSCYNF7;
 				INFOPLIST_FILE = Cinch/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.CinchApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.CinchMemes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
