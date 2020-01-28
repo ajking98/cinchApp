@@ -95,7 +95,7 @@ class CellSelectedCell: UITableViewCell{
         lowerText.leftAnchor.constraint(equalTo: leftAnchor, constant: 17.5).isActive = true
         lowerText.widthAnchor.constraint(equalToConstant: 0.8 * frame.width).isActive = true
         lowerText.topAnchor.constraint(equalTo: bottomAnchor, constant: -0.2 * frame.height).isActive = true
-        lowerText.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        lowerText.heightAnchor.constraint(equalToConstant: 0.15 * frame.height).isActive = true
     }
     
 }

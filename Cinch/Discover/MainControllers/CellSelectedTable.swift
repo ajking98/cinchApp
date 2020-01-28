@@ -28,11 +28,11 @@ class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataS
         view.addSubview(tableView)
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.backgroundColor = .green
+        tableView.backgroundColor = .darkBlue
         tableView.isPagingEnabled = true
         tableView.showsVerticalScrollIndicator = false
         tableView.register(CellSelectedCell.self, forCellReuseIdentifier: identifier)
-        tableView.sectionHeaderHeight = 2
+        tableView.contentInsetAdjustmentBehavior = .never
         
         
         //constraints
@@ -73,6 +73,7 @@ class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataS
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier) as! CellSelectedCell
+        cell.frame.size = view.frame.size
         cell.setup()
         return cell
     }
