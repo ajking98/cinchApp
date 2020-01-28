@@ -14,15 +14,23 @@ class ProfileViewController: UIViewController {
     //data
     var height: CGFloat = 0
     var width: CGFloat = 0
+    var isUser = true
     
     var profileName = "Ahmed Gedi"
     var username = "@ahmedgedi"
+    var followers = 0
+    var followings = 0
+    var likes = 0
+    var isFollowing = false
+    var segmentControl = UISegmentedControl(items: ["somethign", "else"])
     
+    //elements
     var profileImageView = UIImageView(frame: CGRect.zero)
     var usernameLabel = UILabel(frame: CGRect.zero)
     var gemLabel = UILabel(frame: CGRect.zero)
     var numberOfGems = 0
-    var isUser = true
+    var stackView = ProfileStackView(frame: CGRect.zero)
+    var mainButton = UIButton(frame: CGRect.zero) //this is the button that can either be "edit profile" or "follow/unfollow"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,16 +40,18 @@ class ProfileViewController: UIViewController {
         setupProfileImage()
         setupUsernameLabel()
         setupGemLabel()
+        stackView.setup(followings: followings, followers: followers, Likes: likes, view: view)
+        setupButton()
     }
     
-    //sets the data - width, height, profileName, username, isUser etc.
+    //sets the data - width, height, profileName, username, isUser, isFollowing etc.
     func setupData() {
         height = view.frame.height
         width = view.frame.width
     }
     
     func setupNavigationBar() {
-        navigationController?.navigationBar.backgroundColor = .white
+        navigationController?.navigationBar.barTintColor = .white
         title = profileName
         
         //if it is not the local user
@@ -108,11 +118,85 @@ class ProfileViewController: UIViewController {
         gemLabel.topAnchor.constraint(equalTo: usernameLabel.bottomAnchor, constant: 2).isActive = true
     }
     
+    func setupButton() {
+        mainButton.backgroundColor = .customRed
+        
+        if isUser {
+            mainButton.setTitle("Edit Profile", for: .normal)
+            mainButton.addTarget(self, action: #selector(handleEditProfile), for: .touchUpInside)
+        }
+        else {
+            if isFollowing {
+                mainButton.layer.borderWidth = 1.7
+                mainButton.backgroundColor = .white
+                mainButton.setTitle("Unfollow", for: .normal)
+                mainButton.setTitleColor(.customRed, for: .normal)
+                mainButton.layer.borderColor = UIColor.gray.cgColor //Maybe make this customRed as well
+            }
+            else{
+                mainButton.setTitle("Follow", for: .normal)
+            }
+            mainButton.addTarget(self, action: #selector(handleFollow), for: .touchUpInside)
+        }
+        
+        view.addSubview(mainButton)
+        mainButton.layer.cornerRadius = 2
+        
+        //constraints
+        mainButton.translatesAutoresizingMaskIntoConstraints = false
+        mainButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        mainButton.heightAnchor.constraint(equalToConstant: height/18).isActive = true
+        mainButton.widthAnchor.constraint(equalToConstant: width*0.4).isActive = true
+        mainButton.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 20).isActive = true
+    }
+    
+    
+    func setupSegmentControl() {
+        view.addSubview(segmentControl)
+        segmentControl.selectedSegmentIndex = 0
+        segmentControl.addTarget(self, action: #selector(handleSegmentTap), for: .valueChanged)
+        
+        segmentControl.backgroundColor = .green
+        segmentControl.tintColor = .black
+//        segmentControl.remove
+        
+        //constraints
+        segmentControl.translatesAutoresizingMaskIntoConstraints = false
+        segmentControl.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        segmentControl.heightAnchor.constraint(equalToConstant: height/18).isActive = true
+        segmentControl.widthAnchor.constraint(equalToConstant: width).isActive = true
+        segmentControl.topAnchor.constraint(equalTo: mainButton.bottomAnchor, constant: height/25).isActive = true
+    }
+    
+    func setupSegmentControlBars() {
+        
+    }
+    
     
     
     @objc func settingToggle() {
         print("Toggled Settings")
     }
+    
+    
+    @objc func handleEditProfile(){
+        print("working")
+    }
+    
+    @objc func handleFollow(){
+        if isFollowing {
+            print("UnFollowing")
+        }
+        else{
+            print("Following")
+        }
+    }
+    
+    @objc func handleSegmentTap() {
+        print("we are switching")
+    }
+    
+    
     
 
 }
