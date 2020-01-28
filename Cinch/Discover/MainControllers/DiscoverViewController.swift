@@ -4,6 +4,8 @@
         1. Put the search bar in the navigation controller
         2. Set up the Table view
         3. Put the carousel under in the table view header
+        4. Design the table cells
+        
 */
 
 import UIKit

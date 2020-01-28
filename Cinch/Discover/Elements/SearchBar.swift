@@ -26,6 +26,7 @@ class SearchBar: UITextField {
         paddingView.addSubview(searchIcon)
         leftView = paddingView
         leftViewMode = UITextField.ViewMode.always
+        clearButtonMode = .always
     }
 
 }
