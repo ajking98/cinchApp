@@ -22,7 +22,7 @@ class ProfileViewController: UIViewController {
     var followings = 0
     var likes = 0
     var isFollowing = false
-    var segmentControl = UISegmentedControl(items: ["somethign", "else"])
+    var cellIdentifier = "Cell"
     
     //elements
     var profileImageView = UIImageView(frame: CGRect.zero)
@@ -31,6 +31,10 @@ class ProfileViewController: UIViewController {
     var numberOfGems = 0
     var stackView = ProfileStackView(frame: CGRect.zero)
     var mainButton = UIButton(frame: CGRect.zero) //this is the button that can either be "edit profile" or "follow/unfollow"
+    var segmentControl = UISegmentedControl(items: [UIImage(named: "like"), UIImage(named: "profileGems")])
+    var horizontalBar = UIView(frame: CGRect.zero)
+    var segmentMiddleBar = UIView(frame: CGRect.zero)
+    var gemsCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,6 +46,9 @@ class ProfileViewController: UIViewController {
         setupGemLabel()
         stackView.setup(followings: followings, followers: followers, Likes: likes, view: view)
         setupButton()
+        setupSegmentControl()
+        setupSegmentControlBars()
+        setupCollectionView()
     }
     
     //sets the data - width, height, profileName, username, isUser, isFollowing etc.
@@ -156,9 +163,9 @@ class ProfileViewController: UIViewController {
         segmentControl.selectedSegmentIndex = 0
         segmentControl.addTarget(self, action: #selector(handleSegmentTap), for: .valueChanged)
         
-        segmentControl.backgroundColor = .green
+        segmentControl.backgroundColor = .white
         segmentControl.tintColor = .black
-//        segmentControl.remove
+        segmentControl.removeBorders()
         
         //constraints
         segmentControl.translatesAutoresizingMaskIntoConstraints = false
@@ -169,7 +176,47 @@ class ProfileViewController: UIViewController {
     }
     
     func setupSegmentControlBars() {
+        horizontalBar.backgroundColor = .lightGray
+        view.addSubview(horizontalBar)
         
+        horizontalBar.frame = CGRect.zero
+        horizontalBar.translatesAutoresizingMaskIntoConstraints = false
+        horizontalBar.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        horizontalBar.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        horizontalBar.widthAnchor.constraint(equalToConstant: width).isActive = true
+        horizontalBar.topAnchor.constraint(equalTo: segmentControl.topAnchor, constant: 0).isActive = true
+        
+        segmentMiddleBar.backgroundColor = .lightGray
+        view.addSubview(segmentMiddleBar)
+        
+        segmentMiddleBar.frame = CGRect.zero
+        segmentMiddleBar.translatesAutoresizingMaskIntoConstraints = false
+        segmentMiddleBar.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        segmentMiddleBar.heightAnchor.constraint(equalToConstant: height/35).isActive = true
+        segmentMiddleBar.widthAnchor.constraint(equalToConstant: 1).isActive = true
+        segmentMiddleBar.topAnchor.constraint(equalTo: horizontalBar.bottomAnchor, constant: height/75).isActive = true
+    }
+    
+    func setupCollectionView() {
+        var frame = CGRect(x: 0, y: height/1.75, width: width, height: height*2)
+        gemsCollectionView.dataSource = self
+        gemsCollectionView.delegate = self
+        gemsCollectionView.register(ProfileCollectionViewCell.self, forCellWithReuseIdentifier: cellIdentifier)
+        gemsCollectionView.showsVerticalScrollIndicator = false
+        gemsCollectionView.alwaysBounceVertical = false
+        gemsCollectionView.backgroundColor = .white
+        gemsCollectionView.isScrollEnabled = true
+//        setUpSecondCollectionView()
+//        configureCollectionView()
+        
+        
+        view.addSubview(gemsCollectionView)
+        gemsCollectionView.frame = CGRect.zero
+        gemsCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        gemsCollectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        gemsCollectionView.heightAnchor.constraint(equalToConstant: height*2).isActive = true
+        gemsCollectionView.widthAnchor.constraint(equalToConstant: width).isActive = true
+        gemsCollectionView.topAnchor.constraint(equalTo: segmentControl.bottomAnchor, constant: 0).isActive = true
     }
     
     
@@ -199,4 +246,22 @@ class ProfileViewController: UIViewController {
     
     
 
+}
+
+
+extension UISegmentedControl {
+    func removeBorders() {
+        setBackgroundImage(imageWithColor(color: .black), for: .normal, barMetrics: .default)
+        setBackgroundImage(imageWithColor(color: tintColor!), for: .selected, barMetrics: .default)
+        setDividerImage(imageWithColor(color: UIColor.clear), forLeftSegmentState: .normal, rightSegmentState: .normal, barMetrics: .default)
+    }
+    
+    // create a 1x1 image with this color
+    private func imageWithColor(color: UIColor) -> UIImage {
+        let rect = CGRect(x: 0.0, y: 0.0, width:  1.0, height: 1.0)
+        UIGraphicsBeginImageContext(rect.size)
+        let image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        return image!
+    }
 }
