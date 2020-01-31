@@ -33,8 +33,7 @@ class ProfileViewController: UIViewController {
     var stackView = ProfileStackView(frame: CGRect.zero)
     var mainButton = UIButton(frame: CGRect.zero) //this is the button that can either be "edit profile" or "follow/unfollow"
     var segmentControl = UISegmentedControl(items: [UIImage(named: "like"), UIImage(named: "profileGems")])
-    var gemsCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
-    var followingFoldersCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
+    var collectionView: UICollectionView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,8 +48,9 @@ class ProfileViewController: UIViewController {
         setupButton()
         setupSegmentControl()
         setupSegmentControlBars()
-        setupCollectionView()
-        setupSecondCollectionView()
+        setupCollectionViews()
+//        setupCollectionView()
+//        setupSecondCollectionView()
     }
     
     //sets the data - width, height, profileName, username, isUser, isFollowing etc.
@@ -225,47 +225,24 @@ class ProfileViewController: UIViewController {
         horizontalBarBottom.topAnchor.constraint(equalTo: segmentControl.bottomAnchor, constant: -1).isActive = true
     }
     
-    func setupCollectionView() {
-        gemsCollectionView.dataSource = self
-        gemsCollectionView.delegate = self
-        gemsCollectionView.register(ProfileCollectionViewCell.self, forCellWithReuseIdentifier: cellIdentifier)
-        gemsCollectionView.showsVerticalScrollIndicator = false
-        gemsCollectionView.alwaysBounceVertical = false
-        gemsCollectionView.backgroundColor = .white
-        gemsCollectionView.isScrollEnabled = false
-        
-        
-        scrollView.addSubview(gemsCollectionView)
-        gemsCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        gemsCollectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        gemsCollectionView.heightAnchor.constraint(equalToConstant: height*2).isActive = true
-        gemsCollectionView.widthAnchor.constraint(equalToConstant: width).isActive = true
-        gemsCollectionView.topAnchor.constraint(equalTo: segmentControl.bottomAnchor, constant: 0).isActive = true
-    }
-    
-    
-    func setupSecondCollectionView() {
-        followingFoldersCollectionView.dataSource = self
-        followingFoldersCollectionView.delegate = self
-        followingFoldersCollectionView.register(ProfileCollectionViewCell.self, forCellWithReuseIdentifier: cellIdentifier)
-        followingFoldersCollectionView.showsHorizontalScrollIndicator = false
-        followingFoldersCollectionView.alwaysBounceVertical = false
-        followingFoldersCollectionView.showsVerticalScrollIndicator = false
-        followingFoldersCollectionView.backgroundColor = .white
-        followingFoldersCollectionView.isScrollEnabled = false;
+    func setupCollectionViews() {
+        let viewLayout = UICollectionViewFlowLayout()
+        viewLayout.scrollDirection = .horizontal
+        collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: viewLayout)
+        guard let collectionView = collectionView else { return }
+        collectionView.backgroundColor = .lightGray
+        collectionView.register(ProfileMainCollectionViewCell.self, forCellWithReuseIdentifier: cellIdentifier)
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.isPagingEnabled = true
         
         //constraints
-        scrollView.addSubview(followingFoldersCollectionView)
-        followingFoldersCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        followingFoldersCollectionView.leftAnchor.constraint(equalTo: scrollView.rightAnchor, constant: 5).isActive = true
-        followingFoldersCollectionView.heightAnchor.constraint(equalToConstant: height*2).isActive = true
-        followingFoldersCollectionView.widthAnchor.constraint(equalToConstant: width).isActive = true
-        followingFoldersCollectionView.topAnchor.constraint(equalTo: segmentControl.bottomAnchor, constant: 0).isActive = true
+        scrollView.addSubview(collectionView)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        collectionView.heightAnchor.constraint(equalToConstant: height*2).isActive = true
+        collectionView.widthAnchor.constraint(equalToConstant: width).isActive = true
+        collectionView.topAnchor.constraint(equalTo: segmentControl.bottomAnchor, constant: 0).isActive = true
         
     }
-    
-    
-
 }
-
-

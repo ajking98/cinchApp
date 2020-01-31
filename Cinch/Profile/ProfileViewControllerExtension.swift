@@ -10,16 +10,82 @@ import Foundation
 import UIKit
 
 
-extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout  {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 2
+    }
     
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! ProfileMainCollectionViewCell
+        if indexPath.item == 0 {
+            cell.setupFirstCollectionView()
+        }
+        else {
+            cell.setupSecondCollectionView()
+        }
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return collectionView.frame.size
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 2
+    }
+}
+
+
+class ProfileMainCollectionViewCell: UICollectionViewCell {
+    
+    let cellIdentifier = "Cell"
+    
+    //Elements
+    var gemsCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
+    var followingFoldersCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
+    
+    func setup() {
+        print("this is working")
+        setupFirstCollectionView()
+        setupSecondCollectionView()
+        
+    }
+    
+    func setupFirstCollectionView() {
+        gemsCollectionView.dataSource = self
+        gemsCollectionView.delegate = self
+        gemsCollectionView.register(ProfileCollectionViewCell.self, forCellWithReuseIdentifier: cellIdentifier)
+        gemsCollectionView.showsVerticalScrollIndicator = false
+        gemsCollectionView.alwaysBounceVertical = false
+        gemsCollectionView.backgroundColor = .white
+        gemsCollectionView.isScrollEnabled = false
+        gemsCollectionView.frame = frame
+
+        addSubview(gemsCollectionView)
+    }
+    
+    func setupSecondCollectionView() {
+        followingFoldersCollectionView.dataSource = self
+        followingFoldersCollectionView.delegate = self
+        followingFoldersCollectionView.register(ProfileCollectionViewCell.self, forCellWithReuseIdentifier: cellIdentifier)
+        followingFoldersCollectionView.showsHorizontalScrollIndicator = false
+        followingFoldersCollectionView.alwaysBounceVertical = false
+        followingFoldersCollectionView.showsVerticalScrollIndicator = false
+        followingFoldersCollectionView.backgroundColor = .white
+        followingFoldersCollectionView.isScrollEnabled = false;
+        followingFoldersCollectionView.frame = frame
+        followingFoldersCollectionView.frame.origin.x = 0
+        
+        addSubview(followingFoldersCollectionView)
+        
+    }
+}
+
+
+extension ProfileMainCollectionViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 10 //TODO: This should be calling a list count
     }
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 3
-    }
-    
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! ProfileCollectionViewCell
@@ -30,6 +96,7 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
         }
         // For LikeCollections
         else {
+            print("finally")
             let cell = followingFoldersCollectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! ProfileCollectionViewCell
 //            let data = self.data[indexPath.item]
             cell.nameLabel.text = "Like Collection"
@@ -59,7 +126,7 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
     
 }
 
-
+///Folder for the content on the Profile Page
 class ProfileCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -95,4 +162,6 @@ class ProfileCollectionViewCell: UICollectionViewCell {
     
     
 }
+
+
 
