@@ -31,7 +31,7 @@ extension ProfileViewController {
     }
     
     @objc func handleSegmentTap() {
-        print("we are switching")
+        print("this is the segment: ", segmentControl.selectedSegmentIndex)
     }
     
     

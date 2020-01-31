@@ -15,6 +15,11 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 10 //TODO: This should be calling a list count
     }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 3
+    }
+    
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! ProfileCollectionViewCell
@@ -24,11 +29,11 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
             cell.nameLabel.text = "Gem"
         }
         // For LikeCollections
-//        else {
-//            let cell = secondCollectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! Cell
+        else {
+            let cell = followingFoldersCollectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! ProfileCollectionViewCell
 //            let data = self.data[indexPath.item]
-//            cell.nameLabel.text = "Like Collection"
-//        }
+            cell.nameLabel.text = "Like Collection"
+        }
 
         return cell
         
@@ -36,7 +41,7 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
     
     // TODO: Add function when content in profile collections get clicked
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("we are working")
+        print("we are working", indexPath.section)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
