@@ -172,14 +172,13 @@ class ProfileViewController: UIViewController {
         segmentControl.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         segmentControl.heightAnchor.constraint(equalToConstant: height/18).isActive = true
         segmentControl.widthAnchor.constraint(equalToConstant: width).isActive = true
-        segmentControl.topAnchor.constraint(equalTo: mainButton.bottomAnchor, constant: height/25).isActive = true
+        segmentControl.topAnchor.constraint(equalTo: mainButton.bottomAnchor, constant: height/50).isActive = true
     }
     
     func setupSegmentControlBars() {
         horizontalBar.backgroundColor = .lightGray
         view.addSubview(horizontalBar)
         
-        horizontalBar.frame = CGRect.zero
         horizontalBar.translatesAutoresizingMaskIntoConstraints = false
         horizontalBar.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         horizontalBar.heightAnchor.constraint(equalToConstant: 1).isActive = true
@@ -189,7 +188,6 @@ class ProfileViewController: UIViewController {
         segmentMiddleBar.backgroundColor = .lightGray
         view.addSubview(segmentMiddleBar)
         
-        segmentMiddleBar.frame = CGRect.zero
         segmentMiddleBar.translatesAutoresizingMaskIntoConstraints = false
         segmentMiddleBar.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         segmentMiddleBar.heightAnchor.constraint(equalToConstant: height/35).isActive = true
@@ -207,11 +205,9 @@ class ProfileViewController: UIViewController {
         gemsCollectionView.backgroundColor = .white
         gemsCollectionView.isScrollEnabled = true
 //        setUpSecondCollectionView()
-//        configureCollectionView()
         
         
         view.addSubview(gemsCollectionView)
-        gemsCollectionView.frame = CGRect.zero
         gemsCollectionView.translatesAutoresizingMaskIntoConstraints = false
         gemsCollectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         gemsCollectionView.heightAnchor.constraint(equalToConstant: height*2).isActive = true
@@ -249,19 +245,3 @@ class ProfileViewController: UIViewController {
 }
 
 
-extension UISegmentedControl {
-    func removeBorders() {
-        setBackgroundImage(imageWithColor(color: .black), for: .normal, barMetrics: .default)
-        setBackgroundImage(imageWithColor(color: tintColor!), for: .selected, barMetrics: .default)
-        setDividerImage(imageWithColor(color: UIColor.clear), forLeftSegmentState: .normal, rightSegmentState: .normal, barMetrics: .default)
-    }
-    
-    // create a 1x1 image with this color
-    private func imageWithColor(color: UIColor) -> UIImage {
-        let rect = CGRect(x: 0.0, y: 0.0, width:  1.0, height: 1.0)
-        UIGraphicsBeginImageContext(rect.size)
-        let image = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        return image!
-    }
-}
