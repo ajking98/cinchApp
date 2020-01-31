@@ -25,6 +25,7 @@ class ProfileViewController: UIViewController {
     var cellIdentifier = "Cell"
     
     //elements
+    var scrollView = UIScrollView(frame: CGRect.zero)
     var profileImageView = UIImageView(frame: CGRect.zero)
     var usernameLabel = UILabel(frame: CGRect.zero)
     var gemLabel = UILabel(frame: CGRect.zero)
@@ -32,19 +33,18 @@ class ProfileViewController: UIViewController {
     var stackView = ProfileStackView(frame: CGRect.zero)
     var mainButton = UIButton(frame: CGRect.zero) //this is the button that can either be "edit profile" or "follow/unfollow"
     var segmentControl = UISegmentedControl(items: [UIImage(named: "like"), UIImage(named: "profileGems")])
-    var horizontalBar = UIView(frame: CGRect.zero)
-    var segmentMiddleBar = UIView(frame: CGRect.zero)
     var gemsCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupData()
+        setupScrollView()
         setupNavigationBar()
         setupProfileImage()
         setupUsernameLabel()
         setupGemLabel()
-        stackView.setup(followings: followings, followers: followers, Likes: likes, view: view)
+        stackView.setup(followings: followings, followers: followers, Likes: likes, view: view, scrollView: scrollView)
         setupButton()
         setupSegmentControl()
         setupSegmentControlBars()
@@ -55,6 +55,21 @@ class ProfileViewController: UIViewController {
     func setupData() {
         height = view.frame.height
         width = view.frame.width
+    }
+    
+    func setupScrollView() {
+        scrollView.backgroundColor = .white
+        view.addSubview(scrollView)
+        
+        scrollView.contentSize.height = view.frame.height * 2 //TODO: this should be dynamic
+        scrollView.showsVerticalScrollIndicator = false
+        
+        //constriants
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        scrollView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: -0.1 * height).isActive = true
+        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
     
     func setupNavigationBar() {
@@ -82,14 +97,14 @@ class ProfileViewController: UIViewController {
         profileImageView.layer.masksToBounds = true
         profileImageView.backgroundColor = .lightGray
         profileImageView.contentMode = .scaleAspectFill
-        view.addSubview(profileImageView)
+        scrollView.addSubview(profileImageView)
         
         //constraints
         profileImageView.translatesAutoresizingMaskIntoConstraints = false
         profileImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         profileImageView.heightAnchor.constraint(equalToConstant: height*0.12).isActive = true
         profileImageView.widthAnchor.constraint(equalToConstant: height*0.12).isActive = true
-        profileImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: height/9).isActive = true
+        profileImageView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: height/9).isActive = true
         profileImageView.layer.cornerRadius = height * 0.06
     }
     
@@ -100,7 +115,7 @@ class ProfileViewController: UIViewController {
         usernameLabel.sizeToFit()
         usernameLabel.font = usernameLabel.font.withSize(width/30)
         usernameLabel.textAlignment = .center
-        view.addSubview(usernameLabel)
+        scrollView.addSubview(usernameLabel)
         
         //constraints
         usernameLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -115,7 +130,7 @@ class ProfileViewController: UIViewController {
         gemLabel.sizeToFit()
         gemLabel.textAlignment = .center
         gemLabel.font = gemLabel.font.withSize(width/27)
-        view.addSubview(gemLabel)
+        scrollView.addSubview(gemLabel)
         
         //constraints
         gemLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -146,7 +161,7 @@ class ProfileViewController: UIViewController {
             mainButton.addTarget(self, action: #selector(handleFollow), for: .touchUpInside)
         }
         
-        view.addSubview(mainButton)
+        scrollView.addSubview(mainButton)
         mainButton.layer.cornerRadius = 2
         
         //constraints
@@ -159,7 +174,7 @@ class ProfileViewController: UIViewController {
     
     
     func setupSegmentControl() {
-        view.addSubview(segmentControl)
+        scrollView.addSubview(segmentControl)
         segmentControl.selectedSegmentIndex = 0
         segmentControl.addTarget(self, action: #selector(handleSegmentTap), for: .valueChanged)
         
@@ -176,69 +191,56 @@ class ProfileViewController: UIViewController {
     }
     
     func setupSegmentControlBars() {
-        horizontalBar.backgroundColor = .lightGray
-        view.addSubview(horizontalBar)
+        let horizontalBarTop = UIView(frame: CGRect.zero)
+        let segmentMiddleBar = UIView(frame: CGRect.zero)
+        let horizontalBarBottom = UIView(frame: CGRect.zero)
         
-        horizontalBar.translatesAutoresizingMaskIntoConstraints = false
-        horizontalBar.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        horizontalBar.heightAnchor.constraint(equalToConstant: 1).isActive = true
-        horizontalBar.widthAnchor.constraint(equalToConstant: width).isActive = true
-        horizontalBar.topAnchor.constraint(equalTo: segmentControl.topAnchor, constant: 0).isActive = true
+        horizontalBarTop.backgroundColor = .lightGray
+        scrollView.addSubview(horizontalBarTop)
+        
+        horizontalBarTop.translatesAutoresizingMaskIntoConstraints = false
+        horizontalBarTop.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        horizontalBarTop.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        horizontalBarTop.widthAnchor.constraint(equalToConstant: width).isActive = true
+        horizontalBarTop.topAnchor.constraint(equalTo: segmentControl.topAnchor, constant: 0).isActive = true
         
         segmentMiddleBar.backgroundColor = .lightGray
-        view.addSubview(segmentMiddleBar)
+        scrollView.addSubview(segmentMiddleBar)
         
         segmentMiddleBar.translatesAutoresizingMaskIntoConstraints = false
         segmentMiddleBar.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         segmentMiddleBar.heightAnchor.constraint(equalToConstant: height/35).isActive = true
         segmentMiddleBar.widthAnchor.constraint(equalToConstant: 1).isActive = true
-        segmentMiddleBar.topAnchor.constraint(equalTo: horizontalBar.bottomAnchor, constant: height/75).isActive = true
+        segmentMiddleBar.topAnchor.constraint(equalTo: horizontalBarTop.bottomAnchor, constant: height/75).isActive = true
+        
+        horizontalBarBottom.backgroundColor = .lightGray
+        scrollView.addSubview(horizontalBarBottom)
+        
+        horizontalBarBottom.translatesAutoresizingMaskIntoConstraints = false
+        horizontalBarBottom.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        horizontalBarBottom.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        horizontalBarBottom.widthAnchor.constraint(equalToConstant: width).isActive = true
+        horizontalBarBottom.topAnchor.constraint(equalTo: segmentControl.bottomAnchor, constant: -1).isActive = true
     }
     
     func setupCollectionView() {
-        var frame = CGRect(x: 0, y: height/1.75, width: width, height: height*2)
         gemsCollectionView.dataSource = self
         gemsCollectionView.delegate = self
         gemsCollectionView.register(ProfileCollectionViewCell.self, forCellWithReuseIdentifier: cellIdentifier)
         gemsCollectionView.showsVerticalScrollIndicator = false
         gemsCollectionView.alwaysBounceVertical = false
         gemsCollectionView.backgroundColor = .white
-        gemsCollectionView.isScrollEnabled = true
+        gemsCollectionView.isScrollEnabled = false
 //        setUpSecondCollectionView()
         
         
-        view.addSubview(gemsCollectionView)
+        scrollView.addSubview(gemsCollectionView)
         gemsCollectionView.translatesAutoresizingMaskIntoConstraints = false
         gemsCollectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         gemsCollectionView.heightAnchor.constraint(equalToConstant: height*2).isActive = true
         gemsCollectionView.widthAnchor.constraint(equalToConstant: width).isActive = true
         gemsCollectionView.topAnchor.constraint(equalTo: segmentControl.bottomAnchor, constant: 0).isActive = true
     }
-    
-    
-    
-    @objc func settingToggle() {
-        print("Toggled Settings")
-    }
-    
-    
-    @objc func handleEditProfile(){
-        print("working")
-    }
-    
-    @objc func handleFollow(){
-        if isFollowing {
-            print("UnFollowing")
-        }
-        else{
-            print("Following")
-        }
-    }
-    
-    @objc func handleSegmentTap() {
-        print("we are switching")
-    }
-    
     
     
 

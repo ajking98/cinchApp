@@ -47,6 +47,7 @@
 		89871252229DE98200BE8F23 /* ZoomingImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89871251229DE98200BE8F23 /* ZoomingImage.swift */; };
 		89871254229DEA2700BE8F23 /* DiscoverPageBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89871253229DEA2700BE8F23 /* DiscoverPageBackground.swift */; };
 		899F664523E3A5A70022C099 /* UISegmentControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899F664423E3A5A70022C099 /* UISegmentControllerExtension.swift */; };
+		899F664723E3BDDF0022C099 /* ProfilePageFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899F664623E3BDDF0022C099 /* ProfilePageFunctions.swift */; };
 		89CD1D04229201BA004BD0A0 /* DownloadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CD1D03229201BA004BD0A0 /* DownloadImage.swift */; };
 		8E123EFA22B7229400F3ED5D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E123EF922B7229400F3ED5D /* Main.storyboard */; };
 		8E5EDB4E22C025990088FDA9 /* TagElementStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E5EDB4D22C025990088FDA9 /* TagElementStruct.swift */; };
@@ -173,6 +174,7 @@
 		89871251229DE98200BE8F23 /* ZoomingImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomingImage.swift; sourceTree = "<group>"; };
 		89871253229DEA2700BE8F23 /* DiscoverPageBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverPageBackground.swift; sourceTree = "<group>"; };
 		899F664423E3A5A70022C099 /* UISegmentControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISegmentControllerExtension.swift; sourceTree = "<group>"; };
+		899F664623E3BDDF0022C099 /* ProfilePageFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageFunctions.swift; sourceTree = "<group>"; };
 		89B752712398672E00E18634 /* SearchBariMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBariMessage.swift; sourceTree = "<group>"; };
 		89B7527B239880BD00E18634 /* SearchResultCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCollectionView.swift; sourceTree = "<group>"; };
 		89B7528723989BA500E18634 /* iMessageGlobal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iMessageGlobal.swift; sourceTree = "<group>"; };
@@ -267,6 +269,7 @@
 				46A3E09622BF0B6E003F6F35 /* ProfilePage.storyboard */,
 				893911B623DFFF2900AFAE80 /* ProfileViewController.swift */,
 				894C36B723E24349008E717D /* ProfileViewControllerExtension.swift */,
+				899F664623E3BDDF0022C099 /* ProfilePageFunctions.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -836,6 +839,7 @@
 				46D5E07822A87F89003B41DE /* UserStruct.swift in Sources */,
 				46D5E07422A87F5F003B41DE /* FolderStruct.swift in Sources */,
 				89CD1D04229201BA004BD0A0 /* DownloadImage.swift in Sources */,
+				899F664723E3BDDF0022C099 /* ProfilePageFunctions.swift in Sources */,
 				46D48D902318A7D100952EDB /* FolderReference.swift in Sources */,
 				EB63B7DE226A7933004C7E2C /* CustomImageFlowLayout.swift in Sources */,
 				4607196E235ACC1900BE17DF /* PanGestureExtension.swift in Sources */,

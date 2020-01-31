@@ -11,6 +11,7 @@ import UIKit
 class ProfileStackView: UIStackView {
 
     var view = UIView(frame: CGRect.zero)
+    var scrollView = UIScrollView(frame: CGRect.zero)
     var upperInnerStackView = UIStackView(frame: CGRect.zero)
     var lowerInnerStackView = UIStackView(frame: CGRect.zero)
     
@@ -18,8 +19,9 @@ class ProfileStackView: UIStackView {
     var followers = 0
     var likes = 0
     
-    func setup(followings: Int, followers: Int, Likes: Int, view: UIView) {
+    func setup(followings: Int, followers: Int, Likes: Int, view: UIView, scrollView: UIScrollView) {
         self.view = view
+        self.scrollView = scrollView
         setupStatusView()
         setupSpacingBar()
     }
@@ -29,7 +31,7 @@ class ProfileStackView: UIStackView {
         axis = .vertical
         alignment = .fill
         distribution = .fillEqually
-        view.addSubview(self)
+        scrollView.addSubview(self)
 
         setupInnerStackView()
         
@@ -38,7 +40,7 @@ class ProfileStackView: UIStackView {
         centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         heightAnchor.constraint(equalToConstant: view.frame.height/14).isActive = true
         widthAnchor.constraint(equalToConstant: view.frame.width*0.8).isActive = true
-        topAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.height * 0.32).isActive = true
+        topAnchor.constraint(equalTo: scrollView.topAnchor, constant: view.frame.height * 0.31).isActive = true
         
     }
     
@@ -71,8 +73,8 @@ class ProfileStackView: UIStackView {
         textLabel.textColor = .gray
         numberLabel.textAlignment = .center
         textLabel.textAlignment = .center
-        view.addSubview(numberLabel)
-        view.addSubview(textLabel)
+        scrollView.addSubview(numberLabel)
+        scrollView.addSubview(textLabel)
         upperInnerStackView.addArrangedSubview(numberLabel)
         lowerInnerStackView.addArrangedSubview(textLabel)
     }
@@ -82,10 +84,10 @@ class ProfileStackView: UIStackView {
     func setupSpacingBar() {
         let bar = UIView(frame: CGRect(x: view.frame.width/2.8, y: (view.center.y)/1.55, width: 1, height: 40))
         bar.backgroundColor = .lightGray
-        view.addSubview(bar)
+        scrollView.addSubview(bar)
         
         let bar2 = UIView(frame: CGRect(x: view.frame.width/1.55, y: (view.center.y)/1.55, width: 1, height: 40))
         bar2.backgroundColor = .lightGray
-        view.addSubview(bar2)
+        scrollView.addSubview(bar2)
     }
 }
