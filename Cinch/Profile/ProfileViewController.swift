@@ -49,8 +49,6 @@ class ProfileViewController: UIViewController {
         setupSegmentControl()
         setupSegmentControlBars()
         setupCollectionViews()
-//        setupCollectionView()
-//        setupSecondCollectionView()
     }
     
     //sets the data - width, height, profileName, username, isUser, isFollowing etc.

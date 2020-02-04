@@ -49,6 +49,8 @@
 		899F664523E3A5A70022C099 /* UISegmentControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899F664423E3A5A70022C099 /* UISegmentControllerExtension.swift */; };
 		899F664723E3BDDF0022C099 /* ProfilePageFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899F664623E3BDDF0022C099 /* ProfilePageFunctions.swift */; };
 		89CD1D04229201BA004BD0A0 /* DownloadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CD1D03229201BA004BD0A0 /* DownloadImage.swift */; };
+		89E966AB23E8E67700BAF92E /* FolderSelectedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E966AA23E8E67700BAF92E /* FolderSelectedController.swift */; };
+		89E966AD23E8EE1A00BAF92E /* FolderSelectedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E966AC23E8EE1A00BAF92E /* FolderSelectedCell.swift */; };
 		8E123EFA22B7229400F3ED5D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E123EF922B7229400F3ED5D /* Main.storyboard */; };
 		8E5EDB4E22C025990088FDA9 /* TagElementStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E5EDB4D22C025990088FDA9 /* TagElementStruct.swift */; };
 		8E92367E229C5B4F0071E63C /* HelperFrontEnd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E92367D229C5B4F0071E63C /* HelperFrontEnd.swift */; };
@@ -179,6 +181,8 @@
 		89B7527B239880BD00E18634 /* SearchResultCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCollectionView.swift; sourceTree = "<group>"; };
 		89B7528723989BA500E18634 /* iMessageGlobal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iMessageGlobal.swift; sourceTree = "<group>"; };
 		89CD1D03229201BA004BD0A0 /* DownloadImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadImage.swift; sourceTree = "<group>"; };
+		89E966AA23E8E67700BAF92E /* FolderSelectedController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderSelectedController.swift; sourceTree = "<group>"; };
+		89E966AC23E8EE1A00BAF92E /* FolderSelectedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderSelectedCell.swift; sourceTree = "<group>"; };
 		8E123EF922B7229400F3ED5D /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		8E5EDB4D22C025990088FDA9 /* TagElementStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagElementStruct.swift; sourceTree = "<group>"; };
 		8E92367D229C5B4F0071E63C /* HelperFrontEnd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperFrontEnd.swift; sourceTree = "<group>"; };
@@ -270,6 +274,7 @@
 				893911B623DFFF2900AFAE80 /* ProfileViewController.swift */,
 				894C36B723E24349008E717D /* ProfileViewControllerExtension.swift */,
 				899F664623E3BDDF0022C099 /* ProfilePageFunctions.swift */,
+				89E966AA23E8E67700BAF92E /* FolderSelectedController.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -278,7 +283,6 @@
 			isa = PBXGroup;
 			children = (
 				891065C123DE597300EB8238 /* DiscoverViewController.swift */,
-				893911B223DF996100AFAE80 /* CellSelectedCell.swift */,
 				893911B423DFA7CF00AFAE80 /* CellSelectedTable.swift */,
 			);
 			path = MainControllers;
@@ -394,6 +398,7 @@
 			isa = PBXGroup;
 			children = (
 				891065C723DE613C00EB8238 /* SearchBar.swift */,
+				893911B223DF996100AFAE80 /* CellSelectedCell.swift */,
 				891065C923DE6A6A00EB8238 /* TableViewCell.swift */,
 			);
 			path = Elements;
@@ -434,6 +439,7 @@
 			isa = PBXGroup;
 			children = (
 				896556EC23E0CA9600666AB9 /* ProfileStackView.swift */,
+				89E966AC23E8EE1A00BAF92E /* FolderSelectedCell.swift */,
 			);
 			path = Elements;
 			sourceTree = "<group>";
@@ -816,6 +822,7 @@
 				896556ED23E0CA9600666AB9 /* ProfileStackView.swift in Sources */,
 				890608B222BAE2B1004C03CF /* PermissionsController.swift in Sources */,
 				46ADC111233FFBA1001B62E8 /* UIColorExtension.swift in Sources */,
+				89E966AB23E8E67700BAF92E /* FolderSelectedController.swift in Sources */,
 				467E5DC822FD110C00F23ABD /* Buttons.swift in Sources */,
 				8E95FFC322BF252D0067B5F2 /* TagStruct.swift in Sources */,
 				467E5DC522FCFE2100F23ABD /* PostStruct.swift in Sources */,
@@ -836,6 +843,7 @@
 				46D5E07122A87F15003B41DE /* Folder.swift in Sources */,
 				46D5E07622A87F75003B41DE /* User.swift in Sources */,
 				893911B523DFA7CF00AFAE80 /* CellSelectedTable.swift in Sources */,
+				89E966AD23E8EE1A00BAF92E /* FolderSelectedCell.swift in Sources */,
 				46D5E07822A87F89003B41DE /* UserStruct.swift in Sources */,
 				46D5E07422A87F5F003B41DE /* FolderStruct.swift in Sources */,
 				89CD1D04229201BA004BD0A0 /* DownloadImage.swift in Sources */,

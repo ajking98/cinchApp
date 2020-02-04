@@ -23,6 +23,7 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
         else {
             cell.setupSecondCollectionView()
         }
+        cell.navigationController = self.navigationController
         return cell
     }
     
@@ -36,20 +37,14 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
 }
 
 
+
 class ProfileMainCollectionViewCell: UICollectionViewCell {
-    
     let cellIdentifier = "Cell"
     
     //Elements
     var gemsCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
     var followingFoldersCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
-    
-    func setup() {
-        print("this is working")
-        setupFirstCollectionView()
-        setupSecondCollectionView()
-        
-    }
+    var navigationController: UINavigationController!
     
     func setupFirstCollectionView() {
         gemsCollectionView.dataSource = self
@@ -96,19 +91,19 @@ extension ProfileMainCollectionViewCell: UICollectionViewDelegate, UICollectionV
         }
         // For LikeCollections
         else {
-            print("finally")
             let cell = followingFoldersCollectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! ProfileCollectionViewCell
 //            let data = self.data[indexPath.item]
             cell.nameLabel.text = "Like Collection"
         }
-
         return cell
         
     }
     
     // TODO: Add function when content in profile collections get clicked
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("we are working", indexPath.section)
+        let storyboard = UIStoryboard(name: "ProfilePage", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "FolderSelected") as! FolderSelectedController
+        navigationController.pushViewController(vc, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
