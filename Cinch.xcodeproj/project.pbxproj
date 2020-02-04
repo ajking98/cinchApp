@@ -44,6 +44,9 @@
 		893911B723DFFF2900AFAE80 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893911B623DFFF2900AFAE80 /* ProfileViewController.swift */; };
 		894C36B823E24349008E717D /* ProfileViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894C36B723E24349008E717D /* ProfileViewControllerExtension.swift */; };
 		896556ED23E0CA9600666AB9 /* ProfileStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896556EC23E0CA9600666AB9 /* ProfileStackView.swift */; };
+		897E049023E9ED140084D872 /* Upload.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 897E048F23E9ED140084D872 /* Upload.storyboard */; };
+		897E049223E9ED8A0084D872 /* UploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897E049123E9ED8A0084D872 /* UploadViewController.swift */; };
+		897E049423E9FE190084D872 /* AddPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897E049323E9FE190084D872 /* AddPostViewController.swift */; };
 		89871252229DE98200BE8F23 /* ZoomingImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89871251229DE98200BE8F23 /* ZoomingImage.swift */; };
 		89871254229DEA2700BE8F23 /* DiscoverPageBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89871253229DEA2700BE8F23 /* DiscoverPageBackground.swift */; };
 		899F664523E3A5A70022C099 /* UISegmentControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899F664423E3A5A70022C099 /* UISegmentControllerExtension.swift */; };
@@ -127,7 +130,7 @@
 		4622495322DFAD2D0005B12F /* CinchIMessageExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CinchIMessageExtension.entitlements; sourceTree = "<group>"; };
 		463A844222F6279A00F9B4CD /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = SOURCE_ROOT; };
 		463A844422F627F000F9B4CD /* CameraViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewCell.swift; sourceTree = SOURCE_ROOT; };
-		463A844822F6286A00F9B4CD /* Camera.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Camera.storyboard; sourceTree = SOURCE_ROOT; };
+		463A844822F6286A00F9B4CD /* Camera.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Camera.storyboard; path = Cinch/Upload/Camera.storyboard; sourceTree = SOURCE_ROOT; };
 		4657E21C22F72DA700396087 /* CameraViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewExtensions.swift; sourceTree = SOURCE_ROOT; };
 		4669B8D122B6DC64004FB38D /* defaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = defaultsKeys.swift; sourceTree = "<group>"; };
 		467E5DB822FCE8EF00F23ABD /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
@@ -173,6 +176,9 @@
 		893911B623DFFF2900AFAE80 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		894C36B723E24349008E717D /* ProfileViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewControllerExtension.swift; sourceTree = "<group>"; };
 		896556EC23E0CA9600666AB9 /* ProfileStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStackView.swift; sourceTree = "<group>"; };
+		897E048F23E9ED140084D872 /* Upload.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Upload.storyboard; sourceTree = "<group>"; };
+		897E049123E9ED8A0084D872 /* UploadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadViewController.swift; sourceTree = "<group>"; };
+		897E049323E9FE190084D872 /* AddPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPostViewController.swift; sourceTree = "<group>"; };
 		89871251229DE98200BE8F23 /* ZoomingImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomingImage.swift; sourceTree = "<group>"; };
 		89871253229DEA2700BE8F23 /* DiscoverPageBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverPageBackground.swift; sourceTree = "<group>"; };
 		899F664423E3A5A70022C099 /* UISegmentControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISegmentControllerExtension.swift; sourceTree = "<group>"; };
@@ -420,7 +426,6 @@
 			children = (
 				463A844222F6279A00F9B4CD /* CameraViewController.swift */,
 				463A844422F627F000F9B4CD /* CameraViewCell.swift */,
-				463A844822F6286A00F9B4CD /* Camera.storyboard */,
 				4657E21C22F72DA700396087 /* CameraViewExtensions.swift */,
 			);
 			path = CameraView;
@@ -442,6 +447,17 @@
 				89E966AC23E8EE1A00BAF92E /* FolderSelectedCell.swift */,
 			);
 			path = Elements;
+			sourceTree = "<group>";
+		};
+		897E048E23E9EC930084D872 /* Upload */ = {
+			isa = PBXGroup;
+			children = (
+				463A844822F6286A00F9B4CD /* Camera.storyboard */,
+				897E048F23E9ED140084D872 /* Upload.storyboard */,
+				897E049123E9ED8A0084D872 /* UploadViewController.swift */,
+				897E049323E9FE190084D872 /* AddPostViewController.swift */,
+			);
+			path = Upload;
 			sourceTree = "<group>";
 		};
 		89871250229DE96A00BE8F23 /* Classes */ = {
@@ -528,6 +544,7 @@
 		EB74D3B4226025E900556399 /* Cinch */ = {
 			isa = PBXGroup;
 			children = (
+				897E048E23E9EC930084D872 /* Upload */,
 				4622495222DFAD240005B12F /* Cinch.entitlements */,
 				EB74D3FF2260520C00556399 /* Storyboards */,
 				46ADC10E233FFB0F001B62E8 /* Globals */,
@@ -702,6 +719,7 @@
 				891FC3FD22D7F72E0024A623 /* Discover.storyboard in Resources */,
 				46A39D6023A1770000EA1E4B /* GoogleService-Info.plist in Resources */,
 				8E123EFA22B7229400F3ED5D /* Main.storyboard in Resources */,
+				897E049023E9ED140084D872 /* Upload.storyboard in Resources */,
 				EB74D3BD226025EA00556399 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -817,6 +835,7 @@
 				46ADC115233FFC8F001B62E8 /* UIImageExtension.swift in Sources */,
 				46D48D97231AF48700952EDB /* ParentPostStruct.swift in Sources */,
 				EB41F8E922653170003751FA /* Photo.swift in Sources */,
+				897E049423E9FE190084D872 /* AddPostViewController.swift in Sources */,
 				891065CA23DE6A6A00EB8238 /* TableViewCell.swift in Sources */,
 				8E95FFCC22BF25CE0067B5F2 /* TagElement.swift in Sources */,
 				896556ED23E0CA9600666AB9 /* ProfileStackView.swift in Sources */,
@@ -854,6 +873,7 @@
 				467E5DB922FCE8EF00F23ABD /* Post.swift in Sources */,
 				891065C823DE613C00EB8238 /* SearchBar.swift in Sources */,
 				8E95FFCE22BF283F0067B5F2 /* ParentTagStruct.swift in Sources */,
+				897E049223E9ED8A0084D872 /* UploadViewController.swift in Sources */,
 				8E5EDB4E22C025990088FDA9 /* TagElementStruct.swift in Sources */,
 				EB63B7E0226A7EB5004C7E2C /* ImageInsta.swift in Sources */,
 				899F664523E3A5A70022C099 /* UISegmentControllerExtension.swift in Sources */,

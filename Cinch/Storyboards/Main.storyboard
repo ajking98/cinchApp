@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="qpE-qB-mE9">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="qpE-qB-mE9">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--DiscoverID-->
         <scene sceneID="b13-mC-dSV">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="gRP-iE-vzH" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewControllerPlaceholder storyboardName="Discover" referencedIdentifier="DiscoverID" id="Jhd-ws-8hg" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" selectedImage="home" id="O7E-Yh-35g"/>
                 </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gRP-iE-vzH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2639" y="64"/>
         </scene>
-        <!--CameraID-->
+        <!--Upload-->
         <scene sceneID="jZL-2r-oW2">
             <objects>
-                <viewControllerPlaceholder storyboardIdentifier="Testing" storyboardName="Camera" referencedIdentifier="CameraID" id="poY-wD-Fmg" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardIdentifier="Testing" storyboardName="Upload" referencedIdentifier="Upload" id="poY-wD-Fmg" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" image="icons8-compass-20" id="ign-iB-qEF"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jw0-YD-D40" userLabel="First Responder" sceneMemberID="firstResponder"/>

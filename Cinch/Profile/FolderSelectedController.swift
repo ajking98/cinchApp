@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FolderSelectedController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class FolderSelectedController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate {
 
     var folderName = "Hayden"
     let identifier = "Cell"
@@ -18,7 +18,7 @@ class FolderSelectedController: UIViewController, UICollectionViewDataSource, UI
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         setupNavigationBar()
         setupCollectionView()
     }
@@ -35,6 +35,9 @@ class FolderSelectedController: UIViewController, UICollectionViewDataSource, UI
         backButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(goBack)))
         let leftNavItem = UIBarButtonItem(customView: backButton)
         navigationItem.setLeftBarButton(leftNavItem, animated: false)
+        
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
     }
     
     
@@ -95,6 +98,12 @@ class FolderSelectedController: UIViewController, UICollectionViewDataSource, UI
     }
     
     
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+          return true
+      }
+    
+    
 }
+ 
 
 
