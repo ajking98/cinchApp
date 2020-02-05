@@ -9,7 +9,7 @@
 
 import UIKit
 
-class AddPostViewController: UIViewController, UIGestureRecognizerDelegate {
+class AddPostViewController: UIViewController, UIGestureRecognizerDelegate{
     
     //data
     var width: CGFloat = 0
@@ -29,6 +29,8 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate {
         setupPostButton()
         setupImageView()
     }
+    
+    
     
     func setup() {
         view.backgroundColor = .white
@@ -78,13 +80,12 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate {
         postButton.translatesAutoresizingMaskIntoConstraints = false
         postButton.leftAnchor.constraint(equalTo: tagField.rightAnchor, constant: width * 0.08).isActive = true
         postButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 0.12 * height).isActive = true
-        postButton.heightAnchor.constraint(equalToConstant: width * 0.19).isActive = true
-        postButton.widthAnchor.constraint(equalToConstant: width * 0.19).isActive = true
+        postButton.heightAnchor.constraint(equalToConstant: height * 0.084).isActive = true
+        postButton.widthAnchor.constraint(equalToConstant: height * 0.084).isActive = true
     }
     
     func setupImageView() {
         imageView.backgroundColor = .white
-        imageView.image = UIImage(named: "f1")
         imageView.contentMode = .scaleAspectFit
         view.addSubview(imageView)
         
@@ -93,7 +94,7 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate {
         imageView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         imageView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         imageView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        imageView.heightAnchor.constraint(equalToConstant: 0.787 * height).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: 0.77 * height).isActive = true
     }
     
     func addHashTag(){

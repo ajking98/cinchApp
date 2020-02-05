@@ -10,9 +10,12 @@ import UIKit
 
 class UploadViewController: UIViewController {
 
-    //elements
+    //views
     let uploadButton = UIButton(frame: CGRect.zero)
     let lowerText = UILabel(frame: CGRect.zero)
+
+    //controllers
+    let imagePicker = UIImagePickerController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,9 +26,9 @@ class UploadViewController: UIViewController {
     }
     
     func setupNavigationController() {
-//        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-//        navigationController?.navigationBar.shadowImage = UIImage()
-//        navigationController?.navigationBar.layoutIfNeeded()
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.layoutIfNeeded()
     }
     
     func setupUploadButton() {
@@ -59,13 +62,30 @@ class UploadViewController: UIViewController {
     
     
     @objc func selectMedia() {
-        print("we are picking")
-        let vc = AddPostViewController()
-//        vc.modalPresentationStyle = .currentContext
-        vc.modalTransitionStyle = .partialCurl
-//        present(vc, animated: true, completion: nil)
-//        navigationController?.pushViewController(vc, animated: true)
-        navigationController?.show(vc, sender: nil)
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = false
+        print("here ate the types ", imagePicker.mediaTypes)
+        imagePicker.mediaTypes = ["public.image", "public.movie"]
+        imagePicker.sourceType = .photoLibrary
+        present(imagePicker, animated: true, completion: nil)
     }
 
+}
+
+
+extension UploadViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        print("we have selected : ", info)
+        dismiss(animated: true, completion: nil)
+        
+        let vc = AddPostViewController()
+        vc.modalTransitionStyle = .partialCurl
+        navigationController?.show(vc, sender: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+        print("Image selector cancelled")
+    }
 }
