@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Photos
 
 class UploadViewController: UIViewController {
 
@@ -23,6 +24,10 @@ class UploadViewController: UIViewController {
         setupNavigationController()
         setupUploadButton()
         setupText()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        tabBarController?.tabBar.isHidden = false
     }
     
     func setupNavigationController() {
@@ -76,12 +81,22 @@ class UploadViewController: UIViewController {
 extension UploadViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        print("we have selected : ", info)
-        dismiss(animated: true, completion: nil)
         
+        guard let mediaType = info[UIImagePickerController.InfoKey.mediaType] as? String else { return }
+        var mediaLink = URL(fileURLWithPath: "")
+        
+        if mediaType == "public.image" {
+            mediaLink = (info[UIImagePickerController.InfoKey.imageURL] as? URL)!
+        }
+        else if mediaType == "public.movie" {
+            mediaLink = (info[UIImagePickerController.InfoKey.mediaURL] as? URL)!
+        }
         let vc = AddPostViewController()
+        vc.mediaLink = mediaLink
+        
         vc.modalTransitionStyle = .partialCurl
-        navigationController?.show(vc, sender: nil)
+        navigationController?.pushViewController(vc, animated: false)
+        dismiss(animated: true, completion: nil)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {

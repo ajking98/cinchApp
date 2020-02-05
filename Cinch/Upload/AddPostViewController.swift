@@ -14,6 +14,7 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate{
     //data
     var width: CGFloat = 0
     var height: CGFloat = 0
+    var mediaLink = URL(fileURLWithPath: "")
     
     //Elements
     let tagField = UITextView(frame: CGRect.zero)
@@ -23,7 +24,7 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setup()
+        setup(mediaLink: mediaLink)
         setupNavigationController()
         setupTagField()
         setupPostButton()
@@ -31,23 +32,24 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate{
     }
     
     
-    
-    func setup() {
+    func setup(mediaLink: URL) {
         view.backgroundColor = .white
         width = view.frame.width
         height = view.frame.height
+        self.mediaLink = mediaLink
     }
     
     func setupNavigationController() {
         navigationController?.interactivePopGestureRecognizer?.delegate = self
-        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-        
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true 
         let backButton = UIButton(type: .custom)
         backButton.setImage(UIImage(named: "backIcon-black"), for: .normal)
         backButton.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
         backButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(goBack)))
         let leftNavBarItem = UIBarButtonItem(customView: backButton)
         navigationItem.setLeftBarButton(leftNavBarItem, animated: false)
+        
+        tabBarController?.tabBar.isHidden = true
     }
     
     
@@ -86,6 +88,13 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate{
     
     func setupImageView() {
         imageView.backgroundColor = .white
+        do {
+            let imageData = try Data(contentsOf: mediaLink)
+            imageView.image = UIImage(data: imageData)
+        }
+        catch {
+            print("error")
+        }
         imageView.contentMode = .scaleAspectFit
         view.addSubview(imageView)
         

@@ -51,6 +51,10 @@ class ProfileViewController: UIViewController {
         setupCollectionViews()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        tabBarController?.tabBar.isHidden = false
+    }
+    
     //sets the data - width, height, profileName, username, isUser, isFollowing etc.
     func setupData() {
         height = view.frame.height

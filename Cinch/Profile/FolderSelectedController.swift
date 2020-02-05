@@ -62,7 +62,6 @@ class FolderSelectedController: UIViewController, UICollectionViewDataSource, UI
     
     @objc func goBack() {
         navigationController?.popViewController(animated: true)
-        tabBarController?.tabBar.isHidden = false
     }
     
     
