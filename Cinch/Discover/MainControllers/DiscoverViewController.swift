@@ -41,6 +41,10 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
         setupTableResultsView()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.tabBarController?.tabBar.isHidden = false
+    }
+    
     ///sets up the initial data    
     func setupData() {
         width = view.frame.width
@@ -162,6 +166,7 @@ extension DiscoverViewController: UISearchBarDelegate {
             tableTagsView.alpha = 0
             searchBar.endEditing(true)
             let vc = SearchResultsViewController()
+            vc.initialNavigationController = navigationController
             vc.setup()
             navigationController?.pushViewController(vc, animated: true)
 

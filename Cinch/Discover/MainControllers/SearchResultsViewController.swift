@@ -17,6 +17,7 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
     //measurements
     var width: CGFloat = 0
     var height: CGFloat = 0
+    var initialNavigationController: UINavigationController?
     
     //views
     var collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -48,9 +49,12 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
         let leftNavItem = UIBarButtonItem(customView: backButton)
         navigationItem.setLeftBarButton(leftNavItem, animated: false)
         
+        initialNavigationController?.tabBarController?.tabBar.isHidden = true
+        print("here is your navigation controller: ", initialNavigationController?.tabBarController?.tabBar)
+        
         //TODO: this isn't working because navigationController is nil 
-        navigationController?.interactivePopGestureRecognizer?.delegate = self
-        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        initialNavigationController?.interactivePopGestureRecognizer?.delegate = self
+        initialNavigationController?.interactivePopGestureRecognizer?.isEnabled = true
     }
     
     
@@ -58,7 +62,7 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
         collectionView.backgroundColor = .white
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.contentInset.top = 30
+        collectionView.contentInset.top = 24
         collectionView.showsVerticalScrollIndicator = false
         collectionView.register(SearchResultsCell.self, forCellWithReuseIdentifier: identifier)
         view.addSubview(collectionView)
