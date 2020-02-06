@@ -51,6 +51,7 @@
 		89871254229DEA2700BE8F23 /* DiscoverPageBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89871253229DEA2700BE8F23 /* DiscoverPageBackground.swift */; };
 		899F664523E3A5A70022C099 /* UISegmentControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899F664423E3A5A70022C099 /* UISegmentControllerExtension.swift */; };
 		899F664723E3BDDF0022C099 /* ProfilePageFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899F664623E3BDDF0022C099 /* ProfilePageFunctions.swift */; };
+		89C3C00F23EBCA7A00FD03D1 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C3C00E23EBCA7A00FD03D1 /* SearchResultsViewController.swift */; };
 		89CD1D04229201BA004BD0A0 /* DownloadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CD1D03229201BA004BD0A0 /* DownloadImage.swift */; };
 		89E966AB23E8E67700BAF92E /* FolderSelectedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E966AA23E8E67700BAF92E /* FolderSelectedController.swift */; };
 		89E966AD23E8EE1A00BAF92E /* FolderSelectedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E966AC23E8EE1A00BAF92E /* FolderSelectedCell.swift */; };
@@ -186,6 +187,7 @@
 		89B752712398672E00E18634 /* SearchBariMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBariMessage.swift; sourceTree = "<group>"; };
 		89B7527B239880BD00E18634 /* SearchResultCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCollectionView.swift; sourceTree = "<group>"; };
 		89B7528723989BA500E18634 /* iMessageGlobal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iMessageGlobal.swift; sourceTree = "<group>"; };
+		89C3C00E23EBCA7A00FD03D1 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 		89CD1D03229201BA004BD0A0 /* DownloadImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadImage.swift; sourceTree = "<group>"; };
 		89E966AA23E8E67700BAF92E /* FolderSelectedController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderSelectedController.swift; sourceTree = "<group>"; };
 		89E966AC23E8EE1A00BAF92E /* FolderSelectedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderSelectedCell.swift; sourceTree = "<group>"; };
@@ -290,6 +292,7 @@
 			children = (
 				891065C123DE597300EB8238 /* DiscoverViewController.swift */,
 				893911B423DFA7CF00AFAE80 /* CellSelectedTable.swift */,
+				89C3C00E23EBCA7A00FD03D1 /* SearchResultsViewController.swift */,
 			);
 			path = MainControllers;
 			sourceTree = "<group>";
@@ -872,6 +875,7 @@
 				893911B523DFA7CF00AFAE80 /* CellSelectedTable.swift in Sources */,
 				89E966AD23E8EE1A00BAF92E /* FolderSelectedCell.swift in Sources */,
 				46D5E07822A87F89003B41DE /* UserStruct.swift in Sources */,
+				89C3C00F23EBCA7A00FD03D1 /* SearchResultsViewController.swift in Sources */,
 				46D5E07422A87F5F003B41DE /* FolderStruct.swift in Sources */,
 				89CD1D04229201BA004BD0A0 /* DownloadImage.swift in Sources */,
 				899F664723E3BDDF0022C099 /* ProfilePageFunctions.swift in Sources */,

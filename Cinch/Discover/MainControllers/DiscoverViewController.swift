@@ -128,7 +128,7 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
         SearchBar
      */
      
-    var tableResultView = UITableView()
+    var tableTagsView = UITableView()
     var searchTableViewController = SearchTableViewController(style: .plain)
 
 }
@@ -142,7 +142,7 @@ extension DiscoverViewController: UISearchBarDelegate {
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(true, animated: true)
-        tableResultView.alpha = 1
+        tableTagsView.alpha = 1
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -151,12 +151,19 @@ extension DiscoverViewController: UISearchBarDelegate {
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(false, animated: true)
-        tableResultView.alpha = 0
+        tableTagsView.alpha = 0
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if searchBar.text != nil {
             searchTableViewController.addSearchTerm(term: searchBar.text!)
+            
+            //TODO: Move this to a function
+            tableTagsView.alpha = 0
+            searchBar.endEditing(true)
+            let vc = SearchResultsViewController()
+            vc.setup()
+            navigationController?.pushViewController(vc, animated: true)
 
 //            nextView(text: searchBar.text!)
         }
@@ -164,19 +171,19 @@ extension DiscoverViewController: UISearchBarDelegate {
     }
     
     func setupTableResultsView() {
-        view.addSubview(tableResultView)
-        tableResultView.alpha = 0
-        tableResultView.register(UITableViewCell.self, forCellReuseIdentifier: identifier)
-        tableResultView.dataSource = searchTableViewController
-        tableResultView.delegate = searchTableViewController
-        tableResultView.separatorStyle = .none
+        view.addSubview(tableTagsView)
+        tableTagsView.alpha = 0
+        tableTagsView.register(UITableViewCell.self, forCellReuseIdentifier: identifier)
+        tableTagsView.dataSource = searchTableViewController
+        tableTagsView.delegate = searchTableViewController
+        tableTagsView.separatorStyle = .none
         
         //constraints
-        tableResultView.translatesAutoresizingMaskIntoConstraints = false
-        tableResultView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        tableResultView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0).isActive = true
-        tableResultView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        tableResultView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        tableTagsView.translatesAutoresizingMaskIntoConstraints = false
+        tableTagsView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        tableTagsView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0).isActive = true
+        tableTagsView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        tableTagsView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
 }
 
