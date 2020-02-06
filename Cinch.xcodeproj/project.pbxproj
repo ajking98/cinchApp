@@ -477,6 +477,13 @@
 			path = HelpingStructs;
 			sourceTree = "<group>";
 		};
+		89C6B05623EB83960027F51A /* Search */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
 		8E5EDB4522C0043B0088FDA9 /* Tags */ = {
 			isa = PBXGroup;
 			children = (
@@ -544,6 +551,7 @@
 		EB74D3B4226025E900556399 /* Cinch */ = {
 			isa = PBXGroup;
 			children = (
+				89C6B05623EB83960027F51A /* Search */,
 				897E048E23E9EC930084D872 /* Upload */,
 				4622495222DFAD240005B12F /* Cinch.entitlements */,
 				EB74D3FF2260520C00556399 /* Storyboards */,

@@ -69,7 +69,6 @@ class UploadViewController: UIViewController {
     @objc func selectMedia() {
         imagePicker.delegate = self
         imagePicker.allowsEditing = false
-        print("here ate the types ", imagePicker.mediaTypes)
         imagePicker.mediaTypes = ["public.image", "public.movie"]
         imagePicker.sourceType = .photoLibrary
         present(imagePicker, animated: true, completion: nil)

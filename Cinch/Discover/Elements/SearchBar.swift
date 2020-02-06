@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SearchBar: UITextField {
+class SearchBar: UISearchBar {
     ///width of screen
     var width: CGFloat = 0
     
@@ -18,15 +18,8 @@ class SearchBar: UITextField {
         backgroundColor = .lightGray
         
         layer.cornerRadius = 3
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 0.1 * width, height: frame.height))
-        let searchIcon = UIImageView(frame: CGRect(x: 11, y: 0, width: 14, height: 14.43))
-        searchIcon.center.y = center.y
-        searchIcon.image = UIImage(named: "searchIcon")
-        
-        paddingView.addSubview(searchIcon)
-        leftView = paddingView
-        leftViewMode = UITextField.ViewMode.always
-        clearButtonMode = .always
+        frame.size.width = width
+        backgroundColor = .white
     }
 
 }
