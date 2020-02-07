@@ -92,7 +92,6 @@ extension UploadViewController: UIImagePickerControllerDelegate, UINavigationCon
         }
         let vc = AddPostViewController()
         vc.mediaLink = mediaLink
-        
         vc.modalTransitionStyle = .partialCurl
         navigationController?.pushViewController(vc, animated: false)
         dismiss(animated: true, completion: nil)

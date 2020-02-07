@@ -8,6 +8,7 @@
 //
 
 import UIKit
+import XLActionController
 
 class AddPostViewController: UIViewController, UIGestureRecognizerDelegate{
     
@@ -15,6 +16,7 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate{
     var width: CGFloat = 0
     var height: CGFloat = 0
     var mediaLink = URL(fileURLWithPath: "")
+    var isVideo = false
     
     //Elements
     let tagField = UITextView(frame: CGRect.zero)
@@ -24,19 +26,24 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setup(mediaLink: mediaLink)
+        setup()
         setupNavigationController()
         setupTagField()
         setupPostButton()
         setupImageView()
     }
     
+    override func viewDidLayoutSubviews() {
+        guard isVideo else { return }
+        imageView.loadVideo(mediaLink, size: imageView.frame.size)
+    }
     
-    func setup(mediaLink: URL) {
+    
+    func setup() {
         view.backgroundColor = .white
         width = view.frame.width
         height = view.frame.height
-        self.mediaLink = mediaLink
+        isVideo = checkIfVideo(mediaLink.absoluteString)
     }
     
     func setupNavigationController() {
@@ -76,6 +83,7 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate{
         postButton.backgroundColor = .customRed
         postButton.layer.cornerRadius = 3
         
+        postButton.addTarget(self, action: #selector(handlePostMedia), for: .touchUpInside)
         view.addSubview(postButton)
         
         //constraints
@@ -87,14 +95,17 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate{
     }
     
     func setupImageView() {
-        imageView.backgroundColor = .white
         do {
-            let imageData = try Data(contentsOf: mediaLink)
-            imageView.image = UIImage(data: imageData)
+            if !isVideo {
+                let imageData = try Data(contentsOf: mediaLink)
+                imageView.image = UIImage(data: imageData)
+                print("this is image")
+            }
         }
         catch {
             print("error")
         }
+        imageView.backgroundColor = .white
         imageView.contentMode = .scaleAspectFit
         view.addSubview(imageView)
         
@@ -116,6 +127,31 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate{
     
     @objc func goBack() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func handlePostMedia() {
+        print("we are posting")
+
+        //TODO: make this an extension to UIViewController
+        let actionController = SpotifyActionController()
+        actionController.headerData = SpotifyHeaderData(title: "select a folder for the image", subtitle: "", image: UIImage())
+        
+        UserStruct().readFolders(user: "121212") { (folders) in
+            for item in folders {
+                print("reaching here")
+                actionController.addAction(Action(ActionData(title: "\(item.lowercased())", subtitle: "For Content"), style: .default, handler: { action in
+                print("SOmething elese")
+                
+//                StorageStruct().uploadImage(image: UIImage(), completion: { (link) in
+//
+//                    FolderStruct().addContent(user: self.username, folderName: item, link: link)
+//                    FolderStruct().updateNumOfImagesByConstant(user: self.username, folderName: item, constant: 1)
+//                })
+                
+            }))
+        }
+        }
+        present(actionController, animated: true, completion: nil)
     }
 
 }

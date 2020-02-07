@@ -184,7 +184,7 @@ struct Helper {
                     }
                 }
                 if username != nil {
-                    ParentPostStruct().addPost(post: Post(isImage: !checkIfVideo(link: link), postOwner: username!, link: link))
+                    ParentPostStruct().addPost(post: Post(isImage: !checkIfVideo(link), postOwner: username!, link: link))
                 }
                 PostStruct().addTags(post: link, newTags: tagArray)
             }
