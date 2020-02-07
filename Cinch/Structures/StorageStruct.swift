@@ -24,7 +24,7 @@ struct StorageStruct {
         
         //TODO copy the video part in the sense that you can't upload to an already existing link
         //This should use .putFile instead of .putData
-        let storageRef = Storage.storage().reference().child("PublicImages/" + randomString(20)) //TODO append .jpg to the randomString(20)
+        let storageRef = Storage.storage().reference().child("PublicImages/" + randomString(20) + ".jpg") 
         storageRef.putData(imageData, metadata: nil, completion: { (metadata, error) in
             guard (metadata != nil) else{
                 print("Error occurred in the upload process")

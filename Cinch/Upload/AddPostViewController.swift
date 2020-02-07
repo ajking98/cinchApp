@@ -138,7 +138,7 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate{
         
         UserStruct().readFolders(user: "121212") { (folders) in
             for item in folders {
-                print("reaching here")
+                print("reaching here", item)
                 actionController.addAction(Action(ActionData(title: "\(item.lowercased())", subtitle: "For Content"), style: .default, handler: { action in
                 print("SOmething elese")
                 
@@ -151,6 +151,12 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate{
             }))
         }
         }
+
+        StorageStruct().uploadImage(image: imageView.image!, completion: { (link) in
+            FolderStruct().addContent(user: "121212", folderName: "random", link: link)
+            
+        })
+        
         present(actionController, animated: true, completion: nil)
     }
 
