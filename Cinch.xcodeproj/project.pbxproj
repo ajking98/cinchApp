@@ -47,11 +47,18 @@
 		897437E023ED0DEF00F2CCB7 /* Messages.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4622493622DFAC8F0005B12F /* Messages.framework */; };
 		897437E323ED0DEF00F2CCB7 /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897437E223ED0DEF00F2CCB7 /* MessagesViewController.swift */; };
 		897437E623ED0DEF00F2CCB7 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 897437E423ED0DEF00F2CCB7 /* MainInterface.storyboard */; };
-		897437E823ED0DF100F2CCB7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 897437E723ED0DF100F2CCB7 /* Assets.xcassets */; };
 		897437EC23ED0DF100F2CCB7 /* iMessage.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 897437DF23ED0DEF00F2CCB7 /* iMessage.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		897437F023ED101B00F2CCB7 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891065C723DE613C00EB8238 /* SearchBar.swift */; };
 		897437F123ED11A700F2CCB7 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46ADC110233FFBA1001B62E8 /* UIColorExtension.swift */; };
 		897437F223ED182E00F2CCB7 /* FolderSelectedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E966AC23E8EE1A00BAF92E /* FolderSelectedCell.swift */; };
+		897437F623ED258600F2CCB7 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897437F523ED258600F2CCB7 /* SearchTableViewController.swift */; };
+		897437F723ED259800F2CCB7 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897437F523ED258600F2CCB7 /* SearchTableViewController.swift */; };
+		897437F923ED280A00F2CCB7 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C3C00E23EBCA7A00FD03D1 /* SearchResultsViewController.swift */; };
+		897437FA23ED285700F2CCB7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EB74D3BC226025EA00556399 /* Assets.xcassets */; };
+		897437FE23ED333300F2CCB7 /* MessageCollectionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897437FD23ED333300F2CCB7 /* MessageCollectionExtension.swift */; };
+		8974380023ED338500F2CCB7 /* MessageSearchExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897437FF23ED338500F2CCB7 /* MessageSearchExtension.swift */; };
+		8974380523ED373B00F2CCB7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8974380423ED373A00F2CCB7 /* Assets.xcassets */; };
+		8974380723ED37A800F2CCB7 /* MessageSearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8974380623ED37A800F2CCB7 /* MessageSearchResultsViewController.swift */; };
 		897E049023E9ED140084D872 /* Upload.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 897E048F23E9ED140084D872 /* Upload.storyboard */; };
 		897E049223E9ED8A0084D872 /* UploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897E049123E9ED8A0084D872 /* UploadViewController.swift */; };
 		897E049423E9FE190084D872 /* AddPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897E049323E9FE190084D872 /* AddPostViewController.swift */; };
@@ -141,7 +148,6 @@
 		4622493622DFAC8F0005B12F /* Messages.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Messages.framework; path = System/Library/Frameworks/Messages.framework; sourceTree = SDKROOT; };
 		4622493922DFAC8F0005B12F /* MessagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
 		4622493C22DFAC8F0005B12F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
-		4622493E22DFAC900005B12F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4622494022DFAC900005B12F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4622495222DFAD240005B12F /* Cinch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Cinch.entitlements; sourceTree = "<group>"; };
 		4622495322DFAD2D0005B12F /* CinchIMessageExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CinchIMessageExtension.entitlements; sourceTree = "<group>"; };
@@ -196,8 +202,12 @@
 		897437DF23ED0DEF00F2CCB7 /* iMessage.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = iMessage.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		897437E223ED0DEF00F2CCB7 /* MessagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
 		897437E523ED0DEF00F2CCB7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
-		897437E723ED0DF100F2CCB7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		897437E923ED0DF100F2CCB7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		897437F523ED258600F2CCB7 /* SearchTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
+		897437FD23ED333300F2CCB7 /* MessageCollectionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCollectionExtension.swift; sourceTree = "<group>"; };
+		897437FF23ED338500F2CCB7 /* MessageSearchExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageSearchExtension.swift; sourceTree = "<group>"; };
+		8974380423ED373A00F2CCB7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../../testing/cinchApp/iMessage/Assets.xcassets; sourceTree = "<group>"; };
+		8974380623ED37A800F2CCB7 /* MessageSearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageSearchResultsViewController.swift; sourceTree = "<group>"; };
 		897E048F23E9ED140084D872 /* Upload.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Upload.storyboard; sourceTree = "<group>"; };
 		897E049123E9ED8A0084D872 /* UploadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadViewController.swift; sourceTree = "<group>"; };
 		897E049323E9FE190084D872 /* AddPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPostViewController.swift; sourceTree = "<group>"; };
@@ -294,7 +304,6 @@
 				4622493B22DFAC8F0005B12F /* MainInterface.storyboard */,
 				46FA43F123634FE7005F3046 /* MessageCard.swift */,
 				46FA43F223634FE7005F3046 /* MessageCard.xib */,
-				4622493E22DFAC900005B12F /* Assets.xcassets */,
 				4622494022DFAC900005B12F /* Info.plist */,
 				89B752712398672E00E18634 /* SearchBariMessage.swift */,
 				89B7527B239880BD00E18634 /* SearchResultCollectionView.swift */,
@@ -322,6 +331,7 @@
 				891065C123DE597300EB8238 /* DiscoverViewController.swift */,
 				893911B423DFA7CF00AFAE80 /* CellSelectedTable.swift */,
 				89C3C00E23EBCA7A00FD03D1 /* SearchResultsViewController.swift */,
+				897437F523ED258600F2CCB7 /* SearchTableViewController.swift */,
 			);
 			path = MainControllers;
 			sourceTree = "<group>";
@@ -484,12 +494,23 @@
 		897437E123ED0DEF00F2CCB7 /* iMessage */ = {
 			isa = PBXGroup;
 			children = (
-				897437E223ED0DEF00F2CCB7 /* MessagesViewController.swift */,
-				897437E423ED0DEF00F2CCB7 /* MainInterface.storyboard */,
-				897437E723ED0DF100F2CCB7 /* Assets.xcassets */,
+				8974380423ED373A00F2CCB7 /* Assets.xcassets */,
+				8974380123ED33D100F2CCB7 /* Extensions */,
 				897437E923ED0DF100F2CCB7 /* Info.plist */,
+				897437E223ED0DEF00F2CCB7 /* MessagesViewController.swift */,
+				8974380623ED37A800F2CCB7 /* MessageSearchResultsViewController.swift */,
+				897437E423ED0DEF00F2CCB7 /* MainInterface.storyboard */,
 			);
 			path = iMessage;
+			sourceTree = "<group>";
+		};
+		8974380123ED33D100F2CCB7 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				897437FD23ED333300F2CCB7 /* MessageCollectionExtension.swift */,
+				897437FF23ED338500F2CCB7 /* MessageSearchExtension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		897E048E23E9EC930084D872 /* Upload */ = {
@@ -779,7 +800,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				897437E823ED0DF100F2CCB7 /* Assets.xcassets in Resources */,
+				897437FA23ED285700F2CCB7 /* Assets.xcassets in Resources */,
+				8974380523ED373B00F2CCB7 /* Assets.xcassets in Resources */,
 				897437E623ED0DEF00F2CCB7 /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -908,9 +930,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				897437F223ED182E00F2CCB7 /* FolderSelectedCell.swift in Sources */,
+				897437F923ED280A00F2CCB7 /* SearchResultsViewController.swift in Sources */,
+				897437FE23ED333300F2CCB7 /* MessageCollectionExtension.swift in Sources */,
 				897437E323ED0DEF00F2CCB7 /* MessagesViewController.swift in Sources */,
+				897437F723ED259800F2CCB7 /* SearchTableViewController.swift in Sources */,
 				897437F023ED101B00F2CCB7 /* SearchBar.swift in Sources */,
+				8974380723ED37A800F2CCB7 /* MessageSearchResultsViewController.swift in Sources */,
 				897437F123ED11A700F2CCB7 /* UIColorExtension.swift in Sources */,
+				8974380023ED338500F2CCB7 /* MessageSearchExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -955,6 +982,7 @@
 				46D5E07422A87F5F003B41DE /* FolderStruct.swift in Sources */,
 				89CD1D04229201BA004BD0A0 /* DownloadImage.swift in Sources */,
 				899F664723E3BDDF0022C099 /* ProfilePageFunctions.swift in Sources */,
+				897437F623ED258600F2CCB7 /* SearchTableViewController.swift in Sources */,
 				46D48D902318A7D100952EDB /* FolderReference.swift in Sources */,
 				EB63B7DE226A7933004C7E2C /* CustomImageFlowLayout.swift in Sources */,
 				4607196E235ACC1900BE17DF /* PanGestureExtension.swift in Sources */,

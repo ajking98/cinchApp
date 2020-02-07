@@ -15,9 +15,7 @@ class SearchBar: UISearchBar {
     func setup(_ width: CGFloat) {
         self.width = width
         placeholder = "Search"
-        backgroundColor = .lightGray
         
-        layer.cornerRadius = 3
         frame.size.width = width
         backgroundColor = .white
     }

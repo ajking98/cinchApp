@@ -5,6 +5,7 @@
     Add search Bar to navigation bar
     Add collectionview to entire view
     Add searchview to iMessage
+    Pressing search should trigger the next view
  */
 //  Created by Alsahlani, Yassin K on 2/6/20.
 //
@@ -22,6 +23,10 @@ class MessagesViewController: MSMessagesAppViewController {
     //views
     var searchBar = SearchBar(frame: CGRect(x: 0, y: 0, width: 310, height: 32.5))
     var collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
+    var tableTagsView = UITableView()
+    
+    //view controllers
+    var searchTableViewController = SearchTableViewController(style: .plain)
 
     
     override func viewDidLoad() {
@@ -31,6 +36,7 @@ class MessagesViewController: MSMessagesAppViewController {
         setup()
         setupSearchBar()
         setupCollectionView()
+        setupTableTagsView()
     }
     
     
@@ -43,10 +49,28 @@ class MessagesViewController: MSMessagesAppViewController {
         searchBar.setup(width)
         searchBar.delegate = self
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: searchBar)
+        navigationController?.navigationBar.shadowImage = UIImage()
         
         let cancelButtonAttributes = [NSAttributedString.Key.foregroundColor: UIColor.customRed]
         UIBarButtonItem.appearance().setTitleTextAttributes(cancelButtonAttributes , for: .normal)
     }
+    
+    func setupTableTagsView() {
+        view.addSubview(tableTagsView)
+        tableTagsView.alpha = 0
+        tableTagsView.register(UITableViewCell.self, forCellReuseIdentifier: identifier)
+        tableTagsView.dataSource = searchTableViewController
+        tableTagsView.delegate = searchTableViewController
+        tableTagsView.separatorStyle = .none
+        
+        //constraints
+        tableTagsView.translatesAutoresizingMaskIntoConstraints = false
+        tableTagsView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        tableTagsView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0).isActive = true
+        tableTagsView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        tableTagsView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+    }
+    
     
     func setupCollectionView() {
         collectionView.register(FolderSelectedCell.self, forCellWithReuseIdentifier: identifier)
@@ -80,82 +104,3 @@ class MessagesViewController: MSMessagesAppViewController {
     
 
 }
-
-
-//Search
-extension MessagesViewController: UISearchBarDelegate {
-    
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        searchBar.setShowsCancelButton(true, animated: true)
-        expandView()
-//        tableTagsView.alpha = 1
-    }
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.endEditing(true)
-    }
-    
-    func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
-        if presentationStyle == .compact {
-            return false
-        }
-        return true
-    }
-    
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        searchBar.setShowsCancelButton(false, animated: true)
-//        tableTagsView.alpha = 0
-    }
-    
-    func expandView() {
-        if presentationStyle == .compact {
-            requestPresentationStyle(.expanded)
-        }
-    }
-    
-    func minimizeView() {
-        if presentationStyle == .expanded {
-            requestPresentationStyle(.compact)
-        }
-    }
-}
-
-
-//Collection
-extension MessagesViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 12
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! FolderSelectedCell
-        cell.backgroundColor = .lightGray
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        minimizeView()
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (collectionView.bounds.width)/3 - 1.5, height: (collectionView.bounds.width)/2)
-    }
-    
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0.5
-    }
-
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 2
-    }
-    
-    
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-          return true
-      }
-    
-}
-
