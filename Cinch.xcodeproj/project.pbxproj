@@ -44,6 +44,14 @@
 		893911B723DFFF2900AFAE80 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893911B623DFFF2900AFAE80 /* ProfileViewController.swift */; };
 		894C36B823E24349008E717D /* ProfileViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894C36B723E24349008E717D /* ProfileViewControllerExtension.swift */; };
 		896556ED23E0CA9600666AB9 /* ProfileStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896556EC23E0CA9600666AB9 /* ProfileStackView.swift */; };
+		897437E023ED0DEF00F2CCB7 /* Messages.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4622493622DFAC8F0005B12F /* Messages.framework */; };
+		897437E323ED0DEF00F2CCB7 /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897437E223ED0DEF00F2CCB7 /* MessagesViewController.swift */; };
+		897437E623ED0DEF00F2CCB7 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 897437E423ED0DEF00F2CCB7 /* MainInterface.storyboard */; };
+		897437E823ED0DF100F2CCB7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 897437E723ED0DF100F2CCB7 /* Assets.xcassets */; };
+		897437EC23ED0DF100F2CCB7 /* iMessage.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 897437DF23ED0DEF00F2CCB7 /* iMessage.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		897437F023ED101B00F2CCB7 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891065C723DE613C00EB8238 /* SearchBar.swift */; };
+		897437F123ED11A700F2CCB7 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46ADC110233FFBA1001B62E8 /* UIColorExtension.swift */; };
+		897437F223ED182E00F2CCB7 /* FolderSelectedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E966AC23E8EE1A00BAF92E /* FolderSelectedCell.swift */; };
 		897E049023E9ED140084D872 /* Upload.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 897E048F23E9ED140084D872 /* Upload.storyboard */; };
 		897E049223E9ED8A0084D872 /* UploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897E049123E9ED8A0084D872 /* UploadViewController.swift */; };
 		897E049423E9FE190084D872 /* AddPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897E049323E9FE190084D872 /* AddPostViewController.swift */; };
@@ -74,6 +82,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		897437EA23ED0DF100F2CCB7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EB74D3AA226025E900556399 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 897437DE23ED0DEF00F2CCB7;
+			remoteInfo = iMessage;
+		};
 		EB74D3C7226025EA00556399 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = EB74D3AA226025E900556399 /* Project object */;
@@ -97,6 +112,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				897437EC23ED0DF100F2CCB7 /* iMessage.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -177,6 +193,11 @@
 		893911B623DFFF2900AFAE80 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		894C36B723E24349008E717D /* ProfileViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewControllerExtension.swift; sourceTree = "<group>"; };
 		896556EC23E0CA9600666AB9 /* ProfileStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStackView.swift; sourceTree = "<group>"; };
+		897437DF23ED0DEF00F2CCB7 /* iMessage.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = iMessage.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		897437E223ED0DEF00F2CCB7 /* MessagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
+		897437E523ED0DEF00F2CCB7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		897437E723ED0DF100F2CCB7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		897437E923ED0DF100F2CCB7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		897E048F23E9ED140084D872 /* Upload.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Upload.storyboard; sourceTree = "<group>"; };
 		897E049123E9ED8A0084D872 /* UploadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadViewController.swift; sourceTree = "<group>"; };
 		897E049323E9FE190084D872 /* AddPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPostViewController.swift; sourceTree = "<group>"; };
@@ -229,6 +250,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		897437DC23ED0DEF00F2CCB7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				897437E023ED0DEF00F2CCB7 /* Messages.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EB74D3AF226025E900556399 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -452,6 +481,17 @@
 			path = Elements;
 			sourceTree = "<group>";
 		};
+		897437E123ED0DEF00F2CCB7 /* iMessage */ = {
+			isa = PBXGroup;
+			children = (
+				897437E223ED0DEF00F2CCB7 /* MessagesViewController.swift */,
+				897437E423ED0DEF00F2CCB7 /* MainInterface.storyboard */,
+				897437E723ED0DF100F2CCB7 /* Assets.xcassets */,
+				897437E923ED0DF100F2CCB7 /* Info.plist */,
+			);
+			path = iMessage;
+			sourceTree = "<group>";
+		};
 		897E048E23E9EC930084D872 /* Upload */ = {
 			isa = PBXGroup;
 			children = (
@@ -478,13 +518,6 @@
 				8E92367D229C5B4F0071E63C /* HelperFrontEnd.swift */,
 			);
 			path = HelpingStructs;
-			sourceTree = "<group>";
-		};
-		89C6B05623EB83960027F51A /* Search */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Search;
 			sourceTree = "<group>";
 		};
 		8E5EDB4522C0043B0088FDA9 /* Tags */ = {
@@ -535,6 +568,7 @@
 				EB74D3D4226025EA00556399 /* CinchUITests */,
 				4622493822DFAC8F0005B12F /* CinchIMessageExtension */,
 				46F2B5C62371274600FFC751 /* CinchShareExtension */,
+				897437E123ED0DEF00F2CCB7 /* iMessage */,
 				EB74D3B3226025E900556399 /* Products */,
 				C2EFC41CF087D33E3A5E7F49 /* Pods */,
 				72C6EA0D0A89A8447B5FD88A /* Frameworks */,
@@ -547,6 +581,7 @@
 				EB74D3B2226025E900556399 /* Cinch.app */,
 				EB74D3C6226025EA00556399 /* CinchTests.xctest */,
 				EB74D3D1226025EA00556399 /* CinchUITests.xctest */,
+				897437DF23ED0DEF00F2CCB7 /* iMessage.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -554,7 +589,6 @@
 		EB74D3B4226025E900556399 /* Cinch */ = {
 			isa = PBXGroup;
 			children = (
-				89C6B05623EB83960027F51A /* Search */,
 				897E048E23E9EC930084D872 /* Upload */,
 				4622495222DFAD240005B12F /* Cinch.entitlements */,
 				EB74D3FF2260520C00556399 /* Storyboards */,
@@ -604,6 +638,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		897437DE23ED0DEF00F2CCB7 /* iMessage */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 897437EF23ED0DF100F2CCB7 /* Build configuration list for PBXNativeTarget "iMessage" */;
+			buildPhases = (
+				897437DB23ED0DEF00F2CCB7 /* Sources */,
+				897437DC23ED0DEF00F2CCB7 /* Frameworks */,
+				897437DD23ED0DEF00F2CCB7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = iMessage;
+			productName = iMessage;
+			productReference = 897437DF23ED0DEF00F2CCB7 /* iMessage.appex */;
+			productType = "com.apple.product-type.app-extension.messages";
+		};
 		EB74D3B1226025E900556399 /* Cinch */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = EB74D3DA226025EA00556399 /* Build configuration list for PBXNativeTarget "Cinch" */;
@@ -619,6 +670,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				897437EB23ED0DF100F2CCB7 /* PBXTargetDependency */,
 			);
 			name = Cinch;
 			productName = InstagramClone;
@@ -670,10 +722,13 @@
 			isa = PBXProject;
 			attributes = {
 				DefaultBuildSystemTypeForWorkspace = Original;
-				LastSwiftUpdateCheck = 1020;
+				LastSwiftUpdateCheck = 1120;
 				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = "Gedi, Ahmed M";
 				TargetAttributes = {
+					897437DE23ED0DEF00F2CCB7 = {
+						CreatedOnToolsVersion = 11.2.1;
+					};
 					EB74D3B1226025E900556399 = {
 						CreatedOnToolsVersion = 10.2;
 						SystemCapabilities = {
@@ -714,11 +769,21 @@
 				EB74D3B1226025E900556399 /* Cinch */,
 				EB74D3C5226025EA00556399 /* CinchTests */,
 				EB74D3D0226025EA00556399 /* CinchUITests */,
+				897437DE23ED0DEF00F2CCB7 /* iMessage */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		897437DD23ED0DEF00F2CCB7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				897437E823ED0DF100F2CCB7 /* Assets.xcassets in Resources */,
+				897437E623ED0DEF00F2CCB7 /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EB74D3B0226025E900556399 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -838,6 +903,17 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		897437DB23ED0DEF00F2CCB7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				897437F223ED182E00F2CCB7 /* FolderSelectedCell.swift in Sources */,
+				897437E323ED0DEF00F2CCB7 /* MessagesViewController.swift in Sources */,
+				897437F023ED101B00F2CCB7 /* SearchBar.swift in Sources */,
+				897437F123ED11A700F2CCB7 /* UIColorExtension.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EB74D3AE226025E900556399 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -913,6 +989,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		897437EB23ED0DF100F2CCB7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 897437DE23ED0DEF00F2CCB7 /* iMessage */;
+			targetProxy = 897437EA23ED0DF100F2CCB7 /* PBXContainerItemProxy */;
+		};
 		EB74D3C8226025EA00556399 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = EB74D3B1226025E900556399 /* Cinch */;
@@ -942,6 +1023,14 @@
 			name = MainInterface.storyboard;
 			sourceTree = "<group>";
 		};
+		897437E423ED0DEF00F2CCB7 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				897437E523ED0DEF00F2CCB7 /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
 		EB74D3BE226025EA00556399 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -953,6 +1042,50 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		897437ED23ED0DF100F2CCB7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3U2RYAR5C3;
+				INFOPLIST_FILE = iMessage/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.CinchApp.iMessage;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		897437EE23ED0DF100F2CCB7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3U2RYAR5C3;
+				INFOPLIST_FILE = iMessage/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.CinchApp.iMessage;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		EB74D3D8226025EA00556399 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1206,6 +1339,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		897437EF23ED0DF100F2CCB7 /* Build configuration list for PBXNativeTarget "iMessage" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				897437ED23ED0DF100F2CCB7 /* Debug */,
+				897437EE23ED0DF100F2CCB7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		EB74D3AD226025E900556399 /* Build configuration list for PBXProject "Cinch" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
