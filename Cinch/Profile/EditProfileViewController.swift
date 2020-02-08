@@ -18,6 +18,7 @@ class EditProfileViewController: UIViewController {
     // Views
     var titleBar = UIView()
     var imageView = UIImageView()
+    var editImage = UIView()
     var nameText = UITextField()
     var changePhoto = UILabel()
     var saveButton = UIButton()
@@ -37,6 +38,7 @@ class EditProfileViewController: UIViewController {
         self.setupTitleBar()
         self.setupEditLabel()
         self.setUpProfileImage()
+        self.setUpEditImage()
         self.setupChangePhoto()
         self.setupNameField()
         self.setupSaveButton()
@@ -96,8 +98,39 @@ class EditProfileViewController: UIViewController {
         imageView.layer.cornerRadius = height * 0.06
     }
     
+    func setUpEditImage() {
+        editImage.layer.masksToBounds = true
+        editImage.backgroundColor = .black
+        editImage.alpha = 0.5
+        
+        view.addSubview(editImage)
+        
+        editImage.frame = CGRect.zero
+        editImage.translatesAutoresizingMaskIntoConstraints = false
+        editImage.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        editImage.heightAnchor.constraint(equalToConstant: height*0.12).isActive = true
+        editImage.widthAnchor.constraint(equalToConstant: height*0.12).isActive = true
+        editImage.topAnchor.constraint(equalTo: titleBar.bottomAnchor, constant: height*0.02).isActive = true
+        editImage.layer.cornerRadius = height * 0.06
+        
+        let edit = UIImageView(image: UIImage(named: "cameraedit"))
+        editImage.addSubview(edit)
+        
+        edit.frame = CGRect.zero
+        edit.translatesAutoresizingMaskIntoConstraints = false
+        edit.centerXAnchor.constraint(equalTo: editImage.centerXAnchor).isActive = true
+        edit.centerYAnchor.constraint(equalTo: editImage.centerYAnchor).isActive = true
+        edit.heightAnchor.constraint(equalToConstant: height*0.045).isActive = true
+        edit.widthAnchor.constraint(equalToConstant: height*0.05).isActive = true
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleChangePhoto))
+        edit.isUserInteractionEnabled = true
+        edit.addGestureRecognizer(tap)
+    }
+    
+    // TODO: Decided between using a label to edit or overlay camera on profile image
     func setupChangePhoto() {
-        changePhoto.text = "Change Photo"
+        changePhoto.text = ""
         changePhoto.textAlignment = .center
         changePhoto.font = .boldSystemFont(ofSize: height*0.015)
         view.addSubview(changePhoto)

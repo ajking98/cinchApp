@@ -319,8 +319,8 @@
 			children = (
 				896556EB23E0CA5500666AB9 /* Elements */,
 				46A3E09622BF0B6E003F6F35 /* ProfilePage.storyboard */,
-				46CED9BA23EE2BA900D16E68 /* EditProfileViewController.swift */,
 				893911B623DFFF2900AFAE80 /* ProfileViewController.swift */,
+				46CED9BA23EE2BA900D16E68 /* EditProfileViewController.swift */,
 				894C36B723E24349008E717D /* ProfileViewControllerExtension.swift */,
 				899F664623E3BDDF0022C099 /* ProfilePageFunctions.swift */,
 				89E966AA23E8E67700BAF92E /* FolderSelectedController.swift */,
