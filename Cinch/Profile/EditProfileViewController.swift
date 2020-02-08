@@ -28,7 +28,8 @@ class EditProfileViewController: UIViewController {
     
     // Data Points
     var profileImage: UIImageView?
-    var profileName: UILabel?
+    var profileLabel: UILabel?
+    var profileName = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -115,9 +116,12 @@ class EditProfileViewController: UIViewController {
     }
     
     func setupNameField() {
-        if profileName != nil {
-            nameText.text = profileName?.text
+        if profileName != "" {
+            print("here")
+            print(profileName)
+            nameText.text = profileName
         } else {
+            print("there")
             nameText.placeholder = "Name"
         }
         nameText.font = UIFont.systemFont(ofSize: 15)

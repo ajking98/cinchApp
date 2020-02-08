@@ -17,13 +17,26 @@ class ProfileStackView: UIStackView {
     
     var followings = 0
     var followers = 0
-    var likes = 0
+    var gems = 0
+    let username = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
     
-    func setup(followings: Int, followers: Int, Likes: Int, view: UIView, scrollView: UIScrollView) {
+    func setup(followings: Int, followers: Int, Gems: Int, view: UIView, scrollView: UIScrollView) {
         self.view = view
         self.scrollView = scrollView
+        self.grabData()
         setupStatusView()
         setupSpacingBar()
+    }
+    
+    func grabData() {
+        print(username)
+        UserStruct().readFollowing(user: username) { (followers) in
+            self.followings = followers.count
+        }
+        
+        UserStruct().readFollowers(user: username) { (followers) in
+            self.followers = followers.count
+        }
     }
     
     func setupStatusView() {
@@ -60,7 +73,7 @@ class ProfileStackView: UIStackView {
         
         setupInnerStackViewData("Following", followings)
         setupInnerStackViewData("Followers", followers)
-        setupInnerStackViewData("Likes", likes)
+        setupInnerStackViewData("Gems", gems)
     }
     
     
@@ -68,7 +81,7 @@ class ProfileStackView: UIStackView {
         let view = UIView()
         let numberLabel = UILabel()
         let textLabel = UILabel()
-        numberLabel.text = "\(likes)"
+        numberLabel.text = "\(gems)"
         textLabel.text = variableName
         textLabel.textColor = .gray
         numberLabel.textAlignment = .center
