@@ -37,7 +37,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XIQ-18-0KO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3382" y="-662"/>
+            <point key="canvasLocation" x="3860" y="-652"/>
         </scene>
         <!--Item-->
         <scene sceneID="IWK-Pb-eWS">
@@ -57,6 +57,21 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BHU-C0-qSJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1258.4000000000001" y="-651.72413793103453"/>
+        </scene>
+        <!--Edit Profile View Controller-->
+        <scene sceneID="O2g-ft-Rjx">
+            <objects>
+                <viewController storyboardIdentifier="EditProfileViewController" id="qta-fY-D50" customClass="EditProfileViewController" customModule="Cinch" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="FSp-aB-dTH">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="lP9-qt-nWJ"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="g6b-Ff-VcC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3054" y="-652"/>
         </scene>
     </scenes>
 </document>

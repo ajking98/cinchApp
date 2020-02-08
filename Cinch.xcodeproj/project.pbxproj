@@ -23,6 +23,7 @@
 		46ADC111233FFBA1001B62E8 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46ADC110233FFBA1001B62E8 /* UIColorExtension.swift */; };
 		46ADC113233FFBD4001B62E8 /* UIImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46ADC112233FFBD4001B62E8 /* UIImageViewExtension.swift */; };
 		46ADC115233FFC8F001B62E8 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46ADC114233FFC8F001B62E8 /* UIImageExtension.swift */; };
+		46CED9BB23EE2BA900D16E68 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46CED9BA23EE2BA900D16E68 /* EditProfileViewController.swift */; };
 		46D48D902318A7D100952EDB /* FolderReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D48D8F2318A7D100952EDB /* FolderReference.swift */; };
 		46D48D97231AF48700952EDB /* ParentPostStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D48D96231AF48700952EDB /* ParentPostStruct.swift */; };
 		46D5E07122A87F15003B41DE /* Folder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E07022A87F15003B41DE /* Folder.swift */; };
@@ -168,6 +169,7 @@
 		46ADC110233FFBA1001B62E8 /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		46ADC112233FFBD4001B62E8 /* UIImageViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageViewExtension.swift; sourceTree = "<group>"; };
 		46ADC114233FFC8F001B62E8 /* UIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
+		46CED9BA23EE2BA900D16E68 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		46D48D8F2318A7D100952EDB /* FolderReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderReference.swift; sourceTree = "<group>"; };
 		46D48D96231AF48700952EDB /* ParentPostStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentPostStruct.swift; sourceTree = "<group>"; };
 		46D5E07022A87F15003B41DE /* Folder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Folder.swift; sourceTree = "<group>"; };
@@ -317,6 +319,7 @@
 			children = (
 				896556EB23E0CA5500666AB9 /* Elements */,
 				46A3E09622BF0B6E003F6F35 /* ProfilePage.storyboard */,
+				46CED9BA23EE2BA900D16E68 /* EditProfileViewController.swift */,
 				893911B623DFFF2900AFAE80 /* ProfileViewController.swift */,
 				894C36B723E24349008E717D /* ProfileViewControllerExtension.swift */,
 				899F664623E3BDDF0022C099 /* ProfilePageFunctions.swift */,
@@ -989,6 +992,7 @@
 				467E5DB922FCE8EF00F23ABD /* Post.swift in Sources */,
 				891065C823DE613C00EB8238 /* SearchBar.swift in Sources */,
 				8E95FFCE22BF283F0067B5F2 /* ParentTagStruct.swift in Sources */,
+				46CED9BB23EE2BA900D16E68 /* EditProfileViewController.swift in Sources */,
 				897E049223E9ED8A0084D872 /* UploadViewController.swift in Sources */,
 				8E5EDB4E22C025990088FDA9 /* TagElementStruct.swift in Sources */,
 				EB63B7E0226A7EB5004C7E2C /* ImageInsta.swift in Sources */,
