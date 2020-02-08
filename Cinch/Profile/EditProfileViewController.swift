@@ -20,7 +20,6 @@ class EditProfileViewController: UIViewController {
     var imageView = UIImageView()
     var editImage = UIView()
     var nameText = UITextField()
-    var changePhoto = UILabel()
     var saveButton = UIButton()
     
     // ImagePicker
@@ -39,7 +38,6 @@ class EditProfileViewController: UIViewController {
         self.setupEditLabel()
         self.setUpProfileImage()
         self.setUpEditImage()
-        self.setupChangePhoto()
         self.setupNameField()
         self.setupSaveButton()
     }
@@ -128,26 +126,6 @@ class EditProfileViewController: UIViewController {
         edit.addGestureRecognizer(tap)
     }
     
-    // TODO: Decided between using a label to edit or overlay camera on profile image
-    func setupChangePhoto() {
-        changePhoto.text = ""
-        changePhoto.textAlignment = .center
-        changePhoto.font = .boldSystemFont(ofSize: height*0.015)
-        view.addSubview(changePhoto)
-        
-        changePhoto.frame = CGRect.zero
-        changePhoto.translatesAutoresizingMaskIntoConstraints = false
-        changePhoto.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        changePhoto.heightAnchor.constraint(equalToConstant: height*0.05).isActive = true
-        changePhoto.widthAnchor.constraint(equalToConstant: width*0.4).isActive = true
-        changePhoto.topAnchor.constraint(equalTo: imageView.bottomAnchor).isActive = true
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(handleChangePhoto))
-        changePhoto.isUserInteractionEnabled = true
-        changePhoto.addGestureRecognizer(tap)
-        
-    }
-    
     func setupNameField() {
         if profileName != "" {
             print("here")
@@ -172,7 +150,7 @@ class EditProfileViewController: UIViewController {
         nameText.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         nameText.heightAnchor.constraint(equalToConstant: height*0.05).isActive = true
         nameText.widthAnchor.constraint(equalToConstant: width*0.8).isActive = true
-        nameText.topAnchor.constraint(equalTo: changePhoto.bottomAnchor, constant: height*0.01).isActive = true
+        nameText.topAnchor.constraint(equalTo: editImage.bottomAnchor, constant: height*0.05).isActive = true
         
         createHorizontalBar(superView: view, relativeView: nameText, relativeViewConstant: 0, widthConstant: Float(width*0.8))
     }
