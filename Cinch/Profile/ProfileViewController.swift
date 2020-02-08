@@ -8,6 +8,7 @@
 //
 
 import UIKit
+import MobileCoreServices
 
 class ProfileViewController: UIViewController {
     
@@ -16,11 +17,11 @@ class ProfileViewController: UIViewController {
     var width: CGFloat = 0
     var isUser = true
     
-    var profileName = "Ahmed Gedi"
-    var username = "@ahmedgedi"
+    var profileName = ""
+    var username = ""
     var followers = 0
     var followings = 0
-    var likes = 0
+    var gems = 0
     var isFollowing = false
     var cellIdentifier = "Cell"
     
@@ -38,17 +39,50 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.fetchData()
         setupData()
         setupScrollView()
         setupNavigationBar()
         setupProfileImage()
         setupUsernameLabel()
         setupGemLabel()
-        stackView.setup(followings: followings, followers: followers, Likes: likes, view: view, scrollView: scrollView)
+        stackView.setup(followings: followings, followers: followers, Gems: gems, view: view, scrollView: scrollView)
         setupButton()
         setupSegmentControl()
         setupSegmentControlBars()
         setupCollectionViews()
+    }
+    
+    func fetchData() {
+        let localUser = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
+        print("these are the two usernames:", username, " VS ", localUser)
+        if username == ""  || username == localUser { //checks if the user is looking at their profile or someone else's
+            username = localUser
+        } else {
+            UserStruct().readFollowing(user: localUser) { (followers) in
+                if followers.values.contains(self.username) {
+                    //make the button disabled and greyed out
+                    print("hey")
+                }
+            }
+        }
+        // Set Profile Name
+        // TODO: Fix, being completed last so changes aren't made
+        UserStruct().readName(user: username) { (name) in
+            print(name)
+            if (name == "") {
+                self.profileName = "No Name"
+            } else {
+                print("boom")
+                self.profileName = name
+            }
+        }
+        
+        //Set Profile Picture
+        UserStruct().readProfilePic(user: username) { (link) in
+            let url = URL(string: link)
+//            self.profileImageView.sd_setImage(with: url, placeholderImage: UIImage(named: "empty"), completed: nil)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -78,6 +112,8 @@ class ProfileViewController: UIViewController {
     
     func setupNavigationBar() {
         navigationController?.navigationBar.barTintColor = .white
+        print(profileName)
+        print("hey")
         title = profileName
         
         //if it is not the local user
