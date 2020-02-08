@@ -141,7 +141,7 @@ struct PostStruct {
         ParentTagStruct().addTag(tag: tag)
     }
     
-    //This doesn't add the post to the tags
+    //This doesn't add the post to the tag
     ///Adds mutliple tags at a time to a single post
     func addTags(post : String, newTags : [String]) {
         var tagDict : [String : String] = [:]

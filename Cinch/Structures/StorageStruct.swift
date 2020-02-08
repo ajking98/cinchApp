@@ -41,7 +41,6 @@ struct StorageStruct {
         })
     }
     
-    
     ///Uploads video to storage and uses closure to return URL
     func uploadVideo(video: AVPlayerItem, completion: @escaping(String)-> Void){
         let storageRef = Storage.storage().reference().child("videos").child(randomString(20) + ".mp4")
@@ -113,6 +112,61 @@ struct StorageStruct {
 //            uploadImage(image: UIImage(named: "empty")!, completion: completion)
         }
     }
+    
+    ///Uploads local video to firebase - Latest and the greatest 
+    func uploadContent(mediaLink: URL, completion: @escaping(String) -> Void){
+        if checkIfVideo(mediaLink.absoluteString) {
+            let storageRef = Storage.storage().reference().child("videos").child(randomString(20) + ".mp4")
+            let data = NSData(contentsOfFile: mediaLink.path)
+            storageRef.putData(data! as Data, metadata: nil) { (metadata, error) in
+                print("working url")
+                guard metadata != nil else {
+                     return
+                 }
+                 if error != nil {
+                     print("there is an error in url", error)
+                 }
+
+                 storageRef.downloadURL { (url, error) in
+                     guard let downloadURL = url else {
+                         print("error with url", error?.localizedDescription)
+                         return
+                     }
+                     print("here is your url:", downloadURL.absoluteString)
+                     completion(downloadURL.absoluteString)
+                 }
+            }
+        }
+        else {
+            var imageData = Data()
+            do {
+                imageData = try Data(contentsOf: mediaLink)
+            }
+            catch {
+                print("error")
+            }
+            
+            let storageRef = Storage.storage().reference().child("PublicImages/" + randomString(20) + ".jpg")
+            storageRef.putData(imageData, metadata: nil, completion: { (metadata, error) in
+                guard (metadata != nil) else{
+                    print("Error occurred in the upload process")
+                    return
+                }
+                
+                storageRef.downloadURL {(url, error) in
+                    guard let downloadURL = url else {
+                        print("Error occurred")
+                        return
+                    }
+                    completion(downloadURL.absoluteString)
+                }
+            })
+            
+            
+        }
+    }
+    
+    
     
     // WORKS
     //Uploads image to Firebase Storage and adds the path to the firebase database under the user's profile image key

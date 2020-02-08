@@ -67,7 +67,7 @@ struct TagStruct {
         }
     }
     
-    //check is data already exists in db and updates or creates depending on the outcome
+    ///check is data already exists in db and updates or creates depending on the outcome
     func addElement(tagLabel : String, tagElement : TagElement) {
         let link = tagElement.link
         let updatedLink = convertStringToKey(link: link)

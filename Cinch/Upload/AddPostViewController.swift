@@ -11,7 +11,6 @@ import UIKit
 import XLActionController
 
 class AddPostViewController: UIViewController, UIGestureRecognizerDelegate{
-    
     //data
     var width: CGFloat = 0
     var height: CGFloat = 0
@@ -55,7 +54,7 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate{
         backButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(goBack)))
         let leftNavBarItem = UIBarButtonItem(customView: backButton)
         navigationItem.setLeftBarButton(leftNavBarItem, animated: false)
-        
+
         tabBarController?.tabBar.isHidden = true
     }
     
@@ -99,7 +98,6 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate{
             if !isVideo {
                 let imageData = try Data(contentsOf: mediaLink)
                 imageView.image = UIImage(data: imageData)
-                print("this is image")
             }
         }
         catch {
@@ -125,39 +123,60 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate{
         
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        tagField.endEditing(true)
+    }
+    
     @objc func goBack() {
         navigationController?.popViewController(animated: true)
     }
     
     @objc func handlePostMedia() {
-        print("we are posting")
-
-        //TODO: make this an extension to UIViewController
-        let actionController = SpotifyActionController()
-        actionController.headerData = SpotifyHeaderData(title: "select a folder for the image", subtitle: "", image: UIImage())
         
-        UserStruct().readFolders(user: "121212") { (folders) in
-            for item in folders {
-                print("reaching here", item)
-                actionController.addAction(Action(ActionData(title: "\(item.lowercased())", subtitle: "For Content"), style: .default, handler: { action in
-                print("SOmething elese")
-                
-//                StorageStruct().uploadImage(image: UIImage(), completion: { (link) in
-//
-//                    FolderStruct().addContent(user: self.username, folderName: item, link: link)
-//                    FolderStruct().updateNumOfImagesByConstant(user: self.username, folderName: item, constant: 1)
-//                })
-                
-            }))
-        }
-        }
-
-        StorageStruct().uploadImage(image: imageView.image!, completion: { (link) in
-            FolderStruct().addContent(user: "121212", folderName: "random", link: link)
-            
-        })
-        
-        present(actionController, animated: true, completion: nil)
+        SaveToFolder().saveToFolder(navigationController!, localLink: mediaLink, tags: tagField.text)
     }
 
+}
+
+struct SaveToFolder {
+    
+    func saveToFolder(_ navigationController: UINavigationController, localLink: URL, tags: String) {
+        let image = UIImage()
+        let actionController = SpotifyActionController()
+        actionController.headerData = SpotifyHeaderData(title: "select a folder", subtitle: "", image: image)
+        guard let username = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
+        
+        
+        UserStruct().readFolders(user: username) { (folders) in
+            for item in folders {
+                actionController.addAction(Action(ActionData(title: "\(item.lowercased())", subtitle: "For Content"), style: .default, handler: { action in
+                    
+                    StorageStruct().uploadContent(mediaLink: localLink) { (link) in
+                        FolderStruct().addContent(user: username, folderName: item, link: link)
+                        self.addTags(link: link, tags: tags)
+                        navigationController.popViewController(animated: true)
+                    }
+                }))
+            }
+            
+            navigationController.present(actionController, animated: true, completion: nil)
+        }
+    }
+    
+    func addTags(link: String, tags: String){
+        let message = tags.components(separatedBy: CharacterSet(charactersIn: " ./"))
+        var tagArray = [String]()
+        guard let username = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
+        
+        for tag in message{
+            if tag.count > 2 {
+                let standardizedTag = tag.lowercased()
+                tagArray.append(standardizedTag)
+                TagStruct().addElement(tagLabel: standardizedTag, tagElement: TagElement(link: link))
+            }
+        }
+        let post = Post(isImage: !checkIfVideo(link), postOwner: username, link: link)
+        post.tags = tagArray
+        ParentPostStruct().addPost(post: post)
+    }
 }
