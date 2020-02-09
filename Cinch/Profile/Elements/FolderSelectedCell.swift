@@ -8,11 +8,34 @@
 
 import UIKit
 import AVKit
+import SDWebImage
 
 class FolderSelectedCell: UICollectionViewCell {
-    var imageView: UIImageView?
+    var imageView = UIImageView()
     
     func setup(link: String){
-        print("this is your link: ", link)
+        cleanup()
+        guard let contentLink = URL(string: link) else { return }
+        if checkIfVideo(link) {
+            print("this si the frame:", frame.size)
+            imageView.loadVideo(contentLink, size: frame.size)
+        }
+        else {
+            imageView.sd_setImage(with: URL(string: link), placeholderImage: UIImage(), completed: nil)
+        }
+        
+        //constraints
+        addSubview(imageView)
+        imageView.frame.size = frame.size
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.backgroundColor = .lightGray
+    }
+
+    func cleanup() {
+        imageView = UIImageView()
+        //TODO: these are the subviews 
+//        print("these are the subviews:", subviews.count)
+//        subviews[0].removeFromSuperview()
     }
 }

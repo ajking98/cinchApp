@@ -40,16 +40,15 @@ extension UIImageView {
         //TODO: handle local link
         let player = AVPlayer(url: link)
         loadVideo(player, size: size)
-        print("Step 1", link)
-        
         //TODO: handle public link
     }
 
     ///embeds video into imageView given a playerItem
     public func loadVideo(_ player : AVPlayer, size: CGSize) {
+        player.isMuted = true
         let playerLayer = AVPlayerLayer(player: player)
         playerLayer.frame.size = size
-        
+        playerLayer.videoGravity = .resizeAspectFill
         layer.addSublayer(playerLayer)
         player.play()
     }
