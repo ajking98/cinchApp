@@ -44,7 +44,7 @@ extension MessagesViewController: UISearchBarDelegate {
             searchBar.endEditing(true)
             let vc = MessageSearchResultsViewController()
             vc.initialNavigationController = navigationController
-            vc.setup()
+            vc.setup(term: searchBar.text!)
             vc.minimizeView = minimizeView
             navigationController?.pushViewController(vc, animated: true)
 

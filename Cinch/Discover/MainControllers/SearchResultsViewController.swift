@@ -12,7 +12,7 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
     
 
     //data
-    var searchedValue = ""
+    var searchTerm = ""
     
     //measurements
     var width: CGFloat = 0
@@ -26,16 +26,18 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setup()
+        
+        width = view.frame.width
+        height = view.frame.height
+        view.backgroundColor = .white
         setupNavigationBar()
         setupCollectionView()
     }
     
-    func setup() {
-        width = view.frame.width
-        height = view.frame.height
-        view.backgroundColor = .white
+    func setup(term: String) {
+        searchTerm = term
     }
+    
     
     func setupNavigationBar() {
         title = "Results"

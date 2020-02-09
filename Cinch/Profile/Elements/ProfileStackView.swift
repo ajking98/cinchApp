@@ -18,26 +18,26 @@ class ProfileStackView: UIStackView {
     var followings = 0
     var followers = 0
     var gems = 0
-    let username = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
+//    let username = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!) //TODO: This is giving an error
     
     func setup(followings: Int, followers: Int, Gems: Int, view: UIView, scrollView: UIScrollView) {
         self.view = view
         self.scrollView = scrollView
-        self.grabData()
+//        self.grabData()
         setupStatusView()
         setupSpacingBar()
     }
     
-    func grabData() {
-        print(username)
-        UserStruct().readFollowing(user: username) { (followers) in
-            self.followings = followers.count
-        }
-        
-        UserStruct().readFollowers(user: username) { (followers) in
-            self.followers = followers.count
-        }
-    }
+//    func grabData() {
+//        print(username)
+//        UserStruct().readFollowing(user: username) { (followers) in
+//            self.followings = followers.count
+//        }
+//
+//        UserStruct().readFollowers(user: username) { (followers) in
+//            self.followers = followers.count
+//        }
+//    }
     
     func setupStatusView() {
         backgroundColor = .black

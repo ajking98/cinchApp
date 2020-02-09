@@ -14,6 +14,7 @@ import UIKit
 class SearchTableViewController: UITableViewController {
     let identifier = "Cell"
     var searchHistory = ["Food", "Oranges", "Onions", "iPhone", "Swimming"]
+    var handleCellSelected: ((String) -> Void)!
     var secondTableView = UITableView()
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -31,7 +32,8 @@ class SearchTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("this row has been selected : ", indexPath.row)
-        presentNextView(term: searchHistory[indexPath.row])
+        guard let text = tableView.cellForRow(at: indexPath)?.textLabel?.text else { return }
+        handleCellSelected(text)
     }
     
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
@@ -57,10 +59,5 @@ class SearchTableViewController: UITableViewController {
         searchHistory.insert(term, at: 0)
         
         secondTableView.reloadData()
-    }
-    
-    
-    func presentNextView(term: String) {
-        print("present the next view")
     }
 }

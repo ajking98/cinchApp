@@ -160,25 +160,28 @@ extension DiscoverViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if searchBar.text != nil {
-            searchTableViewController.addSearchTerm(term: searchBar.text!)
-            
-            //TODO: Move this to a function
-            tableTagsView.alpha = 0
-            searchBar.endEditing(true)
-            let vc = SearchResultsViewController()
-            vc.initialNavigationController = navigationController
-            vc.setup()
-            navigationController?.pushViewController(vc, animated: true)
-
-//            nextView(text: searchBar.text!)
+            guard let text = searchBar.text else { return }
+            nextView(term: text)
         }
         
+    }
+    
+    func nextView(term: String) {
+        searchTableViewController.addSearchTerm(term: term)
+        tableTagsView.alpha = 0
+        searchBar.endEditing(true)
+        let vc = SearchResultsViewController()
+        vc.initialNavigationController = navigationController
+        vc.setup(term: term)
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     func setupTableTagsView() {
         view.addSubview(tableTagsView)
         tableTagsView.alpha = 0
         tableTagsView.register(UITableViewCell.self, forCellReuseIdentifier: identifier)
+        searchTableViewController.handleCellSelected = nextView(term:)
+        
         tableTagsView.dataSource = searchTableViewController
         tableTagsView.delegate = searchTableViewController
         tableTagsView.separatorStyle = .none
