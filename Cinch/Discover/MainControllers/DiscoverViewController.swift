@@ -181,7 +181,7 @@ extension DiscoverViewController: UISearchBarDelegate {
         tableTagsView.alpha = 0
         tableTagsView.register(UITableViewCell.self, forCellReuseIdentifier: identifier)
         searchTableViewController.handleCellSelected = nextView(term:)
-        
+        searchTableViewController.searchView = searchBar
         tableTagsView.dataSource = searchTableViewController
         tableTagsView.delegate = searchTableViewController
         tableTagsView.separatorStyle = .none

@@ -16,6 +16,8 @@ class SearchTableViewController: UITableViewController {
     var searchHistory = ["Food", "Oranges", "Onions", "iPhone", "Swimming"]
     var handleCellSelected: ((String) -> Void)!
     var secondTableView = UITableView()
+    var searchView = UISearchBar()
+
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         secondTableView = tableView
@@ -31,7 +33,6 @@ class SearchTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("this row has been selected : ", indexPath.row)
         guard let text = tableView.cellForRow(at: indexPath)?.textLabel?.text else { return }
         handleCellSelected(text)
     }
@@ -53,8 +54,8 @@ class SearchTableViewController: UITableViewController {
     }
     
     func addSearchTerm(term: String) {
-        if searchHistory.count == 10 {
-            searchHistory.remove(at: 9)
+        if searchHistory.count == 7 {
+            searchHistory.remove(at: 6)
         }
         searchHistory.insert(term, at: 0)
         

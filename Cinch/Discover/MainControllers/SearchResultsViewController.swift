@@ -13,6 +13,7 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
 
     //data
     var searchTerm = ""
+    var content: [String] = []
     
     //measurements
     var width: CGFloat = 0
@@ -36,14 +37,14 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
     
     func setup(term: String) {
         searchTerm = term
+        title = term
+        fetchContent()
     }
     
     
     func setupNavigationBar() {
-        title = "Results"
         tabBarController?.tabBar.isHidden = true
-        
-
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.customRed]
         let backButton = UIButton(type: .custom)
         backButton.setImage(UIImage(named: "backIcon-black"), for: .normal)
         backButton.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
@@ -66,7 +67,7 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
         collectionView.dataSource = self
         collectionView.contentInset.top = 24
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.register(SearchResultsCell.self, forCellWithReuseIdentifier: identifier)
+        collectionView.register(FolderSelectedCell.self, forCellWithReuseIdentifier: identifier)
         view.addSubview(collectionView)
         
         //constraints
@@ -78,6 +79,16 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
     }
     
     
+    func fetchContent() {
+        ParentTagStruct().readTag(tagLabel: searchTerm.lowercased()) { (tag) in
+            guard let tagElements = tag.tagElements else { return }
+            for element in tagElements {
+                self.content.append(element.link)
+            }
+            self.collectionView.reloadData()
+        }
+    }
+    
     @objc func goBack() {
         navigationController?.popViewController(animated: true)
     }
@@ -85,11 +96,15 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        print("this si the count fetched: ", content.count)
+        return content.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! SearchResultsCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! FolderSelectedCell
+        print("fetched")
+        cell.setup(link: content[indexPath.item])
+        
         return cell
     }
     

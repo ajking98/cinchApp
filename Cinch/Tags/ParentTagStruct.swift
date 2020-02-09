@@ -57,7 +57,7 @@ struct ParentTagStruct{
                 print("reading tag")
                 TagStruct().readAllElements(tagLabel: tagLabel, completion: { (tagElements) in
                     
-                    let firstUsed = tag["firstUsed"] as! Double
+                    guard let firstUsed = tag["firstUsed"] as? Double else { return }
                     let lastUsed = tag["lastUsed"] as! Double
                     let numberOfElements = tag["numberOfElements"] as! Int
                     let tagLabel = tag["tagLabel"] as! String
