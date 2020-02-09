@@ -22,12 +22,26 @@ class CellSelectedCell: UITableViewCell{
     let followUserIcon = UIImageView(image: UIImage(named: "followUserIcon"))
     let profileIcon = UIImageView(frame: CGRect.zero)
     let lowerText = UILabel(frame: CGRect.zero)
+    var link = ""
     
-    
-    func setup() {
+    func setup(link: String) {
+        self.link = link
+        fetchContent()
         setupFullScreenImageView()
         setupRightHandView()
         setupLowerText()
+        
+    }
+    
+    func fetchContent() {
+//        PostStruct().readLink(post: link) { (newLink) in
+        self.fullScreenImageView.sd_setImage(with: URL(string: link), placeholderImage: UIImage(), completed: nil)
+//        }
+        PostStruct().readPostOwner(post: link) { (author) in
+            UserStruct().readProfilePic(user: author) { (profilePic) in
+                self.profileIcon.sd_setImage(with: URL(string: profilePic), placeholderImage: UIImage(), completed: nil)
+            }
+        }
     }
     
     //full screen imageview
@@ -43,7 +57,6 @@ class CellSelectedCell: UITableViewCell{
         fullScreenImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0).isActive = true
         
         //Main Content
-        fullScreenImageView.image = UIImage(named: "1")
         fullScreenImageView.contentMode = .scaleAspectFit
         
     }
@@ -75,6 +88,7 @@ class CellSelectedCell: UITableViewCell{
         profileIcon.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
         profileIcon.layer.cornerRadius = 20
+        profileIcon.clipsToBounds = true
         
         
         //follow user icon

@@ -56,7 +56,6 @@ struct ParentTagStruct{
             if let tag = snapshot.value as? [String : Any] {
                 print("reading tag")
                 TagStruct().readAllElements(tagLabel: tagLabel, completion: { (tagElements) in
-                    
                     guard let firstUsed = tag["firstUsed"] as? Double else { return }
                     let lastUsed = tag["lastUsed"] as! Double
                     let numberOfElements = tag["numberOfElements"] as! Int

@@ -132,7 +132,6 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate{
     }
     
     @objc func handlePostMedia() {
-        
         SaveToFolder().saveToFolder(navigationController!, localLink: mediaLink, tags: tagField.text)
     }
 

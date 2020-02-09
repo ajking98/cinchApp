@@ -126,7 +126,7 @@ extension ProfileMainCollectionViewCell: UICollectionViewDelegate, UICollectionV
         
     }
     
-    // TODO: Add function when content in profile collections get clicked
+    ///Presents the Folder Selected Controller
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! ProfileCollectionViewCell
         

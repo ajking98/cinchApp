@@ -86,10 +86,13 @@ class FolderSelectedController: UIViewController, UICollectionViewDataSource, UI
         return cell
     }
     
+    
+    //summons the table with fullscreen cells
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let storyboard = UIStoryboard(name: "Discover", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "CellSelected") as! CellSelectedTable
         vc.modalPresentationStyle = .fullScreen
+        vc.content = content
         present(vc, animated: true, completion: nil)
     }
     

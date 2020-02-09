@@ -80,11 +80,8 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
     
     
     func fetchContent() {
-        ParentTagStruct().readTag(tagLabel: searchTerm.lowercased()) { (tag) in
-            guard let tagElements = tag.tagElements else { return }
-            for element in tagElements {
-                self.content.append(element.link)
-            }
+        TagStruct().readAllElementLinks(tagLabel: searchTerm.lowercased()) { (links) in
+            self.content = links
             self.collectionView.reloadData()
         }
     }
@@ -96,13 +93,11 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("this si the count fetched: ", content.count)
         return content.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! FolderSelectedCell
-        print("fetched")
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! FolderSelectedCell 
         cell.setup(link: content[indexPath.item])
         
         return cell

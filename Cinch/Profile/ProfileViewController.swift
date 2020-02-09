@@ -53,6 +53,8 @@ class ProfileViewController: UIViewController {
         setupCollectionViews()
     }
     
+    
+    //TODO: Take a look at this
     func fetchData() {
         let localUser = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
         print("these are the two usernames:", username, " VS ", localUser)

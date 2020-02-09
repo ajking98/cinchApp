@@ -48,7 +48,7 @@ extension ProfileViewController {
     ///Set Profile Name
     func fetchTitle() {
         UserStruct().readName(user: username) { (name) in
-            print(name)
+            print("this is your name: ", name)
             if (name == "") {
                 self.profileName = "Profile"
             } else {
@@ -84,7 +84,6 @@ extension EditProfileViewController {
             guard let profileImage = profileImage else { return }
             StorageStruct().uploadImage(image: image) { (newImage) in
                 UserStruct().updateProfilePic(user: username!, newProfilePic: newImage)
-                print(username)
                 profileImage.image = image
             }
         }

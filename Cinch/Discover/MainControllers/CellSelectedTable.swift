@@ -14,6 +14,7 @@ class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataS
     
     let tableView = UITableView(frame: CGRect.zero)
     let identifier = "Cell"
+    var content:[String] = []
     
     let backIcon = UIImageView(image: UIImage(named: "backIcon-white"))
     
@@ -68,13 +69,13 @@ class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataS
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return content.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier) as! CellSelectedCell
         cell.frame.size = view.frame.size
-        cell.setup()
+        cell.setup(link: content[indexPath.row])
         return cell
     }
     

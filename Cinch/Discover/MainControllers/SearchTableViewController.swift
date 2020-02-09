@@ -53,7 +53,9 @@ class SearchTableViewController: UITableViewController {
         secondTableView.reloadData()
     }
     
+    ///Adds a search term to the searchview suggested search terms 
     func addSearchTerm(term: String) {
+        guard !searchHistory.contains(term) else { return } //doesn't add the term if it already exists
         if searchHistory.count == 7 {
             searchHistory.remove(at: 6)
         }

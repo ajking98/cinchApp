@@ -67,6 +67,20 @@ struct TagStruct {
         }
     }
     
+    ///reads all the elements for a given tag label
+      func readAllElementLinks(tagLabel : String, completion : @escaping([String])->Void){
+          DB.child(tagLabel).child("elements").observeSingleEvent(of: .value) { (snapshot) in
+            var elementsDict:[String] = []
+            for child in snapshot.children {
+                guard let child = child as? DataSnapshot else { return }
+                guard let value = child.value as? [String: Any] else { return }
+                guard let link = value["link"] as? String else { return }
+                elementsDict.append(link)
+            }
+              completion(elementsDict)
+          }
+      }
+    
     ///check is data already exists in db and updates or creates depending on the outcome
     func addElement(tagLabel : String, tagElement : TagElement) {
         let link = tagElement.link
