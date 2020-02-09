@@ -23,6 +23,7 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
         else {
             cell.setupSecondCollectionView()
         }
+        cell.username = username
         cell.navigationController = self.navigationController
         return cell
     }
@@ -40,6 +41,9 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
 
 class ProfileMainCollectionViewCell: UICollectionViewCell {
     let cellIdentifier = "Cell"
+    var username = ""
+    var folders: [String] = []
+    var foldersFollowing: [String] = []
     
     //Elements
     var gemsCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -76,33 +80,60 @@ class ProfileMainCollectionViewCell: UICollectionViewCell {
     }
 }
 
-
+//Represents the collection view that holds the cells for gems folders and following folders
 extension ProfileMainCollectionViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    
+    ///gets the names of the folders from firebase
+    func fetchFolders() {
+        print("this is the username", username)
+        if folders.count == 0 && foldersFollowing.count == 0 {
+            UserStruct().readFolders(user: username) { (folders) in
+                print("my username: ", self.username)
+                self.folders = folders
+                self.gemsCollectionView.reloadData()
+            }
+            UserStruct().readFoldersReference(user: username) { (folderRefs) in
+                for folder in folderRefs {
+                    self.foldersFollowing.append(folder.folderName)
+                }
+                self.followingFoldersCollectionView.reloadData()
+            }
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10 //TODO: This should be calling a list count
+        fetchFolders()
+        
+        if collectionView == gemsCollectionView {
+            print("this is the count of the gems: ", folders.count)
+            return folders.count
+        }
+        return foldersFollowing.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! ProfileCollectionViewCell
         // For GemCollections
-        if collectionView == self.gemsCollectionView {
-//            let data = self.data[indexPath.item]
-            cell.nameLabel.text = "Gem"
+        if collectionView == gemsCollectionView {
+            cell.nameLabel.text = folders[indexPath.item]
+            return cell
         }
+        
         // For LikeCollections
-        else {
-            let cell = followingFoldersCollectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! ProfileCollectionViewCell
-//            let data = self.data[indexPath.item]
-            cell.nameLabel.text = "Like Collection"
-        }
+        cell.nameLabel.text = foldersFollowing[indexPath.item]
         return cell
         
     }
     
     // TODO: Add function when content in profile collections get clicked
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as! ProfileCollectionViewCell
+        
         let storyboard = UIStoryboard(name: "ProfilePage", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "FolderSelected") as! FolderSelectedController
+        vc.folderName = cell.nameLabel.text!
+        vc.username = username
         navigationController.pushViewController(vc, animated: true)
     }
     

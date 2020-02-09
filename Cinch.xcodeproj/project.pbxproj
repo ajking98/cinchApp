@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		15C942DAA1A8F35E4A1F7C15 /* Pods_Cinch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DFA3D4756B7C9AA1CE7F219 /* Pods_Cinch.framework */; };
+		31FC04D4F39655A4A315FA9A /* Pods_iMessage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8197CE2758889452E7EA0740 /* Pods_iMessage.framework */; };
 		4607196E235ACC1900BE17DF /* PanGestureExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4607196D235ACC1900BE17DF /* PanGestureExtension.swift */; };
 		463A844322F6279A00F9B4CD /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463A844222F6279A00F9B4CD /* CameraViewController.swift */; };
 		463A844522F627F000F9B4CD /* CameraViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463A844422F627F000F9B4CD /* CameraViewCell.swift */; };
@@ -139,6 +140,7 @@
 
 /* Begin PBXFileReference section */
 		023262E997E9F0A03CDAA1F7 /* Pods_CinchIMessageExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CinchIMessageExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0DA2F8AC1BF415C57806483F /* Pods-iMessage.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMessage.debug.xcconfig"; path = "Target Support Files/Pods-iMessage/Pods-iMessage.debug.xcconfig"; sourceTree = "<group>"; };
 		1EF05ECAF3198189F386010A /* Pods-CinchIMessageExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CinchIMessageExtension.release.xcconfig"; path = "Target Support Files/Pods-CinchIMessageExtension/Pods-CinchIMessageExtension.release.xcconfig"; sourceTree = "<group>"; };
 		24D71DAA07272E90903A4AC5 /* Pods-Cinch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cinch.debug.xcconfig"; path = "Target Support Files/Pods-Cinch/Pods-Cinch.debug.xcconfig"; sourceTree = "<group>"; };
 		275F63426EF2A9C7A49380AB /* Pods-InstagramClone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramClone.release.xcconfig"; path = "Target Support Files/Pods-InstagramClone/Pods-InstagramClone.release.xcconfig"; sourceTree = "<group>"; };
@@ -189,7 +191,9 @@
 		487A857B7431BFCFE64AEA4D /* Pods-Gems.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gems.release.xcconfig"; path = "Target Support Files/Pods-Gems/Pods-Gems.release.xcconfig"; sourceTree = "<group>"; };
 		59D6DA5D887F23C80EC2A8C8 /* Pods_CinchTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CinchTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		64A9B990C160D383D7FF0D45 /* Pods-InstagramCloneTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramCloneTests.release.xcconfig"; path = "Target Support Files/Pods-InstagramCloneTests/Pods-InstagramCloneTests.release.xcconfig"; sourceTree = "<group>"; };
+		66CA94844D31226E1ED29C31 /* Pods-iMessage.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iMessage.release.xcconfig"; path = "Target Support Files/Pods-iMessage/Pods-iMessage.release.xcconfig"; sourceTree = "<group>"; };
 		7DFA3D4756B7C9AA1CE7F219 /* Pods_Cinch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Cinch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8197CE2758889452E7EA0740 /* Pods_iMessage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iMessage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		890608A822BAE27F004C03CF /* Permissions.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Permissions.storyboard; sourceTree = "<group>"; };
 		890608B122BAE2B1004C03CF /* PermissionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsController.swift; sourceTree = "<group>"; };
 		891065C123DE597300EB8238 /* DiscoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverViewController.swift; sourceTree = "<group>"; };
@@ -267,6 +271,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				897437E023ED0DEF00F2CCB7 /* Messages.framework in Frameworks */,
+				31FC04D4F39655A4A315FA9A /* Pods_iMessage.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -441,6 +446,7 @@
 				023262E997E9F0A03CDAA1F7 /* Pods_CinchIMessageExtension.framework */,
 				59D6DA5D887F23C80EC2A8C8 /* Pods_CinchTests.framework */,
 				F4DC95FD178508B2961CE4E0 /* Pods_CinchUITests.framework */,
+				8197CE2758889452E7EA0740 /* Pods_iMessage.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -580,6 +586,8 @@
 				F0F04CCF56E32255BCFC3F5E /* Pods-CinchTests.release.xcconfig */,
 				9A55F06AAB69732F181C5EB4 /* Pods-CinchUITests.debug.xcconfig */,
 				B0D17D20DE1DF1E61B1091B6 /* Pods-CinchUITests.release.xcconfig */,
+				0DA2F8AC1BF415C57806483F /* Pods-iMessage.debug.xcconfig */,
+				66CA94844D31226E1ED29C31 /* Pods-iMessage.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -666,6 +674,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 897437EF23ED0DF100F2CCB7 /* Build configuration list for PBXNativeTarget "iMessage" */;
 			buildPhases = (
+				E53296090FFB219836169C92 /* [CP] Check Pods Manifest.lock */,
 				897437DB23ED0DEF00F2CCB7 /* Sources */,
 				897437DC23ED0DEF00F2CCB7 /* Frameworks */,
 				897437DD23ED0DEF00F2CCB7 /* Resources */,
@@ -925,6 +934,28 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		E53296090FFB219836169C92 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-iMessage-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1076,6 +1107,7 @@
 /* Begin XCBuildConfiguration section */
 		897437ED23ED0DF100F2CCB7 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0DA2F8AC1BF415C57806483F /* Pods-iMessage.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1098,6 +1130,7 @@
 		};
 		897437EE23ED0DF100F2CCB7 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 66CA94844D31226E1ED29C31 /* Pods-iMessage.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
 				CODE_SIGN_IDENTITY = "iPhone Developer";

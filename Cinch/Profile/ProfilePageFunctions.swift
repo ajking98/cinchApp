@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import SDWebImage
 
 
 extension ProfileViewController {
@@ -41,6 +42,27 @@ extension ProfileViewController {
     
     @objc func handleSegmentTap() {
         print("this is the segment: ", segmentControl.selectedSegmentIndex)
+    }
+    
+    
+    ///Set Profile Name
+    func fetchTitle() {
+        UserStruct().readName(user: username) { (name) in
+            print(name)
+            if (name == "") {
+                self.profileName = "Profile"
+            } else {
+                self.title = name
+            }
+        }
+}
+    
+
+    ///Set Profile Picture
+    func fetchProfilePic() {
+        UserStruct().readProfilePic(user: username) { (link) in
+            self.profileImageView.sd_setImage(with: URL(string: link), placeholderImage: UIImage(), completed: nil)
+        }
     }
     
     

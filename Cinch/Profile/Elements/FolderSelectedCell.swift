@@ -7,7 +7,12 @@
 //
 
 import UIKit
+import AVKit
 
 class FolderSelectedCell: UICollectionViewCell {
+    var imageView: UIImageView?
     
+    func setup(link: String){
+        print("this is your link: ", link)
+    }
 }

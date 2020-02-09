@@ -178,15 +178,19 @@ struct FolderStruct {
     /*
      Content
     */
-    //Content is stored in the form of a dictionary where the key and the value are both the same link
     ///reads the folder's content
-    func readContent(user : String, folderName : String, completion : @escaping([String : String])->Void) {
+    func readContent(user : String, folderName : String, completion : @escaping([String])->Void) {
         DB.child(user).child("folders").child(folderName).child("content").observeSingleEvent(of: .value) { (snapshot) in
-            if let content = snapshot.value as? [String : String] {
-                completion(content)
+            if let contentDict = snapshot.value as? [String : String] {
+                var contentArray: [String] = []
+                for (_, value) in contentDict {
+                    contentArray.append(value)
+                }
+                completion(contentArray)
             }
         }
     }
+    
     
     //Must be given a link representing the post within the Post's dictionary in the DB
     ///adds an extra post content to the Folder's content in DB

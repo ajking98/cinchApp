@@ -66,23 +66,7 @@ class ProfileViewController: UIViewController {
                 }
             }
         }
-        // Set Profile Name
-        // TODO: Fix, being completed last so changes aren't made
-        UserStruct().readName(user: username) { (name) in
-            print(name)
-            if (name == "") {
-                self.profileName = "No Name"
-            } else {
-                print("boom")
-                self.profileName = name
-            }
-        }
         
-        //Set Profile Picture
-        UserStruct().readProfilePic(user: username) { (link) in
-            let url = URL(string: link)
-//            self.profileImageView.sd_setImage(with: url, placeholderImage: UIImage(named: "empty"), completed: nil)
-        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -93,7 +77,10 @@ class ProfileViewController: UIViewController {
     func setupData() {
         height = view.frame.height
         width = view.frame.width
+        fetchProfilePic()
+        fetchTitle()
     }
+    
     
     func setupScrollView() {
         scrollView.backgroundColor = .white
@@ -109,13 +96,11 @@ class ProfileViewController: UIViewController {
         scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: -0.1 * height).isActive = true
         scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
+
+    
     
     func setupNavigationBar() {
         navigationController?.navigationBar.barTintColor = .white
-        print(profileName)
-        print("hey")
-        title = profileName
-        
         //if it is not the local user
         if !isUser {
             //todo
@@ -133,7 +118,7 @@ class ProfileViewController: UIViewController {
     
     
     func setupProfileImage() {
-        profileImageView.image = UIImage(named: "B")
+        profileImageView.image = UIImage()
         profileImageView.layer.masksToBounds = true
         profileImageView.backgroundColor = .lightGray
         profileImageView.contentMode = .scaleAspectFill

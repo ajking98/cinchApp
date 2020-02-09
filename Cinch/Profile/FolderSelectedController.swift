@@ -10,7 +10,9 @@ import UIKit
 
 class FolderSelectedController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate {
 
-    var folderName = "Hayden"
+    var folderName = ""
+    var username = ""
+    var content: [String] = [] //this should be using a cash
     let identifier = "Cell"
     
     
@@ -21,6 +23,7 @@ class FolderSelectedController: UIViewController, UICollectionViewDataSource, UI
         
         setupNavigationBar()
         setupCollectionView()
+        fetchContent()
     }
     
     func setupNavigationBar() {
@@ -59,6 +62,13 @@ class FolderSelectedController: UIViewController, UICollectionViewDataSource, UI
     }
     
     
+    func fetchContent() {
+        FolderStruct().readContent(user: username, folderName: folderName) { (content) in
+            self.content = content
+            self.collectionView.reloadData()
+        }
+    }
+    
     
     @objc func goBack() {
         navigationController?.popViewController(animated: true)
@@ -66,12 +76,13 @@ class FolderSelectedController: UIViewController, UICollectionViewDataSource, UI
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 12 //TODO: This should be calling a dynamic number
+        return content.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! FolderSelectedCell
         cell.backgroundColor = .lightGray
+        cell.setup(link: content[indexPath.item])
         return cell
     }
     

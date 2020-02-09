@@ -37,7 +37,7 @@ target 'Cinch' do
   
 end
 
-target 'CinchIMessageExtension' do
+target 'iMessage' do
   use_frameworks!
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
@@ -49,13 +49,13 @@ end
 
 
 
-target 'CinchShareExtension' do
-  use_frameworks!
-  pod 'Firebase/Core'
-  pod 'Firebase/Auth'
-  pod 'Firebase/Database'
-  pod 'SDWebImage/WebP'
-  pod 'Firebase/Storage','~>4.0'
-  pod 'SQLite.swift'
-end
+#target 'CinchShareExtension' do
+#  use_frameworks!
+#  pod 'Firebase/Core'
+#  pod 'Firebase/Auth'
+#  pod 'Firebase/Database'
+#  pod 'SDWebImage/WebP'
+#  pod 'Firebase/Storage','~>4.0'
+#  pod 'SQLite.swift'
+#end
 
