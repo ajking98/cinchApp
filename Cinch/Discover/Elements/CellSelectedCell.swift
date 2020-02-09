@@ -16,13 +16,16 @@ import UIKit
 
 class CellSelectedCell: UITableViewCell{
     
+    //data
+    var link = ""
+    var username = ""
+    
     var fullScreenImageView = UIImageView(frame: CGRect.zero)
     let shareIcon = UIImageView(image: UIImage(named: "shareIcon"))
     let heartIcon = UIImageView(image: UIImage(named: "heartIcon"))
     let followUserIcon = UIImageView(image: UIImage(named: "followUserIcon"))
     let profileIcon = UIImageView(frame: CGRect.zero)
     let lowerText = UILabel(frame: CGRect.zero)
-    var link = ""
     
     func setup(link: String) {
         self.link = link
@@ -34,12 +37,18 @@ class CellSelectedCell: UITableViewCell{
     }
     
     func fetchContent() {
-//        PostStruct().readLink(post: link) { (newLink) in
         self.fullScreenImageView.sd_setImage(with: URL(string: link), placeholderImage: UIImage(), completed: nil)
-//        }
         PostStruct().readPostOwner(post: link) { (author) in
+            self.username = author
+            
             UserStruct().readProfilePic(user: author) { (profilePic) in
                 self.profileIcon.sd_setImage(with: URL(string: profilePic), placeholderImage: UIImage(), completed: nil)
+            }
+        }
+        PostStruct().readTags(post: link) { (tags) in
+            self.lowerText.text = ""
+            for tag in tags {
+                self.lowerText.text? += "#\(tag) "
             }
         }
     }
@@ -89,6 +98,8 @@ class CellSelectedCell: UITableViewCell{
         
         profileIcon.layer.cornerRadius = 20
         profileIcon.clipsToBounds = true
+        profileIcon.isUserInteractionEnabled = true
+        profileIcon.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleProfilePicPressed)))
         
         
         //follow user icon
@@ -98,9 +109,17 @@ class CellSelectedCell: UITableViewCell{
         followUserIcon.centerXAnchor.constraint(equalTo: profileIcon.centerXAnchor).isActive = true
     }
     
+    @objc func handleProfilePicPressed() {
+        //TODO: Present the user's profile page
+        print("present user profile")
+        let vc = ProfileViewController()
+        vc.isUser = false
+        vc.username = username
+        //push using navigation 
+        
+    }
     
     func setupLowerText() {
-        lowerText.text = "#foryoupage #healthyrecipes #healthyfood #fitness # fitnesstips #easymeals" //TODO this should call the DB
         lowerText.textColor = .lightGray
         addSubview(lowerText)
         lowerText.font.withSize(13)
