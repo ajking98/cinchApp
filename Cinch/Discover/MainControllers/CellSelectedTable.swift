@@ -9,21 +9,52 @@
 
 import UIKit
 
-class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, UINavigationControllerDelegate {
     
     
     let tableView = UITableView(frame: CGRect.zero)
     let identifier = "Cell"
     var content:[String] = []
     
-    let backIcon = UIImageView(image: UIImage(named: "backIcon-white"))
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setupNavigationBar()
         setupTableView()
-        setupBackIcon()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        //making the navigation bar invisible
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.view.backgroundColor = .clear
+        
+        //hiding tab bar
+        navigationController?.tabBarController?.tabBar.isHidden = true
+    }
+    
+    func setupNavigationBar() {
+        //Enables swiping back
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        
+        //making the navigation bar invisible
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.view.backgroundColor = .clear
+        navigationController?.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        
+        //back button
+        let backButton = UIButton(type: .custom)
+        backButton.setImage(UIImage(named: "backIcon-white"), for: .normal)
+        backButton.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        backButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(goBack)))
+        let leftNavItem = UIBarButtonItem(customView: backButton)
+        navigationItem.setLeftBarButton(leftNavItem, animated: false)
+    }
+    
     
     func setupTableView() {
         view.addSubview(tableView)
@@ -44,28 +75,17 @@ class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataS
         tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
     }
     
-    //back icon
-    func setupBackIcon(){
-        view.addSubview(backIcon)
-        
-        //constraints
-        backIcon.translatesAutoresizingMaskIntoConstraints = false
-        backIcon.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 17.5).isActive = true
-        backIcon.topAnchor.constraint(equalTo: view.topAnchor, constant: 0.06 * view.frame.height).isActive = true
-        backIcon.heightAnchor.constraint(equalToConstant: 32).isActive = true
-        backIcon.widthAnchor.constraint(equalToConstant: 20).isActive = true
-        
-        backIcon.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(goBack(_:))))
-        backIcon.isUserInteractionEnabled = true
-        
-    }
-    
-    
     @objc func goBack(_ sender: UITapGestureRecognizer? = nil) {
-        dismiss(animated: true, completion: nil)
+        navigationController?.popViewController(animated: true)
     }
     
     
+    func handlePresentProfile(username: String){
+        let vc = ProfileViewController()
+        vc.isUser = false
+        vc.username = username
+        navigationController?.pushViewController(vc, animated: true)
+    }
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -76,6 +96,7 @@ class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataS
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier) as! CellSelectedCell
         cell.frame.size = view.frame.size
         cell.setup(link: content[indexPath.row])
+        cell.handlePresentProfile = handlePresentProfile(username:)
         return cell
     }
     

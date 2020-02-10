@@ -73,6 +73,8 @@ class ProfileViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         tabBarController?.tabBar.isHidden = false
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.view.backgroundColor = .white
     }
     
     //sets the data - width, height, profileName, username, isUser, isFollowing etc.
@@ -103,9 +105,12 @@ class ProfileViewController: UIViewController {
     
     func setupNavigationBar() {
         navigationController?.navigationBar.barTintColor = .white
+        
         //if it is not the local user
         if !isUser {
-            //todo
+            let backButton = UIBarButtonItem(image: UIImage(named: "backIcon-black"), style: .plain, target: self, action: #selector(goBack))
+            navigationController?.navigationBar.tintColor = .black
+            navigationItem.setLeftBarButton(backButton, animated: false)
         }
         
         else {

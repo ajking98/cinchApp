@@ -26,6 +26,16 @@ class FolderSelectedController: UIViewController, UICollectionViewDataSource, UI
         fetchContent()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.view.backgroundColor = .white
+    }
+    
+    func setup(username: String, folderName: String) {
+        self.username = username
+        self.folderName = folderName
+    }
+    
     func setupNavigationBar() {
         tabBarController?.tabBar.isHidden = true
         title = folderName
@@ -41,8 +51,25 @@ class FolderSelectedController: UIViewController, UICollectionViewDataSource, UI
         
         navigationController?.interactivePopGestureRecognizer?.delegate = self
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        
+        //check if the folder is aleady being followed and if it is the local user
+        guard let localUser = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
+        if localUser == username { return }
+        let plusButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleFollowFolder))
+        
+        navigationItem.setRightBarButton(plusButton, animated: false)
+        
+        UserStruct().readFoldersReference(user: username) { (folderRefs) in
+            if !(folderRefs.contains { (folderRef) -> Bool in  return folderRef.folderName == self.folderName }) { //returns true if current folder isn't already followed
+                self.navigationItem.setRightBarButton(nil, animated: false)
+            }
+        }
     }
     
+    
+    @objc func handleFollowFolder() {
+        print("this is handling")
+    }
     
     func setupCollectionView() {
         collectionView.register(FolderSelectedCell.self, forCellWithReuseIdentifier: identifier)
@@ -74,7 +101,6 @@ class FolderSelectedController: UIViewController, UICollectionViewDataSource, UI
         navigationController?.popViewController(animated: true)
     }
     
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return content.count
     }
@@ -93,7 +119,7 @@ class FolderSelectedController: UIViewController, UICollectionViewDataSource, UI
         let vc = storyboard.instantiateViewController(withIdentifier: "CellSelected") as! CellSelectedTable
         vc.modalPresentationStyle = .fullScreen
         vc.content = content
-        present(vc, animated: true, completion: nil)
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

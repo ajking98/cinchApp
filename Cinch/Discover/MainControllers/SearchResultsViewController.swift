@@ -55,7 +55,7 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
         initialNavigationController?.tabBarController?.tabBar.isHidden = true
         print("here is your navigation controller: ", initialNavigationController?.tabBarController?.tabBar)
         
-        //TODO: this isn't working because navigationController is nil 
+        //Enables swiping back
         initialNavigationController?.interactivePopGestureRecognizer?.delegate = self
         initialNavigationController?.interactivePopGestureRecognizer?.isEnabled = true
     }
@@ -97,7 +97,7 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! FolderSelectedCell 
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! FolderSelectedCell
         cell.setup(link: content[indexPath.item])
         
         return cell

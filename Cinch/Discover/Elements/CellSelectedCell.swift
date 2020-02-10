@@ -19,6 +19,7 @@ class CellSelectedCell: UITableViewCell{
     //data
     var link = ""
     var username = ""
+    var handlePresentProfile: ((String) -> Void)?
     
     var fullScreenImageView = UIImageView(frame: CGRect.zero)
     let shareIcon = UIImageView(image: UIImage(named: "shareIcon"))
@@ -110,12 +111,11 @@ class CellSelectedCell: UITableViewCell{
     }
     
     @objc func handleProfilePicPressed() {
-        //TODO: Present the user's profile page
         print("present user profile")
-        let vc = ProfileViewController()
-        vc.isUser = false
-        vc.username = username
-        //push using navigation 
+        
+        //push using navigation
+        guard let handlePresentProfile = handlePresentProfile else { return }
+        handlePresentProfile(username)
         
     }
     

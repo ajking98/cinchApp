@@ -66,6 +66,11 @@ extension ProfileViewController {
     }
     
     
+    @objc func goBack() {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    
 }
 
 extension EditProfileViewController {
