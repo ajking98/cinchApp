@@ -14,7 +14,7 @@ class MessageSearchResultsViewController: SearchResultsViewController {
     
     var minimizeView: (() -> Void)!
     
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("we are selecting")
         minimizeView()
     }

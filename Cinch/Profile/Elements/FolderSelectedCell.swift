@@ -17,7 +17,6 @@ class FolderSelectedCell: UICollectionViewCell {
         cleanup()
         guard let contentLink = URL(string: link) else { return }
         if checkIfVideo(link) {
-            print("this si the frame:", frame.size)
             imageView.loadVideo(contentLink, size: frame.size)
         }
         else {

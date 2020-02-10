@@ -55,6 +55,7 @@
 		893911B523DFA7CF00AFAE80 /* CellSelectedTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893911B423DFA7CF00AFAE80 /* CellSelectedTable.swift */; };
 		893911B723DFFF2900AFAE80 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893911B623DFFF2900AFAE80 /* ProfileViewController.swift */; };
 		894C36B823E24349008E717D /* ProfileViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894C36B723E24349008E717D /* ProfileViewControllerExtension.swift */; };
+		895CCCEB23F1E64A00826D0C /* SearchResultsVCExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895CCCEA23F1E64A00826D0C /* SearchResultsVCExtension.swift */; };
 		896556ED23E0CA9600666AB9 /* ProfileStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896556EC23E0CA9600666AB9 /* ProfileStackView.swift */; };
 		897437E023ED0DEF00F2CCB7 /* Messages.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4622493622DFAC8F0005B12F /* Messages.framework */; };
 		897437E323ED0DEF00F2CCB7 /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897437E223ED0DEF00F2CCB7 /* MessagesViewController.swift */; };
@@ -213,6 +214,7 @@
 		893911B423DFA7CF00AFAE80 /* CellSelectedTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellSelectedTable.swift; sourceTree = "<group>"; };
 		893911B623DFFF2900AFAE80 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		894C36B723E24349008E717D /* ProfileViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewControllerExtension.swift; sourceTree = "<group>"; };
+		895CCCEA23F1E64A00826D0C /* SearchResultsVCExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsVCExtension.swift; sourceTree = "<group>"; };
 		896556EC23E0CA9600666AB9 /* ProfileStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStackView.swift; sourceTree = "<group>"; };
 		897437DF23ED0DEF00F2CCB7 /* iMessage.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = iMessage.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		897437E223ED0DEF00F2CCB7 /* MessagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
@@ -348,6 +350,7 @@
 				893911B423DFA7CF00AFAE80 /* CellSelectedTable.swift */,
 				89C3C00E23EBCA7A00FD03D1 /* SearchResultsViewController.swift */,
 				897437F523ED258600F2CCB7 /* SearchTableViewController.swift */,
+				895CCCEA23F1E64A00826D0C /* SearchResultsVCExtension.swift */,
 			);
 			path = MainControllers;
 			sourceTree = "<group>";
@@ -1026,6 +1029,7 @@
 				46D5E07122A87F15003B41DE /* Folder.swift in Sources */,
 				46D5E07622A87F75003B41DE /* User.swift in Sources */,
 				893911B523DFA7CF00AFAE80 /* CellSelectedTable.swift in Sources */,
+				895CCCEB23F1E64A00826D0C /* SearchResultsVCExtension.swift in Sources */,
 				89E966AD23E8EE1A00BAF92E /* FolderSelectedCell.swift in Sources */,
 				46D5E07822A87F89003B41DE /* UserStruct.swift in Sources */,
 				89C3C00F23EBCA7A00FD03D1 /* SearchResultsViewController.swift in Sources */,

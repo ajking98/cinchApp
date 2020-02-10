@@ -1,7 +1,7 @@
 //
 //  CellSelectedTable.swift
 /*
-    Is presented when the user selects a cell from the DiscoverViewController
+    Is presented when the user selects a cell from the DiscoverViewController, FolderSelectedController, or SearchResultsViewController
     Each cell is from CellSelectedController
  */
 //  Created by Alsahlani, Yassin K on 1/27/20.
@@ -29,6 +29,7 @@ class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataS
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.backgroundColor = .clear
         navigationController?.view.backgroundColor = .clear
         
         //hiding tab bar
@@ -36,8 +37,6 @@ class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataS
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        
-        print("we are at tyhis index: ", startingIndex)
         tableView.scrollToRow(at: startingIndex, at: .top, animated: true)
     }
     
@@ -51,7 +50,6 @@ class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataS
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.isTranslucent = true
         navigationController?.view.backgroundColor = .clear
-        navigationController?.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         
         //back button
         let backButton = UIButton(type: .custom)

@@ -41,7 +41,7 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
         setupTableTagsView()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         navigationController?.tabBarController?.tabBar.isHidden = false
     }
     

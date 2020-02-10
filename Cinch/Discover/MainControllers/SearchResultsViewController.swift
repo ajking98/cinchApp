@@ -1,10 +1,9 @@
 //
 //  SearchResultsViewController.swift
-//  Cinch
-//
-//  Created by Alsahlani, Yassin K on 2/5/20.
-//  Copyright © 2020 Gedi, Ahmed M. All rights reserved.
-//
+/*
+    The view presented after the user searches a term (collection view)
+ */
+//  Created by Alsahlani, Yassin K on 2/5/20
 
 import UIKit
 
@@ -35,6 +34,11 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
         setupCollectionView()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        navigationController?.view.backgroundColor = .white
+        navigationController?.navigationBar.isTranslucent = false 
+    }
+    
     func setup(term: String) {
         searchTerm = term
         title = term
@@ -43,7 +47,6 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
     
     
     func setupNavigationBar() {
-        tabBarController?.tabBar.isHidden = true
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.customRed]
         let backButton = UIButton(type: .custom)
         backButton.setImage(UIImage(named: "backIcon-black"), for: .normal)
@@ -52,12 +55,11 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
         let leftNavItem = UIBarButtonItem(customView: backButton)
         navigationItem.setLeftBarButton(leftNavItem, animated: false)
         
-        initialNavigationController?.tabBarController?.tabBar.isHidden = true
-        print("here is your navigation controller: ", initialNavigationController?.tabBarController?.tabBar)
+        navigationController?.tabBarController?.tabBar.isHidden = true
         
         //Enables swiping back
-        initialNavigationController?.interactivePopGestureRecognizer?.delegate = self
-        initialNavigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
     }
     
     
@@ -101,10 +103,6 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
         cell.setup(link: content[indexPath.item])
         
         return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("Selected")
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
