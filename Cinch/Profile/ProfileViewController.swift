@@ -60,13 +60,6 @@ class ProfileViewController: UIViewController {
         print("these are the two usernames:", username, " VS ", localUser)
         if username == ""  || username == localUser { //checks if the user is looking at their profile or someone else's
             username = localUser
-        } else {
-            UserStruct().readFollowing(user: localUser) { (followers) in
-                if followers.values.contains(self.username) {
-                    //make the button disabled and greyed out
-                    print("hey")
-                }
-            }
         }
         
     }
@@ -107,10 +100,11 @@ class ProfileViewController: UIViewController {
         navigationController?.navigationBar.barTintColor = .white
         
         //if it is not the local user
-        if !isUser {
+        if !(navigationController?.viewControllers.count == 1) {
             let backButton = UIBarButtonItem(image: UIImage(named: "backIcon-black"), style: .plain, target: self, action: #selector(goBack))
             navigationController?.navigationBar.tintColor = .black
             navigationItem.setLeftBarButton(backButton, animated: false)
+            isUser = false
         }
         
         else {

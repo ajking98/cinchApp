@@ -89,6 +89,7 @@ class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataS
         let vc = ProfileViewController()
         vc.isUser = false
         vc.username = username
+        startingIndex = tableView.indexPathsForVisibleRows![0]
         navigationController?.pushViewController(vc, animated: true)
     }
     

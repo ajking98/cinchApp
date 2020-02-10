@@ -25,11 +25,12 @@ class CellSelectedCell: UITableViewCell{
     let shareIcon = UIImageView(image: UIImage(named: "shareIcon"))
     let heartIcon = UIImageView(image: UIImage(named: "heartIcon"))
     let followUserIcon = UIImageView(image: UIImage(named: "followUserIcon"))
-    let profileIcon = UIImageView(frame: CGRect.zero)
+    var profileIcon = UIImageView(frame: CGRect.zero)
     let lowerText = UILabel(frame: CGRect.zero)
     
     func setup(link: String) {
         self.link = link
+        username = "nil"
         fetchContent()
         setupFullScreenImageView()
         setupRightHandView()
@@ -37,8 +38,24 @@ class CellSelectedCell: UITableViewCell{
         
     }
     
+    override func prepareForReuse() {
+        username = "nil"
+        profileIcon.image = UIImage()
+        fullScreenImageView = UIImageView()
+        subviews.forEach { (view) in
+            view.removeFromSuperview()
+        }
+    }
+    
     func fetchContent() {
-        self.fullScreenImageView.sd_setImage(with: URL(string: link), placeholderImage: UIImage(), completed: nil)
+        if checkIfVideo(link) {
+            guard let link = URL(string: link) else { return }
+            let playerLayer = fullScreenImageView.loadVideo(link, size: frame.size)
+            playerLayer.videoGravity = .resizeAspect
+        }
+        else {
+            fullScreenImageView.sd_setImage(with: URL(string: link), placeholderImage: UIImage(), completed: nil)
+        }
         PostStruct().readPostOwner(post: link) { (author) in
             self.username = author
             
@@ -111,8 +128,6 @@ class CellSelectedCell: UITableViewCell{
     }
     
     @objc func handleProfilePicPressed() {
-        print("present user profile")
-        
         //push using navigation
         guard let handlePresentProfile = handlePresentProfile else { return }
         handlePresentProfile(username)
