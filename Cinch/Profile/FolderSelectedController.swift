@@ -119,6 +119,7 @@ class FolderSelectedController: UIViewController, UICollectionViewDataSource, UI
         let vc = storyboard.instantiateViewController(withIdentifier: "CellSelected") as! CellSelectedTable
         vc.modalPresentationStyle = .fullScreen
         vc.content = content
+        vc.startingIndex = indexPath
         navigationController?.pushViewController(vc, animated: true)
     }
     

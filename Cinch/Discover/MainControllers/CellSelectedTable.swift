@@ -15,6 +15,7 @@ class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataS
     let tableView = UITableView(frame: CGRect.zero)
     let identifier = "Cell"
     var content:[String] = []
+    var startingIndex = IndexPath(row: 0, section: 0)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +33,12 @@ class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataS
         
         //hiding tab bar
         navigationController?.tabBarController?.tabBar.isHidden = true
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        print("we are at tyhis index: ", startingIndex)
+        tableView.scrollToRow(at: startingIndex, at: .top, animated: true)
     }
     
     func setupNavigationBar() {
