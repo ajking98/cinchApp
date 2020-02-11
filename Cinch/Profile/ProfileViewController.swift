@@ -44,9 +44,9 @@ class ProfileViewController: UIViewController {
         setupScrollView()
         setupNavigationBar()
         setupProfileImage()
-        setupUsernameLabel()
-        setupGemLabel()
-        stackView.setup(followings: followings, followers: followers, Gems: gems, view: view, scrollView: scrollView)
+//        setupUsernameLabel()
+//        setupGemLabel()
+//        stackView.setup(followings: followings, followers: followers, Gems: gems, view: view, scrollView: scrollView)
         setupButton()
         setupSegmentControl()
         setupSegmentControlBars()
@@ -130,7 +130,7 @@ class ProfileViewController: UIViewController {
         profileImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         profileImageView.heightAnchor.constraint(equalToConstant: height*0.12).isActive = true
         profileImageView.widthAnchor.constraint(equalToConstant: height*0.12).isActive = true
-        profileImageView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: height/9).isActive = true
+        profileImageView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: height*0.15).isActive = true
         profileImageView.layer.cornerRadius = height * 0.06
     }
     
@@ -195,7 +195,7 @@ class ProfileViewController: UIViewController {
         mainButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         mainButton.heightAnchor.constraint(equalToConstant: height/18).isActive = true
         mainButton.widthAnchor.constraint(equalToConstant: width*0.4).isActive = true
-        mainButton.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 20).isActive = true
+        mainButton.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: height*0.1).isActive = true
     }
     
     
@@ -213,7 +213,7 @@ class ProfileViewController: UIViewController {
         segmentControl.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         segmentControl.heightAnchor.constraint(equalToConstant: height/18).isActive = true
         segmentControl.widthAnchor.constraint(equalToConstant: width).isActive = true
-        segmentControl.topAnchor.constraint(equalTo: mainButton.bottomAnchor, constant: height/50).isActive = true
+        segmentControl.topAnchor.constraint(equalTo: mainButton.bottomAnchor, constant: height*0.07).isActive = true
     }
     
     func setupSegmentControlBars() {
