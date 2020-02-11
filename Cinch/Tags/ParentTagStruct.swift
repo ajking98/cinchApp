@@ -85,6 +85,24 @@ struct ParentTagStruct{
         DB.child(tagLabel).removeValue()
     }
     
+    /*
+        Admin tags
+     */
+    
+    func readAdminTags(completion: @escaping([String])-> Void) {
+        let adminDB = Database.database().reference().child("AdminTags")
+        adminDB.observeSingleEvent(of: .value) { (snapshot) in
+            var tags:[String] = []
+            
+            for child in snapshot.children {
+                guard let child = child as? DataSnapshot else { return }
+                guard let value = child.value as? String else { return }
+                tags.append(value)
+            }
+            completion(tags)
+        }
+    }
+    
     
     
 }

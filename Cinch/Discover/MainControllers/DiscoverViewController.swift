@@ -43,11 +43,11 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func fetchData() {
-        print("this is fetching data from the database")
-        //TODO: make a part in the database for main tags
-        mainHashTags.append("FUNNY")
-        mainHashTags.append("christmas")
-        tableView.reloadData()
+        ParentTagStruct().readAdminTags { (tags) in
+            print("these are your stuff:", tags)
+            self.mainHashTags = tags
+            self.tableView.reloadData()
+        }
     }
     
     ///sets up the initial data    

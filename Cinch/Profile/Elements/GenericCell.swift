@@ -1,5 +1,5 @@
 //
-//  FolderSelectedCell.swift
+//  GenericCell.swift
 //  Cinch
 //
 //  Created by Alsahlani, Yassin K on 2/3/20.
@@ -10,7 +10,7 @@ import UIKit
 import AVKit
 import SDWebImage
 
-class FolderSelectedCell: UICollectionViewCell {
+class GenericCell: UICollectionViewCell {
     var imageView = UIImageView()
     
     func setup(link: String){

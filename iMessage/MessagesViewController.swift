@@ -73,7 +73,7 @@ class MessagesViewController: MSMessagesAppViewController {
     
     
     func setupCollectionView() {
-        collectionView.register(FolderSelectedCell.self, forCellWithReuseIdentifier: identifier)
+        collectionView.register(GenericCell.self, forCellWithReuseIdentifier: identifier)
         collectionView.backgroundColor = .white
         collectionView.showsVerticalScrollIndicator = false
         collectionView.contentInset.top = 16

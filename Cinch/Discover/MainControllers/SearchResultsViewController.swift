@@ -69,7 +69,7 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
         collectionView.dataSource = self
         collectionView.contentInset.top = 24
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.register(FolderSelectedCell.self, forCellWithReuseIdentifier: identifier)
+        collectionView.register(GenericCell.self, forCellWithReuseIdentifier: identifier)
         view.addSubview(collectionView)
         
         //constraints
@@ -99,7 +99,7 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! FolderSelectedCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! GenericCell
         cell.setup(link: content[indexPath.item])
         
         return cell

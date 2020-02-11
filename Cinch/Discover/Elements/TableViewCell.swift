@@ -44,7 +44,7 @@ class TableViewCell: UITableViewCell, UICollectionViewDataSource {
         collectionView.delegate = self
         collectionView.dataSource = self
          
-        collectionView.register(FolderSelectedCell.self, forCellWithReuseIdentifier: identifier)
+        collectionView.register(GenericCell.self, forCellWithReuseIdentifier: identifier)
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.backgroundColor = .white
         addSubview(collectionView)
@@ -104,7 +104,7 @@ class TableViewCell: UITableViewCell, UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! FolderSelectedCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! GenericCell
         cell.setup(link: content[indexPath.item])
         return cell
     }

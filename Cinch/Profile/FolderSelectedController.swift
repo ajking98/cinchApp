@@ -72,7 +72,7 @@ class FolderSelectedController: UIViewController, UICollectionViewDataSource, UI
     }
     
     func setupCollectionView() {
-        collectionView.register(FolderSelectedCell.self, forCellWithReuseIdentifier: identifier)
+        collectionView.register(GenericCell.self, forCellWithReuseIdentifier: identifier)
         collectionView.backgroundColor = .white
         collectionView.showsVerticalScrollIndicator = false
         collectionView.contentInset.top = 16
@@ -106,7 +106,7 @@ class FolderSelectedController: UIViewController, UICollectionViewDataSource, UI
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! FolderSelectedCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! GenericCell
         cell.backgroundColor = .lightGray
         cell.setup(link: content[indexPath.item])
         return cell
