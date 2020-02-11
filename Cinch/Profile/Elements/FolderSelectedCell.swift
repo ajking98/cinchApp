@@ -14,7 +14,6 @@ class FolderSelectedCell: UICollectionViewCell {
     var imageView = UIImageView()
     
     func setup(link: String){
-        cleanup()
         guard let contentLink = URL(string: link) else { return }
         if checkIfVideo(link) {
             imageView.loadVideo(contentLink, size: frame.size)
@@ -30,11 +29,10 @@ class FolderSelectedCell: UICollectionViewCell {
         imageView.clipsToBounds = true
         imageView.backgroundColor = .lightGray
     }
-
-    func cleanup() {
-        imageView = UIImageView()
-        //TODO: these are the subviews 
-//        print("these are the subviews:", subviews.count)
-//        subviews[0].removeFromSuperview()
+    
+    override func prepareForReuse() {
+        subviews.forEach { (view) in
+            view.removeFromSuperview()
+        }
     }
 }

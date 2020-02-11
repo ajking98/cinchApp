@@ -13,27 +13,24 @@ import UIKit
 class DiscoverViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
 
-    ///width of screen
+    //Data
     var width: CGFloat = 0
-    ///height of screen
     var height: CGFloat = 0
-    
-    //Search
-    var searchBar = SearchBar(frame: CGRect(x: 0, y: 0, width: 310, height: 32.5))
-    
-    //Table view
-    var tableView: UITableView?
+    var images = ["A", "B", "C", "D"]
+    var mainHashTags:[String] = []
     let identifier = "Cell"
     
-    //Carousel
+    //Views
+    var tableView = UITableView()
     var topCarousel = UIScrollView(frame: CGRect.zero)
     var pageControl = UIPageControl(frame: CGRect.zero)
-    var images = ["A", "B", "C", "D"]
+    var searchBar = SearchBar(frame: CGRect(x: 0, y: 0, width: 310, height: 32.5))
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        fetchData()
         setupData()
         setupSearchBar()
         setupTableView()
@@ -43,6 +40,14 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewDidAppear(_ animated: Bool) {
         navigationController?.tabBarController?.tabBar.isHidden = false
+    }
+    
+    func fetchData() {
+        print("this is fetching data from the database")
+        //TODO: make a part in the database for main tags
+        mainHashTags.append("FUNNY")
+        mainHashTags.append("christmas")
+        tableView.reloadData()
     }
     
     ///sets up the initial data    
@@ -66,12 +71,12 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
     func setupTableView() {
         let tableViewHeight = height - tabBarController!.tabBar.frame.size.height
         tableView = UITableView(frame: CGRect(x: 0, y: 0, width: width, height: tableViewHeight))
-        tableView?.register(TableViewCell.self, forCellReuseIdentifier: identifier)
-        tableView?.delegate = self
-        tableView?.dataSource = self
-        tableView?.backgroundColor = .darkBlue
-        tableView?.showsVerticalScrollIndicator = false
-        view.addSubview(tableView!)
+        tableView.register(TableViewCell.self, forCellReuseIdentifier: identifier)
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.backgroundColor = .darkBlue
+        tableView.showsVerticalScrollIndicator = false
+        view.addSubview(tableView)
     }
     
     
@@ -89,13 +94,13 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
            topCarousel.isPagingEnabled = true
            topCarousel.showsHorizontalScrollIndicator = false
            topCarousel.backgroundColor = .darkBlue
-           tableView?.tableHeaderView = topCarousel
+           tableView.tableHeaderView = topCarousel
            
            pageControl.frame = CGRect(x: 0, y: 0, width: 100, height: 24)
            pageControl.center.x = view.center.x
            pageControl.frame.origin.y = (0.23 * height) - pageControl.frame.size.height
            pageControl.numberOfPages = 4
-           tableView!.addSubview(pageControl)
+           tableView.addSubview(pageControl)
     }
     
     ///updates the current page for the page control
@@ -106,7 +111,7 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5 //TODO change this
+        return mainHashTags.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -114,7 +119,7 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
       cell.cellHeight = height * 0.242
       cell.cellWidth = tableView.frame.size.width
       cell.viewController = self
-      cell.setUp()
+        cell.setUp(hashTagTerm: mainHashTags[indexPath.item])
       return cell
     }
     

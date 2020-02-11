@@ -9,8 +9,6 @@
     5. Put it in a tableView
 */
 //  Created by Alsahlani, Yassin K on 1/27/20.
-//  Copyright © 2020 Gedi, Ahmed M. All rights reserved.
-//
 
 import UIKit
 
