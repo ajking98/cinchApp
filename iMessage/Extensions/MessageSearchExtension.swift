@@ -15,7 +15,8 @@ extension MessagesViewController: UISearchBarDelegate {
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(true, animated: true)
-        expandView()
+        print("this is the activity for search bar: ", iMessageDelegate)
+        iMessageDelegate.expandView()
         tableTagsView.alpha = 1
     }
     
@@ -24,7 +25,7 @@ extension MessagesViewController: UISearchBarDelegate {
     }
     
     func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
-        if presentationStyle == .compact {
+        if iMessageDelegate.getPresentationStyle() == .compact {
             return false
         }
         return true
@@ -38,32 +39,13 @@ extension MessagesViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if searchBar.text != nil {
-            searchTableViewController.addSearchTerm(term: searchBar.text!)
-            
-            //TODO: Move this to a function
-            searchBar.endEditing(true)
-            let vc = MessageSearchResultsViewController()
-            vc.initialNavigationController = navigationController
-            vc.setup(term: searchBar.text!)
-            vc.minimizeView = minimizeView
-            navigationController?.pushViewController(vc, animated: true)
-
-//            nextView(text: searchBar.text!)
+            if searchBar.text != nil {
+                guard let text = searchBar.text else { return }
+                nextView(term: text)
+            }
         }
     }
     
-    //TODO: This should be in a global function
-    func expandView() {
-        if presentationStyle == .compact {
-            requestPresentationStyle(.expanded)
-        }
-    }
-    
-    func minimizeView() {
-        if presentationStyle == .expanded {
-            requestPresentationStyle(.compact)
-        }
-    }
 }
 
 

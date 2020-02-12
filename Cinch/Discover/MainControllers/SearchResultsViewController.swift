@@ -9,19 +9,18 @@ import UIKit
 
 class SearchResultsViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate, UINavigationControllerDelegate {
     
-
     //data
     var searchTerm = ""
-    var content: [String] = []
-    
-    //measurements
     var width: CGFloat = 0
     var height: CGFloat = 0
-    var initialNavigationController: UINavigationController?
+    var identifier = "Cell"
+    var content: [String] = []
     
     //views
     var collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
-    var identifier = "Cell"
+    
+    //view controllers
+    var initialNavigationController: UINavigationController?
     
     override func viewDidLoad() {
         super.viewDidLoad()

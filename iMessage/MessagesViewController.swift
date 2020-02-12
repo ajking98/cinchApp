@@ -12,13 +12,18 @@
 
 import UIKit
 import Messages
+import Firebase
 
-class MessagesViewController: MSMessagesAppViewController {
+class MessagesViewController: UIViewController {
+    
+    //data given by the presenting view
+    var iMessageDelegate: iMessageAppDelegate!
     
     //data
     var width: CGFloat = 0
     var height: CGFloat = 0
     let identifier = "Cell"
+    var content:[String] = []
     
     //views
     var searchBar = SearchBar(frame: CGRect(x: 0, y: 0, width: 310, height: 32.5))
@@ -31,18 +36,27 @@ class MessagesViewController: MSMessagesAppViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         
+        if(FirebaseApp.app() == nil){
+            FirebaseApp.configure()
+        }
+        
+        print("this is the activity for the main convo: ", iMessageDelegate.mainConversation)
         setup()
+        fetchContent()
         setupSearchBar()
         setupCollectionView()
         setupTableTagsView()
     }
     
+    ///gets the links from the DB and appends it to the content array
+    func fetchContent() {
+    }
     
     func setup(){
         width = view.frame.width
         height = view.frame.height
+        
     }
     
     func setupSearchBar() {
@@ -61,6 +75,7 @@ class MessagesViewController: MSMessagesAppViewController {
         tableTagsView.register(UITableViewCell.self, forCellReuseIdentifier: identifier)
         tableTagsView.dataSource = searchTableViewController
         tableTagsView.delegate = searchTableViewController
+        searchTableViewController.handleCellSelected = nextView(term:)
         tableTagsView.separatorStyle = .none
         
         //constraints
@@ -71,6 +86,19 @@ class MessagesViewController: MSMessagesAppViewController {
         tableTagsView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
     
+    ///presents the next vc when the user enters a term to search 
+    func nextView(term: String) {
+        print("this is working myfriend", iMessageDelegate.mainConversation)
+        searchTableViewController.addSearchTerm(term: term)
+        tableTagsView.alpha = 0
+        searchBar.endEditing(true)
+        let vc = MessageSearchResultsViewController()
+        vc.initialNavigationController = navigationController
+        vc.setup(term: term)
+        vc.minimizeView = iMessageDelegate.minimizeView
+        vc.activeConversation = iMessageDelegate.mainConversation
+        navigationController?.pushViewController(vc, animated: true)
+    }
     
     func setupCollectionView() {
         collectionView.register(GenericCell.self, forCellWithReuseIdentifier: identifier)
@@ -92,15 +120,14 @@ class MessagesViewController: MSMessagesAppViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         searchBar.endEditing(true)
     }
-    
-    // MARK: - Conversation Handling
-    
-    override func willBecomeActive(with conversation: MSConversation) {
-        // Called when the extension is about to move from the inactive to active state.
-        // This will happen when the extension is about to present UI.
-        
-        // Use this method to configure the extension and restore previously stored state.
-    }
-    
 
 }
+
+
+protocol iMessageAppDelegate {
+    func expandView()
+    func minimizeView()
+    func getPresentationStyle() -> MSMessagesAppPresentationStyle
+    var mainConversation: MSConversation { get }
+}
+
