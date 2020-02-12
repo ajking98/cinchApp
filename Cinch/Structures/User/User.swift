@@ -31,7 +31,7 @@ class User  {
     var profilePicLink : String?
     
     //default variables 
-    let defaultProfilePic = UIImage(named: "userPlaceholder")
+    let defaultProfilePic = UIImage(named: "defaultProfilePic1")
     let folder1 = Folder(folderName: "random")
     let folder2 = Folder(folderName: "reactions")
 
@@ -144,7 +144,7 @@ class User  {
         
         
         
-        let userString : [String : Any] = ["name": name, "email": email, "username": username, "password": password, "isPrivate": isPrivate, "profilePic": "https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/userImages%2FhKaBCKrdabATDWHqnWIa?alt=media&token=3c8756d0-326c-42cf-86a3-b9901797749c", "folders": foldersDict, "dateCreated": dateCreated!, "dateLastActive": dateLastActive!, "followers" : followersDict, "followings" : followingsDict, "biography" : biography, "isDarkModeEnabled" : isDarkModeEnabled, "newContent" : newContentDict, "suggestedContent" : suggestedContentDict, "folderReferences" : folderReferencesDict]
+        let userString : [String : Any] = ["name": name, "email": email, "username": username, "password": password, "isPrivate": isPrivate, "profilePic": "https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/defaultProfilePics%2FdefaultProfilePic1.png?alt=media&token=b343a31f-15d9-42dd-9ad4-464196fdd270", "folders": foldersDict, "dateCreated": dateCreated!, "dateLastActive": dateLastActive!, "followers" : followersDict, "followings" : followingsDict, "biography" : biography, "isDarkModeEnabled" : isDarkModeEnabled, "newContent" : newContentDict, "suggestedContent" : suggestedContentDict, "folderReferences" : folderReferencesDict]
         
         return userString
     }

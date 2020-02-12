@@ -39,25 +39,6 @@
             </objects>
             <point key="canvasLocation" x="3860" y="-652"/>
         </scene>
-        <!--Item-->
-        <scene sceneID="IWK-Pb-eWS">
-            <objects>
-                <navigationController storyboardIdentifier="ProfileID" automaticallyAdjustsScrollViewInsets="NO" id="4xd-ap-PqM" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="gEW-M6-wIc"/>
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Fou-Ad-bzV">
-                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="dLL-JJ-YxO" kind="relationship" relationship="rootViewController" id="7IW-G8-OaE"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="BHU-C0-qSJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1258.4000000000001" y="-651.72413793103453"/>
-        </scene>
         <!--Edit Profile View Controller-->
         <scene sceneID="O2g-ft-Rjx">
             <objects>

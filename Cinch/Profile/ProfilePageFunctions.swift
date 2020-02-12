@@ -52,7 +52,7 @@ extension ProfileViewController {
             if (name == "") {
                 self.profileName = "Profile"
             } else {
-                self.title = name
+                self.navigationItem.title = name
             }
         }
 }
