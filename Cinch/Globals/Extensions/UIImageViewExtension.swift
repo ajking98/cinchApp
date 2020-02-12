@@ -50,6 +50,12 @@ extension UIImageView {
         playerLayer.videoGravity = .resizeAspectFill
         layer.addSublayer(playerLayer)
         player.play()
+        
+        //autoplay
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil, queue: nil) { notification in
+            player.seek(to: CMTime.zero)
+            player.play()
+        }
         return playerLayer
     }
     

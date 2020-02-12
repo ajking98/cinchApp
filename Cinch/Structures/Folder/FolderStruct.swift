@@ -183,10 +183,10 @@ struct FolderStruct {
         DB.child(user).child("folders").child(folderName).child("content").observeSingleEvent(of: .value) { (snapshot) in
             var contentArray: [String] = []
             for child in snapshot.children {
-                guard let child = child as? DataSnapshot else { return }
-                guard let value = child.value as? String else { return }
-                contentArray.append(value)
-            }
+                if let child = child as? DataSnapshot {
+                    if let value = child.value as? String {
+                        contentArray.append(value)}
+            } }
                 completion(contentArray)
         }
     }

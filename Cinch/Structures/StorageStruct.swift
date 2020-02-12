@@ -267,15 +267,6 @@ struct StorageStruct {
             storageRef.downloadURL { (url, error) in
                 if (error == nil) {
                     if let downloadUrl = url {
-                        // Make you download string
-//                            refImages.observeSingleEvent(of: .value) { (snapshot) -> Void in
-//                                var contentArr = [String]()
-//                                for image in snapshot.children {
-//                                    contentArr.append(image as! String)
-//                                }
-//                                contentArr.append(content as! )
-//                            }
-                        
                         refImages.observeSingleEvent(of: .value, with: { snapshot in
                             var myContentArray = [String]()
                             for child in snapshot.children {

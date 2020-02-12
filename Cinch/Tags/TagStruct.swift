@@ -72,10 +72,11 @@ struct TagStruct {
           DB.child(tagLabel).child("elements").observeSingleEvent(of: .value) { (snapshot) in
             var elementsDict:[String] = []
             for child in snapshot.children {
-                guard let child = child as? DataSnapshot else { return }
-                guard let value = child.value as? [String: Any] else { return }
-                guard let link = value["link"] as? String else { return }
-                elementsDict.append(link)
+                if let child = child as? DataSnapshot {
+                    if let value = child.value as? [String: Any] {
+                        if let link = value["link"] as? String {
+                            elementsDict.append(link)
+                        } } }
             }
               completion(elementsDict)
           }

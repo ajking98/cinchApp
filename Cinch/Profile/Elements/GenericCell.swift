@@ -34,5 +34,7 @@ class GenericCell: UICollectionViewCell {
         subviews.forEach { (view) in
             view.removeFromSuperview()
         }
+        
+        imageView = UIImageView()
     }
 }

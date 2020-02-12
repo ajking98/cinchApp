@@ -27,13 +27,11 @@ class InitialiMessageVC: MSMessagesAppViewController, iMessageAppDelegate {
     
     override func didBecomeActive(with conversation: MSConversation) {
         mainConversation = conversation
-        print("activity is working:", conversation)
     }
     
     
     ///Makes the extension take up the full screen
     func expandView() -> (Void) {
-        print("this is activity")
         if presentationStyle == .compact {
             requestPresentationStyle(.expanded)
         }

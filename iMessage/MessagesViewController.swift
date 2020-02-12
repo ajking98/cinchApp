@@ -24,7 +24,8 @@ class MessagesViewController: UIViewController {
     var height: CGFloat = 0
     let identifier = "Cell"
     var content:[String] = []
-    
+    var dbRef: DatabaseReference!
+
     //views
     var searchBar = SearchBar(frame: CGRect(x: 0, y: 0, width: 310, height: 32.5))
     var collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -41,7 +42,6 @@ class MessagesViewController: UIViewController {
             FirebaseApp.configure()
         }
         
-        print("this is the activity for the main convo: ", iMessageDelegate.mainConversation)
         setup()
         fetchContent()
         setupSearchBar()
@@ -51,6 +51,18 @@ class MessagesViewController: UIViewController {
     
     ///gets the links from the DB and appends it to the content array
     func fetchContent() {
+        dbRef = Database.database().reference().child("posts")
+        dbRef.queryLimited(toFirst: 60).queryOrdered(byChild: "dateCreated").observeSingleEvent(of: .value) { (snapshot) in
+            
+                for child in snapshot.children {
+                    let child = child as? DataSnapshot
+                    if let value = child?.value as? [String : Any] {
+                        if let link = value["link"] as? String {
+                            let indexPath = IndexPath(item: self.content.count, section: 0)
+                            self.content.append(link)
+                            self.collectionView.insertItems(at: [indexPath])
+                        } } }
+        }
     }
     
     func setup(){
@@ -64,6 +76,8 @@ class MessagesViewController: UIViewController {
         searchBar.delegate = self
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: searchBar)
         navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.view.backgroundColor = .white
+        navigationController?.navigationBar.isTranslucent = false
         
         let cancelButtonAttributes = [NSAttributedString.Key.foregroundColor: UIColor.customRed]
         UIBarButtonItem.appearance().setTitleTextAttributes(cancelButtonAttributes , for: .normal)
@@ -88,15 +102,13 @@ class MessagesViewController: UIViewController {
     
     ///presents the next vc when the user enters a term to search 
     func nextView(term: String) {
-        print("this is working myfriend", iMessageDelegate.mainConversation)
         searchTableViewController.addSearchTerm(term: term)
         tableTagsView.alpha = 0
         searchBar.endEditing(true)
         let vc = MessageSearchResultsViewController()
         vc.initialNavigationController = navigationController
         vc.setup(term: term)
-        vc.minimizeView = iMessageDelegate.minimizeView
-        vc.activeConversation = iMessageDelegate.mainConversation
+        vc.iMessageDelegate = iMessageDelegate
         navigationController?.pushViewController(vc, animated: true)
     }
     
