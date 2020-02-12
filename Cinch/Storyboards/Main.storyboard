@@ -12,7 +12,7 @@
         <scene sceneID="f8c-C6-RDA">
             <objects>
                 <tabBarController id="qpE-qB-mE9" sceneMemberID="viewController">
-                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="kiX-Rp-33u">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="kiX-Rp-33u">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -34,7 +34,7 @@
             <objects>
                 <viewController id="JER-F0-SVC" customClass="DiscoverViewController" customModule="Cinch" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="JkS-ea-31d">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="KXc-5g-Nr2"/>
@@ -113,7 +113,7 @@
             <objects>
                 <viewController id="bxu-dy-aen" customClass="UploadViewController" customModule="Cinch" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ZCG-vu-zUM">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="8aB-Ng-pJB"/>
@@ -148,7 +148,7 @@
             <objects>
                 <viewController storyboardIdentifier="ProfileViewController" id="rfK-wM-Z6Z" customClass="ProfileViewController" customModule="Cinch" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="qAV-WM-j5u">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="Y4i-Ik-DQc"/>
@@ -210,11 +210,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="pressedHome" width="41" height="37.5"/>
-        <image name="pressedProfile" width="25" height="29"/>
-        <image name="pressedUpload" width="50" height="50"/>
-        <image name="unpressedHome" width="32" height="29"/>
-        <image name="unpressedProfile" width="25" height="29"/>
-        <image name="unpressedUpload" width="40" height="40"/>
+        <image name="pressedHome" width="29" height="29.5"/>
+        <image name="pressedProfile" width="25.5" height="29"/>
+        <image name="pressedUpload" width="41" height="30"/>
+        <image name="unpressedHome" width="30.5" height="31"/>
+        <image name="unpressedProfile" width="25.5" height="28.5"/>
+        <image name="unpressedUpload" width="34" height="25"/>
     </resources>
 </document>

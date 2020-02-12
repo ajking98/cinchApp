@@ -29,7 +29,8 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.tabBarController!.tabBar.layer.borderWidth = 0.9
+        self.tabBarController?.tabBar.layer.borderColor = UIColor.lightishGray.cgColor
         fetchData()
         setupData()
         setupSearchBar()
