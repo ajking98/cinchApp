@@ -16,7 +16,7 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
     //Data
     var width: CGFloat = 0
     var height: CGFloat = 0
-    var images = ["A", "B", "C", "D"]
+    var images:[UIImage] = [] //Images for the top carousel
     var mainHashTags:[String] = []
     let identifier = "Cell"
     
@@ -42,11 +42,21 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
         navigationController?.tabBarController?.tabBar.isHidden = false
     }
     
+    
     func fetchData() {
         ParentTagStruct().readAdminTags { (tags) in
             print("these are your stuff:", tags)
             self.mainHashTags = tags
             self.tableView.reloadData()
+        }
+        
+        ParentPostStruct().readAdminPosts { (links) in
+            for link in links {
+                let tempImageView = UIImageView()
+                tempImageView.sd_setImage(with: URL(string: link), placeholderImage: UIImage(), completed: nil)
+                self.images.append(tempImageView.image!)
+            }
+            print("this si workng", links)
         }
     }
     
@@ -86,7 +96,7 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
         for index in 0..<images.count {
             let xPos = topCarousel.frame.size.width * CGFloat(index)
             let imageView = UIImageView(frame: CGRect(origin: CGPoint(x: xPos, y: 0), size: topCarousel.frame.size))
-            imageView.image = UIImage(named: images[index])
+            imageView.image = images[index]
             topCarousel.addSubview(imageView)
         }
         topCarousel.contentSize = CGSize(width: width * CGFloat(images.count), height: topCarousel.frame.size.height)
