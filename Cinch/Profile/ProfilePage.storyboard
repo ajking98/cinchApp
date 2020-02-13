@@ -49,10 +49,17 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="lP9-qt-nWJ"/>
                     </view>
+                    <toolbarItems>
+                        <barButtonItem title="Item" image="minus.circle" catalog="system" id="oJn-Up-UR9"/>
+                    </toolbarItems>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g6b-Ff-VcC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3054" y="-652"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="minus.circle" catalog="system" width="64" height="60"/>
+    </resources>
 </document>

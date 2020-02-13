@@ -101,7 +101,7 @@ DEPENDENCIES:
   - XLActionController/Spotify
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  https://github.com/cocoapods/specs.git:
     - CardParts
     - Cards
     - Differentiator
@@ -153,4 +153,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: d1884330235540ac47c0e4d2d4a35eb6e8efc3d0
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.7.0

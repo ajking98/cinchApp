@@ -10,8 +10,12 @@ import UIKit
 
 class FolderSelectedController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate {
 
+    //Data given by the presenting vc
     var folderName = ""
     var username = ""
+    
+    
+    var localUser = ""
     var content: [String] = [] //this should be using a cash
     let identifier = "Cell"
     
@@ -54,21 +58,36 @@ class FolderSelectedController: UIViewController, UICollectionViewDataSource, UI
         
         //check if the folder is aleady being followed and if it is the local user
         guard let localUser = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
-        if localUser == username { return }
-        let plusButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleFollowFolder))
-        
+        self.localUser = localUser
+//        if localUser == username { return }
+        let plusButton = UIBarButtonItem(title: "Follow", style: .plain, target: self, action: #selector(handleFollowFolder))
         navigationItem.setRightBarButton(plusButton, animated: false)
         
         UserStruct().readFoldersReference(user: username) { (folderRefs) in
-            if !(folderRefs.contains { (folderRef) -> Bool in  return folderRef.folderName == self.folderName }) { //returns true if current folder isn't already followed
-                self.navigationItem.setRightBarButton(nil, animated: false)
+            print("this is something")
+            if (folderRefs.contains { (folderRef) -> Bool in  return folderRef.folderName == self.folderName && folderRef.admin == self.username }) { //returns true if current folder is already followed
+                print("this is something here dudeed")
+                let minusButton = UIBarButtonItem(title: "Unfollow", style: .plain, target: self, action: #selector(self.handleUnFollowFolder))
+                self.navigationItem.setRightBarButton(minusButton, animated: false)
             }
         }
     }
     
+    @objc func handleUnFollowFolder() {
+        print("this is unfollowing")
+        let plusButton = UIBarButtonItem(title: "Follow", style: .plain, target: self, action: #selector(handleFollowFolder))
+        navigationItem.setRightBarButton(plusButton, animated: false)
+        let folderRef = FolderReference(admin: username, folderName: folderName)
+        UserStruct().deleteFolderReference(user: localUser, folder: folderRef)
+    }
+
     
     @objc func handleFollowFolder() {
-        print("this is handling")
+        let minusButton = UIBarButtonItem(title: "Unfollow", style: .plain, target: self, action: #selector(handleUnFollowFolder))
+        navigationItem.setRightBarButton(minusButton, animated: false)
+        print("this is following")
+        let folderRef = FolderReference(admin: username, folderName: folderName)
+        UserStruct().addFolderReference(user: localUser, newFolder: folderRef)
     }
     
     func setupCollectionView() {
