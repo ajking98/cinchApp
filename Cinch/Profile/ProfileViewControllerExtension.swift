@@ -25,6 +25,7 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
         }
         cell.username = username
         cell.navigationController = self.navigationController
+        cell.fetchFolders()
         return cell
     }
     
@@ -87,24 +88,20 @@ extension ProfileMainCollectionViewCell: UICollectionViewDelegate, UICollectionV
     ///gets the names of the folders from firebase
     func fetchFolders() {
         print("this is the username", username)
-        if folders.count == 0 && foldersFollowing.count == 0 {
-            UserStruct().readFolders(user: username) { (folders) in
-                print("my username: ", self.username)
-                self.folders = folders
-                self.gemsCollectionView.reloadData()
+        UserStruct().readFolders(user: username) { (folders) in
+            self.folders = folders
+            self.gemsCollectionView.reloadData()
+        }
+        UserStruct().readFoldersReference(user: username) { (folderRefs) in
+            self.foldersFollowing = []
+            for folder in folderRefs {
+                self.foldersFollowing.append(folder.folderName)
             }
-            UserStruct().readFoldersReference(user: username) { (folderRefs) in
-                for folder in folderRefs {
-                    self.foldersFollowing.append(folder.folderName)
-                }
-                self.followingFoldersCollectionView.reloadData()
-            }
+            self.followingFoldersCollectionView.reloadData()
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        fetchFolders()
-        
         if collectionView == gemsCollectionView {
             print("this is the count of the gems: ", folders.count)
             return folders.count

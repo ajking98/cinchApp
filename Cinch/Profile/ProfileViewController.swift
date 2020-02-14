@@ -39,7 +39,7 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.fetchData()
+        fetchData()
         setupData()
         setupScrollView()
         setupNavigationBar()
@@ -68,6 +68,8 @@ class ProfileViewController: UIViewController {
         tabBarController?.tabBar.isHidden = false
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.view.backgroundColor = .white
+        print("this is appearing")
+        collectionView?.reloadData()
     }
     
     //sets the data - width, height, profileName, username, isUser, isFollowing etc.

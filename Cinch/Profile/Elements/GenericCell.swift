@@ -21,7 +21,6 @@ class GenericCell: UICollectionViewCell {
         else {
             imageView.sd_setImage(with: URL(string: link), placeholderImage: UIImage(), completed: nil)
         }
-        
         //constraints
         addSubview(imageView)
         imageView.frame.size = frame.size

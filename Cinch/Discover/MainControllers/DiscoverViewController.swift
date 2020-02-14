@@ -46,18 +46,28 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
     
     func fetchData() {
         ParentTagStruct().readAdminTags { (tags) in
-            print("these are your stuff:", tags)
             self.mainHashTags = tags
             self.tableView.reloadData()
         }
         
         ParentPostStruct().readAdminPosts { (links) in
             for link in links {
-                let tempImageView = UIImageView()
-                tempImageView.sd_setImage(with: URL(string: link), placeholderImage: UIImage(), completed: nil)
-                self.images.append(tempImageView.image!)
+                if let url = URL(string: link) {
+                    do {
+                        let imageData = try Data(contentsOf: url)
+                        if let image = UIImage(data: imageData) {
+                            self.images.append(image)
+                        }
+                    }
+                    catch {
+                        print("THIS IS FUCKING UP")
+                    }
+                    
+                }
             }
-            print("this si workng", links)
+            self.pageControl.numberOfPages = self.images.count
+            self.setupCarousel()
+            self.addCarouselData()
         }
     }
     
@@ -94,12 +104,6 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
     func setupCarousel() {
         topCarousel.frame = CGRect(x: 0, y: 0, width: width, height: 0.24 * height)
         
-        for index in 0..<images.count {
-            let xPos = topCarousel.frame.size.width * CGFloat(index)
-            let imageView = UIImageView(frame: CGRect(origin: CGPoint(x: xPos, y: 0), size: topCarousel.frame.size))
-            imageView.image = images[index]
-            topCarousel.addSubview(imageView)
-        }
         topCarousel.contentSize = CGSize(width: width * CGFloat(images.count), height: topCarousel.frame.size.height)
            topCarousel.delegate = self
            topCarousel.isPagingEnabled = true
@@ -110,8 +114,17 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
            pageControl.frame = CGRect(x: 0, y: 0, width: 100, height: 24)
            pageControl.center.x = view.center.x
            pageControl.frame.origin.y = (0.23 * height) - pageControl.frame.size.height
-           pageControl.numberOfPages = 4
            tableView.addSubview(pageControl)
+    }
+    
+    func addCarouselData() {
+        for index in 0..<images.count {
+            let xPos = topCarousel.frame.size.width * CGFloat(index)
+            let imageView = UIImageView(frame: CGRect(origin: CGPoint(x: xPos, y: 0), size: topCarousel.frame.size))
+            imageView.image = images[index]
+            imageView.contentMode = .scaleAspectFill
+            topCarousel.addSubview(imageView)
+        }
     }
     
     ///updates the current page for the page control
