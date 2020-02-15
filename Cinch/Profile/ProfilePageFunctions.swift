@@ -41,7 +41,8 @@ extension ProfileViewController {
     }
     
     @objc func handleSegmentTap() {
-        print("this is the segment: ", segmentControl.selectedSegmentIndex)
+        let segmentIndex = segmentControl.selectedSegmentIndex
+        collectionView?.scrollToItem(at: IndexPath(item: segmentIndex, section: 0), at: .left, animated: true)
     }
     
     

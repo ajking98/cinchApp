@@ -113,7 +113,9 @@ class TableViewCell: UITableViewCell, UICollectionViewDataSource {
         let storyboard = UIStoryboard(name: "Discover", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "CellSelected") as! CellSelectedTable
         vc.modalPresentationStyle = .fullScreen
-        viewController?.present(vc, animated: true, completion: nil)
+        vc.content = content
+        vc.startingIndex = indexPath
+        viewController?.navigationController?.pushViewController(vc, animated: true)
     }
 }
 

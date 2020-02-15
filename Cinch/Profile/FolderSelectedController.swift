@@ -59,7 +59,7 @@ class FolderSelectedController: UIViewController, UICollectionViewDataSource, UI
         //check if the folder is aleady being followed and if it is the local user
         guard let localUser = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
         self.localUser = localUser
-//        if localUser == username { return }
+        if localUser == username { return }
         let plusButton = UIBarButtonItem(title: "Follow", style: .plain, target: self, action: #selector(handleFollowFolder))
         navigationItem.setRightBarButton(plusButton, animated: false)
         

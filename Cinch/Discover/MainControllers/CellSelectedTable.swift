@@ -11,11 +11,12 @@ import UIKit
 
 class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, UINavigationControllerDelegate {
     
+    //Data given by the presenting VC
+    var content:[String] = []
+    var startingIndex = IndexPath(row: 0, section: 0)
     
     let tableView = UITableView(frame: CGRect.zero)
     let identifier = "Cell"
-    var content:[String] = []
-    var startingIndex = IndexPath(row: 0, section: 0)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -103,11 +104,12 @@ class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataS
         cell.frame.size = view.frame.size
         cell.setup(link: content[indexPath.row])
         cell.handlePresentProfile = handlePresentProfile(username:)
+        print("this is the height of the cell: ", cell.frame.height)
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UIScreen.main.bounds.height
+        return view.frame.height
     }
     
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {

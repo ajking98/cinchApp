@@ -13,7 +13,7 @@ import UIKit
 
 class SearchTableViewController: UITableViewController {
     let identifier = "Cell"
-    var searchHistory = ["Food", "Oranges", "Onions", "iPhone", "Swimming"]
+    var searchHistory = ["Meme", "Funny"]
     var handleCellSelected: ((String) -> Void)!
     var secondTableView = UITableView()
     var searchView = UISearchBar()
@@ -34,7 +34,6 @@ class SearchTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let text = tableView.cellForRow(at: indexPath)?.textLabel?.text else { return }
-        print("this is the term: ", text)
         handleCellSelected(text)
     }
     
