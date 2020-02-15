@@ -33,7 +33,6 @@ class CellSelectedCell: UITableViewCell{
         setupFullScreenImageView()
         setupRightHandView()
         setupLowerText()
-        
     }
     
     override func prepareForReuse() {

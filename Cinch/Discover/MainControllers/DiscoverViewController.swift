@@ -101,6 +101,14 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.backgroundColor = .darkBlue
         tableView.showsVerticalScrollIndicator = false
         view.addSubview(tableView)
+        
+        
+        //constraints
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        tableView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0).isActive = true
+        tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
     
     
