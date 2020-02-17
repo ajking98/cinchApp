@@ -12,6 +12,7 @@ target 'Cinch' do
   pod 'Firebase/Storage','~>4.0'
   platform :ios, '10.0'
   pod 'SQLite.swift', '~> 0.12.0'
+  pod 'Kingfisher'
   
   # Pods for CameraViewFinal
   #  pod "EasyImagy", :path => "../swift-image"
@@ -37,7 +38,7 @@ target 'Cinch' do
   
 end
 
-target 'CinchIMessageExtension' do
+target 'iMessage' do
   use_frameworks!
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
@@ -45,17 +46,18 @@ target 'CinchIMessageExtension' do
   pod 'SDWebImage/WebP'
   pod 'Firebase/Storage','~>4.0'
   pod 'SQLite.swift'
+  pod 'Kingfisher'
 end
 
 
 
-target 'CinchShareExtension' do
-  use_frameworks!
-  pod 'Firebase/Core'
-  pod 'Firebase/Auth'
-  pod 'Firebase/Database'
-  pod 'SDWebImage/WebP'
-  pod 'Firebase/Storage','~>4.0'
-  pod 'SQLite.swift'
-end
+#target 'CinchShareExtension' do
+#  use_frameworks!
+#  pod 'Firebase/Core'
+#  pod 'Firebase/Auth'
+#  pod 'Firebase/Database'
+#  pod 'SDWebImage/WebP'
+#  pod 'Firebase/Storage','~>4.0'
+#  pod 'SQLite.swift'
+#end
 

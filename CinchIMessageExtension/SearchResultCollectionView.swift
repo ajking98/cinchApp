@@ -63,8 +63,6 @@ class SearchResultCollectionView: MSMessagesAppViewController, UICollectionViewD
             layout.minimumLineSpacing = 0
             layout.scrollDirection = .vertical
             layout.itemSize = CGSize(width: collectionView.frame.width / 2.6, height: collectionView.frame.width / 2.6)
-            print(collectionView.frame.width)
-            print(UIScreen.accessibilityFrame().width)
             return layout
         }()
         collectionView.collectionViewLayout = collectionViewLayout

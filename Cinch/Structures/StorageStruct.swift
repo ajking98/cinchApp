@@ -24,7 +24,7 @@ struct StorageStruct {
         
         //TODO copy the video part in the sense that you can't upload to an already existing link
         //This should use .putFile instead of .putData
-        let storageRef = Storage.storage().reference().child("PublicImages/" + randomString(20)) //TODO append .jpg to the randomString(20)
+        let storageRef = Storage.storage().reference().child("PublicImages/" + randomString(20) + ".jpg") 
         storageRef.putData(imageData, metadata: nil, completion: { (metadata, error) in
             guard (metadata != nil) else{
                 print("Error occurred in the upload process")
@@ -41,6 +41,19 @@ struct StorageStruct {
         })
     }
     
+    func deleteContent(link: String) {
+        let storage = Storage.storage()
+        let storageRef = storage.reference(forURL: link)
+        
+        storageRef.delete { (error) in
+            if let error = error {
+                print("this is an error deleting the file: ", error)
+            }
+            else {
+                print("File deleted successfully")
+            }
+        }
+    }
     
     ///Uploads video to storage and uses closure to return URL
     func uploadVideo(video: AVPlayerItem, completion: @escaping(String)-> Void){
@@ -113,6 +126,61 @@ struct StorageStruct {
 //            uploadImage(image: UIImage(named: "empty")!, completion: completion)
         }
     }
+    
+    ///Uploads local video to firebase - Latest and the greatest 
+    func uploadContent(mediaLink: URL, completion: @escaping(String) -> Void){
+        if checkIfVideo(mediaLink.absoluteString) {
+            let storageRef = Storage.storage().reference().child("videos").child(randomString(20) + ".mp4")
+            let data = NSData(contentsOfFile: mediaLink.path)
+            storageRef.putData(data! as Data, metadata: nil) { (metadata, error) in
+                print("working url")
+                guard metadata != nil else {
+                     return
+                 }
+                 if error != nil {
+                     print("there is an error in url", error)
+                 }
+
+                 storageRef.downloadURL { (url, error) in
+                     guard let downloadURL = url else {
+                         print("error with url", error?.localizedDescription)
+                         return
+                     }
+                     print("here is your url:", downloadURL.absoluteString)
+                     completion(downloadURL.absoluteString)
+                 }
+            }
+        }
+        else {
+            var imageData = Data()
+            do {
+                imageData = try Data(contentsOf: mediaLink)
+            }
+            catch {
+                print("error")
+            }
+            
+            let storageRef = Storage.storage().reference().child("PublicImages/" + randomString(20) + ".jpg")
+            storageRef.putData(imageData, metadata: nil, completion: { (metadata, error) in
+                guard (metadata != nil) else{
+                    print("Error occurred in the upload process")
+                    return
+                }
+                
+                storageRef.downloadURL {(url, error) in
+                    guard let downloadURL = url else {
+                        print("Error occurred")
+                        return
+                    }
+                    completion(downloadURL.absoluteString)
+                }
+            })
+            
+            
+        }
+    }
+    
+    
     
     // WORKS
     //Uploads image to Firebase Storage and adds the path to the firebase database under the user's profile image key
@@ -213,15 +281,6 @@ struct StorageStruct {
             storageRef.downloadURL { (url, error) in
                 if (error == nil) {
                     if let downloadUrl = url {
-                        // Make you download string
-//                            refImages.observeSingleEvent(of: .value) { (snapshot) -> Void in
-//                                var contentArr = [String]()
-//                                for image in snapshot.children {
-//                                    contentArr.append(image as! String)
-//                                }
-//                                contentArr.append(content as! )
-//                            }
-                        
                         refImages.observeSingleEvent(of: .value, with: { snapshot in
                             var myContentArray = [String]()
                             for child in snapshot.children {

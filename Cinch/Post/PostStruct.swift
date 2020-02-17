@@ -141,7 +141,7 @@ struct PostStruct {
         ParentTagStruct().addTag(tag: tag)
     }
     
-    //This doesn't add the post to the tags
+    //This doesn't add the post to the tag
     ///Adds mutliple tags at a time to a single post
     func addTags(post : String, newTags : [String]) {
         var tagDict : [String : String] = [:]
@@ -156,14 +156,20 @@ struct PostStruct {
     }
     
     func deleteTag(post : String, tag : String) {
-        DB.child(post).child("tags").child(tag).removeValue()
+        let updatedLink = convertStringToKey(link: post)
+        DB.child(updatedLink).child("tags").child(tag).removeValue()
     }
     
     func readTags(post : String, completion : @escaping([String])-> Void) {
-        DB.child(post).child("tags").observeSingleEvent(of: .value) { (snapshot) in
-            if let tags = snapshot.value as? [String : String] {
-                completion(Array(tags.keys))
+        let updatedLink = convertStringToKey(link: post)
+        DB.child(updatedLink).child("tags").observeSingleEvent(of: .value) { (snapshot) in
+            var tags: [String] = []
+            for child in snapshot.children {
+                let child = child as? DataSnapshot
+                guard let tag = child?.value as? String else { return }
+                tags.append(tag)
             }
+            completion(tags)
         }
     }
 }

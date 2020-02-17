@@ -56,8 +56,7 @@ struct ParentTagStruct{
             if let tag = snapshot.value as? [String : Any] {
                 print("reading tag")
                 TagStruct().readAllElements(tagLabel: tagLabel, completion: { (tagElements) in
-                    
-                    let firstUsed = tag["firstUsed"] as! Double
+                    guard let firstUsed = tag["firstUsed"] as? Double else { return }
                     let lastUsed = tag["lastUsed"] as! Double
                     let numberOfElements = tag["numberOfElements"] as! Int
                     let tagLabel = tag["tagLabel"] as! String
@@ -84,6 +83,24 @@ struct ParentTagStruct{
     ///Takes in a tagLabel and deletes it from the database and returns the deleted tag object
     func deleteTag(tagLabel : String)-> Void {
         DB.child(tagLabel).removeValue()
+    }
+    
+    /*
+        Admin tags
+     */
+    
+    func readAdminTags(completion: @escaping([String])-> Void) {
+        let adminDB = Database.database().reference().child("AdminTags")
+        adminDB.observeSingleEvent(of: .value) { (snapshot) in
+            var tags:[String] = []
+            
+            for child in snapshot.children {
+                guard let child = child as? DataSnapshot else { return }
+                guard let value = child.value as? String else { return }
+                tags.append(value)
+            }
+            completion(tags)
+        }
     }
     
     

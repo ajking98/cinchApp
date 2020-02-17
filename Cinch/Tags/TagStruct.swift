@@ -67,7 +67,22 @@ struct TagStruct {
         }
     }
     
-    //check is data already exists in db and updates or creates depending on the outcome
+    ///reads all the elements for a given tag label
+      func readAllElementLinks(tagLabel : String, completion : @escaping([String])->Void){
+          DB.child(tagLabel).child("elements").observeSingleEvent(of: .value) { (snapshot) in
+            var elementsDict:[String] = []
+            for child in snapshot.children {
+                if let child = child as? DataSnapshot {
+                    if let value = child.value as? [String: Any] {
+                        if let link = value["link"] as? String {
+                            elementsDict.append(link)
+                        } } }
+            }
+              completion(elementsDict)
+          }
+      }
+    
+    ///check is data already exists in db and updates or creates depending on the outcome
     func addElement(tagLabel : String, tagElement : TagElement) {
         let link = tagElement.link
         let updatedLink = convertStringToKey(link: link)
@@ -93,7 +108,9 @@ struct TagStruct {
     
     ///Takes in a tagLabel and a link to the image and deletes the tagElement at that given link in the tag object in the DB
     func deleteElement(tagLabel : String, link : String){
-        DB.child(tagLabel).child("elements").child(String(link)).removeValue()
+        let updatedLink = convertStringToKey(link: link)
+        let updatedTag = tagLabel.lowercased()
+        DB.child(updatedTag).child("elements").child(updatedLink).removeValue()
     }
     
     

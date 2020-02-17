@@ -8,9 +8,13 @@
 
 import Foundation
 import UIKit
+import AVKit
 
 
 extension UIImageView {
+    
+    static var video: AVPlayerLayer?
+    
     
     public func loadGif(name: String) {
         DispatchQueue.global().async {
@@ -30,5 +34,30 @@ extension UIImageView {
             }
         }
     }
+    
+    ///embeds video into imageView given a link
+    public func loadVideo(_ link: URL, size: CGSize)-> AVPlayerLayer {
+        //TODO: handle local link
+        let player = AVPlayer(url: link)
+        return loadVideo(player, size: size)
+    }
+
+    ///embeds video into imageView given a playerItem
+    public func loadVideo(_ player : AVPlayer, size: CGSize) -> AVPlayerLayer {
+        player.isMuted = true
+        let playerLayer = AVPlayerLayer(player: player)
+        playerLayer.frame.size = size
+        playerLayer.videoGravity = .resizeAspectFill
+        layer.addSublayer(playerLayer)
+        player.play()
+        
+        //autoplay
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil, queue: nil) { notification in
+            player.seek(to: CMTime.zero)
+            player.play()
+        }
+        return playerLayer
+    }
+    
     
 }
