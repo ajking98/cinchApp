@@ -203,7 +203,11 @@ struct FolderStruct {
     
     ///deletes a given post from the content's dictionary with in the Folder
     func deleteContent(user : String, folderName : String, link : String) {
-        DB.child(user).child("folders").child(folderName).child("content").child(link).removeValue()
+        let updatedLink = convertStringToKey(link: link)
+        print("this is user info: ", user, folderName, updatedLink)
+        DB.child(user).child("folders").child(folderName).child("content").child(updatedLink).removeValue { (error, DB) in
+            print("Error removing link from folder", folderName, error)
+        }
     }
     
     

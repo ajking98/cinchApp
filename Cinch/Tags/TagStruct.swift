@@ -108,7 +108,9 @@ struct TagStruct {
     
     ///Takes in a tagLabel and a link to the image and deletes the tagElement at that given link in the tag object in the DB
     func deleteElement(tagLabel : String, link : String){
-        DB.child(tagLabel).child("elements").child(String(link)).removeValue()
+        let updatedLink = convertStringToKey(link: link)
+        let updatedTag = tagLabel.lowercased()
+        DB.child(updatedTag).child("elements").child(updatedLink).removeValue()
     }
     
     

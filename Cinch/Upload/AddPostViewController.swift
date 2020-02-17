@@ -34,7 +34,16 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate{
     
     override func viewDidLayoutSubviews() {
         guard isVideo else { return }
-        imageView.loadVideo(mediaLink, size: imageView.frame.size)
+        let playerLayer = imageView.loadVideo(mediaLink, size: imageView.frame.size)
+        if playerLayer.duration > 90 {
+            let alert = UIAlertController(title: "Upload failed", message: "File too large", preferredStyle: .alert)
+            present(alert, animated: true, completion: nil)
+            let alertExpiration = DispatchTime.now() + 5
+            DispatchQueue.main.asyncAfter(deadline: alertExpiration) {
+            alert.dismiss(animated: true, completion: nil)
+            }
+            goBack()
+        }
     }
     
     
@@ -112,7 +121,7 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate{
         imageView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         imageView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         imageView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        imageView.heightAnchor.constraint(equalToConstant: 0.77 * height).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: 0.7 * height).isActive = true
     }
     
     func addHashTag(){

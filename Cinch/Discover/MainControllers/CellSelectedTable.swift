@@ -104,7 +104,6 @@ class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataS
         cell.frame.size = view.frame.size
         cell.setup(link: content[indexPath.row])
         cell.handlePresentProfile = handlePresentProfile(username:)
-        print("this is the height of the cell: ", cell.frame.height)
         return cell
     }
     

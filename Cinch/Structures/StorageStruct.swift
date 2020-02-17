@@ -41,6 +41,20 @@ struct StorageStruct {
         })
     }
     
+    func deleteContent(link: String) {
+        let storage = Storage.storage()
+        let storageRef = storage.reference(forURL: link)
+        
+        storageRef.delete { (error) in
+            if let error = error {
+                print("this is an error deleting the file: ", error)
+            }
+            else {
+                print("File deleted successfully")
+            }
+        }
+    }
+    
     ///Uploads video to storage and uses closure to return URL
     func uploadVideo(video: AVPlayerItem, completion: @escaping(String)-> Void){
         let storageRef = Storage.storage().reference().child("videos").child(randomString(20) + ".mp4")

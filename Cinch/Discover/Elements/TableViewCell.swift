@@ -65,6 +65,7 @@ class TableViewCell: UITableViewCell, UICollectionViewDataSource {
     
     ///fetches the links for the term
     func fetchContent(){
+        content = []
         TagStruct().readAllElementLinks(tagLabel: hashTagTerm.lowercased()) { (links) in
             for link in links {
                 self.content.append(link)

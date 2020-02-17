@@ -11,6 +11,7 @@
 //  Created by Alsahlani, Yassin K on 1/27/20.
 
 import UIKit
+import Kingfisher
 
 class CellSelectedCell: UITableViewCell{
     
@@ -26,13 +27,63 @@ class CellSelectedCell: UITableViewCell{
     var profileIcon = UIImageView(frame: CGRect.zero)
     let lowerText = UILabel(frame: CGRect.zero)
     
+    
+    //TODO: Remove this
+    let xMark = UIButton(type: .contactAdd)
+    var post = Post(isImage: true, numberOfLikes: 0, postOwner: "ohSHoot", likedBy: [], dateCreated: 0, tags: [], link: "")
+    
     func setup(link: String) {
+        
+        post.link = link
+        PostStruct().readPostOwner(post: link) { (author) in
+            self.post.postOwner = author
+        }
+        
+        PostStruct().readTags(post: link) { (tags) in
+            self.post.tags = tags
+        }
+        
+        
+        
         self.link = link
         username = "nil"
         fetchContent()
         setupFullScreenImageView()
         setupRightHandView()
         setupLowerText()
+        setupxMark()
+    }
+    
+    func setupxMark() {
+        xMark.addTarget(self, action: #selector(handleRemoved), for: .touchUpInside)
+        xMark.frame = CGRect(x: 200, y: 200, width: 50, height: 50)
+        xMark.backgroundColor = .green
+        xMark.isHidden = true //TODO remove this to be able to delete posts
+        addSubview(xMark)
+    }
+    
+    @objc func handleRemoved() {
+        
+        
+        UserStruct().readFolders(user: self.username) { (folders) in
+            for folder in folders {
+                FolderStruct().readContent(user: self.username, folderName: folder) { (content) in
+                    content.forEach { (link) in
+                        if link == self.link {
+                            print("this is the folder we are deleting from: ", folder)
+                            FolderStruct().deleteContent(user: self.username, folderName: folder, link: link)
+                        }
+                    }
+                }
+            }
+        }
+        post.tags?.forEach({ (SingleTag) in
+            TagStruct().deleteElement(tagLabel: SingleTag, link: self.link)
+        })
+
+        ParentPostStruct().deletePost(postLink: link)
+        StorageStruct().deleteContent(link: link)
+        print("the user is: \(username), this is being removed", link)
     }
     
     override func prepareForReuse() {
