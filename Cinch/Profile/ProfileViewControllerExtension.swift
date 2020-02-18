@@ -57,7 +57,7 @@ class ProfileMainCollectionViewCell: UICollectionViewCell {
         gemsCollectionView.register(ProfileCollectionViewCell.self, forCellWithReuseIdentifier: cellIdentifier)
         gemsCollectionView.showsVerticalScrollIndicator = false
         gemsCollectionView.alwaysBounceVertical = false
-        gemsCollectionView.backgroundColor = .white
+        gemsCollectionView.backgroundColor = .normalBlue
         gemsCollectionView.isScrollEnabled = false
         gemsCollectionView.frame = frame
 
@@ -71,7 +71,7 @@ class ProfileMainCollectionViewCell: UICollectionViewCell {
         followingFoldersCollectionView.showsHorizontalScrollIndicator = false
         followingFoldersCollectionView.alwaysBounceVertical = false
         followingFoldersCollectionView.showsVerticalScrollIndicator = false
-        followingFoldersCollectionView.backgroundColor = .white
+        followingFoldersCollectionView.backgroundColor = .lightGreen
         followingFoldersCollectionView.isScrollEnabled = false;
         followingFoldersCollectionView.frame = frame
         followingFoldersCollectionView.frame.origin.x = 0

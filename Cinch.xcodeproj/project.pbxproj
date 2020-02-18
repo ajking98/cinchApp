@@ -15,6 +15,7 @@
 		463A844922F6286A00F9B4CD /* Camera.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 463A844822F6286A00F9B4CD /* Camera.storyboard */; };
 		4657E21D22F72DA700396087 /* CameraViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4657E21C22F72DA700396087 /* CameraViewExtensions.swift */; };
 		4669B8D222B6DC65004FB38D /* defaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4669B8D122B6DC64004FB38D /* defaultsKeys.swift */; };
+		4676FA9E23FBA0A1001D8FC7 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4676FA9D23FBA0A1001D8FC7 /* UIViewExtension.swift */; };
 		467E5DB922FCE8EF00F23ABD /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467E5DB822FCE8EF00F23ABD /* Post.swift */; };
 		467E5DC522FCFE2100F23ABD /* PostStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467E5DC422FCFE2100F23ABD /* PostStruct.swift */; };
 		467E5DC822FD110C00F23ABD /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467E5DC722FD110C00F23ABD /* Buttons.swift */; };
@@ -173,6 +174,7 @@
 		463A844822F6286A00F9B4CD /* Camera.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Camera.storyboard; path = Cinch/Upload/Camera.storyboard; sourceTree = SOURCE_ROOT; };
 		4657E21C22F72DA700396087 /* CameraViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewExtensions.swift; sourceTree = SOURCE_ROOT; };
 		4669B8D122B6DC64004FB38D /* defaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = defaultsKeys.swift; sourceTree = "<group>"; };
+		4676FA9D23FBA0A1001D8FC7 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		467E5DB822FCE8EF00F23ABD /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		467E5DC422FCFE2100F23ABD /* PostStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostStruct.swift; sourceTree = "<group>"; };
 		467E5DC722FD110C00F23ABD /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
@@ -394,6 +396,7 @@
 				4607196D235ACC1900BE17DF /* PanGestureExtension.swift */,
 				899F664423E3A5A70022C099 /* UISegmentControllerExtension.swift */,
 				890B2ED523F24F4B0091B77B /* StringExtension.swift */,
+				4676FA9D23FBA0A1001D8FC7 /* UIViewExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1055,6 +1058,7 @@
 				46D48D902318A7D100952EDB /* FolderReference.swift in Sources */,
 				EB63B7DE226A7933004C7E2C /* CustomImageFlowLayout.swift in Sources */,
 				4607196E235ACC1900BE17DF /* PanGestureExtension.swift in Sources */,
+				4676FA9E23FBA0A1001D8FC7 /* UIViewExtension.swift in Sources */,
 				467E5DB922FCE8EF00F23ABD /* Post.swift in Sources */,
 				891065C823DE613C00EB8238 /* SearchBar.swift in Sources */,
 				8E95FFCE22BF283F0067B5F2 /* ParentTagStruct.swift in Sources */,

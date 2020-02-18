@@ -1,10 +1,10 @@
 //
 //  SearchTableViewController.swift
-//  Cinch
-//
+/*
+    This view appears when the user is searching a term
+    This view provides the user with suggested terms to search 
+ */
 //  Created by Alsahlani, Yassin K on 2/6/20.
-//  Copyright © 2020 Gedi, Ahmed M. All rights reserved.
-//
 
 import Foundation
 import UIKit

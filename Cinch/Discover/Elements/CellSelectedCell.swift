@@ -11,7 +11,7 @@
 //  Created by Alsahlani, Yassin K on 1/27/20.
 
 import UIKit
-import Kingfisher
+import AVKit
 
 class CellSelectedCell: UITableViewCell{
     
@@ -21,6 +21,7 @@ class CellSelectedCell: UITableViewCell{
     var handlePresentProfile: ((String) -> Void)?
     
     var fullScreenImageView = UIImageView(frame: CGRect.zero)
+    var playerLayer = AVPlayerLayer()
     let shareIcon = UIImageView(image: UIImage(named: "shareIcon"))
     let heartIcon = UIImageView(image: UIImage(named: "heartIcon"))
     let followUserIcon = UIImageView(image: UIImage(named: "followUserIcon"))
@@ -98,7 +99,9 @@ class CellSelectedCell: UITableViewCell{
     func fetchContent() {
         if checkIfVideo(link) {
             guard let link = URL(string: link) else { return }
-            let playerLayer = fullScreenImageView.loadVideo(link, size: frame.size)
+            playerLayer = fullScreenImageView.loadVideo(link, size: frame.size)
+            fullScreenImageView.isUserInteractionEnabled = true
+            fullScreenImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleImageViewTapped)))
             playerLayer.videoGravity = .resizeAspect
         }
         else {
@@ -117,6 +120,10 @@ class CellSelectedCell: UITableViewCell{
                 self.lowerText.text? += "#\(tag) "
             }
         }
+    }
+    
+    @objc func handleImageViewTapped() {
+        playerLayer.player?.isMuted.toggle()
     }
     
     //full screen imageview
@@ -150,6 +157,8 @@ class CellSelectedCell: UITableViewCell{
         heartIcon.translatesAutoresizingMaskIntoConstraints = false
         heartIcon.centerXAnchor.constraint(equalTo: shareIcon.centerXAnchor).isActive = true
         heartIcon.bottomAnchor.constraint(equalTo: shareIcon.topAnchor, constant: -20).isActive = true
+        heartIcon.isUserInteractionEnabled = true
+        heartIcon.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleHearted)))
         
         
         //profile icon
@@ -173,6 +182,18 @@ class CellSelectedCell: UITableViewCell{
         followUserIcon.translatesAutoresizingMaskIntoConstraints = false
         followUserIcon.centerYAnchor.constraint(equalTo: profileIcon.bottomAnchor).isActive = true
         followUserIcon.centerXAnchor.constraint(equalTo: profileIcon.centerXAnchor).isActive = true
+    }
+    
+    @objc func handleHearted() {
+        //todo: add link to the folder
+        guard let localUser = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
+        FolderStruct().addContent(user: localUser, folderName: "Hearted", link: link)
+        let alert = UIAlertController(title: "Added to \"Hearted\" Folder", message: "", preferredStyle: .alert) //Notify the user with an alert
+        parentViewController?.present(alert, animated: true, completion: nil)
+        let alertExpiration = DispatchTime.now() + 0.85
+        DispatchQueue.main.asyncAfter(deadline: alertExpiration) {
+        alert.dismiss(animated: true, completion: nil)
+        }
     }
     
     @objc func handleProfilePicPressed() {

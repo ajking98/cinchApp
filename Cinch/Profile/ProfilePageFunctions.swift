@@ -42,6 +42,14 @@ extension ProfileViewController {
     
     @objc func handleSegmentTap() {
         let segmentIndex = segmentControl.selectedSegmentIndex
+        if segmentIndex == 0 {
+            segmentControl.setImage(UIImage(named: "heartIcon-Selected"), forSegmentAt: 0)
+            segmentControl.setImage(UIImage(named: "profileGems"), forSegmentAt: 1)
+        }
+        else {
+            segmentControl.setImage(UIImage(named: "heartIcon-Unselected"), forSegmentAt: 0)
+            segmentControl.setImage(UIImage(named: "ProfileGems-Selected"), forSegmentAt: 1)
+        }
         collectionView?.scrollToItem(at: IndexPath(item: segmentIndex, section: 0), at: .left, animated: true)
     }
     
