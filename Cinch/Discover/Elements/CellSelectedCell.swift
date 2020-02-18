@@ -150,7 +150,8 @@ class CellSelectedCell: UITableViewCell{
         shareIcon.translatesAutoresizingMaskIntoConstraints = false
         shareIcon.rightAnchor.constraint(equalTo: rightAnchor, constant: -20).isActive = true
         shareIcon.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -0.31 * frame.height).isActive = true
-        
+        shareIcon.isUserInteractionEnabled = true
+        shareIcon.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleShare)))
         
         //heart icon
         addSubview(heartIcon)
@@ -182,6 +183,12 @@ class CellSelectedCell: UITableViewCell{
         followUserIcon.translatesAutoresizingMaskIntoConstraints = false
         followUserIcon.centerYAnchor.constraint(equalTo: profileIcon.bottomAnchor).isActive = true
         followUserIcon.centerXAnchor.constraint(equalTo: profileIcon.centerXAnchor).isActive = true
+    }
+    
+    @objc func handleShare() {
+        print("this is handling the share")
+        let vc = UIActivityViewController(activityItems: [fullScreenImageView.image], applicationActivities: [])
+        parentViewController?.present(vc, animated: true, completion: nil)
     }
     
     @objc func handleHearted() {

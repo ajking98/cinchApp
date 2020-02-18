@@ -209,7 +209,6 @@ class ProfileViewController: UIViewController {
         segmentControl.backgroundColor = .white
         segmentControl.tintColor = .black
         segmentControl.removeBorders()
-        
         //constraints
         segmentControl.translatesAutoresizingMaskIntoConstraints = false
         segmentControl.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
