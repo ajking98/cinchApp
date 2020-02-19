@@ -39,10 +39,13 @@ class UploadViewController: UIViewController {
     func setupUploadButton() {
         let buttonWidth = 0.46 * view.frame.width
         uploadButton.setImage(UIImage(named: "uploadButton"), for: .normal)
-        uploadButton.frame.size = CGSize(width: buttonWidth, height: buttonWidth)
         
-        uploadButton.center = view.center
         view.addSubview(uploadButton)
+        
+        //constraints
+        uploadButton.translatesAutoresizingMaskIntoConstraints = false
+        uploadButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        uploadButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100).isActive = true
         
         uploadButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(selectMedia)))
     }
@@ -51,15 +54,15 @@ class UploadViewController: UIViewController {
         lowerText.textAlignment = .center
         lowerText.text = "Upload From iPhone"
         lowerText.font = UIFont(name: "Avenir-Heavy", size: 23)
-        lowerText.textColor = .darkerGreen
         lowerText.isUserInteractionEnabled = true
+        lowerText.textColor = .gray
         lowerText.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(selectMedia)))
         
         
         view.addSubview(lowerText)
         //constraints
         lowerText.translatesAutoresizingMaskIntoConstraints = false
-        lowerText.topAnchor.constraint(equalTo: uploadButton.bottomAnchor, constant: 25).isActive = true
+        lowerText.bottomAnchor.constraint(equalTo: uploadButton.topAnchor, constant: -25).isActive = true
         lowerText.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         lowerText.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         lowerText.heightAnchor.constraint(equalToConstant: 25).isActive = true
@@ -71,6 +74,7 @@ class UploadViewController: UIViewController {
         imagePicker.allowsEditing = false
         imagePicker.mediaTypes = ["public.image", "public.movie"]
         imagePicker.sourceType = .photoLibrary
+        imagePicker.modalPresentationStyle = .fullScreen
         
         //checks for permission 
         var status = PHPhotoLibrary.authorizationStatus()
@@ -102,6 +106,19 @@ extension UploadViewController: UIImagePickerControllerDelegate, UINavigationCon
         }
         else if mediaType == "public.movie" {
             mediaLink = (info[UIImagePickerController.InfoKey.mediaURL] as? URL)!
+            let length = AVURLAsset(url: mediaLink).duration.seconds
+            guard length < 90 else {
+                self.dismiss(animated: true) {
+                    print("this is too long")
+                    let alert = UIAlertController(title: "Upload failed", message: "File too large", preferredStyle: .alert)
+                    self.present(alert, animated: true, completion: nil)
+                    let alertExpiration = DispatchTime.now() + 5
+                    DispatchQueue.main.asyncAfter(deadline: alertExpiration) {
+                        alert.dismiss(animated: true, completion: nil)
+                    }
+                }
+                return
+            }
         }
         let vc = AddPostViewController()
         vc.mediaLink = mediaLink

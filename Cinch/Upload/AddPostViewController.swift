@@ -9,6 +9,7 @@
 
 import UIKit
 import XLActionController
+import AVKit
 
 class AddPostViewController: UIViewController, UIGestureRecognizerDelegate{
     //data
@@ -19,7 +20,6 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate{
     
     //Elements
     let tagField = UITextView(frame: CGRect.zero)
-    let postButton = UIButton(frame: CGRect.zero)
     let imageView = UIImageView(frame: CGRect.zero)
 
     override func viewDidLoad() {
@@ -28,22 +28,12 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate{
         setup()
         setupNavigationController()
         setupTagField()
-        setupPostButton()
         setupImageView()
     }
     
     override func viewDidLayoutSubviews() {
         guard isVideo else { return }
         let playerLayer = imageView.loadVideo(mediaLink, size: imageView.frame.size)
-        if playerLayer.duration > 90 {
-            let alert = UIAlertController(title: "Upload failed", message: "File too large", preferredStyle: .alert)
-            present(alert, animated: true, completion: nil)
-            let alertExpiration = DispatchTime.now() + 5
-            DispatchQueue.main.asyncAfter(deadline: alertExpiration) {
-            alert.dismiss(animated: true, completion: nil)
-            }
-            goBack()
-        }
     }
     
     
@@ -63,44 +53,31 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate{
         backButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(goBack)))
         let leftNavBarItem = UIBarButtonItem(customView: backButton)
         navigationItem.setLeftBarButton(leftNavBarItem, animated: false)
-
-        tabBarController?.tabBar.isHidden = true
+        
+        //Post button item
+        let postButton = UIBarButtonItem(title: "Submit", style: .plain, target: self, action: #selector(handlePostMedia))
+        navigationItem.setRightBarButton(postButton, animated: false)
     }
     
     
     func setupTagField() {
         tagField.backgroundColor = .lightGray
         tagField.text = "#Tags"
-        tagField.font?.withSize(24)
+        tagField.font = UIFont(name: "Avenir-Heavy", size: 23)
+        tagField.layer.cornerRadius = 6
         
         view.addSubview(tagField)
         
         //constraints
         tagField.translatesAutoresizingMaskIntoConstraints = false
-        tagField.topAnchor.constraint(equalTo: view.topAnchor, constant: 0.12 * height).isActive = true
-        tagField.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 18).isActive = true
+        tagField.topAnchor.constraint(equalTo: view.topAnchor, constant: (navigationController?.navigationBar.frame.height)!).isActive = true //TODO: Fix this 
+        tagField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         tagField.heightAnchor.constraint(equalToConstant: height * 0.084).isActive = true
-        tagField.widthAnchor.constraint(equalToConstant: width * 0.62).isActive = true
+        tagField.widthAnchor.constraint(equalToConstant: width * 0.9).isActive = true
         
         addHashTag()
     }
     
-    func setupPostButton() {
-        postButton.setTitle("Post", for: .normal)
-        postButton.titleLabel!.font = UIFont(name: "Avenir-Black", size: 23)
-        postButton.backgroundColor = .customRed
-        postButton.layer.cornerRadius = 3
-        
-        postButton.addTarget(self, action: #selector(handlePostMedia), for: .touchUpInside)
-        view.addSubview(postButton)
-        
-        //constraints
-        postButton.translatesAutoresizingMaskIntoConstraints = false
-        postButton.leftAnchor.constraint(equalTo: tagField.rightAnchor, constant: width * 0.08).isActive = true
-        postButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 0.12 * height).isActive = true
-        postButton.heightAnchor.constraint(equalToConstant: height * 0.084).isActive = true
-        postButton.widthAnchor.constraint(equalToConstant: height * 0.084).isActive = true
-    }
     
     func setupImageView() {
         do {
@@ -128,7 +105,7 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate{
         let hashTagView = UIImageView(image: UIImage(named: "HashTag"))
         hashTagView.frame.size = CGSize(width: 30, height: 30)
         tagField.setContentOffset(CGPoint(x: 50, y: 0), animated: true)
-        tagField.addSubview(hashTagView)
+//        tagField.addSubview(hashTagView)
         
     }
     
@@ -143,7 +120,6 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate{
     @objc func handlePostMedia() {
         SaveToFolder().saveToFolder(navigationController!, localLink: mediaLink, tags: tagField.text)
     }
-
 }
 
 struct SaveToFolder {
@@ -192,4 +168,5 @@ struct SaveToFolder {
         post.tags = tagArray
         ParentPostStruct().addPost(post: post)
     }
+    
 }

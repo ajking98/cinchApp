@@ -28,8 +28,8 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
         cell.fetchFolders()
         return cell
     }
-    
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        print("something for the king", scrollView.contentOffset)
         guard let collectionView = scrollView as? UICollectionView else { return }
         guard let index = collectionView.indexPath(for: collectionView.visibleCells[0])?.item else { return }
         segmentControl.selectedSegmentIndex = index
