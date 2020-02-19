@@ -29,6 +29,13 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
         return cell
     }
     
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        guard let collectionView = scrollView as? UICollectionView else { return }
+        guard let index = collectionView.indexPath(for: collectionView.visibleCells[0])?.item else { return }
+        segmentControl.selectedSegmentIndex = index
+        handleSegmentTap()
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return collectionView.frame.size
     }
@@ -44,7 +51,7 @@ class ProfileMainCollectionViewCell: UICollectionViewCell {
     let cellIdentifier = "Cell"
     var username = ""
     var folders: [String] = []
-    var foldersFollowing: [String] = []
+    var foldersFollowing: [FolderReference] = []
     
     //Elements
     var gemsCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -93,10 +100,7 @@ extension ProfileMainCollectionViewCell: UICollectionViewDelegate, UICollectionV
             self.gemsCollectionView.reloadData()
         }
         UserStruct().readFoldersReference(user: username) { (folderRefs) in
-            self.foldersFollowing = []
-            for folder in folderRefs {
-                self.foldersFollowing.append(folder.folderName)
-            }
+            self.foldersFollowing = folderRefs
             self.followingFoldersCollectionView.reloadData()
         }
     }
@@ -118,7 +122,7 @@ extension ProfileMainCollectionViewCell: UICollectionViewDelegate, UICollectionV
         }
         
         // For LikeCollections
-        cell.nameLabel.text = foldersFollowing[indexPath.item]
+        cell.nameLabel.text = foldersFollowing[indexPath.item].folderName
         return cell
         
     }
@@ -129,8 +133,9 @@ extension ProfileMainCollectionViewCell: UICollectionViewDelegate, UICollectionV
         
         let storyboard = UIStoryboard(name: "ProfilePage", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "FolderSelected") as! FolderSelectedController
-        vc.folderName = cell.nameLabel.text!
-        vc.username = username
+        let folderName = cell.nameLabel.text!
+        let username = collectionView == gemsCollectionView ? self.username : foldersFollowing[indexPath.item].admin
+        vc.setup(username: username, folderName: folderName)
         navigationController.pushViewController(vc, animated: true)
     }
     

@@ -32,15 +32,30 @@ extension ProfileViewController {
     }
     
     @objc func handleFollow(){
+        guard let localUser = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
         if isFollowing {
             print("UnFollowing")
+            UserStruct().deleteFollowing(user: localUser, following: username)
+            UserStruct().deleteFollower(user: username, follower: localUser)
+            self.mainButton.backgroundColor = .customRed
+            self.mainButton.setTitle("Follow", for: .normal)
+            self.mainButton.setTitleColor(.white, for: .normal)
         }
         else{
             print("Following")
+            UserStruct().addFollowing(user: localUser, newFollowing: username)
+            UserStruct().addFollower(user: username, newFollower: localUser)
+            
+            self.mainButton.layer.borderWidth = 1.7
+            self.mainButton.backgroundColor = .white
+            self.mainButton.setTitle("Unfollow", for: .normal)
+            self.mainButton.setTitleColor(.customRed, for: .normal)
+            self.mainButton.layer.borderColor = UIColor.customRed.cgColor
         }
+        isFollowing.toggle()
     }
     
-    @objc func handleSegmentTap() {
+    @objc func handleSegmentTap(_ gesture: UITapGestureRecognizer? = nil) {
         let segmentIndex = segmentControl.selectedSegmentIndex
         if segmentIndex == 0 {
             segmentControl.setImage(UIImage(named: "heartIcon-Selected"), forSegmentAt: 0)
@@ -50,7 +65,9 @@ extension ProfileViewController {
             segmentControl.setImage(UIImage(named: "heartIcon-Unselected"), forSegmentAt: 0)
             segmentControl.setImage(UIImage(named: "ProfileGems-Selected"), forSegmentAt: 1)
         }
-        collectionView?.scrollToItem(at: IndexPath(item: segmentIndex, section: 0), at: .left, animated: true)
+        if gesture != nil {
+            collectionView?.scrollToItem(at: IndexPath(item: segmentIndex, section: 0), at: .left, animated: true)
+        }
     }
     
     

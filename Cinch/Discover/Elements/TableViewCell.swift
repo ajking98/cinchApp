@@ -21,7 +21,6 @@ class TableViewCell: UITableViewCell, UICollectionViewDataSource {
     let hashTagIcon = UIImageView(image: UIImage(named: "HashTag"))
     let upperText = UILabel(frame: CGRect.zero)
     var collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
-    var viewController: UIViewController?
     
     
     override func awakeFromNib() {
@@ -37,7 +36,14 @@ class TableViewCell: UITableViewCell, UICollectionViewDataSource {
     
     func setUp(hashTagTerm: String) {
         self.hashTagTerm = hashTagTerm.lowercased().capitalizeFirstLetter()
-        fetchContent()
+        
+        if hashTagTerm.lowercased().contains("following") {
+            fetchFollowingPosts()
+        }
+        else {
+            fetchContent()
+        }
+        
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
@@ -67,12 +73,20 @@ class TableViewCell: UITableViewCell, UICollectionViewDataSource {
     func fetchContent(){
         content = []
         TagStruct().readAllElementLinks(tagLabel: hashTagTerm.lowercased()) { (links) in
-            for link in links {
-                self.content.append(link)
-            }
+            self.content = links
             self.collectionView.reloadData()
         }
     }
+    
+    ///fetches all the new posts for the local user
+    func fetchFollowingPosts() {
+        guard let localUser = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
+        UserStruct().readNewContent(user: localUser) { (links) in
+            self.content = links
+            self.collectionView.reloadData()
+        }
+    }
+    
     
     
     func addHashTag() {
@@ -96,8 +110,9 @@ class TableViewCell: UITableViewCell, UICollectionViewDataSource {
         upperText.translatesAutoresizingMaskIntoConstraints = false
         upperText.leftAnchor.constraint(equalTo: hashTagIcon.rightAnchor, constant: 8).isActive = true
         upperText.widthAnchor.constraint(equalToConstant: 200).isActive = true
-        upperText.bottomAnchor.constraint(equalTo: collectionView.topAnchor, constant: -8).isActive = true
-        upperText.heightAnchor.constraint(equalToConstant: 16).isActive = true
+        upperText.bottomAnchor.constraint(equalTo: collectionView.topAnchor, constant: -12).isActive = true
+        upperText.centerYAnchor.constraint(equalTo: hashTagIcon.centerYAnchor).isActive = true
+        upperText.heightAnchor.constraint(equalToConstant: 20).isActive = true
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -116,7 +131,7 @@ class TableViewCell: UITableViewCell, UICollectionViewDataSource {
         vc.modalPresentationStyle = .fullScreen
         vc.content = content
         vc.startingIndex = indexPath
-        viewController?.navigationController?.pushViewController(vc, animated: true)
+        parentViewController?.navigationController?.pushViewController(vc, animated: true)
     }
 }
 

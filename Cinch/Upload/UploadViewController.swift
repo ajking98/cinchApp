@@ -71,7 +71,20 @@ class UploadViewController: UIViewController {
         imagePicker.allowsEditing = false
         imagePicker.mediaTypes = ["public.image", "public.movie"]
         imagePicker.sourceType = .photoLibrary
-        present(imagePicker, animated: true, completion: nil)
+        
+        //checks for permission 
+        var status = PHPhotoLibrary.authorizationStatus()
+        if status == .notDetermined {
+            PHPhotoLibrary.requestAuthorization { (requestedStatus) in
+                status = requestedStatus
+                DispatchQueue.main.async {
+                    self.present(self.imagePicker, animated: true, completion: nil)
+                }
+            }
+        }
+        if status == .authorized {
+            present(imagePicker, animated: true, completion: nil)
+        }
     }
 
 }
@@ -99,6 +112,5 @@ extension UploadViewController: UIImagePickerControllerDelegate, UINavigationCon
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
-        print("Image selector cancelled")
     }
 }

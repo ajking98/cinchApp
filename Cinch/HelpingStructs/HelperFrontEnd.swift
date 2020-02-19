@@ -107,7 +107,7 @@ struct Helper {
     ///Cycles through everyone in the followers list and appends the link to their newContent array
     func broadcastPost(link: String) {
         UserStruct().readFollowers(user: username) { (followers) in
-            for (_, follower) in followers {
+            for follower in followers {
                 UserStruct().addNewContent(user: follower, link: link)
             }
         }

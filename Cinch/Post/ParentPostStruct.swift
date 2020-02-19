@@ -27,7 +27,7 @@ struct ParentPostStruct {
         //TODO THIS SHOULD BE DONE WITHIN A GOOGLE CLOUD FUNCTION INSTEAD TO OFFLOAD TO THE CLOUD INSTEAD OF LETTING THE USER DO IT ON THEIR DEVICE
         guard let username = post.postOwner else { return }
         UserStruct().readFollowers(user: username) { (followers) in
-            for (_, follower) in followers {
+            for follower in followers {
                 print("adding newContent to user: ", follower)
                 UserStruct().addNewContent(user: follower, link: link)
             }

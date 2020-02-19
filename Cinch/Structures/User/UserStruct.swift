@@ -159,12 +159,16 @@ struct UserStruct {
         Followers
     */
     ///reads the number of followers a given user has
-    func readFollowers(user : String, completion: @escaping ([String : String]) -> Void) {
+    func readFollowers(user : String, completion: @escaping ([String]) -> Void) {
         DB.child(user).child("followers").observeSingleEvent(of: .value) { (snapshot) in
             if let followers = snapshot.value as? [String : String] {
-                completion(followers)
-            }
+                var followersList:[String] = []
+                for (_,follower) in followers {
+                    followersList.append(follower)
+                }
+                completion(followersList)
         }
+    }
     }
     
     ///Adds a follower to the user - Should be given an official username
@@ -191,10 +195,14 @@ struct UserStruct {
     /*
      Following
     */
-    func readFollowing(user : String, completion : @escaping ([String : String]) -> Void) {
+    func readFollowing(user : String, completion : @escaping ([String]) -> Void) {
         DB.child(user).child("followings").observeSingleEvent(of: .value) { (snapshot) in
             if let followings = snapshot.value as? [String : String] {
-                completion(followings)
+                var followingsList:[String] = []
+                for (_,following) in followings {
+                    followingsList.append(following)
+                }
+                completion(followingsList)
             }
         }
     }
@@ -261,11 +269,15 @@ struct UserStruct {
      is an array of links that can be put against the posts node in the database
     */
     ///Reads the new content
-    func readNewContent(user : String, completion : @escaping([String : String]) -> Void) {
+    func readNewContent(user : String, completion : @escaping([String]) -> Void) {
         DB.child(user).child("newContent").observeSingleEvent(of: .value) { (snapshot) in
-            if let newContent = snapshot.value as? [String : String] {
-                completion(newContent)
+            var links:[String] = []
+            for child in snapshot.children {
+                let child = child as? DataSnapshot
+                guard let link = child?.value as? String else { return }
+                links.append(link)
             }
+            completion(links)
         }
     }
     

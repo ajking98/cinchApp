@@ -60,13 +60,11 @@ class FolderSelectedController: UIViewController, UICollectionViewDataSource, UI
         guard let localUser = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
         self.localUser = localUser
         if localUser == username { return }
-        let plusButton = UIBarButtonItem(title: "Follow", style: .plain, target: self, action: #selector(handleFollowFolder))
-        navigationItem.setRightBarButton(plusButton, animated: false)
+        let followButton = UIBarButtonItem(title: "Follow", style: .plain, target: self, action: #selector(handleFollowFolder))
+        navigationItem.setRightBarButton(followButton, animated: false)
         
-        UserStruct().readFoldersReference(user: username) { (folderRefs) in
-            print("this is something")
+        UserStruct().readFoldersReference(user: localUser) { (folderRefs) in
             if (folderRefs.contains { (folderRef) -> Bool in  return folderRef.folderName == self.folderName && folderRef.admin == self.username }) { //returns true if current folder is already followed
-                print("this is something here dudeed")
                 let minusButton = UIBarButtonItem(title: "Unfollow", style: .plain, target: self, action: #selector(self.handleUnFollowFolder))
                 self.navigationItem.setRightBarButton(minusButton, animated: false)
             }
@@ -74,9 +72,8 @@ class FolderSelectedController: UIViewController, UICollectionViewDataSource, UI
     }
     
     @objc func handleUnFollowFolder() {
-        print("this is unfollowing")
-        let plusButton = UIBarButtonItem(title: "Follow", style: .plain, target: self, action: #selector(handleFollowFolder))
-        navigationItem.setRightBarButton(plusButton, animated: false)
+        let followButton = UIBarButtonItem(title: "Follow", style: .plain, target: self, action: #selector(handleFollowFolder))
+        navigationItem.setRightBarButton(followButton, animated: false)
         let folderRef = FolderReference(admin: username, folderName: folderName)
         UserStruct().deleteFolderReference(user: localUser, folder: folderRef)
     }

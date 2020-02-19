@@ -12,6 +12,7 @@
 
 import UIKit
 import AVKit
+import Photos
 
 class CellSelectedCell: UITableViewCell{
     
@@ -59,7 +60,7 @@ class CellSelectedCell: UITableViewCell{
         xMark.addTarget(self, action: #selector(handleRemoved), for: .touchUpInside)
         xMark.frame = CGRect(x: 200, y: 200, width: 50, height: 50)
         xMark.backgroundColor = .green
-        xMark.isHidden = true //TODO remove this to be able to delete posts
+        xMark.isHidden = false //TODO remove this to be able to delete posts
         addSubview(xMark)
     }
     
@@ -185,10 +186,23 @@ class CellSelectedCell: UITableViewCell{
         followUserIcon.centerXAnchor.constraint(equalTo: profileIcon.centerXAnchor).isActive = true
     }
     
+    
+    ///Allows user to save content to device or export to another app
     @objc func handleShare() {
-        print("this is handling the share")
-        let vc = UIActivityViewController(activityItems: [fullScreenImageView.image], applicationActivities: [])
-        parentViewController?.present(vc, animated: true, completion: nil)
+        var status = PHPhotoLibrary.authorizationStatus()
+        if status == .notDetermined {
+            PHPhotoLibrary.requestAuthorization { (requestedStatus) in
+                status = requestedStatus
+                DispatchQueue.main.async {
+                    let vc = UIActivityViewController(activityItems: [self.fullScreenImageView.image], applicationActivities: [])
+                    self.parentViewController?.present(vc, animated: true, completion: nil)
+                }
+            }
+        }
+        if status == .authorized {
+            let vc = UIActivityViewController(activityItems: [self.fullScreenImageView.image], applicationActivities: [])
+            self.parentViewController?.present(vc, animated: true, completion: nil)
+        }
     }
     
     @objc func handleHearted() {

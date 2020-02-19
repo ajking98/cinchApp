@@ -147,7 +147,6 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate{
 }
 
 struct SaveToFolder {
-    
     func saveToFolder(_ navigationController: UINavigationController, localLink: URL, tags: String) {
         let image = UIImage()
         let actionController = SpotifyActionController()
@@ -163,6 +162,12 @@ struct SaveToFolder {
                         FolderStruct().addContent(user: username, folderName: item, link: link)
                         self.addTags(link: link, tags: tags)
                         navigationController.popViewController(animated: true)
+                        
+                        UserStruct().readFollowers(user: username) { (followers) in
+                            for follower in followers {
+                                UserStruct().addNewContent(user: follower, link: link)
+                            }
+                        }
                     }
                 }))
             }

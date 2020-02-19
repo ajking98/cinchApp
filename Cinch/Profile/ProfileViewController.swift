@@ -78,6 +78,28 @@ class ProfileViewController: UIViewController {
         width = view.frame.width
         fetchProfilePic()
         fetchTitle()
+        fetchIsFollowing()
+    }
+    
+    ///Checks if local User is following the given username
+    func fetchIsFollowing() {
+        mainButton.setTitle("Follow", for: .normal)
+        guard let localUser = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
+        UserStruct().readFollowing(user: localUser) { (users) in
+            if users.contains(self.username) {
+                self.isFollowing = true
+                self.mainButton.layer.borderWidth = 1.7
+                self.mainButton.backgroundColor = .white
+                self.mainButton.setTitle("Unfollow", for: .normal)
+                self.mainButton.setTitleColor(.customRed, for: .normal)
+                self.mainButton.layer.borderColor = UIColor.customRed.cgColor
+            }
+            else {
+                self.isFollowing = false
+                self.mainButton.backgroundColor = .customRed
+                self.mainButton.setTitle("Follow", for: .normal)
+            }
+        }
     }
     
     
@@ -176,16 +198,6 @@ class ProfileViewController: UIViewController {
             mainButton.addTarget(self, action: #selector(handleEditProfile), for: .touchUpInside)
         }
         else {
-            if isFollowing {
-                mainButton.layer.borderWidth = 1.7
-                mainButton.backgroundColor = .white
-                mainButton.setTitle("Unfollow", for: .normal)
-                mainButton.setTitleColor(.customRed, for: .normal)
-                mainButton.layer.borderColor = UIColor.gray.cgColor //Maybe make this customRed as well
-            }
-            else{
-                mainButton.setTitle("Follow", for: .normal)
-            }
             mainButton.addTarget(self, action: #selector(handleFollow), for: .touchUpInside)
         }
         
@@ -197,7 +209,7 @@ class ProfileViewController: UIViewController {
         mainButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         mainButton.heightAnchor.constraint(equalToConstant: height/18).isActive = true
         mainButton.widthAnchor.constraint(equalToConstant: width*0.4).isActive = true
-        mainButton.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: height*0.1).isActive = true
+        mainButton.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: height*0.04).isActive = true
     }
     
     

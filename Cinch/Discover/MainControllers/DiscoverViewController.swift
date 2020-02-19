@@ -153,7 +153,6 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
       let cell = tableView.dequeueReusableCell(withIdentifier: identifier) as! TableViewCell
       cell.cellHeight = height * 0.242
       cell.cellWidth = tableView.frame.size.width
-      cell.viewController = self
       cell.setUp(hashTagTerm: mainHashTags[indexPath.item])
       return cell
     }
