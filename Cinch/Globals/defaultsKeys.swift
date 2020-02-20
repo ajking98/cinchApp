@@ -22,7 +22,6 @@ struct defaultsKeys {
     static let stateOfUser = "stateOfUser" //user login status
     
     
-    
     //Share extension
     ///Key for the last folder that the user has added to
     static let lastUsedFolder = "LastUsedFolder"

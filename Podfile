@@ -12,7 +12,6 @@ target 'Cinch' do
   pod 'Firebase/Storage','~>4.0'
   platform :ios, '10.0'
   pod 'SQLite.swift', '~> 0.12.0'
-  pod 'Kingfisher'
   
   # Pods for CameraViewFinal
   #  pod "EasyImagy", :path => "../swift-image"
@@ -46,7 +45,6 @@ target 'iMessage' do
   pod 'SDWebImage/WebP'
   pod 'Firebase/Storage','~>4.0'
   pod 'SQLite.swift'
-  pod 'Kingfisher'
 end
 
 

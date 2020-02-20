@@ -45,7 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UserDefaults(suiteName: "group.InstagramClone.messages")?.set(user.username, forKey: defaultsKeys.usernameKey)
             UserDefaults.standard.set("Signup/Login", forKey: defaultsKeys.stateOfUser)
 
-            //TODO add the other default values here as needed (Use a few user defaults as possible)
+            //TODO add the other default values here as needed (Use as few user defaults as possible)
         }
 //        UILabel.appearance().font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle(rawValue: "Marker felt"))
         return true

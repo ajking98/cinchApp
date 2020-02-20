@@ -114,7 +114,7 @@ class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataS
     
     override func viewDidDisappear(_ animated: Bool) {
         guard let cell = tableView.visibleCells[0] as? CellSelectedCell else { return }
-        cell.playerLayer.player?.pause()
+        cell.playerLayer.player?.isMuted = true
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

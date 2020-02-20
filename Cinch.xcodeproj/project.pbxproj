@@ -17,6 +17,7 @@
 		4669B8D222B6DC65004FB38D /* defaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4669B8D122B6DC64004FB38D /* defaultsKeys.swift */; };
 		4676FA9E23FBA0A1001D8FC7 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4676FA9D23FBA0A1001D8FC7 /* UIViewExtension.swift */; };
 		4676FAA023FE4E22001D8FC7 /* UILabelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4676FA9F23FE4E21001D8FC7 /* UILabelExtension.swift */; };
+		4676FAA123FEF678001D8FC7 /* defaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4669B8D122B6DC64004FB38D /* defaultsKeys.swift */; };
 		467E5DB922FCE8EF00F23ABD /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467E5DB822FCE8EF00F23ABD /* Post.swift */; };
 		467E5DC522FCFE2100F23ABD /* PostStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467E5DC422FCFE2100F23ABD /* PostStruct.swift */; };
 		467E5DC822FD110C00F23ABD /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467E5DC722FD110C00F23ABD /* Buttons.swift */; };
@@ -1005,6 +1006,7 @@
 				8974380723ED37A800F2CCB7 /* MessageSearchResultsViewController.swift in Sources */,
 				897437F123ED11A700F2CCB7 /* UIColorExtension.swift in Sources */,
 				46CED9C123F063AC00D16E68 /* Tag.swift in Sources */,
+				4676FAA123FEF678001D8FC7 /* defaultsKeys.swift in Sources */,
 				46CED9C423F0640600D16E68 /* TagElementStruct.swift in Sources */,
 				46CED9C323F063CC00D16E68 /* TagStruct.swift in Sources */,
 				46CED9BC23EFDC0C00D16E68 /* GenericCell.swift in Sources */,

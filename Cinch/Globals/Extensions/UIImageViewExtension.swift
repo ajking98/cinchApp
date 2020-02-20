@@ -10,6 +10,9 @@ import Foundation
 import UIKit
 import AVKit
 
+///caches the avplayerlayers for the videos 
+var cachedVideoPlayers = NSCache<NSString, AVPlayerLayer>()
+
 
 extension UIImageView {
     
@@ -35,24 +38,33 @@ extension UIImageView {
     
     ///embeds video into imageView given a link
     public func loadVideo(_ link: URL, size: CGSize)-> AVPlayerLayer {
-        let player = AVPlayer(url: link)
-        return loadVideo(player, size: size)
+        if let cachedPlayer = cachedVideoPlayers.object(forKey: link.absoluteString as NSString) {
+            addPlayerToView(cachedPlayer, size: size)
+            return cachedPlayer
+        }
+        else {
+            let player = AVPlayer(url: link)
+            let playerLayer = loadVideo(player, size: size)
+            cachedVideoPlayers.setObject(playerLayer, forKey: link.absoluteString as NSString)
+            return playerLayer
+        }
     }
 
     ///embeds video into imageView given a playerItem
     public func loadVideo(_ player : AVPlayer, size: CGSize) -> AVPlayerLayer {
         player.isMuted = true
         let playerLayer = AVPlayerLayer(player: player)
-        playerLayer.frame.size = size
-        playerLayer.videoGravity = .resizeAspectFill
-        addPlayerToView(playerLayer)
+        addPlayerToView(playerLayer, size: size)
         return playerLayer
     }
     
-    public func addPlayerToView(_ playerLayer : AVPlayerLayer){
+    public func addPlayerToView(_ playerLayer : AVPlayerLayer, size: CGSize){
+        playerLayer.frame.size = size
+        playerLayer.videoGravity = .resizeAspectFill
         guard let player = playerLayer.player else { return }
         layer.addSublayer(playerLayer)
         player.play()
+        
         
         //autoplay
         NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player.currentItem, queue: .main) { notification in

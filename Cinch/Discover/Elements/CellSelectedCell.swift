@@ -16,9 +16,6 @@ import Photos
 
 class CellSelectedCell: UITableViewCell{
     
-    //cache
-    var cache = NSCache<NSString, AVPlayerLayer>()
-    
     //data
     var link = ""
     var username = ""
@@ -38,7 +35,6 @@ class CellSelectedCell: UITableViewCell{
     var post = Post(isImage: true, numberOfLikes: 0, postOwner: "ohSHoot", likedBy: [], dateCreated: 0, tags: [], link: "")
     
     func setup(link: String) {
-        
         post.link = link
         PostStruct().readPostOwner(post: link) { (author) in
             self.post.postOwner = author
@@ -103,19 +99,11 @@ class CellSelectedCell: UITableViewCell{
     }
     
     func fetchContent() {
+        
         if checkIfVideo(link) {
-            if let cachedPlayerLayer = cache.object(forKey: link as NSString) {
-                print("this was already cached")
-                playerLayer = cachedPlayerLayer
-                fullScreenImageView.addPlayerToView(playerLayer)
-            }
-            else {
-                guard let link = URL(string: link) else { return }
-                playerLayer = fullScreenImageView.loadVideo(link, size: frame.size)
-                playerLayer.videoGravity = .resizeAspect
-                cache.setObject(playerLayer, forKey: link.absoluteString as NSString)
-                print("should be cahcing this link: ", link.absoluteString)
-            }
+            guard let link = URL(string: link) else { return }
+            playerLayer = fullScreenImageView.loadVideo(link, size: frame.size)
+            playerLayer.videoGravity = .resizeAspect
             fullScreenImageView.isUserInteractionEnabled = true
             fullScreenImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleImageViewTapped)))
         }
