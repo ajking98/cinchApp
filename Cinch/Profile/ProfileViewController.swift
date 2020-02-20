@@ -192,7 +192,8 @@ class ProfileViewController: UIViewController {
     
     func setupButton() {
         mainButton.backgroundColor = .customRed
-        
+        guard let localUser = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
+        isUser = localUser == username
         if isUser {
             mainButton.setTitle("Edit Profile", for: .normal)
             mainButton.addTarget(self, action: #selector(handleEditProfile), for: .touchUpInside)

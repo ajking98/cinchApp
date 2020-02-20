@@ -23,7 +23,6 @@ class UploadViewController: UIViewController {
 
         setupNavigationController()
         setupUploadButton()
-        setupText()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -32,8 +31,10 @@ class UploadViewController: UIViewController {
     
     func setupNavigationController() {
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationController?.navigationBar.shadowImage = UIImage()
+//        navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.layoutIfNeeded()
+        
+        navigationItem.title = "Upload From iPhone"
     }
     
     func setupUploadButton() {
@@ -49,25 +50,6 @@ class UploadViewController: UIViewController {
         
         uploadButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(selectMedia)))
     }
-    
-    func setupText() {
-        lowerText.textAlignment = .center
-        lowerText.text = "Upload From iPhone"
-        lowerText.font = UIFont(name: "Avenir-Heavy", size: 23)
-        lowerText.isUserInteractionEnabled = true
-        lowerText.textColor = .gray
-        lowerText.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(selectMedia)))
-        
-        
-        view.addSubview(lowerText)
-        //constraints
-        lowerText.translatesAutoresizingMaskIntoConstraints = false
-        lowerText.bottomAnchor.constraint(equalTo: uploadButton.topAnchor, constant: -25).isActive = true
-        lowerText.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        lowerText.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        lowerText.heightAnchor.constraint(equalToConstant: 25).isActive = true
-    }
-    
     
     @objc func selectMedia() {
         imagePicker.delegate = self

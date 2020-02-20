@@ -27,11 +27,11 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate{
         
         setup()
         setupNavigationController()
-        setupTagField()
         setupImageView()
     }
     
     override func viewDidLayoutSubviews() {
+        setupTagField()
         guard isVideo else { return }
         let playerLayer = imageView.loadVideo(mediaLink, size: imageView.frame.size)
     }
@@ -61,19 +61,21 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate{
     
     
     func setupTagField() {
-        tagField.backgroundColor = .lightGray
+        tagField.backgroundColor = .lightishGray
         tagField.text = "#Tags"
-        tagField.font = UIFont(name: "Avenir-Heavy", size: 23)
-        tagField.layer.cornerRadius = 6
+        tagField.font = UIFont(name: "Avenir", size: 18)
+        tagField.layer.cornerRadius = 2
         
         view.addSubview(tagField)
         
         //constraints
         tagField.translatesAutoresizingMaskIntoConstraints = false
-        tagField.topAnchor.constraint(equalTo: view.topAnchor, constant: (navigationController?.navigationBar.frame.height)!).isActive = true //TODO: Fix this 
+        let topY = view.safeAreaLayoutGuide.layoutFrame.minY
+        tagField.topAnchor.constraint(equalTo: view.topAnchor, constant: topY + 10).isActive = true
         tagField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         tagField.heightAnchor.constraint(equalToConstant: height * 0.084).isActive = true
         tagField.widthAnchor.constraint(equalToConstant: width * 0.9).isActive = true
+        
         
         addHashTag()
     }
@@ -91,6 +93,7 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate{
         }
         imageView.backgroundColor = .white
         imageView.contentMode = .scaleAspectFit
+        imageView.clipsToBounds = true
         view.addSubview(imageView)
         
         //constraints

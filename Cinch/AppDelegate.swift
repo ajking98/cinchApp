@@ -47,6 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
             //TODO add the other default values here as needed (Use a few user defaults as possible)
         }
+//        UILabel.appearance().font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle(rawValue: "Marker felt"))
         return true
     }
 

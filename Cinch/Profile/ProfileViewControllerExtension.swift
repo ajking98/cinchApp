@@ -12,6 +12,7 @@ import UIKit
 
 extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout  {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print("this is checking the count")
         return 2
     }
     
@@ -28,13 +29,19 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
         cell.fetchFolders()
         return cell
     }
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        print("something for the king", scrollView.contentOffset)
-        guard let collectionView = scrollView as? UICollectionView else { return }
-        guard let index = collectionView.indexPath(for: collectionView.visibleCells[0])?.item else { return }
+    
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        print("this is being used", indexPath.item)
+        let index = 1 - indexPath.item
         segmentControl.selectedSegmentIndex = index
         handleSegmentTap()
     }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        segmentControl.selectedSegmentIndex = indexPath.item
+        handleSegmentTap()
+    }
+    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return collectionView.frame.size
@@ -64,7 +71,7 @@ class ProfileMainCollectionViewCell: UICollectionViewCell {
         gemsCollectionView.register(ProfileCollectionViewCell.self, forCellWithReuseIdentifier: cellIdentifier)
         gemsCollectionView.showsVerticalScrollIndicator = false
         gemsCollectionView.alwaysBounceVertical = false
-        gemsCollectionView.backgroundColor = .normalBlue
+        gemsCollectionView.backgroundColor = .white
         gemsCollectionView.isScrollEnabled = false
         gemsCollectionView.frame = frame
 
@@ -78,7 +85,7 @@ class ProfileMainCollectionViewCell: UICollectionViewCell {
         followingFoldersCollectionView.showsHorizontalScrollIndicator = false
         followingFoldersCollectionView.alwaysBounceVertical = false
         followingFoldersCollectionView.showsVerticalScrollIndicator = false
-        followingFoldersCollectionView.backgroundColor = .lightGreen
+        followingFoldersCollectionView.backgroundColor = .white
         followingFoldersCollectionView.isScrollEnabled = false;
         followingFoldersCollectionView.frame = frame
         followingFoldersCollectionView.frame.origin.x = 0

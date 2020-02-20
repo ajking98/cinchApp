@@ -16,6 +16,9 @@ import Photos
 
 class CellSelectedCell: UITableViewCell{
     
+    //cache
+    var cache = NSCache<NSString, AVPlayerLayer>()
+    
     //data
     var link = ""
     var username = ""
@@ -90,6 +93,8 @@ class CellSelectedCell: UITableViewCell{
     
     override func prepareForReuse() {
         username = "nil"
+        playerLayer.player?.isMuted = true
+        playerLayer = AVPlayerLayer()
         profileIcon.image = UIImage()
         fullScreenImageView = UIImageView()
         subviews.forEach { (view) in
@@ -99,11 +104,20 @@ class CellSelectedCell: UITableViewCell{
     
     func fetchContent() {
         if checkIfVideo(link) {
-            guard let link = URL(string: link) else { return }
-            playerLayer = fullScreenImageView.loadVideo(link, size: frame.size)
+            if let cachedPlayerLayer = cache.object(forKey: link as NSString) {
+                print("this was already cached")
+                playerLayer = cachedPlayerLayer
+                fullScreenImageView.addPlayerToView(playerLayer)
+            }
+            else {
+                guard let link = URL(string: link) else { return }
+                playerLayer = fullScreenImageView.loadVideo(link, size: frame.size)
+                playerLayer.videoGravity = .resizeAspect
+                cache.setObject(playerLayer, forKey: link.absoluteString as NSString)
+                print("should be cahcing this link: ", link.absoluteString)
+            }
             fullScreenImageView.isUserInteractionEnabled = true
             fullScreenImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleImageViewTapped)))
-            playerLayer.videoGravity = .resizeAspect
         }
         else {
             fullScreenImageView.sd_setImage(with: URL(string: link), placeholderImage: UIImage(), completed: nil)
@@ -125,6 +139,12 @@ class CellSelectedCell: UITableViewCell{
     
     @objc func handleImageViewTapped() {
         playerLayer.player?.isMuted.toggle()
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
+        }
+        catch {
+            print("The device cannot play audio")
+        }
     }
     
     //full screen imageview

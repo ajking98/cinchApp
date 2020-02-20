@@ -107,6 +107,16 @@ class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataS
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let cell = cell as? CellSelectedCell else { return }
+        cell.playerLayer.player?.isMuted = true
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        guard let cell = tableView.visibleCells[0] as? CellSelectedCell else { return }
+        cell.playerLayer.player?.pause()
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return view.frame.height
     }
