@@ -43,8 +43,15 @@ struct ParentTagStruct{
     ///Reads all the names of every tag
     func readTagNames(completion : @escaping([String])->Void) {
         DB.observeSingleEvent(of: .value) { (snapshot) in
-            if let tag = snapshot.value as? [String : Any] {
-                completion(Array(tag.keys))
+            var tags:[String] = []
+            
+            for child in snapshot.children {
+                if let child = child as? DataSnapshot {
+                    if let tag = child.key as? String {
+                        tags.append(tag)
+                    }
+                    completion(tags)
+                }
             }
         }
     }

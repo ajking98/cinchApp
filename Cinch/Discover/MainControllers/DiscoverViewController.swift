@@ -24,8 +24,14 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
     var tableView = UITableView()
     var topCarousel = UIScrollView(frame: CGRect.zero)
     var pageControl = UIPageControl(frame: CGRect.zero)
-    var searchBar = SearchBar(frame: CGRect(x: 0, y: 0, width: 310, height: 32.5))
     
+    /*
+        SearchBar
+     */
+    var searchBar = SearchBar(frame: CGRect(x: 0, y: 0, width: 310, height: 32.5))
+    var tableTagsView = UITableView()
+    var searchTableViewController = SearchTableViewController(style: .plain)
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -165,15 +171,6 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
         searchBar.endEditing(true)
         return false
     }
-    
-    
-    /*
-        SearchBar
-     */
-     
-    var tableTagsView = UITableView()
-    var searchTableViewController = SearchTableViewController(style: .plain)
-
 }
 
 
@@ -184,6 +181,7 @@ extension DiscoverViewController: UISearchBarDelegate {
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchTableViewController.setup()
         searchBar.setShowsCancelButton(true, animated: true)
         tableTagsView.alpha = 1
     }
@@ -202,7 +200,10 @@ extension DiscoverViewController: UISearchBarDelegate {
             guard let text = searchBar.text else { return }
             nextView(term: text)
         }
-        
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        searchTableViewController.handleSearching(searchText: searchText.lowercased())
     }
     
     func nextView(term: String) {
@@ -220,7 +221,6 @@ extension DiscoverViewController: UISearchBarDelegate {
         tableTagsView.alpha = 0
         tableTagsView.register(UITableViewCell.self, forCellReuseIdentifier: identifier)
         searchTableViewController.handleCellSelected = nextView(term:)
-        searchTableViewController.searchView = searchBar
         tableTagsView.dataSource = searchTableViewController
         tableTagsView.delegate = searchTableViewController
         tableTagsView.separatorStyle = .none

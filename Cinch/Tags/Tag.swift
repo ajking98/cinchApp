@@ -18,7 +18,7 @@ class Tag {
     //This init should be called when trying to add a tag the database
     init(tagLabel : String, tagElements : [TagElement]) {
         self.tagElements = tagElements
-        self.tagLabel = tagLabel
+        self.tagLabel = tagLabel.lowercased()
         numberOfElements = 1
         tagOccurance = 1
     }
@@ -30,7 +30,7 @@ class Tag {
         self.tagOccurance = tagOccurance
         self.lastUsed = lastUsed
         self.firstUsed = firstUsed
-        self.tagLabel = tagLabel
+        self.tagLabel = tagLabel.lowercased()
         self.numberOfElements = numberOfElements
     }
     
@@ -54,7 +54,7 @@ class Tag {
             }
         }
         
-        let tagDict : [String : Any] = ["tagLabel" : self.tagLabel!, "lastUsed" : lastUsed!, "firstUsed" : firstUsed!, "numberOfElements" : numberOfElements, "tagOccurance" : tagOccurance, "elements" : tagElementsDict]
+        let tagDict : [String : Any] = ["tagLabel" : self.tagLabel!.lowercased(), "lastUsed" : lastUsed!, "firstUsed" : firstUsed!, "numberOfElements" : numberOfElements, "tagOccurance" : tagOccurance, "elements" : tagElementsDict]
         
         return tagDict
     }
