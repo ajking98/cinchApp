@@ -14,6 +14,8 @@ import UIKit
 import AVKit
 import Photos
 
+///holds the value for whether the cell is muted or not
+var isMuted = true
 class CellSelectedCell: UITableViewCell{
     
     //data
@@ -104,6 +106,7 @@ class CellSelectedCell: UITableViewCell{
             guard let link = URL(string: link) else { return }
             playerLayer = fullScreenImageView.loadVideo(link, size: frame.size)
             playerLayer.videoGravity = .resizeAspect
+            playerLayer.player?.isMuted = isMuted
             fullScreenImageView.isUserInteractionEnabled = true
             fullScreenImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleImageViewTapped)))
         }
@@ -127,6 +130,7 @@ class CellSelectedCell: UITableViewCell{
     
     @objc func handleImageViewTapped() {
         playerLayer.player?.isMuted.toggle()
+        isMuted.toggle()
         do {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
         }
