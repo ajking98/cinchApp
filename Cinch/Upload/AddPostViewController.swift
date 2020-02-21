@@ -11,7 +11,7 @@ import UIKit
 import XLActionController
 import AVKit
 
-class AddPostViewController: UIViewController, UIGestureRecognizerDelegate{
+class AddPostViewController: UIViewController, UIGestureRecognizerDelegate, UITextViewDelegate{
     //data
     var width: CGFloat = 0
     var height: CGFloat = 0
@@ -20,6 +20,7 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate{
     
     //Elements
     let tagField = UITextView(frame: CGRect.zero)
+    let placeholderLabel = UILabel()
     let imageView = UIImageView(frame: CGRect.zero)
 
     override func viewDidLoad() {
@@ -28,10 +29,10 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate{
         setup()
         setupNavigationController()
         setupImageView()
+        setupTagField()
     }
     
     override func viewDidLayoutSubviews() {
-        setupTagField()
         guard isVideo else { return }
         let playerLayer = imageView.loadVideo(mediaLink, size: imageView.frame.size)
     }
@@ -62,22 +63,21 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate{
     
     func setupTagField() {
         tagField.backgroundColor = .lightishGray
-        tagField.text = "#Tags"
-        tagField.font = UIFont(name: "Avenir", size: 18)
+        tagField.delegate = self
+        tagField.font = UIFont(name: "Avenir-Medium", size: 18)
         tagField.layer.cornerRadius = 2
         
         view.addSubview(tagField)
         
         //constraints
         tagField.translatesAutoresizingMaskIntoConstraints = false
-        let topY = view.safeAreaLayoutGuide.layoutFrame.minY
-        tagField.topAnchor.constraint(equalTo: view.topAnchor, constant: topY + 10).isActive = true
+        tagField.topAnchor.constraint(equalTo: view.topAnchor, constant: height * 0.1).isActive = true
         tagField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         tagField.heightAnchor.constraint(equalToConstant: height * 0.084).isActive = true
         tagField.widthAnchor.constraint(equalToConstant: width * 0.9).isActive = true
         
         
-        addHashTag()
+        addPlaceHolder()
     }
     
     
@@ -104,12 +104,19 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate{
         imageView.heightAnchor.constraint(equalToConstant: 0.7 * height).isActive = true
     }
     
-    func addHashTag(){
-        let hashTagView = UIImageView(image: UIImage(named: "HashTag"))
-        hashTagView.frame.size = CGSize(width: 30, height: 30)
-        tagField.setContentOffset(CGPoint(x: 50, y: 0), animated: true)
-//        tagField.addSubview(hashTagView)
-        
+    func addPlaceHolder(){
+        placeholderLabel.text = "Enter some tags..."
+        placeholderLabel.font = UIFont.italicSystemFont(ofSize: (tagField.font?.pointSize)!)
+        placeholderLabel.sizeToFit()
+        tagField.addSubview(placeholderLabel)
+        placeholderLabel.frame.origin = CGPoint(x: 5, y: (tagField.font?.pointSize)! / 2)
+        placeholderLabel.textColor = .gray
+        placeholderLabel.isHidden = !tagField.text.isEmpty
+    }
+    
+    
+    func textViewDidChange(_ textView: UITextView) {
+        placeholderLabel.isHidden = !textView.text.isEmpty
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -124,6 +131,10 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate{
         SaveToFolder().saveToFolder(navigationController!, localLink: mediaLink, tags: tagField.text)
     }
 }
+
+
+
+
 
 struct SaveToFolder {
     func saveToFolder(_ navigationController: UINavigationController, localLink: URL, tags: String) {

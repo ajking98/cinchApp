@@ -15,7 +15,7 @@ import AVKit
 import Photos
 
 ///holds the value for whether the cell is muted or not
-var isMuted = true
+var isMuted = false
 class CellSelectedCell: UITableViewCell{
     
     //data
@@ -129,13 +129,19 @@ class CellSelectedCell: UITableViewCell{
     }
     
     @objc func handleImageViewTapped() {
-        playerLayer.player?.isMuted.toggle()
-        isMuted.toggle()
-        do {
-            try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
+        if AVAudioSession.sharedInstance().category == .soloAmbient {
+            print("this is in silent mode")
+            do {
+                try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
+            }
+            catch {
+                print("The device cannot play audio")
+            }
         }
-        catch {
-            print("The device cannot play audio")
+        else {
+            playerLayer.player?.isMuted.toggle()
+            isMuted.toggle()
+            print("this is the current catagroy: ", AVAudioSession.sharedInstance().category)
         }
     }
     
