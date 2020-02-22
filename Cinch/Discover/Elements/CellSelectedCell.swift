@@ -65,7 +65,7 @@ class CellSelectedCell: UITableViewCell{
         xMark.addTarget(self, action: #selector(handleRemoved), for: .touchUpInside)
         xMark.frame = CGRect(x: 200, y: 200, width: 50, height: 50)
         xMark.backgroundColor = .green
-        xMark.isHidden = false //TODO remove this to be able to delete posts
+        xMark.isHidden = true //TODO remove this to be able to delete posts
         addSubview(xMark)
     }
     

@@ -55,7 +55,7 @@
 		891065C823DE613C00EB8238 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891065C723DE613C00EB8238 /* SearchBar.swift */; };
 		891065CA23DE6A6A00EB8238 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891065C923DE6A6A00EB8238 /* TableViewCell.swift */; };
 		891FC3FD22D7F72E0024A623 /* Discover.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 891FC3FC22D7F72E0024A623 /* Discover.storyboard */; };
-		891FED7C23EDDF700012DF58 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 891FED7B23EDDF700012DF58 /* Assets.xcassets */; };
+		891FED7C23EDDF700012DF58 /* MessageAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 891FED7B23EDDF700012DF58 /* MessageAssets.xcassets */; };
 		893911B323DF996100AFAE80 /* CellSelectedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893911B223DF996100AFAE80 /* CellSelectedCell.swift */; };
 		893911B523DFA7CF00AFAE80 /* CellSelectedTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893911B423DFA7CF00AFAE80 /* CellSelectedTable.swift */; };
 		893911B723DFFF2900AFAE80 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893911B623DFFF2900AFAE80 /* ProfileViewController.swift */; };
@@ -72,7 +72,6 @@
 		897437F623ED258600F2CCB7 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897437F523ED258600F2CCB7 /* SearchTableViewController.swift */; };
 		897437F723ED259800F2CCB7 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897437F523ED258600F2CCB7 /* SearchTableViewController.swift */; };
 		897437F923ED280A00F2CCB7 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C3C00E23EBCA7A00FD03D1 /* SearchResultsViewController.swift */; };
-		897437FA23ED285700F2CCB7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EB74D3BC226025EA00556399 /* Assets.xcassets */; };
 		897437FE23ED333300F2CCB7 /* MessageCollectionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897437FD23ED333300F2CCB7 /* MessageCollectionExtension.swift */; };
 		8974380023ED338500F2CCB7 /* MessageSearchExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897437FF23ED338500F2CCB7 /* MessageSearchExtension.swift */; };
 		8974380723ED37A800F2CCB7 /* MessageSearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8974380623ED37A800F2CCB7 /* MessageSearchResultsViewController.swift */; };
@@ -220,7 +219,7 @@
 		891065C723DE613C00EB8238 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		891065C923DE6A6A00EB8238 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		891FC3FC22D7F72E0024A623 /* Discover.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Discover.storyboard; sourceTree = "<group>"; };
-		891FED7B23EDDF700012DF58 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		891FED7B23EDDF700012DF58 /* MessageAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = MessageAssets.xcassets; sourceTree = "<group>"; };
 		893911B223DF996100AFAE80 /* CellSelectedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellSelectedCell.swift; sourceTree = "<group>"; };
 		893911B423DFA7CF00AFAE80 /* CellSelectedTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellSelectedTable.swift; sourceTree = "<group>"; };
 		893911B623DFFF2900AFAE80 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -535,7 +534,7 @@
 				897437E223ED0DEF00F2CCB7 /* MessagesViewController.swift */,
 				8974380623ED37A800F2CCB7 /* MessageSearchResultsViewController.swift */,
 				897437E423ED0DEF00F2CCB7 /* MainInterface.storyboard */,
-				891FED7B23EDDF700012DF58 /* Assets.xcassets */,
+				891FED7B23EDDF700012DF58 /* MessageAssets.xcassets */,
 				89BBD41A23F365B9006BCC8F /* iMessageGlobals.swift */,
 				8964B2CE23F44BB2002A66BB /* InitialiMessageVC.swift */,
 			);
@@ -841,9 +840,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				897437FA23ED285700F2CCB7 /* Assets.xcassets in Resources */,
 				89BBD41923F3576D006BCC8F /* GoogleService-Info.plist in Resources */,
-				891FED7C23EDDF700012DF58 /* Assets.xcassets in Resources */,
+				891FED7C23EDDF700012DF58 /* MessageAssets.xcassets in Resources */,
 				897437E623ED0DEF00F2CCB7 /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1155,10 +1153,11 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0DA2F8AC1BF415C57806483F /* Pods-iMessage.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
+				ASSETCATALOG_COMPILER_APPICON_NAME = MessageAppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3U2RYAR5C3;
+				CURRENT_PROJECT_VERSION = 1.0.10;
+				DEVELOPMENT_TEAM = 8NHWSCYNF7;
 				INFOPLIST_FILE = iMessage/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1166,7 +1165,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.CinchApp.iMessage;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.CinchMemes.iMessage;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -1178,10 +1177,11 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 66CA94844D31226E1ED29C31 /* Pods-iMessage.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "iMessage App Icon";
+				ASSETCATALOG_COMPILER_APPICON_NAME = MessageAppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3U2RYAR5C3;
+				CURRENT_PROJECT_VERSION = 1.0.10;
+				DEVELOPMENT_TEAM = 8NHWSCYNF7;
 				INFOPLIST_FILE = iMessage/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1189,7 +1189,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.CinchApp.iMessage;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.CinchMemes.iMessage;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -1322,14 +1322,14 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0.9;
-				DEVELOPMENT_TEAM = 3U2RYAR5C3;
+				CURRENT_PROJECT_VERSION = 1.0.10;
+				DEVELOPMENT_TEAM = 8NHWSCYNF7;
 				INFOPLIST_FILE = Cinch/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.CinchApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.CinchMemes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -1346,14 +1346,14 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0.9;
-				DEVELOPMENT_TEAM = 3U2RYAR5C3;
+				CURRENT_PROJECT_VERSION = 1.0.10;
+				DEVELOPMENT_TEAM = 8NHWSCYNF7;
 				INFOPLIST_FILE = Cinch/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.CinchApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.CinchMemes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
