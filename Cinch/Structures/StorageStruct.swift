@@ -60,11 +60,12 @@ struct StorageStruct {
         let storageRef = Storage.storage().reference().child("videos").child(randomString(20) + ".mp4")
         storageRef.getMetadata { (metadata, error) in
             if(error != nil){ //checks if the url already exists
-                print("the url does not exist")
+                print("checking if the file exists")
                 
                 //Start the video storing process
                  if let url = (video.asset as? AVURLAsset)?.url {
                     let data = NSData(contentsOfFile: url.path)
+                    
                     storageRef.putData(data! as Data, metadata: nil) { (metadata, error) in
                         print("working url")
                         guard metadata != nil else {
@@ -73,8 +74,6 @@ struct StorageStruct {
                          if error != nil {
                              print("there is an error in url", error)
                          }
-
-
 
                          storageRef.downloadURL { (url, error) in
                              guard let downloadURL = url else {
@@ -85,6 +84,31 @@ struct StorageStruct {
                              completion(downloadURL.absoluteString)
                          }
                     }
+                }
+                 else {
+                    saveVideo(videoName: "VideoThumbnail", asset: video.asset, completion: { (url) in
+                        print("This is your fucking link: ", url)
+
+                        let data = NSData(contentsOfFile: url.path)
+                        storageRef.putData(data! as Data, metadata: nil) { (metadata, error) in
+                            print("working url2")
+                            guard metadata != nil else {
+                                 return
+                             }
+                             if error != nil {
+                                 print("there is an error in url2", error)
+                             }
+
+                             storageRef.downloadURL { (url, error) in
+                                 guard let downloadURL = url else {
+                                     print("error with url2", error?.localizedDescription)
+                                     return
+                                 }
+                                 print("here is your url2:", downloadURL.absoluteString)
+                                 completion(downloadURL.absoluteString)
+                             }
+                        }
+                    })
                 }
             }
 //            let meta = StorageMetadata()

@@ -125,6 +125,7 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate, UITe
     
     @objc func goBack() {
         navigationController?.popViewController(animated: true)
+        
     }
     
     @objc func handlePostMedia() {
@@ -153,6 +154,7 @@ struct SaveToFolder {
                         self.addTags(link: link, tags: tags)
                         navigationController.popViewController(animated: true)
                         
+                        //Adds content to the followers' newContent array
                         UserStruct().readFollowers(user: username) { (followers) in
                             for follower in followers {
                                 UserStruct().addNewContent(user: follower, link: link)
@@ -161,7 +163,6 @@ struct SaveToFolder {
                     }
                 }))
             }
-            
             navigationController.present(actionController, animated: true, completion: nil)
         }
     }
@@ -178,9 +179,36 @@ struct SaveToFolder {
                 TagStruct().addElement(tagLabel: standardizedTag, tagElement: TagElement(link: link))
             }
         }
-        let post = Post(isImage: !checkIfVideo(link), postOwner: username, link: link)
-        post.tags = tagArray
-        ParentPostStruct().addPost(post: post)
+        
+        var post: Post?
+        if checkIfVideo(link) {  //If video
+            do {
+                try time {
+                    if let sourceURL = URL(string: link) {
+                        let asset = AVURLAsset(url: sourceURL)
+                        let trimmedAsset = try asset.assetByTrimming(timeOffStart: 1.5) //Only getting 1.5 second
+                        let playerItem = AVPlayerItem(asset: trimmedAsset)
+                        StorageStruct().uploadVideo(video: playerItem) { (thumbnailLink) in
+                            post = Post(isImage: false, postOwner: username, link: link)
+                            post?.thumbnail = thumbnailLink
+                            print("we are uploading the thumbnail")
+                            guard let standardPost = post else { return }
+                            standardPost.tags = tagArray
+                            ParentPostStruct().addPost(post: standardPost)
+                        }
+                    }
+                }
+            } catch let error {
+                print("💩 \(error)")
+            }
+        }
+        else { //If image
+            post = Post(isImage: true, postOwner: username, link: link)
+            guard let standardPost = post else { return }
+            standardPost.tags = tagArray
+            ParentPostStruct().addPost(post: standardPost)
+        }
+        
     }
     
 }

@@ -19,6 +19,7 @@ class Post {
     var postOwner : String?
     var dateCreated : TimeInterval?
     var tags : [String]?
+    var thumbnail: String? //1 sec long video 
     
     //image
     var image : UIImage?
@@ -28,7 +29,7 @@ class Post {
     
     
     ///called when a post is first being made
-    init(isImage : Bool, postOwner : String, link : String) {
+    init(isImage : Bool, postOwner : String, link : String, _ thumbnail: String? = nil) {
         
         self.isImage = isImage
         self.link = link
@@ -37,11 +38,12 @@ class Post {
         self.postOwner = postOwner
         self.dateCreated = Date().timeIntervalSince1970
         self.tags = []
+        self.thumbnail = thumbnail
     }
     
     
     ///Initialized when All data is given
-    init(isImage : Bool, numberOfLikes : Int, postOwner : String, likedBy : [String], dateCreated : Double, tags : [String], link : String) {
+    init(isImage : Bool, numberOfLikes : Int, postOwner : String, likedBy : [String], dateCreated : Double, tags : [String], link : String, _ thumbnail: String? = nil) {
         
         self.isImage = isImage
         self.link = link
@@ -50,6 +52,7 @@ class Post {
         self.likedBy = likedBy
         self.dateCreated = dateCreated
         self.tags = tags
+        self.thumbnail = thumbnail
     }
     
     
@@ -66,7 +69,7 @@ class Post {
         }
         
         
-        let postDict : [String : Any] = ["isImage" : isImage as Any, "numberOfLikes" : numberOfLikes as Any, "likedBy" : likedByDict as Any, "postOwner" : postOwner as Any, "dateCreated" : dateCreated as Any, "tags" : tagsDict as Any, "link" : link as Any]
+        let postDict : [String : Any] = ["isImage" : isImage as Any, "numberOfLikes" : numberOfLikes as Any, "likedBy" : likedByDict as Any, "postOwner" : postOwner as Any, "dateCreated" : dateCreated as Any, "tags" : tagsDict as Any, "link" : link as Any, "thumbnail" : thumbnail as Any]
         
         return postDict
     }

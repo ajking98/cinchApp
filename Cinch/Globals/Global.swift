@@ -44,6 +44,30 @@ func convertStringToKey(link : String) -> String {
     return updatedLink
 }
 
+func saveVideo(videoName: String, asset: AVAsset, completion: @escaping(URL) -> Void) {
+    let exportPath = NSTemporaryDirectory().appending("/\(videoName).mov")
+    let exportURL = URL(fileURLWithPath: exportPath)
+    let exporter = AVAssetExportSession(asset: asset, presetName: AVAssetExportPresetHighestQuality)
+    
+    //Checks if file exists, removes it if so
+    if FileManager.default.fileExists(atPath: exportURL.path) {
+         do {
+            try FileManager.default.removeItem(atPath: exportURL.path)
+             print("Removed old video")
+         } catch let removeError {
+             print("couldn't remove file at path", removeError)
+         }
+     }
+    
+    
+    exporter?.outputURL = exportURL
+    exporter?.outputFileType = .mov
+    exporter?.exportAsynchronously(completionHandler: {
+        print("this is the result", exportURL)
+        completion(exportURL)
+    })
+}
+
 ///saves the video locally, to the user's device, before being sent over
 func saveVideo(videoName: String, linkToVideo: URL)->URL? {
     guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }

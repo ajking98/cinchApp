@@ -133,11 +133,35 @@ struct PostStruct {
     /*
         Thumbnail
      */
+    ///adds thumbnail to post at given link
+    func addThumbnail(linkOfPost: String, linkToThumbnail: String) {
+        let updatedLink = convertStringToKey(link: linkOfPost)
+        DB.child(updatedLink).child("thumbnail").setValue(linkToThumbnail)
+    }
+    
+    
+    ///reads the thumbnail for the given post
     func readThumbnail(link: String, completion: @escaping(String) -> Void) {
         let updatedLink = convertStringToKey(link: link)
         DB.child(updatedLink).child("thumbnail").observeSingleEvent(of: .value) { (snapshot) in
             if let thumbnailLink = snapshot.value as? String {
                 completion(thumbnailLink)
+            }
+        }
+    }
+    
+    //TODO: this is a temporary function and should be removed once all the existing posts have a thumbnail
+    ///checks if the given link has a thumbnail
+    func hasThumbnail(link: String, completion: @escaping(Bool) -> Void) {
+        let updatedLink = convertStringToKey(link: link)
+        DB.child(updatedLink).child("thumbnail").observeSingleEvent(of: .value) { (snapshot) in
+            if snapshot.exists() {
+                print("this thumbnail does exist")
+                completion(true)
+            }
+            else {
+                print("this should create a thumbnail")
+                completion(false)
             }
         }
     }
