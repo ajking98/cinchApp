@@ -15,9 +15,15 @@ class GenericCell: UICollectionViewCell {
     
     func setup(link: String){
         guard let contentLink = URL(string: link) else { return }
-        if checkIfVideo(link) {
-            imageView.loadVideo(contentLink, size: frame.size)
-        }
+            if checkIfVideo(link) {
+                //fetch thumbnail
+                PostStruct().readThumbnail(link: link) { (thumbnailLink) in
+                    print("this is the thumbnail", thumbnailLink)
+                    guard let thumbnailURL = URL(string: thumbnailLink) else { return }
+                    
+                    self.imageView.loadVideo(thumbnailURL, size: self.frame.size)
+                }
+            }
         else {
             imageView.sd_setImage(with: URL(string: link), placeholderImage: UIImage(), completed: nil)
         }

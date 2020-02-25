@@ -131,6 +131,19 @@ struct PostStruct {
     
     
     /*
+        Thumbnail
+     */
+    func readThumbnail(link: String, completion: @escaping(String) -> Void) {
+        let updatedLink = convertStringToKey(link: link)
+        DB.child(updatedLink).child("thumbnail").observeSingleEvent(of: .value) { (snapshot) in
+            if let thumbnailLink = snapshot.value as? String {
+                completion(thumbnailLink)
+            }
+        }
+    }
+    
+    
+    /*
     tags
     */
     ///Adds a single tag to a single post and also adds the post under the tag in DB

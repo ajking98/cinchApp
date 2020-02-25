@@ -11,7 +11,7 @@ import UIKit
 import AVKit
 
 ///caches the avplayerlayers for the videos 
-var cachedVideoPlayers = NSCache<NSString, AVPlayerLayer>()
+var cachedAssets = NSCache<NSString, AVAsset>()
 
 
 extension UIImageView {
@@ -38,16 +38,23 @@ extension UIImageView {
     
     ///embeds video into imageView given a link
     public func loadVideo(_ link: URL, size: CGSize)-> AVPlayerLayer {
-        if let cachedPlayer = cachedVideoPlayers.object(forKey: link.absoluteString as NSString) {
-            addPlayerToView(cachedPlayer, size: size)
-            return cachedPlayer
+        var asset: AVAsset?
+//        var cachedAsset = AVAssetCache.add
+        
+        if let cachedAsset = cachedAssets.object(forKey: link.absoluteString as NSString) {
+            print("pulling from cache")
         }
         else {
-            let player = AVPlayer(url: link)
-            let playerLayer = loadVideo(player, size: size)
-            cachedVideoPlayers.setObject(playerLayer, forKey: link.absoluteString as NSString)
-            return playerLayer
+            asset = AVAsset(url: link)
+            cachedAssets.setObject(asset!, forKey: link.absoluteString as NSString)
+            print("not cached")
         }
+        guard let currentAsset = asset else { return AVPlayerLayer() }
+        
+        let playerItem = AVPlayerItem(asset: currentAsset)
+        let player = AVPlayer(playerItem: playerItem)
+        let playerLayer = loadVideo(player, size: size)
+        return playerLayer
     }
 
     ///embeds video into imageView given a playerItem

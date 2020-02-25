@@ -86,6 +86,7 @@
 		89BBD41B23F365B9006BCC8F /* iMessageGlobals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BBD41A23F365B9006BCC8F /* iMessageGlobals.swift */; };
 		89C3C00F23EBCA7A00FD03D1 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C3C00E23EBCA7A00FD03D1 /* SearchResultsViewController.swift */; };
 		89CD1D04229201BA004BD0A0 /* DownloadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CD1D03229201BA004BD0A0 /* DownloadImage.swift */; };
+		89D0DCAF2405446D00E6514A /* PostStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467E5DC422FCFE2100F23ABD /* PostStruct.swift */; };
 		89E966AB23E8E67700BAF92E /* FolderSelectedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E966AA23E8E67700BAF92E /* FolderSelectedController.swift */; };
 		89E966AD23E8EE1A00BAF92E /* GenericCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E966AC23E8EE1A00BAF92E /* GenericCell.swift */; };
 		8E123EFA22B7229400F3ED5D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E123EF922B7229400F3ED5D /* Main.storyboard */; };
@@ -1009,6 +1010,7 @@
 				46CED9C323F063CC00D16E68 /* TagStruct.swift in Sources */,
 				46CED9BC23EFDC0C00D16E68 /* GenericCell.swift in Sources */,
 				890B2ED723F24F4B0091B77B /* StringExtension.swift in Sources */,
+				89D0DCAF2405446D00E6514A /* PostStruct.swift in Sources */,
 				8974380023ED338500F2CCB7 /* MessageSearchExtension.swift in Sources */,
 				46CED9C223F063B900D16E68 /* TagElement.swift in Sources */,
 				46CED9BF23EFDD0D00D16E68 /* UIImageExtension.swift in Sources */,
