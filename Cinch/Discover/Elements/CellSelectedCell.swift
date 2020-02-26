@@ -22,6 +22,7 @@ class CellSelectedCell: UITableViewCell{
     var link = ""
     var username = ""
     var handlePresentProfile: ((String) -> Void)?
+    var post = Post(isImage: true, numberOfLikes: 0, postOwner: "", likedBy: [], dateCreated: 0, tags: [], link: "")
     
     var fullScreenImageView = UIImageView(frame: CGRect.zero)
     var playerLayer = AVPlayerLayer()
@@ -35,15 +36,13 @@ class CellSelectedCell: UITableViewCell{
     let audioSession = AVAudioSession.sharedInstance()
     
     
-    //TODO: Remove this
+    //TODO: This should only exist for admin
     let xMark = UIButton(type: .contactAdd)
-    var post = Post(isImage: true, numberOfLikes: 0, postOwner: "ohSHoot", likedBy: [], dateCreated: 0, tags: [], link: "")
+    let createThumbnailButton = UIButton(type: .roundedRect)
+    
     
     func setup(link: String) {
         post.link = link
-        PostStruct().readPostOwner(post: link) { (author) in
-            self.post.postOwner = author
-        }
         
         PostStruct().readTags(post: link) { (tags) in
             self.post.tags = tags
@@ -65,32 +64,29 @@ class CellSelectedCell: UITableViewCell{
         xMark.addTarget(self, action: #selector(handleRemoved), for: .touchUpInside)
         xMark.frame = CGRect(x: 200, y: 200, width: 50, height: 50)
         xMark.backgroundColor = .green
-        xMark.isHidden = true //TODO remove this to be able to delete posts
+        xMark.isHidden = false //TODO remove this to be able to delete posts
         addSubview(xMark)
+        
+        //createThumbnail Button
+        createThumbnailButton.addTarget(self, action: #selector(handleAddThumbnail), for: .touchUpInside)
+        createThumbnailButton.frame = CGRect(x: 275, y: 200, width: 50, height: 50)
+        createThumbnailButton.backgroundColor = .yellow
+        createThumbnailButton.isHidden = false
+        addSubview(createThumbnailButton)
+    }
+    
+    @objc func handleAddThumbnail() {
+//        imageView?.frame = frame
+//        imageView?.backgroundColor = .brown
+//        print("this is adding a thumbnail", imageView)
+//        print("backgroun color: ", imageView?.backgroundColor)
+//        imageView?.image = UIImage(named: "t6")
+        SuperFunctions().createThumbnail(link: self.link)
     }
     
     @objc func handleRemoved() {
-        
-        
-        UserStruct().readFolders(user: self.username) { (folders) in
-            for folder in folders {
-                FolderStruct().readContent(user: self.username, folderName: folder) { (content) in
-                    content.forEach { (link) in
-                        if link == self.link {
-                            print("this is the folder we are deleting from: ", folder)
-                            FolderStruct().deleteContent(user: self.username, folderName: folder, link: link)
-                        }
-                    }
-                }
-            }
-        }
-        post.tags?.forEach({ (SingleTag) in
-            TagStruct().deleteElement(tagLabel: SingleTag, link: self.link)
-        })
-
-        ParentPostStruct().deletePost(postLink: link)
-        StorageStruct().deleteContent(link: link)
-        print("the user is: \(username), this is being removed", link)
+        print("this is the post: ", self.post.toString())
+        SuperFunctions().permanentlyDeletePost(post: self.post)
     }
     
     override func prepareForReuse() {

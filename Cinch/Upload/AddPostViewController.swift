@@ -186,7 +186,7 @@ struct SaveToFolder {
                 try time {
                     if let sourceURL = URL(string: link) {
                         let asset = AVURLAsset(url: sourceURL)
-                        let trimmedAsset = try asset.assetByTrimming(timeOffStart: 1.5) //Only getting 1.5 second
+                        let trimmedAsset = try asset.assetByTrimming(timeOffStart: 1) //Only getting 1 second
                         let playerItem = AVPlayerItem(asset: trimmedAsset)
                         StorageStruct().uploadVideo(video: playerItem) { (thumbnailLink) in
                             post = Post(isImage: false, postOwner: username, link: link)

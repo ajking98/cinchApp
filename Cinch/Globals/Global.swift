@@ -44,6 +44,7 @@ func convertStringToKey(link : String) -> String {
     return updatedLink
 }
 
+///saves the video from an asset locally
 func saveVideo(videoName: String, asset: AVAsset, completion: @escaping(URL) -> Void) {
     let exportPath = NSTemporaryDirectory().appending("/\(videoName).mov")
     let exportURL = URL(fileURLWithPath: exportPath)

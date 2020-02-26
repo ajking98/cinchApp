@@ -121,7 +121,7 @@ class TableViewCell: UITableViewCell, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! GenericCell
-        cell.setup(link: content[indexPath.item])
+        cell.setup(link: content[indexPath.item])  
         return cell
     }
     

@@ -12,10 +12,10 @@ import AVKit
 import FirebaseDatabase
 import FirebaseStorage
 
+//TODO remove this once all the current content has a thumbnail
+var tempArray = Array(0...2)
 
 struct StorageStruct {
-    
-    
     
     ///Upload image to storage and uses closure to return URL
     func uploadImage(image : UIImage, completion: @escaping(String) -> Void) {
@@ -86,12 +86,13 @@ struct StorageStruct {
                     }
                 }
                  else {
-                    saveVideo(videoName: "VideoThumbnail", asset: video.asset, completion: { (url) in
-                        print("This is your fucking link: ", url)
+                    if tempArray.isEmpty { tempArray = Array(0...2) }
+                    let randomChar = tempArray.popLast()
+                    print("This is the letter: ", randomChar, "this is the remaining", tempArray)
+                    saveVideo(videoName: "VideoThumbnail\(randomChar)", asset: video.asset, completion: { (url) in
 
                         let data = NSData(contentsOfFile: url.path)
                         storageRef.putData(data! as Data, metadata: nil) { (metadata, error) in
-                            print("working url2")
                             guard metadata != nil else {
                                  return
                              }

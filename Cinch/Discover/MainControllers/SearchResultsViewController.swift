@@ -54,7 +54,7 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
         let leftNavItem = UIBarButtonItem(customView: backButton)
         navigationItem.setLeftBarButton(leftNavItem, animated: false)
         
-        navigationController?.tabBarController?.tabBar.isHidden = true
+//        navigationController?.tabBarController?.tabBar.isHidden = false
         
         //Enables swiping back
         navigationController?.interactivePopGestureRecognizer?.delegate = self
