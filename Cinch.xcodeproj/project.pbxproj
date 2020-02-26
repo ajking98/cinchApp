@@ -87,6 +87,11 @@
 		89C3C00F23EBCA7A00FD03D1 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C3C00E23EBCA7A00FD03D1 /* SearchResultsViewController.swift */; };
 		89CD1D04229201BA004BD0A0 /* DownloadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CD1D03229201BA004BD0A0 /* DownloadImage.swift */; };
 		89D0DCAF2405446D00E6514A /* PostStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467E5DC422FCFE2100F23ABD /* PostStruct.swift */; };
+		89D0DCB124058C2F00E6514A /* AVAssetExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D0DCB024058C2F00E6514A /* AVAssetExtension.swift */; };
+		89D0DCB324058C6900E6514A /* FileManagerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D0DCB224058C6900E6514A /* FileManagerExtension.swift */; };
+		89D0DCB424058C6900E6514A /* FileManagerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D0DCB224058C6900E6514A /* FileManagerExtension.swift */; };
+		89D0DCB524058C8000E6514A /* AVAssetExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D0DCB024058C2F00E6514A /* AVAssetExtension.swift */; };
+		89D0DCB62405B3D400E6514A /* StorageStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E07F22ADABC3003B41DE /* StorageStruct.swift */; };
 		89E966AB23E8E67700BAF92E /* FolderSelectedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E966AA23E8E67700BAF92E /* FolderSelectedController.swift */; };
 		89E966AD23E8EE1A00BAF92E /* GenericCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E966AC23E8EE1A00BAF92E /* GenericCell.swift */; };
 		8E123EFA22B7229400F3ED5D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E123EF922B7229400F3ED5D /* Main.storyboard */; };
@@ -249,6 +254,8 @@
 		89BBD41A23F365B9006BCC8F /* iMessageGlobals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iMessageGlobals.swift; sourceTree = "<group>"; };
 		89C3C00E23EBCA7A00FD03D1 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 		89CD1D03229201BA004BD0A0 /* DownloadImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadImage.swift; sourceTree = "<group>"; };
+		89D0DCB024058C2F00E6514A /* AVAssetExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVAssetExtension.swift; sourceTree = "<group>"; };
+		89D0DCB224058C6900E6514A /* FileManagerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerExtension.swift; sourceTree = "<group>"; };
 		89E966AA23E8E67700BAF92E /* FolderSelectedController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderSelectedController.swift; sourceTree = "<group>"; };
 		89E966AC23E8EE1A00BAF92E /* GenericCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericCell.swift; sourceTree = "<group>"; };
 		8E123EF922B7229400F3ED5D /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -401,6 +408,8 @@
 				890B2ED523F24F4B0091B77B /* StringExtension.swift */,
 				4676FA9D23FBA0A1001D8FC7 /* UIViewExtension.swift */,
 				4676FA9F23FE4E21001D8FC7 /* UILabelExtension.swift */,
+				89D0DCB024058C2F00E6514A /* AVAssetExtension.swift */,
+				89D0DCB224058C6900E6514A /* FileManagerExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -997,6 +1006,7 @@
 				89BBD41B23F365B9006BCC8F /* iMessageGlobals.swift in Sources */,
 				46CED9C023F0639F00D16E68 /* ParentTagStruct.swift in Sources */,
 				897437FE23ED333300F2CCB7 /* MessageCollectionExtension.swift in Sources */,
+				89D0DCB524058C8000E6514A /* AVAssetExtension.swift in Sources */,
 				897437E323ED0DEF00F2CCB7 /* MessagesViewController.swift in Sources */,
 				897437F723ED259800F2CCB7 /* SearchTableViewController.swift in Sources */,
 				8964B2CF23F44BB3002A66BB /* InitialiMessageVC.swift in Sources */,
@@ -1008,10 +1018,12 @@
 				4676FAA123FEF678001D8FC7 /* defaultsKeys.swift in Sources */,
 				46CED9C423F0640600D16E68 /* TagElementStruct.swift in Sources */,
 				46CED9C323F063CC00D16E68 /* TagStruct.swift in Sources */,
+				89D0DCB424058C6900E6514A /* FileManagerExtension.swift in Sources */,
 				46CED9BC23EFDC0C00D16E68 /* GenericCell.swift in Sources */,
 				890B2ED723F24F4B0091B77B /* StringExtension.swift in Sources */,
 				89D0DCAF2405446D00E6514A /* PostStruct.swift in Sources */,
 				8974380023ED338500F2CCB7 /* MessageSearchExtension.swift in Sources */,
+				89D0DCB62405B3D400E6514A /* StorageStruct.swift in Sources */,
 				46CED9C223F063B900D16E68 /* TagElement.swift in Sources */,
 				46CED9BF23EFDD0D00D16E68 /* UIImageExtension.swift in Sources */,
 			);
@@ -1026,6 +1038,7 @@
 				46D48D97231AF48700952EDB /* ParentPostStruct.swift in Sources */,
 				EB41F8E922653170003751FA /* Photo.swift in Sources */,
 				897E049423E9FE190084D872 /* AddPostViewController.swift in Sources */,
+				89D0DCB124058C2F00E6514A /* AVAssetExtension.swift in Sources */,
 				891065CA23DE6A6A00EB8238 /* TableViewCell.swift in Sources */,
 				8E95FFCC22BF25CE0067B5F2 /* TagElement.swift in Sources */,
 				896556ED23E0CA9600666AB9 /* ProfileStackView.swift in Sources */,
@@ -1072,6 +1085,7 @@
 				897E049223E9ED8A0084D872 /* UploadViewController.swift in Sources */,
 				8E5EDB4E22C025990088FDA9 /* TagElementStruct.swift in Sources */,
 				890B2ED623F24F4B0091B77B /* StringExtension.swift in Sources */,
+				89D0DCB324058C6900E6514A /* FileManagerExtension.swift in Sources */,
 				EB63B7E0226A7EB5004C7E2C /* ImageInsta.swift in Sources */,
 				899F664523E3A5A70022C099 /* UISegmentControllerExtension.swift in Sources */,
 				4657E21D22F72DA700396087 /* CameraViewExtensions.swift in Sources */,
