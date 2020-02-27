@@ -129,14 +129,10 @@ class TableViewCell: UITableViewCell, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! GenericCell
-        print("index path: ", indexPath.item)
         cell.setup(link: content[indexPath.item]) {
-//            if !self.indexesToPop.contains(indexPath.item) {
-                cell.frame.size = CGSize.zero
-                cell.backgroundColor = .red
+            if !self.indexesToPop.contains(indexPath.item) {
                 self.indexesToPop.append(indexPath.item)
-                print("this should be deleted: ", indexPath.item)
-//            }
+            }
         }
         return cell
     }
@@ -153,12 +149,11 @@ class TableViewCell: UITableViewCell, UICollectionViewDataSource {
     
     
     func popIndexes() {
-//            self.indexesToPop.sort()
-//            for _ in self.indexesToPop {
-//            guard let item = self.indexesToPop.popLast() else { return }
-//            self.content.remove(at: item)
-//        }
-//        print("this si the popped", self.indexesToPop)
+            self.indexesToPop.sort()
+            for _ in self.indexesToPop {
+            guard let item = self.indexesToPop.popLast() else { return }
+            self.content.remove(at: item)
+        }
     }
 }
 

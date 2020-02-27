@@ -46,7 +46,7 @@ class GenericCell: UICollectionViewCell {
         imageView.frame.size = frame.size
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-//        imageView.backgroundColor = .lightGray
+        imageView.backgroundColor = .lightGray
     }
     
     override func prepareForReuse() {

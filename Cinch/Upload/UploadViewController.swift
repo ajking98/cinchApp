@@ -91,7 +91,6 @@ extension UploadViewController: UIImagePickerControllerDelegate, UINavigationCon
             let length = AVURLAsset(url: mediaLink).duration.seconds
             guard length < 90 else {
                 self.dismiss(animated: true) {
-                    print("this is too long")
                     let alert = UIAlertController(title: "Upload failed", message: "File too large", preferredStyle: .alert)
                     self.present(alert, animated: true, completion: nil)
                     let alertExpiration = DispatchTime.now() + 5

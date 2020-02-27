@@ -105,7 +105,7 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate, UITe
     }
     
     func addPlaceHolder(){
-        placeholderLabel.text = "Enter some tags..."
+        placeholderLabel.text = "#meme  #LOL  #..."
         placeholderLabel.font = UIFont.italicSystemFont(ofSize: (tagField.font?.pointSize)!)
         placeholderLabel.sizeToFit()
         tagField.addSubview(placeholderLabel)
@@ -130,6 +130,12 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate, UITe
     
     @objc func handlePostMedia() {
         SaveToFolder().saveToFolder(navigationController!, localLink: mediaLink, tags: tagField.text)
+        let alert = UIAlertController(title: "Uploaded!", message: "", preferredStyle: .alert)
+        self.present(alert, animated: true, completion: nil)
+        let alertExpiration = DispatchTime.now() + 3
+        DispatchQueue.main.asyncAfter(deadline: alertExpiration) {
+            alert.dismiss(animated: true, completion: nil)
+        }
     }
 }
 
@@ -168,7 +174,7 @@ struct SaveToFolder {
     }
     
     func addTags(link: String, tags: String){
-        let message = tags.components(separatedBy: CharacterSet(charactersIn: " ./"))
+        let message = tags.components(separatedBy: CharacterSet(charactersIn: " ./\\#"))
         var tagArray = [String]()
         guard let username = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
         
