@@ -33,7 +33,7 @@ class ProfileViewController: UIViewController {
     var numberOfGems = 0
     var stackView = ProfileStackView(frame: CGRect.zero)
     var mainButton = UIButton(frame: CGRect.zero) //this is the button that can either be "edit profile" or "follow/unfollow"
-    var segmentControl = UISegmentedControl(items: ["Likes", "Following"])
+    var segmentControl = UISegmentedControl(items: ["Personal", "Following"])
     var collectionView: UICollectionView?
     
     override func viewDidLoad() {
