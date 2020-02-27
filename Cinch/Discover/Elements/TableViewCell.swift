@@ -16,6 +16,7 @@ class TableViewCell: UITableViewCell, UICollectionViewDataSource {
     var identifier = "Cell"
     var hashTagTerm = ""
     var content:[String] = []
+    var indexesToPop: [Int] = []
 
     //elements
     let hashTagIcon = UIImageView(image: UIImage(named: "HashTag"))
@@ -75,6 +76,10 @@ class TableViewCell: UITableViewCell, UICollectionViewDataSource {
         TagStruct().readAllElementLinks(tagLabel: hashTagTerm.lowercased()) { (links) in
             self.content = links
             self.collectionView.reloadData()
+
+            self.collectionView.performBatchUpdates({
+                self.popIndexes()
+            }, completion: nil)
         }
     }
     
@@ -84,6 +89,9 @@ class TableViewCell: UITableViewCell, UICollectionViewDataSource {
         UserStruct().readNewContent(user: localUser) { (links) in
             self.content = links
             self.collectionView.reloadData()
+            self.collectionView.performBatchUpdates({
+                self.popIndexes()
+            }, completion: {(value) in })
         }
     }
     
@@ -121,9 +129,18 @@ class TableViewCell: UITableViewCell, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! GenericCell
-        cell.setup(link: content[indexPath.item])  
+        print("index path: ", indexPath.item)
+        cell.setup(link: content[indexPath.item]) {
+//            if !self.indexesToPop.contains(indexPath.item) {
+                cell.frame.size = CGSize.zero
+                cell.backgroundColor = .red
+                self.indexesToPop.append(indexPath.item)
+                print("this should be deleted: ", indexPath.item)
+//            }
+        }
         return cell
     }
+    
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let storyboard = UIStoryboard(name: "Discover", bundle: nil)
@@ -132,6 +149,16 @@ class TableViewCell: UITableViewCell, UICollectionViewDataSource {
         vc.content = content
         vc.startingIndex = indexPath
         parentViewController?.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    
+    func popIndexes() {
+//            self.indexesToPop.sort()
+//            for _ in self.indexesToPop {
+//            guard let item = self.indexesToPop.popLast() else { return }
+//            self.content.remove(at: item)
+//        }
+//        print("this si the popped", self.indexesToPop)
     }
 }
 

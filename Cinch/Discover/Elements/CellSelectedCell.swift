@@ -76,12 +76,12 @@ class CellSelectedCell: UITableViewCell{
     }
     
     @objc func handleAddThumbnail() {
-//        imageView?.frame = frame
-//        imageView?.backgroundColor = .brown
-//        print("this is adding a thumbnail", imageView)
-//        print("backgroun color: ", imageView?.backgroundColor)
-//        imageView?.image = UIImage(named: "t6")
-        SuperFunctions().createThumbnail(link: self.link)
+        imageView?.frame = frame
+        imageView?.backgroundColor = .brown
+        print("this is adding a thumbnail", imageView)
+        print("backgroun color: ", imageView?.backgroundColor)
+        imageView?.image = UIImage(named: "t6")
+//        SuperFunctions().createThumbnail(link: self.link)
     }
     
     @objc func handleRemoved() {
