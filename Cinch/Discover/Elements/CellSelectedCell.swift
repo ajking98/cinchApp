@@ -189,7 +189,7 @@ class CellSelectedCell: UITableViewCell{
         addSubview(shareIcon)
         shareIcon.translatesAutoresizingMaskIntoConstraints = false
         shareIcon.rightAnchor.constraint(equalTo: rightAnchor, constant: -20).isActive = true
-        shareIcon.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -0.31 * frame.height).isActive = true
+        shareIcon.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -0.05 * frame.height).isActive = true
         shareIcon.isUserInteractionEnabled = true
         shareIcon.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleShare)))
         

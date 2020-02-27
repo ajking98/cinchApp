@@ -57,14 +57,8 @@ extension ProfileViewController {
     
     @objc func handleSegmentTap(_ gesture: UITapGestureRecognizer? = nil) {
         let segmentIndex = segmentControl.selectedSegmentIndex
-        if segmentIndex == 0 {
-            segmentControl.setImage(UIImage(named: "heartIcon-Selected"), forSegmentAt: 0)
-            segmentControl.setImage(UIImage(named: "profileGems"), forSegmentAt: 1)
-        }
-        else {
-            segmentControl.setImage(UIImage(named: "heartIcon-Unselected"), forSegmentAt: 0)
-            segmentControl.setImage(UIImage(named: "ProfileGems-Selected"), forSegmentAt: 1)
-        }
+        segmentControl.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .headline)], for: .selected)
+        segmentControl.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .subheadline)], for: .normal)
         if gesture != nil {
             collectionView?.scrollToItem(at: IndexPath(item: segmentIndex, section: 0), at: .left, animated: true)
         }
