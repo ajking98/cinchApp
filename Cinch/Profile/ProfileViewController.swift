@@ -30,10 +30,11 @@ class ProfileViewController: UIViewController {
     var profileImageView = UIImageView(frame: CGRect.zero)
     var usernameLabel = UILabel(frame: CGRect.zero)
     var gemLabel = UILabel(frame: CGRect.zero)
+    var addFolderLabel = UILabel(frame: CGRect.zero)
     var numberOfGems = 0
     var stackView = ProfileStackView(frame: CGRect.zero)
     var mainButton = UIButton(frame: CGRect.zero) //this is the button that can either be "edit profile" or "follow/unfollow"
-    var segmentControl = UISegmentedControl(items: [UIImage(named: "heartIcon-Selected"), UIImage(named: "profileGems")])
+    var segmentControl = UISegmentedControl(items: ["Personal", "Following"])
     var collectionView: UICollectionView?
     
     override func viewDidLoad() {
@@ -48,6 +49,7 @@ class ProfileViewController: UIViewController {
 //        setupGemLabel()
 //        stackView.setup(followings: followings, followers: followers, Gems: gems, view: view, scrollView: scrollView)
         setupButton()
+        setupAddFolderButton()
         setupSegmentControl()
         setupSegmentControlBars()
         setupCollectionViews()
@@ -154,7 +156,7 @@ class ProfileViewController: UIViewController {
         profileImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         profileImageView.heightAnchor.constraint(equalToConstant: height*0.12).isActive = true
         profileImageView.widthAnchor.constraint(equalToConstant: height*0.12).isActive = true
-        profileImageView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: height*0.15).isActive = true
+        profileImageView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: height*0.125).isActive = true
         profileImageView.layer.cornerRadius = height * 0.06
     }
     
@@ -213,6 +215,73 @@ class ProfileViewController: UIViewController {
         mainButton.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: height*0.04).isActive = true
     }
     
+    func setupAddFolderButton() {
+        addFolderLabel.text = "Add Folder"
+        addFolderLabel.sizeToFit()
+        addFolderLabel.textAlignment = .center
+        addFolderLabel.font = gemLabel.font.withSize(width/27)
+        addFolderLabel.textColor = UIColor.customRed
+        
+        scrollView.addSubview(addFolderLabel)
+        
+        //constraints
+        addFolderLabel.translatesAutoresizingMaskIntoConstraints = false
+        addFolderLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        addFolderLabel.heightAnchor.constraint(equalToConstant: addFolderLabel.font.pointSize * 1.5).isActive = true
+        addFolderLabel.widthAnchor.constraint(equalToConstant: width*0.6).isActive = true
+        addFolderLabel.topAnchor.constraint(equalTo: mainButton.bottomAnchor, constant: 15).isActive = true
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleAddFolder))
+        addFolderLabel.isUserInteractionEnabled = true
+        addFolderLabel.addGestureRecognizer(tap)
+    }
+    
+    @objc func handleAddFolder(tapGesture: UITapGestureRecognizer) {
+        print("working dog")
+        var folderName : String = ""
+        
+        let alert = UIAlertController(title: "Name Your Folder", message: "Assign a title to this folder", preferredStyle: .alert)
+        
+        alert.addTextField(configurationHandler: nil)
+        alert.addAction(UIAlertAction(title: "Create", style: .default, handler: { [weak alert] (_) in
+            let textField = alert?.textFields![0]
+            folderName = textField!.text!.lowercased()
+            let newFolder = Folder(folderName: folderName)
+            
+            // TODO add check for duplicate folder names
+            //if a folder with that name already exists, then it wont overwrite it
+//            if self.folders.contains(where: { (tempFolder) -> Bool in
+//                return tempFolder.folderName == folderName
+//            }){
+//                let alert = UIAlertController(title: "ERROR", message: "A folder with title: \"\(folderName)\" already exits. \n Try a different title.", preferredStyle: .alert)
+//                alert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: nil))
+//                self.present(alert, animated: true, completion: nil)
+//            }
+//            else
+//            {
+                //calling the function to save the folder name to Firebase and create it on the front end
+                UserStruct().addFolder(user: self.username, folder: newFolder)
+                self.createFolder(folderName: folderName)
+//            }
+        }))
+        
+        alert.addAction(UIAlertAction(title:"Cancel", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func createFolder(folderName: String){
+        let folder = Folder(folderName: folderName)
+        UserStruct().addFolder(user: username, folder: folder)
+        self.collectionView?.reloadData()
+        
+        let alert = UIAlertController(title: "Created '\(folderName)' Folder", message: "", preferredStyle: .alert) //Notify the user with an alert
+        self.present(alert, animated: true, completion: nil)
+        let alertExpiration = DispatchTime.now() + 0.85
+        DispatchQueue.main.asyncAfter(deadline: alertExpiration) {
+            alert.dismiss(animated: true, completion: nil)
+        }
+    }
+    
     
     func setupSegmentControl() {
         scrollView.addSubview(segmentControl)
@@ -227,7 +296,7 @@ class ProfileViewController: UIViewController {
         segmentControl.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         segmentControl.heightAnchor.constraint(equalToConstant: height/18).isActive = true
         segmentControl.widthAnchor.constraint(equalToConstant: width).isActive = true
-        segmentControl.topAnchor.constraint(equalTo: mainButton.bottomAnchor, constant: height*0.07).isActive = true
+        segmentControl.topAnchor.constraint(equalTo: addFolderLabel.bottomAnchor, constant: height*0.05).isActive = true
     }
     
     func setupSegmentControlBars() {

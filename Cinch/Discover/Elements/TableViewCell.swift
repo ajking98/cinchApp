@@ -117,7 +117,7 @@ class TableViewCell: UITableViewCell, UICollectionViewDataSource {
         //constraints
         upperText.translatesAutoresizingMaskIntoConstraints = false
         upperText.leftAnchor.constraint(equalTo: hashTagIcon.rightAnchor, constant: 8).isActive = true
-        upperText.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        upperText.widthAnchor.constraint(equalToConstant: frame.width).isActive = true
         upperText.bottomAnchor.constraint(equalTo: collectionView.topAnchor, constant: -12).isActive = true
         upperText.centerYAnchor.constraint(equalTo: hashTagIcon.centerYAnchor).isActive = true
         upperText.heightAnchor.constraint(equalToConstant: 20).isActive = true

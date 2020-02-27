@@ -169,8 +169,18 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
     
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         searchBar.endEditing(true)
+        handleGoToResult(str: mainHashTags[indexPath.row])
         return false
     }
+    
+    func handleGoToResult(str: String) {
+        print(str)
+        let vc = SearchResultsViewController()
+        vc.initialNavigationController = navigationController
+        vc.setup(term: str)
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+        
 }
 
 
