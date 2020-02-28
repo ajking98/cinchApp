@@ -30,7 +30,7 @@ class ProfileViewController: UIViewController {
     var profileImageView = UIImageView(frame: CGRect.zero)
     var usernameLabel = UILabel(frame: CGRect.zero)
     var gemLabel = UILabel(frame: CGRect.zero)
-    var addFolderLabel = UILabel(frame: CGRect.zero)
+    var addFolderButton = UILabel(frame: CGRect.zero)
     var numberOfGems = 0
     var stackView = ProfileStackView(frame: CGRect.zero)
     var mainButton = UIButton(frame: CGRect.zero) //this is the button that can either be "edit profile" or "follow/unfollow"
@@ -216,24 +216,29 @@ class ProfileViewController: UIViewController {
     }
     
     func setupAddFolderButton() {
-        addFolderLabel.text = "Add Folder"
-        addFolderLabel.sizeToFit()
-        addFolderLabel.textAlignment = .center
-        addFolderLabel.font = gemLabel.font.withSize(width/27)
-        addFolderLabel.textColor = UIColor.customRed
+        scrollView.addSubview(addFolderButton)
+        addFolderButton.sizeToFit()
+        addFolderButton.backgroundColor = UIColor.clear
+        addFolderButton.layer.borderWidth = 1
+        addFolderButton.layer.borderColor = UIColor.customRed.cgColor
+        addFolderButton.clipsToBounds = true
+        addFolderButton.text = "Add Folder"
+        addFolderButton.textAlignment = .center
+        addFolderButton.font = gemLabel.font.withSize(width/27)
+        addFolderButton.textColor = .customRed
+ 
         
-        scrollView.addSubview(addFolderLabel)
-        
+        addFolderButton.layer.cornerRadius = 12
         //constraints
-        addFolderLabel.translatesAutoresizingMaskIntoConstraints = false
-        addFolderLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        addFolderLabel.heightAnchor.constraint(equalToConstant: addFolderLabel.font.pointSize * 1.5).isActive = true
-        addFolderLabel.widthAnchor.constraint(equalToConstant: width*0.6).isActive = true
-        addFolderLabel.topAnchor.constraint(equalTo: mainButton.bottomAnchor, constant: 15).isActive = true
+        addFolderButton.translatesAutoresizingMaskIntoConstraints = false
+        addFolderButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        addFolderButton.heightAnchor.constraint(equalToConstant: height * 0.03).isActive = true
+        addFolderButton.widthAnchor.constraint(equalToConstant: width*0.3).isActive = true
+        addFolderButton.topAnchor.constraint(equalTo: mainButton.bottomAnchor, constant: 15).isActive = true
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleAddFolder))
-        addFolderLabel.isUserInteractionEnabled = true
-        addFolderLabel.addGestureRecognizer(tap)
+        addFolderButton.isUserInteractionEnabled = true
+        addFolderButton.addGestureRecognizer(tap)
     }
     
     @objc func handleAddFolder(tapGesture: UITapGestureRecognizer) {
@@ -296,7 +301,7 @@ class ProfileViewController: UIViewController {
         segmentControl.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         segmentControl.heightAnchor.constraint(equalToConstant: height/18).isActive = true
         segmentControl.widthAnchor.constraint(equalToConstant: width).isActive = true
-        segmentControl.topAnchor.constraint(equalTo: addFolderLabel.bottomAnchor, constant: height*0.05).isActive = true
+        segmentControl.topAnchor.constraint(equalTo: addFolderButton.bottomAnchor, constant: height*0.05).isActive = true
     }
     
     func setupSegmentControlBars() {
