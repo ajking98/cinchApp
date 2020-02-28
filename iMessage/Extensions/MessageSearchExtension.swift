@@ -15,7 +15,6 @@ extension MessagesViewController: UISearchBarDelegate {
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(true, animated: true)
-        print("this is the activity for search bar: ", iMessageDelegate)
         iMessageDelegate.expandView()
         tableTagsView.alpha = 1
     }
@@ -46,6 +45,9 @@ extension MessagesViewController: UISearchBarDelegate {
         }
     }
     
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        searchTableViewController.handleSearching(searchText: searchText.lowercased())
+    }
 }
 
 

@@ -11,6 +11,8 @@ import Firebase
 import FirebaseStorage
 import FirebaseDatabase
 
+var isAdmin = true //change this to false
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

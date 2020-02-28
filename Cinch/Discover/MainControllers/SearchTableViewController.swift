@@ -26,7 +26,6 @@ class SearchTableViewController: UITableViewController {
     
     func fetchData(_ shouldReset: Bool = false){
         ParentTagStruct().readTagNames { (tags) in
-            print("this is fetching the ata")
             self.allTags = tags
             if shouldReset {
                 self.resetTags()
@@ -49,11 +48,17 @@ class SearchTableViewController: UITableViewController {
         tags.removeAll { (term) -> Bool in
             return !term.contains(searchText)
         }
-        print("these are the remaining search terms: ", tags)
         secondTableView.reloadData()
+        if prevSearchText.count > searchText.count {
+            prevSearchText = searchText
+            if searchText.count == 0 {
+                resetTags()
+            }
+            else {
+                resetTags(searchText)
+            }
+        }
         prevSearchText = searchText
-        
-//        resetTags(searchText)
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -81,15 +86,5 @@ class SearchTableViewController: UITableViewController {
         clearSearch.textAlignment = .center
         clearSearch.text = "No Results Found"
         return clearSearch
-    }
-    
-    ///Adds a search term to the searchview suggested search terms 
-    func addSearchTerm(term: String) {
-//        guard !searchHistory.contains(term) else { return } //doesn't add the term if it already exists
-//        if searchHistory.count == 7 {
-//            searchHistory.remove(at: 6)
-//        }
-//        searchHistory.insert(term, at: 0)
-//
     }
 }

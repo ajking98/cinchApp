@@ -255,7 +255,6 @@ extension DiscoverViewController: UISearchBarDelegate {
     }
     
     func nextView(term: String) {
-        searchTableViewController.addSearchTerm(term: term)
         tableTagsView.alpha = 0
         searchBar.endEditing(true)
         let vc = SearchResultsViewController()

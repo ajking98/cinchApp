@@ -90,6 +90,7 @@ class MessagesViewController: UIViewController {
         tableTagsView.dataSource = searchTableViewController
         tableTagsView.delegate = searchTableViewController
         searchTableViewController.handleCellSelected = nextView(term:)
+        searchTableViewController.setup()
         tableTagsView.separatorStyle = .none
         
         //constraints
@@ -102,7 +103,6 @@ class MessagesViewController: UIViewController {
     
     ///presents the next vc when the user enters a term to search 
     func nextView(term: String) {
-        searchTableViewController.addSearchTerm(term: term)
         tableTagsView.alpha = 0
         searchBar.endEditing(true)
         let vc = MessageSearchResultsViewController()

@@ -56,6 +56,7 @@
 		891065CA23DE6A6A00EB8238 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891065C923DE6A6A00EB8238 /* TableViewCell.swift */; };
 		891FC3FD22D7F72E0024A623 /* Discover.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 891FC3FC22D7F72E0024A623 /* Discover.storyboard */; };
 		891FED7C23EDDF700012DF58 /* MessageAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 891FED7B23EDDF700012DF58 /* MessageAssets.xcassets */; };
+		8925F16E2409B6F20003ADA0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EB74D3BC226025EA00556399 /* Assets.xcassets */; };
 		893911B323DF996100AFAE80 /* CellSelectedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893911B223DF996100AFAE80 /* CellSelectedCell.swift */; };
 		893911B523DFA7CF00AFAE80 /* CellSelectedTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893911B423DFA7CF00AFAE80 /* CellSelectedTable.swift */; };
 		893911B723DFFF2900AFAE80 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893911B623DFFF2900AFAE80 /* ProfileViewController.swift */; };
@@ -852,6 +853,7 @@
 			files = (
 				89BBD41923F3576D006BCC8F /* GoogleService-Info.plist in Resources */,
 				891FED7C23EDDF700012DF58 /* MessageAssets.xcassets in Resources */,
+				8925F16E2409B6F20003ADA0 /* Assets.xcassets in Resources */,
 				897437E623ED0DEF00F2CCB7 /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
