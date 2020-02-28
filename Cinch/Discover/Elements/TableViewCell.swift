@@ -31,19 +31,13 @@ class TableViewCell: UITableViewCell, UICollectionViewDataSource {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
         // Configure the view for the selected state
     }
     
     func setUp(hashTagTerm: String) {
         self.hashTagTerm = hashTagTerm.lowercased().capitalizeFirstLetter()
         
-        if hashTagTerm.lowercased().contains("following") {
-            fetchFollowingPosts()
-        }
-        else {
-            fetchContent()
-        }
+        fetchContent()
         
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -82,19 +76,6 @@ class TableViewCell: UITableViewCell, UICollectionViewDataSource {
             }, completion: nil)
         }
     }
-    
-    ///fetches all the new posts for the local user
-    func fetchFollowingPosts() {
-        guard let localUser = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
-        UserStruct().readNewContent(user: localUser) { (links) in
-            self.content = links
-            self.collectionView.reloadData()
-            self.collectionView.performBatchUpdates({
-                self.popIndexes()
-            }, completion: {(value) in })
-        }
-    }
-    
     
     
     func addHashTag() {

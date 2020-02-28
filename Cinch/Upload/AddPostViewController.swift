@@ -47,7 +47,7 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate, UITe
     
     func setupNavigationController() {
         navigationController?.interactivePopGestureRecognizer?.delegate = self
-        navigationController?.interactivePopGestureRecognizer?.isEnabled = true 
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         let backButton = UIButton(type: .custom)
         backButton.setImage(UIImage(named: "backIcon-black"), for: .normal)
         backButton.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
@@ -130,12 +130,6 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate, UITe
     
     @objc func handlePostMedia() {
         SaveToFolder().saveToFolder(navigationController!, localLink: mediaLink, tags: tagField.text)
-        let alert = UIAlertController(title: "Uploaded!", message: "", preferredStyle: .alert)
-        self.present(alert, animated: true, completion: nil)
-        let alertExpiration = DispatchTime.now() + 3
-        DispatchQueue.main.asyncAfter(deadline: alertExpiration) {
-            alert.dismiss(animated: true, completion: nil)
-        }
     }
 }
 
@@ -147,20 +141,31 @@ struct SaveToFolder {
     func saveToFolder(_ navigationController: UINavigationController, localLink: URL, tags: String) {
         let image = UIImage()
         let actionController = SpotifyActionController()
-        actionController.headerData = SpotifyHeaderData(title: "select a folder", subtitle: "", image: image)
+        actionController.headerData = SpotifyHeaderData(title: "Select a Folder", subtitle: "", image: image)
         guard let username = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
         
         
         UserStruct().readFolders(user: username) { (folders) in
             for item in folders {
+                if item.lowercased() == "hearted" {
+                    continue
+                }
                 actionController.addAction(Action(ActionData(title: "\(item.lowercased())", subtitle: "For Content"), style: .default, handler: { action in
                     
                     StorageStruct().uploadContent(mediaLink: localLink) { (link) in
                         FolderStruct().addContent(user: username, folderName: item, link: link)
                         self.addTags(link: link, tags: tags)
                         navigationController.popViewController(animated: true)
+
+                        //user feedback alert
+                        let alert = UIAlertController(title: "Uploaded!", message: "", preferredStyle: .alert)
+                        navigationController.present(alert, animated: true, completion: nil)
+                        let alertExpiration = DispatchTime.now() + 3
+                        DispatchQueue.main.asyncAfter(deadline: alertExpiration) {
+                            alert.dismiss(animated: true, completion: nil)
+                        }
                         
-                        //Adds content to the followers' newContent array
+                        //Adds content to the followers' newContent array this should be done on a google cloud function
                         UserStruct().readFollowers(user: username) { (followers) in
                             for follower in followers {
                                 UserStruct().addNewContent(user: follower, link: link)

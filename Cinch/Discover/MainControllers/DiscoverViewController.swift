@@ -17,6 +17,7 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
     var width: CGFloat = 0
     var height: CGFloat = 0
     var images:[UIImage] = [] //Images for the top carousel
+    var imageLinks:[String] = [] //Links for the images on the top carousel
     var mainHashTags:[String] = []
     let identifier = "Cell"
     
@@ -59,6 +60,7 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
             self.tableView.reloadData()
         }
         
+        guard let username = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
         ParentPostStruct().readAdminPosts { (links) in
             for link in links {
                 if let url = URL(string: link) {
@@ -66,6 +68,7 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
                         let imageData = try Data(contentsOf: url)
                         if let image = UIImage(data: imageData) {
                             self.images.append(image)
+                            self.imageLinks.append(link)
                         }
                     }
                     catch {
@@ -74,9 +77,32 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
                     
                 }
             }
-            self.pageControl.numberOfPages = self.images.count
-            self.setupCarousel()
-            self.addCarouselData()
+            UserStruct().readNewContent(user: username) { (links) in
+                let limit = links.count < 15 ? links.count : 15
+                for index in 0 ..< limit {
+                    if checkIfVideo(links[index]) {
+                        //TODO: Build for videos too
+                        continue
+                    }
+                    if let url = URL(string: links[index]) {
+                        do {
+                            let imageData = try Data(contentsOf: url)
+                            if let image = UIImage(data: imageData) {
+                                self.images.append(image)
+                                self.imageLinks.append(links[index])
+                            }
+                        }
+                        catch {
+                            print("THIS IS FUCKING UP")
+                        }
+                        
+                    }
+                    
+                }
+                self.pageControl.numberOfPages = self.images.count
+                self.setupCarousel()
+                self.addCarouselData()
+            }
         }
     }
     
@@ -120,7 +146,7 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
     
     func setupCarousel() {
         topCarousel.frame = CGRect(x: 0, y: 0, width: width, height: 0.24 * height)
-        
+        topCarousel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleCarouselTapped)))
         topCarousel.contentSize = CGSize(width: width * CGFloat(images.count), height: topCarousel.frame.size.height)
            topCarousel.delegate = self
            topCarousel.isPagingEnabled = true
@@ -157,6 +183,7 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
       let cell = tableView.dequeueReusableCell(withIdentifier: identifier) as! TableViewCell
+      cell.selectionStyle = .none
       cell.cellHeight = height * 0.242
       cell.cellWidth = tableView.frame.size.width
       cell.setUp(hashTagTerm: mainHashTags[indexPath.item])
@@ -169,12 +196,23 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
     
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         searchBar.endEditing(true)
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         handleGoToResult(str: mainHashTags[indexPath.row])
-        return false
+    }
+    
+    @objc func handleCarouselTapped() {
+        print("we are tapping this index: ", pageControl.currentPage)
+        let vc = CellSelectedTable()
+        vc.modalPresentationStyle = .fullScreen
+        vc.content = self.imageLinks
+        vc.startingIndex = IndexPath(row: pageControl.currentPage, section: 0)
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     func handleGoToResult(str: String) {
-        print(str)
         let vc = SearchResultsViewController()
         vc.initialNavigationController = navigationController
         vc.setup(term: str)
