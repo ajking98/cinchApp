@@ -158,45 +158,46 @@ class CellSelectedCell: UITableViewCell{
     
     
     func setupRightHandView() {
-        //share icon
-        addSubview(shareIcon)
-        shareIcon.translatesAutoresizingMaskIntoConstraints = false
-        shareIcon.rightAnchor.constraint(equalTo: rightAnchor, constant: -20).isActive = true
-        shareIcon.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -0.05 * frame.height).isActive = true
-        shareIcon.isUserInteractionEnabled = true
-        shareIcon.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleShare)))
-        
-        //heart icon
-        addSubview(heartIcon)
-        heartIcon.translatesAutoresizingMaskIntoConstraints = false
-        heartIcon.centerXAnchor.constraint(equalTo: shareIcon.centerXAnchor).isActive = true
-        heartIcon.bottomAnchor.constraint(equalTo: shareIcon.topAnchor, constant: -20).isActive = true
-        heartIcon.isUserInteractionEnabled = true
-        heartIcon.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleHearted)))
-        
-        
-        //profile icon
-        profileIcon.backgroundColor = .lightGray
-        
-        addSubview(profileIcon)
-        profileIcon.translatesAutoresizingMaskIntoConstraints = false
-        profileIcon.centerXAnchor.constraint(equalTo: heartIcon.centerXAnchor).isActive = true
-        profileIcon.bottomAnchor.constraint(equalTo: heartIcon.topAnchor, constant: -25).isActive = true
-        profileIcon.widthAnchor.constraint(equalToConstant: 40).isActive = true
-        profileIcon.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        
-        profileIcon.layer.cornerRadius = 20
-        profileIcon.clipsToBounds = true
-        profileIcon.isUserInteractionEnabled = true
-        profileIcon.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleProfilePicPressed)))
-        
-        
-        //follow user icon
-        addSubview(followUserIcon)
-        followUserIcon.translatesAutoresizingMaskIntoConstraints = false
-        followUserIcon.centerYAnchor.constraint(equalTo: profileIcon.bottomAnchor).isActive = true
-        followUserIcon.centerXAnchor.constraint(equalTo: profileIcon.centerXAnchor).isActive = true
-    }
+            //share icon
+            addSubview(shareIcon)
+            shareIcon.translatesAutoresizingMaskIntoConstraints = false
+            shareIcon.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -0.05  * frame.width).isActive = true
+    //        shareIcon.rightAnchor.constraint(equalTo: rightAnchor, constant: -20).isActive = true
+            shareIcon.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -0.05  * frame.height).isActive = true
+            shareIcon.isUserInteractionEnabled = true
+            shareIcon.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleShare)))
+            
+            //heart icon
+            addSubview(heartIcon)
+            heartIcon.translatesAutoresizingMaskIntoConstraints = false
+            heartIcon.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+            heartIcon.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -0.05  * frame.height).isActive = true
+            heartIcon.isUserInteractionEnabled = true
+            heartIcon.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleHearted)))
+            
+            
+            //profile icon
+            profileIcon.backgroundColor = .lightGray
+            
+            addSubview(profileIcon)
+            profileIcon.translatesAutoresizingMaskIntoConstraints = false
+            profileIcon.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 0.05  * frame.width).isActive = true
+            profileIcon.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -0.05  * frame.height).isActive = true
+            profileIcon.widthAnchor.constraint(equalToConstant: 40).isActive = true
+            profileIcon.heightAnchor.constraint(equalToConstant: 40).isActive = true
+            
+            profileIcon.layer.cornerRadius = 20
+            profileIcon.clipsToBounds = true
+            profileIcon.isUserInteractionEnabled = true
+            profileIcon.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleProfilePicPressed)))
+            
+            
+            //follow user icon
+            addSubview(followUserIcon)
+            followUserIcon.translatesAutoresizingMaskIntoConstraints = false
+            followUserIcon.centerYAnchor.constraint(equalTo: profileIcon.bottomAnchor).isActive = true
+            followUserIcon.centerXAnchor.constraint(equalTo: profileIcon.centerXAnchor).isActive = true
+        }
     
     
     ///Allows user to save content to device or export to another app
@@ -244,7 +245,7 @@ class CellSelectedCell: UITableViewCell{
         lowerText.translatesAutoresizingMaskIntoConstraints = false
         lowerText.leftAnchor.constraint(equalTo: leftAnchor, constant: 17.5).isActive = true
         lowerText.widthAnchor.constraint(equalToConstant: 0.8 * frame.width).isActive = true
-        lowerText.topAnchor.constraint(equalTo: bottomAnchor, constant: -0.2 * frame.height).isActive = true
+        lowerText.bottomAnchor.constraint(equalTo: profileIcon.topAnchor, constant: -0.02 * frame.height).isActive = true
         lowerText.heightAnchor.constraint(equalToConstant: 0.15 * frame.height).isActive = true
     }
     
