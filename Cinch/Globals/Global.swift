@@ -97,7 +97,9 @@ func saveVideo(videoName: String, linkToVideo: URL)->URL? {
 ///saves the image locally, to the user's device, before being sent over
 func saveImage(imageName: String, linkToImage: URL)->URL? {
     guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
-    let data = NSData(contentsOf: linkToImage)
+    guard let fetchedImageData = NSData(contentsOf: linkToImage) else { return URL(fileURLWithPath: "") }
+    let image = UIImage(data: fetchedImageData as Data)?.resizeImage(targetSize: CGSize(width: 400, height: 400))
+    let data = image?.pngData()
     let fileURL = documentsDirectory.appendingPathComponent(imageName)
     
     //Checks if file exists, removes it if so
