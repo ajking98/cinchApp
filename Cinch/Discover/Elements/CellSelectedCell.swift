@@ -30,7 +30,7 @@ class CellSelectedCell: UITableViewCell{
     let heartIcon = UIImageView(image: UIImage(named: "heartIcon"))
     let followUserIcon = UIImageView(image: UIImage(named: "followUserIcon"))
     var profileIcon = UIImageView(frame: CGRect.zero)
-    var backgroundProfileIcon = UIImageView(image: UIImage(named: "backgroundRing2"))
+    var backgroundProfileIcon = UIImageView(image: UIImage(named: "backgroundRing1"))
     let lowerText = UILabel(frame: CGRect.zero)
     
     //TODO: This should only exist for admin
