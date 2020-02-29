@@ -33,10 +33,11 @@ func getAllFrames(videoUrl : URL, completion: @escaping([UIImage]) -> Void) {
         let cmTime = CMTimeMakeWithSeconds(Double(time) / 10.0, preferredTimescale: 600)
         times.append(NSValue(time: cmTime))
     }
+    
     generator?.generateCGImagesAsynchronously(forTimes: times, completionHandler: { (requestedTime, frame, actualTime, result, error) in
         DispatchQueue.main.async {
             if let frame = frame {
-                frames.append(UIImage(data: UIImage(cgImage: frame).jpegData(compressionQuality: 0.7)!)!)
+                frames.append(UIImage(data: UIImage(cgImage: frame).jpegData(compressionQuality: 0.1)!)!)
             }
             if frames.count == 15 {
                 completion(frames)

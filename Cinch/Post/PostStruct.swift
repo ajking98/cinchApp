@@ -133,11 +133,11 @@ struct PostStruct {
     /*
         Thumbnail
      */
-    ///adds thumbnail to post at given link
-    func addThumbnail(linkOfPost: String, linkToThumbnail: String) {
-        let updatedLink = convertStringToKey(link: linkOfPost)
-        DB.child(updatedLink).child("thumbnail").setValue(linkToThumbnail)
-    }
+     ///adds thumbnail to post at given link
+     func addThumbnail(linkOfPost: String, linkToThumbnail: String) {
+         let updatedLink = convertStringToKey(link: linkOfPost)
+         DB.child(updatedLink).child("thumbnail").setValue(linkToThumbnail)
+     }
     
     
     ///reads the thumbnail for the given post
@@ -164,6 +164,19 @@ struct PostStruct {
                 completion(false)
             }
         }
+    }
+    
+    
+    
+    /*
+     Thumbnail - where the thumbnail is a series of images
+     */
+    
+    ///adds thumbnail to post at given link
+    func addThumbnail(linkOfPost: String, linkToThumbnail: [String]) {
+        let updatedLink = convertStringToKey(link: linkOfPost)
+        let sortedContent = linkToThumbnail.sorted()
+        DB.child(updatedLink).child("thumbnail").setValue(sortedContent)
     }
     
     

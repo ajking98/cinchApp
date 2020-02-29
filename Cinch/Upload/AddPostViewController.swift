@@ -17,6 +17,7 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate, UITe
     var height: CGFloat = 0
     var mediaLink = URL(fileURLWithPath: "")
     var isVideo = false
+    var frames:[UIImage] = []
     
     //Elements
     let tagField = UITextView(frame: CGRect.zero)
@@ -37,12 +38,24 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate, UITe
         let playerLayer = imageView.loadVideo(mediaLink, size: imageView.frame.size)
     }
     
+    ///fetches the thumbnail frames for a video
+    func fetchFrames(url: URL) {
+        getAllFrames(videoUrl: url, completion: {(images) in
+            print("this is the count of the images: ", self.imageView.animationImages?.count)
+            self.frames = images
+        })
+    }
+    
     
     func setup() {
         view.backgroundColor = .white
         width = view.frame.width
         height = view.frame.height
         isVideo = checkIfVideo(mediaLink.absoluteString)
+        
+        if isVideo {
+            fetchFrames(url: mediaLink)
+        }
     }
     
     func setupNavigationController() {
@@ -138,7 +151,7 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate, UITe
 
 
 struct SaveToFolder {
-    func saveToFolder(_ navigationController: UINavigationController, localLink: URL, tags: String) {
+    func saveToFolder(_ navigationController: UINavigationController, localLink: URL, tags: String, _ frames: [UIImage]? = nil) {
         let image = UIImage()
         let actionController = SpotifyActionController()
         actionController.headerData = SpotifyHeaderData(title: "Select a Folder", subtitle: "", image: image)
@@ -156,13 +169,23 @@ struct SaveToFolder {
                         FolderStruct().addContent(user: username, folderName: item, link: link)
                         self.addTags(link: link, tags: tags)
                         navigationController.popViewController(animated: true)
-
+                        
                         //user feedback alert
-                        let alert = UIAlertController(title: "Uploaded!", message: "", preferredStyle: .alert)
+                        let alert = UIAlertController(title: "Uploaded to \(item)!", message: "", preferredStyle: .alert)
                         navigationController.present(alert, animated: true, completion: nil)
-                        let alertExpiration = DispatchTime.now() + 3
+                        let alertExpiration = DispatchTime.now() + 1.5
                         DispatchQueue.main.asyncAfter(deadline: alertExpiration) {
                             alert.dismiss(animated: true, completion: nil)
+                        }
+                        
+                        ///Adding the frames if its a video
+
+                        if let frames = frames {
+                            StorageStruct().uploadFrames(frames: frames) { (links) in
+                                print("these are the links: ", links)
+                                //Each link should be appended to the DB thumbnails part
+                                PostStruct().addThumbnail(linkOfPost: link, linkToThumbnail: links)
+                            }
                         }
                         
                         //Adds content to the followers' newContent array this should be done on a google cloud function
@@ -177,6 +200,7 @@ struct SaveToFolder {
             navigationController.present(actionController, animated: true, completion: nil)
         }
     }
+    
     
     func addTags(link: String, tags: String){
         let message = tags.components(separatedBy: CharacterSet(charactersIn: " ./\\#"))
