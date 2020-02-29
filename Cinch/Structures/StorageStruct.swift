@@ -194,14 +194,46 @@ struct StorageStruct {
                 
                 storageRef.downloadURL {(url, error) in
                     guard let downloadURL = url else {
-                        print("Error occurred")
+                        print("Error occurred while uploading image")
                         return
                     }
                     completion(downloadURL.absoluteString)
                 }
             })
-            
-            
+        }
+    }
+    
+    ///Uploads an array of frames and returns an array of the links
+    func uploadFrames(frames: [UIImage], _ completion: @escaping([String]) -> Void) {
+        var image = UIImage()
+        var links = [String]()
+        let filePath = "videoThumbnails/" + randomString(20) + "_"
+        var data: Data?
+        let group = DispatchGroup()
+        
+        for index in 0 ..< frames.count {
+            group.enter()
+            data = frames[index].jpegData(compressionQuality: 0.8)
+            let storageRef = Storage.storage().reference().child(filePath + "\(index).jpg")
+            storageRef.putData(data!, metadata: nil) { (metadata, error) in
+                guard (metadata != nil) else{
+                    print("Error occurred while uploading frames")
+                    return
+                }
+                
+                storageRef.downloadURL {(url, error) in
+                    guard let downloadURL = url else {
+                        print("Error occurred in uploading frames", error?.localizedDescription)
+                        return
+                    }
+                    links.append(downloadURL.absoluteString)
+                    group.leave()
+                }
+            }
+        }
+        
+        group.notify(queue: .main) {
+            completion(links)
         }
     }
     

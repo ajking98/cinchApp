@@ -16,6 +16,36 @@ public enum constants: CGFloat {
     case baseVelocity = 820.0
 }
 
+
+func getAllFrames(videoUrl : URL, completion: @escaping([UIImage]) -> Void) {
+   var frames:[UIImage] = []
+   var generator: AVAssetImageGenerator?
+   let asset:AVAsset = AVAsset(url: videoUrl)
+   let duration:Float64 = CMTimeGetSeconds(asset.duration)
+   generator = AVAssetImageGenerator(asset:asset)
+   generator?.appliesPreferredTrackTransform = true
+    generator?.requestedTimeToleranceAfter = CMTime.zero
+    generator?.requestedTimeToleranceBefore = CMTime.zero
+    
+    var times = [NSValue]()
+    let limit = duration < 1.5 ? duration : 1.5
+    for time in 0 ..< Int(limit * 10) {
+        let cmTime = CMTimeMakeWithSeconds(Double(time) / 10.0, preferredTimescale: 600)
+        times.append(NSValue(time: cmTime))
+    }
+    generator?.generateCGImagesAsynchronously(forTimes: times, completionHandler: { (requestedTime, frame, actualTime, result, error) in
+        DispatchQueue.main.async {
+            if let frame = frame {
+                frames.append(UIImage(data: UIImage(cgImage: frame).jpegData(compressionQuality: 0.7)!)!)
+            }
+            if frames.count == 15 {
+                completion(frames)
+            }
+        }
+    })
+}
+
+
 func isQuickSwipe(velocity : CGFloat) -> Bool {
     if abs(velocity) > constants.baseVelocity.rawValue {
         return true
