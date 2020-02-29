@@ -15,7 +15,7 @@ import AVKit
 import Photos
 
 ///holds the value for whether the cell is muted or not
-var isMuted = false
+var isMuted = true
 class CellSelectedCell: UITableViewCell{
     
     //data
@@ -31,10 +31,6 @@ class CellSelectedCell: UITableViewCell{
     let followUserIcon = UIImageView(image: UIImage(named: "followUserIcon"))
     var profileIcon = UIImageView(frame: CGRect.zero)
     let lowerText = UILabel(frame: CGRect.zero)
-    
-    var outputVolumeObserve: NSKeyValueObservation?
-    let audioSession = AVAudioSession.sharedInstance()
-    
     
     //TODO: This should only exist for admin
     let xMark = UIButton(type: .contactAdd)
@@ -57,7 +53,6 @@ class CellSelectedCell: UITableViewCell{
         setupRightHandView()
         setupLowerText()
         setupxMark()
-        listenVolumeButton()
     }
     
     func setupxMark() {
@@ -141,28 +136,6 @@ class CellSelectedCell: UITableViewCell{
         else {
             playerLayer.player?.isMuted.toggle()
             isMuted.toggle()
-        }
-    }
-    
-    func listenVolumeButton() {
-       do {
-        try audioSession.setActive(true)
-       } catch {
-        print("some error")
-       }
-       audioSession.addObserver(self, forKeyPath: "outputVolume", options: NSKeyValueObservingOptions.new, context: nil)
-    }
-    
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-          if keyPath == "outputVolume" {
-            playerLayer.player?.isMuted = false
-            isMuted = false
-              do {
-                  try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
-              }
-              catch {
-                  print("The device cannot play audio")
-              }
         }
     }
     

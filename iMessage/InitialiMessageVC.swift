@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import Messages
+import AVKit
 
 
 class InitialiMessageVC: MSMessagesAppViewController, iMessageAppDelegate {
@@ -16,6 +17,9 @@ class InitialiMessageVC: MSMessagesAppViewController, iMessageAppDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        _ = try? AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback, mode: .default, options: .mixWithOthers)
+
         
         let vc = MessagesViewController()
         vc.iMessageDelegate = self

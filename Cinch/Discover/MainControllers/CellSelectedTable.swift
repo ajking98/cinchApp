@@ -8,6 +8,7 @@
 //
 
 import UIKit
+import AVKit
 
 class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, UINavigationControllerDelegate {
     
@@ -15,14 +16,39 @@ class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataS
     var content:[String] = []
     var startingIndex = IndexPath(row: 0, section: 0)
     
+    
+    let audioSession = AVAudioSession.sharedInstance()
+    var outputVolumeObserve: NSKeyValueObservation?
+    
+    
     let tableView = UITableView(frame: CGRect.zero)
     let identifier = "Cell"
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setupAudio()
         setupNavigationBar()
         setupTableView()
+    }
+    
+    
+    func setupAudio() {
+
+        do {
+         try audioSession.setActive(true)
+        } catch {
+         print("some error")
+        }
+        
+        outputVolumeObserve = audioSession.observe(\.outputVolume) { (audioSession, changes) in
+            guard let cell = self.tableView.visibleCells[0] as? CellSelectedCell else { return }
+            let playerLayer = cell.playerLayer
+            if isMuted {
+                playerLayer.player?.isMuted = false
+                isMuted = false
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
