@@ -160,6 +160,14 @@ func checkIfVideo(_ link : String) -> Bool {
     return standardLink.contains(".mp4") || standardLink.contains(".mov")
 }
 
+
+
+///returns true if the username passed is the local user
+func checkIfLocalUser(username: String) -> Bool {
+    guard let localUser = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return false }
+    return (localUser == username) || (username == "")
+}
+
 func randomString(_ length: Int) -> String {
     let letters : NSString = "asdfghjkloiuytrewqazxcvbnmWERTYUIASDFGHJKXCVBN!@%^&*()_+=-"
     let len = UInt32(letters.length)

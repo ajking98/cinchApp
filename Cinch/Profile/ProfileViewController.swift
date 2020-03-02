@@ -61,9 +61,9 @@ class ProfileViewController: UIViewController {
     func fetchData() {
         let localUser = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
         print("these are the two usernames:", username, " VS ", localUser)
-        if username == ""  || username == localUser { //checks if the user is looking at their profile or someone else's
-            username = localUser
-        }
+        
+        isUser = checkIfLocalUser(username: username)
+        username = isUser ? localUser : username
         
     }
     
@@ -86,6 +86,7 @@ class ProfileViewController: UIViewController {
     
     ///Checks if local User is following the given username
     func fetchIsFollowing() {
+        if isUser { return }
         mainButton.setTitle("Follow", for: .normal)
         guard let localUser = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
         UserStruct().readFollowing(user: localUser) { (users) in
@@ -127,7 +128,7 @@ class ProfileViewController: UIViewController {
         navigationController?.navigationBar.barTintColor = .white
         
         //if it is not the local user
-        if !(navigationController?.viewControllers.count == 1) {
+        if !isUser {
             let backButton = UIBarButtonItem(image: UIImage(named: "backIcon-black"), style: .plain, target: self, action: #selector(goBack))
             navigationController?.navigationBar.tintColor = .black
             navigationItem.setLeftBarButton(backButton, animated: false)
@@ -204,9 +205,10 @@ class ProfileViewController: UIViewController {
     
     func setupButton() {
         mainButton.backgroundColor = .customRed
-        guard let localUser = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
-//        isUser = localUser == username
+        
+        print("this is the status:", username, isUser)
         if isUser {
+            print("this should be setting")
             mainButton.setTitle("Edit Profile", for: .normal)
             mainButton.addTarget(self, action: #selector(handleEditProfile), for: .touchUpInside)
         }
