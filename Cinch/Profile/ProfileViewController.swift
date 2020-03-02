@@ -28,6 +28,7 @@ class ProfileViewController: UIViewController {
     //elements
     var scrollView = UIScrollView(frame: CGRect.zero)
     var profileImageView = UIImageView(frame: CGRect.zero)
+    var backgroundProfileIcon = UIImageView(image: UIImage(named: "backgroundRing1"))
     var usernameLabel = UILabel(frame: CGRect.zero)
     var gemLabel = UILabel(frame: CGRect.zero)
     var addFolderButton = UILabel(frame: CGRect.zero)
@@ -130,7 +131,7 @@ class ProfileViewController: UIViewController {
             let backButton = UIBarButtonItem(image: UIImage(named: "backIcon-black"), style: .plain, target: self, action: #selector(goBack))
             navigationController?.navigationBar.tintColor = .black
             navigationItem.setLeftBarButton(backButton, animated: false)
-            isUser = false
+//            isUser = false
         }
         
         else {
@@ -158,6 +159,15 @@ class ProfileViewController: UIViewController {
         profileImageView.widthAnchor.constraint(equalToConstant: height*0.12).isActive = true
         profileImageView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: height*0.125).isActive = true
         profileImageView.layer.cornerRadius = height * 0.06
+        
+        view.addSubview(backgroundProfileIcon)
+        backgroundProfileIcon.translatesAutoresizingMaskIntoConstraints = false
+//        backgroundProfileIcon.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 0.0195  * frame.width).isActive = true
+//        backgroundProfileIcon.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -0.030  * frame.height).isActive = true
+        backgroundProfileIcon.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor, constant: width*0.0145).isActive = true
+        backgroundProfileIcon.centerXAnchor.constraint(equalTo: profileImageView.centerXAnchor).isActive = true
+        backgroundProfileIcon.widthAnchor.constraint(equalToConstant: height*0.17).isActive = true
+        backgroundProfileIcon.heightAnchor.constraint(equalToConstant: height*0.17).isActive = true
     }
     
     func setupUsernameLabel() {
@@ -195,7 +205,7 @@ class ProfileViewController: UIViewController {
     func setupButton() {
         mainButton.backgroundColor = .customRed
         guard let localUser = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
-        isUser = localUser == username
+//        isUser = localUser == username
         if isUser {
             mainButton.setTitle("Edit Profile", for: .normal)
             mainButton.addTarget(self, action: #selector(handleEditProfile), for: .touchUpInside)
@@ -251,7 +261,12 @@ class ProfileViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Create", style: .default, handler: { [weak alert] (_) in
             let textField = alert?.textFields![0]
             folderName = textField!.text!.lowercased()
-            let newFolder = Folder(folderName: folderName)
+            if folderName != "" {
+                let newFolder = Folder(folderName: folderName)
+                UserStruct().addFolder(user: self.username, folder: newFolder)
+                self.createFolder(folderName: folderName)
+            }
+            
             
             // TODO add check for duplicate folder names
             //if a folder with that name already exists, then it wont overwrite it
@@ -265,8 +280,7 @@ class ProfileViewController: UIViewController {
 //            else
 //            {
                 //calling the function to save the folder name to Firebase and create it on the front end
-                UserStruct().addFolder(user: self.username, folder: newFolder)
-                self.createFolder(folderName: folderName)
+                
 //            }
         }))
         
