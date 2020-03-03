@@ -100,7 +100,7 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
                     }
                     
                 }
-                self.pageControl.numberOfPages = self.images.count
+                self.pageControl.numberOfPages = self.images.count + 1
                 self.setupCarousel()
                 self.addCarouselData()
             }
@@ -143,28 +143,37 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
-    
-    
     func setupCarousel() {
-        topCarousel.frame = CGRect(x: 0, y: 0, width: width, height: 0.24 * height)
+        topCarousel.frame = CGRect(x: 0, y: 0, width: width, height: 0.3 * height)
         topCarousel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleCarouselTapped)))
-        topCarousel.contentSize = CGSize(width: width * CGFloat(images.count), height: topCarousel.frame.size.height)
-           topCarousel.delegate = self
-           topCarousel.isPagingEnabled = true
-           topCarousel.showsHorizontalScrollIndicator = false
-           topCarousel.backgroundColor = .darkBlue
-           tableView.tableHeaderView = topCarousel
+        topCarousel.contentSize = CGSize(width: width * CGFloat(images.count + 1), height: topCarousel.frame.size.height)
+       topCarousel.delegate = self
+       topCarousel.isPagingEnabled = true
+       topCarousel.showsHorizontalScrollIndicator = false
+       topCarousel.backgroundColor = .darkBlue
+       tableView.tableHeaderView = topCarousel
+        topCarousel.clipsToBounds = true
+        
+        let topImageView = UIImageView(frame: topCarousel.frame)
+        topImageView.image = UIImage(named: "YourFollowingScreen")
+        print("this is the size of the thing:", 0.24 * height, "and then: ", 0.3 * height)
+        topImageView.clipsToBounds = true
+        topImageView.contentMode = .scaleAspectFill
+        topCarousel.addSubview(topImageView)
            
-           pageControl.frame = CGRect(x: 0, y: 0, width: 100, height: 24)
-           pageControl.center.x = view.center.x
-           pageControl.frame.origin.y = (0.23 * height) - pageControl.frame.size.height
-           tableView.addSubview(pageControl)
+       pageControl.frame = CGRect(x: 0, y: 0, width: 100, height: 24)
+       pageControl.center.x = view.center.x
+       pageControl.frame.origin.y = (0.29 * height) - pageControl.frame.size.height
+       tableView.addSubview(pageControl)
     }
     
     func addCarouselData() {
+        var xPos = topCarousel.frame.size.width
+        var imageView = UIImageView()
+        
         for index in 0..<images.count {
-            let xPos = topCarousel.frame.size.width * CGFloat(index)
-            let imageView = UIImageView(frame: CGRect(origin: CGPoint(x: xPos, y: 0), size: topCarousel.frame.size))
+            xPos = topCarousel.frame.size.width * CGFloat(index + 1)
+            imageView = UIImageView(frame: CGRect(origin: CGPoint(x: xPos, y: 0), size: topCarousel.frame.size))
             imageView.image = images[index]
             imageView.contentMode = .scaleAspectFill
             topCarousel.addSubview(imageView)
