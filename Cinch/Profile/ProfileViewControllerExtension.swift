@@ -178,6 +178,7 @@ class ProfileCollectionViewCell: UICollectionViewCell {
         FolderStruct().readIcon(user: username, folderName: folderName) { (icon) in
             let url = URL(string: icon)
             let imageView = UIImageView(frame: self.frame)
+            imageView.layer.opacity = 0.8
             imageView.sd_setImage(with: url, placeholderImage: UIImage(), completed: nil)
             self.backgroundView = imageView
         }
@@ -200,8 +201,7 @@ class ProfileCollectionViewCell: UICollectionViewCell {
     }()
     
     func setupViews() {
-//        backgroundColor = UIColor.lightRed
-//        backgroundView
+        backgroundColor = UIColor.lightGray
         
 //        addSubview(picCollection)
 //        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-12-[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": picCollection]))
