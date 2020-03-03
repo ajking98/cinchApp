@@ -72,7 +72,7 @@ class ProfileViewController: UIViewController {
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.view.backgroundColor = .white
         print("this is appearing")
-        collectionView?.reloadData()
+//        collectionView?.reloadData()
     }
     
     //sets the data - width, height, profileName, username, isUser, isFollowing etc.

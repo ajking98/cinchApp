@@ -124,12 +124,12 @@ extension ProfileMainCollectionViewCell: UICollectionViewDelegate, UICollectionV
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! ProfileCollectionViewCell
         // For GemCollections
         if collectionView == gemsCollectionView {
-            cell.nameLabel.text = folders[indexPath.item]
+            cell.setup(username: username, folderName: folders[indexPath.item])
             return cell
         }
         
         // For LikeCollections
-        cell.nameLabel.text = foldersFollowing[indexPath.item].folderName
+        cell.setup(username: foldersFollowing[indexPath.item].admin, folderName: foldersFollowing[indexPath.item].folderName)
         return cell
         
     }
@@ -163,9 +163,28 @@ extension ProfileMainCollectionViewCell: UICollectionViewDelegate, UICollectionV
 
 ///Folder for the content on the Profile Page
 class ProfileCollectionViewCell: UICollectionViewCell {
+    
+    var username: String = ""
+    var folderName: String = ""
+        
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
+    }
+    
+    func setup(username: String, folderName: String) {
+        nameLabel.text = folderName
+        
+        FolderStruct().readIcon(user: username, folderName: folderName) { (icon) in
+            let url = URL(string: icon)
+            let imageView = UIImageView(frame: self.frame)
+            imageView.sd_setImage(with: url, placeholderImage: UIImage(), completed: nil)
+            self.backgroundView = imageView
+        }
+    }
+    
+    func fetchIcons() {
+        print("this is fetching the icons: ", username, folderName)
     }
     
 //    let picCollection: UIImageView = {
@@ -181,7 +200,8 @@ class ProfileCollectionViewCell: UICollectionViewCell {
     }()
     
     func setupViews() {
-        backgroundColor = UIColor.lightGray
+//        backgroundColor = UIColor.lightRed
+//        backgroundView
         
 //        addSubview(picCollection)
 //        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-12-[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": picCollection]))
