@@ -37,6 +37,7 @@ class ProfileViewController: UIViewController {
     var mainButton = UIButton(frame: CGRect.zero) //this is the button that can either be "edit profile" or "follow/unfollow"
     var segmentControl = UISegmentedControl(items: ["Personal", "Following"])
     var collectionView: UICollectionView?
+    let followNav = UIButton(type: .custom)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,8 +50,12 @@ class ProfileViewController: UIViewController {
 //        setupUsernameLabel()
 //        setupGemLabel()
 //        stackView.setup(followings: followings, followers: followers, Gems: gems, view: view, scrollView: scrollView)
-        setupButton()
-        setupAddFolderButton()
+        if isUser {
+            print(isUser)
+            setupButton()
+            setupAddFolderButton()
+        }
+        
         setupSegmentControl()
         setupSegmentControlBars()
         setupCollectionViews()
@@ -131,13 +136,21 @@ class ProfileViewController: UIViewController {
             let backButton = UIBarButtonItem(image: UIImage(named: "backIcon-black"), style: .plain, target: self, action: #selector(goBack))
             navigationController?.navigationBar.tintColor = .black
             navigationItem.setLeftBarButton(backButton, animated: false)
-//            isUser = false
+
+            
+//            followNav.setTitle("Follow", for: .normal)
+//            followNav.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+//            followNav.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleFollowUser)))
+//            let rightNavItem = UIBarButtonItem(customView: followNav)
+//            navigationItem.setRightBarButton(rightNavItem, animated: false)
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Follow", style: .plain, target: self, action: #selector(handleFollowUser))
+            navigationItem.rightBarButtonItem?.tintColor = .customRed
         }
         
         else {
             let settings = UIButton(type: .custom)
             settings.setImage(UIImage(named: "settings"), for: .normal)
-            settings.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+            settings.frame = CGRect(x: 0, y: 0, width: 60, height: 30)
             settings.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(settingToggle)))
             let rightNavItem = UIBarButtonItem(customView: settings)
             navigationItem.setRightBarButton(rightNavItem, animated: false)
@@ -203,16 +216,13 @@ class ProfileViewController: UIViewController {
     }
     
     func setupButton() {
-        mainButton.backgroundColor = .customRed
+        mainButton.backgroundColor = .skyBlue
         
         print("this is the status:", username, isUser)
         if isUser {
             print("this should be setting")
             mainButton.setTitle("Edit Profile", for: .normal)
             mainButton.addTarget(self, action: #selector(handleEditProfile), for: .touchUpInside)
-        }
-        else {
-            mainButton.addTarget(self, action: #selector(handleFollow), for: .touchUpInside)
         }
         
         scrollView.addSubview(mainButton)
@@ -231,12 +241,12 @@ class ProfileViewController: UIViewController {
         addFolderButton.sizeToFit()
         addFolderButton.backgroundColor = UIColor.clear
         addFolderButton.layer.borderWidth = 1
-        addFolderButton.layer.borderColor = UIColor.customRed.cgColor
+        addFolderButton.layer.borderColor = UIColor.skyBlue.cgColor
         addFolderButton.clipsToBounds = true
         addFolderButton.text = "Add Folder"
         addFolderButton.textAlignment = .center
         addFolderButton.font = gemLabel.font.withSize(width/27)
-        addFolderButton.textColor = .customRed
+        addFolderButton.textColor = .skyBlue
  
         
         addFolderButton.layer.cornerRadius = 12
@@ -316,7 +326,7 @@ class ProfileViewController: UIViewController {
         segmentControl.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         segmentControl.heightAnchor.constraint(equalToConstant: height/18).isActive = true
         segmentControl.widthAnchor.constraint(equalToConstant: width).isActive = true
-        segmentControl.topAnchor.constraint(equalTo: addFolderButton.bottomAnchor, constant: height*0.05).isActive = true
+        segmentControl.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: height*0.17).isActive = true
     }
     
     func setupSegmentControlBars() {
