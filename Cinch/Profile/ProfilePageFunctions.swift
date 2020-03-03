@@ -31,26 +31,44 @@ extension ProfileViewController {
         self.present(next, animated: true, completion: nil)
     }
     
-    @objc func handleFollow(){
+//    @objc func handleFollow(){
+//        guard let localUser = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
+//        if isFollowing {
+//            print("UnFollowing")
+//            UserStruct().deleteFollowing(user: localUser, following: username)
+//            UserStruct().deleteFollower(user: username, follower: localUser)
+//            self.mainButton.backgroundColor = .customRed
+//            self.mainButton.setTitle("Follow", for: .normal)
+//            self.mainButton.setTitleColor(.white, for: .normal)
+//        }
+//        else{
+//            print("Following")
+//            UserStruct().addFollowing(user: localUser, newFollowing: username)
+//            UserStruct().addFollower(user: username, newFollower: localUser)
+//            
+//            self.mainButton.layer.borderWidth = 1.7
+//            self.mainButton.backgroundColor = .white
+//            self.mainButton.setTitle("Unfollow", for: .normal)
+//            self.mainButton.setTitleColor(.customRed, for: .normal)
+//            self.mainButton.layer.borderColor = UIColor.customRed.cgColor
+//        }
+//        isFollowing.toggle()
+//    }
+    
+    @objc func handleFollowUser(){
         guard let localUser = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
         if isFollowing {
             print("UnFollowing")
             UserStruct().deleteFollowing(user: localUser, following: username)
             UserStruct().deleteFollower(user: username, follower: localUser)
-            self.mainButton.backgroundColor = .customRed
-            self.mainButton.setTitle("Follow", for: .normal)
-            self.mainButton.setTitleColor(.white, for: .normal)
+            navigationItem.rightBarButtonItem?.title = "Follow"
         }
         else{
             print("Following")
             UserStruct().addFollowing(user: localUser, newFollowing: username)
             UserStruct().addFollower(user: username, newFollower: localUser)
+            navigationItem.rightBarButtonItem?.title = "Unfollow"
             
-            self.mainButton.layer.borderWidth = 1.7
-            self.mainButton.backgroundColor = .white
-            self.mainButton.setTitle("Unfollow", for: .normal)
-            self.mainButton.setTitleColor(.customRed, for: .normal)
-            self.mainButton.layer.borderColor = UIColor.customRed.cgColor
         }
         isFollowing.toggle()
     }
