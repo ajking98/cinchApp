@@ -178,9 +178,17 @@ class ProfileCollectionViewCell: UICollectionViewCell {
         FolderStruct().readIcon(user: username, folderName: folderName) { (icon) in
             let url = URL(string: icon)
             let imageView = UIImageView(frame: self.frame)
-            imageView.layer.opacity = 0.8
+            imageView.layer.opacity = 0.85
             imageView.sd_setImage(with: url, placeholderImage: UIImage(), completed: nil)
             self.backgroundView = imageView
+
+            let gradient: CAGradientLayer = CAGradientLayer()
+
+            gradient.colors = [UIColor.white.cgColor, UIColor.darkGray.cgColor]
+            gradient.locations = [0.0 , 1.0]
+            gradient.frame = self.frame
+
+            self.layer.insertSublayer(gradient, at: 0)
         }
     }
     
@@ -207,8 +215,15 @@ class ProfileCollectionViewCell: UICollectionViewCell {
 //        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-12-[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": picCollection]))
 //        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": picCollection]))
         addSubview(nameLabel)
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-12-[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": nameLabel]))
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": nameLabel]))
+        
+        nameLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5).isActive = true
+        nameLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 10).isActive = true
+        nameLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -10).isActive = true
+        nameLabel.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        
+        
+//        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-12-[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": nameLabel]))
+//        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": nameLabel]))
     }
     
     required init?(coder aDecoder: NSCoder) {

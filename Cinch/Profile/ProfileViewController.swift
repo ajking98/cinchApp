@@ -71,7 +71,6 @@ class ProfileViewController: UIViewController {
         tabBarController?.tabBar.isHidden = false
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.view.backgroundColor = .white
-        print("this is appearing")
 //        collectionView?.reloadData()
     }
     

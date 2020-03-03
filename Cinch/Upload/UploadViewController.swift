@@ -27,6 +27,27 @@ class UploadViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         tabBarController?.tabBar.isHidden = false
+
+//        let colorTop: UIColor =  .orange
+//        let colorBottom: UIColor = .blue
+//
+//        let gradientLayer = CAGradientLayer()
+//        gradientLayer.colors = [colorTop, colorBottom]
+//        gradientLayer.locations = [0.0, 1.0]
+//        gradientLayer.frame = view.frame
+//        view.layer.insertSublayer(gradientLayer, at: 0)
+//        view.layer.addSublayer(gradientLayer)
+        
+        let gradient: CAGradientLayer = CAGradientLayer()
+
+        gradient.colors = [UIColor.blue, UIColor.red]
+        gradient.locations = [0.0 , 1.0]
+        gradient.startPoint = CGPoint(x: 0.0, y: 1.0)
+        gradient.endPoint = CGPoint(x: 1.0, y: 1.0)
+        gradient.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.size.width, height: self.view.frame.size.height)
+
+        self.view.layer.insertSublayer(gradient, at: 0)
+        print("this is hte printing part")
     }
     
     func setupNavigationController() {
