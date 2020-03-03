@@ -11,7 +11,6 @@
 import UIKit
 
 class DiscoverViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
 
     //Data
     var width: CGFloat = 0
@@ -51,6 +50,8 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
         navigationController?.navigationBar.isHidden = false
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.view.backgroundColor = .white
+//        navigationController?.hidesBarsOnSwipe = true
+        
     }
     
     

@@ -91,8 +91,11 @@ extension UploadViewController: UIImagePickerControllerDelegate, UINavigationCon
             let length = AVURLAsset(url: mediaLink).duration.seconds
             guard length < 90 else {
                 self.dismiss(animated: true) {
-                    let alert = UIAlertController(title: "Upload failed", message: "File too large", preferredStyle: .alert)
-                    self.present(alert, animated: true, completion: nil)
+                    let alert = UIAlertController(title: "Upload failed", message: "Video cannot be longer than 90 seconds", preferredStyle: .alert)
+                    self.present(alert, animated: true) {
+                        alert.view.superview?.isUserInteractionEnabled = true
+                        alert.view.superview?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.dismissAert)))
+                    }
                     let alertExpiration = DispatchTime.now() + 5
                     DispatchQueue.main.asyncAfter(deadline: alertExpiration) {
                         alert.dismiss(animated: true, completion: nil)
@@ -106,6 +109,12 @@ extension UploadViewController: UIImagePickerControllerDelegate, UINavigationCon
         vc.modalTransitionStyle = .partialCurl
         navigationController?.pushViewController(vc, animated: false)
         dismiss(animated: true, completion: nil)
+    }
+    
+    
+    @objc func dismissAert() {
+        print("this is dismissing")
+        self.dismiss(animated: true, completion: nil)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {

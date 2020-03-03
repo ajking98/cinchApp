@@ -147,16 +147,12 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate, UITe
 }
 
 
-
-
-
 struct SaveToFolder {
     func saveToFolder(_ navigationController: UINavigationController, localLink: URL, tags: String, _ frames: [UIImage]? = nil) {
         let image = UIImage()
         let actionController = SpotifyActionController()
         actionController.headerData = SpotifyHeaderData(title: "Select a Folder", subtitle: "", image: image)
         guard let username = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
-        
         
         UserStruct().readFolders(user: username) { (folders) in
             for item in folders {
@@ -172,8 +168,10 @@ struct SaveToFolder {
                         
                         //user feedback alert
                         let alert = UIAlertController(title: "Uploaded to \(item)!", message: "", preferredStyle: .alert)
-                        navigationController.present(alert, animated: true, completion: nil)
-                        let alertExpiration = DispatchTime.now() + 1.5
+                        navigationController.present(alert, animated: true, completion: {
+                            alert.view.superview?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(navigationController.dismissAlert))) //TODO Fix this
+                        })
+                        let alertExpiration = DispatchTime.now() + 1
                         DispatchQueue.main.asyncAfter(deadline: alertExpiration) {
                             alert.dismiss(animated: true, completion: nil)
                         }
@@ -245,5 +243,6 @@ struct SaveToFolder {
         }
         
     }
+    
     
 }

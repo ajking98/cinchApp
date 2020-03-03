@@ -244,11 +244,19 @@ class CellSelectedCell: UITableViewCell{
         guard let localUser = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
         FolderStruct().addContent(user: localUser, folderName: "Hearted", link: link)
         let alert = UIAlertController(title: "Added to \"Hearted\" Folder", message: "", preferredStyle: .alert) //Notify the user with an alert
-        parentViewController?.present(alert, animated: true, completion: nil)
+        parentViewController?.present(alert, animated: true, completion: {
+            alert.view.superview?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.dismissAlert)))
+        })
+        
         let alertExpiration = DispatchTime.now() + 0.85
         DispatchQueue.main.asyncAfter(deadline: alertExpiration) {
         alert.dismiss(animated: true, completion: nil)
         }
+    }
+    
+    
+    @objc func dismissAlert() {
+        parentViewController?.dismiss(animated: true, completion: nil)
     }
     
     @objc func handleProfilePicPressed() {

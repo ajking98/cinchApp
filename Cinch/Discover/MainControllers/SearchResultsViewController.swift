@@ -24,7 +24,6 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         
         width = view.frame.width
         height = view.frame.height
@@ -35,7 +34,8 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
     
     override func viewDidAppear(_ animated: Bool) {
         navigationController?.view.backgroundColor = .white
-        navigationController?.navigationBar.isTranslucent = false 
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.tabBarController?.tabBar.isHidden = false
     }
     
     func setup(term: String) {
