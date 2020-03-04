@@ -169,7 +169,7 @@ struct SaveToFolder {
                         //user feedback alert
                         let alert = UIAlertController(title: "Uploaded to \(item)!", message: "", preferredStyle: .alert)
                         navigationController.present(alert, animated: true, completion: {
-                            alert.view.superview?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(navigationController.dismissAlert))) //TODO Fix this
+//                            alert.view.superview?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(navigationController.dismissAlert))) //TODO Fix this
                         })
                         let alertExpiration = DispatchTime.now() + 1
                         DispatchQueue.main.asyncAfter(deadline: alertExpiration) {
