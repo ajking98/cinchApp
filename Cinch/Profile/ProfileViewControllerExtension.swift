@@ -145,17 +145,17 @@ extension ProfileMainCollectionViewCell: UICollectionViewDelegate, UICollectionV
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (collectionView.bounds.width) * 0.445 - 1.5, height: (collectionView.bounds.width) * 0.315)
+        return CGSize(width: (collectionView.bounds.width) * 0.485, height: (collectionView.bounds.width) * 0.4)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 8
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        let inset = 0.04 * collectionView.frame.width
-        return UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
-    }
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+//        let inset = 0.04 * collectionView.frame.width
+//        return UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
+//    }
     
 }
 
@@ -192,7 +192,7 @@ class FolderCell: UICollectionViewCell {
         //top image
         imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 200, height: 150))
         
-        imageView.frame.size = CGSize(width: 0.89 * frame.width, height: frame.height * 0.84)
+        imageView.frame.size = CGSize(width: 0.9 * frame.width, height: frame.height * 0.87)
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 3

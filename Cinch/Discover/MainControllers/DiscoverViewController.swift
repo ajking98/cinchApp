@@ -152,7 +152,8 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
        topCarousel.showsHorizontalScrollIndicator = false
        topCarousel.backgroundColor = .darkBlue
        tableView.tableHeaderView = topCarousel
-        topCarousel.clipsToBounds = true
+       topCarousel.clipsToBounds = true
+       let timer = Timer.scheduledTimer(timeInterval: 8.0, target: self, selector: #selector(self.scrollCarouselAutomatically), userInfo: nil, repeats: true)
         
         let topImageView = UIImageView(frame: topCarousel.frame)
         topImageView.image = UIImage(named: "YourFollowingScreen")
@@ -214,12 +215,23 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     @objc func handleCarouselTapped() {
-        print("we are tapping this index: ", pageControl.currentPage)
+        if pageControl.currentPage == 0 { return }
         let vc = CellSelectedTable()
         vc.modalPresentationStyle = .fullScreen
         vc.content = self.imageLinks
-        vc.startingIndex = IndexPath(row: pageControl.currentPage, section: 0)
+        vc.startingIndex = IndexPath(row: pageControl.currentPage - 1, section: 0)
         navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc func scrollCarouselAutomatically() {
+        print("we are attempting to scroll")
+        let pageNumber: Int = Int(topCarousel.contentOffset.x / topCarousel.frame.size.width)
+        if pageNumber == images.count {
+            topCarousel.scrollRectToVisible(CGRect(origin: CGPoint.zero, size: topCarousel.frame.size), animated: true)
+        }
+        else{
+            topCarousel.scrollRectToVisible(CGRect(origin: CGPoint(x: topCarousel.contentOffset.x + topCarousel.frame.width, y: 0), size: topCarousel.frame.size), animated: true)
+        }
     }
     
     func handleGoToResult(str: String) {
