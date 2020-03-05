@@ -224,7 +224,6 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     @objc func scrollCarouselAutomatically() {
-        print("we are attempting to scroll")
         let pageNumber: Int = Int(topCarousel.contentOffset.x / topCarousel.frame.size.width)
         if pageNumber == images.count {
             topCarousel.scrollRectToVisible(CGRect(origin: CGPoint.zero, size: topCarousel.frame.size), animated: true)

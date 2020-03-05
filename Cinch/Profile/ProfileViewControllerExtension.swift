@@ -152,10 +152,9 @@ extension ProfileMainCollectionViewCell: UICollectionViewDelegate, UICollectionV
         return 8
     }
     
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-//        let inset = 0.04 * collectionView.frame.width
-//        return UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
-//    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 12, left: 0, bottom: 0, right: 0)
+    }
     
 }
 
@@ -181,10 +180,14 @@ class FolderCell: UICollectionViewCell {
     func setup(username: String, folderName: String, isPersonal: Bool) {
         folderLabel.text = folderName
         
+        print("this is the folder name: ", folderName.lowercased())
+        
         FolderStruct().readIcon(user: username, folderName: folderName) { (icon) in
             let url = URL(string: icon)
+            print("we have something", folderName)
             self.imageView.sd_setImage(with: url, placeholderImage: UIImage(), completed: nil)
         }
+        
         buildCell(username: username, folderName: folderName, isPersonal: isPersonal)
     }
     
@@ -199,6 +202,10 @@ class FolderCell: UICollectionViewCell {
         imageView.layer.borderWidth = 0.8
         imageView.layer.borderColor = UIColor.white.cgColor
         addSubview(imageView)
+        
+        if folderName.lowercased() == "hearted" {
+            self.imageView.image = UIImage(named: "heartedFolder")
+        }
         
         //Gradient
         let topColor = UIColor.white.cgColor.copy(alpha: 0)
