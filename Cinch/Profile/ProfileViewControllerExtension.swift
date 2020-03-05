@@ -122,16 +122,14 @@ extension ProfileMainCollectionViewCell: UICollectionViewDelegate, UICollectionV
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! FolderCell
-        // For GemCollections
+        // For Personal
         if collectionView == gemsCollectionView {
-            cell.setup(username: username, folderName: folders[indexPath.item])
+            cell.setup(username: username, folderName: folders[indexPath.item], isPersonal: true)
             return cell
         }
-        
-        // For LikeCollections
-        cell.setup(username: foldersFollowing[indexPath.item].admin, folderName: foldersFollowing[indexPath.item].folderName)
+        // For Following
+        cell.setup(username: foldersFollowing[indexPath.item].admin, folderName: foldersFollowing[indexPath.item].folderName, isPersonal: false)
         return cell
-        
     }
     
     ///Presents the Folder Selected Controller
@@ -140,7 +138,7 @@ extension ProfileMainCollectionViewCell: UICollectionViewDelegate, UICollectionV
         
         let storyboard = UIStoryboard(name: "ProfilePage", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "FolderSelected") as! FolderSelectedController
-        let folderName = cell.nameLabel.text!
+        let folderName = cell.folderLabel.text!
         let username = collectionView == gemsCollectionView ? self.username : foldersFollowing[indexPath.item].admin
         vc.setup(username: username, folderName: folderName)
         navigationController.pushViewController(vc, animated: true)
@@ -155,13 +153,8 @@ extension ProfileMainCollectionViewCell: UICollectionViewDelegate, UICollectionV
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        let totalCellWidth = 80 * collectionView.numberOfItems(inSection: 0)
-        let totalSpacingWidth = 10 * (collectionView.numberOfItems(inSection: 0) - 1)
-
-        let leftInset = (collectionView.layer.frame.size.width - CGFloat(totalCellWidth + totalSpacingWidth)) / 2
-        let rightInset = leftInset
-
-        return UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+        let inset = 0.04 * collectionView.frame.width
+        return UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
     }
     
 }
@@ -171,6 +164,7 @@ class FolderCell: UICollectionViewCell {
     
     var username: String = ""
     var folderName: String = ""
+    var isPersonal: Bool = false //when set to false, the profile icon will show on the folder along with the author's name
     
     //views
     var imageView = UIImageView(frame: CGRect.zero)
@@ -181,21 +175,20 @@ class FolderCell: UICollectionViewCell {
         
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setup(username: username, folderName: folderName)
     }
     
-    func setup(username: String, folderName: String) {
+    ///sets up the cell, takes the username, folderName, and whether or not the folder is owned by the user passed
+    func setup(username: String, folderName: String, isPersonal: Bool) {
+        folderLabel.text = folderName
         
         FolderStruct().readIcon(user: username, folderName: folderName) { (icon) in
             let url = URL(string: icon)
             self.imageView.sd_setImage(with: url, placeholderImage: UIImage(), completed: nil)
         }
-        buildCell(username: username, folderName: folderName)
+        buildCell(username: username, folderName: folderName, isPersonal: isPersonal)
     }
     
-    func buildCell(username: String, folderName: String) {
-        backgroundColor = .white
-        
+    func buildCell(username: String, folderName: String, isPersonal: Bool) {
         //top image
         imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 200, height: 150))
         
@@ -206,6 +199,16 @@ class FolderCell: UICollectionViewCell {
         imageView.layer.borderWidth = 0.8
         imageView.layer.borderColor = UIColor.white.cgColor
         addSubview(imageView)
+        
+        //Gradient
+        let topColor = UIColor.white.cgColor.copy(alpha: 0)
+        let bottomColor = UIColor.black.cgColor.copy(alpha: 0.8)
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [topColor, bottomColor]
+        gradientLayer.locations = [0.0, 1.0]
+        gradientLayer.frame = imageView.bounds
+        imageView.layer.insertSublayer(gradientLayer, at: 0)
+        
         
         //second layer
         secondLayerView.frame.size = imageView.frame.size
@@ -226,15 +229,18 @@ class FolderCell: UICollectionViewCell {
         
         //folderLabel
         folderLabel.text = folderName
-        imageView.addSubview(folderLabel)
+        folderLabel.textColor = .white
+        folderLabel.font = folderLabel.font.withSize(14)
         
         //constraints for folderLabel
+        imageView.addSubview(folderLabel)
+        folderLabel.translatesAutoresizingMaskIntoConstraints = false
         folderLabel.leftAnchor.constraint(equalTo: imageView.leftAnchor, constant: 8).isActive = true
-        folderLabel.bottomAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 4).isActive = true
+        folderLabel.bottomAnchor.constraint(equalTo: imageView.bottomAnchor, constant: -4).isActive = true
         folderLabel.rightAnchor.constraint(equalTo: imageView.rightAnchor, constant: -4).isActive = true
-        folderLabel.heightAnchor.constraint(equalToConstant: 24).isActive = true
+        folderLabel.heightAnchor.constraint(equalToConstant: 16).isActive = true
         
-        guard !checkIfLocalUser(username: username) else { return }
+        guard !isPersonal else { return }
         
         //profile icon
         profileIcon.frame.size = CGSize(width: 30, height: 30)
@@ -248,6 +254,12 @@ class FolderCell: UICollectionViewCell {
             let url = URL(string: link)
             self.profileIcon.sd_setImage(with: url, placeholderImage: UIImage(), completed: nil)
         }
+        
+        UserStruct().readName(user: username) { (name) in
+            print("this si the name:", name)
+            self.folderLabel.text = "\(name)'s \(folderName)"
+        }
+        
     }
     
     

@@ -35,7 +35,7 @@ class ProfileViewController: UIViewController {
     var numberOfGems = 0
     var stackView = ProfileStackView(frame: CGRect.zero)
     var mainButton = UIButton(frame: CGRect.zero) //this is the button that can either be "edit profile" or "follow/unfollow"
-    var segmentControl = UISegmentedControl(items: ["Personal", "Following"])
+    var segmentControl = UISegmentedControl(items: ["Owned", "Public"])
     var collectionView: UICollectionView?
     let followNav = UIButton(type: .custom)
     

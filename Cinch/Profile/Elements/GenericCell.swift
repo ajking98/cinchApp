@@ -13,6 +13,7 @@ import SDWebImage
 class GenericCell: UICollectionViewCell {
     var imageView = UIImageView()
     
+    ///takes a link to the content it should build
     func setup(link: String, _ errorHandler: (() -> Void)? = nil){
         guard let contentLink = URL(string: link) else { return }
             if checkIfVideo(link) {
