@@ -216,7 +216,7 @@ class ProfileViewController: UIViewController {
     }
     
     func setupButton() {
-        mainButton.backgroundColor = .skyBlue
+        mainButton.backgroundColor = .darkBlue
         
         print("this is the status:", username, isUser)
         if isUser {
@@ -226,7 +226,7 @@ class ProfileViewController: UIViewController {
         }
         
         scrollView.addSubview(mainButton)
-        mainButton.layer.cornerRadius = 2
+        mainButton.layer.cornerRadius = 3
         
         //constraints
         mainButton.translatesAutoresizingMaskIntoConstraints = false
@@ -241,12 +241,12 @@ class ProfileViewController: UIViewController {
         addFolderButton.sizeToFit()
         addFolderButton.backgroundColor = UIColor.clear
         addFolderButton.layer.borderWidth = 1
-        addFolderButton.layer.borderColor = UIColor.skyBlue.cgColor
+        addFolderButton.layer.borderColor = UIColor.darkBlue.cgColor
         addFolderButton.clipsToBounds = true
         addFolderButton.text = "Add Folder"
         addFolderButton.textAlignment = .center
         addFolderButton.font = gemLabel.font.withSize(width/27)
-        addFolderButton.textColor = .skyBlue
+        addFolderButton.textColor = .darkBlue
  
         
         addFolderButton.layer.cornerRadius = 12
@@ -263,12 +263,12 @@ class ProfileViewController: UIViewController {
     }
     
     @objc func handleAddFolder(tapGesture: UITapGestureRecognizer) {
-        print("working dog")
         var folderName : String = ""
         
         let alert = UIAlertController(title: "Name Your Folder", message: "Assign a title to this folder", preferredStyle: .alert)
         
         alert.addTextField(configurationHandler: nil)
+        alert.addAction(UIAlertAction(title:"Cancel", style: .default, handler: nil))
         alert.addAction(UIAlertAction(title: "Create", style: .default, handler: { [weak alert] (_) in
             let textField = alert?.textFields![0]
             folderName = textField!.text!.lowercased()
@@ -290,12 +290,11 @@ class ProfileViewController: UIViewController {
 //            }
 //            else
 //            {
-                //calling the function to save the folder name to Firebase and create it on the front end
-                
+////                calling the function to save the folder name to Firebase and create it on the front end
+//
 //            }
         }))
         
-        alert.addAction(UIAlertAction(title:"Cancel", style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
     

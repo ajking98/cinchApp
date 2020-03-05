@@ -68,7 +68,7 @@ class ProfileMainCollectionViewCell: UICollectionViewCell {
     func setupFirstCollectionView() {
         gemsCollectionView.dataSource = self
         gemsCollectionView.delegate = self
-        gemsCollectionView.register(ProfileCollectionViewCell.self, forCellWithReuseIdentifier: cellIdentifier)
+        gemsCollectionView.register(FolderCell.self, forCellWithReuseIdentifier: cellIdentifier)
         gemsCollectionView.showsVerticalScrollIndicator = false
         gemsCollectionView.alwaysBounceVertical = false
         gemsCollectionView.backgroundColor = .white
@@ -81,7 +81,7 @@ class ProfileMainCollectionViewCell: UICollectionViewCell {
     func setupSecondCollectionView() {
         followingFoldersCollectionView.dataSource = self
         followingFoldersCollectionView.delegate = self
-        followingFoldersCollectionView.register(ProfileCollectionViewCell.self, forCellWithReuseIdentifier: cellIdentifier)
+        followingFoldersCollectionView.register(FolderCell.self, forCellWithReuseIdentifier: cellIdentifier)
         followingFoldersCollectionView.showsHorizontalScrollIndicator = false
         followingFoldersCollectionView.alwaysBounceVertical = false
         followingFoldersCollectionView.showsVerticalScrollIndicator = false
@@ -121,7 +121,7 @@ extension ProfileMainCollectionViewCell: UICollectionViewDelegate, UICollectionV
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! ProfileCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! FolderCell
         // For GemCollections
         if collectionView == gemsCollectionView {
             cell.setup(username: username, folderName: folders[indexPath.item])
@@ -136,7 +136,7 @@ extension ProfileMainCollectionViewCell: UICollectionViewDelegate, UICollectionV
     
     ///Presents the Folder Selected Controller
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath) as! ProfileCollectionViewCell
+        let cell = collectionView.cellForItem(at: indexPath) as! FolderCell
         
         let storyboard = UIStoryboard(name: "ProfilePage", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "FolderSelected") as! FolderSelectedController
@@ -147,50 +147,109 @@ extension ProfileMainCollectionViewCell: UICollectionViewDelegate, UICollectionV
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (collectionView.bounds.width)/3 - 1.5, height: (collectionView.bounds.width)/2)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0.5
+        return CGSize(width: (collectionView.bounds.width) * 0.445 - 1.5, height: (collectionView.bounds.width) * 0.315)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 2
+        return 8
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        let totalCellWidth = 80 * collectionView.numberOfItems(inSection: 0)
+        let totalSpacingWidth = 10 * (collectionView.numberOfItems(inSection: 0) - 1)
+
+        let leftInset = (collectionView.layer.frame.size.width - CGFloat(totalCellWidth + totalSpacingWidth)) / 2
+        let rightInset = leftInset
+
+        return UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+    }
     
 }
 
 ///Folder for the content on the Profile Page
-class ProfileCollectionViewCell: UICollectionViewCell {
+class FolderCell: UICollectionViewCell {
     
     var username: String = ""
     var folderName: String = ""
+    
+    //views
+    var imageView = UIImageView(frame: CGRect.zero)
+    var secondLayerView = UIView(frame: CGRect.zero)
+    var thirdLayerView = UIView(frame: CGRect.zero)
+    var profileIcon = UIImageView(frame: CGRect.zero)
+    var folderLabel = UILabel(frame: CGRect.zero)
         
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupViews()
+        setup(username: username, folderName: folderName)
     }
     
     func setup(username: String, folderName: String) {
-        nameLabel.text = folderName
         
         FolderStruct().readIcon(user: username, folderName: folderName) { (icon) in
             let url = URL(string: icon)
-            let imageView = UIImageView(frame: self.frame)
-            imageView.layer.opacity = 0.85
-            imageView.sd_setImage(with: url, placeholderImage: UIImage(), completed: nil)
-            self.backgroundView = imageView
-
-            let gradient: CAGradientLayer = CAGradientLayer()
-
-            gradient.colors = [UIColor.white.cgColor, UIColor.darkGray.cgColor]
-            gradient.locations = [0.0 , 1.0]
-            gradient.frame = self.frame
-
-            self.layer.insertSublayer(gradient, at: 0)
+            self.imageView.sd_setImage(with: url, placeholderImage: UIImage(), completed: nil)
+        }
+        buildCell(username: username, folderName: folderName)
+    }
+    
+    func buildCell(username: String, folderName: String) {
+        backgroundColor = .white
+        
+        //top image
+        imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 200, height: 150))
+        
+        imageView.frame.size = CGSize(width: 0.89 * frame.width, height: frame.height * 0.84)
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 3
+        imageView.layer.borderWidth = 0.8
+        imageView.layer.borderColor = UIColor.white.cgColor
+        addSubview(imageView)
+        
+        //second layer
+        secondLayerView.frame.size = imageView.frame.size
+        secondLayerView.backgroundColor = .darkBlue
+        secondLayerView.layer.borderColor = UIColor.white.cgColor
+        secondLayerView.layer.borderWidth = 0.8
+        secondLayerView.layer.cornerRadius = 3
+        secondLayerView.frame.origin = CGPoint(x: 8, y: 8)
+        insertSubview(secondLayerView, belowSubview: imageView)
+        
+        //third view
+        thirdLayerView.frame.size = imageView.frame.size
+        thirdLayerView.backgroundColor = .darkBlue
+        thirdLayerView.layer.cornerRadius = 3
+        thirdLayerView.frame.origin.x = secondLayerView.frame.origin.x + 8
+        thirdLayerView.frame.origin.y = secondLayerView.frame.origin.y + 8
+        insertSubview(thirdLayerView, belowSubview: secondLayerView)
+        
+        //folderLabel
+        folderLabel.text = folderName
+        imageView.addSubview(folderLabel)
+        
+        //constraints for folderLabel
+        folderLabel.leftAnchor.constraint(equalTo: imageView.leftAnchor, constant: 8).isActive = true
+        folderLabel.bottomAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 4).isActive = true
+        folderLabel.rightAnchor.constraint(equalTo: imageView.rightAnchor, constant: -4).isActive = true
+        folderLabel.heightAnchor.constraint(equalToConstant: 24).isActive = true
+        
+        guard !checkIfLocalUser(username: username) else { return }
+        
+        //profile icon
+        profileIcon.frame.size = CGSize(width: 30, height: 30)
+        profileIcon.frame.origin = CGPoint(x: (self.imageView.frame.width - self.profileIcon.frame.width - 8), y: 8)
+        profileIcon.backgroundColor = .lightGray
+        profileIcon.layer.cornerRadius = profileIcon.frame.height / 2
+        profileIcon.clipsToBounds = true
+        imageView.addSubview(profileIcon)
+        
+        UserStruct().readProfilePic(user: username) { (link) in
+            let url = URL(string: link)
+            self.profileIcon.sd_setImage(with: url, placeholderImage: UIImage(), completed: nil)
         }
     }
+    
     
     func fetchIcons() {
         print("this is fetching the icons: ", username, folderName)
@@ -201,30 +260,6 @@ class ProfileCollectionViewCell: UICollectionViewCell {
 //        let imageView = UIImageView(image: image)
 //        return imageView
 //    }()
-    
-    let nameLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    func setupViews() {
-        backgroundColor = UIColor.lightGray
-        
-//        addSubview(picCollection)
-//        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-12-[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": picCollection]))
-//        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": picCollection]))
-        addSubview(nameLabel)
-        
-        nameLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5).isActive = true
-        nameLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 10).isActive = true
-        nameLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -10).isActive = true
-        nameLabel.heightAnchor.constraint(equalToConstant: 25).isActive = true
-        
-        
-//        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-12-[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": nameLabel]))
-//        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": nameLabel]))
-    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
