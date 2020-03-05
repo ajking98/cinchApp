@@ -95,6 +95,7 @@
 		89D0DCB62405B3D400E6514A /* StorageStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E07F22ADABC3003B41DE /* StorageStruct.swift */; };
 		89E966AB23E8E67700BAF92E /* FolderSelectedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E966AA23E8E67700BAF92E /* FolderSelectedController.swift */; };
 		89E966AD23E8EE1A00BAF92E /* GenericCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E966AC23E8EE1A00BAF92E /* GenericCell.swift */; };
+		89FF31AC241193AC00FD6D98 /* SuperFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FF31AB241193AC00FD6D98 /* SuperFunctions.swift */; };
 		8E123EFA22B7229400F3ED5D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E123EF922B7229400F3ED5D /* Main.storyboard */; };
 		8E5EDB4E22C025990088FDA9 /* TagElementStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E5EDB4D22C025990088FDA9 /* TagElementStruct.swift */; };
 		8E92367E229C5B4F0071E63C /* HelperFrontEnd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E92367D229C5B4F0071E63C /* HelperFrontEnd.swift */; };
@@ -259,6 +260,7 @@
 		89D0DCB224058C6900E6514A /* FileManagerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerExtension.swift; sourceTree = "<group>"; };
 		89E966AA23E8E67700BAF92E /* FolderSelectedController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderSelectedController.swift; sourceTree = "<group>"; };
 		89E966AC23E8EE1A00BAF92E /* GenericCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericCell.swift; sourceTree = "<group>"; };
+		89FF31AB241193AC00FD6D98 /* SuperFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuperFunctions.swift; sourceTree = "<group>"; };
 		8E123EF922B7229400F3ED5D /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		8E5EDB4D22C025990088FDA9 /* TagElementStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagElementStruct.swift; sourceTree = "<group>"; };
 		8E92367D229C5B4F0071E63C /* HelperFrontEnd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperFrontEnd.swift; sourceTree = "<group>"; };
@@ -446,6 +448,7 @@
 				EB63B7DF226A7EB5004C7E2C /* ImageInsta.swift */,
 				EB41F8E822653170003751FA /* Photo.swift */,
 				46D5E07F22ADABC3003B41DE /* StorageStruct.swift */,
+				89FF31AB241193AC00FD6D98 /* SuperFunctions.swift */,
 			);
 			path = Structures;
 			sourceTree = "<group>";
@@ -1052,6 +1055,7 @@
 				467E5DC522FCFE2100F23ABD /* PostStruct.swift in Sources */,
 				463A844522F627F000F9B4CD /* CameraViewCell.swift in Sources */,
 				463A844322F6279A00F9B4CD /* CameraViewController.swift in Sources */,
+				89FF31AC241193AC00FD6D98 /* SuperFunctions.swift in Sources */,
 				4669B8D222B6DC65004FB38D /* defaultsKeys.swift in Sources */,
 				46D5E08022ADABC3003B41DE /* StorageStruct.swift in Sources */,
 				89871252229DE98200BE8F23 /* ZoomingImage.swift in Sources */,

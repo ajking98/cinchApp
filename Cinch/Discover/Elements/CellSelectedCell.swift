@@ -72,30 +72,13 @@ class CellSelectedCell: UITableViewCell{
     }
     
     @objc func handleAddThumbnail() {
-        imageView?.frame = frame
-        imageView?.backgroundColor = .brown
-        print("this is adding a thumbnail", imageView)
-        print("backgroun color: ", imageView?.backgroundColor)
-        imageView?.image = UIImage(named: "t6")
-//        SuperFunctions().createThumbnail(link: self.link)
+        print("this is adding a thumbnail")
+        SuperFunctions().createThumbnail(link: self.link)
     }
     
     @objc func handleRemoved() {
         print("this is the post: ", self.post.toString())
 //        SuperFunctions().permanentlyDeletePost(post: self.post)
-
-        let url = URL(string: "https://firebasestorage.googleapis.com/v0/b/instagramclone-18923.appspot.com/o/videos%2FsBcWJniIKkdFJyeajakl.mp4?alt=media&token=49df9706-fd6a-488e-acf9-9951ff7c9508")
-        
-        getAllFrames(videoUrl: url!, completion: {(images) in
-            self.fullScreenImageView.animationImages = images
-            self.fullScreenImageView.animationRepeatCount = 0
-            self.fullScreenImageView.animationDuration = 1.2
-            self.fullScreenImageView.startAnimating()
-            print("this is the count of the images: ", self.fullScreenImageView.animationImages?.count)
-            StorageStruct().uploadFrames(frames: images) { (links) in
-                print("these are the links: ", links)
-            }
-        })
     }
     
     override func prepareForReuse() {

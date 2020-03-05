@@ -1,9 +1,10 @@
 //
 //  SuperFunctions.swift
-/*
-    Super functions used to execute powerful commands
- */
-//  Created by Alsahlani, Yassin K on 2/26/20.
+//  Cinch
+//
+//  Created by Alsahlani, Yassin K on 3/5/20.
+//  Copyright © 2020 Gedi, Ahmed M. All rights reserved.
+//
 
 import Foundation
 import AVKit
@@ -38,24 +39,19 @@ struct SuperFunctions {
         StorageStruct().deleteContent(link: link)
     }
     
-    //creates the thumbnail for an existing post
+    
+    
+    
+    
+    
+    //creates the thumbnail for an existing post and adds sets the value of thumbnail for the post to the links of the images
     func createThumbnail(link: String) {
         PostStruct().hasThumbnail(link: link) { (hasThumbnail) in
-            
-            //This is creating the thumbnail and uploads it to DB
-            do {
-                try time {
-                    if let sourceURL = URL(string: link) {
-                        let asset = AVURLAsset(url: sourceURL)
-                        let trimmedAsset = try asset.assetByTrimming(timeOffStart: 1) //Only getting 1 second of the full clip
-                        let playerItem = AVPlayerItem(asset: trimmedAsset)
-                        StorageStruct().uploadVideo(video: playerItem) { (thumbnailLink) in
-                            PostStruct().addThumbnail(linkOfPost: link, linkToThumbnail: thumbnailLink)
-                        }
-                    }
+            guard let url = URL(string: link) else { return }
+            getAllFrames(videoUrl: url) { (thumbnail) in
+                StorageStruct().uploadFrames(frames: thumbnail) { (linkToThumbnail) in
+                    PostStruct().addThumbnail(linkOfPost: link, linkToThumbnail: linkToThumbnail)
                 }
-            } catch let error {
-                print("💩 \(error)")
             }
             
         }

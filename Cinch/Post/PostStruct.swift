@@ -133,22 +133,6 @@ struct PostStruct {
     /*
         Thumbnail
      */
-     ///adds thumbnail to post at given link
-     func addThumbnail(linkOfPost: String, linkToThumbnail: String) {
-         let updatedLink = convertStringToKey(link: linkOfPost)
-         DB.child(updatedLink).child("thumbnail").setValue(linkToThumbnail)
-     }
-    
-    
-    ///reads the thumbnail for the given post
-    func readThumbnail(link: String, completion: @escaping(String) -> Void) {
-        let updatedLink = convertStringToKey(link: link)
-        DB.child(updatedLink).child("thumbnail").observeSingleEvent(of: .value) { (snapshot) in
-            if let thumbnailLink = snapshot.value as? String {
-                completion(thumbnailLink)
-            }
-        }
-    }
     
     //TODO: this is a temporary function and should be removed once all the existing posts have a thumbnail
     ///checks if the given link has a thumbnail
@@ -166,17 +150,29 @@ struct PostStruct {
         }
     }
     
-    
-    
-    /*
-     Thumbnail - where the thumbnail is a series of images
-     */
-    
     ///adds thumbnail to post at given link
     func addThumbnail(linkOfPost: String, linkToThumbnail: [String]) {
         let updatedLink = convertStringToKey(link: linkOfPost)
         let sortedContent = linkToThumbnail.sorted()
         DB.child(updatedLink).child("thumbnail").setValue(sortedContent)
+    }
+    
+    
+    ///reads the thumbnail for the given post
+    func readThumbnail(link: String, completion: @escaping([URL]) -> Void) {
+        let updatedLink = convertStringToKey(link: link)
+        DB.child(updatedLink).child("thumbnail").observeSingleEvent(of: .value) { (snapshot) in
+            var urls: [URL] = []
+            for child in snapshot.children {
+                guard let child = child as? DataSnapshot else { return }
+                guard let value = child.value as? String else { return }
+                print("printing: ", value)
+                if let url = URL(string: value) {
+                    urls.append(url)
+                }
+            }
+            completion(urls)
+        }
     }
     
     

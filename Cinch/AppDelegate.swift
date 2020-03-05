@@ -11,7 +11,7 @@ import Firebase
 import FirebaseStorage
 import FirebaseDatabase
 import AVKit
-var isAdmin = false //change this to false
+var isAdmin = true //change this to false
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

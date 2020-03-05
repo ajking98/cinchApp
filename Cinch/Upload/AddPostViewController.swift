@@ -41,7 +41,7 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate, UITe
     ///fetches the thumbnail frames for a video
     func fetchFrames(url: URL) {
         getAllFrames(videoUrl: url, completion: {(images) in
-            print("this is the count of the images: ", self.imageView.animationImages?.count)
+            print("this is the count of the images: ", images.count)
             self.frames = images
         })
     }
@@ -142,9 +142,12 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate, UITe
     }
     
     @objc func handlePostMedia() {
-        SaveToFolder().saveToFolder(navigationController!, localLink: mediaLink, tags: tagField.text)
+        SaveToFolder().saveToFolder(navigationController!, localLink: mediaLink, tags: tagField.text, frames)
     }
 }
+
+
+
 
 
 struct SaveToFolder {
@@ -153,6 +156,7 @@ struct SaveToFolder {
         let actionController = SpotifyActionController()
         actionController.headerData = SpotifyHeaderData(title: "Select a Folder", subtitle: "", image: image)
         guard let username = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
+        
         
         UserStruct().readFolders(user: username) { (folders) in
             for item in folders {
@@ -163,29 +167,17 @@ struct SaveToFolder {
                     
                     StorageStruct().uploadContent(mediaLink: localLink) { (link) in
                         FolderStruct().addContent(user: username, folderName: item, link: link)
-                        self.addTags(link: link, tags: tags)
+                        self.addTags(link: link, tags: tags, frames)
                         navigationController.popViewController(animated: true)
                         
                         //user feedback alert
                         let alert = UIAlertController(title: "Uploaded to \(item)!", message: "", preferredStyle: .alert)
-                        navigationController.present(alert, animated: true, completion: {
-//                            alert.view.superview?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(navigationController.dismissAlert))) //TODO Fix this
-                        })
-                        let alertExpiration = DispatchTime.now() + 1
+                        navigationController.present(alert, animated: true, completion: nil)
+                        let alertExpiration = DispatchTime.now() + 2
                         DispatchQueue.main.asyncAfter(deadline: alertExpiration) {
                             alert.dismiss(animated: true, completion: nil)
                         }
-                        
-                        ///Adding the frames if its a video
-
-                        if let frames = frames {
-                            StorageStruct().uploadFrames(frames: frames) { (links) in
-                                print("these are the links: ", links)
-                                //Each link should be appended to the DB thumbnails part
-                                PostStruct().addThumbnail(linkOfPost: link, linkToThumbnail: links)
-                            }
-                        }
-                        
+                                                
                         //Adds content to the followers' newContent array this should be done on a google cloud function
                         UserStruct().readFollowers(user: username) { (followers) in
                             for follower in followers {
@@ -200,7 +192,7 @@ struct SaveToFolder {
     }
     
     
-    func addTags(link: String, tags: String){
+    func addTags(link: String, tags: String, _ frames: [UIImage]? = nil){
         let message = tags.components(separatedBy: CharacterSet(charactersIn: " ./\\#"))
         var tagArray = [String]()
         guard let username = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
@@ -214,25 +206,16 @@ struct SaveToFolder {
         }
         
         var post: Post?
-        if checkIfVideo(link) {  //If video
-            do {
-                try time {
-                    if let sourceURL = URL(string: link) {
-                        let asset = AVURLAsset(url: sourceURL)
-                        let trimmedAsset = try asset.assetByTrimming(timeOffStart: 1) //Only getting 1 second
-                        let playerItem = AVPlayerItem(asset: trimmedAsset)
-                        StorageStruct().uploadVideo(video: playerItem) { (thumbnailLink) in
-                            post = Post(isImage: false, postOwner: username, link: link)
-                            post?.thumbnail = thumbnailLink
-                            print("we are uploading the thumbnail")
-                            guard let standardPost = post else { return }
-                            standardPost.tags = tagArray
-                            ParentPostStruct().addPost(post: standardPost)
-                        }
-                    }
+        if checkIfVideo(link) {
+        ///Adding the frames if its a video
+            if let frames = frames {
+                print("step 2")
+                StorageStruct().uploadFrames(frames: frames) { (links) in
+                    post = Post(isImage: true, postOwner: username, link: link, links)
+                    guard let standardPost = post else { return }
+                    standardPost.tags = tagArray
+                    ParentPostStruct().addPost(post: standardPost)
                 }
-            } catch let error {
-                print("💩 \(error)")
             }
         }
         else { //If image
@@ -243,6 +226,5 @@ struct SaveToFolder {
         }
         
     }
-    
     
 }

@@ -128,6 +128,11 @@ class FolderSelectedController: UIViewController, UICollectionViewDataSource, UI
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as! GenericCell
+        cell.setup(link: content[indexPath.item])
+    }
+    
     
     //summons the table with fullscreen cells
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

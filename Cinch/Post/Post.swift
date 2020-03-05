@@ -19,7 +19,7 @@ class Post {
     var postOwner : String?
     var dateCreated : TimeInterval?
     var tags : [String]?
-    var thumbnail: String? //1 sec long video 
+    var thumbnail: [String]? //1 sec long images
     
     //image
     var image : UIImage?
@@ -29,7 +29,7 @@ class Post {
     
     
     ///called when a post is first being made
-    init(isImage : Bool, postOwner : String, link : String, _ thumbnail: String? = nil) {
+    init(isImage : Bool, postOwner : String, link : String, _ thumbnail: [String]? = nil) {
         
         self.isImage = isImage
         self.link = link
@@ -43,7 +43,7 @@ class Post {
     
     
     ///Initialized when All data is given
-    init(isImage : Bool, numberOfLikes : Int, postOwner : String, likedBy : [String], dateCreated : Double, tags : [String], link : String, _ thumbnail: String? = nil) {
+    init(isImage : Bool, numberOfLikes : Int, postOwner : String, likedBy : [String], dateCreated : Double, tags : [String], link : String, _ thumbnail: [String]? = nil) {
         
         self.isImage = isImage
         self.link = link
@@ -59,6 +59,7 @@ class Post {
     func toString() -> [String : Any] {
         var tagsDict : [String : String] = [:]
         var likedByDict : [String : String] = [:]
+        var thumbnailDict : [String : String] = [:]
         
         for tag in tags! {
             tagsDict[tag] = tag
@@ -68,8 +69,13 @@ class Post {
             likedByDict[likedByUser] = likedByUser
         }
         
+        if let sortedThumbnail = thumbnail?.sorted() {
+            for index in 0 ..< sortedThumbnail.count {
+                thumbnailDict[String(index)] = sortedThumbnail[index]
+            }
+        }
         
-        let postDict : [String : Any] = ["isImage" : isImage as Any, "numberOfLikes" : numberOfLikes as Any, "likedBy" : likedByDict as Any, "postOwner" : postOwner as Any, "dateCreated" : dateCreated as Any, "tags" : tagsDict as Any, "link" : link as Any, "thumbnail" : thumbnail as Any]
+        let postDict : [String : Any] = ["isImage" : isImage as Any, "numberOfLikes" : numberOfLikes as Any, "likedBy" : likedByDict as Any, "postOwner" : postOwner as Any, "dateCreated" : dateCreated as Any, "tags" : tagsDict as Any, "link" : link as Any, "thumbnail" : thumbnailDict as Any ]
         
         return postDict
     }

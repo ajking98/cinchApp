@@ -19,10 +19,11 @@ class GenericCell: UICollectionViewCell {
             if checkIfVideo(link) {
                 //fetch thumbnail
                 PostStruct().readThumbnail(link: link) { (thumbnailLink) in
-                    print("this is the thumbnail", thumbnailLink)
-                    guard let thumbnailURL = URL(string: thumbnailLink) else { return }
-                    
-                    self.imageView.loadVideo(thumbnailURL, size: self.frame.size)
+                    if thumbnailLink.isEmpty { return }
+                    self.imageView.sd_setAnimationImages(with: thumbnailLink)
+                    self.imageView.animationDuration = 1.4
+                    self.imageView.sd_setHighlightedImage(with: thumbnailLink[0], completed: nil)
+                    self.imageView.startAnimating()
                 }
             }
         else {
@@ -31,16 +32,6 @@ class GenericCell: UICollectionViewCell {
                         errorHandler?()
                     }
                 }
-                //TODO: work on on an animated image for videos
-//                var urls:[URL] = []
-//                print("this is setting the images up")
-//                urls.append(URL(string: "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg")!)
-//                urls.append(URL(string: "https://image.shutterstock.com/image-photo/bright-spring-view-cameo-island-260nw-1048185397.jpg")!)
-//                urls.append(URL(string: "https://images.unsplash.com/photo-1503803548695-c2a7b4a5b875?ixlib=rb-1.2.1&w=1000&q=80")!)
-//                urls.append(URL(string: "https://cdn.pixabay.com/photo/2013/07/21/13/00/rose-165819__340.jpg")!)
-//                imageView.sd_setAnimationImages(with: urls)
-//                imageView.animationDuration = 0.4
-                
         }
         //constraints
         addSubview(imageView)
@@ -51,10 +42,6 @@ class GenericCell: UICollectionViewCell {
     }
     
     override func prepareForReuse() {
-        subviews.forEach { (view) in
-            view.removeFromSuperview()
-        }
-        
         imageView = UIImageView()
     }
 }

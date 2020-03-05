@@ -128,6 +128,11 @@ class TableViewCell: UITableViewCell, UICollectionViewDataSource {
         parentViewController?.navigationController?.pushViewController(vc, animated: true)
     }
     
+    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as! GenericCell
+        cell.setup(link: content[indexPath.item])
+    }
+    
     
     func popIndexes() {
             self.indexesToPop.sort()
@@ -143,7 +148,7 @@ class TableViewCell: UITableViewCell, UICollectionViewDataSource {
 
 extension UITableViewCell: UICollectionViewDelegateFlowLayout {
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 0.28 * frame.width, height: collectionView.frame.height)
+        return CGSize(width: 0.27 * frame.width, height: collectionView.frame.height)
     }
     
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
