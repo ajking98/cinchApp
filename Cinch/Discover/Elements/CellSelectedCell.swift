@@ -211,15 +211,46 @@ class CellSelectedCell: UITableViewCell{
             PHPhotoLibrary.requestAuthorization { (requestedStatus) in
                 status = requestedStatus
                 DispatchQueue.main.async {
+                    if checkIfVideo(self.link) {
+                        self.handleShareVideo()
+                    }
+                    else {
                     let vc = UIActivityViewController(activityItems: [self.fullScreenImageView.image], applicationActivities: [])
                     self.parentViewController?.present(vc, animated: true, completion: nil)
+                        
+                    }
                 }
             }
         }
         if status == .authorized {
+            if checkIfVideo(link) {
+                handleShareVideo()
+            }
+            else {
             let vc = UIActivityViewController(activityItems: [self.fullScreenImageView.image], applicationActivities: [])
             self.parentViewController?.present(vc, animated: true, completion: nil)
+                
+            }
         }
+    }
+    
+    func handleShareVideo() {
+        guard let url = URL(string: self.link) else { return }
+        DispatchQueue.global(qos: .background).async {
+            if let urlData = NSData(contentsOf: url){
+              let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+                 let filePath="\(documentsPath)/tempFile.mov"
+                 DispatchQueue.main.async {
+                   urlData.write(toFile: filePath, atomically: true)
+
+                   //Hide activity indicator
+
+                   let activityVC = UIActivityViewController(activityItems: [NSURL(fileURLWithPath: filePath)], applicationActivities: nil)
+                   activityVC.excludedActivityTypes = [.addToReadingList, .assignToContact]
+                    self.parentViewController?.present(activityVC, animated: true, completion: nil)
+                 }
+             }
+         }
     }
     
     @objc func handleHearted() {
