@@ -197,21 +197,13 @@ struct SaveToFolder {
         var tagArray = [String]()
         guard let username = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
         
-        for tag in message{
-            if tag.count > 2 {
-                let standardizedTag = tag.lowercased()
-                tagArray.append(standardizedTag)
-                TagStruct().addElement(tagLabel: standardizedTag, tagElement: TagElement(link: link))
-            }
-        }
-        
         var post: Post?
         if checkIfVideo(link) {
         ///Adding the frames if its a video
             if let frames = frames {
                 print("step 2")
                 StorageStruct().uploadFrames(frames: frames) { (links) in
-                    post = Post(isImage: true, postOwner: username, link: link, links)
+                    post = Post(isImage: false, postOwner: username, link: link, links)
                     guard let standardPost = post else { return }
                     standardPost.tags = tagArray
                     ParentPostStruct().addPost(post: standardPost)
@@ -223,6 +215,15 @@ struct SaveToFolder {
             guard let standardPost = post else { return }
             standardPost.tags = tagArray
             ParentPostStruct().addPost(post: standardPost)
+            print("this has been completed")
+        }
+        
+        for tag in message{
+            if tag.count > 2 {
+                let standardizedTag = tag.lowercased()
+                tagArray.append(standardizedTag)
+                TagStruct().addElement(tagLabel: standardizedTag, tagElement: TagElement(link: link, contentKey: post!.contentKey))
+            }
         }
         
     }

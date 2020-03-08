@@ -58,8 +58,8 @@ struct Helper {
                             
                             
                             StorageStruct().uploadImage(image: image, completion: { (link) in
-                                let alert = self.createTagsAlert(link: link, username: self.username)//Tagging alert
-                                viewController.present(alert, animated: true, completion: nil)
+//                                let alert = self.createTagsAlert(link: link, username: self.username)//Tagging alert
+//                                viewController.present(alert, animated: true, completion: nil)
                                 
                                 FolderStruct().addContent(user: self.username, folderName: item, link: link)
                                 FolderStruct().updateNumOfImagesByConstant(user: self.username, folderName: item, constant: 1)
@@ -84,8 +84,8 @@ struct Helper {
                         actionController.addAction(Action(ActionData(title: "\(item.lowercased())", subtitle: "For Content"), style: .default, handler: { action in
                             
                             StorageStruct().uploadContent(content: playerItem) { (link) in
-                                let alert = self.createTagsAlert(link: link, username: self.username) //Tagging alert
-                                viewController.present(alert, animated: true, completion: nil)
+//                                let alert = self.createTagsAlert(link: link, username: self.username) //Tagging alert
+//                                viewController.present(alert, animated: true, completion: nil)
                                 
                                 FolderStruct().addContent(user: self.username, folderName: item, link: link)
                                 FolderStruct().updateNumOfVideosByConstant(user: self.username, folderName: item, constant: 1)
@@ -125,8 +125,8 @@ struct Helper {
             for item in folders {
                 actionController.addAction(Action(ActionData(title: "\(item.lowercased())", subtitle: "For Content"), style: .default, handler: { action in
                     
-                    let alert = self.createTagsAlert(link: link)//Tagging alert
-                    completion(alert)
+//                    let alert = self.createTagsAlert(link: link)//Tagging alert
+//                    completion(alert)
                     FolderStruct().addContent(user: self.username, folderName: item, link: link)
                     FolderStruct().updateNumOfImagesByConstant(user: self.username, folderName: item, constant: 1)
                 }))
@@ -167,7 +167,7 @@ struct Helper {
     
     
     ///Takes a string to the content, and saves the tags under that string
-    func createTagsAlert(link: String, username : String? = nil)-> UIAlertController {
+    func createTagsAlert(link: String, contentKey: String, username : String? = nil)-> UIAlertController {
         //Add tag
         let alert = UIAlertController(title: "tags", message: "tag this gem to find it later", preferredStyle: .alert)
         alert.addTextField { (textField) in
@@ -186,7 +186,7 @@ struct Helper {
                 if username != nil {
                     ParentPostStruct().addPost(post: Post(isImage: !checkIfVideo(link), postOwner: username!, link: link))
                 }
-                PostStruct().addTags(post: link, newTags: tagArray)
+                PostStruct().addTags(post: link, contentKey: contentKey, newTags: tagArray)
             }
         }))
         

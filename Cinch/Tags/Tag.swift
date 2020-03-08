@@ -15,7 +15,7 @@ class Tag {
     var tagLabel : String?
     var numberOfElements : Int?
     
-    //This init should be called when trying to add a tag the database
+    //This init should be called when trying to add a tag to the database
     init(tagLabel : String, tagElements : [TagElement]) {
         self.tagElements = tagElements
         self.tagLabel = tagLabel.lowercased()

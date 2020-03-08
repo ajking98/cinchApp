@@ -17,6 +17,7 @@ var tempArray = Array(0...2)
 
 struct StorageStruct {
     
+    var randomGeneratedString = ""
     ///Upload image to storage and uses closure to return URL
     func uploadImage(image : UIImage, completion: @escaping(String) -> Void) {
         var imageData = Data()
@@ -24,7 +25,7 @@ struct StorageStruct {
         
         //TODO copy the video part in the sense that you can't upload to an already existing link
         //This should use .putFile instead of .putData
-        let storageRef = Storage.storage().reference().child("PublicImages/" + randomString(20) + ".jpg") 
+        let storageRef = Storage.storage().reference().child("PublicImages/" + randomString(5) + ".jpg")
         storageRef.putData(imageData, metadata: nil, completion: { (metadata, error) in
             guard (metadata != nil) else{
                 print("Error occurred in the upload process")
@@ -57,7 +58,7 @@ struct StorageStruct {
     
     ///Uploads video to storage and uses closure to return URL
     func uploadVideo(video: AVPlayerItem, completion: @escaping(String)-> Void){
-        let storageRef = Storage.storage().reference().child("videos").child(randomString(20) + ".mp4")
+        let storageRef = Storage.storage().reference().child("videos").child(randomString(5) + ".mp4")
         storageRef.getMetadata { (metadata, error) in
             if(error != nil){ //checks if the url already exists
                 print("checking if the file exists")
@@ -155,7 +156,7 @@ struct StorageStruct {
     ///Uploads local video to firebase - Latest and the greatest 
     func uploadContent(mediaLink: URL, completion: @escaping(String) -> Void){
         if checkIfVideo(mediaLink.absoluteString) {
-            let storageRef = Storage.storage().reference().child("videos").child(randomString(20) + ".mp4")
+            let storageRef = Storage.storage().reference().child("videos").child(randomString(5) + ".mp4")
             let data = NSData(contentsOfFile: mediaLink.path)
             storageRef.putData(data! as Data, metadata: nil) { (metadata, error) in
                 print("working url")
@@ -185,7 +186,7 @@ struct StorageStruct {
                 print("error")
             }
             
-            let storageRef = Storage.storage().reference().child("PublicImages/" + randomString(20) + ".jpg")
+            let storageRef = Storage.storage().reference().child("PublicImages/" + randomString(5) + ".jpg")
             storageRef.putData(imageData, metadata: nil, completion: { (metadata, error) in
                 guard (metadata != nil) else{
                     print("Error occurred in the upload process")
@@ -207,7 +208,7 @@ struct StorageStruct {
     func uploadFrames(frames: [UIImage], _ completion: @escaping([String]) -> Void) {
         var image = UIImage()
         var links = [String]()
-        let filePath = "videoThumbnails/" + randomString(20) + "_"
+        let filePath = "videoThumbnails/" + randomString(5) + "_"
         var data: Data?
         let group = DispatchGroup()
         
@@ -247,7 +248,7 @@ struct StorageStruct {
         data = image.jpegData(compressionQuality: 0.8)!
         
         let refImages = Database.database().reference().child("users").child(user)
-        let storageRef = Storage.storage().reference().child("userImages/" + randomString(20))
+        let storageRef = Storage.storage().reference().child("userImages/" + randomString(5))
         
         // Upload the file to the path "images/rivers.jpg"
         _ = storageRef.putData(data, metadata: nil) { (metadata, error) in
@@ -285,7 +286,7 @@ struct StorageStruct {
         data = image.jpegData(compressionQuality: 0.8)!
         
         let refImages = Database.database().reference().child("users").child(user).child("folders").child(folderName)
-        let storageRef = Storage.storage().reference().child("userImages/" + randomString(20))
+        let storageRef = Storage.storage().reference().child("userImages/" + randomString(5))
         // Upload the file to the path "images/rivers.jpg"
         _ = storageRef.putData(data, metadata: nil) { (metadata, error) in
             guard let metadata = metadata else {
@@ -323,7 +324,7 @@ struct StorageStruct {
         data = content.jpegData(compressionQuality: 0.8)!
             
         let refImages = Database.database().reference().child("users").child(user).child("folders").child(folderName).child("content")
-        let storageRef = Storage.storage().reference().child("userImages/" + randomString(20))
+        let storageRef = Storage.storage().reference().child("userImages/" + randomString(5))
         
         // Upload the file to the path "images/rivers.jpg"
         _ = storageRef.putData(data, metadata: nil) { (metadata, error) in
@@ -362,7 +363,9 @@ struct StorageStruct {
         return true
     }
     
+    ///returns the timestamp with a random string attached to it
     func randomString(_ length: Int) -> String {
+        let timestamp = Int(NSDate().timeIntervalSince1970)
         let letters : NSString = "asdfghjkloiuytrewqazxcvbnmWERTYUIASDFGHJKXCVBN"
         let len = UInt32(letters.length)
         
@@ -374,6 +377,6 @@ struct StorageStruct {
             randomString += NSString(characters: &nextChar, length: 1) as String
         }
         
-        return randomString
+        return String(timestamp) + "_" + randomString
     }
 }

@@ -180,22 +180,22 @@ struct PostStruct {
     tags
     */
     ///Adds a single tag to a single post and also adds the post under the tag in DB
-    func addTag(post : String, newTag : String) {
+    func addTag(post : String, contentKey: String, newTag : String) {
         let updatedLink = convertStringToKey(link: post)
         DB.child(updatedLink).child("tags").updateChildValues([newTag : newTag])
-        let tag = Tag(tagLabel: newTag, tagElements: [TagElement(link: post)])
+        let tag = Tag(tagLabel: newTag, tagElements: [TagElement(link: post, contentKey: contentKey)])
         ParentTagStruct().addTag(tag: tag)
     }
     
     //This doesn't add the post to the tag
     ///Adds mutliple tags at a time to a single post
-    func addTags(post : String, newTags : [String]) {
+    func addTags(post : String, contentKey: String, newTags : [String]) {
         var tagDict : [String : String] = [:]
         let updatedLink = convertStringToKey(link: post)
         
         for tag in newTags {
             tagDict[tag] = tag
-            let myTag = Tag(tagLabel: tag, tagElements: [TagElement(link: post)])
+            let myTag = Tag(tagLabel: tag, tagElements: [TagElement(link: post, contentKey: contentKey)])
             ParentTagStruct().addTag(tag: myTag)
         }
         DB.child(updatedLink).child("tags").updateChildValues(tagDict)

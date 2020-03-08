@@ -38,7 +38,8 @@ struct TagStruct {
                 let lastUsed = element["lastUsed"] as! Double
                 let link = element["link"] as! String
                 let numOfUsages = element["numOfUsages"] as! Int
-                completion(TagElement(link: link, numOfUsages: numOfUsages, lastUsed: lastUsed, firstUsed: firstUsed))
+                let contentKey = element["contentKey"] != nil ? element["contentKey"] as! String : ""
+                completion(TagElement(link: link, numOfUsages: numOfUsages, lastUsed: lastUsed, firstUsed: firstUsed, contentKey: contentKey))
             }
         }
         
@@ -57,8 +58,9 @@ struct TagStruct {
                         let lastUsed = element["lastUsed"] as! Double
                         let link = element["link"] as! String
                         let numOfUsages = element["numOfUsages"] as! Int
+                        let contentKey = element["contentKey"] != nil ? element["contentKey"] as! String : ""
                         
-                        let tagElement = TagElement(link: link, numOfUsages: numOfUsages, lastUsed: lastUsed, firstUsed: firstUsed)
+                        let tagElement = TagElement(link: link, numOfUsages: numOfUsages, lastUsed: lastUsed, firstUsed: firstUsed, contentKey: contentKey)
                         elementsDict.append(tagElement)
                     }
                 }
@@ -84,7 +86,7 @@ struct TagStruct {
     
     ///check is data already exists in db and updates or creates depending on the outcome
     func addElement(tagLabel : String, tagElement : TagElement) {
-        let link = tagElement.link
+        let link = tagElement.contentKey
         let updatedLink = convertStringToKey(link: link)
         DB.child(tagLabel).child("elements").child(updatedLink).observeSingleEvent(of: .value) { (snapshot) in
             if let _ = snapshot.value as? [String : Any] {
@@ -100,7 +102,7 @@ struct TagStruct {
     
     ///Takes in a tagLabel and a new tagElement and creates the elements for the given link
     fileprivate func createElement(tagLabel : String, newTagElement : TagElement){
-        let link = newTagElement.link
+        let link = newTagElement.contentKey
         let updatedLink = convertStringToKey(link: link)
         DB.child(tagLabel).child("elements").updateChildValues([updatedLink : newTagElement.toString()])
     }
