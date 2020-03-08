@@ -33,7 +33,7 @@ class User  {
     //default variables 
     let defaultProfilePic = UIImage(named: "defaultProfilePic1")
     let folder1 = Folder(folderName: "Random")
-    let folder2 = Folder(folderName: "Hearted")
+    let folder2 = Folder(folderName: "Likes")
 
     
     func generateUserID() -> String {

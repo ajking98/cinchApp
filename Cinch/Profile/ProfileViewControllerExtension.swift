@@ -203,7 +203,7 @@ class FolderCell: UICollectionViewCell {
         imageView.layer.borderColor = UIColor.white.cgColor
         addSubview(imageView)
         
-        if folderName.lowercased() == "hearted" {
+        if folderName.lowercased() == "likes" {
             self.imageView.image = UIImage(named: "heartedFolder")
         }
         

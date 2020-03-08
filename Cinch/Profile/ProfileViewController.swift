@@ -50,9 +50,10 @@ class ProfileViewController: UIViewController {
 //        setupUsernameLabel()
 //        setupGemLabel()
 //        stackView.setup(followings: followings, followers: followers, Gems: gems, view: view, scrollView: scrollView)
+        setupButton()
         if isUser {
             print(isUser)
-            setupButton()
+//            setupButton()
             setupAddFolderButton()
         }
         
@@ -143,8 +144,8 @@ class ProfileViewController: UIViewController {
 //            followNav.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleFollowUser)))
 //            let rightNavItem = UIBarButtonItem(customView: followNav)
 //            navigationItem.setRightBarButton(rightNavItem, animated: false)
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Follow", style: .plain, target: self, action: #selector(handleFollowUser))
-            navigationItem.rightBarButtonItem?.tintColor = .customRed
+//            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Follow", style: .plain, target: self, action: #selector(handleFollowUser))
+//            navigationItem.rightBarButtonItem?.tintColor = .customRed
         }
         
         else {
@@ -223,6 +224,9 @@ class ProfileViewController: UIViewController {
             print("this should be setting")
             mainButton.setTitle("Edit Profile", for: .normal)
             mainButton.addTarget(self, action: #selector(handleEditProfile), for: .touchUpInside)
+        } else {
+            mainButton.setTitle("Follow", for: .normal)
+            mainButton.addTarget(self, action: #selector(handleFollowUser), for: .touchUpInside)
         }
         
         scrollView.addSubview(mainButton)

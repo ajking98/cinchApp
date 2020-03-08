@@ -256,8 +256,8 @@ class CellSelectedCell: UITableViewCell{
     @objc func handleHearted() {
         //todo: add link to the folder
         guard let localUser = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
-        FolderStruct().addContent(user: localUser, folderName: "Hearted", link: link)
-        let alert = UIAlertController(title: "Added to \"Hearted\" Folder", message: "", preferredStyle: .alert) //Notify the user with an alert
+        FolderStruct().addContent(user: localUser, folderName: "Likes", link: link)
+        let alert = UIAlertController(title: "Added to \"Likes\" Folder", message: "", preferredStyle: .alert) //Notify the user with an alert
         parentViewController?.present(alert, animated: true, completion: {
             alert.view.superview?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.dismissAlert)))
         })
