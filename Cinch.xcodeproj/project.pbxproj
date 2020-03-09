@@ -59,6 +59,11 @@
 		893911B723DFFF2900AFAE80 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893911B623DFFF2900AFAE80 /* ProfileViewController.swift */; };
 		894C36B823E24349008E717D /* ProfileViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894C36B723E24349008E717D /* ProfileViewControllerExtension.swift */; };
 		895A429224163E2100E80961 /* UpdateScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895A429124163E2100E80961 /* UpdateScreen.swift */; };
+		895A42942416D10A00E80961 /* UserStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E07722A87F89003B41DE /* UserStruct.swift */; };
+		895A42952416D10D00E80961 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E07522A87F75003B41DE /* User.swift */; };
+		895A42962416D11D00E80961 /* Folder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E07022A87F15003B41DE /* Folder.swift */; };
+		895A42972416D11D00E80961 /* FolderReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D48D8F2318A7D100952EDB /* FolderReference.swift */; };
+		895A42982416D11D00E80961 /* FolderStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D5E07322A87F5F003B41DE /* FolderStruct.swift */; };
 		895CCCEB23F1E64A00826D0C /* SearchResultsVCExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895CCCEA23F1E64A00826D0C /* SearchResultsVCExtension.swift */; };
 		8964B2CF23F44BB3002A66BB /* InitialiMessageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8964B2CE23F44BB2002A66BB /* InitialiMessageVC.swift */; };
 		896556ED23E0CA9600666AB9 /* ProfileStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896556EC23E0CA9600666AB9 /* ProfileStackView.swift */; };
@@ -984,15 +989,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				46CED9BD23EFDC1F00D16E68 /* UIImageViewExtension.swift in Sources */,
+				895A42942416D10A00E80961 /* UserStruct.swift in Sources */,
 				897437F923ED280A00F2CCB7 /* SearchResultsViewController.swift in Sources */,
 				89BBD41B23F365B9006BCC8F /* iMessageGlobals.swift in Sources */,
 				46CED9C023F0639F00D16E68 /* ParentTagStruct.swift in Sources */,
+				895A42952416D10D00E80961 /* User.swift in Sources */,
 				897437FE23ED333300F2CCB7 /* MessageCollectionExtension.swift in Sources */,
 				89D0DCB524058C8000E6514A /* AVAssetExtension.swift in Sources */,
 				897437E323ED0DEF00F2CCB7 /* MessagesViewController.swift in Sources */,
 				897437F723ED259800F2CCB7 /* SearchTableViewController.swift in Sources */,
 				8964B2CF23F44BB3002A66BB /* InitialiMessageVC.swift in Sources */,
 				897437F023ED101B00F2CCB7 /* SearchBar.swift in Sources */,
+				895A42972416D11D00E80961 /* FolderReference.swift in Sources */,
 				46CED9BE23EFDC5200D16E68 /* Global.swift in Sources */,
 				8974380723ED37A800F2CCB7 /* MessageSearchResultsViewController.swift in Sources */,
 				897437F123ED11A700F2CCB7 /* UIColorExtension.swift in Sources */,
@@ -1000,6 +1008,7 @@
 				4676FAA123FEF678001D8FC7 /* defaultsKeys.swift in Sources */,
 				46CED9C423F0640600D16E68 /* TagElementStruct.swift in Sources */,
 				46CED9C323F063CC00D16E68 /* TagStruct.swift in Sources */,
+				895A42982416D11D00E80961 /* FolderStruct.swift in Sources */,
 				89D0DCB424058C6900E6514A /* FileManagerExtension.swift in Sources */,
 				46CED9BC23EFDC0C00D16E68 /* GenericCell.swift in Sources */,
 				890B2ED723F24F4B0091B77B /* StringExtension.swift in Sources */,
@@ -1008,6 +1017,7 @@
 				89D0DCB62405B3D400E6514A /* StorageStruct.swift in Sources */,
 				46CED9C223F063B900D16E68 /* TagElement.swift in Sources */,
 				46CED9BF23EFDD0D00D16E68 /* UIImageExtension.swift in Sources */,
+				895A42962416D11D00E80961 /* Folder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

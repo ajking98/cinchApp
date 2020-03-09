@@ -415,12 +415,14 @@ struct UserStruct {
                 var folderArray : [Folder] = []
                 for folderKey in folders.keys {
                     let folder : [String : Any] = folders[folderKey] as! [String : Any]
-                    let folderName = folder["folderName"] as! String
-                    let iconLink = folder["icon"] as! String
-                    let content = folder["content"] != nil ? folder["content"] as! [String : String] : [:] as! [String : String]
-                    let thisFolder = Folder(folderName: folderName, iconLink: iconLink, dateCreated: folder["dateCreated"] as! Double, dateLastModified: folder["dateLastModified"] as! Double, content: content, numOfImages: folder["numOfImages"] as! Int, numOfVideos: folder["numOfVideos"] as! Int, isPrivate: folder["isPrivate"] as! Bool, followers: folder["followers"] != nil ? folder["followers"] as! [String] : [] as! [String], followersCount: folder["followersCount"] as! Int)
-                    
-                    folderArray.append(thisFolder)
+                    print("this si it:", folder)
+                    if let folderName = folder["folderName"] as? String {
+                        let iconLink = folder["icon"] != nil ? folder["icon"] as! String : ""
+                        let content = folder["content"] != nil ? folder["content"] as! [String : String] : [:] as! [String : String]
+                        let thisFolder = Folder(folderName: folderName, iconLink: iconLink, dateCreated: folder["dateCreated"] as! Double, dateLastModified: folder["dateLastModified"] as! Double, content: content, numOfImages: folder["numOfImages"] as! Int, numOfVideos: folder["numOfVideos"] as! Int, isPrivate: folder["isPrivate"] as! Bool, followers: folder["followers"] != nil ? folder["followers"] as! [String] : [] as! [String], followersCount: folder["followersCount"] as! Int)
+                        
+                        folderArray.append(thisFolder)
+                    }
                 }
                 
                 //TODO sort by date created 
