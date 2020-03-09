@@ -26,7 +26,12 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
         }
         cell.username = username
         cell.navigationController = self.navigationController
-        cell.fetchFolders()
+        cell.fetchFolders { (height) in
+            let totalHeight = height + self.view.frame.height * 0.7
+            if totalHeight > self.scrollView.contentSize.height {
+                self.scrollView.contentSize.height = totalHeight
+            }
+        }
         return cell
     }
     
@@ -99,22 +104,22 @@ class ProfileMainCollectionViewCell: UICollectionViewCell {
 extension ProfileMainCollectionViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     
-    ///gets the names of the folders from firebase
-    func fetchFolders() {
-        print("this is the username", username)
+    ///gets the names of the folders from firebase and sets the height of the scrollview content for the profile page
+    func fetchFolders(completion: @escaping(CGFloat) -> Void) {
         UserStruct().readFolders(user: username) { (folders) in
             self.folders = folders
             self.gemsCollectionView.reloadData()
+            completion(CGFloat(folders.count - Int((folders.count/2))) * self.gemsCollectionView.bounds.width * 0.4)
         }
         UserStruct().readFoldersReference(user: username) { (folderRefs) in
             self.foldersFollowing = folderRefs
             self.followingFoldersCollectionView.reloadData()
+            completion(CGFloat(folderRefs.count - Int((folderRefs.count/2))) * self.gemsCollectionView.bounds.width * 0.4)
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == gemsCollectionView {
-            print("this is the count of the gems: ", folders.count)
             return folders.count
         }
         return foldersFollowing.count

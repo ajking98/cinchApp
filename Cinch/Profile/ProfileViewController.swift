@@ -115,7 +115,7 @@ class ProfileViewController: UIViewController {
         scrollView.backgroundColor = .white
         view.addSubview(scrollView)
         
-        scrollView.contentSize.height = view.frame.height * 2 //TODO: this should be dynamic
+        scrollView.contentSize.height = view.frame.height * 1 //TODO: this should be dynamic
         scrollView.showsVerticalScrollIndicator = false
         
         //constriants
@@ -380,5 +380,10 @@ class ProfileViewController: UIViewController {
         collectionView.widthAnchor.constraint(equalToConstant: width).isActive = true
         collectionView.topAnchor.constraint(equalTo: segmentControl.bottomAnchor, constant: 0).isActive = true
         
+    }
+    
+    ///resets the value conentSize of the scrollview after the folders are fetched
+    func resetSize(height: CGFloat){
+        scrollView.contentSize.height = height
     }
 }
