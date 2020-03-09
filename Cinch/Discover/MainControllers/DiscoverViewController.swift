@@ -56,12 +56,25 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
     
     
     func fetchData() {
+        guard let username = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
+        
+        //Check version
+        UserStruct().readVersion(username: username) { (currentVersion) in
+            ParentStruct().readVersion { (latestVersion) in
+                if (currentVersion * 10).rounded(.down) < (latestVersion * 10).rounded(.down) {
+                    let vc = UpdateScreen()
+                    let navController = UINavigationController(rootViewController: vc)
+                    navController.modalPresentationStyle = .fullScreen
+                    self.present(navController, animated: true, completion: nil)
+                }
+            }
+        }
+        
         ParentTagStruct().readAdminTags { (tags) in
             self.mainHashTags = tags
             self.tableView.reloadData()
         }
         
-        guard let username = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
         ParentPostStruct().readAdminPosts { (links) in
             for link in links {
                 if let url = URL(string: link) {

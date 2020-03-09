@@ -26,10 +26,11 @@ class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataS
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        print("this is something good")
         setupAudio()
         setupNavigationBar()
         setupTableView()
+        print("finishing adsfasdf")
     }
     
     
@@ -52,6 +53,7 @@ class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataS
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        print("this is also good")
         //making the navigation bar invisible
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
@@ -61,9 +63,11 @@ class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataS
         
         //hiding tab bar
         navigationController?.tabBarController?.tabBar.isHidden = true
+        print("finishing potin")
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        print("this is very good")
         tableView.scrollToRow(at: startingIndex, at: .top, animated: true)
     }
     
@@ -128,7 +132,7 @@ class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataS
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier) as! CellSelectedCell
         cell.frame.size = view.frame.size
-        cell.setup(link: content[indexPath.row])
+        cell.setup(contentKey: content[indexPath.row])
         cell.handlePresentProfile = handlePresentProfile(username:)
         return cell
     }

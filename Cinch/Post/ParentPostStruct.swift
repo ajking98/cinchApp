@@ -21,30 +21,29 @@ struct ParentPostStruct {
     ///Adds post to DB
     func addPost(post : Post) {
         let postString = post.toString()
-        print("well well well: ", postString["contentKey"])
-        guard let key = postString["contentKey"] as? String else { return }
-        DB.child(key).setValue(postString)
+        guard let contentKey = postString["contentKey"] as? String else { return }
+        DB.child(contentKey).setValue(postString)
+        let link = post.link ?? ""
         
         //TODO THIS SHOULD BE DONE WITHIN A GOOGLE CLOUD FUNCTION INSTEAD TO OFFLOAD TO THE CLOUD INSTEAD OF LETTING THE USER DO IT ON THEIR DEVICE
         guard let username = post.postOwner else { return }
         UserStruct().readFollowers(user: username) { (followers) in
             for follower in followers {
-                UserStruct().addNewContent(user: follower, link: key)
+                UserStruct().addNewContent(user: follower, link: link, contentKey: contentKey)
             }
         }
     }
     
     ///deletes a post from DB with the given Link
-    func deletePost(postLink : String) {
-        let updatedLink = convertStringToKey(link: postLink)
+    func deletePost(contentKey : String) {
+        let updatedLink = convertStringToKey(link: contentKey)
         DB.child(updatedLink).removeValue()
     }
     
     
     ///Reads complete post from database
-    func readPost(postLink : String, completion : @escaping(Post)-> Void) {
-        let updatedLink = convertStringToKey(link: postLink)
-        
+    func readPost(contentKey : String, completion : @escaping(Post)-> Void) {
+        let updatedLink = convertStringToKey(link: contentKey)
         DB.child(updatedLink).observeSingleEvent(of: .value) { (snapshot) in
             if let post = snapshot.value as? [String : Any] {
                 guard post["dateCreated"] != nil else { return }// this just makes sure that the given post has been properly created

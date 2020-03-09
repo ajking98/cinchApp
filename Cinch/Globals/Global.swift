@@ -12,11 +12,25 @@ import ImageIO
 import AVKit
 
 
-public enum constants: CGFloat {
-    case baseVelocity = 820.0
+///returns the timestamp with a random string attached to it
+func randomString(_ length: Int) -> String {
+    let timestamp = Int(NSDate().timeIntervalSince1970)
+    let letters : NSString = "asdfghjkloiuytrewqazxcvbnmWERTYUIASDFGHJKXCVBN"
+    let len = UInt32(letters.length)
+    
+    var randomString = ""
+    
+    for _ in 0 ..< length {
+        let rand = arc4random_uniform(len)
+        var nextChar = letters.character(at: Int(rand))
+        randomString += NSString(characters: &nextChar, length: 1) as String
+    }
+    
+    return String(timestamp) + "_" + randomString
 }
 
 
+///takes a url to a video and returns a list of frames
 func getAllFrames(videoUrl : URL, completion: @escaping([UIImage]) -> Void) {
    var frames:[UIImage] = []
    var generator: AVAssetImageGenerator?
@@ -45,19 +59,6 @@ func getAllFrames(videoUrl : URL, completion: @escaping([UIImage]) -> Void) {
         }
     })
 }
-
-
-func isQuickSwipe(velocity : CGFloat) -> Bool {
-    if abs(velocity) > constants.baseVelocity.rawValue {
-        return true
-    }
-    return false
-}
-
-///updates y-axis of view by given translation
-//func followFingerVertical(view : UIView, translation : CGPoint) {
-//    view.center.y += translation.y
-//}
 
 ///Takes in a string to a link and updates to a new value that could be used in the key place on Firebase
 func convertStringToKey(link : String) -> String {
@@ -168,22 +169,6 @@ func checkIfLocalUser(username: String) -> Bool {
     return (localUser == username) || (username == "")
 }
 
-func randomString(_ length: Int) -> String {
-    let letters : NSString = "asdfghjkloiuytrewqazxcvbnmWERTYUIASDFGHJKXCVBN!@%^&*()_+=-"
-    let len = UInt32(letters.length)
-    
-    var randomString = ""
-    
-    for _ in 0 ..< length {
-        let rand = arc4random_uniform(len)
-        var nextChar = letters.character(at: Int(rand))
-        randomString += NSString(characters: &nextChar, length: 1) as String
-    }
-    
-    return randomString
-}
-
-
 ///Adds the video to the given uiview
 func addPlayer(view: UIView, playerItem : AVPlayerItem)-> AVPlayerLayer {
     let player = AVPlayer(playerItem: playerItem)
@@ -217,20 +202,3 @@ func loopVideo(videoPlayer: AVPlayer) {
     }
 }
 
-
-///Creates a thumbnail for a given video asset
-func createThumbnailOfVideo(asset: AVAsset) -> UIImage? {
-    let assetImgGenerate = AVAssetImageGenerator(asset: asset)
-    assetImgGenerate.appliesPreferredTrackTransform = true
-    //Can set this to improve performance if target size is known before hand
-    //assetImgGenerate.maximumSize = CGSize(width,height)
-    let time = CMTimeMakeWithSeconds(1.0, preferredTimescale: 600)
-    do {
-        let img = try assetImgGenerate.copyCGImage(at: time, actualTime: nil)
-        let thumbnail = UIImage(cgImage: img)
-        return thumbnail
-    } catch {
-      print(error.localizedDescription)
-      return nil
-    }
-}

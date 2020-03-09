@@ -178,13 +178,13 @@ struct FolderStruct {
     /*
      Content
     */
-    ///reads the folder's content
+    ///takes a username and a folderName and reads the contentKeys
     func readContent(user : String, folderName : String, completion : @escaping([String])->Void) {
         DB.child(user).child("folders").child(folderName).child("content").observeSingleEvent(of: .value) { (snapshot) in
             var contentArray: [String] = []
             for child in snapshot.children {
                 if let child = child as? DataSnapshot {
-                    if let value = child.value as? String {
+                    if let value = child.key as? String {
                         contentArray.append(value)}
             } }
                 completion(contentArray)
@@ -192,19 +192,16 @@ struct FolderStruct {
     }
     
     
-    //Must be given a link representing the post within the Post's dictionary in the DB
-    ///adds an extra post content to the Folder's content in DB
-    func addContent(user : String, folderName : String, link : String) {
-        let updatedLink = convertStringToKey(link: link)
-        DB.child(user).child("folders").child(folderName).child("content").updateChildValues([updatedLink : link])
+    ///takes contentKey and Link and saves it under the given folderName for the given user
+    func addContent(user : String, folderName : String, contentKey : String, link: String) {
+        DB.child(user).child("folders").child(folderName).child("content").updateChildValues([contentKey : link])
 
     }
     
     
-    ///deletes a given post from the content's dictionary with in the Folder
-    func deleteContent(user : String, folderName : String, link : String) {
-        let updatedLink = convertStringToKey(link: link)
-        print("this is user info: ", user, folderName, updatedLink)
+    ///deletes a given post from the content's dictionary within the Folder
+    func deleteContent(user : String, folderName : String, contentKey : String) {
+        let updatedLink = convertStringToKey(link: contentKey)
         DB.child(user).child("folders").child(folderName).child("content").child(updatedLink).removeValue { (error, DB) in
             print("Error removing link from folder", folderName, error)
         }

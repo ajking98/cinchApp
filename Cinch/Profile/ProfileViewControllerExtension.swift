@@ -138,7 +138,7 @@ extension ProfileMainCollectionViewCell: UICollectionViewDelegate, UICollectionV
         
         let storyboard = UIStoryboard(name: "ProfilePage", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "FolderSelected") as! FolderSelectedController
-        let folderName = cell.folderLabel.text!
+        let folderName = folders[indexPath.item]
         let username = collectionView == gemsCollectionView ? self.username : foldersFollowing[indexPath.item].admin
         vc.setup(username: username, folderName: folderName)
         navigationController.pushViewController(vc, animated: true)

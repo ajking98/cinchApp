@@ -19,11 +19,12 @@ var isMuted = true
 class CellSelectedCell: UITableViewCell{
     
     //data
-    var link = ""
-    var username = ""
+    var contentKey = ""
     var handlePresentProfile: ((String) -> Void)?
     var post = Post(isImage: true, numberOfLikes: 0, postOwner: "", likedBy: [], dateCreated: 0, tags: [], link: "")
     
+    
+    //Views
     var fullScreenImageView = UIImageView(frame: CGRect.zero)
     var playerLayer = AVPlayerLayer()
     let shareIcon = UIImageView(image: UIImage(named: "shareIcon"))
@@ -38,22 +39,25 @@ class CellSelectedCell: UITableViewCell{
     let createThumbnailButton = UIButton(type: .roundedRect)
     
     
-    func setup(link: String) {
-        post.link = link
+    func setup(contentKey: String) {
+        self.contentKey = contentKey
         
-        PostStruct().readTags(post: link) { (tags) in
-            self.post.tags = tags
-        }
+        fetchPost()
         
-        
-        
-        self.link = link
-        username = "nil"
-        fetchContent()
+        print("this is the contentKey", contentKey)
         setupFullScreenImageView()
         setupRightHandView()
         setupLowerText()
         setupxMark()
+    }
+    
+    func fetchPost() {
+        ParentPostStruct().readPost(contentKey: contentKey) { (post) in
+            print("we are going here: ", post)
+            self.post = post
+            self.fetchContent()
+            print("finishing pretty hard")
+        }
     }
     
     func setupxMark() {
@@ -73,16 +77,17 @@ class CellSelectedCell: UITableViewCell{
     
     @objc func handleAddThumbnail() {
         print("this is adding a thumbnail")
-        SuperFunctions().createThumbnail(link: self.link)
+//        SuperFunctions().createThumbnail(contentKey: contentKey)
     }
     
     @objc func handleRemoved() {
+        print("this is something coll:", self.post.contentKey)
         print("this is the post: ", self.post.toString())
+        
 //        SuperFunctions().permanentlyDeletePost(post: self.post)
     }
     
     override func prepareForReuse() {
-        username = "nil"
         playerLayer.player?.isMuted = true
         playerLayer = AVPlayerLayer()
         profileIcon.image = UIImage()
@@ -93,7 +98,8 @@ class CellSelectedCell: UITableViewCell{
     }
     
     func fetchContent() {
-        
+        guard let link = post.link else { return }
+        let author = post.postOwner ?? ""
         if checkIfVideo(link) {
             guard let link = URL(string: link) else { return }
             playerLayer = fullScreenImageView.loadVideo(link, size: frame.size)
@@ -105,19 +111,16 @@ class CellSelectedCell: UITableViewCell{
         else {
             fullScreenImageView.sd_setImage(with: URL(string: link), placeholderImage: UIImage(), completed: nil)
         }
-        PostStruct().readPostOwner(post: link) { (author) in
-            self.username = author
-            
-            UserStruct().readProfilePic(user: author) { (profilePic) in
-                self.profileIcon.sd_setImage(with: URL(string: profilePic), placeholderImage: UIImage(), completed: nil)
-            }
+        
+        UserStruct().readProfilePic(user: author) { (profilePic) in
+            self.profileIcon.sd_setImage(with: URL(string: profilePic), placeholderImage: UIImage(), completed: nil)
         }
-        PostStruct().readTags(post: link) { (tags) in
-            self.lowerText.text = ""
-            for tag in tags {
-                self.lowerText.text? += "#\(tag) "
-            }
+        
+        self.lowerText.text = ""
+        for tag in post.tags ?? [] {
+            self.lowerText.text? += "#\(tag) "
         }
+        
     }
     
     @objc func handleImageViewTapped() {
@@ -206,12 +209,13 @@ class CellSelectedCell: UITableViewCell{
     
     ///Allows user to save content to device or export to another app
     @objc func handleShare() {
+        guard let link = post.link else { return }
         var status = PHPhotoLibrary.authorizationStatus()
         if status == .notDetermined {
             PHPhotoLibrary.requestAuthorization { (requestedStatus) in
                 status = requestedStatus
                 DispatchQueue.main.async {
-                    if checkIfVideo(self.link) {
+                    if checkIfVideo(link) {
                         self.handleShareVideo()
                     }
                     else {
@@ -235,7 +239,8 @@ class CellSelectedCell: UITableViewCell{
     }
     
     func handleShareVideo() {
-        guard let url = URL(string: self.link) else { return }
+        guard let link = post.link else { return }
+        guard let url = URL(string: link) else { return }
         DispatchQueue.global(qos: .background).async {
             if let urlData = NSData(contentsOf: url){
               let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
@@ -256,7 +261,8 @@ class CellSelectedCell: UITableViewCell{
     @objc func handleHearted() {
         //todo: add link to the folder
         guard let localUser = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
-        FolderStruct().addContent(user: localUser, folderName: "Hearted", link: link)
+        guard let link = post.link else { return }
+        FolderStruct().addContent(user: localUser, folderName: "Hearted", contentKey: contentKey, link: link)
         let alert = UIAlertController(title: "Added to \"Hearted\" Folder", message: "", preferredStyle: .alert) //Notify the user with an alert
         parentViewController?.present(alert, animated: true, completion: {
             alert.view.superview?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.dismissAlert)))
@@ -275,9 +281,9 @@ class CellSelectedCell: UITableViewCell{
     
     @objc func handleProfilePicPressed() {
         //push using navigation
+        guard let username = post.postOwner else { return }
         guard let handlePresentProfile = handlePresentProfile else { return }
         handlePresentProfile(username)
-        
     }
     
     func setupLowerText() {

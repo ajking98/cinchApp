@@ -14,24 +14,27 @@ class GenericCell: UICollectionViewCell {
     var imageView = UIImageView()
     
     ///takes a link to the content it should build
-    func setup(link: String, _ errorHandler: (() -> Void)? = nil){
-        guard let contentLink = URL(string: link) else { return }
+    func setup(contentKey: String, _ errorHandler: (() -> Void)? = nil){
+        PostStruct().readLink(contentKey: contentKey) { (link) in
             if checkIfVideo(link) {
                 //fetch thumbnail
-                PostStruct().readThumbnail(link: link) { (thumbnailLink) in
-                    if thumbnailLink.isEmpty { return }
-                    self.imageView.sd_setAnimationImages(with: thumbnailLink)
-                    self.imageView.animationDuration = 1.4
-                    self.imageView.sd_setHighlightedImage(with: thumbnailLink[0], completed: nil)
+                PostStruct().readThumbnail(contentKey: contentKey) { (thumbnailLink) in
+                    var smoothedThumbnail = thumbnailLink
+                    smoothedThumbnail.append(contentsOf: thumbnailLink.reversed())
+                    if smoothedThumbnail.isEmpty { return }
+                    self.imageView.sd_setAnimationImages(with: smoothedThumbnail)
+                    self.imageView.animationDuration = 2.8
+                    self.imageView.sd_setHighlightedImage(with: smoothedThumbnail[0], completed: nil)
                     self.imageView.startAnimating()
                 }
             }
         else {
-                imageView.sd_setImage(with: URL(string: link), placeholderImage: UIImage()) { (image, error, cacheType, link) in
+                self.imageView.sd_setImage(with: URL(string: link), placeholderImage: UIImage()) { (image, error, cacheType, link) in
                     if error != nil {
                         errorHandler?()
                     }
                 }
+            }
         }
         //constraints
         addSubview(imageView)

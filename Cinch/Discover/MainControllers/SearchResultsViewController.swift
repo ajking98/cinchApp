@@ -81,8 +81,8 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
     
     
     func fetchContent() {
-        TagStruct().readAllElementLinks(tagLabel: searchTerm.lowercased()) { (links) in
-            self.content = links
+        TagStruct().readAllElementLinks(tagLabel: searchTerm.lowercased()) { (contentKeys) in
+            self.content = contentKeys
             self.collectionView.reloadData()
         }
     }
@@ -99,7 +99,7 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! GenericCell
-        cell.setup(link: content[indexPath.item])
+        cell.setup(contentKey: content[indexPath.item])
         
         return cell
     }

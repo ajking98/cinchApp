@@ -14,7 +14,19 @@ import FirebaseStorage
 
 struct ParentStruct {
     let DB = Database.database().reference().child("users")
-    
+    /*
+     version
+     */
+    func readVersion(completion: @escaping(Double)-> Void) {
+        let DB2 = Database.database().reference().child("version")
+        DB2.observeSingleEvent(of: .value) { (snapshot) in
+            print("working: for the version: ", snapshot)
+            guard let latestVersion = snapshot.value as? Double else { return }
+            completion(latestVersion)
+        }
+    }
+        
+        
     
     /*
      addUser

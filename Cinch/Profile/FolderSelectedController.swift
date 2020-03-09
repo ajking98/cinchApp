@@ -16,7 +16,7 @@ class FolderSelectedController: UIViewController, UICollectionViewDataSource, UI
     
     
     var localUser = ""
-    var content: [String] = [] //this should be using a cash
+    var content: [String] = []
     let identifier = "Cell"
     
     
@@ -24,7 +24,7 @@ class FolderSelectedController: UIViewController, UICollectionViewDataSource, UI
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        print("this is the name of folde: ", folderName)
         setupNavigationBar()
         setupCollectionView()
         fetchContent()
@@ -38,6 +38,7 @@ class FolderSelectedController: UIViewController, UICollectionViewDataSource, UI
     func setup(username: String, folderName: String) {
         self.username = username
         self.folderName = folderName
+        print("is this evern running??")
     }
     
     func setupNavigationBar() {
@@ -82,7 +83,6 @@ class FolderSelectedController: UIViewController, UICollectionViewDataSource, UI
     @objc func handleFollowFolder() {
         let minusButton = UIBarButtonItem(title: "Unfollow", style: .plain, target: self, action: #selector(handleUnFollowFolder))
         navigationItem.setRightBarButton(minusButton, animated: false)
-        print("this is following")
         let folderRef = FolderReference(admin: username, folderName: folderName)
         UserStruct().addFolderReference(user: localUser, newFolder: folderRef)
     }
@@ -106,7 +106,9 @@ class FolderSelectedController: UIViewController, UICollectionViewDataSource, UI
     
     
     func fetchContent() {
+        print("are ew getting conent", username, folderName)
         FolderStruct().readContent(user: username, folderName: folderName) { (content) in
+            print("yessir: ", content)
             self.content = content
             self.collectionView.reloadData()
         }
@@ -124,13 +126,13 @@ class FolderSelectedController: UIViewController, UICollectionViewDataSource, UI
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! GenericCell
         cell.backgroundColor = .lightGray
-        cell.setup(link: content[indexPath.item])
+        cell.setup(contentKey: content[indexPath.item])
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! GenericCell
-        cell.setup(link: content[indexPath.item])
+        cell.setup(contentKey: content[indexPath.item])
     }
     
     

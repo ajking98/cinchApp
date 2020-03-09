@@ -125,10 +125,10 @@ extension EditProfileViewController {
         if (didChangeProfileImage) {
             guard let image = imageView.image else { return }
             guard let profileImage = profileImage else { return }
-            StorageStruct().uploadImage(image: image) { (newImage) in
-                UserStruct().updateProfilePic(user: username!, newProfilePic: newImage)
-                profileImage.image = image
-            }
+//            StorageStruct().uploadImage(image: image) { (newImage) in //TODO: Yassin
+//                UserStruct().updateProfilePic(user: username!, newProfilePic: newImage)
+//                profileImage.image = image
+//            }
         }
 
         if self.nameText.text != "" {

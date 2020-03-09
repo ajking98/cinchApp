@@ -25,7 +25,6 @@ class Post {
     
     ///called when a post is first being made
     init(isImage : Bool, postOwner : String, link : String, contentKey: String = "", _ thumbnail: [String]? = nil) {
-        
         self.isImage = isImage
         self.link = link
         self.numberOfLikes = 0
@@ -34,15 +33,12 @@ class Post {
         self.dateCreated = Date().timeIntervalSince1970
         self.tags = []
         self.thumbnail = thumbnail
-        if contentKey == "" {
-            self.contentKey = StorageStruct().randomString(5)
-        }
+        self.contentKey = contentKey
     }
     
     
     ///Initialized when All data is given
     init(isImage : Bool, numberOfLikes : Int, postOwner : String, likedBy : [String], dateCreated : Double, tags : [String], link : String, contentKey: String = "", _ thumbnail: [String]? = nil) {
-        
         self.isImage = isImage
         self.link = link
         self.numberOfLikes = numberOfLikes
@@ -74,11 +70,6 @@ class Post {
             }
         }
         
-        if contentKey == "" {
-            contentKey = StorageStruct().randomString(5)
-        }
-        
-        print("this is the contentKey: ", contentKey)
         let postDict : [String : Any] = ["isImage" : isImage as Any, "numberOfLikes" : numberOfLikes as Any, "likedBy" : likedByDict as Any, "postOwner" : postOwner as Any, "dateCreated" : dateCreated as Any, "tags" : tagsDict as Any, "link" : link as Any, "thumbnail" : thumbnailDict as Any, "contentKey" : contentKey ]
         
         return postDict

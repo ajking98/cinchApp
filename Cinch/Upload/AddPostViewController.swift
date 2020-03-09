@@ -165,9 +165,9 @@ struct SaveToFolder {
                 }
                 actionController.addAction(Action(ActionData(title: "\(item.lowercased())", subtitle: "For Content"), style: .default, handler: { action in
                     
-                    StorageStruct().uploadContent(mediaLink: localLink) { (link) in
-                        FolderStruct().addContent(user: username, folderName: item, link: link)
-                        self.addTags(link: link, tags: tags, frames)
+                    StorageStruct().uploadContent(mediaLink: localLink) { (link, contentKey) in
+                        FolderStruct().addContent(user: username, folderName: item, contentKey: contentKey, link: link)
+                        self.addTags(link: link, tags: tags, contentKey: contentKey, frames)
                         navigationController.popViewController(animated: true)
                         
                         //user feedback alert
@@ -177,13 +177,6 @@ struct SaveToFolder {
                         DispatchQueue.main.asyncAfter(deadline: alertExpiration) {
                             alert.dismiss(animated: true, completion: nil)
                         }
-                                                
-                        //Adds content to the followers' newContent array this should be done on a google cloud function
-                        UserStruct().readFollowers(user: username) { (followers) in
-                            for follower in followers {
-                                UserStruct().addNewContent(user: follower, link: link)
-                            }
-                        }
                     }
                 }))
             }
@@ -191,38 +184,43 @@ struct SaveToFolder {
         }
     }
     
-    
-    func addTags(link: String, tags: String, _ frames: [UIImage]? = nil){
+    ///Adds the tags and uploads the post and the tags
+    func addTags(link: String, tags: String, contentKey: String, _ frames: [UIImage]? = nil){
         let message = tags.components(separatedBy: CharacterSet(charactersIn: " ./\\#"))
         var tagArray = [String]()
         guard let username = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
-        
         var post: Post?
         if checkIfVideo(link) {
         ///Adding the frames if its a video
             if let frames = frames {
-                print("step 2")
                 StorageStruct().uploadFrames(frames: frames) { (links) in
-                    post = Post(isImage: false, postOwner: username, link: link, links)
+                    post = Post(isImage: false, postOwner: username, link: link, contentKey: contentKey, links)
                     guard let standardPost = post else { return }
                     standardPost.tags = tagArray
                     ParentPostStruct().addPost(post: standardPost)
+                    
+                    for tag in message{
+                        if tag.count > 2 {
+                            let standardizedTag = tag.lowercased()
+                            tagArray.append(standardizedTag)
+                            TagStruct().addElement(tagLabel: standardizedTag, tagElement: TagElement(link: link, contentKey: post!.contentKey))
+                        }
+                    }
                 }
             }
         }
         else { //If image
-            post = Post(isImage: true, postOwner: username, link: link)
+            post = Post(isImage: true, postOwner: username, link: link, contentKey: contentKey)
             guard let standardPost = post else { return }
             standardPost.tags = tagArray
             ParentPostStruct().addPost(post: standardPost)
-            print("this has been completed")
-        }
-        
-        for tag in message{
-            if tag.count > 2 {
-                let standardizedTag = tag.lowercased()
-                tagArray.append(standardizedTag)
-                TagStruct().addElement(tagLabel: standardizedTag, tagElement: TagElement(link: link, contentKey: post!.contentKey))
+            
+            for tag in message{
+                if tag.count > 2 {
+                    let standardizedTag = tag.lowercased()
+                    tagArray.append(standardizedTag)
+                    TagStruct().addElement(tagLabel: standardizedTag, tagElement: TagElement(link: link, contentKey: post!.contentKey))
+                }
             }
         }
         

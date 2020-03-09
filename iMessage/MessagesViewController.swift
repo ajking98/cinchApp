@@ -38,12 +38,15 @@ class MessagesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print("about to start")
         if(FirebaseApp.app() == nil){
             FirebaseApp.configure()
         }
-        
+        print("step 1")
         setup()
+        print("done with setup")
         fetchContent()
+        print("ooops")
         setupSearchBar()
         setupCollectionView()
         setupTableTagsView()
@@ -54,14 +57,13 @@ class MessagesViewController: UIViewController {
         dbRef = Database.database().reference().child("posts")
         dbRef.queryLimited(toFirst: 60).queryOrdered(byChild: "dateCreated").observeSingleEvent(of: .value) { (snapshot) in
             
-                for child in snapshot.children {
-                    let child = child as? DataSnapshot
-                    if let value = child?.value as? [String : Any] {
-                        if let link = value["link"] as? String {
-                            let indexPath = IndexPath(item: self.content.count, section: 0)
-                            self.content.append(link)
-                            self.collectionView.insertItems(at: [indexPath])
-                        } } }
+            for child in snapshot.children {
+                let child = child as? DataSnapshot
+                if let value = child?.key {
+                    let indexPath = IndexPath(item: self.content.count, section: 0)
+                    self.content.append(value)
+                    self.collectionView.insertItems(at: [indexPath])
+                } }
         }
     }
     

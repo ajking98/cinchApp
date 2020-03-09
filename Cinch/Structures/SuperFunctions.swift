@@ -17,13 +17,14 @@ struct SuperFunctions {
     func permanentlyDeletePost(post : Post) {
         let postOwner = post.postOwner ?? ""
         let link = post.link ?? ""
+        let contentKey = post.contentKey.count > 1 ? post.contentKey : link
     
         UserStruct().readFolders(user: postOwner) { (folders) in
             for folder in folders {
                 FolderStruct().readContent(user: postOwner, folderName: folder) { (content) in
                     content.forEach { (mediaLink) in
-                        if link == mediaLink {
-                            FolderStruct().deleteContent(user: postOwner, folderName: folder, link: link)
+                        if contentKey == mediaLink {
+                            FolderStruct().deleteContent(user: postOwner, folderName: folder, contentKey: contentKey)
                         }
                     }
                 }
@@ -32,28 +33,11 @@ struct SuperFunctions {
         
         
         post.tags?.forEach({ (SingleTag) in
-            TagStruct().deleteElement(tagLabel: SingleTag, link: link)
+            TagStruct().deleteElement(tagLabel: SingleTag, contentKey: contentKey)
         })
 
-        ParentPostStruct().deletePost(postLink: link)
-        StorageStruct().deleteContent(link: link)
+        ParentPostStruct().deletePost(contentKey: contentKey)
+        StorageStruct().deleteContent(contentKey: contentKey)
     }
     
-    
-    
-    
-    
-    
-    //creates the thumbnail for an existing post and adds sets the value of thumbnail for the post to the links of the images
-    func createThumbnail(link: String) {
-        PostStruct().hasThumbnail(link: link) { (hasThumbnail) in
-            guard let url = URL(string: link) else { return }
-            getAllFrames(videoUrl: url) { (thumbnail) in
-                StorageStruct().uploadFrames(frames: thumbnail) { (linkToThumbnail) in
-                    PostStruct().addThumbnail(linkOfPost: link, linkToThumbnail: linkToThumbnail)
-                }
-            }
-            
-        }
-    }
 }

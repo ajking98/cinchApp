@@ -75,10 +75,9 @@ struct TagStruct {
             var elementsDict:[String] = []
             for child in snapshot.children {
                 if let child = child as? DataSnapshot {
-                    if let value = child.value as? [String: Any] {
-                        if let link = value["link"] as? String {
-                            elementsDict.append(link)
-                        } } }
+                    if let key = child.key as? String {
+                        elementsDict.append(key)
+                    } }
             }
               completion(elementsDict)
           }
@@ -109,8 +108,8 @@ struct TagStruct {
     
     
     ///Takes in a tagLabel and a link to the image and deletes the tagElement at that given link in the tag object in the DB
-    func deleteElement(tagLabel : String, link : String){
-        let updatedLink = convertStringToKey(link: link)
+    func deleteElement(tagLabel : String, contentKey : String){
+        let updatedLink = convertStringToKey(link: contentKey)
         let updatedTag = tagLabel.lowercased()
         DB.child(updatedTag).child("elements").child(updatedLink).removeValue()
     }

@@ -67,10 +67,28 @@ class TableViewCell: UITableViewCell, UICollectionViewDataSource {
     ///fetches the links for the term
     func fetchContent(){
         content = []
-        TagStruct().readAllElementLinks(tagLabel: hashTagTerm.lowercased()) { (links) in
-            self.content = links
+//        TagStruct().readAllElementLinks(tagLabel: hashTagTerm.lowercased()) { (links) in
+//            self.content = links
+//            self.collectionView.reloadData()
+//
+//            self.collectionView.performBatchUpdates({
+//                self.popIndexes()
+//            }, completion: nil)
+//        }
+        
+        TagStruct().readAllElements(tagLabel: hashTagTerm.lowercased()) { (tagElements) in
+            for tagElement in tagElements {
+                if tagElement.contentKey.count > 1 {
+                    print("appending this: ", tagElement.contentKey)
+                    self.content.append(tagElement.contentKey)
+                }
+                else {
+                    
+                    self.content.append(tagElement.link)
+                }
+            }
             self.collectionView.reloadData()
-
+            
             self.collectionView.performBatchUpdates({
                 self.popIndexes()
             }, completion: nil)
@@ -110,7 +128,7 @@ class TableViewCell: UITableViewCell, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! GenericCell
-        cell.setup(link: content[indexPath.item]) {
+        cell.setup(contentKey: content[indexPath.item]) {
             if !self.indexesToPop.contains(indexPath.item) {
                 self.indexesToPop.append(indexPath.item)
             }
@@ -130,7 +148,7 @@ class TableViewCell: UITableViewCell, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! GenericCell
-        cell.setup(link: content[indexPath.item])
+        cell.setup(contentKey: content[indexPath.item])
     }
     
     
