@@ -23,7 +23,6 @@ class MessagesViewController: UIViewController {
     var width: CGFloat = 0
     var height: CGFloat = 0
     let identifier = "Cell"
-    var content:[String] = []
     var dbRef: DatabaseReference!
 
     //views
@@ -33,38 +32,16 @@ class MessagesViewController: UIViewController {
     
     //view controllers
     var searchTableViewController = SearchTableViewController(style: .plain)
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        print("about to start")
         if(FirebaseApp.app() == nil){
             FirebaseApp.configure()
         }
-        print("step 1")
         setup()
-        print("done with setup")
-        fetchContent()
-        print("ooops")
         setupSearchBar()
         setupCollectionView()
         setupTableTagsView()
-    }
-    
-    ///gets the links from the DB and appends it to the content array
-    func fetchContent() {
-        dbRef = Database.database().reference().child("posts")
-        dbRef.queryLimited(toFirst: 60).queryOrdered(byChild: "dateCreated").observeSingleEvent(of: .value) { (snapshot) in
-            
-            for child in snapshot.children {
-                let child = child as? DataSnapshot
-                if let value = child?.key {
-                    let indexPath = IndexPath(item: self.content.count, section: 0)
-                    self.content.append(value)
-                    self.collectionView.insertItems(at: [indexPath])
-                } }
-        }
     }
     
     func setup(){
@@ -115,14 +92,19 @@ class MessagesViewController: UIViewController {
     }
     
     func setupCollectionView() {
-        collectionView.register(GenericCell.self, forCellWithReuseIdentifier: identifier)
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
+        collectionView.register(BroadCollectionViewCell.self, forCellWithReuseIdentifier: identifier)
         collectionView.backgroundColor = .white
         collectionView.showsVerticalScrollIndicator = false
+        collectionView.showsHorizontalScrollIndicator = false
         collectionView.contentInset.top = 16
+        collectionView.isPagingEnabled = true
         collectionView.delegate = self
         collectionView.dataSource = self
         view.addSubview(collectionView)
-        
+
         //constraints
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true

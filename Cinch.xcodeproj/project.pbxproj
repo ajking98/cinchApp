@@ -227,6 +227,7 @@
 		893911B623DFFF2900AFAE80 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		894C36B723E24349008E717D /* ProfileViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewControllerExtension.swift; sourceTree = "<group>"; };
 		895A429124163E2100E80961 /* UpdateScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateScreen.swift; sourceTree = "<group>"; };
+		895A42932416926B00E80961 /* iMessage.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = iMessage.entitlements; sourceTree = "<group>"; };
 		895CCCEA23F1E64A00826D0C /* SearchResultsVCExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsVCExtension.swift; sourceTree = "<group>"; };
 		8964B2CE23F44BB2002A66BB /* InitialiMessageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialiMessageVC.swift; sourceTree = "<group>"; };
 		896556EC23E0CA9600666AB9 /* ProfileStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStackView.swift; sourceTree = "<group>"; };
@@ -528,6 +529,7 @@
 		897437E123ED0DEF00F2CCB7 /* iMessage */ = {
 			isa = PBXGroup;
 			children = (
+				895A42932416926B00E80961 /* iMessage.entitlements */,
 				8974380123ED33D100F2CCB7 /* Extensions */,
 				897437E923ED0DF100F2CCB7 /* Info.plist */,
 				897437E223ED0DEF00F2CCB7 /* MessagesViewController.swift */,
@@ -1148,6 +1150,7 @@
 			baseConfigurationReference = 0DA2F8AC1BF415C57806483F /* Pods-iMessage.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = MessageAppIcon;
+				CODE_SIGN_ENTITLEMENTS = iMessage/iMessage.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1.0.10;
@@ -1159,7 +1162,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.CinchMemes.iMessage;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.CinchMemes.iMessage2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -1172,6 +1175,7 @@
 			baseConfigurationReference = 66CA94844D31226E1ED29C31 /* Pods-iMessage.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = MessageAppIcon;
+				CODE_SIGN_ENTITLEMENTS = iMessage/iMessage.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1.0.10;
@@ -1183,7 +1187,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.CinchMemes.iMessage;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.CinchMemes.iMessage2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -1313,10 +1317,11 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_ENTITLEMENTS = Cinch/Cinch.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1.0.10;
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 8NHWSCYNF7;
 				INFOPLIST_FILE = Cinch/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1337,10 +1342,11 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_ENTITLEMENTS = Cinch/Cinch.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1.0.10;
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 8NHWSCYNF7;
 				INFOPLIST_FILE = Cinch/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
