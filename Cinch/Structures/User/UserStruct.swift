@@ -49,7 +49,7 @@ struct UserStruct {
     }
     
     ///updates the version of the app for the user
-    func updateVersion(username: String, version: Float) {
+    func updateVersion(username: String, version: Double) {
         DB.child(username).child("version").setValue(version)
     }
     

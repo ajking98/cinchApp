@@ -44,7 +44,7 @@ class GenericCell: UICollectionViewCell {
         imageView.backgroundColor = .lightGray
     }
     
-    ///sets up the cell using a post
+    ///sets up the cell using a post - iMessage
     func setup(post: Post, _ errorHandler: (() -> Void)? = nil) {
         addSubview(imageView)
         imageView.frame.size = frame.size
@@ -64,12 +64,10 @@ class GenericCell: UICollectionViewCell {
         }
         else {
             //fetch thumbnail
-            print("step1")
             guard contentKey != "" else {
                 return
             }
             PostStruct().readThumbnail(contentKey: contentKey) { (thumbnailLink) in
-                print("step2")
                 var smoothedThumbnail = thumbnailLink
                 smoothedThumbnail.append(contentsOf: thumbnailLink.reversed())
                 if smoothedThumbnail.isEmpty { return }

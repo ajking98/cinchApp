@@ -41,9 +41,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let user = User()
             ParentStruct().addUser(user: user)
             print("here is your created username:", user.username)
-            
+            ParentStruct().readVersion { (version) in
+                UserStruct().updateVersion(username: user.username, version: version)
+            }
             UserDefaults.standard.set(user.username, forKey: defaultsKeys.usernameKey)
-            UserDefaults(suiteName: "group.InstagramClone.messages")?.set(user.username, forKey: defaultsKeys.usernameKey)
+            UserDefaults(suiteName: "group.cinch")?.set(user.username, forKey: defaultsKeys.usernameKey)
             UserDefaults.standard.set("Signup/Login", forKey: defaultsKeys.stateOfUser)
 
             //TODO add the other default values here as needed (Use as few user defaults as possible)

@@ -17,6 +17,8 @@ struct ParentStruct {
     /*
      version
      */
+    
+    ///reads the latest version number that is available 
     func readVersion(completion: @escaping(Double)-> Void) {
         let DB2 = Database.database().reference().child("version")
         DB2.observeSingleEvent(of: .value) { (snapshot) in

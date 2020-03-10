@@ -110,13 +110,17 @@ class BroadCollectionViewCell: UICollectionViewCell, UICollectionViewDataSource,
         cell.setup(post: posts[indexPath.item])
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as! GenericCell
+        cell.setup(post: posts[indexPath.item])
+    }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         iMessageDelegate.minimizeView()
         guard let link = posts[indexPath.item].link else { return }
         guard let directory = saveContent(globalLink: link) else { return }
         self.iMessageDelegate.mainConversation.insertAttachment(directory, withAlternateFilename: nil, completionHandler: nil)
-        
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
