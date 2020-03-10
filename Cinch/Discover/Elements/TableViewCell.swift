@@ -88,7 +88,7 @@ class TableViewCell: UITableViewCell, UICollectionViewDataSource {
                 }
             }
             self.collectionView.reloadData()
-            
+
             self.collectionView.performBatchUpdates({
                 self.popIndexes()
             }, completion: nil)

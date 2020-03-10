@@ -32,7 +32,8 @@ struct TagStruct {
     
     ///Gets the whole element at a given link
     func readElement(tagLabel : String, link : String, completion : @escaping (TagElement) -> Void){
-        DB.child(tagLabel).child("elements").child(link).observeSingleEvent(of: .value) { (snapshot) in
+        let updatedLink = convertStringToKey(link: link)
+        DB.child(tagLabel).child("elements").child(updatedLink).observeSingleEvent(of: .value) { (snapshot) in
             if let element = snapshot.value as? [String : Any] {
                 let firstUsed = element["firstUsed"] as! Double
                 let lastUsed = element["lastUsed"] as! Double

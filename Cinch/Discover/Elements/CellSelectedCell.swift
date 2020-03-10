@@ -78,7 +78,6 @@ class CellSelectedCell: UITableViewCell{
     }
     
     @objc func handleAddThumbnail() {
-//        print("this is adding a thumbnail")
         SuperFunctions().createThumbnail(contentKey: contentKey)
     }
     

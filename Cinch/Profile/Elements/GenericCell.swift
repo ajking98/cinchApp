@@ -15,7 +15,8 @@ class GenericCell: UICollectionViewCell {
     
     ///takes a contentKey to the content it should build
     func setup(contentKey: String, _ errorHandler: (() -> Void)? = nil){
-        PostStruct().readLink(contentKey: contentKey) { (link) in
+        let updatedLink = convertStringToKey(link: contentKey)
+        PostStruct().readLink(contentKey: updatedLink) { (link) in
             if checkIfVideo(link) {
                 //fetch thumbnail
                 PostStruct().readThumbnail(contentKey: contentKey) { (thumbnailLink) in
