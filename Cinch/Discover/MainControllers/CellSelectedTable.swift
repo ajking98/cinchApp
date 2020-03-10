@@ -8,6 +8,7 @@
 //
 
 import UIKit
+import AVKit
 
 class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, UINavigationControllerDelegate {
     
@@ -15,17 +16,44 @@ class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataS
     var content:[String] = []
     var startingIndex = IndexPath(row: 0, section: 0)
     
+    
+    let audioSession = AVAudioSession.sharedInstance()
+    var outputVolumeObserve: NSKeyValueObservation?
+    
+    
     let tableView = UITableView(frame: CGRect.zero)
     let identifier = "Cell"
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        print("this is something good")
+        setupAudio()
         setupNavigationBar()
         setupTableView()
+        print("finishing adsfasdf")
+    }
+    
+    
+    func setupAudio() {
+
+        do {
+         try audioSession.setActive(true)
+        } catch {
+         print("some error")
+        }
+        
+        outputVolumeObserve = audioSession.observe(\.outputVolume) { (audioSession, changes) in
+            guard let cell = self.tableView.visibleCells[0] as? CellSelectedCell else { return }
+            let playerLayer = cell.playerLayer
+            if isMuted {
+                playerLayer.player?.isMuted = false
+                isMuted = false
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        print("this is also good")
         //making the navigation bar invisible
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
@@ -35,9 +63,11 @@ class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataS
         
         //hiding tab bar
         navigationController?.tabBarController?.tabBar.isHidden = true
+        print("finishing potin")
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        print("this is very good")
         tableView.scrollToRow(at: startingIndex, at: .top, animated: true)
     }
     
@@ -102,7 +132,7 @@ class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataS
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier) as! CellSelectedCell
         cell.frame.size = view.frame.size
-        cell.setup(link: content[indexPath.row])
+        cell.setup(contentKey: content[indexPath.row])
         cell.handlePresentProfile = handlePresentProfile(username:)
         return cell
     }
@@ -122,8 +152,9 @@ class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataS
     }
     
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        
+        //Should edit the sound here 
         return false
     }
-    
 
 }

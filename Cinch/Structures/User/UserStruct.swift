@@ -35,6 +35,28 @@ struct UserStruct {
     let DB = Database.database().reference().child("users")
     let uuid = UIDevice.current.identifierForVendor!
     
+    
+    /*
+     Version
+     */
+    ///reads the version of the app the user is currently using
+    func readVersion(username: String, _ completion: @escaping(Double) -> Void, _ errorHandler: @escaping() -> Void) {
+        DB.child(username).child("version").observeSingleEvent(of: .value) { (snapshot) in
+            if let version = snapshot.value as? Double {
+                completion(version)
+            }
+            else {
+                errorHandler()
+            }
+        }
+    }
+    
+    ///updates the version of the app for the user
+    func updateVersion(username: String, version: Double) {
+        DB.child(username).child("version").setValue(version)
+    }
+    
+    
     /*
      Name
      */
@@ -283,15 +305,14 @@ struct UserStruct {
     
     
     ///adds new post links to the user's new content
-    func addNewContent(user : String, link : String) {
-        let updatedLink = convertStringToKey(link: link)
-        DB.child(user).child("newContent").updateChildValues([updatedLink : link])
+    func addNewContent(user : String, link : String, contentKey: String) {
+        DB.child(user).child("newContent").updateChildValues([contentKey : link])
     }
     
     
     ///deletes a post link from the user's new content
-    func deleteNewContent(user : String, link : String) {
-        DB.child(user).child("newContent").child(link).removeValue()
+    func deleteNewContent(user : String, contentKey : String) {
+        DB.child(user).child("newContent").child(contentKey).removeValue()
     }
     
     
@@ -397,12 +418,14 @@ struct UserStruct {
                 var folderArray : [Folder] = []
                 for folderKey in folders.keys {
                     let folder : [String : Any] = folders[folderKey] as! [String : Any]
-                    let folderName = folder["folderName"] as! String
-                    let iconLink = folder["icon"] as! String
-                    let content = folder["content"] != nil ? folder["content"] as! [String : String] : [:] as! [String : String]
-                    let thisFolder = Folder(folderName: folderName, iconLink: iconLink, dateCreated: folder["dateCreated"] as! Double, dateLastModified: folder["dateLastModified"] as! Double, content: content, numOfImages: folder["numOfImages"] as! Int, numOfVideos: folder["numOfVideos"] as! Int, isPrivate: folder["isPrivate"] as! Bool, followers: folder["followers"] != nil ? folder["followers"] as! [String] : [] as! [String], followersCount: folder["followersCount"] as! Int)
-                    
-                    folderArray.append(thisFolder)
+                    print("this si it:", folder)
+                    if let folderName = folder["folderName"] as? String {
+                        let iconLink = folder["icon"] != nil ? folder["icon"] as! String : ""
+                        let content = folder["content"] != nil ? folder["content"] as! [String : String] : [:] as! [String : String]
+                        let thisFolder = Folder(folderName: folderName, iconLink: iconLink, dateCreated: folder["dateCreated"] as! Double, dateLastModified: folder["dateLastModified"] as! Double, content: content, numOfImages: folder["numOfImages"] as! Int, numOfVideos: folder["numOfVideos"] as! Int, isPrivate: folder["isPrivate"] as! Bool, followers: folder["followers"] != nil ? folder["followers"] as! [String] : [] as! [String], followersCount: folder["followersCount"] as! Int)
+                        
+                        folderArray.append(thisFolder)
+                    }
                 }
                 
                 //TODO sort by date created 

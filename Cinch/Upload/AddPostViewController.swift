@@ -17,6 +17,7 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate, UITe
     var height: CGFloat = 0
     var mediaLink = URL(fileURLWithPath: "")
     var isVideo = false
+    var frames:[UIImage] = []
     
     //Elements
     let tagField = UITextView(frame: CGRect.zero)
@@ -37,17 +38,29 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate, UITe
         let playerLayer = imageView.loadVideo(mediaLink, size: imageView.frame.size)
     }
     
+    ///fetches the thumbnail frames for a video
+    func fetchFrames(url: URL) {
+        getAllFrames(videoUrl: url, completion: {(images) in
+            print("this is the count of the images: ", images.count)
+            self.frames = images
+        })
+    }
+    
     
     func setup() {
         view.backgroundColor = .white
         width = view.frame.width
         height = view.frame.height
         isVideo = checkIfVideo(mediaLink.absoluteString)
+        
+        if isVideo {
+            fetchFrames(url: mediaLink)
+        }
     }
     
     func setupNavigationController() {
         navigationController?.interactivePopGestureRecognizer?.delegate = self
-        navigationController?.interactivePopGestureRecognizer?.isEnabled = true 
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         let backButton = UIButton(type: .custom)
         backButton.setImage(UIImage(named: "backIcon-black"), for: .normal)
         backButton.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
@@ -105,7 +118,7 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate, UITe
     }
     
     func addPlaceHolder(){
-        placeholderLabel.text = "Enter some tags..."
+        placeholderLabel.text = "#meme  #LOL  #..."
         placeholderLabel.font = UIFont.italicSystemFont(ofSize: (tagField.font?.pointSize)!)
         placeholderLabel.sizeToFit()
         tagField.addSubview(placeholderLabel)
@@ -125,10 +138,11 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate, UITe
     
     @objc func goBack() {
         navigationController?.popViewController(animated: true)
+        
     }
     
     @objc func handlePostMedia() {
-        SaveToFolder().saveToFolder(navigationController!, localLink: mediaLink, tags: tagField.text)
+        SaveToFolder().saveToFolder(navigationController!, localLink: mediaLink, tags: tagField.text, frames)
     }
 }
 
@@ -137,50 +151,79 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate, UITe
 
 
 struct SaveToFolder {
-    func saveToFolder(_ navigationController: UINavigationController, localLink: URL, tags: String) {
+    func saveToFolder(_ navigationController: UINavigationController, localLink: URL, tags: String, _ frames: [UIImage]? = nil) {
         let image = UIImage()
         let actionController = SpotifyActionController()
-        actionController.headerData = SpotifyHeaderData(title: "select a folder", subtitle: "", image: image)
+        actionController.headerData = SpotifyHeaderData(title: "Select a Folder", subtitle: "", image: image)
         guard let username = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
         
         
         UserStruct().readFolders(user: username) { (folders) in
             for item in folders {
+                if item.lowercased() == "likes" {
+                    continue
+                }
                 actionController.addAction(Action(ActionData(title: "\(item.lowercased())", subtitle: "For Content"), style: .default, handler: { action in
                     
-                    StorageStruct().uploadContent(mediaLink: localLink) { (link) in
-                        FolderStruct().addContent(user: username, folderName: item, link: link)
-                        self.addTags(link: link, tags: tags)
+                    StorageStruct().uploadContent(mediaLink: localLink) { (link, contentKey) in
+                        FolderStruct().addContent(user: username, folderName: item, contentKey: contentKey, link: link)
+                        self.addTags(link: link, tags: tags, contentKey: contentKey, frames)
                         navigationController.popViewController(animated: true)
                         
-                        UserStruct().readFollowers(user: username) { (followers) in
-                            for follower in followers {
-                                UserStruct().addNewContent(user: follower, link: link)
-                            }
+                        //user feedback alert
+                        let alert = UIAlertController(title: "Uploaded to \(item)!", message: "", preferredStyle: .alert)
+                        navigationController.present(alert, animated: true, completion: nil)
+                        let alertExpiration = DispatchTime.now() + 2
+                        DispatchQueue.main.asyncAfter(deadline: alertExpiration) {
+                            alert.dismiss(animated: true, completion: nil)
                         }
                     }
                 }))
             }
-            
             navigationController.present(actionController, animated: true, completion: nil)
         }
     }
     
-    func addTags(link: String, tags: String){
-        let message = tags.components(separatedBy: CharacterSet(charactersIn: " ./"))
+    ///Adds the tags and uploads the post and the tags
+    func addTags(link: String, tags: String, contentKey: String, _ frames: [UIImage]? = nil){
+        let message = tags.components(separatedBy: CharacterSet(charactersIn: " ./\\#"))
         var tagArray = [String]()
         guard let username = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
-        
-        for tag in message{
-            if tag.count > 2 {
-                let standardizedTag = tag.lowercased()
-                tagArray.append(standardizedTag)
-                TagStruct().addElement(tagLabel: standardizedTag, tagElement: TagElement(link: link))
+        var post: Post?
+        if checkIfVideo(link) {
+        ///Adding the frames if its a video
+            if let frames = frames {
+                StorageStruct().uploadFrames(frames: frames) { (links) in
+                    post = Post(isImage: false, postOwner: username, link: link, contentKey: contentKey, links)
+                    guard let standardPost = post else { return }
+                    standardPost.tags = tagArray
+                    ParentPostStruct().addPost(post: standardPost)
+                    
+                    for tag in message{
+                        if tag.count > 2 {
+                            let standardizedTag = tag.lowercased()
+                            tagArray.append(standardizedTag)
+                            TagStruct().addElement(tagLabel: standardizedTag, tagElement: TagElement(link: link, contentKey: post!.contentKey))
+                        }
+                    }
+                }
             }
         }
-        let post = Post(isImage: !checkIfVideo(link), postOwner: username, link: link)
-        post.tags = tagArray
-        ParentPostStruct().addPost(post: post)
+        else { //If image
+            post = Post(isImage: true, postOwner: username, link: link, contentKey: contentKey)
+            guard let standardPost = post else { return }
+            standardPost.tags = tagArray
+            ParentPostStruct().addPost(post: standardPost)
+            
+            for tag in message{
+                if tag.count > 2 {
+                    let standardizedTag = tag.lowercased()
+                    tagArray.append(standardizedTag)
+                    TagStruct().addElement(tagLabel: standardizedTag, tagElement: TagElement(link: link, contentKey: post!.contentKey))
+                }
+            }
+        }
+        
     }
     
 }

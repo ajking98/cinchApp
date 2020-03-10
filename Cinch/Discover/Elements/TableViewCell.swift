@@ -16,6 +16,7 @@ class TableViewCell: UITableViewCell, UICollectionViewDataSource {
     var identifier = "Cell"
     var hashTagTerm = ""
     var content:[String] = []
+    var indexesToPop: [Int] = []
 
     //elements
     let hashTagIcon = UIImageView(image: UIImage(named: "HashTag"))
@@ -30,19 +31,13 @@ class TableViewCell: UITableViewCell, UICollectionViewDataSource {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
         // Configure the view for the selected state
     }
     
     func setUp(hashTagTerm: String) {
         self.hashTagTerm = hashTagTerm.lowercased().capitalizeFirstLetter()
         
-        if hashTagTerm.lowercased().contains("following") {
-            fetchFollowingPosts()
-        }
-        else {
-            fetchContent()
-        }
+        fetchContent()
         
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -72,21 +67,33 @@ class TableViewCell: UITableViewCell, UICollectionViewDataSource {
     ///fetches the links for the term
     func fetchContent(){
         content = []
-        TagStruct().readAllElementLinks(tagLabel: hashTagTerm.lowercased()) { (links) in
-            self.content = links
+//        TagStruct().readAllElementLinks(tagLabel: hashTagTerm.lowercased()) { (links) in
+//            self.content = links
+//            self.collectionView.reloadData()
+//
+//            self.collectionView.performBatchUpdates({
+//                self.popIndexes()
+//            }, completion: nil)
+//        }
+        
+        TagStruct().readAllElements(tagLabel: hashTagTerm.lowercased()) { (tagElements) in
+            for tagElement in tagElements {
+                if tagElement.contentKey.count > 1 {
+                    print("appending this: ", tagElement.contentKey)
+                    self.content.append(tagElement.contentKey)
+                }
+                else {
+                    
+                    self.content.append(tagElement.link)
+                }
+            }
             self.collectionView.reloadData()
+            
+            self.collectionView.performBatchUpdates({
+                self.popIndexes()
+            }, completion: nil)
         }
     }
-    
-    ///fetches all the new posts for the local user
-    func fetchFollowingPosts() {
-        guard let localUser = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
-        UserStruct().readNewContent(user: localUser) { (links) in
-            self.content = links
-            self.collectionView.reloadData()
-        }
-    }
-    
     
     
     func addHashTag() {
@@ -109,7 +116,7 @@ class TableViewCell: UITableViewCell, UICollectionViewDataSource {
         //constraints
         upperText.translatesAutoresizingMaskIntoConstraints = false
         upperText.leftAnchor.constraint(equalTo: hashTagIcon.rightAnchor, constant: 8).isActive = true
-        upperText.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        upperText.widthAnchor.constraint(equalToConstant: frame.width).isActive = true
         upperText.bottomAnchor.constraint(equalTo: collectionView.topAnchor, constant: -12).isActive = true
         upperText.centerYAnchor.constraint(equalTo: hashTagIcon.centerYAnchor).isActive = true
         upperText.heightAnchor.constraint(equalToConstant: 20).isActive = true
@@ -121,9 +128,14 @@ class TableViewCell: UITableViewCell, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! GenericCell
-        cell.setup(link: content[indexPath.item])
+        cell.setup(contentKey: content[indexPath.item]) {
+            if !self.indexesToPop.contains(indexPath.item) {
+                self.indexesToPop.append(indexPath.item)
+            }
+        }
         return cell
     }
+    
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let storyboard = UIStoryboard(name: "Discover", bundle: nil)
@@ -133,6 +145,20 @@ class TableViewCell: UITableViewCell, UICollectionViewDataSource {
         vc.startingIndex = indexPath
         parentViewController?.navigationController?.pushViewController(vc, animated: true)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as! GenericCell
+        cell.setup(contentKey: content[indexPath.item])
+    }
+    
+    
+    func popIndexes() {
+            self.indexesToPop.sort()
+            for _ in self.indexesToPop {
+            guard let item = self.indexesToPop.popLast() else { return }
+            self.content.remove(at: item)
+        }
+    }
 }
 
 
@@ -140,7 +166,7 @@ class TableViewCell: UITableViewCell, UICollectionViewDataSource {
 
 extension UITableViewCell: UICollectionViewDelegateFlowLayout {
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 0.28 * frame.width, height: collectionView.frame.height)
+        return CGSize(width: 0.27 * frame.width, height: collectionView.frame.height)
     }
     
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

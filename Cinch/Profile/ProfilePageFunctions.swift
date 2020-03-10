@@ -31,40 +31,57 @@ extension ProfileViewController {
         self.present(next, animated: true, completion: nil)
     }
     
-    @objc func handleFollow(){
+//    @objc func handleFollow(){
+//        guard let localUser = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
+//        if isFollowing {
+//            print("UnFollowing")
+//            UserStruct().deleteFollowing(user: localUser, following: username)
+//            UserStruct().deleteFollower(user: username, follower: localUser)
+//            self.mainButton.backgroundColor = .customRed
+//            self.mainButton.setTitle("Follow", for: .normal)
+//            self.mainButton.setTitleColor(.white, for: .normal)
+//        }
+//        else{
+//            print("Following")
+//            UserStruct().addFollowing(user: localUser, newFollowing: username)
+//            UserStruct().addFollower(user: username, newFollower: localUser)
+//            
+//            self.mainButton.layer.borderWidth = 1.7
+//            self.mainButton.backgroundColor = .white
+//            self.mainButton.setTitle("Unfollow", for: .normal)
+//            self.mainButton.setTitleColor(.customRed, for: .normal)
+//            self.mainButton.layer.borderColor = UIColor.customRed.cgColor
+//        }
+//        isFollowing.toggle()
+//    }
+    
+    @objc func handleFollowUser(){
         guard let localUser = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
         if isFollowing {
             print("UnFollowing")
             UserStruct().deleteFollowing(user: localUser, following: username)
             UserStruct().deleteFollower(user: username, follower: localUser)
-            self.mainButton.backgroundColor = .customRed
             self.mainButton.setTitle("Follow", for: .normal)
+            self.mainButton.backgroundColor = .darkBlue
             self.mainButton.setTitleColor(.white, for: .normal)
         }
         else{
             print("Following")
             UserStruct().addFollowing(user: localUser, newFollowing: username)
             UserStruct().addFollower(user: username, newFollower: localUser)
-            
             self.mainButton.layer.borderWidth = 1.7
-            self.mainButton.backgroundColor = .white
             self.mainButton.setTitle("Unfollow", for: .normal)
-            self.mainButton.setTitleColor(.customRed, for: .normal)
-            self.mainButton.layer.borderColor = UIColor.customRed.cgColor
+            self.mainButton.backgroundColor = .white
+            self.mainButton.setTitleColor(.darkBlue, for: .normal)
+            self.mainButton.layer.borderColor = UIColor.darkBlue.cgColor
         }
         isFollowing.toggle()
     }
     
     @objc func handleSegmentTap(_ gesture: UITapGestureRecognizer? = nil) {
         let segmentIndex = segmentControl.selectedSegmentIndex
-        if segmentIndex == 0 {
-            segmentControl.setImage(UIImage(named: "heartIcon-Selected"), forSegmentAt: 0)
-            segmentControl.setImage(UIImage(named: "profileGems"), forSegmentAt: 1)
-        }
-        else {
-            segmentControl.setImage(UIImage(named: "heartIcon-Unselected"), forSegmentAt: 0)
-            segmentControl.setImage(UIImage(named: "ProfileGems-Selected"), forSegmentAt: 1)
-        }
+        segmentControl.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .headline)], for: .selected)
+        segmentControl.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .subheadline)], for: .normal)
         if gesture != nil {
             collectionView?.scrollToItem(at: IndexPath(item: segmentIndex, section: 0), at: .left, animated: true)
         }
@@ -113,10 +130,10 @@ extension EditProfileViewController {
         if (didChangeProfileImage) {
             guard let image = imageView.image else { return }
             guard let profileImage = profileImage else { return }
-            StorageStruct().uploadImage(image: image) { (newImage) in
-                UserStruct().updateProfilePic(user: username!, newProfilePic: newImage)
-                profileImage.image = image
-            }
+//            StorageStruct().uploadImage(image: image) { (newImage) in //TODO: Yassin
+//                UserStruct().updateProfilePic(user: username!, newProfilePic: newImage)
+//                profileImage.image = image
+//            }
         }
 
         if self.nameText.text != "" {

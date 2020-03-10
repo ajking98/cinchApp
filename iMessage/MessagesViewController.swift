@@ -23,7 +23,6 @@ class MessagesViewController: UIViewController {
     var width: CGFloat = 0
     var height: CGFloat = 0
     let identifier = "Cell"
-    var content:[String] = []
     var dbRef: DatabaseReference!
 
     //views
@@ -33,36 +32,16 @@ class MessagesViewController: UIViewController {
     
     //view controllers
     var searchTableViewController = SearchTableViewController(style: .plain)
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         if(FirebaseApp.app() == nil){
             FirebaseApp.configure()
         }
-        
         setup()
-        fetchContent()
         setupSearchBar()
         setupCollectionView()
         setupTableTagsView()
-    }
-    
-    ///gets the links from the DB and appends it to the content array
-    func fetchContent() {
-        dbRef = Database.database().reference().child("posts")
-        dbRef.queryLimited(toFirst: 60).queryOrdered(byChild: "dateCreated").observeSingleEvent(of: .value) { (snapshot) in
-            
-                for child in snapshot.children {
-                    let child = child as? DataSnapshot
-                    if let value = child?.value as? [String : Any] {
-                        if let link = value["link"] as? String {
-                            let indexPath = IndexPath(item: self.content.count, section: 0)
-                            self.content.append(link)
-                            self.collectionView.insertItems(at: [indexPath])
-                        } } }
-        }
     }
     
     func setup(){
@@ -90,6 +69,7 @@ class MessagesViewController: UIViewController {
         tableTagsView.dataSource = searchTableViewController
         tableTagsView.delegate = searchTableViewController
         searchTableViewController.handleCellSelected = nextView(term:)
+        searchTableViewController.setup()
         tableTagsView.separatorStyle = .none
         
         //constraints
@@ -102,7 +82,6 @@ class MessagesViewController: UIViewController {
     
     ///presents the next vc when the user enters a term to search 
     func nextView(term: String) {
-        searchTableViewController.addSearchTerm(term: term)
         tableTagsView.alpha = 0
         searchBar.endEditing(true)
         let vc = MessageSearchResultsViewController()
@@ -113,14 +92,19 @@ class MessagesViewController: UIViewController {
     }
     
     func setupCollectionView() {
-        collectionView.register(GenericCell.self, forCellWithReuseIdentifier: identifier)
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
+        collectionView.register(BroadCollectionViewCell.self, forCellWithReuseIdentifier: identifier)
         collectionView.backgroundColor = .white
         collectionView.showsVerticalScrollIndicator = false
+        collectionView.showsHorizontalScrollIndicator = false
         collectionView.contentInset.top = 16
+        collectionView.isPagingEnabled = true
         collectionView.delegate = self
         collectionView.dataSource = self
         view.addSubview(collectionView)
-        
+
         //constraints
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true

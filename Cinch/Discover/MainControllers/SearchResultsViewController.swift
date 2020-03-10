@@ -24,7 +24,6 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         
         width = view.frame.width
         height = view.frame.height
@@ -35,7 +34,8 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
     
     override func viewDidAppear(_ animated: Bool) {
         navigationController?.view.backgroundColor = .white
-        navigationController?.navigationBar.isTranslucent = false 
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.tabBarController?.tabBar.isHidden = false
     }
     
     func setup(term: String) {
@@ -54,7 +54,7 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
         let leftNavItem = UIBarButtonItem(customView: backButton)
         navigationItem.setLeftBarButton(leftNavItem, animated: false)
         
-        navigationController?.tabBarController?.tabBar.isHidden = true
+//        navigationController?.tabBarController?.tabBar.isHidden = false
         
         //Enables swiping back
         navigationController?.interactivePopGestureRecognizer?.delegate = self
@@ -81,8 +81,8 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
     
     
     func fetchContent() {
-        TagStruct().readAllElementLinks(tagLabel: searchTerm.lowercased()) { (links) in
-            self.content = links
+        TagStruct().readAllElementLinks(tagLabel: searchTerm.lowercased()) { (contentKeys) in
+            self.content = contentKeys
             self.collectionView.reloadData()
         }
     }
@@ -99,9 +99,14 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! GenericCell
-        cell.setup(link: content[indexPath.item])
+        cell.setup(contentKey: content[indexPath.item])
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as! GenericCell
+        cell.setup(contentKey: content[indexPath.item])
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

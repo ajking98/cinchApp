@@ -33,13 +33,20 @@ class User  {
     //default variables 
     let defaultProfilePic = UIImage(named: "defaultProfilePic1")
     let folder1 = Folder(folderName: "Random")
-    let folder2 = Folder(folderName: "Hearted")
+    let folder2 = Folder(folderName: "Likes")
 
     
     func generateUserID() -> String {
-        //Todo this should be an actual function that Ahmed has
-        //it should also check if that userID exists in the DB, if does, then generate a different userID 
-        return randomString(10)
+        let letters : NSString = "asdfghjkloiuytrewqazxcvbnmWERTYUIASDFGHJKXCVBN=(&^+@%!-_*)"
+        let len = UInt32(letters.length)
+        
+        var randomString = ""
+        for _ in 0 ..< 10 {
+            let rand = arc4random_uniform(len)
+            var nextChar = letters.character(at: Int(rand))
+            randomString += NSString(characters: &nextChar, length: 1) as String
+        }
+        return randomString
     }
     
     
@@ -47,7 +54,7 @@ class User  {
     
     ///should only be called when first making a user to add them to the database
     init() {
-        username = generateUserID() //TODO this should not be static, it should instead generate a generic key that doesn't exist in the DB
+        username = generateUserID()
         name = ""
         email = ""
         password = ""

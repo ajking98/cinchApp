@@ -156,7 +156,7 @@ class EditProfileViewController: UIViewController {
     }
     
     func setupSaveButton() {
-        saveButton.backgroundColor = UIColor.customRed
+        saveButton.backgroundColor = .darkBlue
         saveButton.setTitle("Save", for: .normal)
         saveButton.addTarget(self, action: #selector(saveButtonAction), for: .touchUpInside)
         saveButton.layer.cornerRadius = 3

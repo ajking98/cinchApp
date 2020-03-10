@@ -20,41 +20,41 @@ struct ParentPostStruct {
     
     ///Adds post to DB
     func addPost(post : Post) {
-        guard let link = post.link else { return }
-        let updatedLink = convertStringToKey(link: link)
-        DB.child(updatedLink).setValue(post.toString())
+        let postString = post.toString()
+        guard let contentKey = postString["contentKey"] as? String else { return }
+        DB.child(contentKey).setValue(postString)
+        let link = post.link ?? ""
         
         //TODO THIS SHOULD BE DONE WITHIN A GOOGLE CLOUD FUNCTION INSTEAD TO OFFLOAD TO THE CLOUD INSTEAD OF LETTING THE USER DO IT ON THEIR DEVICE
         guard let username = post.postOwner else { return }
         UserStruct().readFollowers(user: username) { (followers) in
             for follower in followers {
-                print("adding newContent to user: ", follower)
-                UserStruct().addNewContent(user: follower, link: link)
+                UserStruct().addNewContent(user: follower, link: link, contentKey: contentKey)
             }
         }
     }
     
     ///deletes a post from DB with the given Link
-    func deletePost(postLink : String) {
-        let updatedLink = convertStringToKey(link: postLink)
+    func deletePost(contentKey : String) {
+        let updatedLink = convertStringToKey(link: contentKey)
         DB.child(updatedLink).removeValue()
     }
     
     
     ///Reads complete post from database
-    func readPost(postLink : String, completion : @escaping(Post)-> Void) {
-        let updatedLink = convertStringToKey(link: postLink)
-        
+    func readPost(contentKey : String, completion : @escaping(Post)-> Void) {
+        let updatedLink = convertStringToKey(link: contentKey)
         DB.child(updatedLink).observeSingleEvent(of: .value) { (snapshot) in
             if let post = snapshot.value as? [String : Any] {
                 guard post["dateCreated"] != nil else { return }// this just makes sure that the given post has been properly created
                 let likedBy = post["likedBy"] != nil ? post["likedBy"] as! [String : String] : [:] as! [String : String]
+                let contentKey = post["contentKey"] != nil ? post["contentKey"] as! String : ""
                 
                 let tags = post["tags"] != nil ? post["tags"] as! [String : String] : [:] as! [String : String]
                 
             
                 
-                let thisPost = Post(isImage: post["isImage"] as! Bool, numberOfLikes: post["numberOfLikes"] as! Int, postOwner: post["postOwner"] as! String, likedBy: Array(likedBy.keys), dateCreated: post["dateCreated"] as! Double, tags: Array(tags.keys), link: post["link"] as! String)
+                let thisPost = Post(isImage: post["isImage"] as! Bool, numberOfLikes: post["numberOfLikes"] as! Int, postOwner: post["postOwner"] as! String, likedBy: Array(likedBy.keys), dateCreated: post["dateCreated"] as! Double, tags: Array(tags.keys), link: post["link"] as! String, contentKey: contentKey)
                 
                 
                 completion(thisPost)
@@ -70,9 +70,10 @@ struct ParentPostStruct {
                 for post in listOfPosts.values {
                     guard post["dateCreated"] != nil else { return }// this just makes sure that the given post has been properly created
                         let likedBy = post["likedBy"] != nil ? post["likedBy"] as! [String : String] : [:] as! [String : String]
-                        
+                        let contentKey = post["contentKey"] != nil ? post["contentKey"] as! String : ""
+                    
                         let tags = post["tags"] != nil ? post["tags"] as! [String : String] : [:] as! [String : String]
-                        let thisPost = Post(isImage: post["isImage"] as! Bool, numberOfLikes: post["numberOfLikes"] as! Int, postOwner: post["postOwner"] as! String, likedBy: Array(likedBy.keys), dateCreated: post["dateCreated"] as! Double, tags: Array(tags.keys), link: post["link"] as! String)
+                        let thisPost = Post(isImage: post["isImage"] as! Bool, numberOfLikes: post["numberOfLikes"] as! Int, postOwner: post["postOwner"] as! String, likedBy: Array(likedBy.keys), dateCreated: post["dateCreated"] as! Double, tags: Array(tags.keys), link: post["link"] as! String, contentKey: contentKey)
                         postArray.append(thisPost)
                 }
                 completion(postArray)

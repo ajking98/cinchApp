@@ -13,19 +13,28 @@ import SDWebImage
 class GenericCell: UICollectionViewCell {
     var imageView = UIImageView()
     
-    func setup(link: String){
-        guard let contentLink = URL(string: link) else { return }
+    ///takes a contentKey to the content it should build
+    func setup(contentKey: String, _ errorHandler: (() -> Void)? = nil){
+        PostStruct().readLink(contentKey: contentKey) { (link) in
             if checkIfVideo(link) {
                 //fetch thumbnail
-                PostStruct().readThumbnail(link: link) { (thumbnailLink) in
-                    print("this is the thumbnail", thumbnailLink)
-                    guard let thumbnailURL = URL(string: thumbnailLink) else { return }
-                    
-                    self.imageView.loadVideo(thumbnailURL, size: self.frame.size)
+                PostStruct().readThumbnail(contentKey: contentKey) { (thumbnailLink) in
+                    var smoothedThumbnail = thumbnailLink
+                    smoothedThumbnail.append(contentsOf: thumbnailLink.reversed())
+                    if smoothedThumbnail.isEmpty { return }
+                    self.imageView.sd_setAnimationImages(with: smoothedThumbnail)
+                    self.imageView.animationDuration = 2.8
+                    self.imageView.sd_setHighlightedImage(with: smoothedThumbnail[0], completed: nil)
+                    self.imageView.startAnimating()
                 }
             }
         else {
-            imageView.sd_setImage(with: URL(string: link), placeholderImage: UIImage(), completed: nil)
+                self.imageView.sd_setImage(with: URL(string: link), placeholderImage: UIImage()) { (image, error, cacheType, link) in
+                    if error != nil {
+                        errorHandler?()
+                    }
+                }
+            }
         }
         //constraints
         addSubview(imageView)
@@ -35,11 +44,43 @@ class GenericCell: UICollectionViewCell {
         imageView.backgroundColor = .lightGray
     }
     
-    override func prepareForReuse() {
-        subviews.forEach { (view) in
-            view.removeFromSuperview()
-        }
+    ///sets up the cell using a post - iMessage
+    func setup(post: Post, _ errorHandler: (() -> Void)? = nil) {
+        addSubview(imageView)
+        imageView.frame.size = frame.size
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.backgroundColor = .lightGray
         
+        
+        guard let link = post.link else { return }
+        let contentKey = post.contentKey
+        if post.isImage! {
+            self.imageView.sd_setImage(with: URL(string: link), placeholderImage: UIImage()) { (image, error, cacheType, link) in
+                if error != nil {
+                    errorHandler?()
+                }
+            }
+        }
+        else {
+            //fetch thumbnail
+            guard contentKey != "" else {
+                return
+            }
+            PostStruct().readThumbnail(contentKey: contentKey) { (thumbnailLink) in
+                var smoothedThumbnail = thumbnailLink
+                smoothedThumbnail.append(contentsOf: thumbnailLink.reversed())
+                if smoothedThumbnail.isEmpty { return }
+                self.imageView.sd_setAnimationImages(with: smoothedThumbnail)
+                self.imageView.animationDuration = 2.8
+                self.imageView.sd_setHighlightedImage(with: smoothedThumbnail[0], completed: nil)
+                self.imageView.startAnimating()
+            }
+        }
+    }
+    
+    
+    override func prepareForReuse() {
         imageView = UIImageView()
     }
 }

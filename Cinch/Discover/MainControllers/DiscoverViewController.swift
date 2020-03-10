@@ -11,12 +11,12 @@
 import UIKit
 
 class DiscoverViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
 
     //Data
     var width: CGFloat = 0
     var height: CGFloat = 0
     var images:[UIImage] = [] //Images for the top carousel
+    var imageLinks:[String] = [] //Links for the images on the top carousel
     var mainHashTags:[String] = []
     let identifier = "Cell"
     
@@ -50,22 +50,63 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
         navigationController?.navigationBar.isHidden = false
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.view.backgroundColor = .white
+//        navigationController?.hidesBarsOnSwipe = true
+        
     }
     
     
     func fetchData() {
+        guard let username = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
+        
+        //Check version
+        ParentStruct().readVersion { (latestVersion) in
+            UserStruct().readVersion(username: username, { (currentVersion) in
+                    if (currentVersion * 10).rounded(.down) < (latestVersion * 10).rounded(.down) {
+                        let vc = UpdateScreen()
+                        let navController = UINavigationController(rootViewController: vc)
+                        navController.modalPresentationStyle = .fullScreen
+                        self.present(navController, animated: true, completion: nil)
+                    }
+            }) {
+                UserStruct().updateVersion(username: username, version: latestVersion)
+            }
+        }
+        
         ParentTagStruct().readAdminTags { (tags) in
             self.mainHashTags = tags
             self.tableView.reloadData()
         }
         
-        ParentPostStruct().readAdminPosts { (links) in
-            for link in links {
-                if let url = URL(string: link) {
+//        ParentPostStruct().readAdminPosts { (links) in
+//            for link in links {
+//                if let url = URL(string: link) {
+//                    do {
+//                        let imageData = try Data(contentsOf: url)
+//                        if let image = UIImage(data: imageData) {
+//                            self.images.append(image)
+//                            self.imageLinks.append(link)
+//                        }
+//                    }
+//                    catch {
+//                        print("THIS IS FUCKING UP")
+//                    }
+//                    
+//                }
+//            }
+//        }
+        UserStruct().readNewContent(user: username) { (links) in
+            let limit = links.count < 15 ? links.count : 15
+            for index in 0 ..< limit {
+                if checkIfVideo(links[index]) {
+                    //TODO: Build for videos too
+                    continue
+                }
+                if let url = URL(string: links[index]) {
                     do {
                         let imageData = try Data(contentsOf: url)
                         if let image = UIImage(data: imageData) {
                             self.images.append(image)
+                            self.imageLinks.append(links[index])
                         }
                     }
                     catch {
@@ -73,8 +114,9 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
                     }
                     
                 }
+                
             }
-            self.pageControl.numberOfPages = self.images.count
+            self.pageControl.numberOfPages = self.images.count + 1
             self.setupCarousel()
             self.addCarouselData()
         }
@@ -116,28 +158,37 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
-    
-    
     func setupCarousel() {
-        topCarousel.frame = CGRect(x: 0, y: 0, width: width, height: 0.24 * height)
+        topCarousel.frame = CGRect(x: 0, y: 0, width: width, height: 0.3 * height)
+        topCarousel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleCarouselTapped)))
+        topCarousel.contentSize = CGSize(width: width * CGFloat(images.count + 1), height: topCarousel.frame.size.height)
+       topCarousel.delegate = self
+       topCarousel.isPagingEnabled = true
+       topCarousel.showsHorizontalScrollIndicator = false
+       topCarousel.backgroundColor = .darkBlue
+       tableView.tableHeaderView = topCarousel
+       topCarousel.clipsToBounds = true
+       let timer = Timer.scheduledTimer(timeInterval: 8.0, target: self, selector: #selector(self.scrollCarouselAutomatically), userInfo: nil, repeats: true)
         
-        topCarousel.contentSize = CGSize(width: width * CGFloat(images.count), height: topCarousel.frame.size.height)
-           topCarousel.delegate = self
-           topCarousel.isPagingEnabled = true
-           topCarousel.showsHorizontalScrollIndicator = false
-           topCarousel.backgroundColor = .darkBlue
-           tableView.tableHeaderView = topCarousel
+        let topImageView = UIImageView(frame: topCarousel.frame)
+        topImageView.image = UIImage(named: "YourFollowingScreen")
+        topImageView.clipsToBounds = true
+        topImageView.contentMode = .scaleAspectFill
+        topCarousel.addSubview(topImageView)
            
-           pageControl.frame = CGRect(x: 0, y: 0, width: 100, height: 24)
-           pageControl.center.x = view.center.x
-           pageControl.frame.origin.y = (0.23 * height) - pageControl.frame.size.height
-           tableView.addSubview(pageControl)
+       pageControl.frame = CGRect(x: 0, y: 0, width: 100, height: 24)
+       pageControl.center.x = view.center.x
+       pageControl.frame.origin.y = (0.29 * height) - pageControl.frame.size.height
+       tableView.addSubview(pageControl)
     }
     
     func addCarouselData() {
+        var xPos = topCarousel.frame.size.width
+        var imageView = UIImageView()
+        
         for index in 0..<images.count {
-            let xPos = topCarousel.frame.size.width * CGFloat(index)
-            let imageView = UIImageView(frame: CGRect(origin: CGPoint(x: xPos, y: 0), size: topCarousel.frame.size))
+            xPos = topCarousel.frame.size.width * CGFloat(index + 1)
+            imageView = UIImageView(frame: CGRect(origin: CGPoint(x: xPos, y: 0), size: topCarousel.frame.size))
             imageView.image = images[index]
             imageView.contentMode = .scaleAspectFill
             topCarousel.addSubview(imageView)
@@ -157,6 +208,7 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
       let cell = tableView.dequeueReusableCell(withIdentifier: identifier) as! TableViewCell
+      cell.selectionStyle = .none
       cell.cellHeight = height * 0.242
       cell.cellWidth = tableView.frame.size.width
       cell.setUp(hashTagTerm: mainHashTags[indexPath.item])
@@ -164,13 +216,44 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return height * 0.242
+        return height * 0.25
     }
     
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         searchBar.endEditing(true)
-        return false
+        return true
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        handleGoToResult(str: mainHashTags[indexPath.row])
+    }
+    
+    @objc func handleCarouselTapped() {
+        if pageControl.currentPage == 0 { return }
+        let vc = CellSelectedTable()
+        vc.modalPresentationStyle = .fullScreen
+        vc.content = self.imageLinks
+        vc.startingIndex = IndexPath(row: pageControl.currentPage - 1, section: 0)
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc func scrollCarouselAutomatically() {
+        let pageNumber: Int = Int(topCarousel.contentOffset.x / topCarousel.frame.size.width)
+        if pageNumber == images.count {
+            topCarousel.scrollRectToVisible(CGRect(origin: CGPoint.zero, size: topCarousel.frame.size), animated: true)
+        }
+        else{
+            topCarousel.scrollRectToVisible(CGRect(origin: CGPoint(x: topCarousel.contentOffset.x + topCarousel.frame.width, y: 0), size: topCarousel.frame.size), animated: true)
+        }
+    }
+    
+    func handleGoToResult(str: String) {
+        let vc = SearchResultsViewController()
+        vc.initialNavigationController = navigationController
+        vc.setup(term: str)
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+        
 }
 
 
@@ -207,7 +290,6 @@ extension DiscoverViewController: UISearchBarDelegate {
     }
     
     func nextView(term: String) {
-        searchTableViewController.addSearchTerm(term: term)
         tableTagsView.alpha = 0
         searchBar.endEditing(true)
         let vc = SearchResultsViewController()

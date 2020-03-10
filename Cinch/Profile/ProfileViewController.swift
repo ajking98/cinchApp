@@ -28,13 +28,16 @@ class ProfileViewController: UIViewController {
     //elements
     var scrollView = UIScrollView(frame: CGRect.zero)
     var profileImageView = UIImageView(frame: CGRect.zero)
+    var backgroundProfileIcon = UIImageView(image: UIImage(named: "backgroundRing1"))
     var usernameLabel = UILabel(frame: CGRect.zero)
     var gemLabel = UILabel(frame: CGRect.zero)
+    var addFolderButton = UILabel(frame: CGRect.zero)
     var numberOfGems = 0
     var stackView = ProfileStackView(frame: CGRect.zero)
     var mainButton = UIButton(frame: CGRect.zero) //this is the button that can either be "edit profile" or "follow/unfollow"
-    var segmentControl = UISegmentedControl(items: [UIImage(named: "heartIcon-Selected"), UIImage(named: "profileGems")])
+    var segmentControl = UISegmentedControl(items: ["Owned", "Public"])
     var collectionView: UICollectionView?
+    let followNav = UIButton(type: .custom)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,6 +51,12 @@ class ProfileViewController: UIViewController {
 //        setupGemLabel()
 //        stackView.setup(followings: followings, followers: followers, Gems: gems, view: view, scrollView: scrollView)
         setupButton()
+        if isUser {
+            print(isUser)
+//            setupButton()
+            setupAddFolderButton()
+        }
+        
         setupSegmentControl()
         setupSegmentControlBars()
         setupCollectionViews()
@@ -58,9 +67,9 @@ class ProfileViewController: UIViewController {
     func fetchData() {
         let localUser = String(UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)!)
         print("these are the two usernames:", username, " VS ", localUser)
-        if username == ""  || username == localUser { //checks if the user is looking at their profile or someone else's
-            username = localUser
-        }
+        
+        isUser = checkIfLocalUser(username: username)
+        username = isUser ? localUser : username
         
     }
     
@@ -68,8 +77,7 @@ class ProfileViewController: UIViewController {
         tabBarController?.tabBar.isHidden = false
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.view.backgroundColor = .white
-        print("this is appearing")
-        collectionView?.reloadData()
+//        collectionView?.reloadData()
     }
     
     //sets the data - width, height, profileName, username, isUser, isFollowing etc.
@@ -83,6 +91,7 @@ class ProfileViewController: UIViewController {
     
     ///Checks if local User is following the given username
     func fetchIsFollowing() {
+        if isUser { return }
         mainButton.setTitle("Follow", for: .normal)
         guard let localUser = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
         UserStruct().readFollowing(user: localUser) { (users) in
@@ -107,7 +116,7 @@ class ProfileViewController: UIViewController {
         scrollView.backgroundColor = .white
         view.addSubview(scrollView)
         
-        scrollView.contentSize.height = view.frame.height * 2 //TODO: this should be dynamic
+        scrollView.contentSize.height = view.frame.height * 1 //TODO: this should be dynamic
         scrollView.showsVerticalScrollIndicator = false
         
         //constriants
@@ -124,17 +133,25 @@ class ProfileViewController: UIViewController {
         navigationController?.navigationBar.barTintColor = .white
         
         //if it is not the local user
-        if !(navigationController?.viewControllers.count == 1) {
+        if !isUser {
             let backButton = UIBarButtonItem(image: UIImage(named: "backIcon-black"), style: .plain, target: self, action: #selector(goBack))
             navigationController?.navigationBar.tintColor = .black
             navigationItem.setLeftBarButton(backButton, animated: false)
-            isUser = false
+
+            
+//            followNav.setTitle("Follow", for: .normal)
+//            followNav.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+//            followNav.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleFollowUser)))
+//            let rightNavItem = UIBarButtonItem(customView: followNav)
+//            navigationItem.setRightBarButton(rightNavItem, animated: false)
+//            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Follow", style: .plain, target: self, action: #selector(handleFollowUser))
+//            navigationItem.rightBarButtonItem?.tintColor = .customRed
         }
         
         else {
             let settings = UIButton(type: .custom)
             settings.setImage(UIImage(named: "settings"), for: .normal)
-            settings.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+            settings.frame = CGRect(x: 0, y: 0, width: 60, height: 30)
             settings.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(settingToggle)))
             let rightNavItem = UIBarButtonItem(customView: settings)
             navigationItem.setRightBarButton(rightNavItem, animated: false)
@@ -154,8 +171,17 @@ class ProfileViewController: UIViewController {
         profileImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         profileImageView.heightAnchor.constraint(equalToConstant: height*0.12).isActive = true
         profileImageView.widthAnchor.constraint(equalToConstant: height*0.12).isActive = true
-        profileImageView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: height*0.15).isActive = true
+        profileImageView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: height*0.125).isActive = true
         profileImageView.layer.cornerRadius = height * 0.06
+        
+        view.addSubview(backgroundProfileIcon)
+        backgroundProfileIcon.translatesAutoresizingMaskIntoConstraints = false
+//        backgroundProfileIcon.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 0.0195  * frame.width).isActive = true
+//        backgroundProfileIcon.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -0.030  * frame.height).isActive = true
+        backgroundProfileIcon.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor, constant: width*0.0145).isActive = true
+        backgroundProfileIcon.centerXAnchor.constraint(equalTo: profileImageView.centerXAnchor).isActive = true
+        backgroundProfileIcon.widthAnchor.constraint(equalToConstant: height*0.17).isActive = true
+        backgroundProfileIcon.heightAnchor.constraint(equalToConstant: height*0.17).isActive = true
     }
     
     func setupUsernameLabel() {
@@ -191,19 +217,20 @@ class ProfileViewController: UIViewController {
     }
     
     func setupButton() {
-        mainButton.backgroundColor = .customRed
-        guard let localUser = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
-        isUser = localUser == username
+        mainButton.backgroundColor = .darkBlue
+        
+        print("this is the status:", username, isUser)
         if isUser {
+            print("this should be setting")
             mainButton.setTitle("Edit Profile", for: .normal)
             mainButton.addTarget(self, action: #selector(handleEditProfile), for: .touchUpInside)
-        }
-        else {
-            mainButton.addTarget(self, action: #selector(handleFollow), for: .touchUpInside)
+        } else {
+            mainButton.setTitle("Follow", for: .normal)
+            mainButton.addTarget(self, action: #selector(handleFollowUser), for: .touchUpInside)
         }
         
         scrollView.addSubview(mainButton)
-        mainButton.layer.cornerRadius = 2
+        mainButton.layer.cornerRadius = 3
         
         //constraints
         mainButton.translatesAutoresizingMaskIntoConstraints = false
@@ -211,6 +238,81 @@ class ProfileViewController: UIViewController {
         mainButton.heightAnchor.constraint(equalToConstant: height/18).isActive = true
         mainButton.widthAnchor.constraint(equalToConstant: width*0.4).isActive = true
         mainButton.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: height*0.04).isActive = true
+    }
+    
+    func setupAddFolderButton() {
+        scrollView.addSubview(addFolderButton)
+        addFolderButton.sizeToFit()
+        addFolderButton.backgroundColor = UIColor.clear
+        addFolderButton.layer.borderWidth = 1
+        addFolderButton.layer.borderColor = UIColor.darkBlue.cgColor
+        addFolderButton.clipsToBounds = true
+        addFolderButton.text = "Add Folder"
+        addFolderButton.textAlignment = .center
+        addFolderButton.font = gemLabel.font.withSize(width/27)
+        addFolderButton.textColor = .darkBlue
+ 
+        
+        addFolderButton.layer.cornerRadius = 12
+        //constraints
+        addFolderButton.translatesAutoresizingMaskIntoConstraints = false
+        addFolderButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        addFolderButton.heightAnchor.constraint(equalToConstant: height * 0.03).isActive = true
+        addFolderButton.widthAnchor.constraint(equalToConstant: width*0.3).isActive = true
+        addFolderButton.topAnchor.constraint(equalTo: mainButton.bottomAnchor, constant: 15).isActive = true
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleAddFolder))
+        addFolderButton.isUserInteractionEnabled = true
+        addFolderButton.addGestureRecognizer(tap)
+    }
+    
+    @objc func handleAddFolder(tapGesture: UITapGestureRecognizer) {
+        var folderName : String = ""
+        
+        let alert = UIAlertController(title: "Name Your Folder", message: "Assign a title to this folder", preferredStyle: .alert)
+        
+        alert.addTextField(configurationHandler: nil)
+        alert.addAction(UIAlertAction(title:"Cancel", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: "Create", style: .default, handler: { [weak alert] (_) in
+            let textField = alert?.textFields![0]
+            folderName = textField!.text!.lowercased()
+            if folderName != "" {
+                let newFolder = Folder(folderName: folderName)
+                UserStruct().addFolder(user: self.username, folder: newFolder)
+                self.createFolder(folderName: folderName)
+            }
+            
+            
+            // TODO add check for duplicate folder names
+            //if a folder with that name already exists, then it wont overwrite it
+//            if self.folders.contains(where: { (tempFolder) -> Bool in
+//                return tempFolder.folderName == folderName
+//            }){
+//                let alert = UIAlertController(title: "ERROR", message: "A folder with title: \"\(folderName)\" already exits. \n Try a different title.", preferredStyle: .alert)
+//                alert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: nil))
+//                self.present(alert, animated: true, completion: nil)
+//            }
+//            else
+//            {
+////                calling the function to save the folder name to Firebase and create it on the front end
+//
+//            }
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func createFolder(folderName: String){
+        let folder = Folder(folderName: folderName)
+        UserStruct().addFolder(user: username, folder: folder)
+        self.collectionView?.reloadData()
+        
+        let alert = UIAlertController(title: "Created '\(folderName)' Folder", message: "", preferredStyle: .alert) //Notify the user with an alert
+        self.present(alert, animated: true, completion: nil)
+        let alertExpiration = DispatchTime.now() + 0.85
+        DispatchQueue.main.asyncAfter(deadline: alertExpiration) {
+            alert.dismiss(animated: true, completion: nil)
+        }
     }
     
     
@@ -227,7 +329,7 @@ class ProfileViewController: UIViewController {
         segmentControl.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         segmentControl.heightAnchor.constraint(equalToConstant: height/18).isActive = true
         segmentControl.widthAnchor.constraint(equalToConstant: width).isActive = true
-        segmentControl.topAnchor.constraint(equalTo: mainButton.bottomAnchor, constant: height*0.07).isActive = true
+        segmentControl.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: height*0.17).isActive = true
     }
     
     func setupSegmentControlBars() {
@@ -282,5 +384,10 @@ class ProfileViewController: UIViewController {
         collectionView.widthAnchor.constraint(equalToConstant: width).isActive = true
         collectionView.topAnchor.constraint(equalTo: segmentControl.bottomAnchor, constant: 0).isActive = true
         
+    }
+    
+    ///resets the value conentSize of the scrollview after the folders are fetched
+    func resetSize(height: CGFloat){
+        scrollView.contentSize.height = height
     }
 }

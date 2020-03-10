@@ -34,8 +34,6 @@ struct TagElementStruct {
         return
     }
     
-    
-    
     ///Takes in a tagLabel and a link and returns the number of times that element has been used
     func readNumOfUsages(tagLabel : String, link : String, action : @escaping (Int) -> Void) {
         DB.child(tagLabel).child("elements").child(link).child("numOfUsages").observeSingleEvent(of: .value) { (snapshot) in

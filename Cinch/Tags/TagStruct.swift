@@ -38,7 +38,8 @@ struct TagStruct {
                 let lastUsed = element["lastUsed"] as! Double
                 let link = element["link"] as! String
                 let numOfUsages = element["numOfUsages"] as! Int
-                completion(TagElement(link: link, numOfUsages: numOfUsages, lastUsed: lastUsed, firstUsed: firstUsed))
+                let contentKey = element["contentKey"] != nil ? element["contentKey"] as! String : ""
+                completion(TagElement(link: link, numOfUsages: numOfUsages, lastUsed: lastUsed, firstUsed: firstUsed, contentKey: contentKey))
             }
         }
         
@@ -57,8 +58,9 @@ struct TagStruct {
                         let lastUsed = element["lastUsed"] as! Double
                         let link = element["link"] as! String
                         let numOfUsages = element["numOfUsages"] as! Int
+                        let contentKey = element["contentKey"] != nil ? element["contentKey"] as! String : ""
                         
-                        let tagElement = TagElement(link: link, numOfUsages: numOfUsages, lastUsed: lastUsed, firstUsed: firstUsed)
+                        let tagElement = TagElement(link: link, numOfUsages: numOfUsages, lastUsed: lastUsed, firstUsed: firstUsed, contentKey: contentKey)
                         elementsDict.append(tagElement)
                     }
                 }
@@ -73,10 +75,9 @@ struct TagStruct {
             var elementsDict:[String] = []
             for child in snapshot.children {
                 if let child = child as? DataSnapshot {
-                    if let value = child.value as? [String: Any] {
-                        if let link = value["link"] as? String {
-                            elementsDict.append(link)
-                        } } }
+                    if let key = child.key as? String {
+                        elementsDict.append(key)
+                    } }
             }
               completion(elementsDict)
           }
@@ -84,7 +85,7 @@ struct TagStruct {
     
     ///check is data already exists in db and updates or creates depending on the outcome
     func addElement(tagLabel : String, tagElement : TagElement) {
-        let link = tagElement.link
+        let link = tagElement.contentKey
         let updatedLink = convertStringToKey(link: link)
         DB.child(tagLabel).child("elements").child(updatedLink).observeSingleEvent(of: .value) { (snapshot) in
             if let _ = snapshot.value as? [String : Any] {
@@ -100,15 +101,15 @@ struct TagStruct {
     
     ///Takes in a tagLabel and a new tagElement and creates the elements for the given link
     fileprivate func createElement(tagLabel : String, newTagElement : TagElement){
-        let link = newTagElement.link
+        let link = newTagElement.contentKey
         let updatedLink = convertStringToKey(link: link)
         DB.child(tagLabel).child("elements").updateChildValues([updatedLink : newTagElement.toString()])
     }
     
     
     ///Takes in a tagLabel and a link to the image and deletes the tagElement at that given link in the tag object in the DB
-    func deleteElement(tagLabel : String, link : String){
-        let updatedLink = convertStringToKey(link: link)
+    func deleteElement(tagLabel : String, contentKey : String){
+        let updatedLink = convertStringToKey(link: contentKey)
         let updatedTag = tagLabel.lowercased()
         DB.child(updatedTag).child("elements").child(updatedLink).removeValue()
     }

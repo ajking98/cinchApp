@@ -29,6 +29,6 @@ extension UIColor {
     static let darkBlue = UIColor(red: 0.04, green: 0.1, blue: 0.43, alpha: 1.0)
     static let customRed = UIColor(red:0.93, green:0.11, blue:0.32, alpha:1.0)
     static let lightRed = UIColor(red:0.91, green:0.54, blue:0.54, alpha:1.0)
-
+    static let skyBlue =  UIColor(red:0.41, green:0.79, blue:0.82, alpha:1.0)
 
 }

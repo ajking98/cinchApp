@@ -26,7 +26,12 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
         }
         cell.username = username
         cell.navigationController = self.navigationController
-        cell.fetchFolders()
+        cell.fetchFolders { (height) in
+            let totalHeight = height + self.view.frame.height * 0.7
+            if totalHeight > self.scrollView.contentSize.height {
+                self.scrollView.contentSize.height = totalHeight
+            }
+        }
         return cell
     }
     
@@ -68,7 +73,7 @@ class ProfileMainCollectionViewCell: UICollectionViewCell {
     func setupFirstCollectionView() {
         gemsCollectionView.dataSource = self
         gemsCollectionView.delegate = self
-        gemsCollectionView.register(ProfileCollectionViewCell.self, forCellWithReuseIdentifier: cellIdentifier)
+        gemsCollectionView.register(FolderCell.self, forCellWithReuseIdentifier: cellIdentifier)
         gemsCollectionView.showsVerticalScrollIndicator = false
         gemsCollectionView.alwaysBounceVertical = false
         gemsCollectionView.backgroundColor = .white
@@ -81,7 +86,7 @@ class ProfileMainCollectionViewCell: UICollectionViewCell {
     func setupSecondCollectionView() {
         followingFoldersCollectionView.dataSource = self
         followingFoldersCollectionView.delegate = self
-        followingFoldersCollectionView.register(ProfileCollectionViewCell.self, forCellWithReuseIdentifier: cellIdentifier)
+        followingFoldersCollectionView.register(FolderCell.self, forCellWithReuseIdentifier: cellIdentifier)
         followingFoldersCollectionView.showsHorizontalScrollIndicator = false
         followingFoldersCollectionView.alwaysBounceVertical = false
         followingFoldersCollectionView.showsVerticalScrollIndicator = false
@@ -99,73 +104,180 @@ class ProfileMainCollectionViewCell: UICollectionViewCell {
 extension ProfileMainCollectionViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     
-    ///gets the names of the folders from firebase
-    func fetchFolders() {
-        print("this is the username", username)
+    ///gets the names of the folders from firebase and sets the height of the scrollview content for the profile page
+    func fetchFolders(completion: @escaping(CGFloat) -> Void) {
         UserStruct().readFolders(user: username) { (folders) in
             self.folders = folders
             self.gemsCollectionView.reloadData()
+            completion(CGFloat(folders.count - Int((folders.count/2))) * self.gemsCollectionView.bounds.width * 0.4)
         }
         UserStruct().readFoldersReference(user: username) { (folderRefs) in
             self.foldersFollowing = folderRefs
             self.followingFoldersCollectionView.reloadData()
+            completion(CGFloat(folderRefs.count - Int((folderRefs.count/2))) * self.gemsCollectionView.bounds.width * 0.4)
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == gemsCollectionView {
-            print("this is the count of the gems: ", folders.count)
             return folders.count
         }
         return foldersFollowing.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! ProfileCollectionViewCell
-        // For GemCollections
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! FolderCell
+        // For Personal
         if collectionView == gemsCollectionView {
-            cell.nameLabel.text = folders[indexPath.item]
+            cell.setup(username: username, folderName: folders[indexPath.item], isPersonal: true)
             return cell
         }
-        
-        // For LikeCollections
-        cell.nameLabel.text = foldersFollowing[indexPath.item].folderName
+        // For Following
+        cell.setup(username: foldersFollowing[indexPath.item].admin, folderName: foldersFollowing[indexPath.item].folderName, isPersonal: false)
         return cell
-        
     }
     
     ///Presents the Folder Selected Controller
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath) as! ProfileCollectionViewCell
+        let cell = collectionView.cellForItem(at: indexPath) as! FolderCell
         
         let storyboard = UIStoryboard(name: "ProfilePage", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "FolderSelected") as! FolderSelectedController
-        let folderName = cell.nameLabel.text!
+        let folderName = folders[indexPath.item]
         let username = collectionView == gemsCollectionView ? self.username : foldersFollowing[indexPath.item].admin
         vc.setup(username: username, folderName: folderName)
         navigationController.pushViewController(vc, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (collectionView.bounds.width)/3 - 1.5, height: (collectionView.bounds.width)/2)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0.5
+        return CGSize(width: (collectionView.bounds.width) * 0.485, height: (collectionView.bounds.width) * 0.4)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 2
+        return 8
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 12, left: 0, bottom: 0, right: 0)
+    }
     
 }
 
 ///Folder for the content on the Profile Page
-class ProfileCollectionViewCell: UICollectionViewCell {
+class FolderCell: UICollectionViewCell {
+    
+    var username: String = ""
+    var folderName: String = ""
+    var isPersonal: Bool = false //when set to false, the profile icon will show on the folder along with the author's name
+    
+    //views
+    var imageView = UIImageView(frame: CGRect.zero)
+    var secondLayerView = UIView(frame: CGRect.zero)
+    var thirdLayerView = UIView(frame: CGRect.zero)
+    var profileIcon = UIImageView(frame: CGRect.zero)
+    var folderLabel = UILabel(frame: CGRect.zero)
+        
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupViews()
+    }
+    
+    ///sets up the cell, takes the username, folderName, and whether or not the folder is owned by the user passed
+    func setup(username: String, folderName: String, isPersonal: Bool) {
+        folderLabel.text = folderName
+        
+        print("this is the folder name: ", folderName.lowercased())
+        
+        FolderStruct().readIcon(user: username, folderName: folderName) { (icon) in
+            let url = URL(string: icon)
+            print("we have something", folderName)
+            if folderName.lowercased() == "likes" {
+                self.imageView.image = UIImage(named: "heartedFolder")
+            } else {
+                self.imageView.sd_setImage(with: url, placeholderImage: UIImage(), completed: nil)
+            }
+        }
+        
+        buildCell(username: username, folderName: folderName, isPersonal: isPersonal)
+    }
+    
+    func buildCell(username: String, folderName: String, isPersonal: Bool) {
+        //top image
+        imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 200, height: 150))
+        
+        imageView.frame.size = CGSize(width: 0.9 * frame.width, height: frame.height * 0.87)
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 3
+        imageView.layer.borderWidth = 0.8
+        imageView.layer.borderColor = UIColor.white.cgColor
+        addSubview(imageView)
+        print("sfesfaef \(folderName)")
+        
+        //Gradient
+        let topColor = UIColor.white.cgColor.copy(alpha: 0)
+        let bottomColor = UIColor.black.cgColor.copy(alpha: 0.8)
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [topColor, bottomColor]
+        gradientLayer.locations = [0.0, 1.0]
+        gradientLayer.frame = imageView.bounds
+        imageView.layer.insertSublayer(gradientLayer, at: 0)
+        
+        
+        //second layer
+        secondLayerView.frame.size = imageView.frame.size
+        secondLayerView.backgroundColor = .darkBlue
+        secondLayerView.layer.borderColor = UIColor.white.cgColor
+        secondLayerView.layer.borderWidth = 0.8
+        secondLayerView.layer.cornerRadius = 3
+        secondLayerView.frame.origin = CGPoint(x: 8, y: 8)
+        insertSubview(secondLayerView, belowSubview: imageView)
+        
+        //third view
+        thirdLayerView.frame.size = imageView.frame.size
+        thirdLayerView.backgroundColor = .darkBlue
+        thirdLayerView.layer.cornerRadius = 3
+        thirdLayerView.frame.origin.x = secondLayerView.frame.origin.x + 8
+        thirdLayerView.frame.origin.y = secondLayerView.frame.origin.y + 8
+        insertSubview(thirdLayerView, belowSubview: secondLayerView)
+        
+        //folderLabel
+        folderLabel.text = folderName
+        folderLabel.textColor = .white
+        folderLabel.font = folderLabel.font.withSize(14)
+        
+        //constraints for folderLabel
+        imageView.addSubview(folderLabel)
+        folderLabel.translatesAutoresizingMaskIntoConstraints = false
+        folderLabel.leftAnchor.constraint(equalTo: imageView.leftAnchor, constant: 8).isActive = true
+        folderLabel.bottomAnchor.constraint(equalTo: imageView.bottomAnchor, constant: -4).isActive = true
+        folderLabel.rightAnchor.constraint(equalTo: imageView.rightAnchor, constant: -4).isActive = true
+        folderLabel.heightAnchor.constraint(equalToConstant: 16).isActive = true
+        
+        guard !isPersonal else { return }
+        
+        //profile icon
+        profileIcon.frame.size = CGSize(width: 30, height: 30)
+        profileIcon.frame.origin = CGPoint(x: (self.imageView.frame.width - self.profileIcon.frame.width - 8), y: 8)
+        profileIcon.backgroundColor = .lightGray
+        profileIcon.layer.cornerRadius = profileIcon.frame.height / 2
+        profileIcon.clipsToBounds = true
+        imageView.addSubview(profileIcon)
+        
+        UserStruct().readProfilePic(user: username) { (link) in
+            let url = URL(string: link)
+            self.profileIcon.sd_setImage(with: url, placeholderImage: UIImage(), completed: nil)
+        }
+        
+        UserStruct().readName(user: username) { (name) in
+            print("this si the name:", name)
+            self.folderLabel.text = "\(name)'s \(folderName)"
+        }
+        
+    }
+    
+    
+    func fetchIcons() {
+        print("this is fetching the icons: ", username, folderName)
     }
     
 //    let picCollection: UIImageView = {
@@ -173,23 +285,6 @@ class ProfileCollectionViewCell: UICollectionViewCell {
 //        let imageView = UIImageView(image: image)
 //        return imageView
 //    }()
-    
-    let nameLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    func setupViews() {
-        backgroundColor = UIColor.lightGray
-        
-//        addSubview(picCollection)
-//        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-12-[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": picCollection]))
-//        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": picCollection]))
-        addSubview(nameLabel)
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-12-[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": nameLabel]))
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": nameLabel]))
-    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
