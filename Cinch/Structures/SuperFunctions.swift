@@ -34,16 +34,13 @@ struct SuperFunctions {
         
         if let thumbnail = post.thumbnail {
             for imageLink in thumbnail {
-                print("here is a link to check: ", imageLink)
                 StorageStruct().deleteContent(link: imageLink)
             }
         }
         
-        
+        print("these are you tags my son: ", post.tags)
         post.tags?.forEach({ (SingleTag) in
-            print("this is the content Key: ", contentKey)
             TagStruct().deleteElement(tagLabel: SingleTag, contentKey: contentKey)
-            TagStruct().deleteElement(tagLabel: SingleTag, contentKey: link)
         })
         
         print("is a link: ", link)

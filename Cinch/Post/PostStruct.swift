@@ -229,6 +229,7 @@ struct PostStruct {
     ///reads the tags for the given post
     func readTags(contentKey: String, completion: @escaping([String])-> Void) {
         let updatedLink = convertStringToKey(link: contentKey)
+        print("thisis you updated Link sonny", updatedLink)
         DB.child(updatedLink).child("tags").observeSingleEvent(of: .value) { (snapshot) in
             var tags: [String] = []
             for child in snapshot.children {

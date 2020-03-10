@@ -72,7 +72,7 @@ struct ParentPostStruct {
                         let likedBy = post["likedBy"] != nil ? post["likedBy"] as! [String : String] : [:] as! [String : String]
                         let contentKey = post["contentKey"] != nil ? post["contentKey"] as! String : ""
                         let thumbnail = post["thumbnail"] != nil ? post["thumbnail"] as! [String] : []
-                    
+                        
                         let tags = post["tags"] != nil ? post["tags"] as! [String : String] : [:] as! [String : String]
                         let thisPost = Post(isImage: post["isImage"] as! Bool, numberOfLikes: post["numberOfLikes"] as! Int, postOwner: post["postOwner"] as! String, likedBy: Array(likedBy.keys), dateCreated: post["dateCreated"] as! Double, tags: Array(tags.keys), link: post["link"] as! String, contentKey: contentKey, thumbnail)
                         postArray.append(thisPost)

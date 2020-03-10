@@ -191,37 +191,45 @@ struct SaveToFolder {
         guard let username = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
         var post: Post?
         if checkIfVideo(link) {
+                for tag in message{
+                    if tag.count > 2 {
+                        print("this is a tag")
+                        let standardizedTag = tag.lowercased()
+                        tagArray.append(standardizedTag)
+                    }
+                }
+            
         ///Adding the frames if its a video
             if let frames = frames {
                 StorageStruct().uploadFrames(frames: frames) { (links) in
                     post = Post(isImage: false, postOwner: username, link: link, contentKey: contentKey, links)
                     guard let standardPost = post else { return }
                     standardPost.tags = tagArray
+                    print("thisis you array: ", tagArray)
                     ParentPostStruct().addPost(post: standardPost)
                     
-                    for tag in message{
-                        if tag.count > 2 {
-                            let standardizedTag = tag.lowercased()
-                            tagArray.append(standardizedTag)
-                            TagStruct().addElement(tagLabel: standardizedTag, tagElement: TagElement(link: link, contentKey: post!.contentKey))
-                        }
-                    }
+                    
                 }
             }
         }
         else { //If image
-            post = Post(isImage: true, postOwner: username, link: link, contentKey: contentKey)
-            guard let standardPost = post else { return }
-            standardPost.tags = tagArray
-            ParentPostStruct().addPost(post: standardPost)
             
             for tag in message{
                 if tag.count > 2 {
                     let standardizedTag = tag.lowercased()
                     tagArray.append(standardizedTag)
-                    TagStruct().addElement(tagLabel: standardizedTag, tagElement: TagElement(link: link, contentKey: post!.contentKey))
                 }
             }
+            post = Post(isImage: true, postOwner: username, link: link, contentKey: contentKey)
+            guard let standardPost = post else { return }
+            standardPost.tags = tagArray
+            print("thisis you array: ", tagArray)
+            ParentPostStruct().addPost(post: standardPost)
+            
+        }
+
+        for tag in tagArray {
+            TagStruct().addElement(tagLabel: tag, tagElement: TagElement(link: link, contentKey: post!.contentKey))
         }
         
     }

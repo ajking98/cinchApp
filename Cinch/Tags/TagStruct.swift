@@ -111,6 +111,7 @@ struct TagStruct {
     func deleteElement(tagLabel : String, contentKey : String){
         let updatedLink = convertStringToKey(link: contentKey)
         let updatedTag = tagLabel.lowercased()
+        print("we are deleting this link", contentKey)
         DB.child(updatedTag).child("elements").child(updatedLink).removeValue()
     }
     
