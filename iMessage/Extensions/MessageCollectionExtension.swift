@@ -37,7 +37,7 @@ class BroadCollectionViewCell: UICollectionViewCell, UICollectionViewDataSource,
     
     var index = 0
     let identifier = "Cell"
-    var content: [String] = []
+    var posts: [Post] = []
     var dbRef: DatabaseReference!
     var collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
     var iMessageDelegate: iMessageAppDelegate!
@@ -61,9 +61,11 @@ class BroadCollectionViewCell: UICollectionViewCell, UICollectionViewDataSource,
         collectionView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
         fetchContent(index: index)
     }
+    
+    //TODO Do we really need this?
     override func prepareForReuse() {
         collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
-        content = []
+        posts = []
     }
     
     
@@ -72,24 +74,27 @@ class BroadCollectionViewCell: UICollectionViewCell, UICollectionViewDataSource,
         dbRef = Database.database().reference().child("posts")
         if index == 0 {
             dbRef.queryLimited(toLast: 60).queryOrdered(byChild: "dateCreated").observeSingleEvent(of: .value) { (snapshot) in
-
                 for child in snapshot.children {
                     let child = child as? DataSnapshot
-                    if let value = child?.key {
-                        let indexPath = IndexPath(item: self.content.count, section: 0)
-                        self.content.append(value)
-                        self.collectionView.insertItems(at: [indexPath])
-                    } }
+                    if let contentKey = child?.key {
+                        ParentPostStruct().readPost(contentKey: contentKey) { (post) in
+                            let indexPath = IndexPath(item: self.posts.count, section: 0)
+                            self.posts.append(post)
+                            self.collectionView.insertItems(at: [indexPath])
+                        }
+                        } }
             }
         }
         else {
             guard let username = UserDefaults(suiteName: "group.cinch")?.string(forKey: defaultsKeys.usernameKey) else { return }
             UserStruct().readCompleteFolders(user: username) { (folders) in
                 for folder in folders {
-                    for (contentKey, link) in folder.content {
-                        let indexPath = IndexPath(item: self.content.count, section: 0)
-                        self.content.append(contentKey)
-                        self.collectionView.insertItems(at: [indexPath])
+                    for (contentKey, _) in folder.content {
+                        ParentPostStruct().readPost(contentKey: contentKey) { (post) in
+                            let indexPath = IndexPath(item: self.posts.count, section: 0)
+                            self.posts.append(post)
+                            self.collectionView.insertItems(at: [indexPath])
+                        }
                     }
                 }
             }
@@ -97,21 +102,21 @@ class BroadCollectionViewCell: UICollectionViewCell, UICollectionViewDataSource,
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return content.count
+        return posts.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! GenericCell
-        cell.setup(contentKey: content[indexPath.item])
+        cell.setup(post: posts[indexPath.item])
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         iMessageDelegate.minimizeView()
-        PostStruct().readLink(contentKey: content[indexPath.item]) { (link) in
-            guard let directory = saveContent(globalLink: link) else { return }
-            self.iMessageDelegate.mainConversation.insertAttachment(directory, withAlternateFilename: nil, completionHandler: nil)
-        }
+        guard let link = posts[indexPath.item].link else { return }
+        guard let directory = saveContent(globalLink: link) else { return }
+        self.iMessageDelegate.mainConversation.insertAttachment(directory, withAlternateFilename: nil, completionHandler: nil)
+        
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
