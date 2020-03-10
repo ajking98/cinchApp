@@ -160,7 +160,7 @@ struct SaveToFolder {
         
         UserStruct().readFolders(user: username) { (folders) in
             for item in folders {
-                if item.lowercased() == "hearted" {
+                if item.lowercased() == "likes" {
                     continue
                 }
                 actionController.addAction(Action(ActionData(title: "\(item.lowercased())", subtitle: "For Content"), style: .default, handler: { action in

@@ -190,7 +190,11 @@ class FolderCell: UICollectionViewCell {
         FolderStruct().readIcon(user: username, folderName: folderName) { (icon) in
             let url = URL(string: icon)
             print("we have something", folderName)
-            self.imageView.sd_setImage(with: url, placeholderImage: UIImage(), completed: nil)
+            if folderName.lowercased() == "likes" {
+                self.imageView.image = UIImage(named: "heartedFolder")
+            } else {
+                self.imageView.sd_setImage(with: url, placeholderImage: UIImage(), completed: nil)
+            }
         }
         
         buildCell(username: username, folderName: folderName, isPersonal: isPersonal)
@@ -207,10 +211,7 @@ class FolderCell: UICollectionViewCell {
         imageView.layer.borderWidth = 0.8
         imageView.layer.borderColor = UIColor.white.cgColor
         addSubview(imageView)
-        
-        if folderName.lowercased() == "hearted" {
-            self.imageView.image = UIImage(named: "heartedFolder")
-        }
+        print("sfesfaef \(folderName)")
         
         //Gradient
         let topColor = UIColor.white.cgColor.copy(alpha: 0)
