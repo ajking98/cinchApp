@@ -40,10 +40,13 @@ struct UserStruct {
      Version
      */
     ///reads the version of the app the user is currently using
-    func readVersion(username: String, completion: @escaping(Double) -> Void) {
+    func readVersion(username: String, _ completion: @escaping(Double) -> Void, _ errorHandler: @escaping() -> Void) {
         DB.child(username).child("version").observeSingleEvent(of: .value) { (snapshot) in
             if let version = snapshot.value as? Double {
                 completion(version)
+            }
+            else {
+                errorHandler()
             }
         }
     }
