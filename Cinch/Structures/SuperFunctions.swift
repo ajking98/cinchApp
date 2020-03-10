@@ -17,6 +17,7 @@ struct SuperFunctions {
     func permanentlyDeletePost(post : Post) {
         let postOwner = post.postOwner ?? ""
         let link = post.link ?? ""
+        
         let contentKey = post.contentKey.count > 1 ? post.contentKey : link
     
         UserStruct().readFolders(user: postOwner) { (folders) in
@@ -31,13 +32,38 @@ struct SuperFunctions {
             }
         }
         
+        if let thumbnail = post.thumbnail {
+            for imageLink in thumbnail {
+                print("here is a link to check: ", imageLink)
+                StorageStruct().deleteContent(link: imageLink)
+            }
+        }
+        
         
         post.tags?.forEach({ (SingleTag) in
+            print("this is the content Key: ", contentKey)
             TagStruct().deleteElement(tagLabel: SingleTag, contentKey: contentKey)
+            TagStruct().deleteElement(tagLabel: SingleTag, contentKey: link)
         })
-
+        
+        print("is a link: ", link)
         ParentPostStruct().deletePost(contentKey: contentKey)
-        StorageStruct().deleteContent(contentKey: contentKey)
+        StorageStruct().deleteContent(link: link)
+    }
+    
+    func createThumbnail(contentKey: String) {
+        //This is creating the thumbnail and uploads it to DB
+        PostStruct().readLink(contentKey: contentKey) { (link) in
+            guard let url = URL(string: link) else { return }
+            getAllFrames(videoUrl: url, completion: {(frames) in
+                print("this is the count of the images: ", frames.count)
+                
+                StorageStruct().uploadFrames(frames: frames) { (links) in
+                    PostStruct().addThumbnail(contentKey: contentKey, linkToThumbnail: links)
+                    print("just added the thumbnail")
+                }
+            })
+        }
     }
     
 }

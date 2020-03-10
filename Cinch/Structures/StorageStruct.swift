@@ -19,20 +19,20 @@ struct StorageStruct {
     
     
     ///Takes a contentKey and deletes the content completely from storage and DB
-    func deleteContent(contentKey: String) {
+    func deleteContent(link: String) {
         //Check if the contentKey given is actually a link ( this is for the older posts)
         //TODO Delete the content Completely
-//        let storage = Storage.storage()
-//        let storageRef = storage.reference(forURL: contentKey)
-//
-//        storageRef.delete { (error) in
-//            if let error = error {
-//                print("this is an error deleting the file: ", error)
-//            }
-//            else {
-//                print("File deleted successfully")
-//            }
-//        }
+        let storage = Storage.storage()
+        let storageRef = storage.reference(forURL: link)
+
+        storageRef.delete { (error) in
+            if let error = error {
+                print("this is an error deleting the file: ", error)
+            }
+            else {
+                print("File deleted successfully")
+            }
+        }
     }
     
     ///Uploads local video to firebase and returns the link to the post and the contentKey
