@@ -59,14 +59,16 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
         guard let username = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
         
         //Check version
-        UserStruct().readVersion(username: username) { (currentVersion) in
-            ParentStruct().readVersion { (latestVersion) in
-                if (currentVersion * 10).rounded(.down) < (latestVersion * 10).rounded(.down) {
-                    let vc = UpdateScreen()
-                    let navController = UINavigationController(rootViewController: vc)
-                    navController.modalPresentationStyle = .fullScreen
-                    self.present(navController, animated: true, completion: nil)
-                }
+        ParentStruct().readVersion { (latestVersion) in
+            UserStruct().readVersion(username: username, { (currentVersion) in
+                    if (currentVersion * 10).rounded(.down) < (latestVersion * 10).rounded(.down) {
+                        let vc = UpdateScreen()
+                        let navController = UINavigationController(rootViewController: vc)
+                        navController.modalPresentationStyle = .fullScreen
+                        self.present(navController, animated: true, completion: nil)
+                    }
+            }) {
+                UserStruct().updateVersion(username: username, version: latestVersion)
             }
         }
         
@@ -75,14 +77,36 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
             self.tableView.reloadData()
         }
         
-        ParentPostStruct().readAdminPosts { (links) in
-            for link in links {
-                if let url = URL(string: link) {
+//        ParentPostStruct().readAdminPosts { (links) in
+//            for link in links {
+//                if let url = URL(string: link) {
+//                    do {
+//                        let imageData = try Data(contentsOf: url)
+//                        if let image = UIImage(data: imageData) {
+//                            self.images.append(image)
+//                            self.imageLinks.append(link)
+//                        }
+//                    }
+//                    catch {
+//                        print("THIS IS FUCKING UP")
+//                    }
+//                    
+//                }
+//            }
+//        }
+        UserStruct().readNewContent(user: username) { (links) in
+            let limit = links.count < 15 ? links.count : 15
+            for index in 0 ..< limit {
+                if checkIfVideo(links[index]) {
+                    //TODO: Build for videos too
+                    continue
+                }
+                if let url = URL(string: links[index]) {
                     do {
                         let imageData = try Data(contentsOf: url)
                         if let image = UIImage(data: imageData) {
                             self.images.append(image)
-                            self.imageLinks.append(link)
+                            self.imageLinks.append(links[index])
                         }
                     }
                     catch {
@@ -90,33 +114,11 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
                     }
                     
                 }
+                
             }
-            UserStruct().readNewContent(user: username) { (links) in
-                let limit = links.count < 15 ? links.count : 15
-                for index in 0 ..< limit {
-                    if checkIfVideo(links[index]) {
-                        //TODO: Build for videos too
-                        continue
-                    }
-                    if let url = URL(string: links[index]) {
-                        do {
-                            let imageData = try Data(contentsOf: url)
-                            if let image = UIImage(data: imageData) {
-                                self.images.append(image)
-                                self.imageLinks.append(links[index])
-                            }
-                        }
-                        catch {
-                            print("THIS IS FUCKING UP")
-                        }
-                        
-                    }
-                    
-                }
-                self.pageControl.numberOfPages = self.images.count + 1
-                self.setupCarousel()
-                self.addCarouselData()
-            }
+            self.pageControl.numberOfPages = self.images.count + 1
+            self.setupCarousel()
+            self.addCarouselData()
         }
     }
     
@@ -170,7 +172,6 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
         
         let topImageView = UIImageView(frame: topCarousel.frame)
         topImageView.image = UIImage(named: "YourFollowingScreen")
-        print("this is the size of the thing:", 0.24 * height, "and then: ", 0.3 * height)
         topImageView.clipsToBounds = true
         topImageView.contentMode = .scaleAspectFill
         topCarousel.addSubview(topImageView)

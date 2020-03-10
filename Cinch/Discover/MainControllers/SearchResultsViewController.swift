@@ -104,6 +104,11 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as! GenericCell
+        cell.setup(contentKey: content[indexPath.item])
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: (collectionView.bounds.width * 0.5) - 0.5, height: (height) * 0.4)
     }

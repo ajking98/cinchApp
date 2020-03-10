@@ -13,7 +13,7 @@ import SDWebImage
 class GenericCell: UICollectionViewCell {
     var imageView = UIImageView()
     
-    ///takes a link to the content it should build
+    ///takes a contentKey to the content it should build
     func setup(contentKey: String, _ errorHandler: (() -> Void)? = nil){
         PostStruct().readLink(contentKey: contentKey) { (link) in
             if checkIfVideo(link) {
@@ -43,6 +43,42 @@ class GenericCell: UICollectionViewCell {
         imageView.clipsToBounds = true
         imageView.backgroundColor = .lightGray
     }
+    
+    ///sets up the cell using a post - iMessage
+    func setup(post: Post, _ errorHandler: (() -> Void)? = nil) {
+        addSubview(imageView)
+        imageView.frame.size = frame.size
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.backgroundColor = .lightGray
+        
+        
+        guard let link = post.link else { return }
+        let contentKey = post.contentKey
+        if post.isImage! {
+            self.imageView.sd_setImage(with: URL(string: link), placeholderImage: UIImage()) { (image, error, cacheType, link) in
+                if error != nil {
+                    errorHandler?()
+                }
+            }
+        }
+        else {
+            //fetch thumbnail
+            guard contentKey != "" else {
+                return
+            }
+            PostStruct().readThumbnail(contentKey: contentKey) { (thumbnailLink) in
+                var smoothedThumbnail = thumbnailLink
+                smoothedThumbnail.append(contentsOf: thumbnailLink.reversed())
+                if smoothedThumbnail.isEmpty { return }
+                self.imageView.sd_setAnimationImages(with: smoothedThumbnail)
+                self.imageView.animationDuration = 2.8
+                self.imageView.sd_setHighlightedImage(with: smoothedThumbnail[0], completed: nil)
+                self.imageView.startAnimating()
+            }
+        }
+    }
+    
     
     override func prepareForReuse() {
         imageView = UIImageView()
