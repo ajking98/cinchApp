@@ -53,7 +53,6 @@ class ProfileViewController: UIViewController {
         setupButton()
         if isUser {
             print(isUser)
-//            setupButton()
             setupAddFolderButton()
         }
         
@@ -100,12 +99,12 @@ class ProfileViewController: UIViewController {
                 self.mainButton.layer.borderWidth = 1.7
                 self.mainButton.backgroundColor = .white
                 self.mainButton.setTitle("Unfollow", for: .normal)
-                self.mainButton.setTitleColor(.customRed, for: .normal)
-                self.mainButton.layer.borderColor = UIColor.customRed.cgColor
+                self.mainButton.setTitleColor(.darkBlue, for: .normal)
+                self.mainButton.layer.borderColor = UIColor.darkBlue.cgColor
             }
             else {
                 self.isFollowing = false
-                self.mainButton.backgroundColor = .customRed
+                self.mainButton.backgroundColor = .darkBlue
                 self.mainButton.setTitle("Follow", for: .normal)
             }
         }

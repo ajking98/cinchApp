@@ -63,28 +63,29 @@ class CellSelectedCell: UITableViewCell{
     func setupxMark() {
         xMark.addTarget(self, action: #selector(handleRemoved), for: .touchUpInside)
         xMark.frame = CGRect(x: 200, y: 200, width: 50, height: 50)
-        xMark.backgroundColor = .green
+        xMark.backgroundColor = .red
+        xMark.titleLabel?.text = "Delete"
         xMark.isHidden = !isAdmin //TODO remove this to be able to delete posts
         addSubview(xMark)
         
         //createThumbnail Button
         createThumbnailButton.addTarget(self, action: #selector(handleAddThumbnail), for: .touchUpInside)
         createThumbnailButton.frame = CGRect(x: 275, y: 200, width: 50, height: 50)
-        createThumbnailButton.backgroundColor = .yellow
+        createThumbnailButton.backgroundColor = .green
         createThumbnailButton.isHidden = !isAdmin
+        createThumbnailButton.titleLabel!.text = "Thumbnail"
         addSubview(createThumbnailButton)
     }
     
     @objc func handleAddThumbnail() {
-        print("this is adding a thumbnail")
-//        SuperFunctions().createThumbnail(contentKey: contentKey)
+        SuperFunctions().createThumbnail(contentKey: contentKey)
     }
     
     @objc func handleRemoved() {
         print("this is something coll:", self.post.contentKey)
         print("this is the post: ", self.post.toString())
         
-//        SuperFunctions().permanentlyDeletePost(post: self.post)
+        SuperFunctions().permanentlyDeletePost(post: self.post)
     }
     
     override func prepareForReuse() {
