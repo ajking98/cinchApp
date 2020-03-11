@@ -50,9 +50,9 @@ class ProfileViewController: UIViewController {
 //        setupUsernameLabel()
 //        setupGemLabel()
 //        stackView.setup(followings: followings, followers: followers, Gems: gems, view: view, scrollView: scrollView)
+        setupButton()
         if isUser {
             print(isUser)
-            setupButton()
             setupAddFolderButton()
         }
         
@@ -99,12 +99,12 @@ class ProfileViewController: UIViewController {
                 self.mainButton.layer.borderWidth = 1.7
                 self.mainButton.backgroundColor = .white
                 self.mainButton.setTitle("Unfollow", for: .normal)
-                self.mainButton.setTitleColor(.customRed, for: .normal)
-                self.mainButton.layer.borderColor = UIColor.customRed.cgColor
+                self.mainButton.setTitleColor(.darkBlue, for: .normal)
+                self.mainButton.layer.borderColor = UIColor.darkBlue.cgColor
             }
             else {
                 self.isFollowing = false
-                self.mainButton.backgroundColor = .customRed
+                self.mainButton.backgroundColor = .darkBlue
                 self.mainButton.setTitle("Follow", for: .normal)
             }
         }
@@ -143,8 +143,8 @@ class ProfileViewController: UIViewController {
 //            followNav.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleFollowUser)))
 //            let rightNavItem = UIBarButtonItem(customView: followNav)
 //            navigationItem.setRightBarButton(rightNavItem, animated: false)
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Follow", style: .plain, target: self, action: #selector(handleFollowUser))
-            navigationItem.rightBarButtonItem?.tintColor = .customRed
+//            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Follow", style: .plain, target: self, action: #selector(handleFollowUser))
+//            navigationItem.rightBarButtonItem?.tintColor = .customRed
         }
         
         else {
@@ -223,6 +223,9 @@ class ProfileViewController: UIViewController {
             print("this should be setting")
             mainButton.setTitle("Edit Profile", for: .normal)
             mainButton.addTarget(self, action: #selector(handleEditProfile), for: .touchUpInside)
+        } else {
+            mainButton.setTitle("Follow", for: .normal)
+            mainButton.addTarget(self, action: #selector(handleFollowUser), for: .touchUpInside)
         }
         
         scrollView.addSubview(mainButton)
