@@ -79,7 +79,6 @@ class TableViewCell: UITableViewCell, UICollectionViewDataSource {
         TagStruct().readAllElements(tagLabel: hashTagTerm.lowercased()) { (tagElements) in
             for tagElement in tagElements {
                 if tagElement.contentKey.count > 1 {
-                    print("appending this: ", tagElement.contentKey)
                     self.content.append(tagElement.contentKey)
                 }
                 else {

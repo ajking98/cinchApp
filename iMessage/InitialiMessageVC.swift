@@ -18,7 +18,6 @@ class InitialiMessageVC: MSMessagesAppViewController, iMessageAppDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("we are going in")
         _ = try? AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback, mode: .default, options: .mixWithOthers)
 
         

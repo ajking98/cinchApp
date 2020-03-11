@@ -194,7 +194,8 @@ struct FolderStruct {
     
     ///takes contentKey and Link and saves it under the given folderName for the given user
     func addContent(user : String, folderName : String, contentKey : String, link: String) {
-        DB.child(user).child("folders").child(folderName).child("content").updateChildValues([contentKey : link])
+        let updatedContentKey = convertStringToKey(link: contentKey) //this is for the olderposts that don't have proper contentKeys
+        DB.child(user).child("folders").child(folderName).child("content").updateChildValues([updatedContentKey : link])
 
     }
     

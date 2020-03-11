@@ -88,7 +88,7 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
 //                        }
 //                    }
 //                    catch {
-//                        print("THIS IS FUCKING UP")
+//                        print("Failed to fetch image")
 //                    }
 //                    
 //                }
@@ -110,7 +110,7 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
                         }
                     }
                     catch {
-                        print("THIS IS FUCKING UP")
+                        print("Failed to fetch image")
                     }
                     
                 }

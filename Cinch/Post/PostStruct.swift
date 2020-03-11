@@ -184,7 +184,6 @@ struct PostStruct {
             for child in snapshot.children {
                 guard let child = child as? DataSnapshot else { return }
                 guard let value = child.value as? String else { return }
-                print("printing: ", value)
                 if let url = URL(string: value) {
                     urls.append(url)
                 }

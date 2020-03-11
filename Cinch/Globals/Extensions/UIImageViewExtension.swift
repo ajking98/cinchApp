@@ -42,7 +42,6 @@ extension UIImageView {
 //        var cachedAsset = AVAssetCache.add
         
         if let cachedAsset = cachedAssets.object(forKey: link.absoluteString as NSString) {
-            print("pulling from cache")
             asset = cachedAsset
         }
         else {

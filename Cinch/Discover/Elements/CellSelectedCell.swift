@@ -44,7 +44,6 @@ class CellSelectedCell: UITableViewCell{
         
         fetchPost()
         
-        print("this is the contentKey", contentKey)
         setupFullScreenImageView()
         setupRightHandView()
         setupLowerText()
@@ -53,10 +52,8 @@ class CellSelectedCell: UITableViewCell{
     
     func fetchPost() {
         ParentPostStruct().readPost(contentKey: contentKey) { (post) in
-            print("we are going here: ", post)
             self.post = post
             self.fetchContent()
-            print("finishing pretty hard")
         }
     }
     
@@ -262,7 +259,7 @@ class CellSelectedCell: UITableViewCell{
     @objc func handleHearted() {
         //todo: add link to the folder
         guard let localUser = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
-
+        
         guard let link = post.link else { return }
         FolderStruct().addContent(user: localUser, folderName: "Likes", contentKey: contentKey, link: link)
         let alert = UIAlertController(title: "Added to \"Likes\" Folder", message: "", preferredStyle: .alert) //Notify the user with an alert
