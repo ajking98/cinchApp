@@ -205,7 +205,6 @@ struct SaveToFolder {
                     post = Post(isImage: false, postOwner: username, link: link, contentKey: contentKey, links)
                     guard let standardPost = post else { return }
                     standardPost.tags = tagArray
-                    print("thisis you array: ", tagArray)
                     ParentPostStruct().addPost(post: standardPost)
                     
                     
@@ -223,7 +222,6 @@ struct SaveToFolder {
             post = Post(isImage: true, postOwner: username, link: link, contentKey: contentKey)
             guard let standardPost = post else { return }
             standardPost.tags = tagArray
-            print("thisis you array: ", tagArray)
             ParentPostStruct().addPost(post: standardPost)
             
         }
