@@ -193,12 +193,10 @@ struct SaveToFolder {
         if checkIfVideo(link) {
                 for tag in message{
                     if tag.count > 2 {
-                        print("this is a tag")
                         let standardizedTag = tag.lowercased()
                         tagArray.append(standardizedTag)
                     }
                 }
-            
         ///Adding the frames if its a video
             if let frames = frames {
                 StorageStruct().uploadFrames(frames: frames) { (links) in
@@ -206,8 +204,6 @@ struct SaveToFolder {
                     guard let standardPost = post else { return }
                     standardPost.tags = tagArray
                     ParentPostStruct().addPost(post: standardPost)
-                    
-                    
                 }
             }
         }
@@ -225,9 +221,9 @@ struct SaveToFolder {
             ParentPostStruct().addPost(post: standardPost)
             
         }
-
+        
         for tag in tagArray {
-            TagStruct().addElement(tagLabel: tag, tagElement: TagElement(link: link, contentKey: post!.contentKey))
+            TagStruct().addElement(tagLabel: tag, tagElement: TagElement(link: link, contentKey: contentKey))
         }
         
     }

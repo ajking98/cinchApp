@@ -89,7 +89,8 @@ class CellSelectedCell: UITableViewCell{
         playerLayer.player?.isMuted = true
         playerLayer = AVPlayerLayer()
         profileIcon.image = UIImage()
-        fullScreenImageView = UIImageView()
+        fullScreenImageView.image = UIImage()
+//        fullScreenImageView = UIImageView()
         subviews.forEach { (view) in
             view.removeFromSuperview()
         }
