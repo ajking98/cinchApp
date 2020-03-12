@@ -27,6 +27,7 @@ class CellSelectedCell: UITableViewCell{
     //Views
     var fullScreenImageView = UIImageView(frame: CGRect.zero)
     var playerLayer = AVPlayerLayer()
+    var player = AVPlayer()
     let shareIcon = UIImageView(image: UIImage(named: "shareIcon"))
     let heartIcon = UIImageView(image: UIImage(named: "heartIcon"))
     let followUserIcon = UIImageView(image: UIImage(named: "followUserIcon"))
@@ -85,23 +86,24 @@ class CellSelectedCell: UITableViewCell{
         SuperFunctions().permanentlyDeletePost(post: self.post)
     }
     
-    override func prepareForReuse() {
-        playerLayer.player?.isMuted = true
-        playerLayer = AVPlayerLayer()
-        profileIcon.image = UIImage()
-        fullScreenImageView.image = UIImage()
-//        fullScreenImageView = UIImageView()
-        subviews.forEach { (view) in
-            view.removeFromSuperview()
-        }
-    }
-    
     func fetchContent() {
         guard let link = post.link else { return }
         let author = post.postOwner ?? ""
         if checkIfVideo(link) {
             guard let link = URL(string: link) else { return }
-            playerLayer = fullScreenImageView.loadVideo(link, size: frame.size)
+//            playerLayer = fullScreenImageView.loadVideo(link, size: frame.size)
+            player = AVPlayer(url: link)
+            playerLayer = AVPlayerLayer(player: player)
+            playerLayer.player?.play()
+            fullScreenImageView.layer.addSublayer(playerLayer)
+            playerLayer.frame = fullScreenImageView.layer.bounds
+            
+            //autoplay Fix autoplay
+//            NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player.currentItem, queue: .main) { notification in
+//                self.player.seek(to: CMTime.zero)
+//                self.player.play()
+//            }
+            
             playerLayer.videoGravity = .resizeAspect
             playerLayer.player?.isMuted = isMuted
             fullScreenImageView.isUserInteractionEnabled = true

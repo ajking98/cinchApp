@@ -73,11 +73,11 @@ extension UIImageView {
         player.play()
         
         
-        //autoplay
-        NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player.currentItem, queue: .main) { notification in
-            player.seek(to: CMTime.zero)
-            player.play()
-        }
+//        //autoplay
+//        NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player.currentItem, queue: .main) { notification in
+//            player.seek(to: CMTime.zero)
+//            player.play()
+//        }
     }
     
     

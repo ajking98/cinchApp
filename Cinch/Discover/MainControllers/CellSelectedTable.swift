@@ -125,7 +125,7 @@ class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataS
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: identifier) as! CellSelectedCell
+        let cell = CellSelectedCell()
         cell.frame.size = view.frame.size
         cell.setup(contentKey: content[indexPath.row])
         cell.handlePresentProfile = handlePresentProfile(username:)
@@ -135,6 +135,10 @@ class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataS
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard let cell = cell as? CellSelectedCell else { return }
         cell.playerLayer.player?.isMuted = true
+        cell.playerLayer.player?.pause()
+        
+        cell.player.isMuted = true
+        cell.player.pause()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
