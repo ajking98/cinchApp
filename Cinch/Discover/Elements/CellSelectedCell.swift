@@ -98,11 +98,13 @@ class CellSelectedCell: UITableViewCell{
             fullScreenImageView.layer.addSublayer(playerLayer)
             playerLayer.frame = fullScreenImageView.layer.bounds
             
-            //autoplay Fix autoplay
+            //autoplay
 //            NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player.currentItem, queue: .main) { notification in
 //                self.player.seek(to: CMTime.zero)
 //                self.player.play()
 //            }
+            
+            NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinish), name: .AVPlayerItemDidPlayToEndTime, object: player.currentItem)
             
             playerLayer.videoGravity = .resizeAspect
             playerLayer.player?.isMuted = isMuted
@@ -122,6 +124,12 @@ class CellSelectedCell: UITableViewCell{
             self.lowerText.text? += "#\(tag) "
         }
         
+    }
+    
+    @objc func playerDidFinish() {
+        print("this is done playing")
+        self.player.seek(to: CMTime.zero)
+        self.player.play()
     }
     
     @objc func handleImageViewTapped() {

@@ -139,6 +139,8 @@ class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataS
         
         cell.player.isMuted = true
         cell.player.pause()
+        
+        NotificationCenter.default.removeObserver(cell, name: .AVPlayerItemDidPlayToEndTime, object: cell.player.currentItem)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
