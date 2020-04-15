@@ -41,7 +41,7 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
         setupData()
         setupSearchBar()
         setupTableView()
-        setupCarousel()
+//        setupCarousel()
         setupTableTagsView()
     }
     
@@ -116,9 +116,9 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
                 }
                 
             }
-            self.pageControl.numberOfPages = self.images.count + 1
-            self.setupCarousel()
-            self.addCarouselData()
+//            self.pageControl.numberOfPages = self.images.count + 1
+//            self.setupCarousel()
+//            self.addCarouselData()
         }
     }
     
@@ -196,10 +196,10 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     ///updates the current page for the page control
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let pageNumber = topCarousel.contentOffset.x / topCarousel.frame.size.width
-        pageControl.currentPage = Int(pageNumber)
-    }
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        let pageNumber = topCarousel.contentOffset.x / topCarousel.frame.size.width
+//        pageControl.currentPage = Int(pageNumber)
+//    }
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -207,12 +207,12 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-      let cell = tableView.dequeueReusableCell(withIdentifier: identifier) as! TableViewCell
-      cell.selectionStyle = .none
-      cell.cellHeight = height * 0.242
-      cell.cellWidth = tableView.frame.size.width
-      cell.setUp(hashTagTerm: mainHashTags[indexPath.item])
-      return cell
+        let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! TableViewCell
+        cell.selectionStyle = .none
+        cell.cellHeight = height * 0.242
+        cell.cellWidth = tableView.frame.size.width
+        cell.setUp(hashTagTerm: mainHashTags[indexPath.item])
+        return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
