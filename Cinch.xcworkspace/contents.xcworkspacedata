@@ -5,6 +5,9 @@
       location = "group:/Users/cinch/Desktop/cinchApp/Cinch.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:Cinch.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:Pods/Pods.xcodeproj">
    </FileRef>
 </Workspace>

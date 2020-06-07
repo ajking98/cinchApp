@@ -30,7 +30,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "EB74D3B1226025E900556399"
-               BuildableName = "Cinch.app"
+               BuildableName = "Cinch Memes.app"
                BlueprintName = "Cinch"
                ReferencedContainer = "container:Cinch.xcodeproj">
             </BuildableReference>
@@ -71,7 +71,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "EB74D3B1226025E900556399"
-            BuildableName = "Cinch.app"
+            BuildableName = "Cinch Memes.app"
             BlueprintName = "Cinch"
             ReferencedContainer = "container:Cinch.xcodeproj">
          </BuildableReference>
@@ -89,7 +89,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "EB74D3B1226025E900556399"
-            BuildableName = "Cinch.app"
+            BuildableName = "Cinch Memes.app"
             BlueprintName = "Cinch"
             ReferencedContainer = "container:Cinch.xcodeproj">
          </BuildableReference>

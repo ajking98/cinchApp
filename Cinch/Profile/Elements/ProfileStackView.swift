@@ -78,7 +78,6 @@ class ProfileStackView: UIStackView {
     
     
     func setupInnerStackViewData(_ variableName: String, _ value: Int) {
-        let view = UIView()
         let numberLabel = UILabel()
         let textLabel = UILabel()
         numberLabel.text = "\(gems)"
