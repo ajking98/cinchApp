@@ -22,7 +22,7 @@ class ProfileMainCollectionViewCell: UICollectionViewCell {
     
     var navigationController: UINavigationController!
     
-    func setupUploadedCV() {
+    func setupUploadedVC(completion: @escaping(CGFloat)->Void) {
         uploadedCollectionView.dataSource = self
         uploadedCollectionView.delegate = self
         uploadedCollectionView.register(GenericCell.self, forCellWithReuseIdentifier: cellIdentifier)
@@ -31,11 +31,22 @@ class ProfileMainCollectionViewCell: UICollectionViewCell {
         uploadedCollectionView.backgroundColor = .white
         uploadedCollectionView.isScrollEnabled = false
         uploadedCollectionView.frame = frame
-
+        
+        //reading uploaded content
+        FolderStruct().readContent(user: username, folderName: "Uploaded") { (content) in
+            self.uploaded = content
+            if content.count > 6 {
+                var extendedHeight = CGFloat((content.count / 3) - 2)
+                extendedHeight *= self.uploadedCollectionView.frame.size.width / 2
+                completion(extendedHeight)
+            }
+            self.uploadedCollectionView.reloadData()
+        }
+        
         addSubview(uploadedCollectionView)
     }
     
-    func setupHeartedVC() {
+    func setupHeartedVC(completion: @escaping(CGFloat)->Void) {
         heartedCollectionView.dataSource = self
         heartedCollectionView.delegate = self
         heartedCollectionView.register(GenericCell.self, forCellWithReuseIdentifier: cellIdentifier)
@@ -47,6 +58,19 @@ class ProfileMainCollectionViewCell: UICollectionViewCell {
         heartedCollectionView.frame = frame
         heartedCollectionView.frame.origin.x = 0
         
+        //reading hearted content
+        FolderStruct().readContent(user: username, folderName: "Hearted") { (content) in
+        self.hearted = content
+        if content.count > 6 {
+            var extendedHeight = CGFloat((content.count / 3) - 2)
+            let cellHeight = self.heartedCollectionView.frame.size.width / 2
+            extendedHeight *= cellHeight
+            extendedHeight += cellHeight
+            completion(extendedHeight)
+        }
+        self.heartedCollectionView.reloadData()
+        }
+        
         addSubview(heartedCollectionView)
         
     }
@@ -54,19 +78,6 @@ class ProfileMainCollectionViewCell: UICollectionViewCell {
 
 //Represents the collection view that holds the cells for gems folders and following folders
 extension ProfileMainCollectionViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    
-    
-    ///gets the hearted content from firebase and sets the height of the scrollview content for the profile page
-    func fetchContent(completion: @escaping(CGFloat) -> Void) {
-        FolderStruct().readContent(user: username, folderName: "Likes") { (content) in
-            self.hearted = content
-            self.heartedCollectionView.reloadData()
-        }
-        FolderStruct().readContent(user: username, folderName: "Uploaded") { (content) in
-            self.uploaded = content
-            self.uploadedCollectionView.reloadData()
-        }
-    }
     
     ///returns the number of items in
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

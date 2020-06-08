@@ -18,25 +18,32 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! ProfileMainCollectionViewCell
-        if indexPath.item == 0 {
-            cell.setupUploadedCV()
-        }
-        else {
-            cell.setupHeartedVC()
-        }
         
         //TODO: put this is a delegate maybe
         cell.username = username
         cell.navigationController = self.navigationController
-        cell.fetchContent { (contentHeight) in
-            print("this is the content height: ", contentHeight)
-        }
         
+        
+        if indexPath.item == 0 {
+            cell.setupUploadedVC { (contentHeight) in
+                let newHeight = self.scrollView.contentSize.height + contentHeight
+                if self.scrollView.contentSize.height < newHeight {
+                    self.scrollView.contentSize.height = newHeight
+                }
+            }
+        }
+        else {
+            cell.setupHeartedVC { (contentHeight) in
+                let newHeight = self.scrollView.contentSize.height + contentHeight
+                if self.scrollView.contentSize.height < newHeight {
+                    self.scrollView.contentSize.height = newHeight
+                }
+            }
+        }
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        print("this is being used", indexPath.item)
         let index = 1 - indexPath.item
         segmentControl.selectedSegmentIndex = index
         handleSegmentTap()
@@ -84,7 +91,7 @@ class FolderCell: UICollectionViewCell {
         FolderStruct().readIcon(user: username, folderName: folderName) { (icon) in
             let url = URL(string: icon)
             print("we have something", folderName)
-            if folderName.lowercased() == "likes" {
+            if folderName.lowercased() == "Hearted" {
                 self.imageView.image = UIImage(named: "heartedFolder")
             } else {
                 self.imageView.sd_setImage(with: url, placeholderImage: UIImage(), completed: nil)

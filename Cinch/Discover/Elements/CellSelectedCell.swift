@@ -272,8 +272,8 @@ class CellSelectedCell: UITableViewCell{
         guard let localUser = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
         
         guard let link = post.link else { return }
-        FolderStruct().addContent(user: localUser, folderName: "Likes", contentKey: contentKey, link: link)
-        let alert = UIAlertController(title: "Added to \"Likes\" Folder", message: "", preferredStyle: .alert) //Notify the user with an alert
+        FolderStruct().addContent(user: localUser, folderName: "Hearted", contentKey: contentKey, link: link)
+        let alert = UIAlertController(title: "Added To Favorites!", message: "", preferredStyle: .alert) //Notify the user with an alert
         parentViewController?.present(alert, animated: true, completion: {
             alert.view.superview?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.dismissAlert)))
         })
