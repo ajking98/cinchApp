@@ -87,14 +87,24 @@ class BroadCollectionViewCell: UICollectionViewCell, UICollectionViewDataSource,
         }
         else {
             guard let username = UserDefaults(suiteName: "group.cinch")?.string(forKey: defaultsKeys.usernameKey) else { return }
-            UserStruct().readCompleteFolders(user: username) { (folders) in
-                for folder in folders {
-                    for (contentKey, _) in folder.content {
-                        ParentPostStruct().readPost(contentKey: contentKey) { (post) in
-                            let indexPath = IndexPath(item: self.posts.count, section: 0)
-                            self.posts.append(post)
-                            self.collectionView.insertItems(at: [indexPath])
-                        }
+            FolderStruct().readContent(user: username, folderName: "Uploaded") { (contentKeys) in
+                for contentKey in contentKeys {
+                    ParentPostStruct().readPost(contentKey: contentKey) { (post) in
+
+                        let indexPath = IndexPath(item: self.posts.count, section: 0)
+                        self.posts.append(post)
+                        self.collectionView.insertItems(at: [indexPath])
+                    }
+                }
+            }
+            
+            FolderStruct().readContent(user: username, folderName: "Hearted") { (contentKeys) in
+                for contentKey in contentKeys {
+                    ParentPostStruct().readPost(contentKey: contentKey) { (post) in
+
+                        let indexPath = IndexPath(item: self.posts.count, section: 0)
+                        self.posts.append(post)
+                        self.collectionView.insertItems(at: [indexPath])
                     }
                 }
             }
@@ -102,12 +112,16 @@ class BroadCollectionViewCell: UICollectionViewCell, UICollectionViewDataSource,
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print("this is the count:", posts.count)
         return posts.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! GenericCell
-        cell.setup(post: posts[indexPath.item])
+        
+        if posts.count > indexPath.item {
+            cell.setup(post: posts[indexPath.item])
+        }
         return cell
     }
     

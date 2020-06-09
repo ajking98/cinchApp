@@ -178,11 +178,7 @@
 		4053B843C77EE909A8C7461F /* Pods-InstagramCloneUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramCloneUITests.release.xcconfig"; path = "Target Support Files/Pods-InstagramCloneUITests/Pods-InstagramCloneUITests.release.xcconfig"; sourceTree = "<group>"; };
 		4607196D235ACC1900BE17DF /* PanGestureExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanGestureExtension.swift; sourceTree = "<group>"; };
 		4622493622DFAC8F0005B12F /* Messages.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Messages.framework; path = System/Library/Frameworks/Messages.framework; sourceTree = SDKROOT; };
-		4622493922DFAC8F0005B12F /* MessagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
-		4622493C22DFAC8F0005B12F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
-		4622494022DFAC900005B12F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4622495222DFAD240005B12F /* Cinch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Cinch.entitlements; sourceTree = "<group>"; };
-		4622495322DFAD2D0005B12F /* CinchIMessageExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CinchIMessageExtension.entitlements; sourceTree = "<group>"; };
 		463A844822F6286A00F9B4CD /* Camera.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Camera.storyboard; path = Cinch/Upload/Camera.storyboard; sourceTree = SOURCE_ROOT; };
 		4669B8D122B6DC64004FB38D /* defaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = defaultsKeys.swift; sourceTree = "<group>"; };
 		4676FA9D23FBA0A1001D8FC7 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
@@ -214,8 +210,6 @@
 		46F2B5CA2371274600FFC751 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		46F2B5CC2371274600FFC751 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		46F2B5D42371280400FFC751 /* CinchShareExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CinchShareExtension.entitlements; sourceTree = "<group>"; };
-		46FA43F123634FE7005F3046 /* MessageCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCard.swift; sourceTree = "<group>"; };
-		46FA43F223634FE7005F3046 /* MessageCard.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageCard.xib; sourceTree = "<group>"; };
 		487A857B7431BFCFE64AEA4D /* Pods-Gems.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gems.release.xcconfig"; path = "Target Support Files/Pods-Gems/Pods-Gems.release.xcconfig"; sourceTree = "<group>"; };
 		59D6DA5D887F23C80EC2A8C8 /* Pods_CinchTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CinchTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		64A9B990C160D383D7FF0D45 /* Pods-InstagramCloneTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramCloneTests.release.xcconfig"; path = "Target Support Files/Pods-InstagramCloneTests/Pods-InstagramCloneTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -254,9 +248,6 @@
 		89871253229DEA2700BE8F23 /* DiscoverPageBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverPageBackground.swift; sourceTree = "<group>"; };
 		899F664423E3A5A70022C099 /* UISegmentControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISegmentControllerExtension.swift; sourceTree = "<group>"; };
 		899F664623E3BDDF0022C099 /* ProfilePageFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageFunctions.swift; sourceTree = "<group>"; };
-		89B752712398672E00E18634 /* SearchBariMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBariMessage.swift; sourceTree = "<group>"; };
-		89B7527B239880BD00E18634 /* SearchResultCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCollectionView.swift; sourceTree = "<group>"; };
-		89B7528723989BA500E18634 /* iMessageGlobal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iMessageGlobal.swift; sourceTree = "<group>"; };
 		89BBD41A23F365B9006BCC8F /* iMessageGlobals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iMessageGlobals.swift; sourceTree = "<group>"; };
 		89C3C00E23EBCA7A00FD03D1 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 		89CD1D03229201BA004BD0A0 /* DownloadImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadImage.swift; sourceTree = "<group>"; };
@@ -340,22 +331,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		4622493822DFAC8F0005B12F /* CinchIMessageExtension */ = {
-			isa = PBXGroup;
-			children = (
-				4622495322DFAD2D0005B12F /* CinchIMessageExtension.entitlements */,
-				4622493922DFAC8F0005B12F /* MessagesViewController.swift */,
-				4622493B22DFAC8F0005B12F /* MainInterface.storyboard */,
-				46FA43F123634FE7005F3046 /* MessageCard.swift */,
-				46FA43F223634FE7005F3046 /* MessageCard.xib */,
-				4622494022DFAC900005B12F /* Info.plist */,
-				89B752712398672E00E18634 /* SearchBariMessage.swift */,
-				89B7527B239880BD00E18634 /* SearchResultCollectionView.swift */,
-				89B7528723989BA500E18634 /* iMessageGlobal.swift */,
-			);
-			path = CinchIMessageExtension;
-			sourceTree = "<group>";
-		};
 		465C438C22D176FB002BD263 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -629,7 +604,6 @@
 				EB74D3B4226025E900556399 /* Cinch */,
 				EB74D3C9226025EA00556399 /* CinchTests */,
 				EB74D3D4226025EA00556399 /* CinchUITests */,
-				4622493822DFAC8F0005B12F /* CinchIMessageExtension */,
 				46F2B5C62371274600FFC751 /* CinchShareExtension */,
 				897437E123ED0DEF00F2CCB7 /* iMessage */,
 				EB74D3B3226025E900556399 /* Products */,
@@ -1128,14 +1102,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		4622493B22DFAC8F0005B12F /* MainInterface.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				4622493C22DFAC8F0005B12F /* Base */,
-			);
-			name = MainInterface.storyboard;
-			sourceTree = "<group>";
-		};
 		46F2B5C92371274600FFC751 /* MainInterface.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
