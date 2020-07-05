@@ -26,7 +26,10 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
         
         if indexPath.item == 0 {
             cell.setupUploadedVC { (contentHeight) in
-                let newHeight = self.scrollView.contentSize.height + contentHeight
+                let newHeight = self.view.frame.height + contentHeight + (self.tabBarController?.tabBar.frame.height)! +
+                (self.navigationController?.navigationBar.frame.height)!
+                
+    //                self.scrollView.contentSize.height = contentHeight
                 if self.scrollView.contentSize.height < newHeight {
                     self.scrollView.contentSize.height = newHeight
                 }
@@ -34,7 +37,10 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
         }
         else {
             cell.setupHeartedVC { (contentHeight) in
-                let newHeight = self.scrollView.contentSize.height + contentHeight
+                let newHeight = self.view.frame.height + contentHeight + (self.tabBarController?.tabBar.frame.height)! +
+                (self.navigationController?.navigationBar.frame.height)!
+                
+//                self.scrollView.contentSize.height = contentHeight
                 if self.scrollView.contentSize.height < newHeight {
                     self.scrollView.contentSize.height = newHeight
                 }
