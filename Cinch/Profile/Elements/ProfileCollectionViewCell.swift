@@ -103,21 +103,14 @@ extension ProfileMainCollectionViewCell: UICollectionViewDelegate, UICollectionV
         return cell
     }
     
-    ///Presents the Folder Selected Controller
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let cell = collectionView.cellForItem(at: indexPath) as! FolderCell
-//
-//        let storyboard = UIStoryboard(name: "ProfilePage", bundle: nil)
-//        let vc = storyboard.instantiateViewController(withIdentifier: "FolderSelected") as! FolderSelectedController
-//        let folderName = folders[indexPath.item]
-//        let username = collectionView == gemsCollectionView ? self.username : foldersFollowing[indexPath.item].admin
-//        vc.setup(username: username, folderName: folderName)
-//        navigationController.pushViewController(vc, animated: true)
-//    }
-    
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-//        return UIEdgeInsets(top: 12, left: 0, bottom: 0, right: 0)
-//    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let vc = CellSelectedTable()
+        vc.modalPresentationStyle = .fullScreen
+        vc.content = collectionView == uploadedCollectionView ? uploaded : hearted
+        vc.startingIndex = indexPath
+        parentViewController?.navigationController?.pushViewController(vc, animated: true)
+    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: (collectionView.bounds.width)/3 - 1.5, height: (collectionView.bounds.width)/2)

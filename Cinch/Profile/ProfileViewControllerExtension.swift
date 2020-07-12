@@ -24,12 +24,11 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
         cell.navigationController = self.navigationController
         
         
-        if indexPath.item == 0 {
+        if indexPath.item == 0 { //That means this is pulling from the uploaded folder
             cell.setupUploadedVC { (contentHeight) in
                 let newHeight = self.view.frame.height + contentHeight + (self.tabBarController?.tabBar.frame.height)! +
                 (self.navigationController?.navigationBar.frame.height)!
                 
-    //                self.scrollView.contentSize.height = contentHeight
                 if self.scrollView.contentSize.height < newHeight {
                     self.scrollView.contentSize.height = newHeight
                 }
@@ -91,8 +90,6 @@ class FolderCell: UICollectionViewCell {
     ///sets up the cell, takes the username, folderName, and whether or not the folder is owned by the user passed
     func setup(username: String, folderName: String, isPersonal: Bool) {
         folderLabel.text = folderName
-        
-        print("this is the folder name: ", folderName.lowercased())
         
         FolderStruct().readIcon(user: username, folderName: folderName) { (icon) in
             let url = URL(string: icon)

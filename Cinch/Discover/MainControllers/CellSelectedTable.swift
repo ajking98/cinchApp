@@ -1,7 +1,7 @@
 //
 //  CellSelectedTable.swift
 /*
-    Is presented when the user selects a cell from the DiscoverViewController, FolderSelectedController, or SearchResultsViewController
+    Is presented when the user selects a cell from the DiscoverViewController, ProfilePage, or SearchResultsViewController
     Each cell is from CellSelectedController
  */
 //  Created by Alsahlani, Yassin K on 1/27/20.
