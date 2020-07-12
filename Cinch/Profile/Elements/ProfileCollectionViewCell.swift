@@ -31,10 +31,15 @@ class ProfileMainCollectionViewCell: UICollectionViewCell {
         uploadedCollectionView.backgroundColor = .white
         uploadedCollectionView.isScrollEnabled = false
         uploadedCollectionView.frame = frame
+        self.uploadedCollectionView.backgroundColor = .lightGray
+        let emptyFieldText = UILabel()
         
         //reading uploaded content
         FolderStruct().readContent(user: username, folderName: "Uploaded") { (content) in
             self.uploaded = content
+            if content.count > 0 {
+                emptyFieldText.removeFromSuperview()
+            }
             if content.count > 6 {
                 var extendedHeight = CGFloat((content.count / 3) - 2)
                 extendedHeight *= self.uploadedCollectionView.frame.size.width / 2
@@ -44,6 +49,16 @@ class ProfileMainCollectionViewCell: UICollectionViewCell {
         }
         
         addSubview(uploadedCollectionView)
+        
+        //Text for when the section is empty
+        emptyFieldText.numberOfLines = 0
+        emptyFieldText.textAlignment = .center
+        emptyFieldText.frame.size.height = 80
+        emptyFieldText.frame.size.width = 300
+        emptyFieldText.text = "This Section is Empty. Go Upload A Meme"
+        emptyFieldText.center.x = uploadedCollectionView.center.x
+        
+        uploadedCollectionView.addSubview(emptyFieldText)
     }
     
     func setupHeartedVC(completion: @escaping(CGFloat)->Void) {
@@ -57,10 +72,16 @@ class ProfileMainCollectionViewCell: UICollectionViewCell {
         heartedCollectionView.isScrollEnabled = false;
         heartedCollectionView.frame = frame
         heartedCollectionView.frame.origin.x = 0
+        self.heartedCollectionView.backgroundColor = .lightGray
+        let emptyFieldText = UILabel()
+        
         
         //reading hearted content
         FolderStruct().readContent(user: username, folderName: "Hearted") { (content) in
         self.hearted = content
+        if content.count > 0 {
+            emptyFieldText.removeFromSuperview()
+        }
         if content.count > 6 {
             var extendedHeight = CGFloat((content.count / 3) - 2)
             let cellHeight = self.heartedCollectionView.frame.size.width / 2
@@ -72,6 +93,16 @@ class ProfileMainCollectionViewCell: UICollectionViewCell {
         }
         
         addSubview(heartedCollectionView)
+        
+        //Text for when the section is empty
+        emptyFieldText.text = "This Section is Empty. Go Like More Memes"
+        emptyFieldText.numberOfLines = 0
+        emptyFieldText.textAlignment = .center
+        emptyFieldText.frame.size.height = 80
+        emptyFieldText.frame.size.width = 300
+        emptyFieldText.center.x = heartedCollectionView.center.x
+        
+        heartedCollectionView.addSubview(emptyFieldText)
         
     }
 }
