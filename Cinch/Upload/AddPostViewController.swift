@@ -8,7 +8,6 @@
 //
 
 import UIKit
-import XLActionController
 import AVKit
 
 class AddPostViewController: UIViewController, UIGestureRecognizerDelegate, UITextViewDelegate{
@@ -152,35 +151,22 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate, UITe
 
 struct SaveToFolder {
     func saveToFolder(_ navigationController: UINavigationController, localLink: URL, tags: String, _ frames: [UIImage]? = nil) {
-        let image = UIImage()
-        let actionController = SpotifyActionController()
-        actionController.headerData = SpotifyHeaderData(title: "Select a Folder", subtitle: "", image: image)
         guard let username = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
         
-        
         UserStruct().readFolders(user: username) { (folders) in
-            for item in folders {
-                if item.lowercased() == "likes" {
-                    continue
+            StorageStruct().uploadContent(mediaLink: localLink) { (link, contentKey) in
+                FolderStruct().addContent(user: username, folderName: "Uploaded", contentKey: contentKey, link: link)
+                self.addTags(link: link, tags: tags, contentKey: contentKey, frames)
+                navigationController.popViewController(animated: true)
+                
+                //user feedback alert
+                let alert = UIAlertController(title: "Upload Complete!", message: "", preferredStyle: .alert)
+                navigationController.present(alert, animated: true, completion: nil)
+                let alertExpiration = DispatchTime.now() + 2
+                DispatchQueue.main.asyncAfter(deadline: alertExpiration) {
+                    alert.dismiss(animated: true, completion: nil)
                 }
-                actionController.addAction(Action(ActionData(title: "\(item.lowercased())", subtitle: "For Content"), style: .default, handler: { action in
-                    
-                    StorageStruct().uploadContent(mediaLink: localLink) { (link, contentKey) in
-                        FolderStruct().addContent(user: username, folderName: item, contentKey: contentKey, link: link)
-                        self.addTags(link: link, tags: tags, contentKey: contentKey, frames)
-                        navigationController.popViewController(animated: true)
-                        
-                        //user feedback alert
-                        let alert = UIAlertController(title: "Uploaded to \(item)!", message: "", preferredStyle: .alert)
-                        navigationController.present(alert, animated: true, completion: nil)
-                        let alertExpiration = DispatchTime.now() + 2
-                        DispatchQueue.main.asyncAfter(deadline: alertExpiration) {
-                            alert.dismiss(animated: true, completion: nil)
-                        }
-                    }
-                }))
             }
-            navigationController.present(actionController, animated: true, completion: nil)
         }
     }
     

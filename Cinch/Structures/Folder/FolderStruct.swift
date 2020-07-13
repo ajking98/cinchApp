@@ -180,8 +180,10 @@ struct FolderStruct {
     */
     ///takes a username and a folderName and reads the contentKeys
     func readContent(user : String, folderName : String, completion : @escaping([String])->Void) {
-        DB.child(user).child("folders").child(folderName).child("content").observeSingleEvent(of: .value) { (snapshot) in
+        
+        DB.child(user).child("folders").child(folderName).child("content").observe(.value) { (snapshot) in
             var contentArray: [String] = []
+            print("this is going")
             for child in snapshot.children {
                 if let child = child as? DataSnapshot {
                     if let value = child.key as? String {

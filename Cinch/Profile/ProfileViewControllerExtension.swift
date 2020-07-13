@@ -18,25 +18,37 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! ProfileMainCollectionViewCell
-        if indexPath.item == 0 {
-            cell.setupFirstCollectionView()
-        }
-        else {
-            cell.setupSecondCollectionView()
-        }
+        
+        //TODO: put this is a delegate maybe
         cell.username = username
         cell.navigationController = self.navigationController
-        cell.fetchFolders { (height) in
-            let totalHeight = height + self.view.frame.height * 0.7
-            if totalHeight > self.scrollView.contentSize.height {
-                self.scrollView.contentSize.height = totalHeight
+        
+        
+        if indexPath.item == 0 { //That means this is pulling from the uploaded folder
+            cell.setupUploadedVC { (contentHeight) in
+                let newHeight = self.view.frame.height + contentHeight + (self.tabBarController?.tabBar.frame.height)! +
+                (self.navigationController?.navigationBar.frame.height)!
+                
+                if self.scrollView.contentSize.height < newHeight {
+                    self.scrollView.contentSize.height = newHeight
+                }
+            }
+        }
+        else {
+            cell.setupHeartedVC { (contentHeight) in
+                let newHeight = self.view.frame.height + contentHeight + (self.tabBarController?.tabBar.frame.height)! +
+                (self.navigationController?.navigationBar.frame.height)!
+                
+//                self.scrollView.contentSize.height = contentHeight
+                if self.scrollView.contentSize.height < newHeight {
+                    self.scrollView.contentSize.height = newHeight
+                }
             }
         }
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        print("this is being used", indexPath.item)
         let index = 1 - indexPath.item
         segmentControl.selectedSegmentIndex = index
         handleSegmentTap()
@@ -55,112 +67,6 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 2
     }
-}
-
-
-
-class ProfileMainCollectionViewCell: UICollectionViewCell {
-    let cellIdentifier = "Cell"
-    var username = ""
-    var folders: [String] = []
-    var foldersFollowing: [FolderReference] = []
-    
-    //Elements
-    var gemsCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
-    var followingFoldersCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
-    var navigationController: UINavigationController!
-    
-    func setupFirstCollectionView() {
-        gemsCollectionView.dataSource = self
-        gemsCollectionView.delegate = self
-        gemsCollectionView.register(FolderCell.self, forCellWithReuseIdentifier: cellIdentifier)
-        gemsCollectionView.showsVerticalScrollIndicator = false
-        gemsCollectionView.alwaysBounceVertical = false
-        gemsCollectionView.backgroundColor = .white
-        gemsCollectionView.isScrollEnabled = false
-        gemsCollectionView.frame = frame
-
-        addSubview(gemsCollectionView)
-    }
-    
-    func setupSecondCollectionView() {
-        followingFoldersCollectionView.dataSource = self
-        followingFoldersCollectionView.delegate = self
-        followingFoldersCollectionView.register(FolderCell.self, forCellWithReuseIdentifier: cellIdentifier)
-        followingFoldersCollectionView.showsHorizontalScrollIndicator = false
-        followingFoldersCollectionView.alwaysBounceVertical = false
-        followingFoldersCollectionView.showsVerticalScrollIndicator = false
-        followingFoldersCollectionView.backgroundColor = .white
-        followingFoldersCollectionView.isScrollEnabled = false;
-        followingFoldersCollectionView.frame = frame
-        followingFoldersCollectionView.frame.origin.x = 0
-        
-        addSubview(followingFoldersCollectionView)
-        
-    }
-}
-
-//Represents the collection view that holds the cells for gems folders and following folders
-extension ProfileMainCollectionViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    
-    
-    ///gets the names of the folders from firebase and sets the height of the scrollview content for the profile page
-    func fetchFolders(completion: @escaping(CGFloat) -> Void) {
-        UserStruct().readFolders(user: username) { (folders) in
-            self.folders = folders
-            self.gemsCollectionView.reloadData()
-            completion(CGFloat(folders.count - Int((folders.count/2))) * self.gemsCollectionView.bounds.width * 0.4)
-        }
-        UserStruct().readFoldersReference(user: username) { (folderRefs) in
-            self.foldersFollowing = folderRefs
-            self.followingFoldersCollectionView.reloadData()
-            completion(CGFloat(folderRefs.count - Int((folderRefs.count/2))) * self.gemsCollectionView.bounds.width * 0.4)
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == gemsCollectionView {
-            return folders.count
-        }
-        return foldersFollowing.count
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! FolderCell
-        // For Personal
-        if collectionView == gemsCollectionView {
-            cell.setup(username: username, folderName: folders[indexPath.item], isPersonal: true)
-            return cell
-        }
-        // For Following
-        cell.setup(username: foldersFollowing[indexPath.item].admin, folderName: foldersFollowing[indexPath.item].folderName, isPersonal: false)
-        return cell
-    }
-    
-    ///Presents the Folder Selected Controller
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath) as! FolderCell
-        
-        let storyboard = UIStoryboard(name: "ProfilePage", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "FolderSelected") as! FolderSelectedController
-        let folderName = folders[indexPath.item]
-        let username = collectionView == gemsCollectionView ? self.username : foldersFollowing[indexPath.item].admin
-        vc.setup(username: username, folderName: folderName)
-        navigationController.pushViewController(vc, animated: true)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (collectionView.bounds.width) * 0.485, height: (collectionView.bounds.width) * 0.4)
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 8
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 12, left: 0, bottom: 0, right: 0)
-    }
-    
 }
 
 ///Folder for the content on the Profile Page
@@ -185,12 +91,10 @@ class FolderCell: UICollectionViewCell {
     func setup(username: String, folderName: String, isPersonal: Bool) {
         folderLabel.text = folderName
         
-        print("this is the folder name: ", folderName.lowercased())
-        
         FolderStruct().readIcon(user: username, folderName: folderName) { (icon) in
             let url = URL(string: icon)
             print("we have something", folderName)
-            if folderName.lowercased() == "likes" {
+            if folderName.lowercased() == "Hearted" {
                 self.imageView.image = UIImage(named: "heartedFolder")
             } else {
                 self.imageView.sd_setImage(with: url, placeholderImage: UIImage(), completed: nil)

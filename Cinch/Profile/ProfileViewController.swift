@@ -31,11 +31,10 @@ class ProfileViewController: UIViewController {
     var backgroundProfileIcon = UIImageView(image: UIImage(named: "backgroundRing1"))
     var usernameLabel = UILabel(frame: CGRect.zero)
     var gemLabel = UILabel(frame: CGRect.zero)
-    var addFolderButton = UILabel(frame: CGRect.zero)
     var numberOfGems = 0
     var stackView = ProfileStackView(frame: CGRect.zero)
     var mainButton = UIButton(frame: CGRect.zero) //this is the button that can either be "edit profile" or "follow/unfollow"
-    var segmentControl = UISegmentedControl(items: ["Owned", "Public"])
+    var segmentControl = UISegmentedControl(items: ["Uploaded", "Favorites"])
     var collectionView: UICollectionView?
     let followNav = UIButton(type: .custom)
     
@@ -53,7 +52,6 @@ class ProfileViewController: UIViewController {
         setupButton()
         if isUser {
             print(isUser)
-            setupAddFolderButton()
         }
         
         setupSegmentControl()
@@ -239,82 +237,6 @@ class ProfileViewController: UIViewController {
         mainButton.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: height*0.04).isActive = true
     }
     
-    func setupAddFolderButton() {
-        scrollView.addSubview(addFolderButton)
-        addFolderButton.sizeToFit()
-        addFolderButton.backgroundColor = UIColor.clear
-        addFolderButton.layer.borderWidth = 1
-        addFolderButton.layer.borderColor = UIColor.darkBlue.cgColor
-        addFolderButton.clipsToBounds = true
-        addFolderButton.text = "Add Folder"
-        addFolderButton.textAlignment = .center
-        addFolderButton.font = gemLabel.font.withSize(width/27)
-        addFolderButton.textColor = .darkBlue
- 
-        
-        addFolderButton.layer.cornerRadius = 12
-        //constraints
-        addFolderButton.translatesAutoresizingMaskIntoConstraints = false
-        addFolderButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        addFolderButton.heightAnchor.constraint(equalToConstant: height * 0.03).isActive = true
-        addFolderButton.widthAnchor.constraint(equalToConstant: width*0.3).isActive = true
-        addFolderButton.topAnchor.constraint(equalTo: mainButton.bottomAnchor, constant: 15).isActive = true
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(handleAddFolder))
-        addFolderButton.isUserInteractionEnabled = true
-        addFolderButton.addGestureRecognizer(tap)
-    }
-    
-    @objc func handleAddFolder(tapGesture: UITapGestureRecognizer) {
-        var folderName : String = ""
-        
-        let alert = UIAlertController(title: "Name Your Folder", message: "Assign a title to this folder", preferredStyle: .alert)
-        
-        alert.addTextField(configurationHandler: nil)
-        alert.addAction(UIAlertAction(title:"Cancel", style: .default, handler: nil))
-        alert.addAction(UIAlertAction(title: "Create", style: .default, handler: { [weak alert] (_) in
-            let textField = alert?.textFields![0]
-            folderName = textField!.text!.lowercased()
-            if folderName != "" {
-                let newFolder = Folder(folderName: folderName)
-                UserStruct().addFolder(user: self.username, folder: newFolder)
-                self.createFolder(folderName: folderName)
-            }
-            
-            
-            // TODO add check for duplicate folder names
-            //if a folder with that name already exists, then it wont overwrite it
-//            if self.folders.contains(where: { (tempFolder) -> Bool in
-//                return tempFolder.folderName == folderName
-//            }){
-//                let alert = UIAlertController(title: "ERROR", message: "A folder with title: \"\(folderName)\" already exits. \n Try a different title.", preferredStyle: .alert)
-//                alert.addAction(UIAlertAction(title: "okay", style: .cancel, handler: nil))
-//                self.present(alert, animated: true, completion: nil)
-//            }
-//            else
-//            {
-////                calling the function to save the folder name to Firebase and create it on the front end
-//
-//            }
-        }))
-        
-        self.present(alert, animated: true, completion: nil)
-    }
-    
-    func createFolder(folderName: String){
-        let folder = Folder(folderName: folderName)
-        UserStruct().addFolder(user: username, folder: folder)
-        self.collectionView?.reloadData()
-        
-        let alert = UIAlertController(title: "Created '\(folderName)' Folder", message: "", preferredStyle: .alert) //Notify the user with an alert
-        self.present(alert, animated: true, completion: nil)
-        let alertExpiration = DispatchTime.now() + 0.85
-        DispatchQueue.main.asyncAfter(deadline: alertExpiration) {
-            alert.dismiss(animated: true, completion: nil)
-        }
-    }
-    
-    
     func setupSegmentControl() {
         scrollView.addSubview(segmentControl)
         segmentControl.selectedSegmentIndex = 0
@@ -385,7 +307,7 @@ class ProfileViewController: UIViewController {
         
     }
     
-    ///resets the value conentSize of the scrollview after the folders are fetched
+    ///resets the value conentSize of the scrollview after the memes are fetched
     func resetSize(height: CGFloat){
         scrollView.contentSize.height = height
     }
