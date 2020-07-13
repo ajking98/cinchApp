@@ -72,7 +72,7 @@
 		897437E023ED0DEF00F2CCB7 /* Messages.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4622493622DFAC8F0005B12F /* Messages.framework */; };
 		897437E323ED0DEF00F2CCB7 /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897437E223ED0DEF00F2CCB7 /* MessagesViewController.swift */; };
 		897437E623ED0DEF00F2CCB7 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 897437E423ED0DEF00F2CCB7 /* MainInterface.storyboard */; };
-		897437EC23ED0DF100F2CCB7 /* iMessage.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 897437DF23ED0DEF00F2CCB7 /* iMessage.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		897437EC23ED0DF100F2CCB7 /* Cinch.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 897437DF23ED0DEF00F2CCB7 /* Cinch.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		897437F023ED101B00F2CCB7 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891065C723DE613C00EB8238 /* SearchBar.swift */; };
 		897437F123ED11A700F2CCB7 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46ADC110233FFBA1001B62E8 /* UIColorExtension.swift */; };
 		897437F623ED258600F2CCB7 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897437F523ED258600F2CCB7 /* SearchTableViewController.swift */; };
@@ -115,8 +115,6 @@
 		EB74D3B6226025E900556399 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB74D3B5226025E900556399 /* AppDelegate.swift */; };
 		EB74D3BD226025EA00556399 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EB74D3BC226025EA00556399 /* Assets.xcassets */; };
 		EB74D3C0226025EA00556399 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB74D3BE226025EA00556399 /* LaunchScreen.storyboard */; };
-		EB74D3CB226025EA00556399 /* InstagramCloneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB74D3CA226025EA00556399 /* InstagramCloneTests.swift */; };
-		EB74D3D6226025EA00556399 /* InstagramCloneUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB74D3D5226025EA00556399 /* InstagramCloneUITests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -150,7 +148,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				897437EC23ED0DF100F2CCB7 /* iMessage.appex in Embed App Extensions */,
+				897437EC23ED0DF100F2CCB7 /* Cinch.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -233,7 +231,7 @@
 		895CCCEA23F1E64A00826D0C /* SearchResultsVCExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsVCExtension.swift; sourceTree = "<group>"; };
 		8964B2CE23F44BB2002A66BB /* InitialiMessageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialiMessageVC.swift; sourceTree = "<group>"; };
 		896556EC23E0CA9600666AB9 /* ProfileStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStackView.swift; sourceTree = "<group>"; };
-		897437DF23ED0DEF00F2CCB7 /* iMessage.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = iMessage.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		897437DF23ED0DEF00F2CCB7 /* Cinch.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Cinch.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		897437E223ED0DEF00F2CCB7 /* MessagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
 		897437E523ED0DEF00F2CCB7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		897437E923ED0DF100F2CCB7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -283,11 +281,7 @@
 		EB74D3BF226025EA00556399 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EB74D3C1226025EA00556399 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EB74D3C6226025EA00556399 /* CinchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CinchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		EB74D3CA226025EA00556399 /* InstagramCloneTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramCloneTests.swift; sourceTree = "<group>"; };
-		EB74D3CC226025EA00556399 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EB74D3D1226025EA00556399 /* CinchUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CinchUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		EB74D3D5226025EA00556399 /* InstagramCloneUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramCloneUITests.swift; sourceTree = "<group>"; };
-		EB74D3D7226025EA00556399 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F0F04CCF56E32255BCFC3F5E /* Pods-CinchTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CinchTests.release.xcconfig"; path = "Target Support Files/Pods-CinchTests/Pods-CinchTests.release.xcconfig"; sourceTree = "<group>"; };
 		F4DC95FD178508B2961CE4E0 /* Pods_CinchUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CinchUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6ABF4619C5F19733B490B61 /* Pods-Cinch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cinch.release.xcconfig"; path = "Target Support Files/Pods-Cinch/Pods-Cinch.release.xcconfig"; sourceTree = "<group>"; };
@@ -602,8 +596,6 @@
 			isa = PBXGroup;
 			children = (
 				EB74D3B4226025E900556399 /* Cinch */,
-				EB74D3C9226025EA00556399 /* CinchTests */,
-				EB74D3D4226025EA00556399 /* CinchUITests */,
 				46F2B5C62371274600FFC751 /* CinchShareExtension */,
 				897437E123ED0DEF00F2CCB7 /* iMessage */,
 				EB74D3B3226025E900556399 /* Products */,
@@ -618,7 +610,7 @@
 				EB74D3B2226025E900556399 /* Cinch Memes.app */,
 				EB74D3C6226025EA00556399 /* CinchTests.xctest */,
 				EB74D3D1226025EA00556399 /* CinchUITests.xctest */,
-				897437DF23ED0DEF00F2CCB7 /* iMessage.appex */,
+				897437DF23ED0DEF00F2CCB7 /* Cinch.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -641,24 +633,6 @@
 				EB74D3C1226025EA00556399 /* Info.plist */,
 			);
 			path = Cinch;
-			sourceTree = "<group>";
-		};
-		EB74D3C9226025EA00556399 /* CinchTests */ = {
-			isa = PBXGroup;
-			children = (
-				EB74D3CA226025EA00556399 /* InstagramCloneTests.swift */,
-				EB74D3CC226025EA00556399 /* Info.plist */,
-			);
-			path = CinchTests;
-			sourceTree = "<group>";
-		};
-		EB74D3D4226025EA00556399 /* CinchUITests */ = {
-			isa = PBXGroup;
-			children = (
-				EB74D3D5226025EA00556399 /* InstagramCloneUITests.swift */,
-				EB74D3D7226025EA00556399 /* Info.plist */,
-			);
-			path = CinchUITests;
 			sourceTree = "<group>";
 		};
 		EB74D3FF2260520C00556399 /* Storyboards */ = {
@@ -688,7 +662,7 @@
 			);
 			name = iMessage;
 			productName = iMessage;
-			productReference = 897437DF23ED0DEF00F2CCB7 /* iMessage.appex */;
+			productReference = 897437DF23ED0DEF00F2CCB7 /* Cinch.appex */;
 			productType = "com.apple.product-type.app-extension.messages";
 		};
 		EB74D3B1226025E900556399 /* Cinch */ = {
@@ -1069,7 +1043,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EB74D3CB226025EA00556399 /* InstagramCloneTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1077,7 +1050,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EB74D3D6226025EA00556399 /* InstagramCloneUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1147,7 +1119,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.CinchMemes.iMessage2;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Cinch;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1172,7 +1144,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.CinchMemes.iMessage2;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Cinch;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
