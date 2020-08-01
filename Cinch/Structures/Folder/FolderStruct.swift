@@ -183,7 +183,6 @@ struct FolderStruct {
         
         DB.child(user).child("folders").child(folderName).child("content").observe(.value) { (snapshot) in
             var contentArray: [String] = []
-            print("this is going")
             for child in snapshot.children {
                 if let child = child as? DataSnapshot {
                     if let value = child.key as? String {

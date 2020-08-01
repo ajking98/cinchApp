@@ -6,7 +6,6 @@ target 'Cinch' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
   pod 'Firebase/Core'
-  pod 'Firebase/Auth'
   pod 'Firebase/Database'
   pod 'SDWebImage/WebP'
   pod 'Firebase/Storage','~>4.0'
@@ -22,6 +21,7 @@ target 'Cinch' do
   pod 'Cards'
   pod 'CardParts'
   
+  pod 'IBMMobileFirstPlatformFoundation', '~>8.0.2020011414'
   
   # Pods for Cinch
   
@@ -40,7 +40,6 @@ end
 target 'iMessage' do
   use_frameworks!
   pod 'Firebase/Core'
-  pod 'Firebase/Auth'
   pod 'Firebase/Database'
   pod 'SDWebImage/WebP'
   pod 'Firebase/Storage','~>4.0'

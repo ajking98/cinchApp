@@ -30,6 +30,7 @@ class EditProfileViewController: UIViewController {
     var profileImage: UIImageView?
     var profileLabel: UILabel?
     var profileName = ""
+    var newImageLink = URL(fileURLWithPath: "")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -128,11 +129,9 @@ class EditProfileViewController: UIViewController {
     
     func setupNameField() {
         if profileName != "" {
-            print("here")
             print(profileName)
             nameText.text = profileName
         } else {
-            print("there")
             nameText.placeholder = "Name"
         }
         nameText.font = UIFont.systemFont(ofSize: 15)
@@ -191,6 +190,9 @@ extension EditProfileViewController: UIImagePickerControllerDelegate, UINavigati
             didChangeProfileImage = true
         }
         
+        if let imageURL = info[UIImagePickerController.InfoKey.imageURL] as? URL {
+            newImageLink = imageURL
+        }
         dismiss(animated: true, completion: nil)
     }
 }

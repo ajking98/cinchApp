@@ -36,8 +36,8 @@ class CellSelectedCell: UITableViewCell{
     let lowerText = UILabel(frame: CGRect.zero)
     
     //TODO: This should only exist for admin
-    let xMark = UIButton(type: .contactAdd)
-    let createThumbnailButton = UIButton(type: .roundedRect)
+    let removeMedia = UIButton()
+    var createThumbnailButton = UIButton()
     
     
     func setup(contentKey: String) {
@@ -59,19 +59,20 @@ class CellSelectedCell: UITableViewCell{
     }
     
     func setupxMark() {
-        xMark.addTarget(self, action: #selector(handleRemoved), for: .touchUpInside)
-        xMark.frame = CGRect(x: 200, y: 200, width: 50, height: 50)
-        xMark.backgroundColor = .red
-        xMark.titleLabel?.text = "Delete"
-        xMark.isHidden = !isAdmin //TODO remove this to be able to delete posts
-        addSubview(xMark)
+        removeMedia.addTarget(self, action: #selector(handleRemoved), for: .touchUpInside)
+        removeMedia.frame = CGRect(x: 50, y: 200, width: 100, height: 50)
+        removeMedia.backgroundColor = .red
+        removeMedia.setTitle("Delete", for: .normal)
+        removeMedia.isHidden = !isAdmin //TODO remove this to be able to delete posts
+        addSubview(removeMedia)
+        
         
         //createThumbnail Button
         createThumbnailButton.addTarget(self, action: #selector(handleAddThumbnail), for: .touchUpInside)
-        createThumbnailButton.frame = CGRect(x: 275, y: 200, width: 50, height: 50)
+        createThumbnailButton.frame = CGRect(x: 200, y: 200, width: 150, height: 50)
         createThumbnailButton.backgroundColor = .green
         createThumbnailButton.isHidden = !isAdmin
-        createThumbnailButton.titleLabel!.text = "Thumbnail"
+        createThumbnailButton.setTitle("Create Thumbnail", for: .normal)
         addSubview(createThumbnailButton)
     }
     

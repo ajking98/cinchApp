@@ -35,17 +35,23 @@ class ProfileMainCollectionViewCell: UICollectionViewCell {
         let emptyFieldText = UILabel()
         
         //reading uploaded content
-        FolderStruct().readContent(user: username, folderName: "Uploaded") { (content) in
-            self.uploaded = content
-            if content.count > 0 {
-                emptyFieldText.removeFromSuperview()
+    
+        UserStruct().readFolders(user: username) { (folders) in
+            for folder in folders {
+                if folder == "Hearted" { continue }
+                FolderStruct().readContent(user: self.username, folderName: folder) { (content) in
+                    self.uploaded.append(contentsOf: content)
+                    if content.count > 0 {
+                        emptyFieldText.removeFromSuperview()
+                    }
+                    if content.count > 6 {
+                        var extendedHeight = CGFloat((content.count / 3) - 2)
+                        extendedHeight *= self.uploadedCollectionView.frame.size.width / 2
+                        completion(extendedHeight)
+                    }
+                    self.uploadedCollectionView.reloadData()
+                }
             }
-            if content.count > 6 {
-                var extendedHeight = CGFloat((content.count / 3) - 2)
-                extendedHeight *= self.uploadedCollectionView.frame.size.width / 2
-                completion(extendedHeight)
-            }
-            self.uploadedCollectionView.reloadData()
         }
         
         addSubview(uploadedCollectionView)
@@ -55,7 +61,7 @@ class ProfileMainCollectionViewCell: UICollectionViewCell {
         emptyFieldText.textAlignment = .center
         emptyFieldText.frame.size.height = 80
         emptyFieldText.frame.size.width = 300
-        emptyFieldText.text = "This Section is Empty. Go Upload A Meme"
+        emptyFieldText.text = "This Section is Empty. 0 memes uploaded"
         emptyFieldText.center.x = uploadedCollectionView.center.x
         
         uploadedCollectionView.addSubview(emptyFieldText)
@@ -95,7 +101,7 @@ class ProfileMainCollectionViewCell: UICollectionViewCell {
         addSubview(heartedCollectionView)
         
         //Text for when the section is empty
-        emptyFieldText.text = "This Section is Empty. Go Like More Memes"
+        emptyFieldText.text = "This Section is Empty. 0 memes liked"
         emptyFieldText.numberOfLines = 0
         emptyFieldText.textAlignment = .center
         emptyFieldText.frame.size.height = 80

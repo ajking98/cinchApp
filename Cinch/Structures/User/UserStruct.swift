@@ -61,7 +61,7 @@ struct UserStruct {
      Name
      */
     func readName(user : String, completion: @escaping (String) -> Void) {
-        DB.child(user).child("name").observeSingleEvent(of: .value) { (snapshot) in
+        DB.child(user).child("name").observe(.value) { (snapshot) in
             if let name = snapshot.value as? String {
                 completion(name)
             }
@@ -129,10 +129,19 @@ struct UserStruct {
      ProfilePic
      */
     func readProfilePic(user : String, completion: @escaping (String) -> Void) {
-        DB.child(user).child("profilePic").observeSingleEvent(of: .value) { (snapshot) in
+//        DB.child(user).child("profilePic").observeSingleEvent(of: .value) { (snapshot) in
+//            if let profilePic = snapshot.value as? String {
+//                completion(profilePic)
+//            }
+//        }
+        
+        DB.child(user).child("profilePic").observe(.value) { (snapshot) in
+            print("hitting again")
             if let profilePic = snapshot.value as? String {
+                print("hitting this", profilePic)
                 completion(profilePic)
             }
+            
         }
     }
     
