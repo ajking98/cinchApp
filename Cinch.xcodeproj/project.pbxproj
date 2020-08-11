@@ -737,7 +737,7 @@
 			attributes = {
 				DefaultBuildSystemTypeForWorkspace = Original;
 				LastSwiftUpdateCheck = 1120;
-				LastUpgradeCheck = 1020;
+				LastUpgradeCheck = 1150;
 				ORGANIZATIONNAME = "Gedi, Ahmed M";
 				TargetAttributes = {
 					897437DE23ED0DEF00F2CCB7 = {

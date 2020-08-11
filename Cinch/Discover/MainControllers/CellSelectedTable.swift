@@ -124,23 +124,32 @@ class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataS
         return content.count
     }
     
+    
+    var visited = [Int]()
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = CellSelectedCell()
         cell.frame.size = view.frame.size
-        cell.setup(contentKey: content[indexPath.row])
-        cell.handlePresentProfile = handlePresentProfile(username:)
+        
+        if visited.contains(indexPath.row) {
+            cell.setup(contentKey: content[indexPath.row])
+            cell.handlePresentProfile = handlePresentProfile(username:)
+        }
+        else {
+            visited.append(indexPath.row)
+        }
         return cell
     }
     
+    
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard let cell = cell as? CellSelectedCell else { return }
+        
         cell.playerLayer.player?.isMuted = true
         cell.playerLayer.player?.pause()
         
         cell.player.isMuted = true
         cell.player.pause()
-        
-        NotificationCenter.default.removeObserver(cell, name: .AVPlayerItemDidPlayToEndTime, object: cell.player.currentItem)
     }
     
     override func viewDidDisappear(_ animated: Bool) {

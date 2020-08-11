@@ -27,13 +27,14 @@ class CellSelectedCell: UITableViewCell{
     //Views
     var fullScreenImageView = UIImageView(frame: CGRect.zero)
     var playerLayer = AVPlayerLayer()
-    var player = AVPlayer()
+    var player = AVQueuePlayer()
     let shareIcon = UIImageView(image: UIImage(named: "shareIcon"))
     let heartIcon = UIImageView(image: UIImage(named: "heartIcon"))
     let followUserIcon = UIImageView(image: UIImage(named: "followUserIcon"))
     var profileIcon = UIImageView(frame: CGRect.zero)
     var backgroundProfileIcon = UIImageView(image: UIImage(named: "backgroundRing1"))
     let lowerText = UILabel(frame: CGRect.zero)
+    var videoLooper: AVPlayerLooper?
     
     //TODO: This should only exist for admin
     let removeMedia = UIButton()
@@ -92,20 +93,20 @@ class CellSelectedCell: UITableViewCell{
         let author = post.postOwner ?? ""
         if checkIfVideo(link) {
             guard let link = URL(string: link) else { return }
-//            playerLayer = fullScreenImageView.loadVideo(link, size: frame.size)
-            player = AVPlayer(url: link)
+            
+            
+            //looping
+            let asset = AVAsset(url: link)
+            let item = AVPlayerItem(asset: asset)
+            player = AVQueuePlayer(playerItem: item)
+            
+            
+            videoLooper = AVPlayerLooper(player: player, templateItem: item)
+            
             playerLayer = AVPlayerLayer(player: player)
             playerLayer.player?.play()
             fullScreenImageView.layer.addSublayer(playerLayer)
             playerLayer.frame = fullScreenImageView.layer.bounds
-            
-            //autoplay
-//            NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player.currentItem, queue: .main) { notification in
-//                self.player.seek(to: CMTime.zero)
-//                self.player.play()
-//            }
-            
-            NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinish), name: .AVPlayerItemDidPlayToEndTime, object: player.currentItem)
             
             playerLayer.videoGravity = .resizeAspect
             playerLayer.player?.isMuted = isMuted
