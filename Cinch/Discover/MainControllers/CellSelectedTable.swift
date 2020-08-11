@@ -125,20 +125,26 @@ class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataS
     }
     
     
-    var visited = [Int]()
+    var visited = [0]
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = CellSelectedCell()
         cell.frame.size = view.frame.size
         
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let cell = cell as! CellSelectedCell
+        
         if visited.contains(indexPath.row) {
+            print("Bingo: ", indexPath.row)
             cell.setup(contentKey: content[indexPath.row])
             cell.handlePresentProfile = handlePresentProfile(username:)
         }
         else {
             visited.append(indexPath.row)
         }
-        return cell
     }
     
     
