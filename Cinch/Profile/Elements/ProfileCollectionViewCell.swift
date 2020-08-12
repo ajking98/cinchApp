@@ -44,10 +44,12 @@ class ProfileMainCollectionViewCell: UICollectionViewCell {
                     if content.count > 0 {
                         emptyFieldText.removeFromSuperview()
                     }
-                    if content.count > 6 {
-                        var extendedHeight = CGFloat((content.count / 3) - 2)
-                        extendedHeight *= self.uploadedCollectionView.frame.size.width / 2
-                        completion(extendedHeight)
+                    if folder == folders.last {
+                        if self.uploaded.count > 6 {
+                            var extendedHeight = CGFloat((self.uploaded.count / 3) - 1)
+                            extendedHeight *= self.uploadedCollectionView.frame.size.width / 2
+                            completion(extendedHeight)
+                        }
                     }
                     self.uploadedCollectionView.reloadData()
                 }
@@ -128,7 +130,6 @@ extension ProfileMainCollectionViewCell: UICollectionViewDelegate, UICollectionV
     ///returns the image
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! GenericCell
-        cell.backgroundColor = .white
         
         // For uploaded
         if collectionView == uploadedCollectionView {

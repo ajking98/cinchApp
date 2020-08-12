@@ -42,7 +42,7 @@ class GenericCell: UICollectionViewCell {
         imageView.frame.size = frame.size
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.backgroundColor = .lightGray
+        imageView.backgroundColor = .skyBlue
     }
     
     ///sets up the cell using a post - iMessage
@@ -51,7 +51,7 @@ class GenericCell: UICollectionViewCell {
         imageView.frame.size = frame.size
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.backgroundColor = .lightGray
+        imageView.backgroundColor = .skyBlue
         
         
         guard let link = post.link else { return }
@@ -82,6 +82,7 @@ class GenericCell: UICollectionViewCell {
     
     
     override func prepareForReuse() {
-        imageView = UIImageView()
+        imageView.image = UIImage()
+        imageView.removeFromSuperview()
     }
 }

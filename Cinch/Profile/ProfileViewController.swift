@@ -301,7 +301,7 @@ class ProfileViewController: UIViewController {
         scrollView.addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        collectionView.heightAnchor.constraint(equalToConstant: height*2).isActive = true
+        collectionView.heightAnchor.constraint(equalToConstant: height*20).isActive = true
         collectionView.widthAnchor.constraint(equalToConstant: width).isActive = true
         collectionView.topAnchor.constraint(equalTo: segmentControl.bottomAnchor, constant: 0).isActive = true
         
