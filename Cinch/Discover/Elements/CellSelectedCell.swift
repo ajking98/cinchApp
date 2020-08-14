@@ -59,10 +59,13 @@ class CellSelectedCell: UITableViewCell{
         }
         
         guard let username = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
-//        FolderStruct().readContent(user: username, folderName: "Hearted") { (hear) in
-//            <#code#>
-//        }
-        print("this is the contentKey: ", contentKey)
+        
+        FolderStruct().isInFolder(user: username, folderName: "Hearted", contentKey: contentKey) { (isInFolder) in
+            if(isInFolder) {
+                print("running home this is in the folder", self.contentKey)
+                self.heartIcon.image = UIImage(named: "heartIcon-Selected")
+            }
+        }
     }
     
     func setupxMark() {
