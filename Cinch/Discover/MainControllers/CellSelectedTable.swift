@@ -63,7 +63,14 @@ class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataS
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        tableView.scrollToRow(at: startingIndex, at: .top, animated: true)
+        if startingIndex.row == 0 {
+            let cell = tableView.cellForRow(at: startingIndex) as! CellSelectedCell
+            cell.setup(contentKey: content[0])
+            cell.handlePresentProfile = handlePresentProfile(username:)
+        }
+        else {
+            tableView.scrollToRow(at: startingIndex, at: .top, animated: true)
+        }
     }
     
     func setupNavigationBar() {
@@ -124,29 +131,40 @@ class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataS
         return content.count
     }
     
-    
-    var visited = [0]
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = CellSelectedCell()
         cell.frame.size = view.frame.size
+        cell.backgroundColor = .black
         
         return cell
     }
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let cell = cell as! CellSelectedCell
+    
+    ///When the user manually swipes the screen
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         
-        if visited.contains(indexPath.row) {
-            print("Bingo: ", indexPath.row)
-            cell.setup(contentKey: content[indexPath.row])
-            cell.handlePresentProfile = handlePresentProfile(username:)
+        let index = tableView.indexPathsForVisibleRows![0][1]
+        let cell = tableView.cellForRow(at: IndexPath(item: index, section: 0)) as! CellSelectedCell
+        
+        if cell.contentKey == content[index] { //checks if the user switched to a new cell 
+            cell.player.play()
         }
         else {
-            visited.append(indexPath.row)
+            cell.setup(contentKey: content[index])
+            cell.handlePresentProfile = handlePresentProfile(username:)
         }
+        
     }
     
+    ///When the app scrolls to the selected index
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+
+        let index = tableView.indexPathsForVisibleRows![0][1]
+        let cell = tableView.cellForRow(at: IndexPath(item: index, section: 0)) as! CellSelectedCell
+        
+        cell.setup(contentKey: content[index])
+        cell.handlePresentProfile = handlePresentProfile(username:)
+    }
     
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard let cell = cell as? CellSelectedCell else { return }

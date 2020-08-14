@@ -15,7 +15,7 @@ import AVKit
 import Photos
 
 ///holds the value for whether the cell is muted or not
-var isMuted = true
+var isMuted = false
 class CellSelectedCell: UITableViewCell{
     
     //data
@@ -57,6 +57,12 @@ class CellSelectedCell: UITableViewCell{
             self.post = post
             self.fetchContent()
         }
+        
+        guard let username = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
+//        FolderStruct().readContent(user: username, folderName: "Hearted") { (hear) in
+//            <#code#>
+//        }
+        print("this is the contentKey: ", contentKey)
     }
     
     func setupxMark() {

@@ -197,8 +197,12 @@ struct FolderStruct {
     func addContent(user : String, folderName : String, contentKey : String, link: String) {
         let updatedContentKey = convertStringToKey(link: contentKey) //this is for the olderposts that don't have proper contentKeys
         DB.child(user).child("folders").child(folderName).child("content").updateChildValues([updatedContentKey : link])
-
     }
+    
+//    func isInFolder(user: String, folderName: String, link: String, completion: @escaping(Bool)->Void) {
+//        DB.child(user).child("folders").child(folderName).child("content")
+//        
+//    }
     
     
     ///deletes a given post from the content's dictionary within the Folder
