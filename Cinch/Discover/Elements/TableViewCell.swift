@@ -142,12 +142,22 @@ class TableViewCell: UITableViewCell, UICollectionViewDataSource {
         vc.modalPresentationStyle = .fullScreen
         vc.content = content
         vc.startingIndex = indexPath
+        vc.refreshCell = refreshCell(indexPath:)
         parentViewController?.navigationController?.pushViewController(vc, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! GenericCell
         cell.setup(contentKey: content[indexPath.item])
+    }
+    
+    
+    //TODO: Fix this so that it refreshes the cell when user goes back
+    func refreshCell(indexPath: IndexPath) {
+////        collectionView.reloadItems(at: [indexPath])
+//        let cell = collectionView.cellForItem(at: indexPath) as! GenericCell
+////        cell.setup(contentKey: content[indexPath.item])
+//        cell.imageView.startAnimating()
     }
     
     
