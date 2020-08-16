@@ -39,6 +39,7 @@ class CellSelectedCell: UITableViewCell{
     //TODO: This should only exist for admin
     let removeMedia = UIButton()
     var createThumbnailButton = UIButton()
+    var isHearted = false
     
     
     func setup(contentKey: String) {
@@ -62,8 +63,12 @@ class CellSelectedCell: UITableViewCell{
         
         FolderStruct().isInFolder(user: username, folderName: "Hearted", contentKey: contentKey) { (isInFolder) in
             if(isInFolder) {
-                print("running home this is in the folder", self.contentKey)
+                print("is present")
                 self.heartIcon.image = UIImage(named: "heartIcon-Selected")
+                self.isHearted = true
+            }
+            else {
+                self.heartIcon.image = UIImage(named: "heartIcon")
             }
         }
     }
@@ -91,9 +96,6 @@ class CellSelectedCell: UITableViewCell{
     }
     
     @objc func handleRemoved() {
-        print("this is something coll:", self.post.contentKey)
-        print("this is the post: ", self.post.toString())
-        
         SuperFunctions().permanentlyDeletePost(post: self.post)
     }
     
@@ -283,12 +285,22 @@ class CellSelectedCell: UITableViewCell{
         guard let localUser = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
         
         guard let link = post.link else { return }
-        FolderStruct().addContent(user: localUser, folderName: "Hearted", contentKey: contentKey, link: link)
-        let alert = UIAlertController(title: "Added To Favorites!", message: "", preferredStyle: .alert) //Notify the user with an alert
+
+        let alert = UIAlertController(title: "", message: "", preferredStyle: .alert) //Notify the user with an alert
         parentViewController?.present(alert, animated: true, completion: {
             alert.view.superview?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.dismissAlert)))
         })
         
+        if isHearted {
+            FolderStruct().deleteContent(user: localUser, folderName: "Hearted", contentKey: contentKey)
+            alert.title = "Removed From Favorites"
+        }
+        else {
+            FolderStruct().addContent(user: localUser, folderName: "Hearted", contentKey: contentKey, link: link)
+            alert.title = "Added To Favorites!"
+        }
+        
+        isHearted = !isHearted
         let alertExpiration = DispatchTime.now() + 0.85
         DispatchQueue.main.asyncAfter(deadline: alertExpiration) {
         alert.dismiss(animated: true, completion: nil)
