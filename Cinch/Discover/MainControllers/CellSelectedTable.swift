@@ -63,7 +63,14 @@ class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataS
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        tableView.scrollToRow(at: startingIndex, at: .top, animated: true)
+        if startingIndex.row == 0 {
+            let cell = tableView.cellForRow(at: startingIndex) as! CellSelectedCell
+            cell.setup(contentKey: content[0])
+            cell.handlePresentProfile = handlePresentProfile(username:)
+        }
+        else {
+            tableView.scrollToRow(at: startingIndex, at: .top, animated: true)
+        }
     }
     
     func setupNavigationBar() {
@@ -127,20 +134,46 @@ class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataS
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = CellSelectedCell()
         cell.frame.size = view.frame.size
-        cell.setup(contentKey: content[indexPath.row])
-        cell.handlePresentProfile = handlePresentProfile(username:)
+        cell.backgroundColor = .black
+        
         return cell
+    }
+    
+    
+    ///When the user manually swipes the screen
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        
+        let index = tableView.indexPathsForVisibleRows![0][1]
+        let cell = tableView.cellForRow(at: IndexPath(item: index, section: 0)) as! CellSelectedCell
+        
+        if cell.contentKey == content[index] { //checks if the user switched to a new cell 
+            cell.player.play()
+        }
+        else {
+            cell.setup(contentKey: content[index])
+            cell.handlePresentProfile = handlePresentProfile(username:)
+        }
+        
+    }
+    
+    ///When the app scrolls to the selected index
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+
+        let index = tableView.indexPathsForVisibleRows![0][1]
+        let cell = tableView.cellForRow(at: IndexPath(item: index, section: 0)) as! CellSelectedCell
+        
+        cell.setup(contentKey: content[index])
+        cell.handlePresentProfile = handlePresentProfile(username:)
     }
     
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard let cell = cell as? CellSelectedCell else { return }
+        
         cell.playerLayer.player?.isMuted = true
         cell.playerLayer.player?.pause()
         
         cell.player.isMuted = true
         cell.player.pause()
-        
-        NotificationCenter.default.removeObserver(cell, name: .AVPlayerItemDidPlayToEndTime, object: cell.player.currentItem)
     }
     
     override func viewDidDisappear(_ animated: Bool) {

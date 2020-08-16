@@ -1,0 +1,11 @@
+framework module IBMMobileFoundationSwift {
+  umbrella header "IBMMobileFoundationSwift.h"
+
+  export *
+  module * { export * }
+}
+
+module IBMMobileFoundationSwift.Swift {
+    header "IBMMobileFoundationSwift-Swift.h"
+    requires objc
+}

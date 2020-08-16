@@ -47,7 +47,6 @@ class UploadViewController: UIViewController {
         gradient.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.size.width, height: self.view.frame.size.height)
 
         self.view.layer.insertSublayer(gradient, at: 0)
-        print("this is hte printing part")
     }
     
     func setupNavigationController() {
@@ -78,8 +77,8 @@ class UploadViewController: UIViewController {
         imagePicker.mediaTypes = ["public.image", "public.movie"]
         imagePicker.sourceType = .photoLibrary
         imagePicker.modalPresentationStyle = .fullScreen
-        
-        //checks for permission 
+
+        //checks for permission
         var status = PHPhotoLibrary.authorizationStatus()
         if status == .notDetermined {
             PHPhotoLibrary.requestAuthorization { (requestedStatus) in
@@ -92,10 +91,14 @@ class UploadViewController: UIViewController {
         if status == .authorized {
             present(imagePicker, animated: true, completion: nil)
         }
+        
+        //Uncomment this for the upload script
+//        let uploadScriptVC = UploadScriptVC()
+//        uploadScriptVC.modalPresentationStyle = .fullScreen
+//        self.present(uploadScriptVC, animated: true, completion: nil)
     }
 
 }
-
 
 extension UploadViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     

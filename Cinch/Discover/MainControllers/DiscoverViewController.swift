@@ -51,7 +51,6 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.view.backgroundColor = .white
 //        navigationController?.hidesBarsOnSwipe = true
-        
     }
     
     
@@ -94,6 +93,8 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
 //                }
 //            }
 //        }
+        
+        
         UserStruct().readNewContent(user: username) { (links) in
             let limit = links.count < 15 ? links.count : 15
             for index in 0 ..< limit {

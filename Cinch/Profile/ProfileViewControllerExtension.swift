@@ -24,7 +24,7 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
         cell.navigationController = self.navigationController
         
         
-        if indexPath.item == 0 { //That means this is pulling from the uploaded folder
+        if indexPath.item == 0 { //pulling from the uploaded folder
             cell.setupUploadedVC { (contentHeight) in
                 let newHeight = self.view.frame.height + contentHeight + (self.tabBarController?.tabBar.frame.height)! +
                 (self.navigationController?.navigationBar.frame.height)!

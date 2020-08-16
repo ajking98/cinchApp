@@ -23,7 +23,6 @@ extension ProfileViewController {
     
     
     @objc func handleEditProfile(){
-        print("Editing")
         print(profileName)
         let next:EditProfileViewController = storyboard?.instantiateViewController(withIdentifier: "EditProfileViewController") as! EditProfileViewController
         next.profileName = profileName
@@ -118,28 +117,21 @@ extension ProfileViewController {
 
 extension EditProfileViewController {
     @objc func handleChangePhoto(){
-        print("Changing")
         imagePicker.sourceType = .photoLibrary
         imagePicker.allowsEditing = true
         present(imagePicker, animated: true, completion: nil)
     }
     
     @objc func saveButtonAction() {
-        print("Saving")
-        let username = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey)
+        guard let username = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
         if (didChangeProfileImage) {
-            guard let image = imageView.image else { return }
-            guard let profileImage = profileImage else { return }
-//            StorageStruct().uploadImage(image: image) { (newImage) in //TODO: Yassin
-//                UserStruct().updateProfilePic(user: username!, newProfilePic: newImage)
-//                profileImage.image = image
-//            }
+            StorageStruct().uploadContent(mediaLink: newImageLink) { (link, _) in
+                UserStruct().updateProfilePic(user: username, newProfilePic: link)
+            }
         }
 
         if self.nameText.text != "" {
-            UserStruct().updateName(user: username!, newName: self.nameText.text!)
-            print(username)
-            self.profileName = self.nameText.text!
+            UserStruct().updateName(user: username, newName: self.nameText.text!)
         }
         self.dismiss(animated: true, completion: nil)
     }

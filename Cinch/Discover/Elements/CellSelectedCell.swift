@@ -15,7 +15,7 @@ import AVKit
 import Photos
 
 ///holds the value for whether the cell is muted or not
-var isMuted = true
+var isMuted = false
 class CellSelectedCell: UITableViewCell{
     
     //data
@@ -27,17 +27,19 @@ class CellSelectedCell: UITableViewCell{
     //Views
     var fullScreenImageView = UIImageView(frame: CGRect.zero)
     var playerLayer = AVPlayerLayer()
-    var player = AVPlayer()
+    var player = AVQueuePlayer()
     let shareIcon = UIImageView(image: UIImage(named: "shareIcon"))
     let heartIcon = UIImageView(image: UIImage(named: "heartIcon"))
     let followUserIcon = UIImageView(image: UIImage(named: "followUserIcon"))
     var profileIcon = UIImageView(frame: CGRect.zero)
     var backgroundProfileIcon = UIImageView(image: UIImage(named: "backgroundRing1"))
     let lowerText = UILabel(frame: CGRect.zero)
+    var videoLooper: AVPlayerLooper?
     
     //TODO: This should only exist for admin
-    let xMark = UIButton(type: .contactAdd)
-    let createThumbnailButton = UIButton(type: .roundedRect)
+    let removeMedia = UIButton()
+    var createThumbnailButton = UIButton()
+    var isHearted = false
     
     
     func setup(contentKey: String) {
@@ -56,22 +58,36 @@ class CellSelectedCell: UITableViewCell{
             self.post = post
             self.fetchContent()
         }
+        
+        guard let username = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
+        
+        FolderStruct().isInFolder(user: username, folderName: "Hearted", contentKey: contentKey) { (isInFolder) in
+            if(isInFolder) {
+                print("is present")
+                self.heartIcon.image = UIImage(named: "heartIcon-Selected")
+                self.isHearted = true
+            }
+            else {
+                self.heartIcon.image = UIImage(named: "heartIcon")
+            }
+        }
     }
     
     func setupxMark() {
-        xMark.addTarget(self, action: #selector(handleRemoved), for: .touchUpInside)
-        xMark.frame = CGRect(x: 200, y: 200, width: 50, height: 50)
-        xMark.backgroundColor = .red
-        xMark.titleLabel?.text = "Delete"
-        xMark.isHidden = !isAdmin //TODO remove this to be able to delete posts
-        addSubview(xMark)
+        removeMedia.addTarget(self, action: #selector(handleRemoved), for: .touchUpInside)
+        removeMedia.frame = CGRect(x: 50, y: 200, width: 100, height: 50)
+        removeMedia.backgroundColor = .red
+        removeMedia.setTitle("Delete", for: .normal)
+        removeMedia.isHidden = !isAdmin //TODO remove this to be able to delete posts
+        addSubview(removeMedia)
+        
         
         //createThumbnail Button
         createThumbnailButton.addTarget(self, action: #selector(handleAddThumbnail), for: .touchUpInside)
-        createThumbnailButton.frame = CGRect(x: 275, y: 200, width: 50, height: 50)
+        createThumbnailButton.frame = CGRect(x: 200, y: 200, width: 150, height: 50)
         createThumbnailButton.backgroundColor = .green
         createThumbnailButton.isHidden = !isAdmin
-        createThumbnailButton.titleLabel!.text = "Thumbnail"
+        createThumbnailButton.setTitle("Create Thumbnail", for: .normal)
         addSubview(createThumbnailButton)
     }
     
@@ -80,9 +96,6 @@ class CellSelectedCell: UITableViewCell{
     }
     
     @objc func handleRemoved() {
-        print("this is something coll:", self.post.contentKey)
-        print("this is the post: ", self.post.toString())
-        
         SuperFunctions().permanentlyDeletePost(post: self.post)
     }
     
@@ -91,20 +104,20 @@ class CellSelectedCell: UITableViewCell{
         let author = post.postOwner ?? ""
         if checkIfVideo(link) {
             guard let link = URL(string: link) else { return }
-//            playerLayer = fullScreenImageView.loadVideo(link, size: frame.size)
-            player = AVPlayer(url: link)
+            
+            
+            //looping
+            let asset = AVAsset(url: link)
+            let item = AVPlayerItem(asset: asset)
+            player = AVQueuePlayer(playerItem: item)
+            
+            
+            videoLooper = AVPlayerLooper(player: player, templateItem: item)
+            
             playerLayer = AVPlayerLayer(player: player)
             playerLayer.player?.play()
             fullScreenImageView.layer.addSublayer(playerLayer)
             playerLayer.frame = fullScreenImageView.layer.bounds
-            
-            //autoplay
-//            NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player.currentItem, queue: .main) { notification in
-//                self.player.seek(to: CMTime.zero)
-//                self.player.play()
-//            }
-            
-            NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinish), name: .AVPlayerItemDidPlayToEndTime, object: player.currentItem)
             
             playerLayer.videoGravity = .resizeAspect
             playerLayer.player?.isMuted = isMuted
@@ -272,12 +285,22 @@ class CellSelectedCell: UITableViewCell{
         guard let localUser = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
         
         guard let link = post.link else { return }
-        FolderStruct().addContent(user: localUser, folderName: "Hearted", contentKey: contentKey, link: link)
-        let alert = UIAlertController(title: "Added To Favorites!", message: "", preferredStyle: .alert) //Notify the user with an alert
+
+        let alert = UIAlertController(title: "", message: "", preferredStyle: .alert) //Notify the user with an alert
         parentViewController?.present(alert, animated: true, completion: {
             alert.view.superview?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.dismissAlert)))
         })
         
+        if isHearted {
+            FolderStruct().deleteContent(user: localUser, folderName: "Hearted", contentKey: contentKey)
+            alert.title = "Removed From Favorites"
+        }
+        else {
+            FolderStruct().addContent(user: localUser, folderName: "Hearted", contentKey: contentKey, link: link)
+            alert.title = "Added To Favorites!"
+        }
+        
+        isHearted = !isHearted
         let alertExpiration = DispatchTime.now() + 0.85
         DispatchQueue.main.asyncAfter(deadline: alertExpiration) {
         alert.dismiss(animated: true, completion: nil)

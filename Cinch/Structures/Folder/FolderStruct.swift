@@ -183,11 +183,10 @@ struct FolderStruct {
         
         DB.child(user).child("folders").child(folderName).child("content").observe(.value) { (snapshot) in
             var contentArray: [String] = []
-            print("this is going")
             for child in snapshot.children {
                 if let child = child as? DataSnapshot {
-                    if let value = child.key as? String {
-                        contentArray.append(value)}
+                    if let contentKey = child.key as? String {
+                        contentArray.append(contentKey)}
             } }
                 completion(contentArray)
         }
@@ -198,7 +197,25 @@ struct FolderStruct {
     func addContent(user : String, folderName : String, contentKey : String, link: String) {
         let updatedContentKey = convertStringToKey(link: contentKey) //this is for the olderposts that don't have proper contentKeys
         DB.child(user).child("folders").child(folderName).child("content").updateChildValues([updatedContentKey : link])
-
+    }
+    
+    func isInFolder(user: String, folderName: String, contentKey: String, completion: @escaping(Bool)->Void) {
+        
+        DB.child(user).child("folders").child(folderName).child("content").observe(.value) { (snapshot) in
+            for child in snapshot.children {
+                if let child = child as? DataSnapshot {
+                    if let key = child.key as? String {
+                        if key == contentKey {
+                            print("this is in folder dog running home")
+                            completion(true)
+                            return
+                        }
+                    }
+                }
+            }
+            completion(false)
+        }
+        
     }
     
     
