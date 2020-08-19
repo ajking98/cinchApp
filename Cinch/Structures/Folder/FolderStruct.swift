@@ -205,8 +205,7 @@ struct FolderStruct {
             for child in snapshot.children {
                 if let child = child as? DataSnapshot {
                     if let key = child.key as? String {
-                        if key == contentKey {
-                            print("this is in folder dog running home")
+                        if key == convertStringToKey(link: contentKey) {
                             completion(true)
                             return
                         }

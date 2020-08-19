@@ -63,7 +63,6 @@ class CellSelectedCell: UITableViewCell{
         
         FolderStruct().isInFolder(user: username, folderName: "Hearted", contentKey: contentKey) { (isInFolder) in
             if(isInFolder) {
-                print("is present")
                 self.heartIcon.image = UIImage(named: "heartIcon-Selected")
                 self.isHearted = true
             }
