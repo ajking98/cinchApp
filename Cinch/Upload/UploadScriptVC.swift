@@ -19,10 +19,6 @@ struct Meme: Codable {
 
 class UploadScriptVC: UIViewController {
     
-    //static data
-    let links = ["https://www.indiewire.com/wp-content/uploads/2019/11/960x0-2.jpg", "https://ichef.bbci.co.uk/images/ic/704xn/p072ms6r.jpg"]
-    let captionList = ["Funny Yoda Baby Starwars", "There was a spider its gone now"]
-    
     let contentImageView = UIImageView()
     var tagText = ""
     var tagArray = [String]()
@@ -47,13 +43,30 @@ class UploadScriptVC: UIViewController {
                 let jsonResult = try JSONSerialization.jsonObject(with: data, options: .mutableLeaves)
                 if let jsonOther = try? JSONDecoder().decode([Meme].self, from: data){
                     memes = jsonOther
-                    tagArray = memes[0].tags
-                    setup(link: links[0], tagArray: tagArray)
+                    setup(currentIndex)
                 }
             } catch {
                  // handle error
             }
         }
+    }
+    
+    func setup(_ index: Int) {
+        tagArray = memes[index].title.components(separatedBy: " ")
+        tagArray.append(contentsOf: memes[index].tags)
+        
+        let link = memes[index].image
+        
+        //image
+        let url = URL(string: link)
+        let data = try? Data(contentsOf: url!)
+
+        if let imageData = data {
+            let image = UIImage(data: imageData)
+            contentImageView.image = image
+        }
+        
+        captionTableView.reloadData()
     }
     
     override func viewDidLoad() {
@@ -98,35 +111,15 @@ class UploadScriptVC: UIViewController {
         view.addSubview(declineButton)
     }
     
-    
-    func setup(link: String, tagArray: [String]) {
-        
-        //image
-        let url = URL(string: link)
-        let data = try? Data(contentsOf: url!)
-
-        if let imageData = data {
-            let image = UIImage(data: imageData)
-            contentImageView.image = image
-        }
-    }
-    
     @objc func accept(){
-        
         if let image = contentImageView.image {
             if let data = image.jpegData(compressionQuality: 0.8) {
                 let filename = getDocumentsDirectory().appendingPathComponent("copy.png")
                 try? data.write(to: filename)
-
-                print("this is going to DB", filename)
-                print("compare:", getDocumentsDirectory())
                 
-                
-                saveToFolder(localLink: filename, tags: tagText ?? "")
+                saveToFolder(localLink: filename, tagArray: tagArray)
             }
         }
-        
-        //Calls the reject method to move to next content
         reject()
         
     }
@@ -137,15 +130,15 @@ class UploadScriptVC: UIViewController {
     }
     
     
-    
     @objc func reject(){
-        print("Rejected")
-        if(links.count - 1 > currentIndex) {
+        if(memes.count - 1 > currentIndex) {
+            print("moving to next", currentIndex)
             currentIndex += 1
-//            setup(link: links[currentIndex], tag: captionList[currentIndex])
+            setup(currentIndex)
         }
         
         else {
+            print("reached end")
             reachedEndAlert()
         }
     }
@@ -158,11 +151,11 @@ class UploadScriptVC: UIViewController {
     }
     
     
-    func saveToFolder(localLink: URL, tags: String, _ frames: [UIImage]? = nil) {
+    func saveToFolder(localLink: URL, tagArray: [String], _ frames: [UIImage]? = nil) {
 
         StorageStruct().uploadContent(mediaLink: localLink) { (link, contentKey) in
             FolderStruct().addContent(user: self.username, folderName: "Uploaded", contentKey: contentKey, link: link)
-                self.addTags(link: link, tags: tags, contentKey: contentKey, frames)
+            self.addTags(link: link, tagArray: tagArray, contentKey: contentKey, frames)
 
             
             //user feedback alert
@@ -177,17 +170,9 @@ class UploadScriptVC: UIViewController {
     
     
     ///Adds the tags and uploads the post and the tags
-    func addTags(link: String, tags: String, contentKey: String, _ frames: [UIImage]? = nil){
-        let message = tags.components(separatedBy: CharacterSet(charactersIn: " ./\\#"))
-        var tagArray = [String]()
+    func addTags(link: String, tagArray: [String], contentKey: String, _ frames: [UIImage]? = nil){
         var post: Post?
         if checkIfVideo(link) {
-                for tag in message{
-                    if tag.count > 2 {
-                        let standardizedTag = tag.lowercased()
-                        tagArray.append(standardizedTag)
-                    }
-                }
             
         ///Adding the frames if its a video
             if let frames = frames {
@@ -199,23 +184,18 @@ class UploadScriptVC: UIViewController {
                 }
             }
         }
-        else { //If image
-            
-            for tag in message{
-                if tag.count > 2 {
-                    let standardizedTag = tag.lowercased()
-                    tagArray.append(standardizedTag)
-                }
-            }
+        else {
             post = Post(isImage: true, postOwner: username, link: link, contentKey: contentKey)
             guard let standardPost = post else { return }
             standardPost.tags = tagArray
             ParentPostStruct().addPost(post: standardPost)
-            
+            print("here is contentKey:", contentKey)
         }
         
         for tag in tagArray {
-            TagStruct().addElement(tagLabel: tag, tagElement: TagElement(link: link, contentKey: contentKey))
+            if tag.contains("./\\#") { continue }
+            let standardTag = tag.lowercased()
+            TagStruct().addElement(tagLabel: standardTag, tagElement: TagElement(link: link, contentKey: contentKey))
         }
         
     }
