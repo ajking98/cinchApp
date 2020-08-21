@@ -10,6 +10,8 @@
 		15C942DAA1A8F35E4A1F7C15 /* Pods_Cinch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DFA3D4756B7C9AA1CE7F219 /* Pods_Cinch.framework */; };
 		31FC04D4F39655A4A315FA9A /* Pods_iMessage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8197CE2758889452E7EA0740 /* Pods_iMessage.framework */; };
 		4607196E235ACC1900BE17DF /* PanGestureExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4607196D235ACC1900BE17DF /* PanGestureExtension.swift */; };
+		4628FDAA24EF1A9A003AF9D6 /* memes_part1.json in Resources */ = {isa = PBXBuildFile; fileRef = 4628FDA924EF1A9A003AF9D6 /* memes_part1.json */; };
+		4628FDAC24EF6D8E003AF9D6 /* UploadScriptVCExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4628FDAB24EF6D8E003AF9D6 /* UploadScriptVCExtension.swift */; };
 		463A844922F6286A00F9B4CD /* Camera.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 463A844822F6286A00F9B4CD /* Camera.storyboard */; };
 		4656C39324D4B69400A47BD1 /* UploadScriptVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4656C39224D4B69400A47BD1 /* UploadScriptVC.swift */; };
 		4669B8D222B6DC65004FB38D /* defaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4669B8D122B6DC64004FB38D /* defaultsKeys.swift */; };
@@ -178,6 +180,8 @@
 		4607196D235ACC1900BE17DF /* PanGestureExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanGestureExtension.swift; sourceTree = "<group>"; };
 		4622493622DFAC8F0005B12F /* Messages.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Messages.framework; path = System/Library/Frameworks/Messages.framework; sourceTree = SDKROOT; };
 		4622495222DFAD240005B12F /* Cinch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Cinch.entitlements; sourceTree = "<group>"; };
+		4628FDA924EF1A9A003AF9D6 /* memes_part1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = memes_part1.json; path = ../../../Downloads/memes_part1.json; sourceTree = "<group>"; };
+		4628FDAB24EF6D8E003AF9D6 /* UploadScriptVCExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadScriptVCExtension.swift; sourceTree = "<group>"; };
 		463A844822F6286A00F9B4CD /* Camera.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Camera.storyboard; path = Cinch/Upload/Camera.storyboard; sourceTree = SOURCE_ROOT; };
 		4656C39224D4B69400A47BD1 /* UploadScriptVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadScriptVC.swift; sourceTree = "<group>"; };
 		4669B8D122B6DC64004FB38D /* defaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = defaultsKeys.swift; sourceTree = "<group>"; };
@@ -540,6 +544,7 @@
 				897E049123E9ED8A0084D872 /* UploadViewController.swift */,
 				897E049323E9FE190084D872 /* AddPostViewController.swift */,
 				4656C39224D4B69400A47BD1 /* UploadScriptVC.swift */,
+				4628FDAB24EF6D8E003AF9D6 /* UploadScriptVCExtension.swift */,
 			);
 			path = Upload;
 			sourceTree = "<group>";
@@ -621,6 +626,7 @@
 		EB74D3B4226025E900556399 /* Cinch */ = {
 			isa = PBXGroup;
 			children = (
+				4628FDA924EF1A9A003AF9D6 /* memes_part1.json */,
 				897E048E23E9EC930084D872 /* Upload */,
 				4622495222DFAD240005B12F /* Cinch.entitlements */,
 				EB74D3FF2260520C00556399 /* Storyboards */,
@@ -808,6 +814,7 @@
 				890608A922BAE27F004C03CF /* Permissions.storyboard in Resources */,
 				463A844922F6286A00F9B4CD /* Camera.storyboard in Resources */,
 				46A3E09722BF0B6E003F6F35 /* ProfilePage.storyboard in Resources */,
+				4628FDAA24EF1A9A003AF9D6 /* memes_part1.json in Resources */,
 				891FC3FD22D7F72E0024A623 /* Discover.storyboard in Resources */,
 				46A39D6023A1770000EA1E4B /* GoogleService-Info.plist in Resources */,
 				8E123EFA22B7229400F3ED5D /* Main.storyboard in Resources */,
@@ -1007,6 +1014,7 @@
 				EB41F8E922653170003751FA /* Photo.swift in Sources */,
 				897E049423E9FE190084D872 /* AddPostViewController.swift in Sources */,
 				89D0DCB124058C2F00E6514A /* AVAssetExtension.swift in Sources */,
+				4628FDAC24EF6D8E003AF9D6 /* UploadScriptVCExtension.swift in Sources */,
 				891065CA23DE6A6A00EB8238 /* TableViewCell.swift in Sources */,
 				8E95FFCC22BF25CE0067B5F2 /* TagElement.swift in Sources */,
 				896556ED23E0CA9600666AB9 /* ProfileStackView.swift in Sources */,

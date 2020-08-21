@@ -10,6 +10,13 @@ import Foundation
 import UIKit
 
 
+
+struct Meme: Codable {
+    var title: String
+    var image: String
+    var tags: [String]
+}
+
 class UploadScriptVC: UIViewController {
     
     //static data
@@ -17,30 +24,56 @@ class UploadScriptVC: UIViewController {
     let captionList = ["Funny Yoda Baby Starwars", "There was a spider its gone now"]
     
     let contentImageView = UIImageView()
-    let captionText = UILabel()
+    var tagText = ""
+    var tagArray = [String]()
     
     let acceptButton = UIButton()
     let declineButton = UIButton()
     var currentIndex = 0
     let username = "Admin"
     
+    let identifier = "Cell"
+    var captionTableView = UITableView()
+    
+    var memes = [Meme]()
+    
+    
+    ///Reads Json from file
+    func parseData(){
+        if let path = Bundle.main.path(forResource: "memes_part1", ofType: "json") { //Change file name
+            print("the file is present")
+            do {
+                let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
+                let jsonResult = try JSONSerialization.jsonObject(with: data, options: .mutableLeaves)
+                if let jsonOther = try? JSONDecoder().decode([Meme].self, from: data){
+                    memes = jsonOther
+                    tagArray = memes[0].tags
+                    setup(link: links[0], tagArray: tagArray)
+                }
+            } catch {
+                 // handle error
+            }
+        }
+    }
     
     override func viewDidLoad() {
         view.backgroundColor = .lightGray
-        setup(link: links[0], tag: captionList[0])
         
+        
+        //calls functions to read json file
+        parseData()
+        
+        //TableView
+        captionTableView.register(UITableViewCell.self, forCellReuseIdentifier: identifier)
+        captionTableView.dataSource = self
+        captionTableView.delegate = self
+        captionTableView.frame = CGRect(x: 20, y: 20, width: 200, height: 300)
+        view.addSubview(captionTableView)
         
         contentImageView.frame.size = CGSize(width: 200, height: 200)
         contentImageView.center = view.center
+        contentImageView.center.y += 100
         view.addSubview(contentImageView)
-        
-        
-        //caption setup
-        captionText.frame.size = CGSize(width: view.frame.width, height: 100)
-        captionText.numberOfLines = 0
-        captionText.frame.origin.x = 24
-        view.addSubview(captionText)
-        
         
         
         //AcceptButton
@@ -49,7 +82,7 @@ class UploadScriptVC: UIViewController {
         acceptButton.setTitleColor(.black, for: .normal)
         acceptButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(accept)))
         
-        acceptButton.frame.size = CGSize(width: 200, height: 100)
+        acceptButton.frame.size = CGSize(width: 150, height: 100)
         acceptButton.center.y = view.center.y + 300
         view.addSubview(acceptButton)
         
@@ -59,14 +92,14 @@ class UploadScriptVC: UIViewController {
         declineButton.setTitleColor(.black, for: .normal)
         declineButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(reject)))
         
-        declineButton.frame.size = CGSize(width: 200, height: 100)
+        declineButton.frame.size = CGSize(width: 150, height: 100)
         declineButton.center.y = view.center.y + 300
-        declineButton.frame.origin.x = 210
+        declineButton.frame.origin.x = 200
         view.addSubview(declineButton)
     }
     
     
-    func setup(link: String, tag: String) {
+    func setup(link: String, tagArray: [String]) {
         
         //image
         let url = URL(string: link)
@@ -76,10 +109,6 @@ class UploadScriptVC: UIViewController {
             let image = UIImage(data: imageData)
             contentImageView.image = image
         }
-        
-        
-        //Tags
-        captionText.text = tag
     }
     
     @objc func accept(){
@@ -93,7 +122,7 @@ class UploadScriptVC: UIViewController {
                 print("compare:", getDocumentsDirectory())
                 
                 
-                saveToFolder(localLink: filename, tags: captionText.text ?? "")
+                saveToFolder(localLink: filename, tags: tagText ?? "")
             }
         }
         
@@ -113,7 +142,7 @@ class UploadScriptVC: UIViewController {
         print("Rejected")
         if(links.count - 1 > currentIndex) {
             currentIndex += 1
-            setup(link: links[currentIndex], tag: captionList[currentIndex])
+//            setup(link: links[currentIndex], tag: captionList[currentIndex])
         }
         
         else {
@@ -190,4 +219,5 @@ class UploadScriptVC: UIViewController {
         }
         
     }
+    
 }

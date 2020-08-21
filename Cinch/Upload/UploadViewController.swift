@@ -9,6 +9,7 @@
 import UIKit
 import Photos
 
+
 class UploadViewController: UIViewController {
 
     //views
@@ -17,6 +18,7 @@ class UploadViewController: UIViewController {
 
     //controllers
     let imagePicker = UIImagePickerController()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,30 +74,30 @@ class UploadViewController: UIViewController {
     }
     
     @objc func selectMedia() {
-        imagePicker.delegate = self
-        imagePicker.allowsEditing = false
-        imagePicker.mediaTypes = ["public.image", "public.movie"]
-        imagePicker.sourceType = .photoLibrary
-        imagePicker.modalPresentationStyle = .fullScreen
-
-        //checks for permission
-        var status = PHPhotoLibrary.authorizationStatus()
-        if status == .notDetermined {
-            PHPhotoLibrary.requestAuthorization { (requestedStatus) in
-                status = requestedStatus
-                DispatchQueue.main.async {
-                    self.present(self.imagePicker, animated: true, completion: nil)
-                }
-            }
-        }
-        if status == .authorized {
-            present(imagePicker, animated: true, completion: nil)
-        }
+//        imagePicker.delegate = self
+//        imagePicker.allowsEditing = false
+//        imagePicker.mediaTypes = ["public.image", "public.movie"]
+//        imagePicker.sourceType = .photoLibrary
+//        imagePicker.modalPresentationStyle = .fullScreen
+//
+//        //checks for permission
+//        var status = PHPhotoLibrary.authorizationStatus()
+//        if status == .notDetermined {
+//            PHPhotoLibrary.requestAuthorization { (requestedStatus) in
+//                status = requestedStatus
+//                DispatchQueue.main.async {
+//                    self.present(self.imagePicker, animated: true, completion: nil)
+//                }
+//            }
+//        }
+//        if status == .authorized {
+//            present(imagePicker, animated: true, completion: nil)
+//        }
         
         //Uncomment this for the upload script
-//        let uploadScriptVC = UploadScriptVC()
-//        uploadScriptVC.modalPresentationStyle = .fullScreen
-//        self.present(uploadScriptVC, animated: true, completion: nil)
+        let uploadScriptVC = UploadScriptVC()
+        uploadScriptVC.modalPresentationStyle = .fullScreen
+        self.present(uploadScriptVC, animated: true, completion: nil)
     }
 
 }
