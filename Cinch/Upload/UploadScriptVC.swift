@@ -25,8 +25,8 @@ class UploadScriptVC: UIViewController {
     
     let acceptButton = UIButton()
     let declineButton = UIButton()
-    var currentIndex = 0
-    let username = "Admin"
+    var currentIndex = 210
+    let username = "Yassin"
     
     let identifier = "Cell"
     var captionTableView = UITableView()
@@ -54,6 +54,14 @@ class UploadScriptVC: UIViewController {
     func setup(_ index: Int) {
         tagArray = memes[index].title.components(separatedBy: " ")
         tagArray.append(contentsOf: memes[index].tags)
+        
+        for tagIndex in 0..<tagArray.count - 1 {
+            let currTag = tagArray[tagIndex]
+            if currTag.contains(".") || currTag.contains("/") || currTag.contains("\\") || currTag.contains("$") || currTag.contains("#") || currTag.contains("[") || currTag.contains("]") {
+                tagArray.remove(at: tagIndex)
+            }
+        }
+        
         
         let link = memes[index].image
         
@@ -132,8 +140,8 @@ class UploadScriptVC: UIViewController {
     
     @objc func reject(){
         if(memes.count - 1 > currentIndex) {
-            print("moving to next", currentIndex)
             currentIndex += 1
+            print("moving to next", currentIndex)
             setup(currentIndex)
         }
         
@@ -172,8 +180,8 @@ class UploadScriptVC: UIViewController {
     ///Adds the tags and uploads the post and the tags
     func addTags(link: String, tagArray: [String], contentKey: String, _ frames: [UIImage]? = nil){
         var post: Post?
+        
         if checkIfVideo(link) {
-            
         ///Adding the frames if its a video
             if let frames = frames {
                 StorageStruct().uploadFrames(frames: frames) { (links) in
@@ -193,7 +201,7 @@ class UploadScriptVC: UIViewController {
         }
         
         for tag in tagArray {
-            if tag.contains("./\\#") { continue }
+            if tag.contains("./\\#$[]") { continue }
             let standardTag = tag.lowercased()
             TagStruct().addElement(tagLabel: standardTag, tagElement: TagElement(link: link, contentKey: contentKey))
         }

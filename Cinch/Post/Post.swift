@@ -57,7 +57,10 @@ class Post {
         var thumbnailDict : [String : String] = [:]
         
         for tag in tags! {
-            tagsDict[tag] = tag
+            if tag.contains("./\\#$[]") { continue }
+            else {
+                tagsDict[tag] = tag
+            }
         }
         
         for likedByUser in likedBy! {
