@@ -38,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         else {
             //TODO user should be constructed with a preset SuggestedContent list
-            let user = User()
+            var user = User()
             ParentStruct().addUser(user: user)
             print("here is your created username:", user.username)
             ParentStruct().readVersion { (version) in

@@ -63,7 +63,7 @@ class SearchTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         secondTableView = tableView
-        return tags.count < 6 ? tags.count : 6
+        return tags.count < 9 ? tags.count : 9
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

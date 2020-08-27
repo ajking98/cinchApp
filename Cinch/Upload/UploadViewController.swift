@@ -9,6 +9,7 @@
 import UIKit
 import Photos
 
+
 class UploadViewController: UIViewController {
 
     //views
@@ -17,6 +18,7 @@ class UploadViewController: UIViewController {
 
     //controllers
     let imagePicker = UIImagePickerController()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -142,12 +142,23 @@ extension ProfileMainCollectionViewCell: UICollectionViewDelegate, UICollectionV
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
         let vc = CellSelectedTable()
         vc.modalPresentationStyle = .fullScreen
         vc.content = collectionView == uploadedCollectionView ? uploaded : hearted
         vc.startingIndex = indexPath
         parentViewController?.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as! GenericCell
+        
+        //for uploaded content
+        if collectionView == uploadedCollectionView {
+            cell.setup(contentKey: uploaded[indexPath.item])
+            return
+        }
+          // For hearted
+        cell.setup(contentKey: hearted[indexPath.item])
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

@@ -30,7 +30,9 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
      */
     var searchBar = SearchBar(frame: CGRect(x: 0, y: 0, width: 310, height: 32.5))
     var tableTagsView = UITableView()
+    var priorityTagsView = UITableView()
     var searchTableViewController = SearchTableViewController(style: .plain)
+    var searchPriorityViewController = SearchTableViewController(style: .plain)
 
     
     override func viewDidLoad() {
@@ -43,6 +45,7 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
         setupTableView()
 //        setupCarousel()
         setupTableTagsView()
+        setupPriorityTagsView()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -72,7 +75,9 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
         }
         
         ParentTagStruct().readAdminTags { (tags) in
-            self.mainHashTags = tags
+            tags.forEach { (hashTagTerm) in
+                self.mainHashTags.append(hashTagTerm.lowercased().capitalizeFirstLetter())
+            }
             self.tableView.reloadData()
         }
         
@@ -265,9 +270,21 @@ extension DiscoverViewController: UISearchBarDelegate {
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        searchTableViewController.setup()
         searchBar.setShowsCancelButton(true, animated: true)
-        tableTagsView.alpha = 1
+        guard let textCount = searchBar.text?.count else {
+            return
+        }
+
+        if textCount == 0 {
+            searchTableViewController.setup()
+            searchPriorityViewController.tags = mainHashTags
+            priorityTagsView.reloadData()
+            tableTagsView.alpha = 0
+            priorityTagsView.alpha = 1
+        }
+        else {
+            tableTagsView.alpha = 1
+        }
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -277,6 +294,7 @@ extension DiscoverViewController: UISearchBarDelegate {
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(false, animated: true)
         tableTagsView.alpha = 0
+        priorityTagsView.alpha = 0
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -288,6 +306,15 @@ extension DiscoverViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         searchTableViewController.handleSearching(searchText: searchText.lowercased())
+        
+        if searchText.count == 0 {
+            tableTagsView.alpha = 0
+            priorityTagsView.alpha = 1
+        }
+        else {
+            priorityTagsView.alpha = 0
+            tableTagsView.alpha = 1
+        }
     }
     
     func nextView(term: String) {
@@ -298,6 +325,25 @@ extension DiscoverViewController: UISearchBarDelegate {
         vc.setup(term: term)
         navigationController?.pushViewController(vc, animated: true)
     }
+
+    ///Builds the UI for the priority tags
+    func setupPriorityTagsView() {
+        
+        view.addSubview(priorityTagsView)
+        priorityTagsView.alpha = 0
+        priorityTagsView.register(UITableViewCell.self, forCellReuseIdentifier: identifier)
+        searchPriorityViewController.handleCellSelected = nextView(term:)
+        priorityTagsView.dataSource = searchPriorityViewController
+        priorityTagsView.delegate = searchPriorityViewController
+        priorityTagsView.separatorStyle = .none
+
+        priorityTagsView.translatesAutoresizingMaskIntoConstraints = false
+        priorityTagsView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        priorityTagsView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0).isActive = true
+        priorityTagsView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        priorityTagsView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+    }
+    
     
     func setupTableTagsView() {
         view.addSubview(tableTagsView)
@@ -314,5 +360,6 @@ extension DiscoverViewController: UISearchBarDelegate {
         tableTagsView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0).isActive = true
         tableTagsView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         tableTagsView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        
     }
 }

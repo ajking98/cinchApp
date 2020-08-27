@@ -50,6 +50,14 @@ class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataS
         }
     }
     
+    var refreshCell: ((IndexPath)->Void)?
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        guard let refreshCell = refreshCell else { return }
+
+        refreshCell(startingIndex)
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         //making the navigation bar invisible
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)

@@ -51,6 +51,8 @@ class CellSelectedCell: UITableViewCell{
         setupRightHandView()
         setupLowerText()
         setupxMark()
+        
+        FolderStruct()
     }
     
     func fetchPost() {
@@ -63,7 +65,6 @@ class CellSelectedCell: UITableViewCell{
         
         FolderStruct().isInFolder(user: username, folderName: "Hearted", contentKey: contentKey) { (isInFolder) in
             if(isInFolder) {
-                print("is present")
                 self.heartIcon.image = UIImage(named: "heartIcon-Selected")
                 self.isHearted = true
             }
@@ -293,10 +294,12 @@ class CellSelectedCell: UITableViewCell{
         
         if isHearted {
             FolderStruct().deleteContent(user: localUser, folderName: "Hearted", contentKey: contentKey)
+            PostStruct().decrementNumberOfLikes(contentKey: contentKey)
             alert.title = "Removed From Favorites"
         }
         else {
             FolderStruct().addContent(user: localUser, folderName: "Hearted", contentKey: contentKey, link: link)
+            PostStruct().incrementNumberOfLikes(contentKey: contentKey)
             alert.title = "Added To Favorites!"
         }
         
