@@ -50,6 +50,7 @@ struct TagStruct {
     
     ///reads all the elements for a given tag label
     func readAllElements(tagLabel : String, completion : @escaping([TagElement])->Void){
+        
         DB.child(tagLabel).child("elements").observeSingleEvent(of: .value) { (snapshot) in
             if let elements = snapshot.value as? [String : [String : Any]] {
                 var elementsDict : [TagElement] = []
@@ -65,6 +66,7 @@ struct TagStruct {
                         elementsDict.append(tagElement)
                     }
                 }
+                
                 completion(elementsDict)
             }
         }
@@ -80,6 +82,7 @@ struct TagStruct {
                         elementsDict.append(key)
                     } }
             }
+            TagStruct().incrementTagOccurance(tagLabel: tagLabel)
               completion(elementsDict)
           }
       }
@@ -91,7 +94,7 @@ struct TagStruct {
         DB.child(tagLabel).child("elements").child(updatedLink).observeSingleEvent(of: .value) { (snapshot) in
             if let _ = snapshot.value as? [String : Any] {
                 TagElementStruct().updateNumOfUsages(tagLabel: tagLabel, link: updatedLink)
-                TagStruct().updateTagOccurance(tagLabel: tagLabel)
+                TagStruct().incrementTagOccurance(tagLabel: tagLabel)
             }
             else {
                 self.createElement(tagLabel: tagLabel, newTagElement: tagElement)
@@ -112,7 +115,6 @@ struct TagStruct {
     func deleteElement(tagLabel : String, contentKey : String){
         let updatedLink = convertStringToKey(link: contentKey)
         let updatedTag = tagLabel.lowercased()
-        print("we are deleting this link", contentKey)
         DB.child(updatedTag).child("elements").child(updatedLink).removeValue()
     }
     
@@ -122,6 +124,9 @@ struct TagStruct {
         DB.child(tagLabel).child("tagOccurance").observeSingleEvent(of: .value) { (snapshot) in
             if let tagOccurance = snapshot.value as? Int {
                 action(tagOccurance)
+            }
+            else {
+                TagStruct().updateTagOccurance(tagLabel: tagLabel, newTagOccuranceValue: 1)
             }
         }
     }
@@ -134,7 +139,7 @@ struct TagStruct {
     
     
     ///Increments TagOccurance by one
-    func updateTagOccurance(tagLabel : String){
+    func incrementTagOccurance(tagLabel : String){
         readTagOccurance(tagLabel: tagLabel) { (tagOccurance) in
             self.updateTagOccurance(tagLabel: tagLabel, newTagOccuranceValue: tagOccurance + 1)
         }

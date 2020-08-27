@@ -75,6 +75,22 @@ struct PostStruct {
         DB.child(contentKey).child("numberOfLikes").setValue(newNumberOfLikes)
     }
     
+    ///increments the given content key by 1
+    func incrementNumberOfLikes(contentKey: String) {
+        readNumberOfLikes(contentKey: contentKey) { (currentLikeCount) in
+            self.DB.child(contentKey).child("numberOfLikes").setValue(currentLikeCount + 1)
+        }
+        print("this ahs been incremented", contentKey)
+    }
+    
+    ///decrments the given content key by 1
+    func decrementNumberOfLikes(contentKey: String) {
+        readNumberOfLikes(contentKey: contentKey) { (currentLikeCount) in
+            self.DB.child(contentKey).child("numberOfLikes").setValue(currentLikeCount - 1)
+        }
+        print("this ahs been incremented", contentKey)
+    }
+    
     
     
     
