@@ -23,7 +23,6 @@ class CellSelectedCell: UITableViewCell{
     var handlePresentProfile: ((String) -> Void)?
     var post = Post(isImage: true, numberOfLikes: 0, postOwner: "", likedBy: [], dateCreated: 0, tags: [], link: "")
     
-    
     //Views
     var fullScreenImageView = UIImageView(frame: CGRect.zero)
     var playerLayer = AVPlayerLayer()
@@ -35,6 +34,7 @@ class CellSelectedCell: UITableViewCell{
     var backgroundProfileIcon = UIImageView(image: UIImage(named: "backgroundRing1"))
     let lowerText = UILabel(frame: CGRect.zero)
     var videoLooper: AVPlayerLooper?
+    var alert = UIAlertController(title: "", message: "", preferredStyle: .alert) //Notify the user with an alert
     
     //TODO: This should only exist for admin
     let removeMedia = UIButton()
@@ -122,12 +122,17 @@ class CellSelectedCell: UITableViewCell{
             
             playerLayer.videoGravity = .resizeAspect
             playerLayer.player?.isMuted = isMuted
-            fullScreenImageView.isUserInteractionEnabled = true
             fullScreenImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleImageViewTapped)))
         }
         else {
             fullScreenImageView.sd_setImage(with: URL(string: link), placeholderImage: UIImage(), completed: nil)
         }
+
+        fullScreenImageView.isUserInteractionEnabled = true
+        let longGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleCopy))
+        longGestureRecognizer.minimumPressDuration = 1.5
+        fullScreenImageView.addGestureRecognizer(longGestureRecognizer)
+        
         
         UserStruct().readProfilePic(user: author) { (profilePic) in
             self.profileIcon.sd_setImage(with: URL(string: profilePic), placeholderImage: UIImage(), completed: nil)
@@ -147,6 +152,7 @@ class CellSelectedCell: UITableViewCell{
     }
     
     @objc func handleImageViewTapped() {
+        
         if AVAudioSession.sharedInstance().category == .soloAmbient {
             print("this is in silent mode")
             do {
@@ -281,15 +287,46 @@ class CellSelectedCell: UITableViewCell{
          }
     }
     
+
+    @objc func handleCopy(gesture: UILongPressGestureRecognizer) {
+        guard gesture.state == .began else { return }
+        
+        //Copy to clipboard
+        guard let link = post.link else { return }
+        
+        
+        print("copying")
+        alert.title = "Copied!"
+        parentViewController?.present(alert, animated: true, completion: {
+            self.alert.view.superview?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.dismissAlert)))
+        })
+        
+        if checkIfVideo(link) {
+            guard let clipBoardURL = URL(string: post.link ?? "") else { return }
+            guard let clipBoardData = try? Data(contentsOf: clipBoardURL) else { return }
+            
+            UIPasteboard.general.setData(clipBoardData, forPasteboardType: "public.mpeg-4")
+        }
+        else {
+        UIPasteboard.general.image = fullScreenImageView.image
+        }
+        
+        let alertExpiration = DispatchTime.now() + 1
+        DispatchQueue.main.asyncAfter(deadline: alertExpiration) {
+            self.alert.dismiss(animated: true, completion: nil)
+        }
+    }
+    
     @objc func handleHearted() {
-        //todo: add link to the folder
+        
+        
+        //adds link to the folder
         guard let localUser = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
         
         guard let link = post.link else { return }
 
-        let alert = UIAlertController(title: "", message: "", preferredStyle: .alert) //Notify the user with an alert
         parentViewController?.present(alert, animated: true, completion: {
-            alert.view.superview?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.dismissAlert)))
+            self.alert.view.superview?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.dismissAlert)))
         })
         
         if isHearted {
@@ -304,15 +341,17 @@ class CellSelectedCell: UITableViewCell{
         }
         
         isHearted = !isHearted
-        let alertExpiration = DispatchTime.now() + 0.85
+        let alertExpiration = DispatchTime.now() + 1
         DispatchQueue.main.asyncAfter(deadline: alertExpiration) {
-        alert.dismiss(animated: true, completion: nil)
+            self.alert.dismiss(animated: true, completion: nil)
         }
     }
     
     
     @objc func dismissAlert() {
-        parentViewController?.dismiss(animated: true, completion: nil)
+        alert.dismiss(animated: true, completion: nil)
+        alert.removeFromParent()
+        print("this is dismissing")
     }
     
     @objc func handleProfilePicPressed() {
