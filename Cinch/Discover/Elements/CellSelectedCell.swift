@@ -29,6 +29,7 @@ class CellSelectedCell: UITableViewCell{
     var player = AVQueuePlayer()
     let shareIcon = UIImageView(image: UIImage(named: "shareIcon"))
     let heartIcon = UIImageView(image: UIImage(named: "heartIcon"))
+    let copyIcon = UIImageView(image: UIImage(named: "CopyLink"))
     let followUserIcon = UIImageView(image: UIImage(named: "followUserIcon"))
     var profileIcon = UIImageView(frame: CGRect.zero)
     var backgroundProfileIcon = UIImageView(image: UIImage(named: "backgroundRing1"))
@@ -130,7 +131,6 @@ class CellSelectedCell: UITableViewCell{
 
         fullScreenImageView.isUserInteractionEnabled = true
         let longGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleCopy))
-        longGestureRecognizer.minimumPressDuration = 1.5
         fullScreenImageView.addGestureRecognizer(longGestureRecognizer)
         
         
@@ -191,10 +191,21 @@ class CellSelectedCell: UITableViewCell{
         addSubview(shareIcon)
         shareIcon.translatesAutoresizingMaskIntoConstraints = false
         shareIcon.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -0.05  * frame.width).isActive = true
-//        shareIcon.rightAnchor.constraint(equalTo: rightAnchor, constant: -20).isActive = true
         shareIcon.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -0.05  * frame.height).isActive = true
         shareIcon.isUserInteractionEnabled = true
         shareIcon.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleShare)))
+        
+        //Copy Link Icon
+        addSubview(copyIcon)
+        copyIcon.translatesAutoresizingMaskIntoConstraints = false
+        copyIcon.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        copyIcon.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        copyIcon.centerYAnchor.constraint(equalTo: shareIcon.centerYAnchor, constant: 0).isActive = true
+        copyIcon.rightAnchor.constraint(equalTo: self.shareIcon.leftAnchor, constant: -0.1 * frame.width).isActive = true
+        copyIcon.clipsToBounds = true
+        copyIcon.layer.masksToBounds = true
+        copyIcon.isUserInteractionEnabled = true
+        copyIcon.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleCopy)))
         
         //heart icon
         addSubview(heartIcon)
@@ -227,6 +238,7 @@ class CellSelectedCell: UITableViewCell{
         backgroundProfileIcon.centerXAnchor.constraint(equalTo: profileIcon.centerXAnchor).isActive = true
         backgroundProfileIcon.widthAnchor.constraint(equalToConstant: 66).isActive = true
         backgroundProfileIcon.heightAnchor.constraint(equalToConstant: 66).isActive = true
+        
         
 //        //follow user icon
 //        addSubview(followUserIcon)
@@ -288,8 +300,10 @@ class CellSelectedCell: UITableViewCell{
     }
     
 
-    @objc func handleCopy(gesture: UILongPressGestureRecognizer) {
-        guard gesture.state == .began else { return }
+    @objc func handleCopy(_ gesture: UIGestureRecognizer? = nil) {
+        if let _ = gesture as? UILongPressGestureRecognizer {
+            guard gesture?.state == .began else { return }
+        }
         
         //Copy to clipboard
         guard let link = post.link else { return }
