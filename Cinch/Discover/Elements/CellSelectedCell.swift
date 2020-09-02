@@ -329,6 +329,9 @@ class CellSelectedCell: UITableViewCell{
         DispatchQueue.main.asyncAfter(deadline: alertExpiration) {
             self.alert.dismiss(animated: true, completion: nil)
         }
+        
+        let generator = UIImpactFeedbackGenerator(style: .heavy)
+        generator.impactOccurred()
     }
     
     @objc func handleHearted() {
