@@ -55,7 +55,6 @@ class ProfileMainCollectionViewCell: UICollectionViewCell {
                 }
             }
         }
-        
         addSubview(uploadedCollectionView)
         
         //Text for when the section is empty
@@ -99,7 +98,6 @@ class ProfileMainCollectionViewCell: UICollectionViewCell {
         }
         self.heartedCollectionView.reloadData()
         }
-        
         addSubview(heartedCollectionView)
         
         //Text for when the section is empty
