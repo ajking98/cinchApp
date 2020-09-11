@@ -168,17 +168,33 @@ class CellSelectedCell: UITableViewCell{
         }
     }
     
+    
     //full screen imageview
     func setupFullScreenImageView(){
         backgroundColor = .black
-        addSubview(fullScreenImageView)
         
-        //constraints
-        fullScreenImageView.translatesAutoresizingMaskIntoConstraints = false
-        fullScreenImageView.leftAnchor.constraint(equalTo: leftAnchor, constant: 0).isActive = true
-        fullScreenImageView.rightAnchor.constraint(equalTo: rightAnchor, constant: 0).isActive = true
-        fullScreenImageView.topAnchor.constraint(equalTo: topAnchor, constant: 0).isActive = true
-        fullScreenImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0).isActive = true
+        //Zoom in capabilities
+        let imageScrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        imageScrollView.delegate = self
+        imageScrollView.minimumZoomScale = 1
+        imageScrollView.maximumZoomScale = 5
+        imageScrollView.backgroundColor = .black
+        
+        addSubview(imageScrollView)
+        imageScrollView.translatesAutoresizingMaskIntoConstraints = false
+        imageScrollView.leftAnchor.constraint(equalTo: leftAnchor, constant: 0).isActive = true
+        imageScrollView.rightAnchor.constraint(equalTo: rightAnchor, constant: 0).isActive = true
+        imageScrollView.topAnchor.constraint(equalTo: topAnchor, constant: 0).isActive = true
+        imageScrollView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0).isActive = true
+        
+        
+//        imageScrollView
+        imageScrollView.addSubview(fullScreenImageView)
+        fullScreenImageView.frame.size.width = frame.width
+        fullScreenImageView.frame.size.height = frame.height
+        fullScreenImageView.center.y = frame.height / 2
+        print("this is teh size:", fullScreenImageView.frame)
+        print("frame size for imageScrollView:", imageScrollView.frame)
         
         //Main Content
         fullScreenImageView.contentMode = .scaleAspectFit
@@ -388,6 +404,16 @@ class CellSelectedCell: UITableViewCell{
         lowerText.widthAnchor.constraint(equalToConstant: 0.8 * frame.width).isActive = true
         lowerText.bottomAnchor.constraint(equalTo: profileIcon.topAnchor, constant: -0.02 * frame.height).isActive = true
         lowerText.heightAnchor.constraint(equalToConstant: 0.15 * frame.height).isActive = true
+    }
+    
+    
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return self.fullScreenImageView
+    }
+    
+    func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
+        print("we ended zooming")
+        scrollView.setZoomScale(1, animated: true)
     }
     
 }
