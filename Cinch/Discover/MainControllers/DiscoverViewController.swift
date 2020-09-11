@@ -81,24 +81,6 @@ class DiscoverViewController: UIViewController, UITableViewDelegate, UITableView
             self.tableView.reloadData()
         }
         
-//        ParentPostStruct().readAdminPosts { (links) in
-//            for link in links {
-//                if let url = URL(string: link) {
-//                    do {
-//                        let imageData = try Data(contentsOf: url)
-//                        if let image = UIImage(data: imageData) {
-//                            self.images.append(image)
-//                            self.imageLinks.append(link)
-//                        }
-//                    }
-//                    catch {
-//                        print("Failed to fetch image")
-//                    }
-//                    
-//                }
-//            }
-//        }
-        
         
         UserStruct().readNewContent(user: username) { (links) in
             let limit = links.count < 15 ? links.count : 15
@@ -328,7 +310,6 @@ extension DiscoverViewController: UISearchBarDelegate {
 
     ///Builds the UI for the priority tags
     func setupPriorityTagsView() {
-        
         view.addSubview(priorityTagsView)
         priorityTagsView.alpha = 0
         priorityTagsView.register(UITableViewCell.self, forCellReuseIdentifier: identifier)

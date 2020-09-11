@@ -29,9 +29,12 @@ class MessagesViewController: UIViewController {
     var searchBar = SearchBar(frame: CGRect(x: 0, y: 0, width: 310, height: 32.5))
     var collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
     var tableTagsView = UITableView()
+    var priorityTagsView = UITableView()
+    var mainHashTags:[String] = []
     
     //view controllers
     var searchTableViewController = SearchTableViewController(style: .plain)
+    var searchPriorityViewController = SearchTableViewController(style: .plain)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,6 +45,7 @@ class MessagesViewController: UIViewController {
         setupSearchBar()
         setupCollectionView()
         setupTableTagsView()
+        setupPriorityTagsView()
     }
     
     func setup(){
@@ -60,35 +64,6 @@ class MessagesViewController: UIViewController {
         
         let cancelButtonAttributes = [NSAttributedString.Key.foregroundColor: UIColor.customRed]
         UIBarButtonItem.appearance().setTitleTextAttributes(cancelButtonAttributes , for: .normal)
-    }
-    
-    func setupTableTagsView() {
-        view.addSubview(tableTagsView)
-        tableTagsView.alpha = 0
-        tableTagsView.register(UITableViewCell.self, forCellReuseIdentifier: identifier)
-        tableTagsView.dataSource = searchTableViewController
-        tableTagsView.delegate = searchTableViewController
-        searchTableViewController.handleCellSelected = nextView(term:)
-        searchTableViewController.setup()
-        tableTagsView.separatorStyle = .none
-        
-        //constraints
-        tableTagsView.translatesAutoresizingMaskIntoConstraints = false
-        tableTagsView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        tableTagsView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0).isActive = true
-        tableTagsView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        tableTagsView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-    }
-    
-    ///presents the next vc when the user enters a term to search 
-    func nextView(term: String) {
-        tableTagsView.alpha = 0
-        searchBar.endEditing(true)
-        let vc = MessageSearchResultsViewController()
-        vc.initialNavigationController = navigationController
-        vc.setup(term: term)
-        vc.iMessageDelegate = iMessageDelegate
-        navigationController?.pushViewController(vc, animated: true)
     }
     
     func setupCollectionView() {
@@ -113,12 +88,8 @@ class MessagesViewController: UIViewController {
         collectionView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        searchBar.endEditing(true)
-    }
 
 }
-
 
 protocol iMessageAppDelegate {
     func expandView()
