@@ -48,10 +48,15 @@ struct PostStruct {
     */
     
     ///takes a contentKey and returns the link to the content
-    func readLink(contentKey : String, completion : @escaping(String)->Void) {
-        DB.child(contentKey).child("link").observeSingleEvent(of: .value) { (snapshot) in
+    func readLink(contentKey : String, completion : @escaping(String)->Void, handleMissing: (()->Void)? = nil) {
+        let updatedLink = convertStringToKey(link: contentKey)
+        DB.child(updatedLink).child("link").observeSingleEvent(of: .value) { (snapshot) in
             if let link = snapshot.value as? String {
                 completion(link)
+            }
+            else {
+                print("going here mane")
+                handleMissing?()
             }
         }
     }
