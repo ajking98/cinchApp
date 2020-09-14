@@ -13,30 +13,34 @@ import SDWebImage
 class GenericCell: UICollectionViewCell {
     var imageView = UIImageView()
     
-    ///takes a contentKey to the content it should build
+    ///takes a contentKey  & errorHandler for if the content is missing
     func setup(contentKey: String, _ errorHandler: (() -> Void)? = nil){
         let updatedLink = convertStringToKey(link: contentKey)
-        PostStruct().readLink(contentKey: updatedLink) { (link) in
-            if checkIfVideo(link) {
-                //fetch thumbnail
-                PostStruct().readThumbnail(contentKey: contentKey) { (thumbnailLink) in
-                    var smoothedThumbnail = thumbnailLink
-                    smoothedThumbnail.append(contentsOf: thumbnailLink.reversed())
-                    if smoothedThumbnail.isEmpty { return }
-                    self.imageView.sd_setAnimationImages(with: smoothedThumbnail)
-                    self.imageView.animationDuration = 2.8
-                    self.imageView.sd_setHighlightedImage(with: smoothedThumbnail[0], completed: nil)
-                    self.imageView.startAnimating()
-                }
-            }
-        else {
-                self.imageView.sd_setImage(with: URL(string: link), placeholderImage: UIImage()) { (image, error, cacheType, link) in
-                    if error != nil {
-                        errorHandler?()
+        PostStruct().readLink(contentKey: contentKey, completion: { (link) in
+                if checkIfVideo(link) {
+                    //fetch thumbnail
+                    PostStruct().readThumbnail(contentKey: contentKey) { (thumbnailLink) in
+                        var smoothedThumbnail = thumbnailLink
+                        smoothedThumbnail.append(contentsOf: thumbnailLink.reversed())
+                        if smoothedThumbnail.isEmpty { return }
+                        self.imageView.sd_setAnimationImages(with: smoothedThumbnail)
+                        self.imageView.animationDuration = 2.8
+                        self.imageView.sd_setHighlightedImage(with: smoothedThumbnail[0], completed: nil)
+                        self.imageView.startAnimating()
                     }
                 }
-            }
+            else {
+                    self.imageView.sd_setImage(with: URL(string: link), placeholderImage: UIImage()) { (image, error, cacheType, link) in
+                        if error != nil {
+                            errorHandler?()
+                        }
+                    }
+                }
+        }) {
+            print("this content is missing", contentKey)
+            errorHandler?()
         }
+        
         //constraints
         addSubview(imageView)
         imageView.frame.size = frame.size

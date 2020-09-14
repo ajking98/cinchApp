@@ -50,7 +50,7 @@ struct SuperFunctions {
     
     func createThumbnail(contentKey: String) {
         //This is creating the thumbnail and uploads it to DB
-        PostStruct().readLink(contentKey: contentKey) { (link) in
+        PostStruct().readLink(contentKey: contentKey, completion: { (link) in
             guard let url = URL(string: link) else { return }
             getAllFrames(videoUrl: url, completion: {(frames) in
                 print("this is the count of the images: ", frames.count)
@@ -60,6 +60,8 @@ struct SuperFunctions {
                     print("just added the thumbnail")
                 }
             })
+        }) {
+            print("content missing")
         }
     }
     

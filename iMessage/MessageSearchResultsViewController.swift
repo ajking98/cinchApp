@@ -17,10 +17,12 @@ class MessageSearchResultsViewController: SearchResultsViewController {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         iMessageDelegate.minimizeView()
-        
-        PostStruct().readLink(contentKey: content[indexPath.item]) { (link) in
+                
+        PostStruct().readLink(contentKey: content[indexPath.item], completion: { (link) in
             guard let directory = saveContent(globalLink: link) else { return }
             self.iMessageDelegate.mainConversation.insertAttachment(directory, withAlternateFilename: nil, completionHandler: nil)
+        }) {
+            print("missing content")
         }
     }
     

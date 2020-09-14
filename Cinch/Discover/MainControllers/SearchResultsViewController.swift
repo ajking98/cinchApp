@@ -15,6 +15,7 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
     var height: CGFloat = 0
     var identifier = "Cell"
     var content: [String] = []
+    var indexesToPop:[IndexPath] = []
     
     //views
     var collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -79,11 +80,20 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
         collectionView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
     }
     
-    
     func fetchContent() {
-        TagStruct().readAllElementLinks(tagLabel: searchTerm.lowercased()) { (contentKeys) in
+        let tag = searchTerm.lowercased()
+        TagStruct().readAllElementLinks(tagLabel: tag) { (contentKeys) in
             self.content = contentKeys
-            self.collectionView.reloadData()
+            self.collectionView.performBatchUpdates({
+                for index in 0 ..< self.content.count {
+                    self.collectionView.insertItems(at: [IndexPath(item: index, section: 0)])
+                }
+            }) { (isComplete) in
+                for indexPath in self.indexesToPop.reversed() {
+                    print("deleting tagElement:", indexPath.item)
+                    TagStruct().deleteElement(tagLabel: tag, contentKey: self.content[indexPath.item])
+                }
+            }
         }
     }
     
@@ -99,7 +109,10 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! GenericCell
-        cell.setup(contentKey: content[indexPath.item])
+        
+        cell.setup(contentKey: content[indexPath.item]) {
+            self.indexesToPop.append(indexPath)
+        }
         
         return cell
     }

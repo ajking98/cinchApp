@@ -86,22 +86,4 @@ struct ParentPostStruct {
         }
     }
     
-    
-    ///Reads the Admin Posts for the top caousel for the discover page
-    func readAdminPosts(completion: @escaping([String]) -> Void) {
-        let DB = Database.database().reference().child("AdminPosts")
-        DB.observeSingleEvent(of: .value) { (snapshot) in
-            
-            var adminPosts:[String] = []
-            
-            for child in snapshot.children {
-                guard let child = child as? DataSnapshot else { return }
-                guard let value = child.value as? String else { return }
-                adminPosts.append(value)
-            }
-            completion(adminPosts)
-        }
-        
-    }
-    
 }

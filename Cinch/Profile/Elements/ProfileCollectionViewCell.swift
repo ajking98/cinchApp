@@ -15,6 +15,8 @@ class ProfileMainCollectionViewCell: UICollectionViewCell {
     var username = ""
     var uploaded: [String] = []
     var hearted: [String] = []
+    var heartedIndexesToPop: [IndexPath] = []
+    var uploadedIndexesToPop: [IndexPath] = []
     
     //Elements
     var uploadedCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -35,14 +37,31 @@ class ProfileMainCollectionViewCell: UICollectionViewCell {
         let emptyFieldText = UILabel()
         
         //reading uploaded content
-    
         UserStruct().readFolders(user: username) { (folders) in
             for folder in folders {
                 if folder == "Hearted" { continue }
                 FolderStruct().readContent(user: self.username, folderName: folder) { (content) in
+                    print("this is the ocntent for:", folder, " Count:", content.count)
                     self.uploaded.append(contentsOf: content)
                     if content.count > 0 {
                         emptyFieldText.removeFromSuperview()
+                    }
+                    
+                    self.uploadedCollectionView.performBatchUpdates({
+                        for index in (self.uploaded.count - content.count) ..< self.uploaded.count {
+                            self.uploadedCollectionView.insertItems(at: [IndexPath(item: index, section: 0)])
+                        }
+                    }) { (isComplete) in
+                        print("this is comeplete pop:", self.uploadedIndexesToPop)
+
+                        print(self.username, "this is your last folder", folder, "array:", self.uploadedIndexesToPop)
+                        for indexPath in self.uploadedIndexesToPop.reversed() {
+                            print("removing:", indexPath.item, "  From:", folder)
+                                FolderStruct().deleteContent(user: self.username, folderName: folder, contentKey: self.uploaded[indexPath.item])
+//                                self.uploaded.remove(at: indexPath.item)
+//                                self.uploadedCollectionView.deleteItems(at: [indexPath])
+                        }
+                        
                     }
                     if folder == folders.last {
                         if self.uploaded.count > 6 {
@@ -51,10 +70,11 @@ class ProfileMainCollectionViewCell: UICollectionViewCell {
                             completion(extendedHeight)
                         }
                     }
-                    self.uploadedCollectionView.reloadData()
+                    
                 }
             }
         }
+        
         addSubview(uploadedCollectionView)
         
         //Text for when the section is empty
@@ -85,19 +105,31 @@ class ProfileMainCollectionViewCell: UICollectionViewCell {
         
         //reading hearted content
         FolderStruct().readContent(user: username, folderName: "Hearted") { (content) in
-        self.hearted = content
-        if content.count > 0 {
-            emptyFieldText.removeFromSuperview()
+            self.hearted = content
+            if content.count > 0 {
+                emptyFieldText.removeFromSuperview()
+            }
+            if content.count > 6 {
+                var extendedHeight = CGFloat((content.count / 3) - 2)
+                let cellHeight = self.heartedCollectionView.frame.size.width / 2
+                extendedHeight *= cellHeight
+                extendedHeight += cellHeight
+                completion(extendedHeight)
+            }
+            
+            self.heartedCollectionView.performBatchUpdates({
+                for index in 0 ..< self.hearted.count {
+                    self.heartedCollectionView.insertItems(at: [IndexPath(item: index, section: 0)])
+                }
+            }) { (isComplete) in
+                for indexPath in self.heartedIndexesToPop.reversed() {
+                    FolderStruct().deleteContent(user: self.username, folderName: "Hearted", contentKey: self.hearted[indexPath.item])
+                    self.hearted.remove(at: indexPath.item)
+                    self.heartedCollectionView.deleteItems(at: [indexPath])
+                }
+            }
         }
-        if content.count > 6 {
-            var extendedHeight = CGFloat((content.count / 3) - 2)
-            let cellHeight = self.heartedCollectionView.frame.size.width / 2
-            extendedHeight *= cellHeight
-            extendedHeight += cellHeight
-            completion(extendedHeight)
-        }
-        self.heartedCollectionView.reloadData()
-        }
+        
         addSubview(heartedCollectionView)
         
         //Text for when the section is empty
@@ -131,11 +163,15 @@ extension ProfileMainCollectionViewCell: UICollectionViewDelegate, UICollectionV
         
         // For uploaded
         if collectionView == uploadedCollectionView {
-            cell.setup(contentKey: uploaded[indexPath.item])
+            cell.setup(contentKey: uploaded[indexPath.item]) {
+                self.uploadedIndexesToPop.append(indexPath)
+            }
             return cell
         }
 //        // For hearted
-        cell.setup(contentKey: hearted[indexPath.item])
+        cell.setup(contentKey: hearted[indexPath.item]) {
+            self.heartedIndexesToPop.append(indexPath)
+        }
         return cell
     }
     
