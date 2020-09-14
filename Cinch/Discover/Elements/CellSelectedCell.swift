@@ -128,7 +128,10 @@ class CellSelectedCell: UITableViewCell{
         else {
             fullScreenImageView.sd_setImage(with: URL(string: link), placeholderImage: UIImage(), completed: nil)
         }
-
+        
+        let doubleTap = UITapGestureRecognizer(target: self, action: #selector(handleHearted))
+        doubleTap.numberOfTapsRequired = 2
+        fullScreenImageView.addGestureRecognizer(doubleTap)
         fullScreenImageView.isUserInteractionEnabled = true
         let longGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleCopy))
         fullScreenImageView.addGestureRecognizer(longGestureRecognizer)

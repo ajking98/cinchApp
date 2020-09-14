@@ -25,7 +25,7 @@ class UploadScriptVC: UIViewController {
     
     let acceptButton = UIButton()
     let declineButton = UIButton()
-    var currentIndex = 210
+    var currentIndex = 598
     let username = "Yassin"
     
     let identifier = "Cell"
