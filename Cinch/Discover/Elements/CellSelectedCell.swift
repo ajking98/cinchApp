@@ -104,6 +104,17 @@ class CellSelectedCell: UITableViewCell{
     func fetchContent() {
         guard let link = post.link else { return }
         let author = post.postOwner ?? ""
+        
+        
+        //Tap Gesture
+        let doubleTap = UITapGestureRecognizer(target: self, action: #selector(handleHearted))
+        doubleTap.numberOfTapsRequired = 2
+        fullScreenImageView.addGestureRecognizer(doubleTap)
+        fullScreenImageView.isUserInteractionEnabled = true
+        let longGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleCopy))
+        fullScreenImageView.addGestureRecognizer(longGestureRecognizer)
+        
+        
         if checkIfVideo(link) {
             guard let link = URL(string: link) else { return }
             
@@ -123,19 +134,16 @@ class CellSelectedCell: UITableViewCell{
             
             playerLayer.videoGravity = .resizeAspect
             playerLayer.player?.isMuted = isMuted
-            fullScreenImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleImageViewTapped)))
+            let audioControlTap = UITapGestureRecognizer(target: self, action: #selector(handleImageViewTapped))
+            audioControlTap.numberOfTapsRequired = 1
+            fullScreenImageView.addGestureRecognizer(audioControlTap)
+            audioControlTap.require(toFail: doubleTap)
+            audioControlTap.delaysTouchesBegan = true
+            doubleTap.delaysTouchesBegan = true
         }
         else {
             fullScreenImageView.sd_setImage(with: URL(string: link), placeholderImage: UIImage(), completed: nil)
         }
-        
-        let doubleTap = UITapGestureRecognizer(target: self, action: #selector(handleHearted))
-        doubleTap.numberOfTapsRequired = 2
-        fullScreenImageView.addGestureRecognizer(doubleTap)
-        fullScreenImageView.isUserInteractionEnabled = true
-        let longGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleCopy))
-        fullScreenImageView.addGestureRecognizer(longGestureRecognizer)
-        
         
         UserStruct().readProfilePic(user: author) { (profilePic) in
             self.profileIcon.sd_setImage(with: URL(string: profilePic), placeholderImage: UIImage(), completed: nil)
