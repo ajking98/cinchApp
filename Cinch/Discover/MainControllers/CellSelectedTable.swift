@@ -30,7 +30,7 @@ class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataS
         setupNavigationBar()
         setupTableView()
         
-        
+        //Adding swipe to go back functionality to entire screen
         let popGestureRecognizer = self.navigationController!.interactivePopGestureRecognizer!
                if let targets = popGestureRecognizer.value(forKey: "targets") as? NSMutableArray {
                  let gestureRecognizer = UIPanGestureRecognizer()

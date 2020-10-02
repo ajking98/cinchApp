@@ -31,6 +31,14 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
         view.backgroundColor = .white
         setupNavigationBar()
         setupCollectionView()
+        
+        //Adding swipe to go back functionality to entire screen
+        let popGestureRecognizer = self.navigationController!.interactivePopGestureRecognizer!
+               if let targets = popGestureRecognizer.value(forKey: "targets") as? NSMutableArray {
+                 let gestureRecognizer = UIPanGestureRecognizer()
+                 gestureRecognizer.setValue(targets, forKey: "targets")
+                 self.view.addGestureRecognizer(gestureRecognizer)
+               }
     }
     
     override func viewDidAppear(_ animated: Bool) {
