@@ -13,6 +13,8 @@
 		4628FDAC24EF6D8E003AF9D6 /* UploadScriptVCExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4628FDAB24EF6D8E003AF9D6 /* UploadScriptVCExtension.swift */; };
 		463A844922F6286A00F9B4CD /* Camera.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 463A844822F6286A00F9B4CD /* Camera.storyboard */; };
 		464601282522B23A004E8786 /* memes_part1.json in Resources */ = {isa = PBXBuildFile; fileRef = 464601272522B239004E8786 /* memes_part1.json */; };
+		465202EF2533F900004C48E1 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465202EE2533F900004C48E1 /* Helpers.swift */; };
+		465202F02533FABE004C48E1 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465202EE2533F900004C48E1 /* Helpers.swift */; };
 		4656C39324D4B69400A47BD1 /* UploadScriptVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4656C39224D4B69400A47BD1 /* UploadScriptVC.swift */; };
 		4669B8D222B6DC65004FB38D /* defaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4669B8D122B6DC64004FB38D /* defaultsKeys.swift */; };
 		4676FA9E23FBA0A1001D8FC7 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4676FA9D23FBA0A1001D8FC7 /* UIViewExtension.swift */; };
@@ -183,6 +185,7 @@
 		4628FDAB24EF6D8E003AF9D6 /* UploadScriptVCExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadScriptVCExtension.swift; sourceTree = "<group>"; };
 		463A844822F6286A00F9B4CD /* Camera.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Camera.storyboard; path = Cinch/Upload/Camera.storyboard; sourceTree = SOURCE_ROOT; };
 		464601272522B239004E8786 /* memes_part1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = memes_part1.json; sourceTree = "<group>"; };
+		465202EE2533F900004C48E1 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		4656C39224D4B69400A47BD1 /* UploadScriptVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadScriptVC.swift; sourceTree = "<group>"; };
 		4669B8D122B6DC64004FB38D /* defaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = defaultsKeys.swift; sourceTree = "<group>"; };
 		4676FA9D23FBA0A1001D8FC7 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
@@ -428,6 +431,7 @@
 				EB41F8E822653170003751FA /* Photo.swift */,
 				46D5E07F22ADABC3003B41DE /* StorageStruct.swift */,
 				89FF31AB241193AC00FD6D98 /* SuperFunctions.swift */,
+				465202EE2533F900004C48E1 /* Helpers.swift */,
 			);
 			path = Structures;
 			sourceTree = "<group>";
@@ -973,6 +977,7 @@
 				895A42942416D10A00E80961 /* UserStruct.swift in Sources */,
 				897437F923ED280A00F2CCB7 /* SearchResultsViewController.swift in Sources */,
 				89BBD41B23F365B9006BCC8F /* iMessageGlobals.swift in Sources */,
+				465202F02533FABE004C48E1 /* Helpers.swift in Sources */,
 				46CED9C023F0639F00D16E68 /* ParentTagStruct.swift in Sources */,
 				895A42952416D10D00E80961 /* User.swift in Sources */,
 				893E95C824172D9500989136 /* ParentPostStruct.swift in Sources */,
@@ -1061,6 +1066,7 @@
 				897E049223E9ED8A0084D872 /* UploadViewController.swift in Sources */,
 				8E5EDB4E22C025990088FDA9 /* TagElementStruct.swift in Sources */,
 				890B2ED623F24F4B0091B77B /* StringExtension.swift in Sources */,
+				465202EF2533F900004C48E1 /* Helpers.swift in Sources */,
 				89D0DCB324058C6900E6514A /* FileManagerExtension.swift in Sources */,
 				EB63B7E0226A7EB5004C7E2C /* ImageInsta.swift in Sources */,
 				899F664523E3A5A70022C099 /* UISegmentControllerExtension.swift in Sources */,
@@ -1139,7 +1145,7 @@
 				CODE_SIGN_ENTITLEMENTS = iMessage/iMessage.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0.25;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8NHWSCYNF7;
 				INFOPLIST_FILE = iMessage/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
@@ -1148,6 +1154,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
+				MARKETING_VERSION = 0.9;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.CinchMemes.iMessage2;
 				PRODUCT_NAME = Cinch;
 				SKIP_INSTALL = YES;
@@ -1164,7 +1171,7 @@
 				CODE_SIGN_ENTITLEMENTS = iMessage/iMessage.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0.25;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8NHWSCYNF7;
 				INFOPLIST_FILE = iMessage/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
@@ -1173,6 +1180,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
+				MARKETING_VERSION = 0.9;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.CinchMemes.iMessage2;
 				PRODUCT_NAME = Cinch;
 				SKIP_INSTALL = YES;
@@ -1308,7 +1316,7 @@
 				CODE_SIGN_ENTITLEMENTS = Cinch/Cinch.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0.25;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 8NHWSCYNF7;
 				INFOPLIST_FILE = Cinch/Info.plist;
@@ -1316,6 +1324,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 0.9;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.CinchMemes;
 				PRODUCT_NAME = "Cinch Memes";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1333,7 +1342,7 @@
 				CODE_SIGN_ENTITLEMENTS = Cinch/Cinch.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0.25;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 8NHWSCYNF7;
 				INFOPLIST_FILE = Cinch/Info.plist;
@@ -1341,6 +1350,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 0.9;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.CinchMemes;
 				PRODUCT_NAME = "Cinch Memes";
 				PROVISIONING_PROFILE_SPECIFIER = "";

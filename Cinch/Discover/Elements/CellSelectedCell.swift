@@ -2,12 +2,12 @@
 //  CellSelectedController.swift
 //  Cinch
 /*
-    1. Add fullscreen image
-    2. Add Back button
-    3. Add right hand side
-    4. Add hashtags
-    5. Put it in a tableView
-*/
+ 1. Add fullscreen image
+ 2. Add Back button
+ 3. Add right hand side
+ 4. Add hashtags
+ 5. Put it in a tableView
+ */
 //  Created by Alsahlani, Yassin K on 1/27/20.
 
 import UIKit
@@ -199,7 +199,7 @@ class CellSelectedCell: UITableViewCell{
         imageScrollView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0).isActive = true
         
         
-//        imageScrollView
+        //        imageScrollView
         imageScrollView.addSubview(fullScreenImageView)
         fullScreenImageView.frame.size.width = frame.width
         fullScreenImageView.frame.size.height = frame.height
@@ -259,20 +259,20 @@ class CellSelectedCell: UITableViewCell{
         
         addSubview(backgroundProfileIcon)
         backgroundProfileIcon.translatesAutoresizingMaskIntoConstraints = false
-//        backgroundProfileIcon.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 0.0195  * frame.width).isActive = true
-//        backgroundProfileIcon.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -0.030  * frame.height).isActive = true
+        //        backgroundProfileIcon.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 0.0195  * frame.width).isActive = true
+        //        backgroundProfileIcon.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -0.030  * frame.height).isActive = true
         backgroundProfileIcon.centerYAnchor.constraint(equalTo: profileIcon.centerYAnchor, constant: 3).isActive = true
         backgroundProfileIcon.centerXAnchor.constraint(equalTo: profileIcon.centerXAnchor).isActive = true
         backgroundProfileIcon.widthAnchor.constraint(equalToConstant: 66).isActive = true
         backgroundProfileIcon.heightAnchor.constraint(equalToConstant: 66).isActive = true
         
         
-//        //follow user icon
-//        addSubview(followUserIcon)
-//        followUserIcon.translatesAutoresizingMaskIntoConstraints = false
-//        followUserIcon.centerYAnchor.constraint(equalTo: profileIcon.bottomAnchor).isActive = true
-//        followUserIcon.centerXAnchor.constraint(equalTo: profileIcon.centerXAnchor).isActive = true
-        }
+        //        //follow user icon
+        //        addSubview(followUserIcon)
+        //        followUserIcon.translatesAutoresizingMaskIntoConstraints = false
+        //        followUserIcon.centerYAnchor.constraint(equalTo: profileIcon.bottomAnchor).isActive = true
+        //        followUserIcon.centerXAnchor.constraint(equalTo: profileIcon.centerXAnchor).isActive = true
+    }
     
     
     ///Allows user to save content to device or export to another app
@@ -287,8 +287,8 @@ class CellSelectedCell: UITableViewCell{
                         self.handleShareVideo()
                     }
                     else {
-                    let vc = UIActivityViewController(activityItems: [self.fullScreenImageView.image], applicationActivities: [])
-                    self.parentViewController?.present(vc, animated: true, completion: nil)
+                        let vc = UIActivityViewController(activityItems: [self.fullScreenImageView.image], applicationActivities: [])
+                        self.parentViewController?.present(vc, animated: true, completion: nil)
                         
                     }
                 }
@@ -299,8 +299,8 @@ class CellSelectedCell: UITableViewCell{
                 handleShareVideo()
             }
             else {
-            let vc = UIActivityViewController(activityItems: [self.fullScreenImageView.image], applicationActivities: [])
-            self.parentViewController?.present(vc, animated: true, completion: nil)
+                let vc = UIActivityViewController(activityItems: [self.fullScreenImageView.image], applicationActivities: [])
+                self.parentViewController?.present(vc, animated: true, completion: nil)
                 
             }
         }
@@ -311,22 +311,22 @@ class CellSelectedCell: UITableViewCell{
         guard let url = URL(string: link) else { return }
         DispatchQueue.global(qos: .background).async {
             if let urlData = NSData(contentsOf: url){
-              let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
-                 let filePath="\(documentsPath)/tempFile.mov"
-                 DispatchQueue.main.async {
-                   urlData.write(toFile: filePath, atomically: true)
-
-                   //Hide activity indicator
-
-                   let activityVC = UIActivityViewController(activityItems: [NSURL(fileURLWithPath: filePath)], applicationActivities: nil)
-                   activityVC.excludedActivityTypes = [.addToReadingList, .assignToContact]
+                let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+                let filePath="\(documentsPath)/tempFile.mov"
+                DispatchQueue.main.async {
+                    urlData.write(toFile: filePath, atomically: true)
+                    
+                    //Hide activity indicator
+                    
+                    let activityVC = UIActivityViewController(activityItems: [NSURL(fileURLWithPath: filePath)], applicationActivities: nil)
+                    activityVC.excludedActivityTypes = [.addToReadingList, .assignToContact]
                     self.parentViewController?.present(activityVC, animated: true, completion: nil)
-                 }
-             }
-         }
+                }
+            }
+        }
     }
     
-
+    
     @objc func handleCopy(_ gesture: UIGestureRecognizer? = nil) {
         if let _ = gesture as? UILongPressGestureRecognizer {
             guard gesture?.state == .began else { return }
@@ -349,7 +349,7 @@ class CellSelectedCell: UITableViewCell{
             UIPasteboard.general.setData(clipBoardData, forPasteboardType: "public.mpeg-4")
         }
         else {
-        UIPasteboard.general.image = fullScreenImageView.image
+            UIPasteboard.general.image = fullScreenImageView.image
         }
         
         let alertExpiration = DispatchTime.now() + 1
@@ -368,7 +368,7 @@ class CellSelectedCell: UITableViewCell{
         guard let localUser = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
         
         guard let link = post.link else { return }
-
+        
         parentViewController?.present(alert, animated: true, completion: {
             self.alert.view.superview?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.dismissAlert)))
         })

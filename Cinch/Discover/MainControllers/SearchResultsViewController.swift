@@ -103,6 +103,11 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
                 }
             }
         }
+        Helpers.findSynonyms(word: tag) { (synonymsSet) in
+            print("yes sir we hit it:", synonymsSet)
+            //TODO: Add additional cells with the synonyms set 
+        }
+        
     }
     
     @objc func goBack() {

@@ -25,30 +25,11 @@ class UploadViewController: UIViewController {
 
         setupNavigationController()
         setupUploadButton()
+        print("this shit loaded son")
     }
     
     override func viewDidAppear(_ animated: Bool) {
         tabBarController?.tabBar.isHidden = false
-
-//        let colorTop: UIColor =  .orange
-//        let colorBottom: UIColor = .blue
-//
-//        let gradientLayer = CAGradientLayer()
-//        gradientLayer.colors = [colorTop, colorBottom]
-//        gradientLayer.locations = [0.0, 1.0]
-//        gradientLayer.frame = view.frame
-//        view.layer.insertSublayer(gradientLayer, at: 0)
-//        view.layer.addSublayer(gradientLayer)
-        
-        let gradient: CAGradientLayer = CAGradientLayer()
-
-        gradient.colors = [UIColor.blue, UIColor.red]
-        gradient.locations = [0.0 , 1.0]
-        gradient.startPoint = CGPoint(x: 0.0, y: 1.0)
-        gradient.endPoint = CGPoint(x: 1.0, y: 1.0)
-        gradient.frame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.size.width, height: self.view.frame.size.height)
-
-        self.view.layer.insertSublayer(gradient, at: 0)
     }
     
     func setupNavigationController() {
@@ -60,15 +41,21 @@ class UploadViewController: UIViewController {
     }
     
     func setupUploadButton() {
-        let buttonWidth = 0.46 * view.frame.width
-        uploadButton.setImage(UIImage(named: "uploadButton"), for: .normal)
-        
+        uploadButton.setTitle("+ Add Meme", for: .normal)
+        uploadButton.backgroundColor = .systemBlue
+        uploadButton.titleLabel?.font = .boldSystemFont(ofSize: 20)
         view.addSubview(uploadButton)
+        uploadButton.layer.cornerRadius = 5
         
         //constraints
         uploadButton.translatesAutoresizingMaskIntoConstraints = false
-        uploadButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        uploadButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100).isActive = true
+        
+        NSLayoutConstraint.activate([
+            uploadButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            uploadButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
+            uploadButton.heightAnchor.constraint(equalToConstant: 56),
+            uploadButton.widthAnchor.constraint(equalToConstant: self.view.frame.width * 0.6),
+        ])
         
         uploadButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(selectMedia)))
     }
