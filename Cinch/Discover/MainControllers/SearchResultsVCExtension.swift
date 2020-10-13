@@ -16,7 +16,7 @@ extension SearchResultsViewController {
         let storyboard = UIStoryboard(name: "Discover", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "CellSelected") as! CellSelectedTable
         vc.modalPresentationStyle = .fullScreen
-        vc.content = content
+        vc.content = Array(content)
         vc.startingIndex = indexPath
         navigationController?.pushViewController(vc, animated: true)
     }

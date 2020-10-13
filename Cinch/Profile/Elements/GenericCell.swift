@@ -89,5 +89,8 @@ class GenericCell: UICollectionViewCell {
         imageView.stopAnimating()
         imageView.image = UIImage()
         imageView.removeFromSuperview()
+        self.subviews.forEach { (subview) in
+            subview.removeFromSuperview()
+        }
     }
 }

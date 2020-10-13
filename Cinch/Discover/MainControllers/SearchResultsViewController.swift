@@ -14,7 +14,7 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
     var width: CGFloat = 0
     var height: CGFloat = 0
     var identifier = "Cell"
-    var content: [String] = []
+    var content: Set = Set<String>()
     var indexesToPop:[IndexPath] = []
     
     //views
@@ -50,7 +50,10 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
     func setup(term: String) {
         searchTerm = term
         title = term
-        fetchContent()
+        
+        let tag = searchTerm.lowercased()
+        fetchContent(tag: tag)
+        fetchSynonyms(tag: tag)
     }
     
     
@@ -88,33 +91,55 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
         collectionView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
     }
     
-    func fetchContent() {
-        let tag = searchTerm.lowercased()
+    
+    //MARK: - Fetching
+    
+    func fetchContent(tag: String) {
         TagStruct().readAllElementLinks(tagLabel: tag) { (contentKeys) in
-            self.content = contentKeys
+            self.content = Set(contentKeys)
             self.collectionView.performBatchUpdates({
                 for index in 0 ..< self.content.count {
                     self.collectionView.insertItems(at: [IndexPath(item: index, section: 0)])
                 }
             }) { (isComplete) in
                 for indexPath in self.indexesToPop.reversed() {
-                    print("deleting tagElement:", indexPath.item)
-                    TagStruct().deleteElement(tagLabel: tag, contentKey: self.content[indexPath.item])
+                    let contentToDeleteKey = self.content[self.content.index(self.content.startIndex, offsetBy: indexPath.item)]
+                    TagStruct().deleteElement(tagLabel: tag, contentKey:contentToDeleteKey)
                 }
             }
-        }
-        Helpers.findSynonyms(word: tag) { (synonymsSet) in
-            print("yes sir we hit it:", synonymsSet)
-            //TODO: Add additional cells with the synonyms set 
         }
         
     }
     
-    @objc func goBack() {
-        navigationController?.popViewController(animated: true)
+    private func fetchSynonyms(tag: String) {
+        Helpers.findSynonyms(word: tag) { (synonymSet) in
+            for tempWord in synonymSet {
+                TagStruct().readAllElementLinks(tagLabel: tempWord) { (contentKeys) in
+                    
+                    let start = self.content.count
+//                    self.content.append(contentsOf: contentKeys)
+                    self.content = self.content.union(contentKeys)
+                    
+                    self.collectionView.performBatchUpdates({
+                        for index in start ..< self.content.count {
+                            self.collectionView.insertItems(at: [IndexPath(item: index, section: 0)])
+                        }
+                    }) { (isComplete) in
+                        for indexPath in self.indexesToPop.reversed() {
+                            let contentToDeleteKey = self.content[self.content.index(self.content.startIndex, offsetBy: indexPath.item)]
+                            TagStruct().deleteElement(tagLabel: tag, contentKey: contentToDeleteKey)
+                        }
+                    }
+                }
+            }
+        }
     }
     
     
+    
+    @objc func goBack() {
+        navigationController?.popViewController(animated: true)
+    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return content.count
@@ -122,8 +147,10 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! GenericCell
+
+        let contentKey = self.content[self.content.index(self.content.startIndex, offsetBy: indexPath.item)]
         
-        cell.setup(contentKey: content[indexPath.item]) {
+        cell.setup(contentKey: contentKey) {
             self.indexesToPop.append(indexPath)
         }
         
@@ -132,7 +159,9 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
     
     func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! GenericCell
-        cell.setup(contentKey: content[indexPath.item])
+        let contentKey = self.content[self.content.index(self.content.startIndex, offsetBy: indexPath.item)]
+        
+        cell.setup(contentKey: contentKey)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

@@ -38,7 +38,6 @@ struct Helpers {
                     }
                 }
             }
-            print("finished with results:", synonymSet)
             completion(synonymSet)
         }
         
