@@ -1,80 +1,76 @@
 //
 //  TableViewCell.swift
-/*
-    Represents the rows in the discover page with the hashtag Label
- */
 //  Created by Alsahlani, Yassin K on 1/26/20.
 
 import UIKit
 
- 
-class TableViewCell: UITableViewCell, UICollectionViewDataSource {
-    
-    
-    var cellHeight: CGFloat = 0
-    var cellWidth: CGFloat = 0
-    var identifier = "Cell"
-    var hashTagTerm = ""
-    var content:[String] = []
-    var indexesToPop: [Int] = []
 
-    //elements
+class DiscoverCell: UITableViewCell {
+    
+    /*
+     Cell for tableView in DiscoverViewController
+     */
+    
+    
+    // MARK: Data
+    
+    private var cellHeight: CGFloat = 0
+    private var cellWidth: CGFloat = 0
+    private var identifier = "Cell"
+    private var hashTagTerm = ""
+    private var content:[String] = []
+    private var indexesToPop: [Int] = []
+    
+    // MARK: Views
     let hashTagIcon = UIImageView(image: UIImage(named: "HashTag"))
     let upperText = UILabel(frame: CGRect.zero)
     var collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
     
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        // Configure the view for the selected state
+    // MARK: Setup
+    
+    func setUp(hashTagTerm: String, cellSize: CGSize) {
+        
+        self.hashTagTerm = hashTagTerm.lowercased().capitalizeFirstLetter()
+        self.selectionStyle = .none
+        
+        self.cellHeight = cellSize.height
+        self.cellWidth = cellSize.width
+        
+        setupCollectionView()
+        fetchContent()
+        addHashTag()
+        addTopText()
     }
     
-    func setUp(hashTagTerm: String) {
-        self.hashTagTerm = hashTagTerm.lowercased().capitalizeFirstLetter()
-        
-        fetchContent()
-        
+    func setupCollectionView() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
         collectionView.delegate = self
         collectionView.dataSource = self
-         
+        
         collectionView.register(GenericCell.self, forCellWithReuseIdentifier: identifier)
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.backgroundColor = .white
+        
         addSubview(collectionView)
-         
-        //constraints
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
-        collectionView.widthAnchor.constraint(equalToConstant: cellWidth).isActive = true
-        collectionView.heightAnchor.constraint(equalToConstant: 0.68 * cellHeight).isActive = true
-        collectionView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -0.07 * cellHeight).isActive = true
-         
+        
+        //constraints
+        NSLayoutConstraint.activate([
+            collectionView.leftAnchor.constraint(equalTo: leftAnchor),
+            collectionView.widthAnchor.constraint(equalToConstant: cellWidth),
+            collectionView.heightAnchor.constraint(equalToConstant: 0.68 * cellHeight),
+            collectionView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -0.07 * cellHeight)
+        ])
+        
         collectionView.contentInset.left = frame.width * 0.0387
-         
-        //add elements
-        addHashTag()
-        addTopText()
     }
     
-    ///fetches the links for the term
+    //fetches the links for the term
     func fetchContent(){
         content = []
-//        TagStruct().readAllElementLinks(tagLabel: hashTagTerm.lowercased()) { (links) in
-//            self.content = links
-//            self.collectionView.reloadData()
-//
-//            self.collectionView.performBatchUpdates({
-//                self.popIndexes()
-//            }, completion: nil)
-//        }
         
         TagStruct().readAllElements(tagLabel: hashTagTerm.lowercased()) { (tagElements) in
             for tagElement in tagElements {
@@ -82,12 +78,11 @@ class TableViewCell: UITableViewCell, UICollectionViewDataSource {
                     self.content.append(tagElement.contentKey)
                 }
                 else {
-                    
                     self.content.append(tagElement.link)
                 }
             }
             self.collectionView.reloadData()
-
+            
             self.collectionView.performBatchUpdates({
                 self.popIndexes()
             }, completion: nil)
@@ -101,25 +96,63 @@ class TableViewCell: UITableViewCell, UICollectionViewDataSource {
         
         //constraints
         hashTagIcon.translatesAutoresizingMaskIntoConstraints = false
-        hashTagIcon.leftAnchor.constraint(equalTo: leftAnchor, constant: leftMargin).isActive = true
-        hashTagIcon.widthAnchor.constraint(equalToConstant: 0.147 * cellHeight).isActive = true
-        hashTagIcon.heightAnchor.constraint(equalToConstant: 0.147 * cellHeight).isActive = true
-        hashTagIcon.topAnchor.constraint(equalTo: topAnchor, constant: 0.09 * cellHeight).isActive = true
+        
+        NSLayoutConstraint.activate([
+            hashTagIcon.leftAnchor.constraint(equalTo: leftAnchor, constant: leftMargin),
+            hashTagIcon.widthAnchor.constraint(equalToConstant: 0.147 * cellHeight),
+            hashTagIcon.heightAnchor.constraint(equalToConstant: 0.147 * cellHeight),
+            hashTagIcon.topAnchor.constraint(equalTo: topAnchor, constant: 0.09 * cellHeight),
+        ])
     }
     
     func addTopText() {
         upperText.text = hashTagTerm
         upperText.textAlignment = .left
+        
         addSubview(upperText)
+        upperText.translatesAutoresizingMaskIntoConstraints = false
         
         //constraints
-        upperText.translatesAutoresizingMaskIntoConstraints = false
-        upperText.leftAnchor.constraint(equalTo: hashTagIcon.rightAnchor, constant: 8).isActive = true
-        upperText.widthAnchor.constraint(equalToConstant: frame.width).isActive = true
-        upperText.bottomAnchor.constraint(equalTo: collectionView.topAnchor, constant: -12).isActive = true
-        upperText.centerYAnchor.constraint(equalTo: hashTagIcon.centerYAnchor).isActive = true
-        upperText.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        NSLayoutConstraint.activate([
+            upperText.leftAnchor.constraint(equalTo: hashTagIcon.rightAnchor, constant: 8),
+            upperText.widthAnchor.constraint(equalToConstant: frame.width),
+            upperText.bottomAnchor.constraint(equalTo: hashTagIcon.bottomAnchor),
+            upperText.heightAnchor.constraint(equalToConstant: 20),
+        ])
     }
+    
+    //TODO: Fix this so that it refreshes the cell when user goes back
+    func refreshCell(indexPath: IndexPath) {
+        ////        collectionView.reloadItems(at: [indexPath])
+        //        let cell = collectionView.cellForItem(at: indexPath) as! GenericCell
+        ////        cell.setup(contentKey: content[indexPath.item])
+        //        cell.imageView.startAnimating()
+    }
+    
+    
+    func popIndexes() {
+        self.indexesToPop.sort()
+        for _ in self.indexesToPop {
+            guard let item = self.indexesToPop.popLast() else { return }
+            self.content.remove(at: item)
+        }
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+    }
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        // Configure the view for the selected state
+    }
+}
+
+
+// MARK: Collectionview
+//Yassin TODO: Start here
+
+extension DiscoverCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return content.count
@@ -151,27 +184,7 @@ class TableViewCell: UITableViewCell, UICollectionViewDataSource {
         cell.setup(contentKey: content[indexPath.item])
     }
     
-    
-    //TODO: Fix this so that it refreshes the cell when user goes back
-    func refreshCell(indexPath: IndexPath) {
-////        collectionView.reloadItems(at: [indexPath])
-//        let cell = collectionView.cellForItem(at: indexPath) as! GenericCell
-////        cell.setup(contentKey: content[indexPath.item])
-//        cell.imageView.startAnimating()
-    }
-    
-    
-    func popIndexes() {
-            self.indexesToPop.sort()
-            for _ in self.indexesToPop {
-            guard let item = self.indexesToPop.popLast() else { return }
-            self.content.remove(at: item)
-        }
-    }
 }
-
-
-
 
 extension UITableViewCell: UICollectionViewDelegateFlowLayout {
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
