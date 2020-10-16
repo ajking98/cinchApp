@@ -21,7 +21,9 @@ class DiscoverCell: UITableViewCell {
     private var content:[String] = []
     private var indexesToPop: [Int] = []
     
+    
     // MARK: Views
+    
     let hashTagIcon = UIImageView(image: UIImage(named: "HashTag"))
     let upperText = UILabel(frame: CGRect.zero)
     var collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -150,7 +152,6 @@ class DiscoverCell: UITableViewCell {
 
 
 // MARK: Collectionview
-//Yassin TODO: Start here
 
 extension DiscoverCell: UICollectionViewDataSource {
     
@@ -173,9 +174,8 @@ extension DiscoverCell: UICollectionViewDataSource {
         let storyboard = UIStoryboard(name: "Discover", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "CellSelected") as! CellSelectedTable
         vc.modalPresentationStyle = .fullScreen
-        vc.content = content
-        vc.startingIndex = indexPath
-        vc.refreshCell = refreshCell(indexPath:)
+        
+        vc.setup(content: self.content, startingIndex: indexPath, refreshCell: refreshCell(indexPath:))
         parentViewController?.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -185,6 +185,9 @@ extension DiscoverCell: UICollectionViewDataSource {
     }
     
 }
+
+
+// MARK: - CollectionView Flow
 
 extension UITableViewCell: UICollectionViewDelegateFlowLayout {
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

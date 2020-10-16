@@ -1,73 +1,54 @@
 //
 //  CellSelectedTable.swift
-/*
-    Is presented when the user selects a cell from the DiscoverViewController, ProfilePage, or SearchResultsViewController
-    Each cell is from CellSelectedController
- */
 //  Created by Alsahlani, Yassin K on 1/27/20.
 //
 
 import UIKit
 import AVKit
 
-class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, UINavigationControllerDelegate {
+
+class CellSelectedTable: UIViewController, UIGestureRecognizerDelegate, UINavigationControllerDelegate {
+    /*
+     Is presented when the user selects a cell from the DiscoverViewController, ProfilePage, or SearchResultsViewController
+     Each cell is from CellSelectedController
+     */
     
-    //Data given by the presenting VC
+    // MARK: - Data
+    
     var content:[String] = []
     var startingIndex = IndexPath(row: 0, section: 0)
+    var refreshCell: ((IndexPath)->Void)?
+    private let audioSession = AVAudioSession.sharedInstance()
+    private var outputVolumeObserve: NSKeyValueObservation?
+    private let identifier = "Cell"
     
     
-    let audioSession = AVAudioSession.sharedInstance()
-    var outputVolumeObserve: NSKeyValueObservation?
+    // MARK: - Views
     
+    private let tableView = UITableView(frame: CGRect.zero)
+
     
-    let tableView = UITableView(frame: CGRect.zero)
-    let identifier = "Cell"
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setupAudio()
         setupNavigationBar()
         setupTableView()
         
         //Adding swipe to go back functionality to entire screen
         let popGestureRecognizer = self.navigationController!.interactivePopGestureRecognizer!
-               if let targets = popGestureRecognizer.value(forKey: "targets") as? NSMutableArray {
-                 let gestureRecognizer = UIPanGestureRecognizer()
-                 gestureRecognizer.setValue(targets, forKey: "targets")
-                 self.view.addGestureRecognizer(gestureRecognizer)
-               }
-    }
-    
-    
-    func setupAudio() {
-
-        do {
-         try audioSession.setActive(true)
-        } catch {
-         print("some error")
+        if let targets = popGestureRecognizer.value(forKey: "targets") as? NSMutableArray {
+            let gestureRecognizer = UIPanGestureRecognizer()
+            gestureRecognizer.setValue(targets, forKey: "targets")
+            self.view.addGestureRecognizer(gestureRecognizer)
         }
-        
-        outputVolumeObserve = audioSession.observe(\.outputVolume) { (audioSession, changes) in
-            guard let cell = self.tableView.visibleCells[0] as? CellSelectedCell else { return }
-            let playerLayer = cell.playerLayer
-            if isMuted {
-                playerLayer.player?.isMuted = false
-                isMuted = false
-            }
-        }
-    }
-    
-    var refreshCell: ((IndexPath)->Void)?
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        guard let refreshCell = refreshCell else { return }
-
-        refreshCell(startingIndex)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         //making the navigation bar invisible
+        //TODO: Make this shit cleaner
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.isTranslucent = true
@@ -89,8 +70,46 @@ class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataS
         }
     }
     
-    func setupNavigationBar() {
+    override func viewWillDisappear(_ animated: Bool) {
+        guard let refreshCell = refreshCell else { return }
+        refreshCell(startingIndex)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        guard let cell = tableView.visibleCells[0] as? CellSelectedCell else { return }
+        cell.playerLayer.player?.isMuted = true
+    }
+    
+    
+    // MARK: - Setup
+    
+    func setup(content: [String], startingIndex: IndexPath, refreshCell: @escaping((IndexPath) -> Void)) {
+        self.content = content
+        self.startingIndex = startingIndex
+        self.refreshCell = refreshCell
+        
+    }
+    
+    private func setupAudio() {
+        do {
+            try audioSession.setActive(true)
+        } catch {
+            print("some error")
+        }
+        
+        outputVolumeObserve = audioSession.observe(\.outputVolume) { (audioSession, changes) in
+            guard let cell = self.tableView.visibleCells[0] as? CellSelectedCell else { return }
+            let playerLayer = cell.playerLayer
+            if isMuted {
+                playerLayer.player?.isMuted = false
+                isMuted = false
+            }
+        }
+    }
+    
+    private func setupNavigationBar() {
         //Enables swiping back
+        //TODO: Come back and clean this shit up
         navigationController?.interactivePopGestureRecognizer?.delegate = self
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         
@@ -111,7 +130,6 @@ class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataS
     
     
     func setupTableView() {
-        view.addSubview(tableView)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = .darkBlue
@@ -120,19 +138,24 @@ class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataS
         tableView.register(CellSelectedCell.self, forCellReuseIdentifier: identifier)
         tableView.contentInsetAdjustmentBehavior = .never
         
-        
         //constraints
+        view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        
+        NSLayoutConstraint.activate([
+            tableView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            tableView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            tableView.topAnchor.constraint(equalTo: view.topAnchor),
+        ])
     }
+    
+    
+    // MARK: Interaction Handlers
     
     @objc func goBack(_ sender: UITapGestureRecognizer? = nil) {
         navigationController?.popViewController(animated: true)
     }
-    
     
     func handlePresentProfile(username: String){
         let vc = ProfileViewController()
@@ -142,6 +165,12 @@ class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataS
         navigationController?.pushViewController(vc, animated: true)
     }
     
+}
+
+
+// MARK: TableView
+
+extension CellSelectedTable:  UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return content.count
@@ -154,7 +183,6 @@ class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataS
         
         return cell
     }
-    
     
     ///When the user manually swipes the screen
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
@@ -174,7 +202,7 @@ class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataS
     
     ///When the app scrolls to the selected index
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-
+        
         let index = tableView.indexPathsForVisibleRows![0][1]
         let cell = tableView.cellForRow(at: IndexPath(item: index, section: 0)) as! CellSelectedCell
         
@@ -185,6 +213,7 @@ class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataS
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard let cell = cell as? CellSelectedCell else { return }
         
+        //Yassin TODO: Start here
         cell.playerLayer.player?.isMuted = true
         cell.playerLayer.player?.pause()
         
@@ -192,19 +221,13 @@ class CellSelectedTable: UIViewController, UITableViewDelegate, UITableViewDataS
         cell.player.pause()
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        guard let cell = tableView.visibleCells[0] as? CellSelectedCell else { return }
-        cell.playerLayer.player?.isMuted = true
-    }
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return view.frame.height
     }
     
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        
         //Should edit the sound here 
         return false
     }
-
+    
 }
