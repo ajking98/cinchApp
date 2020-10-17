@@ -1324,7 +1324,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.9;
+				MARKETING_VERSION = 0.91;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.CinchMemes;
 				PRODUCT_NAME = "Cinch Memes";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1350,7 +1350,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.9;
+				MARKETING_VERSION = 0.91;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cinch.CinchMemes;
 				PRODUCT_NAME = "Cinch Memes";
 				PROVISIONING_PROFILE_SPECIFIER = "";

@@ -33,19 +33,14 @@ class DiscoverViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.tabBarController!.tabBar.layer.borderWidth = 0.9
-//        self.tabBarController?.tabBar.layer.borderColor = UIColor.lightishGray.cgColor
-        
         setup()
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        self.navigationController?.setNavigationBarHidden(false, animated: false)
-//        navigationController?.tabBarController?.tabBar.isHidden = false
-//        navigationController?.navigationBar.isHidden = false
-//        navigationController?.navigationBar.isTranslucent = false
-//        navigationController?.view.backgroundColor = .white
-        //        navigationController?.hidesBarsOnSwipe = true
+        // Tab bar
+        navigationController?.navigationBar.backgroundColor = .white
+        navigationController?.view.backgroundColor = .white
+        navigationController?.tabBarController?.tabBar.isHidden = false
     }
     
     
@@ -92,7 +87,6 @@ class DiscoverViewController: UIViewController {
     func setupData() {
         width = view.frame.width
         height = view.frame.height
-        navigationController?.navigationBar.backgroundColor = .white
     }
     
     func setupSearchBar() {

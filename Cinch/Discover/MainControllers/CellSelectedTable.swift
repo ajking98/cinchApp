@@ -45,12 +45,11 @@ class CellSelectedTable: UIViewController {
         navigationController?.navigationBar.isTranslucent = true
         navigationController?.navigationBar.backgroundColor = .clear
         navigationController?.view.backgroundColor = .clear
-        
-        // Tab bar
-        navigationController?.tabBarController?.tabBar.isHidden = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        // Tab bar
+        navigationController?.tabBarController?.tabBar.isHidden = true
         
         if startingIndex.row == 0 {
             guard let cell = tableView.cellForRow(at: startingIndex) as? CellSelectedCell else { return }
@@ -68,16 +67,16 @@ class CellSelectedTable: UIViewController {
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.backgroundColor = .white
-        navigationController?.view.backgroundColor = .white
-        
-        // Tab bar
-        navigationController?.tabBarController?.tabBar.isHidden = false
         
         guard let refreshCell = refreshCell else { return }
         refreshCell(startingIndex)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
+        
+        // Tab bar
+        navigationController?.tabBarController?.tabBar.isHidden = false
+        
         guard let cell = tableView.visibleCells[0] as? CellSelectedCell else { return }
         cell.playerLayer.player?.isMuted = true
     }
