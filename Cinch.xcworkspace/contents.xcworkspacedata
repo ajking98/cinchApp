@@ -2,9 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:/Users/cinch/Desktop/cinchApp/Cinch.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:Cinch.xcodeproj">
    </FileRef>
    <FileRef

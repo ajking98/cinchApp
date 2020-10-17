@@ -171,8 +171,7 @@ extension DiscoverCell: UICollectionViewDataSource {
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let storyboard = UIStoryboard(name: "Discover", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "CellSelected") as! CellSelectedTable
+        let vc = CellSelectedTable()
         vc.modalPresentationStyle = .fullScreen
         
         vc.setup(content: self.content, startingIndex: indexPath, refreshCell: refreshCell(indexPath:))

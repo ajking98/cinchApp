@@ -31,22 +31,22 @@ PODS:
   - GTMSessionFetcher/Core (1.4.0)
   - IBMMobileFirstPlatformFoundation (8.0.2020060717)
   - leveldb-library (1.22)
-  - libwebp (1.0.3):
-    - libwebp/demux (= 1.0.3)
-    - libwebp/mux (= 1.0.3)
-    - libwebp/webp (= 1.0.3)
-  - libwebp/demux (1.0.3):
+  - libwebp (1.1.0):
+    - libwebp/demux (= 1.1.0)
+    - libwebp/mux (= 1.1.0)
+    - libwebp/webp (= 1.1.0)
+  - libwebp/demux (1.1.0):
     - libwebp/webp
-  - libwebp/mux (1.0.3):
+  - libwebp/mux (1.1.0):
     - libwebp/demux
-  - libwebp/webp (1.0.3)
+  - libwebp/webp (1.1.0)
   - nanopb (0.3.9011):
     - nanopb/decode (= 0.3.9011)
     - nanopb/encode (= 0.3.9011)
   - nanopb/decode (0.3.9011)
   - nanopb/encode (0.3.9011)
-  - SDWebImage/Core (4.4.7)
-  - SDWebImage/WebP (4.4.7):
+  - SDWebImage/Core (4.4.8)
+  - SDWebImage/WebP (4.4.8):
     - libwebp (< 2.0, >= 0.5)
     - SDWebImage/Core
   - SQLite.swift (0.12.2):
@@ -90,11 +90,11 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 6f5c8abbab8a9bce4bb3f057e317728ec6182b10
   IBMMobileFirstPlatformFoundation: 2fd46cd05bdb7cc072eb003148aa6571a143e321
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
-  libwebp: 057912d6d0abfb6357d8bb05c0ea470301f5d61e
+  libwebp: 946cb3063cea9236285f7e9a8505d806d30e07f3
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
-  SDWebImage: c10d14a8883ebd89664f02a422006f66a85c0c5d
+  SDWebImage: 783af2c3fa36291a250030c4752ee370a9a51d13
   SQLite.swift: d2b4642190917051ce6bd1d49aab565fe794eea3
 
-PODFILE CHECKSUM: 9c1755ca903f56d52e5ae0ec6ff43af80f88d921
+PODFILE CHECKSUM: 72c75953452c9f4d58acd49d200aa0aae2cabbfa
 
 COCOAPODS: 1.9.3

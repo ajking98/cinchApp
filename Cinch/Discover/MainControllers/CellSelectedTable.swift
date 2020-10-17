@@ -7,7 +7,7 @@ import UIKit
 import AVKit
 
 
-class CellSelectedTable: UIViewController, UIGestureRecognizerDelegate, UINavigationControllerDelegate {
+class CellSelectedTable: UIViewController {
     /*
      Is presented when the user selects a cell from the DiscoverViewController, ProfilePage, or SearchResultsViewController
      Each cell is from CellSelectedController
@@ -36,32 +36,24 @@ class CellSelectedTable: UIViewController, UIGestureRecognizerDelegate, UINaviga
         setupAudio()
         setupNavigationBar()
         setupTableView()
-        
-        //Adding swipe to go back functionality to entire screen
-        let popGestureRecognizer = self.navigationController!.interactivePopGestureRecognizer!
-        if let targets = popGestureRecognizer.value(forKey: "targets") as? NSMutableArray {
-            let gestureRecognizer = UIPanGestureRecognizer()
-            gestureRecognizer.setValue(targets, forKey: "targets")
-            self.view.addGestureRecognizer(gestureRecognizer)
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        //making the navigation bar invisible
-        //TODO: Make this shit cleaner
+        
+        // Nav bar
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.isTranslucent = true
         navigationController?.navigationBar.backgroundColor = .clear
         navigationController?.view.backgroundColor = .clear
         
-        //hiding tab bar
+        // Tab bar
         navigationController?.tabBarController?.tabBar.isHidden = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        
         if startingIndex.row == 0 {
-            let cell = tableView.cellForRow(at: startingIndex) as! CellSelectedCell
+            guard let cell = tableView.cellForRow(at: startingIndex) as? CellSelectedCell else { return }
             cell.setup(contentKey: content[0])
             cell.handlePresentProfile = handlePresentProfile(username:)
         }
@@ -71,6 +63,16 @@ class CellSelectedTable: UIViewController, UIGestureRecognizerDelegate, UINaviga
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        
+        // Nav bar
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.backgroundColor = .white
+        navigationController?.view.backgroundColor = .white
+        
+        // Tab bar
+        navigationController?.tabBarController?.tabBar.isHidden = false
+        
         guard let refreshCell = refreshCell else { return }
         refreshCell(startingIndex)
     }
@@ -87,7 +89,6 @@ class CellSelectedTable: UIViewController, UIGestureRecognizerDelegate, UINaviga
         self.content = content
         self.startingIndex = startingIndex
         self.refreshCell = refreshCell
-        
     }
     
     private func setupAudio() {
@@ -108,24 +109,19 @@ class CellSelectedTable: UIViewController, UIGestureRecognizerDelegate, UINaviga
     }
     
     private func setupNavigationBar() {
-        //Enables swiping back
-        //TODO: Come back and clean this shit up
-        navigationController?.interactivePopGestureRecognizer?.delegate = self
-        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         
-        //making the navigation bar invisible
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.isTranslucent = true
-        navigationController?.view.backgroundColor = .clear
+        let backButton = UIBarButtonItem()
+        backButton.title = ""
+        backButton.tintColor = .white
+        self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
         
-        //back button
-        let backButton = UIButton(type: .custom)
-        backButton.setImage(UIImage(named: "backIcon-white"), for: .normal)
-        backButton.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
-        backButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(goBack)))
-        let leftNavItem = UIBarButtonItem(customView: backButton)
-        navigationItem.setLeftBarButton(leftNavItem, animated: false)
+        //Adding swipe to go back functionality to entire screen
+        let popGestureRecognizer = self.navigationController!.interactivePopGestureRecognizer!
+        if let targets = popGestureRecognizer.value(forKey: "targets") as? NSMutableArray {
+            let gestureRecognizer = UIPanGestureRecognizer()
+            gestureRecognizer.setValue(targets, forKey: "targets")
+            self.view.addGestureRecognizer(gestureRecognizer)
+        }
     }
     
     
@@ -180,7 +176,6 @@ extension CellSelectedTable:  UITableViewDelegate, UITableViewDataSource {
         let cell = CellSelectedCell()
         cell.frame.size = view.frame.size
         cell.backgroundColor = .black
-        
         return cell
     }
     
@@ -212,13 +207,7 @@ extension CellSelectedTable:  UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard let cell = cell as? CellSelectedCell else { return }
-        
-        //Yassin TODO: Start here
-        cell.playerLayer.player?.isMuted = true
-        cell.playerLayer.player?.pause()
-        
-        cell.player.isMuted = true
-        cell.player.pause()
+        cell.handleDisplayDidEnd()
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

@@ -46,7 +46,6 @@ class CellSelectedCell: UITableViewCell {
     
     func setup(contentKey: String) {
         self.contentKey = contentKey
-        
         fetchPost()
         setupFullScreenImageView()
         setupRightHandView()
@@ -405,7 +404,6 @@ class CellSelectedCell: UITableViewCell {
     @objc func dismissAlert() {
         alert.dismiss(animated: true, completion: nil)
         alert.removeFromParent()
-        print("this is dismissing")
     }
     
     @objc func handleProfilePicPressed() {
@@ -413,6 +411,13 @@ class CellSelectedCell: UITableViewCell {
         guard let username = post.postOwner else { return }
         guard let handlePresentProfile = handlePresentProfile else { return }
         handlePresentProfile(username)
+    }
+    
+    func handleDisplayDidEnd() {
+        self.playerLayer.player?.isMuted = true
+        self.playerLayer.player?.pause()
+        self.player.isMuted = true
+        self.player.pause()
     }
     
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {

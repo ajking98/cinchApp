@@ -33,17 +33,18 @@ class DiscoverViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tabBarController!.tabBar.layer.borderWidth = 0.9
-        self.tabBarController?.tabBar.layer.borderColor = UIColor.lightishGray.cgColor
+//        self.tabBarController!.tabBar.layer.borderWidth = 0.9
+//        self.tabBarController?.tabBar.layer.borderColor = UIColor.lightishGray.cgColor
         
         setup()
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        navigationController?.tabBarController?.tabBar.isHidden = false
-        navigationController?.navigationBar.isHidden = false
-        navigationController?.navigationBar.isTranslucent = false
-        navigationController?.view.backgroundColor = .white
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+//        navigationController?.tabBarController?.tabBar.isHidden = false
+//        navigationController?.navigationBar.isHidden = false
+//        navigationController?.navigationBar.isTranslucent = false
+//        navigationController?.view.backgroundColor = .white
         //        navigationController?.hidesBarsOnSwipe = true
     }
     
@@ -152,7 +153,6 @@ extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {
         return mainHashTags.count
     }
     
-    //Yassin TODO: Start here
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! DiscoverCell
         let cellTerm = mainHashTags[indexPath.item]
@@ -231,7 +231,14 @@ extension DiscoverViewController: UISearchBarDelegate {
             tableTagsView.alpha = 1
         }
     }
+}
+
+
+// MARK: - Setup For Search
+
+extension DiscoverViewController {
     
+    //YASSIN TODO: Start here
     func nextView(term: String) {
         tableTagsView.alpha = 0
         searchBar.endEditing(true)
