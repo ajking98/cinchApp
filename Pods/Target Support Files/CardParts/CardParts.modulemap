@@ -1,6 +1,0 @@
-framework module CardParts {
-  umbrella header "CardParts-umbrella.h"
-
-  export *
-  module * { export * }
-}

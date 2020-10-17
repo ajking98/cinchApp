@@ -1,12 +1,4 @@
 PODS:
-  - CardParts (2.20.0):
-    - RxCocoa (~> 4.5)
-    - RxDataSources (~> 3.1)
-    - RxGesture (~> 2.2)
-    - RxSwift (~> 4.5)
-  - Cards (1.4.0):
-    - Player (= 0.13.0)
-  - Differentiator (3.1.0)
   - Firebase/Core (4.13.0):
     - FirebaseAnalytics (= 4.2.0)
     - FirebaseCore (= 4.0.20)
@@ -53,17 +45,6 @@ PODS:
     - nanopb/encode (= 0.3.9011)
   - nanopb/decode (0.3.9011)
   - nanopb/encode (0.3.9011)
-  - Player (0.13.0)
-  - RxCocoa (4.5.0):
-    - RxSwift (>= 4.4.2, ~> 4.4)
-  - RxDataSources (3.1.0):
-    - Differentiator (~> 3.0)
-    - RxCocoa (~> 4.0)
-    - RxSwift (~> 4.0)
-  - RxGesture (2.2.0):
-    - RxCocoa (~> 4.5)
-    - RxSwift (~> 4.5)
-  - RxSwift (4.5.0)
   - SDWebImage/Core (4.4.7)
   - SDWebImage/WebP (4.4.7):
     - libwebp (< 2.0, >= 0.5)
@@ -71,13 +52,8 @@ PODS:
   - SQLite.swift (0.12.2):
     - SQLite.swift/standard (= 0.12.2)
   - SQLite.swift/standard (0.12.2)
-  - XLActionController/Core (5.0.2)
-  - XLActionController/Spotify (5.0.2):
-    - XLActionController/Core
 
 DEPENDENCIES:
-  - CardParts
-  - Cards
   - Firebase/Core
   - Firebase/Database
   - Firebase/Storage (~> 4.0)
@@ -85,13 +61,9 @@ DEPENDENCIES:
   - SDWebImage/WebP
   - SQLite.swift
   - SQLite.swift (~> 0.12.0)
-  - XLActionController/Spotify
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
-    - CardParts
-    - Cards
-    - Differentiator
     - Firebase
     - FirebaseAnalytics
     - FirebaseCore
@@ -104,19 +76,10 @@ SPEC REPOS:
     - leveldb-library
     - libwebp
     - nanopb
-    - Player
-    - RxCocoa
-    - RxDataSources
-    - RxGesture
-    - RxSwift
     - SDWebImage
     - SQLite.swift
-    - XLActionController
 
 SPEC CHECKSUMS:
-  CardParts: 76f7e864e1e0f2eab2c7fb5d7a0a43521f21275e
-  Cards: 45ae6bd0eca7b5e8016d3b6cb30b60b04753f68f
-  Differentiator: be49ca3408f0ecfc761e4c7763d20c62be01b9ad
   Firebase: 5ec5e863d269d82d66b4bf56856726f8fb8f0fb3
   FirebaseAnalytics: 7ef69e76a5142f643aeb47c780e1cdce4e23632e
   FirebaseCore: 90cb1c53d69b556f112a1bf72b5fcfaad7650790
@@ -129,15 +92,9 @@ SPEC CHECKSUMS:
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   libwebp: 057912d6d0abfb6357d8bb05c0ea470301f5d61e
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
-  Player: 968d8d07d923bcdd6f7e4091c9e306eb44a5f7a4
-  RxCocoa: cbf70265dc65a981d4ac982e513c10cf23df24a0
-  RxDataSources: a843bad90c29817f5923ec8163f4af2de084ceb3
-  RxGesture: c1b7bf17166b0ef9d642a9510f8bac5785f18990
-  RxSwift: f172070dfd1a93d70a9ab97a5a01166206e1c575
   SDWebImage: c10d14a8883ebd89664f02a422006f66a85c0c5d
   SQLite.swift: d2b4642190917051ce6bd1d49aab565fe794eea3
-  XLActionController: f1f2226d2c6629db197d4a41f2da907085a4cb9d
 
-PODFILE CHECKSUM: 95d507f1352a22dec9c542dec3d5e7388937a593
+PODFILE CHECKSUM: 9c1755ca903f56d52e5ae0ec6ff43af80f88d921
 
 COCOAPODS: 1.9.3

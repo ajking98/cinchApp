@@ -12,18 +12,7 @@ target 'Cinch' do
   platform :ios, '10.0'
   pod 'SQLite.swift', '~> 0.12.0'
   
-  # Pods for CameraViewFinal
-  #  pod "EasyImagy", :path => "../swift-image"
-  pod 'XLActionController/Spotify'
-  
-  
-  #for Profile page
-  pod 'Cards'
-  pod 'CardParts'
-  
   pod 'IBMMobileFirstPlatformFoundation', '~>8.0.2020011414'
-  
-  # Pods for Cinch
   
   target 'CinchTests' do
     inherit! :search_paths
