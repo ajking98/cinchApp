@@ -13,9 +13,7 @@ import UIKit
 
 class DiscoverBackGround : UIView {
     
-    
-    let colorDefault = UIColor.black
-    let colorOnHold = UIColor.lightGray
+    let colorOnHold = UIColor.secondarySystemBackground
     
     override init(frame: CGRect) {
         super.init(frame : frame)
@@ -23,7 +21,8 @@ class DiscoverBackGround : UIView {
     }
     
     func setupView(){
-        self.backgroundColor = colorDefault
+        let inverseSystemBackground: UIColor = traitCollection.userInterfaceStyle == .dark ? .white : .black
+        self.backgroundColor = inverseSystemBackground
         self.alpha = 0
         self.layer.name = "black_background"
         self.isUserInteractionEnabled = true

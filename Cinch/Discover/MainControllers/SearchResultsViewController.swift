@@ -28,7 +28,7 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
         
         width = view.frame.width
         height = view.frame.height
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         setupNavigationBar()
         setupCollectionView()
         
@@ -42,7 +42,7 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        navigationController?.view.backgroundColor = .white
+        navigationController?.view.backgroundColor = .systemBackground
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.tabBarController?.tabBar.isHidden = false
     }
@@ -59,12 +59,11 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
     
     func setupNavigationBar() {
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.customRed]
-        let backButton = UIButton(type: .custom)
-        backButton.setImage(UIImage(named: "backIcon-black"), for: .normal)
-        backButton.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
-        backButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(goBack)))
-        let leftNavItem = UIBarButtonItem(customView: backButton)
-        navigationItem.setLeftBarButton(leftNavItem, animated: false)
+        let backButton = UIBarButtonItem()
+        let inverseSystemBackground: UIColor = traitCollection.userInterfaceStyle == .dark ? .white : .black
+        backButton.title = ""
+        backButton.tintColor = inverseSystemBackground
+        self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
         
 //        navigationController?.tabBarController?.tabBar.isHidden = false
         
@@ -75,7 +74,7 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
     
     
     func setupCollectionView() {
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .systemBackground
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.contentInset.top = 24
@@ -133,12 +132,6 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
                 }
             }
         }
-    }
-    
-    
-    
-    @objc func goBack() {
-        navigationController?.popViewController(animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -202,7 +195,7 @@ class SearchResultsCell: UICollectionViewCell {
     }()
     
     func setupViews() {
-        backgroundColor = .lightGray
+        backgroundColor = .secondarySystemBackground
         
 //        addSubview(picCollection)
 //        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-12-[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": picCollection]))

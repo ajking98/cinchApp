@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="qpE-qB-mE9">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="qpE-qB-mE9">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,8 +15,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <color key="selectedImageTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
                         <segue destination="3U0-NV-aHd" kind="relationship" relationship="viewControllers" id="NNB-kd-tgS"/>
@@ -32,7 +29,7 @@
         <!--Discover View Controller-->
         <scene sceneID="rY4-bw-JYB">
             <objects>
-                <viewController id="JER-F0-SVC" customClass="DiscoverViewController" customModule="Cinch" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="JER-F0-SVC" customClass="DiscoverViewController" customModule="Cinch_Memes" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="JkS-ea-31d">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -48,7 +45,7 @@
         <!--Cell Selected Table-->
         <scene sceneID="Fma-jE-57k">
             <objects>
-                <viewController storyboardIdentifier="CellSelected" id="TIZ-bB-p9z" customClass="CellSelectedTable" customModule="Cinch" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CellSelected" id="TIZ-bB-p9z" customClass="CellSelectedTable" customModule="Cinch_Memes" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="M8v-ns-6Wl">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -97,7 +94,6 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="9cy-gU-moo">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -111,7 +107,7 @@
         <!--Upload View Controller-->
         <scene sceneID="MaA-dR-A0D">
             <objects>
-                <viewController id="bxu-dy-aen" customClass="UploadViewController" customModule="Cinch" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="bxu-dy-aen" customClass="UploadViewController" customModule="Cinch_Memes" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ZCG-vu-zUM">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -146,7 +142,7 @@
         <!--Profile View Controller-->
         <scene sceneID="6fY-Za-liS">
             <objects>
-                <viewController storyboardIdentifier="ProfileViewController" id="rfK-wM-Z6Z" customClass="ProfileViewController" customModule="Cinch" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ProfileViewController" id="rfK-wM-Z6Z" customClass="ProfileViewController" customModule="Cinch_Memes" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="qAV-WM-j5u">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -162,7 +158,7 @@
         <!--Folder Selected Controller-->
         <scene sceneID="U20-H6-WcK">
             <objects>
-                <viewController storyboardIdentifier="FolderSelected" id="mjy-nT-DrO" customClass="FolderSelectedController" customModule="Cinch" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FolderSelected" id="mjy-nT-DrO" customClass="FolderSelectedController" customModule="Cinch_Memes" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="rF6-Lw-RtQ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -196,7 +192,7 @@
         <!--Edit Profile View Controller-->
         <scene sceneID="LqV-w5-liR">
             <objects>
-                <viewController storyboardIdentifier="EditProfileViewController" id="EdK-HI-5Si" customClass="EditProfileViewController" customModule="Cinch" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EditProfileViewController" id="EdK-HI-5Si" customClass="EditProfileViewController" customModule="Cinch_Memes" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Fin-od-YtV">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

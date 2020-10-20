@@ -30,10 +30,10 @@ class ProfileMainCollectionViewCell: UICollectionViewCell {
         uploadedCollectionView.register(GenericCell.self, forCellWithReuseIdentifier: cellIdentifier)
         uploadedCollectionView.showsVerticalScrollIndicator = false
         uploadedCollectionView.alwaysBounceVertical = false
-        uploadedCollectionView.backgroundColor = .white
+        uploadedCollectionView.backgroundColor = .systemBackground
         uploadedCollectionView.isScrollEnabled = false
         uploadedCollectionView.frame = frame
-        self.uploadedCollectionView.backgroundColor = .lightGray
+        self.uploadedCollectionView.backgroundColor = .secondarySystemBackground
         let emptyFieldText = UILabel()
         
         //reading uploaded content
@@ -95,11 +95,11 @@ class ProfileMainCollectionViewCell: UICollectionViewCell {
         heartedCollectionView.showsHorizontalScrollIndicator = false
         heartedCollectionView.alwaysBounceVertical = false
         heartedCollectionView.showsVerticalScrollIndicator = false
-        heartedCollectionView.backgroundColor = .white
+        heartedCollectionView.backgroundColor = .systemBackground
         heartedCollectionView.isScrollEnabled = false;
         heartedCollectionView.frame = frame
         heartedCollectionView.frame.origin.x = 0
-        self.heartedCollectionView.backgroundColor = .lightGray
+        self.heartedCollectionView.backgroundColor = .secondarySystemBackground
         let emptyFieldText = UILabel()
         
         

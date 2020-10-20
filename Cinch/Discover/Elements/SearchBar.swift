@@ -17,7 +17,7 @@ class SearchBar: UISearchBar {
         placeholder = "Search"
         
         frame.size.width = width
-        backgroundColor = .white
+        backgroundColor = .systemBackground
     }
 
 }

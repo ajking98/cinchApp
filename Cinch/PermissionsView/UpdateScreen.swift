@@ -20,7 +20,7 @@ class UpdateScreen: UIViewController {
     }
     
     func setup(){
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .secondarySystemBackground
         print("please update the app")
         title = "Update Needed"
         

@@ -88,6 +88,9 @@ class GenericCell: UICollectionViewCell {
     override func prepareForReuse() {
         imageView.stopAnimating()
         imageView.image = UIImage()
+        imageView.subviews.forEach { (subview) in
+            subview.removeFromSuperview()
+        }
         imageView.removeFromSuperview()
         self.subviews.forEach { (subview) in
             subview.removeFromSuperview()

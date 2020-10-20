@@ -47,7 +47,7 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate, UITe
     
     
     func setup() {
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         width = view.frame.width
         height = view.frame.height
         isVideo = checkIfVideo(mediaLink.absoluteString)
@@ -74,7 +74,7 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate, UITe
     
     
     func setupTagField() {
-        tagField.backgroundColor = .lightishGray
+        tagField.backgroundColor = .secondarySystemBackground
         tagField.delegate = self
         tagField.font = UIFont(name: "Avenir-Medium", size: 18)
         tagField.layer.cornerRadius = 2
@@ -103,7 +103,7 @@ class AddPostViewController: UIViewController, UIGestureRecognizerDelegate, UITe
         catch {
             print("error")
         }
-        imageView.backgroundColor = .white
+        imageView.backgroundColor = .systemBackground
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         view.addSubview(imageView)

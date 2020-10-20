@@ -13,7 +13,8 @@ import UIKit
 
 extension UISegmentedControl {
     func removeBorders() {
-        setBackgroundImage(imageWithColor(color: .black), for: .normal, barMetrics: .default)
+        let inverseSystemBackground: UIColor = traitCollection.userInterfaceStyle == .dark ? .white : .black
+        setBackgroundImage(imageWithColor(color: inverseSystemBackground), for: .normal, barMetrics: .default)
         setBackgroundImage(imageWithColor(color: tintColor!), for: .selected, barMetrics: .default)
         setDividerImage(imageWithColor(color: UIColor.clear), forLeftSegmentState: .normal, rightSegmentState: .normal, barMetrics: .default)
     }

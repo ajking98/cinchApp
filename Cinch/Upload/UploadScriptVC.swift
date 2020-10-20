@@ -78,7 +78,7 @@ class UploadScriptVC: UIViewController {
     }
     
     override func viewDidLoad() {
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .secondarySystemBackground
         
         
         //calls functions to read json file
@@ -96,11 +96,12 @@ class UploadScriptVC: UIViewController {
         contentImageView.center.y += 100
         view.addSubview(contentImageView)
         
+        let inverseSystemBackground: UIColor = traitCollection.userInterfaceStyle == .dark ? .white : .black
         
         //AcceptButton
         acceptButton.backgroundColor = .green
         acceptButton.setTitle("Accept", for: .normal)
-        acceptButton.setTitleColor(.black, for: .normal)
+        acceptButton.setTitleColor(inverseSystemBackground, for: .normal)
         acceptButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(accept)))
         
         acceptButton.frame.size = CGSize(width: 150, height: 100)
@@ -110,7 +111,7 @@ class UploadScriptVC: UIViewController {
         //DeclineButton
         declineButton.backgroundColor = .red
         declineButton.setTitle("Reject", for: .normal)
-        declineButton.setTitleColor(.black, for: .normal)
+        declineButton.setTitleColor(inverseSystemBackground, for: .normal)
         declineButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(reject)))
         
         declineButton.frame.size = CGSize(width: 150, height: 100)

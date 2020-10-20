@@ -2,7 +2,6 @@
 /*  DiscoverViewController.swift
  
  */
-
 import UIKit
 
 class DiscoverViewController: UIViewController {
@@ -37,9 +36,12 @@ class DiscoverViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        // Nav bar
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.backgroundColor = .systemBackground
+        
         // Tab bar
-        navigationController?.navigationBar.backgroundColor = .white
-        navigationController?.view.backgroundColor = .white
         navigationController?.tabBarController?.tabBar.isHidden = false
     }
     
@@ -140,7 +142,6 @@ class DiscoverViewController: UIViewController {
 
 
 // MARK: TableView
-
 extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -171,7 +172,6 @@ extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {
 
 
 // MARK: Searchbar
-
 extension DiscoverViewController: UISearchBarDelegate {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -229,7 +229,6 @@ extension DiscoverViewController: UISearchBarDelegate {
 
 
 // MARK: - Setup For Search
-
 extension DiscoverViewController {
     
     //YASSIN TODO: Start here

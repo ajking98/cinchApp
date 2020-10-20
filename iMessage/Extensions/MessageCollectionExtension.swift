@@ -43,7 +43,7 @@ class BroadCollectionViewCell: UICollectionViewCell, UICollectionViewDataSource,
     var iMessageDelegate: iMessageAppDelegate!
     
     func setup(index: Int) {
-        backgroundColor = .lightGray 
+        backgroundColor = .secondarySystemBackground
         
         //publicCollectionView
         addSubview(collectionView)
