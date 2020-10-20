@@ -54,6 +54,7 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
         let tag = searchTerm.lowercased()
         fetchContent(tag: tag)
         fetchSynonyms(tag: tag)
+        fetchOthers(tag: tag)
     }
     
     
@@ -117,7 +118,6 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
                 TagStruct().readAllElementLinks(tagLabel: tempWord) { (contentKeys) in
                     
                     let start = self.content.count
-//                    self.content.append(contentsOf: contentKeys)
                     self.content = self.content.union(contentKeys)
                     
                     self.collectionView.performBatchUpdates({
@@ -132,6 +132,30 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
                     }
                 }
             }
+        }
+    }
+    
+    private func fetchOthers(tag: String) {
+        print("this is the tag term:", tag)
+        Helpers.findOthers(word: tag) { (images) in
+            print("here are the images:", images[0])
+            self.content.insert(images[0])
+            let index = self.content.count - 1
+            
+            DispatchQueue.main.async {
+                print("this is the collectionview index", index)
+                self.collectionView.insertItems(at: [IndexPath(item: index, section: 0)])
+//                self.collectionView.reloadData()
+//                self.collectionView.performBatchUpdates({
+//                    let cell = GenericCell()
+//                    cell.setup(contentKey: images[0])
+//                    self.content.insert(images[0])
+////                    self.collectionView.insertItems(at: [IndexPath(item: index, section: 0)])
+//                }) { (isComplete) in
+//                    print("completed")
+//                }
+            }
+            
         }
     }
     

@@ -41,6 +41,16 @@ class GenericCell: UICollectionViewCell {
             errorHandler?()
         }
         
+        if contentKey.contains("cdn.memes") {
+            print("this ius the link to the image:", contentKey)
+            self.imageView.sd_setImage(with: URL(string: contentKey), placeholderImage: UIImage()) { (image, error, cacheType, link) in
+                if error != nil {
+                    errorHandler?()
+                }
+            }
+            
+        }
+        
         //constraints
         addSubview(imageView)
         imageView.frame.size = frame.size

@@ -138,7 +138,6 @@ struct UserStruct {
         DB.child(user).child("profilePic").observe(.value) { (snapshot) in
             print("hitting again")
             if let profilePic = snapshot.value as? String {
-                print("hitting this", profilePic)
                 completion(profilePic)
             }
             

@@ -2,7 +2,7 @@
 //  Helpers.swift
 //  Cinch
 //
-//  Created by Ahmed Gedi on 10/11/20.
+//  Created by Yassin on 10/11/20.
 //  Copyright © 2020 Gedi, Ahmed M. All rights reserved.
 //
 
@@ -39,6 +39,28 @@ struct Helpers {
                 }
             }
             completion(synonymSet)
+        }
+        
+        task.resume()
+    }
+    
+    
+    /// Searches other platforms for memes
+    static func findOthers(word: String, completion: @escaping([String]) -> Void) {
+        var images: [String] = []
+        
+        guard let url = URL(string: "https://api.memes.com/search/memes?term=pissed+off&page=1") else { return }
+        print("other shit:", url)
+        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+//            print("something happened:", data, response, error)
+            guard let data = data else { return }
+            guard let json = (try? JSONSerialization.jsonObject(with: data, options: [])) as? [String:AnyObject] else { return }
+            guard let posts = json["posts"] as? [[String: AnyObject]] else { return }
+            guard let path = posts[0]["path"] else { return }
+            let imageLink = "https://cdn.memes.com/\(path)"
+            
+            images.append(imageLink)
+            completion(images)
         }
         
         task.resume()
