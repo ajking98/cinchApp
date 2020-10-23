@@ -98,8 +98,9 @@ class EditProfileViewController: UIViewController {
     }
     
     func setUpEditImage() {
+        let inverseSystemBackground: UIColor = traitCollection.userInterfaceStyle == .dark ? .white : .black
         editImage.layer.masksToBounds = true
-        editImage.backgroundColor = .black
+        editImage.backgroundColor = inverseSystemBackground
         editImage.alpha = 0.5
         
         view.addSubview(editImage)
@@ -171,7 +172,7 @@ class EditProfileViewController: UIViewController {
     
     func createHorizontalBar(superView: UIView, relativeView: UIView, relativeViewConstant: Float, widthConstant: Float) {
         var horizontalBar = UIView()
-        horizontalBar.backgroundColor = UIColor.lightishGray
+        horizontalBar.backgroundColor = .secondarySystemBackground
         superView.addSubview(horizontalBar)
 
         horizontalBar.frame = CGRect.zero

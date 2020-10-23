@@ -59,7 +59,7 @@ class MessagesViewController: UIViewController {
         searchBar.delegate = self
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: searchBar)
         navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.view.backgroundColor = .white
+        navigationController?.view.backgroundColor = .systemBackground
         navigationController?.navigationBar.isTranslucent = false
         
         let cancelButtonAttributes = [NSAttributedString.Key.foregroundColor: UIColor.customRed]
@@ -71,7 +71,7 @@ class MessagesViewController: UIViewController {
         layout.scrollDirection = .horizontal
         collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
         collectionView.register(BroadCollectionViewCell.self, forCellWithReuseIdentifier: identifier)
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .systemBackground
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.contentInset.top = 16

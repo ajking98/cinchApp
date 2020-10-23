@@ -40,7 +40,8 @@ class ProfileStackView: UIStackView {
 //    }
     
     func setupStatusView() {
-        backgroundColor = .black
+        let inverseSystemBackground: UIColor = traitCollection.userInterfaceStyle == .dark ? .white : .black
+        backgroundColor = inverseSystemBackground
         axis = .vertical
         alignment = .fill
         distribution = .fillEqually
@@ -58,12 +59,13 @@ class ProfileStackView: UIStackView {
     }
     
     func setupInnerStackView() {
-        upperInnerStackView.backgroundColor = .black
+        let inverseSystemBackground: UIColor = traitCollection.userInterfaceStyle == .dark ? .white : .black
+        upperInnerStackView.backgroundColor = inverseSystemBackground
         upperInnerStackView.axis = .horizontal
         upperInnerStackView.alignment = .fill
         upperInnerStackView.distribution = .fillEqually
         
-        lowerInnerStackView.backgroundColor = .black
+        lowerInnerStackView.backgroundColor = inverseSystemBackground
         lowerInnerStackView.axis = .horizontal
         lowerInnerStackView.alignment = .fill
         lowerInnerStackView.distribution = .fillEqually
@@ -95,11 +97,11 @@ class ProfileStackView: UIStackView {
     //Try to add this to the stackview and not the parent view
     func setupSpacingBar() {
         let bar = UIView(frame: CGRect(x: view.frame.width/2.8, y: (view.center.y)/1.55, width: 1, height: 40))
-        bar.backgroundColor = .lightGray
+        bar.backgroundColor = .secondarySystemBackground
         scrollView.addSubview(bar)
         
         let bar2 = UIView(frame: CGRect(x: view.frame.width/1.55, y: (view.center.y)/1.55, width: 1, height: 40))
-        bar2.backgroundColor = .lightGray
+        bar2.backgroundColor = .secondarySystemBackground
         scrollView.addSubview(bar2)
     }
 }

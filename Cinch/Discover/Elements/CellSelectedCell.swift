@@ -198,7 +198,7 @@ class CellSelectedCell: UITableViewCell {
         heartIcon.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleHearted)))
         
         //profile icon
-        profileIcon.backgroundColor = .lightGray
+        profileIcon.backgroundColor = .white
         profileIcon.layer.cornerRadius = 20
         profileIcon.clipsToBounds = true
         profileIcon.isUserInteractionEnabled = true
@@ -254,7 +254,7 @@ class CellSelectedCell: UITableViewCell {
     }
     
     private func setupLowerText() {
-        lowerText.textColor = .lightGray
+        lowerText.textColor = .systemGray3
         lowerText.font.withSize(13)
         lowerText.numberOfLines = 0
         

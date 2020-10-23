@@ -11,7 +11,7 @@ import AVKit
 import SDWebImage
 
 class GenericCell: UICollectionViewCell {
-    
+
     ///takes a contentKey  & errorHandler for if the content is missing
     func setup(contentKey: String, _ errorHandler: (() -> Void)? = nil){
         var imageView = UIImageView()
@@ -40,7 +40,7 @@ class GenericCell: UICollectionViewCell {
             print("this content is missing", contentKey)
             errorHandler?()
         }
-        
+
         if contentKey.contains("cdn.memes") {
             print("this ius the link to the image:", contentKey)
             imageView.sd_setImage(with: URL(string: contentKey), placeholderImage: UIImage()) { (image, error, cacheType, link) in
@@ -48,9 +48,9 @@ class GenericCell: UICollectionViewCell {
                     errorHandler?()
                 }
             }
-            
+
         }
-        
+
         //constraints
         addSubview(imageView)
         imageView.frame.size = frame.size
@@ -58,7 +58,7 @@ class GenericCell: UICollectionViewCell {
         imageView.clipsToBounds = true
         imageView.backgroundColor = .skyBlue
     }
-    
+
     ///sets up the cell using a post - iMessage
     func setup(post: Post, _ errorHandler: (() -> Void)? = nil) {
         var imageView = UIImageView()
@@ -67,8 +67,8 @@ class GenericCell: UICollectionViewCell {
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.backgroundColor = .skyBlue
-        
-        
+
+
         guard let link = post.link else { return }
         let contentKey = post.contentKey
         if post.isImage! {
@@ -94,8 +94,8 @@ class GenericCell: UICollectionViewCell {
             }
         }
     }
-    
-    
+
+
     override func prepareForReuse() {
 //        imageView.stopAnimating()
 //        imageView.image = UIImage()

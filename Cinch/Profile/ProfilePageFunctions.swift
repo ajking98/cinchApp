@@ -62,7 +62,7 @@ extension ProfileViewController {
             UserStruct().deleteFollower(user: username, follower: localUser)
             self.mainButton.setTitle("Follow", for: .normal)
             self.mainButton.backgroundColor = .darkBlue
-            self.mainButton.setTitleColor(.white, for: .normal)
+            self.mainButton.setTitleColor(.systemBackground, for: .normal)
         }
         else{
             print("Following")
@@ -70,7 +70,7 @@ extension ProfileViewController {
             UserStruct().addFollower(user: username, newFollower: localUser)
             self.mainButton.layer.borderWidth = 1.7
             self.mainButton.setTitle("Unfollow", for: .normal)
-            self.mainButton.backgroundColor = .white
+            self.mainButton.backgroundColor = .systemBackground
             self.mainButton.setTitleColor(.darkBlue, for: .normal)
             self.mainButton.layer.borderColor = UIColor.darkBlue.cgColor
         }

@@ -81,7 +81,7 @@ class ProfileViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         tabBarController?.tabBar.isHidden = false
         navigationController?.navigationBar.isTranslucent = false
-        navigationController?.view.backgroundColor = .white
+        navigationController?.view.backgroundColor = .systemBackground
 //        collectionView?.reloadData()
     }
     
@@ -103,7 +103,7 @@ class ProfileViewController: UIViewController {
             if users.contains(self.username) {
                 self.isFollowing = true
                 self.mainButton.layer.borderWidth = 1.7
-                self.mainButton.backgroundColor = .white
+                self.mainButton.backgroundColor = .systemBackground
                 self.mainButton.setTitle("Unfollow", for: .normal)
                 self.mainButton.setTitleColor(.darkBlue, for: .normal)
                 self.mainButton.layer.borderColor = UIColor.darkBlue.cgColor
@@ -118,7 +118,7 @@ class ProfileViewController: UIViewController {
     
     
     func setupScrollView() {
-        scrollView.backgroundColor = .white
+        scrollView.backgroundColor = .systemBackground
         view.addSubview(scrollView)
         
         scrollView.contentSize.height = view.frame.height * 1 //TODO: this should be dynamic
@@ -135,12 +135,13 @@ class ProfileViewController: UIViewController {
     
     
     func setupNavigationBar() {
-        navigationController?.navigationBar.barTintColor = .white
+        navigationController?.navigationBar.barTintColor = .systemBackground
         
         //if it is not the local user
         if !isUser {
+            let inverseSystemBackground: UIColor = traitCollection.userInterfaceStyle == .dark ? .white : .black
             let backButton = UIBarButtonItem(image: UIImage(named: "backIcon-black"), style: .plain, target: self, action: #selector(goBack))
-            navigationController?.navigationBar.tintColor = .black
+            navigationController?.navigationBar.tintColor = inverseSystemBackground
             navigationItem.setLeftBarButton(backButton, animated: false)
 
             
@@ -167,7 +168,7 @@ class ProfileViewController: UIViewController {
     func setupProfileImage() {
         profileImageView.image = UIImage()
         profileImageView.layer.masksToBounds = true
-        profileImageView.backgroundColor = .lightGray
+        profileImageView.backgroundColor = .secondarySystemBackground
         profileImageView.contentMode = .scaleAspectFill
         scrollView.addSubview(profileImageView)
         
@@ -250,8 +251,9 @@ class ProfileViewController: UIViewController {
         segmentControl.selectedSegmentIndex = 0
         segmentControl.addTarget(self, action: #selector(handleSegmentTap), for: .valueChanged)
         
-        segmentControl.backgroundColor = .white
-        segmentControl.tintColor = .black
+        segmentControl.backgroundColor = .systemBackground
+        let inverseSystemBackground: UIColor = traitCollection.userInterfaceStyle == .dark ? .white : .black
+        segmentControl.tintColor = inverseSystemBackground
         segmentControl.removeBorders()
         //constraints
         segmentControl.translatesAutoresizingMaskIntoConstraints = false
@@ -266,7 +268,7 @@ class ProfileViewController: UIViewController {
         let segmentMiddleBar = UIView(frame: CGRect.zero)
         let horizontalBarBottom = UIView(frame: CGRect.zero)
         
-        horizontalBarTop.backgroundColor = .lightGray
+        horizontalBarTop.backgroundColor = .secondarySystemBackground
         scrollView.addSubview(horizontalBarTop)
         
         horizontalBarTop.translatesAutoresizingMaskIntoConstraints = false
@@ -275,7 +277,7 @@ class ProfileViewController: UIViewController {
         horizontalBarTop.widthAnchor.constraint(equalToConstant: width).isActive = true
         horizontalBarTop.topAnchor.constraint(equalTo: segmentControl.topAnchor, constant: 0).isActive = true
         
-        segmentMiddleBar.backgroundColor = .lightGray
+        segmentMiddleBar.backgroundColor = .secondarySystemBackground
         scrollView.addSubview(segmentMiddleBar)
         
         segmentMiddleBar.translatesAutoresizingMaskIntoConstraints = false
@@ -284,7 +286,7 @@ class ProfileViewController: UIViewController {
         segmentMiddleBar.widthAnchor.constraint(equalToConstant: 1).isActive = true
         segmentMiddleBar.topAnchor.constraint(equalTo: horizontalBarTop.bottomAnchor, constant: height/75).isActive = true
         
-        horizontalBarBottom.backgroundColor = .lightGray
+        horizontalBarBottom.backgroundColor = .secondarySystemBackground
         scrollView.addSubview(horizontalBarBottom)
         
         horizontalBarBottom.translatesAutoresizingMaskIntoConstraints = false
@@ -299,7 +301,7 @@ class ProfileViewController: UIViewController {
         viewLayout.scrollDirection = .horizontal
         collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: viewLayout)
         guard let collectionView = collectionView else { return }
-        collectionView.backgroundColor = .lightGray
+        collectionView.backgroundColor = .secondarySystemBackground
         collectionView.register(ProfileMainCollectionViewCell.self, forCellWithReuseIdentifier: cellIdentifier)
         collectionView.delegate = self
         collectionView.dataSource = self

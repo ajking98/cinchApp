@@ -2,7 +2,6 @@
 //  CellSelectedTable.swift
 //  Created by Alsahlani, Yassin K on 1/27/20.
 //
-
 import UIKit
 import AVKit
 
@@ -66,7 +65,7 @@ class CellSelectedTable: UIViewController {
         // Nav bar
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.backgroundColor = .white
+        navigationController?.navigationBar.backgroundColor = .systemBackground
         
         guard let refreshCell = refreshCell else { return }
         refreshCell(startingIndex)
@@ -164,7 +163,6 @@ class CellSelectedTable: UIViewController {
 
 
 // MARK: TableView
-
 extension CellSelectedTable:  UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -184,7 +182,7 @@ extension CellSelectedTable:  UITableViewDelegate, UITableViewDataSource {
         let index = tableView.indexPathsForVisibleRows![0][1]
         let cell = tableView.cellForRow(at: IndexPath(item: index, section: 0)) as! CellSelectedCell
         
-        if cell.contentKey == content[index] { //checks if the user switched to a new cell 
+        if cell.contentKey == content[index] { //checks if the user switched to a new cell
             cell.player.play()
         }
         else {
@@ -214,7 +212,7 @@ extension CellSelectedTable:  UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        //Should edit the sound here 
+        //Should edit the sound here
         return false
     }
     

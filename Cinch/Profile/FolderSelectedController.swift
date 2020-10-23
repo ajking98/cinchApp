@@ -32,7 +32,7 @@ class FolderSelectedController: UIViewController, UICollectionViewDataSource, UI
     
     override func viewDidAppear(_ animated: Bool) {
         navigationController?.navigationBar.isTranslucent = false
-        navigationController?.view.backgroundColor = .white
+        navigationController?.view.backgroundColor = .systemBackground
     }
     
     func setup(username: String, folderName: String) {
@@ -44,7 +44,7 @@ class FolderSelectedController: UIViewController, UICollectionViewDataSource, UI
     func setupNavigationBar() {
         tabBarController?.tabBar.isHidden = true
         title = folderName
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         
 
         let backButton = UIButton(type: .custom)
@@ -89,7 +89,7 @@ class FolderSelectedController: UIViewController, UICollectionViewDataSource, UI
     
     func setupCollectionView() {
         collectionView.register(GenericCell.self, forCellWithReuseIdentifier: identifier)
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .systemBackground
         collectionView.showsVerticalScrollIndicator = false
         collectionView.contentInset.top = 16
         collectionView.delegate = self
@@ -125,7 +125,7 @@ class FolderSelectedController: UIViewController, UICollectionViewDataSource, UI
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! GenericCell
-        cell.backgroundColor = .lightGray
+        cell.backgroundColor = .secondarySystemBackground
         cell.setup(contentKey: content[indexPath.item])
         return cell
     }

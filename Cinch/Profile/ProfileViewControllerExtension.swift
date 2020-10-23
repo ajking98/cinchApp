@@ -113,13 +113,14 @@ class FolderCell: UICollectionViewCell {
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 3
         imageView.layer.borderWidth = 0.8
-        imageView.layer.borderColor = UIColor.white.cgColor
+        imageView.layer.borderColor = UIColor.systemBackground.cgColor
         addSubview(imageView)
         print("sfesfaef \(folderName)")
         
         //Gradient
-        let topColor = UIColor.white.cgColor.copy(alpha: 0)
-        let bottomColor = UIColor.black.cgColor.copy(alpha: 0.8)
+        let inverseSystemBackground: UIColor = traitCollection.userInterfaceStyle == .dark ? .white : .black
+        let topColor = UIColor.systemBackground.cgColor.copy(alpha: 0)
+        let bottomColor = inverseSystemBackground.cgColor.copy(alpha: 0.8)
         let gradientLayer = CAGradientLayer()
         gradientLayer.colors = [topColor, bottomColor]
         gradientLayer.locations = [0.0, 1.0]
@@ -130,7 +131,7 @@ class FolderCell: UICollectionViewCell {
         //second layer
         secondLayerView.frame.size = imageView.frame.size
         secondLayerView.backgroundColor = .darkBlue
-        secondLayerView.layer.borderColor = UIColor.white.cgColor
+        secondLayerView.layer.borderColor = UIColor.systemBackground.cgColor
         secondLayerView.layer.borderWidth = 0.8
         secondLayerView.layer.cornerRadius = 3
         secondLayerView.frame.origin = CGPoint(x: 8, y: 8)
@@ -146,7 +147,7 @@ class FolderCell: UICollectionViewCell {
         
         //folderLabel
         folderLabel.text = folderName
-        folderLabel.textColor = .white
+        folderLabel.textColor = .systemBackground
         folderLabel.font = folderLabel.font.withSize(14)
         
         //constraints for folderLabel
@@ -162,7 +163,7 @@ class FolderCell: UICollectionViewCell {
         //profile icon
         profileIcon.frame.size = CGSize(width: 30, height: 30)
         profileIcon.frame.origin = CGPoint(x: (self.imageView.frame.width - self.profileIcon.frame.width - 8), y: 8)
-        profileIcon.backgroundColor = .lightGray
+        profileIcon.backgroundColor = .secondarySystemBackground
         profileIcon.layer.cornerRadius = profileIcon.frame.height / 2
         profileIcon.clipsToBounds = true
         imageView.addSubview(profileIcon)

@@ -54,7 +54,7 @@ class DiscoverCell: UITableViewCell {
         
         collectionView.register(GenericCell.self, forCellWithReuseIdentifier: identifier)
         collectionView.showsHorizontalScrollIndicator = false
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .systemBackground
         
         addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
