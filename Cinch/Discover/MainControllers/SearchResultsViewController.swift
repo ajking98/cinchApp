@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SearchResultsViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate, UINavigationControllerDelegate {
+class SearchResultsViewController: UIViewController, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate, UINavigationControllerDelegate {
     
     //data
     var searchTerm = ""
@@ -107,6 +107,7 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
                     let contentToDeleteKey = self.content[self.content.index(self.content.startIndex, offsetBy: indexPath.item)]
                     TagStruct().deleteElement(tagLabel: tag, contentKey:contentToDeleteKey)
                 }
+                self.indexesToPop = []
             }
         }
         
@@ -130,21 +131,20 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
                             TagStruct().deleteElement(tagLabel: tag, contentKey: contentToDeleteKey)
                         }
                     }
+                    self.indexesToPop = []
                 }
             }
         }
     }
     
     private func fetchOthers(tag: String) {
-        print("this is the tag term:", tag)
-        Helpers.findOthers(word: tag) { (images) in
-            print("here are the images:", images[0])
-            self.content.insert(images[0])
-            let index = self.content.count - 1
-            
+        Helpers.findOthers(term: tag) { (images) in
+            self.content = self.content.union(images)
             DispatchQueue.main.async {
-                print("this is the collectionview index", index)
-                self.collectionView.insertItems(at: [IndexPath(item: index, section: 0)])
+                self.collectionView.reloadData()
+                
+                // TODO: This is a better implementation but buggy
+//                self.collectionView.insertItems(at: [IndexPath(item: index, section: 0)])
 //                self.collectionView.reloadData()
 //                self.collectionView.performBatchUpdates({
 //                    let cell = GenericCell()
@@ -159,11 +159,16 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
         }
     }
     
-    
-    
     @objc func goBack() {
         navigationController?.popViewController(animated: true)
     }
+    
+}
+
+
+// MARK: - Collectionview
+
+extension SearchResultsViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return content.count
@@ -171,9 +176,7 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! GenericCell
-
         let contentKey = self.content[self.content.index(self.content.startIndex, offsetBy: indexPath.item)]
-        
         cell.setup(contentKey: contentKey) {
             self.indexesToPop.append(indexPath)
         }
@@ -184,7 +187,6 @@ class SearchResultsViewController: UIViewController, UICollectionViewDataSource,
     func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! GenericCell
         let contentKey = self.content[self.content.index(self.content.startIndex, offsetBy: indexPath.item)]
-        
         cell.setup(contentKey: contentKey)
     }
     

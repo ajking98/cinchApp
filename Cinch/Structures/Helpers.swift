@@ -46,20 +46,25 @@ struct Helpers {
     
     
     /// Searches other platforms for memes
-    static func findOthers(word: String, completion: @escaping([String]) -> Void) {
+    static func findOthers(term: String, completion: @escaping([String]) -> Void) {
         var images: [String] = []
-        
-        guard let url = URL(string: "https://api.memes.com/search/memes?term=pissed+off&page=1") else { return }
+        let formattedTerm = term.replacingOccurrences(of: " ", with: "+")
+        guard let url = URL(string: "https://api.memes.com/search/memes?term=\(formattedTerm)&page=1") else { return }
         print("other shit:", url)
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
 //            print("something happened:", data, response, error)
             guard let data = data else { return }
             guard let json = (try? JSONSerialization.jsonObject(with: data, options: [])) as? [String:AnyObject] else { return }
             guard let posts = json["posts"] as? [[String: AnyObject]] else { return }
-            guard let path = posts[0]["path"] else { return }
-            let imageLink = "https://cdn.memes.com/\(path)"
+            for post in posts{
+                guard let path = post["path"] else { return }
+                let imageLink = "https://cdn.memes.com/\(path)"
+                images.append(imageLink)
+            }
+//            guard let path = posts[0]["path"] else { return }
+//            let imageLink = "https://cdn.memes.com/\(path)"
             
-            images.append(imageLink)
+//            images.append(imageLink)
             completion(images)
         }
         

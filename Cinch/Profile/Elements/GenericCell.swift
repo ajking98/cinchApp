@@ -11,10 +11,10 @@ import AVKit
 import SDWebImage
 
 class GenericCell: UICollectionViewCell {
-    var imageView = UIImageView()
     
     ///takes a contentKey  & errorHandler for if the content is missing
     func setup(contentKey: String, _ errorHandler: (() -> Void)? = nil){
+        var imageView = UIImageView()
         let updatedLink = convertStringToKey(link: contentKey)
         PostStruct().readLink(contentKey: contentKey, completion: { (link) in
                 if checkIfVideo(link) {
@@ -23,14 +23,14 @@ class GenericCell: UICollectionViewCell {
                         var smoothedThumbnail = thumbnailLink
                         smoothedThumbnail.append(contentsOf: thumbnailLink.reversed())
                         if smoothedThumbnail.isEmpty { return }
-                        self.imageView.sd_setAnimationImages(with: smoothedThumbnail)
-                        self.imageView.animationDuration = 2.8
-                        self.imageView.sd_setHighlightedImage(with: smoothedThumbnail[0], completed: nil)
-                        self.imageView.startAnimating()
+                        imageView.sd_setAnimationImages(with: smoothedThumbnail)
+                        imageView.animationDuration = 2.8
+                        imageView.sd_setHighlightedImage(with: smoothedThumbnail[0], completed: nil)
+                        imageView.startAnimating()
                     }
                 }
             else {
-                    self.imageView.sd_setImage(with: URL(string: link), placeholderImage: UIImage()) { (image, error, cacheType, link) in
+                    imageView.sd_setImage(with: URL(string: link), placeholderImage: UIImage()) { (image, error, cacheType, link) in
                         if error != nil {
                             errorHandler?()
                         }
@@ -43,7 +43,7 @@ class GenericCell: UICollectionViewCell {
         
         if contentKey.contains("cdn.memes") {
             print("this ius the link to the image:", contentKey)
-            self.imageView.sd_setImage(with: URL(string: contentKey), placeholderImage: UIImage()) { (image, error, cacheType, link) in
+            imageView.sd_setImage(with: URL(string: contentKey), placeholderImage: UIImage()) { (image, error, cacheType, link) in
                 if error != nil {
                     errorHandler?()
                 }
@@ -61,6 +61,7 @@ class GenericCell: UICollectionViewCell {
     
     ///sets up the cell using a post - iMessage
     func setup(post: Post, _ errorHandler: (() -> Void)? = nil) {
+        var imageView = UIImageView()
         addSubview(imageView)
         imageView.frame.size = frame.size
         imageView.contentMode = .scaleAspectFill
@@ -71,7 +72,7 @@ class GenericCell: UICollectionViewCell {
         guard let link = post.link else { return }
         let contentKey = post.contentKey
         if post.isImage! {
-            self.imageView.sd_setImage(with: URL(string: link), placeholderImage: UIImage()) { (image, error, cacheType, link) in
+            imageView.sd_setImage(with: URL(string: link), placeholderImage: UIImage()) { (image, error, cacheType, link) in
                 if error != nil {
                     errorHandler?()
                 }
@@ -86,19 +87,19 @@ class GenericCell: UICollectionViewCell {
                 var smoothedThumbnail = thumbnailLink
                 smoothedThumbnail.append(contentsOf: thumbnailLink.reversed())
                 if smoothedThumbnail.isEmpty { return }
-                self.imageView.sd_setAnimationImages(with: smoothedThumbnail)
-                self.imageView.animationDuration = 2.8
-                self.imageView.sd_setHighlightedImage(with: smoothedThumbnail[0], completed: nil)
-                self.imageView.startAnimating()
+                imageView.sd_setAnimationImages(with: smoothedThumbnail)
+                imageView.animationDuration = 2.8
+                imageView.sd_setHighlightedImage(with: smoothedThumbnail[0], completed: nil)
+                imageView.startAnimating()
             }
         }
     }
     
     
     override func prepareForReuse() {
-        imageView.stopAnimating()
-        imageView.image = UIImage()
-        imageView.removeFromSuperview()
+//        imageView.stopAnimating()
+//        imageView.image = UIImage()
+//        imageView.removeFromSuperview()
         self.subviews.forEach { (subview) in
             subview.removeFromSuperview()
         }
