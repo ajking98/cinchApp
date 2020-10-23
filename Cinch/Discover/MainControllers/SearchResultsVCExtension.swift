@@ -13,8 +13,7 @@ import UIKit
 extension SearchResultsViewController {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let storyboard = UIStoryboard(name: "Discover", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "CellSelected") as! CellSelectedTable
+        let vc = CellSelectedTable()
         vc.modalPresentationStyle = .fullScreen
         vc.content = Array(content)
         vc.startingIndex = indexPath

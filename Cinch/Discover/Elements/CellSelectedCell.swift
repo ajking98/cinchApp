@@ -40,22 +40,29 @@ class CellSelectedCell: UITableViewCell {
     //TODO: This should only exist for admin
     let removeMedia = UIButton()
     var createThumbnailButton = UIButton()
-    
+    lazy var isFromAPI = {
+        return self.contentKey.contains("memes.com")
+    }()
     
     //MARK: - Setup
     
     func setup(contentKey: String) {
         self.contentKey = contentKey
+        print("This is from API:", isFromAPI)
         fetchPost()
         setupFullScreenImageView()
         setupRightHandView()
         setupLowerText()
         setupxMark()
-        
-        FolderStruct()
     }
     
     private func fetchPost() {
+        
+        if isFromAPI {
+            self.post = Post(isImage: self.contentKey.contains(".mp4"), postOwner: "Yassin", link: self.contentKey)
+            self.fetchContent()
+        }
+        
         ParentPostStruct().readPost(contentKey: contentKey) { (post) in
             self.post = post
             self.fetchContent()
@@ -240,6 +247,10 @@ class CellSelectedCell: UITableViewCell {
             backgroundProfileIcon.heightAnchor.constraint(equalToConstant: 66),
             
         ])
+        
+        if isFromAPI {
+            heartIcon.isHidden = true
+        }
     }
     
     private func setupLowerText() {
@@ -374,6 +385,7 @@ class CellSelectedCell: UITableViewCell {
     }
     
     @objc func handleHearted() {
+        guard !isFromAPI else { return }
         //adds link to the folder
         guard let localUser = UserDefaults.standard.string(forKey: defaultsKeys.usernameKey) else { return }
         
